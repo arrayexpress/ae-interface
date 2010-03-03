@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%t] %C (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="ROLLINGFILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="File" value="${catalina.base}/logs/${interface.application.pref.files.prefix}-interface.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="org.apache.tomcat" additivity="false">
+        <level value="${interface.application.log.default.priority}"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="org.apache" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="javax.management" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="org.tuckey.web.filters" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="org.quartz.simpl" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="httpclient.wire" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <!-- EFO-related frameworks -->
+    <logger name="org.mindswap.pellet" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="org.coode.owl.rdfxml.parser.OWLRDFConsumer" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <logger name="javax.activation" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
+    <root>
+        <priority value="${interface.application.log.default.priority}"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </root>
+
+</log4j:configuration>

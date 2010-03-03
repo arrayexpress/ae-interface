@@ -1,0 +1,70 @@
+.ae_left_container_100pc {
+    width: 100%;
+    min-width: 950px;
+    text-align: left;
+    margin: 0;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.2em;
+}
+
+#ae_files_content {
+    width: 700px;
+    margin: 20px;
+}
+
+.ae_accession {
+    font-size: 18px;
+    line-height: normal;
+    padding: 10px 0 0;
+}
+
+.ae_title {
+    border-bottom: 1px solid #bdd7d7;
+    padding: 0 0 5px 0;
+}
+
+.ae_comment {
+    background: #f2f8f8 url(../images/silk_warn.gif) no-repeat scroll 10px 50%;
+    border-top: 1px solid #bdd7d7;
+    font-style: italic;
+    padding: 3px 0 3px 35px;
+}
+
+.ae_comment div {
+    padding: 0 0 2px 0;
+}
+
+.ae_files_table {
+    table-layout: fixed;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.ae_files_table td {
+    font-size: 11px;
+    line-height: normal;
+    vertical-align: top;
+    padding: 0 10px 2px;
+    overflow: hidden;
+}
+
+#ae_infotext {
+    font-size: 12px;    
+}
+
+.ae_files_table td.td_all {
+    text-align: left;
+    font-style: italic;
+    padding: 0 10px 10px 10px;
+}
+
+.td_size {
+    width: 100px;
+    text-align: right;
+}
+
+.td_date {
+    width: 200px;
+    text-align: left;
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="eng">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta http-equiv="Content-Language" content="en-GB"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>
+
+    <title>Browse | ArrayExpress Archive | EBI</title>
+
+    <link rel="stylesheet" href="${interface.application.link.www_domain}/inc/css/contents.css" type="text/css"/>
+    <link rel="stylesheet" href="${interface.application.link.www_domain}/inc/css/userstyles.css" type="text/css"/>
+    <script src="${interface.application.link.www_domain}/inc/js/contents.js" type="text/javascript"></script>
+    <link rel="SHORTCUT ICON" href="${interface.application.link.www_domain}/bookmark.ico"/>
+
+    <link rel="stylesheet" href="assets/stylesheets/ae_common-1.4.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/stylesheets/ae_browse-1.4.css" type="text/css"/>
+    <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="assets/scripts/jsdeferred.jquery.js" type="text/javascript"></script>
+    <script src="assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
+    <script src="assets/scripts/jquery.query-2.1.2.js" type="text/javascript"></script>
+    <script src="assets/scripts/ae_browse-1.4.js" type="text/javascript"></script>
+    <link rel="alternate" href="rss/experiments"
+              type="application/rss+xml" title="ArrayExpress Experiments Feed"/>    
+</head>
+
+<body>
+<div class="headerdiv" id="headerdiv" style="position:absolute;z-index:1;">
+    <iframe src="${interface.application.link.www_domain}/inc/head.html" name="head" id="head"
+            frameborder="0" marginwidth="0px" marginheight="0px" scrolling="no" width="100%"
+            style="position:absolute;z-index:1;height:57px;">
+        Your browser does not support inline frames or is currently configured not to display inline frames. Content can
+        be viewed at actual source page: http://www.ebi.ac.uk/inc/head.html
+    </iframe>
+</div>
+<noscript>
+    <div id="ae_noscript" class="assign_font">
+        <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+    </div>
+</noscript>
+<div id="ae_contents" style="display:none">
+    <div class="ae_centered_container_100pc assign_font">
+        <div id="ae_keywords_filters_area">
+            <div id="ae_keywords_filters_box">
+                <div class="form_outer"><div class="form_top"><div class="form_bottom"><div class="form_left"><div class="form_right"><div class="form_bottom_left"><div class="form_bottom_right"><div class="form_top_left"><div class="form_top_right">
+                    <div id="ae_keywords_filters_inner_box">
+                        <form method="get" action="browse.html">
+                            <fieldset id="ae_keywords_box">
+                                <label for="ae_keywords">Experiment, citation, sample and factor annotations [<a href="javascript:aeClearKeywords()">clear</a>]</label>
+                                <input id="ae_keywords" name="keywords" maxlength="200">
+                                <!-- not yet
+                                <span>
+                                    <input id="ae_expandefo" name="expandefo" type="checkbox" title="Search uses your term and searches for synonyms and child terms in the Experimental Factor Ontology e.g. cancer will be searched for synonyms for cancer and sub types of cancer">
+                                    <label for="ae_expandefo" title="Search uses your term and searches for synonyms and child terms in the Experimental Factor Ontology e.g. cancer will be searched for synonyms for cancer and sub types of cancer">Expand search using <a href="${interface.application.link.www_domain}/efo/" target="_blank">Experimental Factor Ontology</a></label>
+                                </span>
+                                -->
+                            </fieldset>
+                            <fieldset id="ae_filters_box">
+                                <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>
+                                <select id="ae_species" name="species" disabled="true"><option value="">All species (loading options)</option></select>
+                                <select id="ae_array" name="array" disabled="true"><option value="">All arrays (loading options)</option></select>
+                                <div id="ae_exptype_selector">
+                                    <select id="ae_expdesign" name="expdesign" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
+                                    <span>by</span>
+                                    <select id="ae_exptech" name="exptech" disabled="true"><option value="">All technologies (loading options)</option></select>
+                                </div>
+                            </fieldset>
+                            <fieldset id="ae_options_box">
+                                <label>Display options [<a href="javascript:aeResetOptions()">reset</a>]</label>
+                                <div class="select_margin"><select id="ae_pagesize" name="pagesize"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option></select><label for="ae_pagesize"> experiments per page</label></div>
+                                <input id="ae_keyword_filters_submit" type="submit" value="Query">
+                                <input type="hidden" id="ae_sortby" name="sortby">
+                                <input type="hidden" id="ae_sortorder" name="sortorder">
+                                <div><input id="ae_detailedview" name="detailedview" type="checkbox"><label for="ae_detailedview">Detailed view</label></div>
+                            </fieldset>
+                        </form>
+                        <div id="ae_login_box" style="display:none"><div class="login_outer"><div class="login_top"><div class="login_bottom"><div class="login_left"><div class="login_right"><div class="login_top_left"><div class="login_top_right"><div class="login_bottom_left"><div class="login_bottom_right"><div class="login_inner">
+                            <div id="ae_login_title">Submitter/reviewer login [<a href="javascript:aeHideLoginForm();">close</a>]</div>
+                            <form id="ae_login_form" method="get" action="index.html" onsubmit="aeDoLogin(); return false">
+                                <fieldset id="ae_login_user_fset">
+                                    <label for="ae_user_field">User name</label>
+                                    <input id="ae_user_field" name="u" maxlength="50">
+                                </fieldset>
+                                <fieldset id="ae_login_pass_fset">
+                                    <label for="ae_pass_field">Password</label>
+                                    <input id="ae_pass_field" type="password" name="p" maxlength="50">
+                                </fieldset>
+                                <input id="ae_login_submit" type="submit" value="Log in">
+                                <span><input id="ae_login_remember" type="checkbox"><label for="ae_login_remember">Remember me</label></span>
+                            </form>
+                            <div id="ae_login_status"> </div>
+                        </div></div></div></div></div></div></div></div></div></div></div>
+                        <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="assets/images/silk_help.gif" width="16" height="16">ArrayExpress Browser Help</a></div>
+                        <div id="ae_login_link"><a href="javascript:aeShowLoginForm();">Submitter/reviewer login</a></div>
+                        <div id="ae_login_info" style="display:none"><img src="assets/images/mini_user.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
+                        <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"></a></div>
+                    </div></div></div></div></div></div></div></div></div></div>
+                </div>
+            </div>
+            <div id="ae_results_area">
+                <div id="ae_results_box">
+                    <div class="table_box_top"><div class="table_box_bottom"><div class="table_box_left"><div class="table_box_right"><div class="table_box_bottom_left"><div class="table_box_bottom_right"><div class="table_box_top_left"><div class="table_box_top_right">
+                        <div class="table_padding_box">
+                            <div class="table_inner_box">
+                                <div id="ae_results_tbl">
+                                    <div id="ae_results_hdr_filler" class="table_header_filler">&nbsp;</div>
+                                    <div id="ae_results_hdr" style="right: 15px">
+                                        <div id="ae_results_hdr_inner">
+                                            <table border="0" cellpadding="0" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="table_header_box ae_results_more" id="ae_results_header_more"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">&nbsp;</div></div></div></div></th>
+                                                        <th class="table_header_box sortable ae_results_accession" id="ae_results_header_accession"><a href="javascript:aeSort('accession')" title="Click to sort by accession"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">ID</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_name" id="ae_results_header_name"><a href="javascript:aeSort('name')" title="Click to sort by title"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Title</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_assays" id="ae_results_header_assays"><a href="javascript:aeSort('assays')" title="Click to sort by number of assays"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Assays</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_species" id="ae_results_header_species"><a href="javascript:aeSort('species')" title="Click to sort by species"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Species</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_releasedate" id="ae_results_header_releasedate"><a href="javascript:aeSort('releasedate')" title="Click to sort by release date"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Date</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_fgem" id="ae_results_header_fgem"><a href="javascript:aeSort('fgem')" title="Click to sort by number of assays of processed data"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Processed</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_raw" id="ae_results_header_raw"><a href="javascript:aeSort('raw')" title="Click to sort by number of assays of raw data"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Raw</div></div></div></div></a></th>
+                                                        <th class="table_header_box sortable ae_results_atlas" id="ae_results_header_atlas"><a href="javascript:aeSort('atlas')" title="Click to sort by presence of experiment data in ArrayExpress Atlas"><div class="table_header_border_left"><div class="table_header_border_right"><div class="table_header_inner"><div class="table_header_label">Atlas</div></div></div></div></a></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div id="ae_results_body">
+                                        <div id="ae_results_body_inner" class="ae_results_tbl_loading">
+                                            <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                                                <thead style="visibility: collapse; height: 0">
+                                                    <tr>
+                                                        <th class="table_header_box_fake ae_results_more"></th>
+                                                        <th class="table_header_box_fake ae_results_accession"></th>
+                                                        <th class="table_header_box_fake ae_results_name"></th>
+                                                        <th class="table_header_box_fake ae_results_assays"></th>
+                                                        <th class="table_header_box_fake ae_results_species"></th>
+                                                        <th class="table_header_box_fake ae_results_releasedate"></th>
+                                                        <th class="table_header_box_fake ae_results_fgem"></th>
+                                                        <th class="table_header_box_fake ae_results_raw"></th>
+                                                        <th class="table_header_box_fake ae_results_atlas"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ae_results_tbody"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="ae_results_ftr" class="table_footer_box"><div class="table_footer_left"><div class="table_footer_right">
+                                        <div class="table_footer_inner">
+                                            <div id="ae_results_print" class="status_icon"><a href="" title="Print results"><img src="assets/images/silk_print.gif" alt="Print results"/></a></div>
+                                            <div id="ae_results_save" class="status_icon"><a href="" title="Save results in a Tab-delimited format"><img src="assets/images/silk_save_txt.gif" alt="Save results in a Tab-delimited format"/></a></div>
+                                            <div id="ae_results_save_xls" class="status_icon"><a href="" title="Open results table in Excel"><img src="assets/images/silk_save_xls.gif" alt="Open results table in Excel"/></a></div>
+                                            <div id="ae_results_save_feed" class="status_icon"><a href="" title="Get RSS feed with first page results matching selected criteria"><img src="assets/images/silk_save_feed.gif" alt="Open results as RSS feed"/></a></div>
+                                            <div id="ae_results_status">&nbsp;</div><div id="ae_results_pager">&nbsp;</div></div>
+                                    </div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div></div></div></div></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ebi_footer">
+    <iframe src="${interface.application.link.www_domain}/inc/foot.html"
+            name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
+            scrolling="no" height="22px" width="800px" style="z-index:2">
+        Your browser does not support inline frames or is currently configured not to display inline frames.
+        Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/foot.html
+    </iframe>
+</div>
+${interface.application.google.analytics}
+</body>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>${project.name} v${project.version}.r${buildNumber}</display-name>
+    <servlet>
+        <description>ArrayExpress Experiments Query Servlet</description>
+        <servlet-name>QueryServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.QueryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress Data Download Servlet</description>
+        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.DownloadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress Data Control Servlet</description>
+        <servlet-name>ControlServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.ControlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress HTTP Proxy Servlet</description>
+        <servlet-name>HttpProxyServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.HttpProxyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress Data Lookup Servlet</description>
+        <servlet-name>LookupServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.LookupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QueryServlet</servlet-name>
+        <url-pattern>/servlets/query/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/servlets/download/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlServlet</servlet-name>
+        <url-pattern>/servlets/control/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HttpProxyServlet</servlet-name>
+        <url-pattern>/servlets/proxy/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LookupServlet</servlet-name>
+        <url-pattern>/servlets/lookup/*</url-pattern>
+    </servlet-mapping>
+    <!--
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>uk.ac.ebi.arrayexpress.servlets.AuthServletFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>confPath</param-name>
+            <param-value>/WEB-INF/urlrewrite.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>confReloadCheckInterval</param-name>
+            <param-value>-1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>log4j</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <description>The class implementing the "ServletContextListener" interface and thus receiving the
+            "contextInitialized" and "contextDestroyed" messages indicating that the application
+            is being de/initialized.
+        </description>
+        <listener-class>uk.ac.ebi.arrayexpress.AEInterfaceApplication</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/server_error.html</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/restricted_access.html</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/not_found.html</location>
+    </error-page>
+</web-app>

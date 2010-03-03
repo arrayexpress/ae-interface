@@ -1,0 +1,576 @@
+
+
+
+<?xml-stylesheet type="text/xsl" href="stats.xsl"?>
+
+
+
+
+
+
+
+
+
+
+
+
+<solr>
+  <schema>DW_GeneDocs</schema>
+  <host>tomcat-2.ebi.ac.uk</host>
+  <now>Fri Apr 25 12:16:06 BST 2008</now>
+  <start>Fri Apr 25 04:13:14 BST 2008</start>
+  <solr-info>
+
+    <CORE>
+
+    <entry>
+      <name>
+        Searcher@293b9fae main
+      </name>
+      <class>
+        org.apache.solr.search.SolrIndexSearcher
+      </class>
+      <version>
+        1.0
+      </version>
+      <description>
+        index searcher
+      </description>
+      <stats>
+
+        <stat name="caching" >
+          true
+        </stat>
+
+        <stat name="numDocs" >
+          121979
+        </stat>
+
+        <stat name="maxDoc" >
+          121979
+        </stat>
+
+        <stat name="readerImpl" >
+          SegmentReader
+        </stat>
+
+        <stat name="readerDir" >
+          org.apache.lucene.store.FSDirectory@/net/nfs7/vol9/ma-db3/AE/ArrayExpress-files/AEW.SOLR/solrhome_gene/data/index
+        </stat>
+
+        <stat name="indexVersion" >
+          1174501068826
+        </stat>
+
+        <stat name="openedAt" >
+          Fri Apr 25 04:13:15 BST 2008
+        </stat>
+
+        <stat name="registeredAt" >
+          Fri Apr 25 04:13:15 BST 2008
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    </CORE>
+
+    <QUERYHANDLER>
+
+    <entry>
+      <name>
+        standard
+      </name>
+      <class>
+        org.apache.solr.request.StandardRequestHandler
+      </class>
+      <version>
+        $Revision: 501174 $
+      </version>
+      <description>
+        The standard Solr request handler
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          564
+        </stat>
+
+        <stat name="errors" >
+          5
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        indexinfo
+      </name>
+      <class>
+        org.apache.solr.handler.IndexInfoRequestHandler
+      </class>
+      <version>
+        $Revision: 501512 $
+      </version>
+      <description>
+        The structure Solr request handler
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        dismax
+      </name>
+      <class>
+        org.apache.solr.request.DisMaxRequestHandler
+      </class>
+      <version>
+        $Revision: 510689 $
+      </version>
+      <description>
+        DisjunctionMax Request Handler: Does relevancy based queries accross a variety of fields using configured boosts
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        partitioned
+      </name>
+      <class>
+        org.apache.solr.request.DisMaxRequestHandler
+      </class>
+      <version>
+        $Revision: 510689 $
+      </version>
+      <description>
+        DisjunctionMax Request Handler: Does relevancy based queries accross a variety of fields using configured boosts
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        instock
+      </name>
+      <class>
+        org.apache.solr.request.DisMaxRequestHandler
+      </class>
+      <version>
+        $Revision: 510689 $
+      </version>
+      <description>
+        DisjunctionMax Request Handler: Does relevancy based queries accross a variety of fields using configured boosts
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        /update/xml
+      </name>
+      <class>
+        org.apache.solr.handler.XmlUpdateRequestHandler
+      </class>
+      <version>
+        $Revision: 501512 $
+      </version>
+      <description>
+        Add documents with XML
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        /debug/dump
+      </name>
+      <class>
+        org.apache.solr.handler.DumpRequestHandler
+      </class>
+      <version>
+        $Revision: 501512 $
+      </version>
+      <description>
+        Dump handler (debug)
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        /update/commit
+      </name>
+      <class>
+        org.apache.solr.handler.CommitRequestHandler
+      </class>
+      <version>
+        $Revision: 501174 $
+      </version>
+      <description>
+        Commit all pending documents
+      </description>
+      <stats>
+
+        <stat name="requests" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    </QUERYHANDLER>
+
+    <UPDATEHANDLER>
+
+    <entry>
+      <name>
+        updateHandler
+      </name>
+      <class>
+        org.apache.solr.update.DirectUpdateHandler2
+      </class>
+      <version>
+        1.0
+      </version>
+      <description>
+        Update handler that efficiently directly updates the on-disk main lucene index
+      </description>
+      <stats>
+
+        <stat name="commits" >
+          0
+        </stat>
+
+        <stat name="autocommits" >
+          0
+        </stat>
+
+        <stat name="optimizes" >
+          0
+        </stat>
+
+        <stat name="docsPending" >
+          0
+        </stat>
+
+        <stat name="deletesPending" >
+          0
+        </stat>
+
+        <stat name="adds" >
+          0
+        </stat>
+
+        <stat name="deletesById" >
+          0
+        </stat>
+
+        <stat name="deletesByQuery" >
+          0
+        </stat>
+
+        <stat name="errors" >
+          0
+        </stat>
+
+        <stat name="cumulative_adds" >
+          0
+        </stat>
+
+        <stat name="cumulative_deletesById" >
+          0
+        </stat>
+
+        <stat name="cumulative_deletesByQuery" >
+          0
+        </stat>
+
+        <stat name="cumulative_errors" >
+          0
+        </stat>
+
+        <stat name="docsDeleted" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    </UPDATEHANDLER>
+
+    <CACHE>
+
+    <entry>
+      <name>
+        filterCache
+      </name>
+      <class>
+        org.apache.solr.search.LRUCache
+      </class>
+      <version>
+        1.0
+      </version>
+      <description>
+        LRU Cache(maxSize=512, initialSize=512, autowarmCount=256, regenerator=org.apache.solr.search.SolrIndexSearcher$1@9706da8)
+      </description>
+      <stats>
+
+        <stat name="lookups" >
+          0
+        </stat>
+
+        <stat name="hits" >
+          0
+        </stat>
+
+        <stat name="hitratio" >
+          0.00
+        </stat>
+
+        <stat name="inserts" >
+          0
+        </stat>
+
+        <stat name="evictions" >
+          0
+        </stat>
+
+        <stat name="size" >
+          0
+        </stat>
+
+        <stat name="cumulative_lookups" >
+          0
+        </stat>
+
+        <stat name="cumulative_hits" >
+          0
+        </stat>
+
+        <stat name="cumulative_hitratio" >
+          0.00
+        </stat>
+
+        <stat name="cumulative_inserts" >
+          0
+        </stat>
+
+        <stat name="cumulative_evictions" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        queryResultCache
+      </name>
+      <class>
+        org.apache.solr.search.LRUCache
+      </class>
+      <version>
+        1.0
+      </version>
+      <description>
+        LRU Cache(maxSize=512, initialSize=512, autowarmCount=256, regenerator=org.apache.solr.search.SolrIndexSearcher$2@342f356f)
+      </description>
+      <stats>
+
+        <stat name="lookups" >
+          559
+        </stat>
+
+        <stat name="hits" >
+          39
+        </stat>
+
+        <stat name="hitratio" >
+          0.06
+        </stat>
+
+        <stat name="inserts" >
+          520
+        </stat>
+
+        <stat name="evictions" >
+          8
+        </stat>
+
+        <stat name="size" >
+          512
+        </stat>
+
+        <stat name="cumulative_lookups" >
+          559
+        </stat>
+
+        <stat name="cumulative_hits" >
+          39
+        </stat>
+
+        <stat name="cumulative_hitratio" >
+          0.06
+        </stat>
+
+        <stat name="cumulative_inserts" >
+          520
+        </stat>
+
+        <stat name="cumulative_evictions" >
+          8
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    <entry>
+      <name>
+        documentCache
+      </name>
+      <class>
+        org.apache.solr.search.LRUCache
+      </class>
+      <version>
+        1.0
+      </version>
+      <description>
+        LRU Cache(maxSize=512, initialSize=512)
+      </description>
+      <stats>
+
+        <stat name="lookups" >
+          532
+        </stat>
+
+        <stat name="hits" >
+          258
+        </stat>
+
+        <stat name="hitratio" >
+          0.48
+        </stat>
+
+        <stat name="inserts" >
+          274
+        </stat>
+
+        <stat name="evictions" >
+          0
+        </stat>
+
+        <stat name="size" >
+          274
+        </stat>
+
+        <stat name="cumulative_lookups" >
+          532
+        </stat>
+
+        <stat name="cumulative_hits" >
+          258
+        </stat>
+
+        <stat name="cumulative_hitratio" >
+          0.48
+        </stat>
+
+        <stat name="cumulative_inserts" >
+          274
+        </stat>
+
+        <stat name="cumulative_evictions" >
+          0
+        </stat>
+
+      </stats>
+    </entry>
+
+
+    </CACHE>
+
+    <OTHER>
+
+    </OTHER>
+
+  </solr-info>
+</solr>

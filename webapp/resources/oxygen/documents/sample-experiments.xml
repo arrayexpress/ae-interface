@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<experiments version="" total="4">
+    <experiment loadedinatlas="true">
+        <id>1673780805</id>
+        <accession>E-BUGS-60</accession>
+        <name>Transcription profiling of Mycobacterium tuberculosis samples to develop a
+            quantification of global transcription patterns in prokaryotes using spotted
+            microarrays</name>
+        <releasedate>2008-09-29</releasedate>
+        <miamescores>
+            <reportersequencescore>0</reportersequencescore>
+            <factorvaluescore>0</factorvaluescore>
+            <measuredbioassaydatascore>1</measuredbioassaydatascore>
+            <protocolscore>1</protocolscore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <overallscore>3</overallscore>
+        </miamescores>
+        <assays>2</assays>
+        <samples>0</samples>
+        <rawdatafiles>114</rawdatafiles>
+        <fgemdatafiles>12</fgemdatafiles>
+        <user>1</user>
+        <bioassaydatagroup>
+            <id>1673818582</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_1</name>
+            <bioassaydatacubes>26</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>26</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673818583</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_1</name>
+            <bioassaydatacubes>26</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>26</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673818876</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_30</name>
+            <bioassaydatacubes>8</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>8</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673818877</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_30</name>
+            <bioassaydatacubes>8</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>8</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673819159</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_37</name>
+            <bioassaydatacubes>23</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>23</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673819178</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_37</name>
+            <bioassaydatacubes>23</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>23</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820228</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23512</name>
+            <bioassaydatacubes>3</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>3</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820319</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23512</name>
+            <bioassaydatacubes>3</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>3</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820564</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23924</name>
+            <bioassaydatacubes>2</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>2</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820577</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23924</name>
+            <bioassaydatacubes>2</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>2</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820856</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:25199</name>
+            <bioassaydatacubes>1</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>1</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1673820865</id>
+            <name>bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:25199</name>
+            <bioassaydatacubes>1</bioassaydatacubes>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>1</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bibliography>
+            <accession>18078514</accession>
+        </bibliography>
+        <bibliography>
+            <accession>18078514</accession>
+            <publication>Genome Biol</publication>
+            <authors>Sidders B, Withers M, Kendall SL, Bacon J, Waddell SJ, Hinds J, Golby P,
+                Movahedzadeh F, Cox RA, Frita R, Ten Bokum AM, Wernisch L, Stoker NG</authors>
+            <title>Quantification of global transcription patterns in prokaryotes using spotting
+                microarrays</title>
+            <year>2007</year>
+            <volume>8</volume>
+            <issue>12</issue>
+            <pages>R265</pages>
+        </bibliography>
+        <bibliography>
+            <accession>18519559</accession>
+            <publication>Infect Immun</publication>
+            <authors>Sidders B, Pirson C, Hogarth PJ, Hewinson RG, Stoker NG, Vordermeier HM, Ewer
+                K</authors>
+            <title>Screening of highly expressed mycobacterial genes identifies Rv3615c as a useful
+                differential diagnostic anitgen for the Mycobacterium tuberculosis complex</title>
+            <year>2008</year>
+            <volume>76</volume>
+            <issue>9</issue>
+            <pages>3932-3939</pages>
+            <uri>http://dx.doi.org/10.1128/IAI.00150-08</uri>
+        </bibliography>
+        <experimenttype>transcription profiling</experimenttype>
+        <description>
+            <id>1673822003</id>
+            <text>(Generated description) Experiment with 2 hybridizations, using samples of species
+                [Mycobacterium tuberculosis], using 1 arrays of array design [A-BUGS-1], producing
+                114 raw data files and 12 transformed and/or normalized data files.</text>
+        </description>
+        <description>
+            <id>1673780808</id>
+            <text>We describe an analysis, applicable to any spotted microarray dataset produced
+                using genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a
+                genome-wide scale. Applying this to Mycobacterium tuberculosis, we validate the
+                technique, show a correlation between level of expression and biological importance,
+                define the complement of invariant genes and analyse absolute levels of expression
+                by functional class to develop ways of understanding an organism s biology without
+                comparison to another growth condition.</text>
+        </description>
+        <description>
+            <id>1673780816</id>
+            <text>Data is also available from &lt;ahref="http://bugs.sgul.ac.uk/E-BUGS-60"
+                target="_blank"&gt;BuG@Sbase&lt;/a&gt;</text>
+        </description>
+        <description>
+            <id>1751040287</id>
+            <text/>
+        </description>
+        <description>
+            <id>1680985362</id>
+            <text/>
+        </description>
+    </experiment>
+    <experiment loadedinatlas="true">
+        <id>366346722</id>
+        <accession>E-AFMX-5</accession>
+        <name>Transcription profiling of human cell lines and tissues (GNF/Novartis)</name>
+        <releasedate>2004-11-16</releasedate>
+        <species>Homo sapiens</species>
+        <miamescores>
+            <reportersequencescore>1</reportersequencescore>
+            <factorvaluescore>1</factorvaluescore>
+            <measuredbioassaydatascore>1</measuredbioassaydatascore>
+            <protocolscore>1</protocolscore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <overallscore>5</overallscore>
+        </miamescores>
+        <assays>316</assays>
+        <samples>160</samples>
+        <rawdatafiles>316</rawdatafiles>
+        <fgemdatafiles>311</fgemdatafiles>
+        <sampleattribute>
+            <category>Age</category>
+            <value>15-24 weeks since fecundation</value>
+            <value>15-61 years since birth</value>
+            <value>15-68 years since birth</value>
+            <value>17-70 years since birth</value>
+            <value>19 years since birth</value>
+            <value>20-33 weeks since fecundation</value>
+            <value>20-61 years since birth</value>
+            <value>21 years since birth</value>
+            <value>21-39 years since birth</value>
+            <value>21-50 years since birth</value>
+            <value>22 years since birth</value>
+            <value>22-27 weeks since fecundation</value>
+            <value>22-65 years since birth</value>
+            <value>23 years since birth</value>
+            <value>24 years since birth</value>
+            <value>25 years since birth</value>
+            <value>27 years since birth</value>
+            <value>28 years since birth</value>
+            <value>28-52 years since birth</value>
+            <value>29 years since birth</value>
+            <value>30 years since birth</value>
+            <value>30-40 years since birth</value>
+            <value>31 years since birth</value>
+            <value>32 years since birth</value>
+            <value>32-74 years since birth</value>
+            <value>33 years since birth</value>
+            <value>35 years since birth</value>
+            <value>36 years since birth</value>
+            <value>39 years since birth</value>
+            <value>41 years since birth</value>
+            <value>42 years since birth</value>
+            <value>43 years since birth</value>
+            <value>44 years since birth</value>
+            <value>45 years since birth</value>
+            <value>47 years since birth</value>
+            <value>48 years since birth</value>
+            <value>49 years since birth</value>
+            <value>50 years since birth</value>
+            <value>51 years since birth</value>
+            <value>52 years since birth</value>
+            <value>53 years since birth</value>
+            <value>54 years since birth</value>
+            <value>55 years since birth</value>
+            <value>56 years since birth</value>
+            <value>57 years since birth</value>
+            <value>58 years since birth</value>
+            <value>59 years since birth</value>
+            <value>60 years since birth</value>
+            <value>61 years since birth</value>
+            <value>62 years since birth</value>
+            <value>64 years since birth</value>
+            <value>66 years since birth</value>
+            <value>69 years since birth</value>
+            <value>70 years since birth</value>
+            <value>73 years since birth</value>
+            <value>74 years since birth</value>
+            <value>78 years since birth</value>
+            <value>90 years since birth</value>
+            <value>96 years since birth</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>BioSourceProvider</category>
+            <value>AllCells</value>
+            <value>AMS biotechnology</value>
+            <value>AMS biotechnology Biotechnology</value>
+            <value>Clinomics</value>
+            <value>Clinomics Biosciences, Inc</value>
+            <value>Clonetics Cat # CC-2582</value>
+            <value>Clonetics lot #17151</value>
+            <value>Clontech</value>
+            <value>from Zen-Bio, Lot L061201</value>
+            <value>Gino Van Heeke, Novartis- cell line NHBE 6167</value>
+            <value>Kavathas, P., F. H. Bach and R. DeMars. 1980. Gamma ray-induced loss of
+                expression of HLA and glyoxalase I alleles in lymphoblastoid cells. Proc Natl Acad
+                Sci U S A 77:4251-4255.</value>
+            <value>Mt. Sinai</value>
+            <value>Novartis, Graeme Bilbe, Jose Crespo</value>
+            <value>UCSD</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>BioSourceType</category>
+            <value>frozen_sample</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>CellType</category>
+            <value>beta cell islets</value>
+            <value>white blood cells</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>ClinicalHistory</category>
+            <value>Aspirin</value>
+            <value>Aspirin, Inderol</value>
+            <value>Aspirin, Tylenol</value>
+            <value>Ativan</value>
+            <value>Elavil</value>
+            <value>spontaneously aborted</value>
+            <value>sudden death</value>
+            <value>trauma</value>
+            <value>Tylenol</value>
+            <value>Unk</value>
+            <value>Vioxx</value>
+            <value>xanax</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>DevelopmentalStage</category>
+            <value>adult</value>
+            <value>fetus</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>DiseaseState</category>
+            <value>chronic myelogenous leukemia K562</value>
+            <value>colorectal adenocarcinoma</value>
+            <value>Daudi Burkitt's lymphoma</value>
+            <value>lymphoblastic leukemia MOLT-4</value>
+            <value>promyelocytic leukemia HL-60</value>
+            <value>Raji Burkitt's lymphoma</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Ethnicity</category>
+            <value>Asian</value>
+            <value>Caucasian</value>
+            <value>Hispanic</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Observation</category>
+            <value>African American</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Homo sapiens</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>OrganismPart</category>
+            <value>adipose tissue</value>
+            <value>adrenal cortex</value>
+            <value>adrenal gland</value>
+            <value>amygdala</value>
+            <value>appendix</value>
+            <value>atrioventricular node</value>
+            <value>bone marrow</value>
+            <value>brain</value>
+            <value>caudate nucleus</value>
+            <value>cerebellum</value>
+            <value>cerebellum peduncles</value>
+            <value>ciliary ganglion</value>
+            <value>cingulate cortex</value>
+            <value>dorsal root ganglion</value>
+            <value>globus pallidus</value>
+            <value>heart</value>
+            <value>hypothalamus</value>
+            <value>kidney</value>
+            <value>liver</value>
+            <value>lung</value>
+            <value>lymph node</value>
+            <value>medulla oblongata</value>
+            <value>occipital lobe</value>
+            <value>olfactory bulb</value>
+            <value>ovary</value>
+            <value>pancreas</value>
+            <value>parietal lobe</value>
+            <value>pituitary</value>
+            <value>placenta</value>
+            <value>pons</value>
+            <value>prefrontal cortex</value>
+            <value>prostate</value>
+            <value>salivary gland</value>
+            <value>skeletal muscle</value>
+            <value>skin</value>
+            <value>smooth muscle</value>
+            <value>spinal cord</value>
+            <value>subthalamic nucleus</value>
+            <value>superior cervical ganglion</value>
+            <value>temporal lobe</value>
+            <value>testis</value>
+            <value>testis - interstitial</value>
+            <value>testis - seminiferous tubule</value>
+            <value>thalamus</value>
+            <value>thymus</value>
+            <value>thyroid</value>
+            <value>tongue</value>
+            <value>tonsil</value>
+            <value>trachea</value>
+            <value>trigeminal ganglion</value>
+            <value>tumor</value>
+            <value>uterus</value>
+            <value>uterus corpus</value>
+            <value>whole blood</value>
+            <value>whole brain</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Sex</category>
+            <value>female</value>
+            <value>male</value>
+            <value>mixed_sex</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>TargetedCellType</category>
+            <value>721 B lymphoblast</value>
+            <value>adipocyte</value>
+            <value>BDCA4+ dentritic cells</value>
+            <value>bronchial epithelial</value>
+            <value>cardiac myocyte</value>
+            <value>CD105+ endothelial</value>
+            <value>CD14+ monocyte</value>
+            <value>CD19+ B cells (neg. sel.)</value>
+            <value>CD33+ myeloid</value>
+            <value>CD34+</value>
+            <value>CD4+ T cell</value>
+            <value>CD56+ NK cells</value>
+            <value>CD71+ early erythroid</value>
+            <value>CD8+ T cell</value>
+            <value>testis - germ cell</value>
+            <value>testis - leydig cell</value>
+        </sampleattribute>
+        <experimentalfactor>
+            <name>CellType</name>
+            <value>beta cell islets</value>
+            <value>white blood cells</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>DiseaseState</name>
+            <value>chronic myelogenous leukemia K562</value>
+            <value>colorectal adenocarcinoma</value>
+            <value>Daudi Burkitt's lymphoma</value>
+            <value>lymphoblastic leukemia MOLT-4</value>
+            <value>promyelocytic leukemia HL-60</value>
+            <value>Raji Burkitt's lymphoma</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>OrganismPart</name>
+            <value>adipose tissue</value>
+            <value>adrenal cortex</value>
+            <value>adrenal gland</value>
+            <value>amygdala</value>
+            <value>appendix</value>
+            <value>atrioventricular node</value>
+            <value>bone marrow</value>
+            <value>brain</value>
+            <value>caudate nucleus</value>
+            <value>cerebellum</value>
+            <value>cerebellum peduncles</value>
+            <value>ciliary ganglion</value>
+            <value>cingulate cortex</value>
+            <value>dorsal root ganglion</value>
+            <value>globus pallidus</value>
+            <value>heart</value>
+            <value>hypothalamus</value>
+            <value>kidney</value>
+            <value>liver</value>
+            <value>lung</value>
+            <value>lymph node</value>
+            <value>medulla oblongata</value>
+            <value>occipital lobe</value>
+            <value>olfactory bulb</value>
+            <value>ovary</value>
+            <value>pancreas</value>
+            <value>parietal lobe</value>
+            <value>pituitary</value>
+            <value>placenta</value>
+            <value>pons</value>
+            <value>prefrontal cortex</value>
+            <value>prostate</value>
+            <value>salivary gland</value>
+            <value>skeletal muscle</value>
+            <value>skin</value>
+            <value>smooth muscle</value>
+            <value>spinal cord</value>
+            <value>subthalamic nucleus</value>
+            <value>superior cervical ganglion</value>
+            <value>temporal lobe</value>
+            <value>testis</value>
+            <value>testis - interstitial</value>
+            <value>testis - seminiferous tubule</value>
+            <value>thalamus</value>
+            <value>thymus</value>
+            <value>thyroid</value>
+            <value>tongue</value>
+            <value>tonsil</value>
+            <value>trachea</value>
+            <value>trigeminal ganglion</value>
+            <value>tumor</value>
+            <value>uterus</value>
+            <value>uterus corpus</value>
+            <value>whole blood</value>
+            <value>whole brain</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>TargetedCellType</name>
+            <value> </value>
+            <value>721 B lymphoblast</value>
+            <value>adipocyte</value>
+            <value>BDCA4+ dentritic cells</value>
+            <value>bronchial epithelial</value>
+            <value>cardiac myocyte</value>
+            <value>CD105+ endothelial</value>
+            <value>CD14+ monocyte</value>
+            <value>CD19+ B cells (neg. sel.)</value>
+            <value>CD33+ myeloid</value>
+            <value>CD34+</value>
+            <value>CD4+ T cell</value>
+            <value>CD56+ NK cells</value>
+            <value>CD71+ early erythroid</value>
+            <value>CD8+ T cell</value>
+            <value>testis - germ cell</value>
+            <value>testis - leydig cell</value>
+        </experimentalfactor>
+        <user>1</user>
+        <arraydesign>
+            <id>302382080</id>
+            <accession>A-AFFY-33</accession>
+            <name>Affymetrix GeneChip Human Genome HG-U133A [HG-U133A]</name>
+            <count>158</count>
+        </arraydesign>
+        <arraydesign>
+            <id>347513713</id>
+            <accession>A-AFFY-40</accession>
+            <name>Affymetrix Custom Array - Novartis Human [gnGNF1Ba]</name>
+            <count>158</count>
+        </arraydesign>
+        <bioassaydatagroup>
+            <id>1342297411</id>
+            <name>Affymetrix:FeatureDimension:HG-U133A</name>
+            <bioassaydatacubes>158</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>158</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342292047</id>
+            <name>Affymetrix:FeatureDimension:gnGNF1Ba</name>
+            <bioassaydatacubes>158</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>158</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342297491</id>
+            <name>Affymetrix:CompositeSequenceDimension:HG-U133A</name>
+            <bioassaydatacubes>158</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>158</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342292711</id>
+            <name>Affymetrix:CompositeSequenceDimension:gnGNF1Ba</name>
+            <bioassaydatacubes>153</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>153</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bibliography>
+            <accession>15075390</accession>
+            <publication>Proc Natl Acad Sci U S A</publication>
+            <authors>Andrew I. Su, Tim Wiltshire, Serge Batalov, Hilmar Lapp, Keith A. Ching, David
+                Block, Jie Zhang, Richard Soden, Mimi Hayakawa, Gabriel Kreiman, Michael P. Cooke,
+                John R. Walker, and John B. Hogenesch</authors>
+            <title>A gene atlas of the mouse and human protein-encoding transcriptomes</title>
+            <year>2004</year>
+            <volume>101</volume>
+            <pages>6062-6067</pages>
+            <uri>http://dx.doi.org/10.1073/pnas.0400782101</uri>
+        </bibliography>
+        <provider>
+            <contact>John Walker</contact>
+            <role>submitter</role>
+        </provider>
+        <experimentdesign>organism part comparison</experimentdesign>
+        <experimenttype>transcription profiling</experimenttype>
+        <description>
+            <id>366346723</id>
+            <text>The tissue-specific pattern of mRNA expression can indicate important clues about
+                gene function. High-density oligonucleotide arrays offer the opportunity to examine
+                patterns of gene expression on a genome scale. Toward this end, we have designed
+                custom arrays that interrogate the expression of the vast majority of
+                protein-encoding human and mouse genes and have used them to profile a panel of 79
+                human and 61 mouse tissues. The resulting data set provides the expression patterns
+                for thousands of predicted genes, as well as known and poorly characterized genes,
+                from mice and humans. We have explored this data set for global trends in gene
+                expression, evaluated commonly used lines of evidence in gene prediction
+                methodologies, and investigated patterns indicative of chromosomal organization of
+                transcription. We describe hundreds of regions of correlated transcription and show
+                that some are subject to both tissue and parental allele-specific expression,
+                suggesting a link between spatial expression and imprinting.</text>
+        </description>
+        <description>
+            <id>1342434336</id>
+            <text>(Generated description) Experiment with 316 hybridizations, using 160 samples of
+                species [Homo sapiens], using 316 arrays of array design [Affymetrix Custom Array -
+                Novartis Human [gnGNF1Ba], Affymetrix GeneChip Human Genome HG-U133A [HG-U133A]],
+                producing 316 raw data files and 311 transformed and/or normalized data
+                files.</text>
+        </description>
+    </experiment>
+    <experiment loadedinatlas="true">
+        <id>352682122</id>
+        <accession>E-AFMX-2</accession>
+        <name>Transcription profiling of human and chimp brain tissues</name>
+        <releasedate>2004-09-16</releasedate>
+        <species>Homo sapiens</species>
+        <species>Pan troglodytes</species>
+        <miamescores>
+            <reportersequencescore>1</reportersequencescore>
+            <factorvaluescore>1</factorvaluescore>
+            <measuredbioassaydatascore>1</measuredbioassaydatascore>
+            <protocolscore>1</protocolscore>
+            <derivedbioassaydatascore>0</derivedbioassaydatascore>
+            <overallscore>4</overallscore>
+        </miamescores>
+        <assays>141</assays>
+        <samples>141</samples>
+        <rawdatafiles>141</rawdatafiles>
+        <fgemdatafiles>0</fgemdatafiles>
+        <sampleattribute>
+            <category>Age</category>
+            <value>12 years since birth</value>
+            <value>40 years since birth</value>
+            <value>45 years since birth</value>
+            <value>70 years since birth</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>BioSourceProvider</category>
+            <value>The Biomedical Primate Research Centre, Rijswijk</value>
+            <value>The National Disease Research Interchange (NDRI)</value>
+            <value>Zoo Zurich</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>BioSourceType</category>
+            <value>frozen_sample</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>DiseaseState</category>
+            <value>none</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Observation</category>
+            <value>independent replicate </value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Homo sapiens</value>
+            <value>Pan troglodytes</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>OrganismPart</category>
+            <value>anterior cingulate cortex</value>
+            <value>brain</value>
+            <value>Broca's area</value>
+            <value>Broca's area </value>
+            <value>Broca's area (mirror region from the right hemisphere)</value>
+            <value>caudate nucleus</value>
+            <value>cerebellum (vermis)</value>
+            <value>prefrontal cortex</value>
+            <value>premotor cortex</value>
+            <value>primary visual cortex</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Sex</category>
+            <value>male</value>
+        </sampleattribute>
+        <experimentalfactor>
+            <name>individual</name>
+            <value>1</value>
+            <value>2</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>6</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>Organism</name>
+            <value>Homo sapiens</value>
+            <value>Pan troglodytes</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>OrganismPart</name>
+            <value>anterior cingulate cortex</value>
+            <value>Broca's area</value>
+            <value>Broca's area (mirror region from the right hemisphere)</value>
+            <value>Broca's area independent replicate </value>
+            <value>caudate nucleus</value>
+            <value>cerebellum (vermis)</value>
+            <value>prefrontal cortex</value>
+            <value>premotor cortex</value>
+            <value>primary visual cortex</value>
+        </experimentalfactor>
+        <user>1</user>
+        <arraydesign>
+            <id>5728564</id>
+            <accession>A-AFFY-1</accession>
+            <name>Affymetrix GeneChip Human Genome U95Av2 [HG_U95Av2]</name>
+            <count>45</count>
+        </arraydesign>
+        <arraydesign>
+            <id>79316217</id>
+            <accession>A-AFFY-11</accession>
+            <name>Affymetrix GeneChip Human Genome U95C [HG_U95C]</name>
+            <count>24</count>
+        </arraydesign>
+        <arraydesign>
+            <id>80397530</id>
+            <accession>A-AFFY-10</accession>
+            <name>Affymetrix GeneChip Human Genome U95B [HG_U95B]</name>
+            <count>24</count>
+        </arraydesign>
+        <arraydesign>
+            <id>94702453</id>
+            <accession>A-AFFY-12</accession>
+            <name>Affymetrix GeneChip Human Genome U95D [HG_U95D]</name>
+            <count>24</count>
+        </arraydesign>
+        <arraydesign>
+            <id>102089699</id>
+            <accession>A-AFFY-13</accession>
+            <name>Affymetrix GeneChip Human Genome U95E [HG_U95E]</name>
+            <count>24</count>
+        </arraydesign>
+        <bioassaydatagroup>
+            <id>1342082326</id>
+            <name>Affymetrix:FeatureDimension:HG_U95B</name>
+            <bioassaydatacubes>24</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>24</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342083723</id>
+            <name>Affymetrix:FeatureDimension:HG_U95C</name>
+            <bioassaydatacubes>24</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>24</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342084633</id>
+            <name>Affymetrix:FeatureDimension:HG_U95D</name>
+            <bioassaydatacubes>24</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>24</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342085381</id>
+            <name>Affymetrix:FeatureDimension:HG_U95E</name>
+            <bioassaydatacubes>24</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>24</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1342080220</id>
+            <name>Affymetrix:FeatureDimension:HG_U95Av2</name>
+            <bioassaydatacubes>45</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv3</dataformat>
+            <bioassays>45</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bibliography>
+            <accession>15289471</accession>
+            <publication>Genome Res</publication>
+            <authors>Philipp Khaitovich, Bjoern Muetzel, Xinwei She, Michael Lachmann, Ines
+                Hellmann, Janko Dietzsch, Stephan Steigele, Hong-Hai Do, Gunter Weiss, Wolfgang
+                Enard, Florian Heissig, Thomas Arendt, Kay Nieselt-Struwe, Evan E. Eichler, and
+                Svante P bo</authors>
+            <title>Regional Pattern of Gene Expression in Human and Chimpanzee Brains</title>
+            <year>2004</year>
+            <volume>14</volume>
+            <issue>8</issue>
+            <pages>1462-1473</pages>
+            <uri>http://www.genome.org/cgi/content/abstract/14/8/1462</uri>
+        </bibliography>
+        <provider>
+            <contact>Philipp Khaitovich</contact>
+            <email>khaitovich@eva.mpg.de</email>
+            <role>submitter</role>
+        </provider>
+        <experimentdesign>organism part comparison</experimentdesign>
+        <experimentdesign>species</experimentdesign>
+        <experimenttype>transcription profiling</experimenttype>
+        <description>
+            <id>1342093112</id>
+            <text>(Generated description) Experiment with 141 hybridizations, using 141 samples of
+                species [Homo sapiens, Pan troglodytes], using 141 arrays of array design
+                [Affymetrix GeneChip Human Genome U95Av2 [HG_U95Av2], Affymetrix GeneChip Human
+                Genome U95E [HG_U95E], Affymetrix GeneChip Human Genome U95B [HG_U95B], Affymetrix
+                GeneChip Human Genome U95C [HG_U95C], Affymetrix GeneChip Human Genome U95D
+                [HG_U95D]], producing 141 raw data files and 0 transformed and/or normalized data
+                files.</text>
+        </description>
+        <description>
+            <id>352682123</id>
+            <text>We have analyzed gene expression in various brain regions of humans and
+                chimpanzees. Within both human and chimpanzee individuals, the transcriptomes of the
+                cerebral cortex are very similar to each other and differ more between individuals
+                than among regions within an individual. In contrast, the transcriptomes of the
+                cerebral cortex, the caudate nucleus, and the cerebellum differ substantially from
+                each other. Between humans and chimpanzees, 10% of genes differ in their expression
+                in at least one region of the brain. The majority of these expression differences
+                are shared among all brain regions. Whereas genes encoding proteins involved in
+                signal transduction and cell differentiation differ significantly between brain
+                regions within individuals, no such pattern is seen between the species. However, a
+                subset of genes that show expression differences between humans and chimpanzees are
+                distributed nonrandomly across the genome. Furthermore, genes that show an elevated
+                expression level in humans are statistically significantly enriched in regions that
+                are recently duplicated in humans</text>
+        </description>
+    </experiment>
+    <experiment loadedinatlas="true">
+        <id>13850163</id>
+        <accession>E-SNGR-9</accession>
+        <name>Transcription profiling of fission yeast cell cycle data (log normalised data from
+            E-SNGR-2-7)</name>
+        <species>Schizosaccharomyces pombe</species>
+        <miamescores>
+            <reportersequencescore>0</reportersequencescore>
+            <factorvaluescore>0</factorvaluescore>
+            <measuredbioassaydatascore>0</measuredbioassaydatascore>
+            <protocolscore>1</protocolscore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <overallscore>2</overallscore>
+        </miamescores>
+        <assays>77</assays>
+        <samples>10</samples>
+        <rawdatafiles>0</rawdatafiles>
+        <fgemdatafiles>77</fgemdatafiles>
+        <sampleattribute>
+            <category>Genotype</category>
+            <value>h+/h+ ade6-M210/ade6-M216</value>
+            <value>h+/h+ pat1-114/pat1-114 ade6-M210/ade6-M216</value>
+            <value>h+/h- ade6-M210/ade6-M216</value>
+            <value>h90</value>
+            <value>h90_atf21::kanR</value>
+            <value>h90_atf31::kanR</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Schizosaccharomyces pombe</value>
+        </sampleattribute>
+        <user>1</user>
+        <bioassaydatagroup>
+            <id>1341901624</id>
+            <name>DED:A-SNGR-1_composites</name>
+            <bioassaydatacubes>11</bioassaydatacubes>
+            <arraydesignprovider>SNGR</arraydesignprovider>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>11</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1341914572</id>
+            <name>DED:A-SNGR-1_composites</name>
+            <bioassaydatacubes>66</bioassaydatacubes>
+            <arraydesignprovider>SNGR</arraydesignprovider>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>66</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <provider>
+            <contact>Juan Mata</contact>
+            <email>jm6@sanger.ac.uk</email>
+            <role>submitter</role>
+        </provider>
+        <experimentdesign>time series</experimentdesign>
+        <experimenttype>transcription profiling</experimenttype>
+        <description>
+            <id>13850164</id>
+            <text>This experiment contains the log normalized data for ArrayExpress experiments
+                E-SNGR-2 to E-SNGR-7</text>
+        </description>
+        <description>
+            <id>1341914638</id>
+            <text>(Generated description) Experiment with 77 hybridizations, using 10 samples of
+                species [Schizosaccharomyces pombe], producing 0 raw data files and 77 transformed
+                and/or normalized data files.</text>
+        </description>
+    </experiment>
+</experiments>

@@ -1,0 +1,11 @@
+and|11
+adult|10
+acid|9
+acute|6
+amygdala|6
+anterior|6
+adipose|5
+adrenal|5
+abscisic|2
+accumbens|2
+adenocarcinoma|2

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <index id="experiments" location="${sys:java.io.tmpdir}/index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <document path="/experiments/experiment" defaultField="keywords">
+            <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" />
+            <field name="accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" />
+            <field name="date" type="string" path="releasedate" analyze="true" store="false"/>
+            <field name="species" type="string" path="species" analyze="true" store="false" />
+            <field name="array" type="string" path="arraydesign/id | arraydesign/accession | arraydesign/name" analyze="true" store="false" />
+            <field name="exptype" type="string" path="experimenttype" analyze="true" store="false" />
+            <field name="expdesign" type="string" path="experimentdesign" analyze="true" store="false" />
+            <field name="ef" type="string" path="experimentalfactor/name" analyze="true" store="false" />
+            <field name="efv" type="string" path="experimentalfactor/value" analyze="true" store="false" />
+            <field name="sa" type="string" path="sampleattribute/value" analyze="true" store="false" />
+            <field name="pmid" type="string" path="bibliography/accession" analyze="false" store="false" />
+            <field name="userid" type="string" path="user" analyze="false" store="false" />
+            <field name="gxa" type="string" path="@loadedinatlas" analyze="false" store="false" />
+            <!-- numeric fields -->
+            <field name="assaycount" type="integer" path="(if (assays castable as xs:integer) then assays else 0) cast as xs:integer" />
+            <field name="samplecount" type="integer" path="(if (samples castable as xs:integer) then samples else 0) cast as xs:integer" />
+            <field name="rawcount" type="integer" path="(if (rawdatafiles castable as xs:integer) then rawdatafiles else 0) cast as xs:integer" />
+            <field name="fgemcount" type="integer" path="(if (fgemdatafiles castable as xs:integer) then fgemdatafiles else 0) cast as xs:integer" />
+            <field name="efcount" type="integer" path="count(distinct-values(experimentalfactor/name, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
+            <field name="sacount" type="integer" path="count(distinct-values(sampleattribute/category, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
+            <field name="miamescore" type="integer" path="(if (miamescores/overallscore castable as xs:integer) then miamescores/overallscore else 0) cast as xs:integer" /> 
+        </document>
+    </index>
+    <index id="protocols">
+        <document path="/protocols/protocol">
+            <field name="keywords" path="string-join(.//text(), ' ')" analyze="true" store="false" />
+        </document>
+    </index>
+    <index id="arrays">
+        <document path="/arrays/array">
+            <field name="keywords" path="string-join(.//text(), ' ')" analyze="true" store="false" />
+        </document>
+    </index>
+</configuration>

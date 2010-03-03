@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<experiments total="4">
+	<experiment id="13850163" accession="E-SNGR-9" name="Transcription profiling of fission yeast cell cycle data (log normalised data from E-SNGR-2-7)">
+		<user>1</user>
+		<sampleattribute category="Genotype" value="h+/h+ ade6-M210/ade6-M216"/>
+		<sampleattribute category="Genotype" value="h+/h+ pat1-114/pat1-114 ade6-M210/ade6-M216"/>
+		<sampleattribute category="Genotype" value="h+/h- ade6-M210/ade6-M216"/>
+		<sampleattribute category="Genotype" value="h90_atf21::kanR"/>
+		<sampleattribute category="Organism" value="Schizosaccharomyces pombe"/>
+		<sampleattribute category="Genotype" value="h90_atf31::kanR"/>
+		<sampleattribute category="Genotype" value="h90"/>
+		<experimentalfactor value=" "/>
+		<miamescore name="ReporterSequenceScore" value="0"/>
+		<miamescore name="FactorValueScore" value="0"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="0"/>
+		<miamescore name="ProtocolScore" value="1"/>
+		<miamescore name="DerivedBioAssayDataScore" value="1"/>
+		<bioassaydatagroup id="1341901624" name="DED:A-SNGR-1_composites" bioassaydatacubes="11" arraydesignprovider="SNGR" dataformat="tab delimited" bioassays="11" isderived="1"/>
+		<bioassaydatagroup id="1341914572" name="DED:A-SNGR-1_composites" bioassaydatacubes="66" arraydesignprovider="SNGR" dataformat="tab delimited" bioassays="66" isderived="1"/>
+		<provider contact="Juan Mata" email="jm6@sanger.ac.uk" role="submitter"/>
+		<experimentdesign>time series</experimentdesign>
+		<experimenttype>transcription profiling</experimenttype>
+		<description id="13850164">This experiment contains the log normalized data for ArrayExpress experiments E-SNGR-2 to E-SNGR-7</description>
+		<description id="1341914638">(Generated description) Experiment with 77 hybridizations, using 10 samples of species [Schizosaccharomyces pombe],  producing 0 raw data files and 77 transformed and/or normalized data files.</description>
+	</experiment>
+	<experiment id="352682122" accession="E-AFMX-2" name="Transcription profiling of human and chimp brain tissues" releasedate="2004-09-16">
+		<user>1</user>
+		<sampleattribute category="Age" value="12 years since birth"/>
+		<sampleattribute category="Age" value="40 years since birth"/>
+		<sampleattribute category="Age" value="45 years since birth"/>
+		<sampleattribute category="BioSourceProvider" value="The Biomedical Primate Research Centre, Rijswijk"/>
+		<sampleattribute category="BioSourceProvider" value="Zoo Zurich"/>
+		<sampleattribute category="DiseaseState" value="none"/>
+		<sampleattribute category="Organism" value="Homo sapiens"/>
+		<sampleattribute category="OrganismPart" value="Broca's area"/>
+		<sampleattribute category="OrganismPart" value="Broca's area (mirror region from the right hemisphere)"/>
+		<sampleattribute category="Sex" value="male"/>
+		<sampleattribute category="OrganismPart" value="primary visual cortex"/>
+		<sampleattribute category="OrganismPart" value="premotor cortex"/>
+		<sampleattribute category="OrganismPart" value="prefrontal cortex"/>
+		<sampleattribute category="OrganismPart" value="cerebellum (vermis)"/>
+		<sampleattribute category="OrganismPart" value="caudate nucleus"/>
+		<sampleattribute category="OrganismPart" value="brain"/>
+		<sampleattribute category="OrganismPart" value="anterior cingulate cortex"/>
+		<sampleattribute category="OrganismPart" value="Broca's area "/>
+		<sampleattribute category="Organism" value="Pan troglodytes"/>
+		<sampleattribute category="Observation" value="independent replicate "/>
+		<sampleattribute category="BioSourceType" value="frozen_sample"/>
+		<sampleattribute category="BioSourceProvider" value="The National Disease Research Interchange (NDRI)"/>
+		<sampleattribute category="Age" value="70 years since birth"/>
+		<experimentalfactor name="Organism" value="Homo sapiens"/>
+		<experimentalfactor name="Organism" value="Pan troglodytes"/>
+		<experimentalfactor name="OrganismPart" value="Broca's area"/>
+		<experimentalfactor name="OrganismPart" value="Broca's area independent replicate "/>
+		<experimentalfactor name="OrganismPart" value="caudate nucleus"/>
+		<experimentalfactor name="OrganismPart" value="prefrontal cortex"/>
+		<experimentalfactor name="OrganismPart" value="primary visual cortex"/>
+		<experimentalfactor name="individual" value="2"/>
+		<experimentalfactor name="individual" value="4"/>
+		<experimentalfactor name="individual" value="6"/>
+		<experimentalfactor name="individual" value="5"/>
+		<experimentalfactor name="individual" value="3"/>
+		<experimentalfactor name="individual" value="1"/>
+		<experimentalfactor name="OrganismPart" value="premotor cortex"/>
+		<experimentalfactor name="OrganismPart" value="cerebellum (vermis)"/>
+		<experimentalfactor name="OrganismPart" value="anterior cingulate cortex"/>
+		<experimentalfactor name="OrganismPart" value="Broca's area (mirror region from the right hemisphere)"/>
+		<miamescore name="ReporterSequenceScore" value="1"/>
+		<miamescore name="FactorValueScore" value="1"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="1"/>
+		<miamescore name="ProtocolScore" value="1"/>
+		<miamescore name="DerivedBioAssayDataScore" value="0"/>
+		<arraydesign id="5728564" accession="A-AFFY-1" name="Affymetrix GeneChip Human Genome U95Av2 [HG_U95Av2]" count="45"/>
+		<arraydesign id="79316217" accession="A-AFFY-11" name="Affymetrix GeneChip Human Genome U95C [HG_U95C]" count="24"/>
+		<arraydesign id="80397530" accession="A-AFFY-10" name="Affymetrix GeneChip Human Genome U95B [HG_U95B]" count="24"/>
+		<arraydesign id="94702453" accession="A-AFFY-12" name="Affymetrix GeneChip Human Genome U95D [HG_U95D]" count="24"/>
+		<arraydesign id="102089699" accession="A-AFFY-13" name="Affymetrix GeneChip Human Genome U95E [HG_U95E]" count="24"/>
+		<bioassaydatagroup id="1342082326" name="Affymetrix:FeatureDimension:HG_U95B" bioassaydatacubes="24" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="24" isderived="0"/>
+		<bioassaydatagroup id="1342083723" name="Affymetrix:FeatureDimension:HG_U95C" bioassaydatacubes="24" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="24" isderived="0"/>
+		<bioassaydatagroup id="1342084633" name="Affymetrix:FeatureDimension:HG_U95D" bioassaydatacubes="24" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="24" isderived="0"/>
+		<bioassaydatagroup id="1342085381" name="Affymetrix:FeatureDimension:HG_U95E" bioassaydatacubes="24" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="24" isderived="0"/>
+		<bioassaydatagroup id="1342080220" name="Affymetrix:FeatureDimension:HG_U95Av2" bioassaydatacubes="45" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="45" isderived="0"/>
+		<bibliography accession="15289471" publication="Genome Res" authors="Philipp Khaitovich, Bjoern Muetzel, Xinwei She, Michael Lachmann, Ines Hellmann, Janko Dietzsch, Stephan Steigele, Hong-Hai Do, Gunter Weiss, Wolfgang Enard, Florian Heissig, Thomas Arendt, Kay Nieselt-Struwe, Evan E. Eichler, and Svante P  bo" title="Regional Pattern of Gene Expression in Human and Chimpanzee Brains" year="2004" volume="14" issue="8" pages="1462-1473" uri="http://www.genome.org/cgi/content/abstract/14/8/1462"/>
+		<provider contact="Philipp Khaitovich" email="khaitovich@eva.mpg.de" role="submitter"/>
+		<experimentdesign>organism part comparison</experimentdesign>
+		<experimentdesign>species</experimentdesign>
+		<experimenttype>transcription profiling</experimenttype>
+		<description id="1342093112">(Generated description) Experiment with 141 hybridizations, using 141 samples of species [Homo sapiens, Pan troglodytes], using 141 arrays of array design [Affymetrix GeneChip  Human Genome U95Av2 [HG_U95Av2], Affymetrix GeneChip  Human Genome U95E [HG_U95E], Affymetrix GeneChip  Human Genome U95B [HG_U95B], Affymetrix GeneChip  Human Genome U95C [HG_U95C], Affymetrix GeneChip  Human Genome U95D [HG_U95D]], producing 141 raw data files and 0 transformed and/or normalized data files.</description>
+		<description id="352682123">We have analyzed gene expression in various brain regions of humans and chimpanzees. Within both human and chimpanzee individuals, the transcriptomes of the cerebral cortex are very similar to each other and differ more between individuals than among regions within an individual. In contrast, the transcriptomes of the cerebral cortex, the caudate nucleus, and the cerebellum differ substantially from each other. Between humans and chimpanzees, 10% of genes differ in their expression in at least one region of the brain. The majority of these expression differences are shared among all brain regions. Whereas genes encoding proteins involved in signal transduction and cell differentiation differ significantly between brain regions within individuals, no such pattern is seen between the species. However, a subset of genes that show expression differences between humans and chimpanzees are distributed nonrandomly across the genome. Furthermore, genes that show an elevated expression level in humans are statistically significantly enriched in regions that are recently duplicated in humans</description>
+	</experiment>
+	<experiment id="366346722" accession="E-AFMX-5" name="Transcription profiling of human cell lines and tissues (GNF/Novartis)" releasedate="2004-11-16">
+		<user>1</user>
+		<sampleattribute category="Age" value="15-24 weeks since fecundation"/>
+		<sampleattribute category="Age" value="15-61 years since birth"/>
+		<sampleattribute category="Age" value="15-68 years since birth"/>
+		<sampleattribute category="Age" value="19 years since birth"/>
+		<sampleattribute category="Age" value="20-61 years since birth"/>
+		<sampleattribute category="Age" value="21-39 years since birth"/>
+		<sampleattribute category="Age" value="22 years since birth"/>
+		<sampleattribute category="Age" value="22-65 years since birth"/>
+		<sampleattribute category="Age" value="24 years since birth"/>
+		<sampleattribute category="Age" value="32 years since birth"/>
+		<sampleattribute category="Age" value="31 years since birth"/>
+		<sampleattribute category="Age" value="30-40 years since birth"/>
+		<sampleattribute category="Age" value="30 years since birth"/>
+		<sampleattribute category="Age" value="29 years since birth"/>
+		<sampleattribute category="Age" value="28-52 years since birth"/>
+		<sampleattribute category="Age" value="28 years since birth"/>
+		<sampleattribute category="Age" value="27 years since birth"/>
+		<sampleattribute category="Age" value="25 years since birth"/>
+		<sampleattribute category="Age" value="53 years since birth"/>
+		<sampleattribute category="Age" value="52 years since birth"/>
+		<sampleattribute category="Age" value="51 years since birth"/>
+		<sampleattribute category="Age" value="50 years since birth"/>
+		<sampleattribute category="Age" value="49 years since birth"/>
+		<sampleattribute category="Age" value="48 years since birth"/>
+		<sampleattribute category="Age" value="47 years since birth"/>
+		<sampleattribute category="Age" value="45 years since birth"/>
+		<sampleattribute category="Age" value="44 years since birth"/>
+		<sampleattribute category="Age" value="90 years since birth"/>
+		<sampleattribute category="Age" value="78 years since birth"/>
+		<sampleattribute category="Age" value="74 years since birth"/>
+		<sampleattribute category="Age" value="73 years since birth"/>
+		<sampleattribute category="Age" value="70 years since birth"/>
+		<sampleattribute category="Age" value="69 years since birth"/>
+		<sampleattribute category="Age" value="66 years since birth"/>
+		<sampleattribute category="Age" value="64 years since birth"/>
+		<sampleattribute category="Age" value="62 years since birth"/>
+		<sampleattribute category="CellType" value="beta cell islets"/>
+		<sampleattribute category="BioSourceType" value="frozen_sample"/>
+		<sampleattribute category="BioSourceProvider" value="from Zen-Bio, Lot L061201"/>
+		<sampleattribute category="BioSourceProvider" value="UCSD"/>
+		<sampleattribute category="BioSourceProvider" value="Novartis, Graeme Bilbe, Jose Crespo"/>
+		<sampleattribute category="BioSourceProvider" value="Mt. Sinai"/>
+		<sampleattribute category="BioSourceProvider" value="Kavathas, P., F. H. Bach and R. DeMars. 1980. Gamma ray-induced loss of expression of HLA and glyoxalase I alleles in lymphoblastoid cells. Proc Natl Acad Sci U S A 77:4251-4255."/>
+		<sampleattribute category="BioSourceProvider" value="Gino Van Heeke, Novartis- cell line NHBE 6167"/>
+		<sampleattribute category="BioSourceProvider" value="Clontech"/>
+		<sampleattribute category="DiseaseState" value="Raji Burkitt's lymphoma"/>
+		<sampleattribute category="DiseaseState" value="Daudi Burkitt's lymphoma"/>
+		<sampleattribute category="DevelopmentalStage" value="fetus"/>
+		<sampleattribute category="DevelopmentalStage" value="adult"/>
+		<sampleattribute category="ClinicalHistory" value="xanax"/>
+		<sampleattribute category="ClinicalHistory" value="trauma"/>
+		<sampleattribute category="ClinicalHistory" value="sudden death"/>
+		<sampleattribute category="ClinicalHistory" value="spontaneously aborted"/>
+		<sampleattribute category="ClinicalHistory" value="Vioxx"/>
+		<sampleattribute category="OrganismPart" value="brain"/>
+		<sampleattribute category="OrganismPart" value="bone marrow"/>
+		<sampleattribute category="OrganismPart" value="atrioventricular node"/>
+		<sampleattribute category="OrganismPart" value="appendix"/>
+		<sampleattribute category="OrganismPart" value="amygdala"/>
+		<sampleattribute category="OrganismPart" value="adrenal gland"/>
+		<sampleattribute category="OrganismPart" value="adrenal cortex"/>
+		<sampleattribute category="OrganismPart" value="adipose tissue"/>
+		<sampleattribute category="Organism" value="Homo sapiens"/>
+		<sampleattribute category="OrganismPart" value="ovary"/>
+		<sampleattribute category="OrganismPart" value="olfactory bulb"/>
+		<sampleattribute category="OrganismPart" value="occipital lobe"/>
+		<sampleattribute category="OrganismPart" value="medulla oblongata"/>
+		<sampleattribute category="OrganismPart" value="lymph node"/>
+		<sampleattribute category="OrganismPart" value="lung"/>
+		<sampleattribute category="OrganismPart" value="liver"/>
+		<sampleattribute category="OrganismPart" value="kidney"/>
+		<sampleattribute category="OrganismPart" value="hypothalamus"/>
+		<sampleattribute category="TargetedCellType" value="testis - leydig cell"/>
+		<sampleattribute category="TargetedCellType" value="testis - germ cell"/>
+		<sampleattribute category="TargetedCellType" value="cardiac myocyte"/>
+		<sampleattribute category="TargetedCellType" value="bronchial epithelial"/>
+		<sampleattribute category="TargetedCellType" value="adipocyte"/>
+		<sampleattribute category="TargetedCellType" value="CD8+ T cell"/>
+		<sampleattribute category="TargetedCellType" value="CD71+ early erythroid"/>
+		<sampleattribute category="TargetedCellType" value="CD56+ NK cells"/>
+		<sampleattribute category="TargetedCellType" value="CD4+ T cell"/>
+		<sampleattribute category="TargetedCellType" value="CD34+"/>
+		<sampleattribute category="TargetedCellType" value="CD33+ myeloid"/>
+		<sampleattribute category="TargetedCellType" value="CD19+ B cells (neg. sel.)"/>
+		<sampleattribute category="TargetedCellType" value="CD14+ monocyte"/>
+		<sampleattribute category="TargetedCellType" value="CD105+ endothelial"/>
+		<sampleattribute category="TargetedCellType" value="BDCA4+ dentritic cells"/>
+		<sampleattribute category="TargetedCellType" value="721 B lymphoblast"/>
+		<sampleattribute category="Sex" value="mixed_sex"/>
+		<sampleattribute category="Sex" value="male"/>
+		<sampleattribute category="Sex" value="female"/>
+		<sampleattribute category="OrganismPart" value="whole brain"/>
+		<sampleattribute category="OrganismPart" value="whole blood"/>
+		<sampleattribute category="OrganismPart" value="uterus corpus"/>
+		<sampleattribute category="OrganismPart" value="uterus"/>
+		<sampleattribute category="OrganismPart" value="tumor"/>
+		<sampleattribute category="OrganismPart" value="trigeminal ganglion"/>
+		<sampleattribute category="OrganismPart" value="trachea"/>
+		<sampleattribute category="OrganismPart" value="tonsil"/>
+		<sampleattribute category="OrganismPart" value="tongue"/>
+		<sampleattribute category="OrganismPart" value="thyroid"/>
+		<sampleattribute category="OrganismPart" value="thymus"/>
+		<sampleattribute category="OrganismPart" value="thalamus"/>
+		<sampleattribute category="OrganismPart" value="testis - seminiferous tubule"/>
+		<sampleattribute category="OrganismPart" value="testis - interstitial"/>
+		<sampleattribute category="OrganismPart" value="testis"/>
+		<sampleattribute category="OrganismPart" value="temporal lobe"/>
+		<sampleattribute category="OrganismPart" value="superior cervical ganglion"/>
+		<sampleattribute category="OrganismPart" value="subthalamic nucleus"/>
+		<sampleattribute category="OrganismPart" value="spinal cord"/>
+		<sampleattribute category="OrganismPart" value="smooth muscle"/>
+		<sampleattribute category="OrganismPart" value="skin"/>
+		<sampleattribute category="OrganismPart" value="skeletal muscle"/>
+		<sampleattribute category="OrganismPart" value="salivary gland"/>
+		<sampleattribute category="OrganismPart" value="prostate"/>
+		<sampleattribute category="OrganismPart" value="prefrontal cortex"/>
+		<sampleattribute category="OrganismPart" value="pons"/>
+		<sampleattribute category="OrganismPart" value="placenta"/>
+		<sampleattribute category="OrganismPart" value="pituitary"/>
+		<sampleattribute category="OrganismPart" value="parietal lobe"/>
+		<sampleattribute category="OrganismPart" value="pancreas"/>
+		<sampleattribute category="OrganismPart" value="heart"/>
+		<sampleattribute category="OrganismPart" value="globus pallidus"/>
+		<sampleattribute category="OrganismPart" value="dorsal root ganglion"/>
+		<sampleattribute category="OrganismPart" value="cingulate cortex"/>
+		<sampleattribute category="OrganismPart" value="ciliary ganglion"/>
+		<sampleattribute category="OrganismPart" value="cerebellum peduncles"/>
+		<sampleattribute category="OrganismPart" value="cerebellum"/>
+		<sampleattribute category="OrganismPart" value="caudate nucleus"/>
+		<sampleattribute category="Observation" value="African American"/>
+		<sampleattribute category="Ethnicity" value="Hispanic"/>
+		<sampleattribute category="Ethnicity" value="Caucasian"/>
+		<sampleattribute category="Ethnicity" value="Asian"/>
+		<sampleattribute category="DiseaseState" value="promyelocytic leukemia HL-60"/>
+		<sampleattribute category="DiseaseState" value="lymphoblastic leukemia MOLT-4"/>
+		<sampleattribute category="DiseaseState" value="colorectal adenocarcinoma"/>
+		<sampleattribute category="DiseaseState" value="chronic myelogenous leukemia K562"/>
+		<sampleattribute category="ClinicalHistory" value="Unk"/>
+		<sampleattribute category="ClinicalHistory" value="Tylenol"/>
+		<sampleattribute category="ClinicalHistory" value="Elavil"/>
+		<sampleattribute category="ClinicalHistory" value="Ativan"/>
+		<sampleattribute category="ClinicalHistory" value="Aspirin, Tylenol"/>
+		<sampleattribute category="ClinicalHistory" value="Aspirin, Inderol"/>
+		<sampleattribute category="ClinicalHistory" value="Aspirin"/>
+		<sampleattribute category="CellType" value="white blood cells"/>
+		<sampleattribute category="BioSourceProvider" value="Clonetics lot #17151"/>
+		<sampleattribute category="BioSourceProvider" value="Clonetics Cat # CC-2582"/>
+		<sampleattribute category="BioSourceProvider" value="Clinomics Biosciences, Inc"/>
+		<sampleattribute category="BioSourceProvider" value="Clinomics"/>
+		<sampleattribute category="BioSourceProvider" value="AllCells"/>
+		<sampleattribute category="BioSourceProvider" value="AMS biotechnology Biotechnology"/>
+		<sampleattribute category="BioSourceProvider" value="AMS biotechnology"/>
+		<sampleattribute category="Age" value="96 years since birth"/>
+		<sampleattribute category="Age" value="61 years since birth"/>
+		<sampleattribute category="Age" value="60 years since birth"/>
+		<sampleattribute category="Age" value="59 years since birth"/>
+		<sampleattribute category="Age" value="58 years since birth"/>
+		<sampleattribute category="Age" value="57 years since birth"/>
+		<sampleattribute category="Age" value="56 years since birth"/>
+		<sampleattribute category="Age" value="55 years since birth"/>
+		<sampleattribute category="Age" value="54 years since birth"/>
+		<sampleattribute category="Age" value="43 years since birth"/>
+		<sampleattribute category="Age" value="42 years since birth"/>
+		<sampleattribute category="Age" value="41 years since birth"/>
+		<sampleattribute category="Age" value="39 years since birth"/>
+		<sampleattribute category="Age" value="36 years since birth"/>
+		<sampleattribute category="Age" value="35 years since birth"/>
+		<sampleattribute category="Age" value="33 years since birth"/>
+		<sampleattribute category="Age" value="32-74 years since birth"/>
+		<sampleattribute category="Age" value="23 years since birth"/>
+		<sampleattribute category="Age" value="22-27 weeks since fecundation"/>
+		<sampleattribute category="Age" value="21-50 years since birth"/>
+		<sampleattribute category="Age" value="21 years since birth"/>
+		<sampleattribute category="Age" value="20-33 weeks since fecundation"/>
+		<sampleattribute category="Age" value="17-70 years since birth"/>
+		<experimentalfactor name="CellType" value="beta cell islets"/>
+		<experimentalfactor name="CellType" value="white blood cells"/>
+		<experimentalfactor name="DiseaseState" value="Daudi Burkitt's lymphoma"/>
+		<experimentalfactor name="DiseaseState" value="chronic myelogenous leukemia K562"/>
+		<experimentalfactor name="DiseaseState" value="lymphoblastic leukemia MOLT-4"/>
+		<experimentalfactor name="OrganismPart" value="adipose tissue"/>
+		<experimentalfactor name="OrganismPart" value="adrenal gland"/>
+		<experimentalfactor name="OrganismPart" value="appendix"/>
+		<experimentalfactor name="OrganismPart" value="bone marrow"/>
+		<experimentalfactor name="OrganismPart" value="heart"/>
+		<experimentalfactor name="OrganismPart" value="globus pallidus"/>
+		<experimentalfactor name="OrganismPart" value="dorsal root ganglion"/>
+		<experimentalfactor name="OrganismPart" value="cingulate cortex"/>
+		<experimentalfactor name="OrganismPart" value="ciliary ganglion"/>
+		<experimentalfactor name="OrganismPart" value="cerebellum peduncles"/>
+		<experimentalfactor name="OrganismPart" value="cerebellum"/>
+		<experimentalfactor name="OrganismPart" value="caudate nucleus"/>
+		<experimentalfactor name="OrganismPart" value="brain"/>
+		<experimentalfactor name="OrganismPart" value="salivary gland"/>
+		<experimentalfactor name="OrganismPart" value="prostate"/>
+		<experimentalfactor name="OrganismPart" value="prefrontal cortex"/>
+		<experimentalfactor name="OrganismPart" value="pons"/>
+		<experimentalfactor name="OrganismPart" value="placenta"/>
+		<experimentalfactor name="OrganismPart" value="pituitary"/>
+		<experimentalfactor name="OrganismPart" value="parietal lobe"/>
+		<experimentalfactor name="OrganismPart" value="pancreas"/>
+		<experimentalfactor name="OrganismPart" value="ovary"/>
+		<experimentalfactor name="OrganismPart" value="trigeminal ganglion"/>
+		<experimentalfactor name="OrganismPart" value="trachea"/>
+		<experimentalfactor name="OrganismPart" value="tonsil"/>
+		<experimentalfactor name="OrganismPart" value="tongue"/>
+		<experimentalfactor name="OrganismPart" value="thyroid"/>
+		<experimentalfactor name="OrganismPart" value="thymus"/>
+		<experimentalfactor name="OrganismPart" value="thalamus"/>
+		<experimentalfactor name="OrganismPart" value="testis - seminiferous tubule"/>
+		<experimentalfactor name="OrganismPart" value="testis - interstitial"/>
+		<experimentalfactor name="TargetedCellType" value="CD8+ T cell"/>
+		<experimentalfactor name="TargetedCellType" value="CD71+ early erythroid"/>
+		<experimentalfactor name="TargetedCellType" value="CD56+ NK cells"/>
+		<experimentalfactor name="TargetedCellType" value="CD4+ T cell"/>
+		<experimentalfactor name="TargetedCellType" value="CD34+"/>
+		<experimentalfactor name="TargetedCellType" value="CD33+ myeloid"/>
+		<experimentalfactor name="TargetedCellType" value="CD19+ B cells (neg. sel.)"/>
+		<experimentalfactor name="TargetedCellType" value="CD14+ monocyte"/>
+		<experimentalfactor name="TargetedCellType" value="CD105+ endothelial"/>
+		<experimentalfactor name="TargetedCellType" value="testis - leydig cell"/>
+		<experimentalfactor name="TargetedCellType" value="testis - germ cell"/>
+		<experimentalfactor name="TargetedCellType" value="cardiac myocyte"/>
+		<experimentalfactor name="TargetedCellType" value="bronchial epithelial"/>
+		<experimentalfactor name="TargetedCellType" value="adipocyte"/>
+		<experimentalfactor name="TargetedCellType" value="BDCA4+ dentritic cells"/>
+		<experimentalfactor name="TargetedCellType" value="721 B lymphoblast"/>
+		<experimentalfactor name="TargetedCellType" value=" "/>
+		<experimentalfactor name="OrganismPart" value="whole brain"/>
+		<experimentalfactor name="OrganismPart" value="whole blood"/>
+		<experimentalfactor name="OrganismPart" value="uterus corpus"/>
+		<experimentalfactor name="OrganismPart" value="uterus"/>
+		<experimentalfactor name="OrganismPart" value="tumor"/>
+		<experimentalfactor name="OrganismPart" value="testis"/>
+		<experimentalfactor name="OrganismPart" value="temporal lobe"/>
+		<experimentalfactor name="OrganismPart" value="superior cervical ganglion"/>
+		<experimentalfactor name="OrganismPart" value="subthalamic nucleus"/>
+		<experimentalfactor name="OrganismPart" value="spinal cord"/>
+		<experimentalfactor name="OrganismPart" value="smooth muscle"/>
+		<experimentalfactor name="OrganismPart" value="skin"/>
+		<experimentalfactor name="OrganismPart" value="skeletal muscle"/>
+		<experimentalfactor name="OrganismPart" value="olfactory bulb"/>
+		<experimentalfactor name="OrganismPart" value="occipital lobe"/>
+		<experimentalfactor name="OrganismPart" value="medulla oblongata"/>
+		<experimentalfactor name="OrganismPart" value="lymph node"/>
+		<experimentalfactor name="OrganismPart" value="lung"/>
+		<experimentalfactor name="OrganismPart" value="liver"/>
+		<experimentalfactor name="OrganismPart" value="kidney"/>
+		<experimentalfactor name="OrganismPart" value="hypothalamus"/>
+		<experimentalfactor name="OrganismPart" value="atrioventricular node"/>
+		<experimentalfactor name="OrganismPart" value="amygdala"/>
+		<experimentalfactor name="OrganismPart" value="adrenal cortex"/>
+		<experimentalfactor name="DiseaseState" value="promyelocytic leukemia HL-60"/>
+		<experimentalfactor name="DiseaseState" value="colorectal adenocarcinoma"/>
+		<experimentalfactor name="DiseaseState" value="Raji Burkitt's lymphoma"/>
+		<miamescore name="ReporterSequenceScore" value="1"/>
+		<miamescore name="FactorValueScore" value="1"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="1"/>
+		<miamescore name="ProtocolScore" value="1"/>
+		<miamescore name="DerivedBioAssayDataScore" value="1"/>
+		<arraydesign id="302382080" accession="A-AFFY-33" name="Affymetrix GeneChip Human Genome HG-U133A [HG-U133A]" count="158"/>
+		<arraydesign id="347513713" accession="A-AFFY-40" name="Affymetrix Custom Array - Novartis Human [gnGNF1Ba]" count="158"/>
+		<bioassaydatagroup id="1342297411" name="Affymetrix:FeatureDimension:HG-U133A" bioassaydatacubes="158" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="158" isderived="0"/>
+		<bioassaydatagroup id="1342292047" name="Affymetrix:FeatureDimension:gnGNF1Ba" bioassaydatacubes="158" arraydesignprovider="AFFY" dataformat="CELv3" bioassays="158" isderived="0"/>
+		<bioassaydatagroup id="1342297491" name="Affymetrix:CompositeSequenceDimension:HG-U133A" bioassaydatacubes="158" arraydesignprovider="AFFY" dataformat="tab delimited" bioassays="158" isderived="1"/>
+		<bioassaydatagroup id="1342292711" name="Affymetrix:CompositeSequenceDimension:gnGNF1Ba" bioassaydatacubes="153" arraydesignprovider="AFFY" dataformat="tab delimited" bioassays="153" isderived="1"/>
+		<bibliography accession="15075390" publication="Proc Natl Acad Sci U S A" authors="Andrew I. Su, Tim Wiltshire, Serge Batalov, Hilmar Lapp, Keith A. Ching, David Block, Jie Zhang, Richard Soden, Mimi Hayakawa, Gabriel Kreiman, Michael P. Cooke, John R. Walker, and John B. Hogenesch" title="A gene atlas of the mouse and human protein-encoding transcriptomes" year="2004" volume="101" pages="6062-6067" uri="http://dx.doi.org/10.1073/pnas.0400782101"/>
+		<provider contact="John Walker" role="submitter"/>
+		<experimentdesign>organism part comparison</experimentdesign>
+		<experimenttype>transcription profiling</experimenttype>
+		<description id="366346723">The tissue-specific pattern of mRNA expression can indicate important clues about gene function. High-density oligonucleotide arrays offer the opportunity to examine patterns of gene expression on a genome scale. Toward this end, we have designed custom arrays that interrogate the expression of the vast majority of protein-encoding human and mouse genes and have used them to profile a panel of 79 human and 61 mouse tissues. The resulting data set provides the expression patterns for thousands of predicted genes, as well as known and poorly characterized genes, from mice and humans. We have explored this data set for global trends in gene expression, evaluated commonly used lines of evidence in gene prediction methodologies, and investigated patterns indicative of chromosomal organization of transcription. We describe hundreds of regions of correlated transcription and show that some are subject to both tissue and parental allele-specific expression, suggesting a link between spatial expression and imprinting.</description>
+		<description id="1342434336">(Generated description) Experiment with 316 hybridizations, using 160 samples of species [Homo sapiens], using 316 arrays of array design [Affymetrix Custom Array - Novartis Human [gnGNF1Ba], Affymetrix GeneChip  Human Genome HG-U133A [HG-U133A]], producing 316 raw data files and 311 transformed and/or normalized data files.</description>
+	</experiment>
+	<experiment id="1673780805" accession="E-BUGS-60" name="Transcription profiling of Mycobacterium tuberculosis samples to develop a quantification of global transcription patterns in prokaryotes using spotted microarrays" releasedate="2008-09-29">
+		<user>1</user>
+		<miamescore name="ReporterSequenceScore" value="0"/>
+		<miamescore name="FactorValueScore" value="0"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="1"/>
+		<miamescore name="ProtocolScore" value="1"/>
+		<miamescore name="DerivedBioAssayDataScore" value="1"/>
+		<bioassaydatagroup id="1673818582" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_1" bioassaydatacubes="26" dataformat="tab delimited" bioassays="26" isderived="0"/>
+		<bioassaydatagroup id="1673818583" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_1" bioassaydatacubes="26" dataformat="tab delimited" bioassays="26" isderived="0"/>
+		<bioassaydatagroup id="1673818876" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_30" bioassaydatacubes="8" dataformat="tab delimited" bioassays="8" isderived="0"/>
+		<bioassaydatagroup id="1673818877" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_30" bioassaydatacubes="8" dataformat="tab delimited" bioassays="8" isderived="0"/>
+		<bioassaydatagroup id="1673819159" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_37" bioassaydatacubes="23" dataformat="tab delimited" bioassays="23" isderived="0"/>
+		<bioassaydatagroup id="1673819178" name="bugs.sgul.ac.uk:BuG@Sbase/FeatureDimension:138_37" bioassaydatacubes="23" dataformat="tab delimited" bioassays="23" isderived="0"/>
+		<bioassaydatagroup id="1673820228" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23512" bioassaydatacubes="3" dataformat="tab delimited" bioassays="3" isderived="1"/>
+		<bioassaydatagroup id="1673820319" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23512" bioassaydatacubes="3" dataformat="tab delimited" bioassays="3" isderived="1"/>
+		<bioassaydatagroup id="1673820564" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23924" bioassaydatacubes="2" dataformat="tab delimited" bioassays="2" isderived="1"/>
+		<bioassaydatagroup id="1673820577" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:23924" bioassaydatacubes="2" dataformat="tab delimited" bioassays="2" isderived="1"/>
+		<bioassaydatagroup id="1673820856" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:25199" bioassaydatacubes="1" dataformat="tab delimited" bioassays="1" isderived="1"/>
+		<bioassaydatagroup id="1673820865" name="bugs.sgul.ac.uk:BuG@Sbase/ReporterDimension:25199" bioassaydatacubes="1" dataformat="tab delimited" bioassays="1" isderived="1"/>
+		<bibliography accession="18078514"/>
+		<bibliography accession="18078514" publication="Genome Biol" authors="Sidders B, Withers M, Kendall SL, Bacon J, Waddell SJ, Hinds J, Golby P, Movahedzadeh F, Cox RA, Frita R, Ten Bokum AM, Wernisch L, Stoker NG" title="Quantification of global transcription patterns in prokaryotes using spotting microarrays" year="2007" volume="8" issue="12" pages="R265"/>
+		<bibliography accession="18519559" publication="Infect Immun" authors="Sidders B, Pirson C, Hogarth PJ, Hewinson RG, Stoker NG, Vordermeier HM, Ewer K" title="Screening of highly expressed mycobacterial genes identifies Rv3615c as a useful differential diagnostic anitgen for the Mycobacterium tuberculosis complex" year="2008" volume="76" issue="9" pages="3932-3939" uri="http://dx.doi.org/10.1128/IAI.00150-08"/>
+		<experimenttype>transcription profiling</experimenttype>
+		<description id="1673822003">(Generated description) Experiment with 2 hybridizations, using samples of species [Mycobacterium tuberculosis], using 1 arrays of array design [A-BUGS-1], producing 114 raw data files and 12 transformed and/or normalized data files.</description>
+		<description id="1673780808">We describe an analysis, applicable to any spotted microarray dataset produced using genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a genome-wide scale.  Applying this to Mycobacterium tuberculosis, we validate the technique, show a correlation between level of expression and biological importance, define the complement of invariant genes and analyse absolute levels of expression by functional class to develop ways of understanding an organism   s biology without comparison to another growth condition.</description>
+		<description id="1673780816">Data is also available from &lt;ahref="http://bugs.sgul.ac.uk/E-BUGS-60" target="_blank"&gt;BuG@Sbase&lt;/a&gt;</description>
+		<description id="1751040287"/>
+		<description id="1680985362"/>
+	</experiment>
+</experiments>
