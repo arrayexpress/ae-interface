@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryExpander;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,7 +39,7 @@ public final class EFOQueryExpander implements IQueryExpander
         this.lookup = lookup;
     }
 
-    public Query expandQuery( Query originalQuery, Map<String, String> queryParams )
+    public Query expandQuery( Query originalQuery, Map<String, String[]> queryParams )
     {
         boolean shouldExpandEfo = "true".equals(queryParams.get("expandefo"));
         
@@ -70,8 +69,20 @@ public final class EFOQueryExpander implements IQueryExpander
     private Query doExpand( Query query, boolean shouldExpandEfo )
     {
         String field = getQueryField(query);
-        if (null != field && -1 != "keywords sa efv".indexOf(field)) {
-            List<Set<String>> expansionTerms = lookup.getExpansionTerms(query);
+        if (null != field && -1 != "keywords sa efv exptype".indexOf(field)) {
+            EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
+            if (0 != expansionTerms.efo.size() || 0 != expansionTerms.synonyms.size()) {
+                BooleanQuery boolQuery = new BooleanQuery();
+
+                for (String term : expansionTerms.synonyms ) {
+                    boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
+                }
+
+                for (String term : expansionTerms.efo ) {
+                    boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
+                }
+                return boolQuery;
+            }
         }
         return query;
     }
@@ -106,5 +117,19 @@ public final class EFOQueryExpander implements IQueryExpander
         }
 
         return field;
+    }
+
+    public Query newQueryFromString( String text, String field )
+    {
+        if (-1 != text.indexOf(" ")) {
+            String[] tokens = text.split("\\s+");
+            PhraseQuery q = new PhraseQuery();
+            for (String token : tokens) {
+                q.add(new Term(field, token));
+            }
+            return q;
+        } else {
+            return new TermQuery(new Term(field, text));
+        }
     }
 }

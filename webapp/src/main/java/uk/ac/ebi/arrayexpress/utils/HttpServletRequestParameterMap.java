@@ -21,25 +21,32 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpServletRequestParameterMap extends HashMap<String,String>
+public class HttpServletRequestParameterMap extends HashMap<String,String[]>
 {
+    private final static RegExpHelper allSansSquareBrackets = new RegExpHelper("^(.*)\\[\\]$", "ig");
+
     public HttpServletRequestParameterMap( HttpServletRequest request )
     {
         if (null != request) {
             Map params = request.getParameterMap();
             for ( Object param : params.entrySet() ) {
                 Map.Entry p = (Map.Entry) param;
-                this.put((String) p.getKey(), arrayToString((String[]) p.getValue()));
+                this.put(filterArrayBrackets((String)p.getKey()), (String[])p.getValue());
             }
         }
     }
 
-    private static String arrayToString( String[] array )
+    public void put( String key, String value )
     {
-        StringBuilder sb = new StringBuilder();
-        for ( String item : array ) {
-            sb.append(item).append(' ');
-        }
-        return sb.toString().trim();
+        String[] arrValue = new String[1];
+        arrValue[0] = value;
+        this.put(key, arrValue);
     }
+
+    private String filterArrayBrackets( String key )
+    {
+        String result = allSansSquareBrackets.matchFirst(key);
+        return !"".equals(result) ? result : key;
+    }
+
 }

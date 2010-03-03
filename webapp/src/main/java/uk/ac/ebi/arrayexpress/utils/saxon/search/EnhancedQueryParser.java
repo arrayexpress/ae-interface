@@ -25,13 +25,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 
-public class NumericRangeQueryParser extends QueryParser
+public class EnhancedQueryParser extends QueryParser
 {
     private IndexEnvironment env;
 
-    public NumericRangeQueryParser( IndexEnvironment env, String f, Analyzer a )
+    public EnhancedQueryParser( IndexEnvironment env, String f, Analyzer a )
     {
-        super(Version.LUCENE_29, f, a);
+        super(Version.LUCENE_30, f, a);
         this.env = env;
     }
 
@@ -54,6 +54,14 @@ public class NumericRangeQueryParser extends QueryParser
         } else {
             return query;
         }
+    }
+
+    public Query parse(String queryText) throws ParseException
+    {
+        if (env.fields.containsKey(this.getField()) && env.fields.get(this.getField()).forcePhraseQuery) {
+            queryText = "\"" + queryText + "\"";
+        }
+        return super.parse(queryText);
     }
 
     protected Query getFieldQuery( String field, String queryText, int slop ) throws ParseException

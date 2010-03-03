@@ -16,6 +16,7 @@ new function(settings) {
   var $prefix = settings.prefix === false ? false : true;
   var $hash = $prefix ? settings.hash === true ? "#" : "?" : "";
   var $numbers = settings.numbers === false ? false : true;
+  var $boolean = settings.boolean === true ? true : false;
 
   jQuery.query = new function() {
     var is = function(o, t) {
@@ -90,7 +91,9 @@ new function(settings) {
                 val = parseInt(val, 10);
             }
 
-            val = (!val && val !== 0) ? true : val;
+            if ($boolean) {
+                val = (!val && val !== 0) ? true : val;
+            }
 
             if (val !== false && val !== true && typeof val != 'number')
               val = val;

@@ -31,7 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     {
@@ -97,9 +100,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             }
         }
 
-        public List<Set<String>> getExpansionTerms( Query origQuery )
+        public EFOExpansionTerms getExpansionTerms( Query origQuery )
         {
-            List<Set<String>> expansion = new ArrayList<Set<String>>(2);
+            EFOExpansionTerms expansion = new EFOExpansionTerms();
 
             try {
                 IndexReader ir = IndexReader.open(this.indexDirectory, true);
@@ -117,6 +120,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                     String[] terms = doc.getValues("term");
                     String[] efo = doc.getValues("efo");
                     logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
+                    if (0 != terms.length) {
+                        expansion.synonyms = new HashSet<String>(Arrays.asList(terms));
+                    }
+
+                    if (0 != efo.length) {
+                        expansion.efo = new HashSet<String>(Arrays.asList(efo));
+                    }
                 }
 
                 isearcher.close();

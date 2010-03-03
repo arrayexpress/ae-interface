@@ -33,10 +33,10 @@ public class QueryPool
 
     public class QueryInfo
     {
-        public Map<String, String> queryParams;
+        public Map<String, String[]> queryParams;
         public Query parsedQuery;
 
-        public QueryInfo( Map<String, String> queryParams )
+        public QueryInfo( Map<String, String[]> queryParams )
         {
             this.queryParams = queryParams;
         }
@@ -49,7 +49,7 @@ public class QueryPool
         this.queryId = new AtomicInteger(0);
     }
 
-    public Integer addQuery( QueryConstructor queryConstructor, Map<String, String> queryParams, IQueryExpander queryExpander )
+    public Integer addQuery( QueryConstructor queryConstructor, Map<String, String[]> queryParams, IQueryExpander queryExpander )
     {
         QueryInfo info = new QueryInfo(queryParams);
         info.parsedQuery = queryConstructor.construct(queryParams);

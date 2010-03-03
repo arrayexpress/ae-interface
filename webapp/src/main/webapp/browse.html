@@ -18,7 +18,7 @@
     <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
     <script src="assets/scripts/jsdeferred.jquery.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
-    <script src="assets/scripts/jquery.query-2.1.2.js" type="text/javascript"></script>
+    <script src="assets/scripts/jquery.query-2.1.7.js" type="text/javascript"></script>
     <script src="assets/scripts/ae_browse-1.4.js" type="text/javascript"></script>
     <link rel="alternate" href="rss/experiments"
               type="application/rss+xml" title="ArrayExpress Experiments Feed"/>    
@@ -60,9 +60,9 @@
                                 <select id="ae_species" name="species" disabled="true"><option value="">All species (loading options)</option></select>
                                 <select id="ae_array" name="array" disabled="true"><option value="">All arrays (loading options)</option></select>
                                 <div id="ae_exptype_selector">
-                                    <select id="ae_expdesign" name="expdesign" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
+                                    <select id="ae_expdesign" name="exptype[]" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
                                     <span>by</span>
-                                    <select id="ae_exptech" name="exptech" disabled="true"><option value="">All technologies (loading options)</option></select>
+                                    <select id="ae_exptech" name="exptype[]" disabled="true"><option value="">All technologies (loading options)</option></select>
                                 </div>
                             </fieldset>
                             <fieldset id="ae_options_box">

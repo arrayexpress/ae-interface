@@ -1,4 +1,8 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.search;
+package uk.ac.ebi.arrayexpress.utils.search;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 /*
  * Copyright 2009-2010 Microarray Informatics Group, European Bioinformatics Institute
@@ -17,11 +21,16 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
-import org.apache.lucene.search.Query;
-
-import java.util.Map;
-
-public interface IQueryExpander
+public class EFOExpansionTerms
 {
-    public Query expandQuery( Query originalQuery, Map<String, String[]> queryParams );
+    public String           term;
+    public Set<String>      synonyms;
+    public Set<String>      efo;
+
+    public EFOExpansionTerms()
+    {
+        term = "";
+        synonyms = new HashSet<String>();
+        efo = new HashSet<String>();
+    }
 }

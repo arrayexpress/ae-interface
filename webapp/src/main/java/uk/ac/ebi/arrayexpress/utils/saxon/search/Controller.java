@@ -73,7 +73,7 @@ public class Controller
         return new Querier(getEnvironment(indexId)).getTerms(fieldName);
     }
 
-    public Integer addQuery( String indexId, Map<String, String> queryParams )
+    public Integer addQuery( String indexId, Map<String, String[]> queryParams )
     {
         return queryPool.addQuery(new QueryConstructor(getEnvironment(indexId)), queryParams, queryExpander);
     }

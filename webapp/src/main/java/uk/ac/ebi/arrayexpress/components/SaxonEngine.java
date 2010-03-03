@@ -179,17 +179,17 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    public boolean transformToWriter( DocumentInfo srcDocument, String stylesheet, Map<String,String> params, Writer dstWriter )
+    public boolean transformToWriter( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, Writer dstWriter )
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));
     }
 
-    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String,String> params, File dstFile )
+    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, File dstFile )
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstFile));
     }
 
-    public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String,String> params )
+    public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params )
     {
         String str = null;
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -206,7 +206,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String,String> params )
+    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String,String[]> params )
     {
         try {
             Source src = new StreamSource(new StringReader(srcXmlString));
@@ -220,7 +220,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    public DocumentInfo transform( DocumentInfo srcDocument, String stylesheet, Map<String,String> params )
+    public DocumentInfo transform( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params )
     {
         try {
             TinyBuilder dstDocument = new TinyBuilder();
@@ -234,7 +234,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    private boolean transform( Source src, String stylesheet, Map<String,String> params, Result dst )
+    private boolean transform( Source src, String stylesheet, Map<String,String[]> params, Result dst )
     {
         boolean result = false;
         try {
@@ -257,8 +257,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
             // assign the parameters (if not null)
             if (null != params) {
-                for ( Map.Entry<String, String> param : params.entrySet() ) {
-                    xslt.setParameter(param.getKey(), param.getValue());
+                for ( Map.Entry<String, String[]> param : params.entrySet() ) {
+                    xslt.setParameter(param.getKey(), arrayToString(param.getValue(), " "));
                 }
             }
 
@@ -278,6 +278,23 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             }
         }
         return result;
+    }
+
+    private static String arrayToString(String[] a, String separator)
+    {
+        if (a == null || separator == null) {
+            return null;
+        }
+
+        StringBuilder result = new StringBuilder();
+        if (a.length > 0) {
+            result.append(a[0]);
+            for (int i=1; i < a.length; i++) {
+                result.append(separator);
+                result.append(a[i]);
+            }
+        }
+        return result.toString();
     }
 
     class LoggerWriter extends SequenceWriter

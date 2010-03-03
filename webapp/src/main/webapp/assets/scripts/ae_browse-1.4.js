@@ -203,8 +203,7 @@ $(document).ready( function() {
         query.expandefo = getQueryBooleanParam("expandefo");
         query.species = getQueryStringParam("species");
         query.array = getQueryStringParam("array");
-        query.expdesign = getQueryStringParam("expdesign");
-        query.exptech = getQueryStringParam("exptech");
+        query.exptype = getQueryArrayParam("exptype");
         query.efv = getQueryStringParam("efv");
         query.sa = getQueryStringParam("sa");
         query.pmid = getQueryStringParam("pmid");
@@ -356,15 +355,15 @@ initControls()
         $("#ae_array").removeAttr("disabled").val(query.array);
     });
 
-    $("#ae_expdesign").change( function(e) {
-                    var selected = e.target.value;
-                    onExpDesignChange(selected);
-    });
-
-    $("#ae_exptech").change( function(e) {
-                    var selected = e.target.value;
-                    onExpTechChange(selected);
-    });
+//  $("#ae_expdesign").change( function(e) {
+//                  var selected = e.target.value;
+//                  onExpDesignChange(selected);
+//  });
+//
+//  $("#ae_exptech").change( function(e) {
+//                  var selected = e.target.value;
+//                  onExpTechChange(selected);
+//  });
 
 
     $.get("expdesign-list.html?q=").next( function(data) {
@@ -372,8 +371,8 @@ initControls()
                 .html(data)
                 .removeAttr("disabled")
                 .val(query.expdesign);
-        if (query.expdesign > "")
-            onExpDesignChange(query.expdesign);
+//      if (query.expdesign > "")
+//          onExpDesignChange(query.expdesign);
     });
 
 
@@ -382,8 +381,8 @@ initControls()
                 .html(data)
                 .removeAttr("disabled")
                 .val(query.exptech);
-        if (query.exptech > "")
-            onExpTechChange(query.exptech);
+//      if (query.exptech > "")
+//          onExpTechChange(query.exptech);
     });
 
     if ( "" != query.sortby ) {
@@ -466,6 +465,17 @@ getQueryStringParam( paramName, defaultValue )
         return param;
     } else {
         return defaultValue;
+    }
+}
+
+function
+getQueryArrayParam( paramName )
+{
+    var param = $.query.get(paramName);
+    if ("string" == typeof(param)) {
+        return new Array(param);
+    } else {
+        return param;
     }
 }
 
