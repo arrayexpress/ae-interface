@@ -42,7 +42,7 @@ public final class EFOQueryExpander implements IQueryExpander
 
     public Query expandQuery( Query originalQuery, Map<String, String[]> queryParams )
     {
-        boolean shouldExpandEfo = -1 != StringTools.arrayToString(queryParams.get("expandefo"), " ").indexOf("true");
+        boolean shouldExpandEfo = "true".equals(StringTools.arrayToString(queryParams.get("expandefo"), " "));
         
         return expand(originalQuery, shouldExpandEfo);
     }
