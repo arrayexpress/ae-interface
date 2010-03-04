@@ -57,6 +57,7 @@ public final class EFOQueryExpander implements IQueryExpander
 
         if (null != queryInfo) {
             queryInfo.setExpandEfoFlag("true".equals(StringTools.arrayToString(info.getParams().get("expandefo"), " ")));
+            queryInfo.setOriginalQuery(queryInfo.getQuery());
 
             return expand(queryInfo, queryInfo.getQuery());
         } else {
@@ -78,6 +79,9 @@ public final class EFOQueryExpander implements IQueryExpander
                         , c.getOccur()
                 );
             }
+//      } else if (query instanceof PrefixQuery || query instanceof WildcardQuery) {
+//        // we don't expand prefix or wildcard queries yet
+//          return query;
         } else {
             result = doExpand(queryInfo, query);
         }
@@ -95,8 +99,14 @@ public final class EFOQueryExpander implements IQueryExpander
             if ((shouldExpandEfo && (0 != expansionTerms.efo.size())) || 0 != expansionTerms.synonyms.size()) {
                 BooleanQuery boolQuery = new BooleanQuery();
 
+                boolQuery.add(query, BooleanClause.Occur.SHOULD);
+
                 for (String term : expansionTerms.synonyms) {
-                    boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
+                    Query synonymPart = newQueryFromString(term.trim(), field);
+                    if (!queryPartIsRedundant(query, synonymPart)) {
+                        boolQuery.add(synonymPart, BooleanClause.Occur.SHOULD);
+                        queryInfo.addToSynonymPartQuery(synonymPart);
+                    }
                 }
 
                 if (shouldExpandEfo) {
@@ -129,7 +139,7 @@ public final class EFOQueryExpander implements IQueryExpander
             } else {
                 Set<Term> terms = new HashSet<Term>();
                 query.extractTerms(terms);
-                if (terms.size() > 1) {
+                if (terms.size() > 1 && !(query instanceof PhraseQuery)) {
                     logger.warn("More than one term found for query [{}]", query.toString());
                 } else if (0 == terms.size()) {
                     logger.error("No terms found for query [{}]", query.toString());
@@ -156,5 +166,41 @@ public final class EFOQueryExpander implements IQueryExpander
         } else {
             return new TermQuery(new Term(field, text));
         }
+    }
+
+    private boolean queryPartIsRedundant( Query query, Query part )
+    {
+        Term partTerm = getFirstTerm(part);
+
+        if (query instanceof PrefixQuery) {
+            Term prefixTerm = ((PrefixQuery)query).getPrefix();
+            return prefixTerm.field().equals(partTerm.field()) && (partTerm.text().startsWith(prefixTerm.text()));
+        } else if (query instanceof WildcardQuery) {
+            Term wildcardTerm = ((WildcardQuery)query).getTerm();
+            String wildcard = "^" + wildcardTerm.text().replaceAll("\\?", "\\.").replaceAll("\\*", "\\.*") + "$";
+            return wildcardTerm.field().equals(partTerm.field()) && (partTerm.text().matches(wildcard));
+        } else {
+            return query.toString().equals(part.toString());
+        }
+
+    }
+
+    private Term getFirstTerm( Query query )
+    {
+        if (query instanceof PhraseQuery) {
+            Term[] terms = ((PhraseQuery)query).getTerms();
+            if (0 != terms.length) {
+                return terms[0];
+            }
+        } else if (query instanceof TermQuery) {
+            return ((TermQuery)query).getTerm();
+        } else {
+            Set<Term> terms = new HashSet<Term>();
+            query.extractTerms(terms);
+            for (Term t : terms ) {
+                return t;
+            }
+        }
+        return new Term("", "");
     }
 }

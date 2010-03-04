@@ -24,8 +24,30 @@ import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryInfo;
 
 public class EFOExpandableQueryInfo extends QueryInfo
 {
+    private Query originalQuery;
+    private BooleanQuery synonymPartQuery = new BooleanQuery();
     private BooleanQuery efoExpansionPartQuery = new BooleanQuery();
     private boolean shouldExpandEfo;
+
+    public Query getOriginalQuery()
+    {
+        return originalQuery;
+    }
+
+    public void setOriginalQuery( Query originalQuery )
+    {
+        this.originalQuery = originalQuery;
+    }
+
+    public Query getSynonymPartQuery()
+    {
+        return synonymPartQuery;
+    }
+
+    public void addToSynonymPartQuery( Query part )
+    {
+        synonymPartQuery.add(part, BooleanClause.Occur.SHOULD);
+    }
 
     public Query getEfoExpansionPartQuery()
     {

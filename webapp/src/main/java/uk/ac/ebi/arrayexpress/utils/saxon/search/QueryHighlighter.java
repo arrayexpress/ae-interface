@@ -24,16 +24,17 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class QueryHighlighter
+public class QueryHighlighter implements IQueryHighlighter
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private IndexEnvironment env;
 
-    public QueryHighlighter( IndexEnvironment env )
+    public IQueryHighlighter setEnvironment( IndexEnvironment env )
     {
         this.env = env;
+        return this;
     }
 
     public String highlightQuery( QueryInfo queryInfo, String fieldName, String text, String openMark, String closeMark )

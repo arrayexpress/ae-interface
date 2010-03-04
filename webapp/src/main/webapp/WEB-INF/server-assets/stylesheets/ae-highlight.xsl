@@ -12,7 +12,7 @@
         <xsl:variable name="vText" select="normalize-space($pText)"/>
         <xsl:choose>
             <xsl:when test="string-length($vText)!=0">
-                <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText, '&#171;', '&#187;')"/>
+                <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText, '', '')"/>
                 <xsl:call-template name="add_highlight_element">
                     <xsl:with-param name="text" select="$markedtext"/>
                 </xsl:call-template>
@@ -24,11 +24,53 @@
     <xsl:template name="add_highlight_element">
         <xsl:param name="text"/>
         <xsl:choose>
-            <xsl:when test="contains($text,'&#171;') and contains($text,'&#187;')">
-                <xsl:value-of select="substring-before($text,'&#171;')"/>
-                <span class="ae_text_highlight"><xsl:value-of select="substring-after(substring-before($text,'&#187;'),'&#171;')"/></span>
+            <xsl:when test="contains($text,'&#x00ab;') and contains($text,'&#x00bb;')">
                 <xsl:call-template name="add_highlight_element">
-                    <xsl:with-param name="text" select="substring-after($text,'&#187;')"/>
+                    <xsl:with-param name="text" select="substring-before($text,'&#x00ab;')"/>
+                </xsl:call-template>
+                <span class="ae_text_hit"><xsl:value-of select="substring-after(substring-before($text,'&#x00bb;'),'&#x00ab;')"/></span>
+                <xsl:call-template name="add_highlight_element">
+                    <xsl:with-param name="text" select="substring-after($text,'&#x00bb;')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="add_syn_highlight_element">
+                    <xsl:with-param name="text" select="$text"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+       </xsl:choose>
+   </xsl:template>
+
+   <xsl:template name="add_syn_highlight_element">
+        <xsl:param name="text"/>
+        <xsl:choose>
+            <xsl:when test="contains($text,'&#x2039;') and contains($text,'&#x203a;')">
+                <xsl:call-template name="add_syn_highlight_element">
+                    <xsl:with-param name="text" select="substring-before($text,'&#x2039;')"/>
+                </xsl:call-template>
+                <span class="ae_text_syn"><xsl:value-of select="substring-after(substring-before($text,'&#x203a;'),'&#x2039;')"/></span>
+                <xsl:call-template name="add_syn_highlight_element">
+                    <xsl:with-param name="text" select="substring-after($text,'&#x203a;')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="add_efo_highlight_element">
+                    <xsl:with-param name="text" select="$text"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+       </xsl:choose>
+   </xsl:template>
+
+   <xsl:template name="add_efo_highlight_element">
+        <xsl:param name="text"/>
+        <xsl:choose>
+            <xsl:when test="contains($text,'&#x2035;') and contains($text,'&#x2032;')">
+                <xsl:call-template name="add_efo_highlight_element">
+                    <xsl:with-param name="text" select="substring-before($text,'&#x2035;')"/>
+                </xsl:call-template>
+                <span class="ae_text_efo"><xsl:value-of select="substring-after(substring-before($text,'&#x2032;'),'&#x2035;')"/></span>
+                <xsl:call-template name="add_efo_highlight_element">
+                    <xsl:with-param name="text" select="substring-after($text,'&#x2032;')"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
@@ -37,5 +79,4 @@
        </xsl:choose>
    </xsl:template>
 
-    
 </xsl:stylesheet>

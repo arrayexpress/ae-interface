@@ -121,11 +121,11 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                     String[] efo = doc.getValues("efo");
                     logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
                     if (0 != terms.length) {
-                        expansion.synonyms = new HashSet<String>(Arrays.asList(terms));
+                        expansion.synonyms.addAll(Arrays.asList(terms));
                     }
 
                     if (0 != efo.length) {
-                        expansion.efo = new HashSet<String>(Arrays.asList(efo));
+                        expansion.efo.addAll(Arrays.asList(efo));
                     }
                 }
 

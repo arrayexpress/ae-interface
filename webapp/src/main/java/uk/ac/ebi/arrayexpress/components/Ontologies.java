@@ -20,6 +20,8 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
+import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
@@ -49,7 +51,9 @@ public class Ontologies extends ApplicationComponent
             EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(getPreferences().getString("ae.efo.index.location"));
             ix.addMaps(efoSynonymMap, efoFullExpansionMap);
 
-            ((SearchEngine)getComponent("SearchEngine")).getController().setQueryExpander(new EFOQueryExpander(ix));
+            Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
+            c.setQueryExpander(new EFOQueryExpander(ix));
+            c.setQueryHighlighter(new EFOExpandedHighlighter());
 
         } catch (Exception x) {
             logger.error("Caught an exception:", x);

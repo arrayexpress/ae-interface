@@ -726,8 +726,16 @@ a:active .table_header_label {
     text-align: left;
 }
 
-.ae_text_highlight {
+.ae_text_hit {
     background-color: yellow;
+}
+
+.ae_text_syn {
+    background-color: #9aff32;
+}
+
+.ae_text_efo {
+    background-color: #ff9a32;
 }
 
 #ae_results_status,

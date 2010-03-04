@@ -35,6 +35,7 @@ public class Controller
     private Configuration config;
     private QueryPool queryPool;
     private IQueryExpander queryExpander;
+    private IQueryHighlighter queryHighlighter;
 
     private Map<String, IndexEnvironment> environment = new HashMap<String, IndexEnvironment>();
 
@@ -47,6 +48,11 @@ public class Controller
     public void setQueryExpander( IQueryExpander queryExpander )
     {
         this.queryExpander = queryExpander;
+    }
+
+    public void setQueryHighlighter( IQueryHighlighter queryHighlighter )
+    {
+        this.queryHighlighter = queryHighlighter;
     }
 
     public IndexEnvironment getEnvironment( String indexId )
@@ -85,6 +91,10 @@ public class Controller
 
     public String highlightQuery( String indexId, Integer queryId, String fieldName, String text, String openMark, String closeMark )
     {
-        return new QueryHighlighter(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text, openMark, closeMark);
+        if (null == queryHighlighter) {
+            // sort of lazy init if we forgot to specify more advanced highlighter
+            this.setQueryHighlighter(new QueryHighlighter());
+        }
+        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text, openMark, closeMark);
     }
 }
