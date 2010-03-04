@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
-import org.apache.lucene.search.Query;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
 
 import java.util.Collections;
@@ -31,17 +30,6 @@ public class QueryPool
 
     private AtomicInteger queryId;
 
-    public class QueryInfo
-    {
-        public Map<String, String[]> queryParams;
-        public Query parsedQuery;
-
-        public QueryInfo( Map<String, String[]> queryParams )
-        {
-            this.queryParams = queryParams;
-        }
-    }
-
     private Map<Integer, QueryInfo> queries = Collections.synchronizedMap(new LRUMap<Integer, QueryInfo>(50));
 
     public QueryPool()
@@ -51,10 +39,18 @@ public class QueryPool
 
     public Integer addQuery( QueryConstructor queryConstructor, Map<String, String[]> queryParams, IQueryExpander queryExpander )
     {
-        QueryInfo info = new QueryInfo(queryParams);
-        info.parsedQuery = queryConstructor.construct(queryParams);
+        QueryInfo info;
+
         if (null != queryExpander) {
-            info.parsedQuery = queryExpander.expandQuery(info.parsedQuery, queryParams);
+            info = queryExpander.newQueryInfo();
+        } else {
+            info = new QueryInfo();
+        }
+
+        info.setParams(queryParams);
+        info.setQuery(queryConstructor.construct(queryParams));
+        if (null != queryExpander) {
+            info.setQuery(queryExpander.expandQuery(info));
         }
         this.queries.put(this.queryId.addAndGet(1), info);
 

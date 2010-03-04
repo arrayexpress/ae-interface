@@ -80,11 +80,11 @@ public class Controller
 
     public List<NodeInfo> queryIndex( String indexId, Integer queryId )
     {
-        return new Querier(getEnvironment(indexId)).query(queryPool.getQueryInfo(queryId).parsedQuery);
+        return new Querier(getEnvironment(indexId)).query(queryPool.getQueryInfo(queryId).getQuery());
     }
 
     public String highlightQuery( String indexId, Integer queryId, String fieldName, String text, String openMark, String closeMark )
     {
-        return new QueryHighlighter(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId).parsedQuery, fieldName, text, openMark, closeMark);
+        return new QueryHighlighter(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text, openMark, closeMark);
     }
 }

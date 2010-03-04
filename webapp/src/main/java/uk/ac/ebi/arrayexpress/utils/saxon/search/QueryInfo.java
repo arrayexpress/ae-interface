@@ -1,5 +1,9 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
+import org.apache.lucene.search.Query;
+
+import java.util.Map;
+
 /*
  * Copyright 2009-2010 Microarray Informatics Group, European Bioinformatics Institute
  *
@@ -17,12 +21,28 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
-import org.apache.lucene.search.Query;
-
-public interface IQueryExpander
+public class QueryInfo
 {
-    // returns special kind of query info that holds expansions etc
-    public QueryInfo newQueryInfo();
-    // does query expansion 
-    public Query expandQuery( QueryInfo info );
+    private Map<String, String[]> params;
+    private Query query;
+
+    public void setParams( Map<String, String[]> params )
+    {
+        this.params = params;
+    }
+
+    public Map<String, String[]> getParams()
+    {
+        return params;
+    }
+
+    public void setQuery( Query query )
+    {
+        this.query = query;
+    }
+
+    public Query getQuery()
+    {
+        return query;
+    }
 }
