@@ -370,7 +370,7 @@ initControls()
         $("#ae_expdesign")
                 .html(data)
                 .removeAttr("disabled")
-                .val(query.expdesign);
+                .val((jQuery.isArray(query.exptype) && query.exptype.length > 0) ? query.exptype[0] : "");
 //      if (query.expdesign > "")
 //          onExpDesignChange(query.expdesign);
     });
@@ -380,7 +380,7 @@ initControls()
         $("#ae_exptech")
                 .html(data)
                 .removeAttr("disabled")
-                .val(query.exptech);
+                .val((jQuery.isArray(query.exptype) && query.exptype.length > 1) ? query.exptype[1] : "");
 //      if (query.exptech > "")
 //          onExpTechChange(query.exptech);
     });
@@ -461,7 +461,7 @@ getQueryStringParam( paramName, defaultValue )
         defaultValue = "";
     }
     var param = $.query.get(paramName);
-    if ("boolean" != typeof(param) && "" !== param) {
+    if ("" !== param) {
         return param;
     } else {
         return defaultValue;
@@ -472,7 +472,7 @@ function
 getQueryArrayParam( paramName )
 {
     var param = $.query.get(paramName);
-    if ("string" == typeof(param)) {
+    if (!jQuery.isArray(param)) {
         return new Array(param);
     } else {
         return param;

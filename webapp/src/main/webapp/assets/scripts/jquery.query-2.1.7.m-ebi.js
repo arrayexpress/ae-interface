@@ -5,8 +5,9 @@
  * Date: 2009/8/13
  *
  * @author Blair Mitchelmore
- * @version 2.1.7
+ * @version 2.1.7.m-ebi
  *
+ * Portions written by Microarray Informatics Group, European Bioinformatics Institute
  **/
 new function(settings) {
   // Various Settings
@@ -91,7 +92,7 @@ new function(settings) {
                 val = parseInt(val, 10);
             }
 
-            if ($boolean) {
+            if ($boolean) { // treat empty value as boolean 'true'
                 val = (!val && val !== 0) ? true : val;
             }
 
