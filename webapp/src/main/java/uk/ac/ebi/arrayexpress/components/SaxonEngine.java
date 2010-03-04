@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 
 import javax.xml.transform.*;
@@ -258,7 +259,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             // assign the parameters (if not null)
             if (null != params) {
                 for ( Map.Entry<String, String[]> param : params.entrySet() ) {
-                    xslt.setParameter(param.getKey(), arrayToString(param.getValue(), " "));
+                    xslt.setParameter(param.getKey(), StringTools.arrayToString(param.getValue(), " "));
                 }
             }
 
@@ -278,23 +279,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             }
         }
         return result;
-    }
-
-    private static String arrayToString(String[] a, String separator)
-    {
-        if (a == null || separator == null) {
-            return null;
-        }
-
-        StringBuilder result = new StringBuilder();
-        if (a.length > 0) {
-            result.append(a[0]);
-            for (int i=1; i < a.length; i++) {
-                result.append(separator);
-                result.append(a[i]);
-            }
-        }
-        return result.toString();
     }
 
     class LoggerWriter extends SequenceWriter

@@ -21,6 +21,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryExpander;
 
 import java.util.HashSet;
@@ -41,7 +42,7 @@ public final class EFOQueryExpander implements IQueryExpander
 
     public Query expandQuery( Query originalQuery, Map<String, String[]> queryParams )
     {
-        boolean shouldExpandEfo = "true".equals(queryParams.get("expandefo"));
+        boolean shouldExpandEfo = -1 != StringTools.arrayToString(queryParams.get("expandefo"), " ").indexOf("true");
         
         return expand(originalQuery, shouldExpandEfo);
     }
