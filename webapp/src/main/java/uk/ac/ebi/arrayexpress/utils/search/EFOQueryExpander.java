@@ -70,16 +70,21 @@ public final class EFOQueryExpander implements IQueryExpander
     {
         String field = getQueryField(query);
         if (null != field && -1 != "keywords sa efv exptype".indexOf(field)) {
+
+            shouldExpandEfo = shouldExpandEfo || "exptype".equals(field);   // exptype always expands
+
             EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
-            if (0 != expansionTerms.efo.size() || 0 != expansionTerms.synonyms.size()) {
+            if ((shouldExpandEfo && (0 != expansionTerms.efo.size())) || 0 != expansionTerms.synonyms.size()) {
                 BooleanQuery boolQuery = new BooleanQuery();
 
-                for (String term : expansionTerms.synonyms ) {
+                for (String term : expansionTerms.synonyms) {
                     boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
                 }
 
-                for (String term : expansionTerms.efo ) {
-                    boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
+                if (shouldExpandEfo) {
+                    for (String term : expansionTerms.efo) {
+                        boolQuery.add(newQueryFromString(term.trim(), field), BooleanClause.Occur.SHOULD);
+                    }
                 }
                 return boolQuery;
             }
