@@ -12,7 +12,7 @@
         <xsl:variable name="vText" select="normalize-space($pText)"/>
         <xsl:choose>
             <xsl:when test="string-length($vText)!=0">
-                <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText, '', '')"/>
+                <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText)"/>
                 <xsl:call-template name="add_highlight_element">
                     <xsl:with-param name="text" select="$markedtext"/>
                 </xsl:call-template>

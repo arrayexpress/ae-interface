@@ -48,7 +48,7 @@ public class EFOExpandedHighlighter implements IQueryHighlighter
         return this;
     }
 
-    public String highlightQuery( QueryInfo info, String fieldName, String text, String openMark, String closeMark )
+    public String highlightQuery( QueryInfo info, String fieldName, String text )
     {
         EFOExpandableQueryInfo queryInfo = null;
 

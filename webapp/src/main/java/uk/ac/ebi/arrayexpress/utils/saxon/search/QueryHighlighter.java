@@ -31,16 +31,19 @@ public class QueryHighlighter implements IQueryHighlighter
 
     private IndexEnvironment env;
 
+    private final String HIT_OPEN_MARK = "\u00ab";
+    private final String HIT_CLOSE_MARK = "\u00bb";
+
     public IQueryHighlighter setEnvironment( IndexEnvironment env )
     {
         this.env = env;
         return this;
     }
 
-    public String highlightQuery( QueryInfo queryInfo, String fieldName, String text, String openMark, String closeMark )
+    public String highlightQuery( QueryInfo queryInfo, String fieldName, String text )
     {
         try {
-            SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter(openMark, closeMark);
+            SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter(HIT_OPEN_MARK, HIT_CLOSE_MARK);
             Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(queryInfo.getQuery(), fieldName, this.env.defaultField));
             highlighter.setTextFragmenter(new NullFragmenter());
 

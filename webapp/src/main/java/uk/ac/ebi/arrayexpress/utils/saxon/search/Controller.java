@@ -89,12 +89,12 @@ public class Controller
         return new Querier(getEnvironment(indexId)).query(queryPool.getQueryInfo(queryId).getQuery());
     }
 
-    public String highlightQuery( String indexId, Integer queryId, String fieldName, String text, String openMark, String closeMark )
+    public String highlightQuery( String indexId, Integer queryId, String fieldName, String text )
     {
         if (null == queryHighlighter) {
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryHighlighter(new QueryHighlighter());
         }
-        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text, openMark, closeMark);
+        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text);
     }
 }

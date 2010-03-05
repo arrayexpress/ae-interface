@@ -21,5 +21,5 @@ public interface IQueryHighlighter
 {
     public IQueryHighlighter setEnvironment( IndexEnvironment env );
 
-    public String highlightQuery( QueryInfo queryInfo, String fieldName, String text, String openMark, String closeMark );
+    public String highlightQuery( QueryInfo queryInfo, String fieldName, String text );
 }
