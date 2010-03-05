@@ -267,3 +267,96 @@ body.dev_preview {
     font-size: 1px;
     height: 1px;
 }
+
+/* autocomplete-related classes */
+.ac_results {
+	padding: 0px;
+	/*border: 1px solid #5e9e9e;*/
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0;
+	padding: 0 3px;
+	cursor: default;
+	display: block;
+	height: 16px;
+	overflow: hidden;
+}
+
+.ac_tree_level
+, .ac_tree_control {
+    float: left;
+    width: 16px;
+    height: 16px;
+    padding: 4px 4px 3px 3px;
+}
+
+.ac_tree_collapsed .ac_tree_control div {
+    width: 9px;
+    height: 9px;
+    background: url( ../images/tminmax.gif ) 0 0 no-repeat;
+}
+
+.ac_tree_expanded .ac_tree_control div {
+    width: 9px;
+    height: 9px;
+    background: url( ../images/tminmax.gif ) 0 -9px no-repeat;
+}
+
+.ac_loading {
+	background: white url('../images/busy.gif') right center no-repeat;
+}
+
+.ac_over {
+	background-color: #006666; /* url('../images/ac_select.gif') 0 0 repeat-x; */
+	color: white;
+}
+
+.ac_top {
+    background: url( ../images/fft.gif ) 0 0 repeat-x;
+}
+
+.ac_top_left {
+    background: url( ../images/fftl.gif ) 0 0 no-repeat;
+}
+
+.ac_top_right {
+    background: url( ../images/fftr.gif ) 100% 0 no-repeat;
+}
+
+.ac_left {
+    background: url( ../images/ffl.gif ) 0 0 repeat-y;
+}
+
+.ac_right {
+    background: url( ../images/ffr.gif ) 100% 0 repeat-y;
+}
+
+.ac_bottom {
+    background: url( ../images/ffb.gif ) 0 100% repeat-x;
+}
+
+.ac_bottom_left {
+    background: url( ../images/ffbl.gif ) 0 100% no-repeat;
+}
+
+.ac_bottom_right {
+    background: url( ../images/ffbr.gif ) 100% 100% no-repeat;
+}
+
+.ac_inner {
+    padding: 1px;
+}

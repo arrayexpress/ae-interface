@@ -1,0 +1,5 @@
+sa|f|Sample Attribute Values
+sacount|f|Number of Sample Attributes
+sail|i|
+sample|o|EFO_0000311|
+sample call|o|EFO_0001639|

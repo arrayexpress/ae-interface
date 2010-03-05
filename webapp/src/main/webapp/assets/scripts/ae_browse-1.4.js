@@ -151,6 +151,42 @@ aeToggleExpand( id, shouldUpdateState )
     }
 }
 
+function
+aeACParseData(data)
+{
+    var parsed = [];
+    var rows = data.split("\n");
+    for (var i=0; i < rows.length; i++) {
+        var row = $.trim(rows[i]);
+        if (row) {
+            row = row.split("|");
+            parsed[parsed.length] = {
+                data: row,
+                value: row[0],
+                result: aeACFormatResult(row, row[0]),
+                type: row[1],
+                fieldName: "f" == row[1] ? row[2] : null,
+                treeId: "o" == row[1] ? row[2] : null,
+                treeLevel: "o" == row[1] ? 0 : null,
+                treeIsExpanded: false
+            };
+        }
+    }
+    return parsed;
+}
+
+function
+aeACFormatResult(data, value)
+{
+    if ("f" == data[1]) {
+        value = value + ":";
+    }
+    if (-1 != String(value).indexOf(" ")) {
+        return "\"" + value + "\"";
+    } else
+        return value;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready( function() {
@@ -176,6 +212,23 @@ $(document).ready( function() {
     } else {
         onWindowResize();
     }
+
+    // added autocompletion
+    var browseUrl = decodeURI(window.location.pathname);
+
+    $("#ae_keywords").autocomplete(
+            browseUrl.replace(/browse\.html/, "test/keywords.txt")
+            , { multiple: true
+                , multipleSeparator: " "
+                , matchContains: false
+                , selectFirst: false
+                , scroll: true
+                , max: 50
+                , parse: aeACParseData
+                , formatResult: aeACFormatResult
+                , requestTreeUrl: browseUrl.replace(/browse\.html/, "test/efotree.txt")
+            }
+        );
 
     var _user = $.cookie("AeLoggedUser");
     var _token = $.cookie("AeLoginToken");
