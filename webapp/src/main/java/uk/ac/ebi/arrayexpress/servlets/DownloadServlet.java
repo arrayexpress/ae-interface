@@ -74,6 +74,13 @@ public class DownloadServlet extends ApplicationServlet
             }
         } catch (DownloadServletException x) {
             logger.error(x.getMessage());
+        } catch (Exception x) {
+            if (x.getClass().getName().equals("org.apache.catalina.connector.ClientAbortException")) {
+                // generate log entry for client abortion
+                logger.warn("Download aborted");
+            } else {
+                throw new ServletException(x);
+            }
         }
     }
 

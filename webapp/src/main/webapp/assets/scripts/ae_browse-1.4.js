@@ -11,6 +11,7 @@ function
 aeClearKeywords()
 {
     $("#ae_keywords").val("");
+    $("#ae_expandefo").removeAttr("checked");
 }
 
 function
@@ -242,6 +243,11 @@ onExperimentQuery( tableHtml )
 
     // populate table with data
     $("#ae_results_tbody").html(tableHtml);
+
+    // attach titles to highlight classes
+    $("#ae_results_tbody").find(".ae_text_hit").attr("title", "This is exact string matched for input query terms");
+    $("#ae_results_tbody").find(".ae_text_syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
+    $("#ae_results_tbody").find(".ae_text_efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
 
     // check if the appstate was saved for the page
     if (checkAppState()) {

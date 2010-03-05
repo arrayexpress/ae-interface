@@ -731,11 +731,11 @@ a:active .table_header_label {
 }
 
 .ae_text_syn {
-    background-color: #9aff32;
+    background-color: #99ff33;
 }
 
 .ae_text_efo {
-    background-color: #ffb57f;
+    background-color: pink;
 }
 
 #ae_results_status,
