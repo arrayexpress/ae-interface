@@ -79,9 +79,11 @@ public final class EFOQueryExpander implements IQueryExpander
                         , c.getOccur()
                 );
             }
-//      } else if (query instanceof PrefixQuery || query instanceof WildcardQuery) {
-//        // we don't expand prefix or wildcard queries yet
-//          return query;
+        } else if (query instanceof PrefixQuery || query instanceof WildcardQuery) {
+            // we don't expand prefix or wildcard queries yet (because there are side-effects
+            // we need to take care of first
+            // for example, for prefix query will found multi-worded terms which, well, is wrong
+            return query;
         } else {
             result = doExpand(queryInfo, query);
         }
