@@ -15,13 +15,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>hasbanana-repo</id>
-            <url>http://www.hasbanana.com/maven/repo</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
     </repositories>
     <build>
         <plugins>
@@ -61,8 +54,8 @@
         </dependency>
         <dependency>
             <groupId>net.sourceforge.fluxion</groupId>
-            <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>fluxion-utils</artifactId>
+            <version>1.0-alpha</version>
         </dependency>
     </dependencies>
 </project>

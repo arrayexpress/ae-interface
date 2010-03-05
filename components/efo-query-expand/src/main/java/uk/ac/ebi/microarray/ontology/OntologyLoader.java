@@ -24,6 +24,7 @@ package uk.ac.ebi.microarray.ontology;
 import net.sourceforge.fluxion.utils.OWLTransformationException;
 import net.sourceforge.fluxion.utils.OWLUtils;
 import net.sourceforge.fluxion.utils.ReasonerSession;
+import net.sourceforge.fluxion.utils.ReasonerSessionManager;
 import org.semanticweb.owl.apibinding.OWLManager;
 import org.semanticweb.owl.inference.OWLReasoner;
 import org.semanticweb.owl.inference.OWLReasonerException;
@@ -41,6 +42,7 @@ public class OntologyLoader<N extends IOntologyNode>
 {
     private OWLOntology ontology;
     private OWLReasoner reasoner;
+    private ReasonerSessionManager sessionManager;
 
     /**
      * Create an instance with ontology read from the given InputStream.
@@ -59,6 +61,7 @@ public class OntologyLoader<N extends IOntologyNode>
      */
     public OntologyLoader( StreamInputSource ontologyInput )
     {
+        sessionManager = ReasonerSessionManager.createManager();
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         try {
             ontology = manager.loadOntology(ontologyInput);
@@ -80,20 +83,22 @@ public class OntologyLoader<N extends IOntologyNode>
                                 IPropertyVisitor<N>... propertyVisitors )
     {
         Map<String, N> ontologyMap = new HashMap<String, N>();
-        ReasonerSession session = OWLUtils.getReasonerSession(ontology);
+        ReasonerSession session = sessionManager.acquireReasonerSession(ontology);
         try {
             reasoner = session.getReasoner();
             for (OWLClass cls : ontology.getReferencedClasses()) {
                 loadClass(cls, annotationVisitor, ontologyMap);
             }
+
+            for (IPropertyVisitor<N> visitor : propertyVisitors) {
+                loadProperties(session, visitor, ontologyMap);
+            }
         } catch (OWLReasonerException e) {
-            throw new RuntimeException(e);
+                throw new RuntimeException(e);
         } finally {
             session.releaseSession();
         }
-        for (IPropertyVisitor<N> visitor : propertyVisitors) {
-            loadProperties(visitor, ontologyMap);
-        }
+
         return ontologyMap;
     }
 
@@ -101,7 +106,7 @@ public class OntologyLoader<N extends IOntologyNode>
      * Finds all classes with the relationship induced by the property the given visitor is interested in
      * and gives them to the visitor
      */
-    private void loadProperties( IPropertyVisitor<N> visitor, Map<String, N> ontologyMap )
+    private void loadProperties( ReasonerSession session, IPropertyVisitor<N> visitor, Map<String, N> ontologyMap )
     {
         OWLObjectProperty property = getProperty(visitor.getPropertyName());
         if (null != property) {
@@ -109,9 +114,9 @@ public class OntologyLoader<N extends IOntologyNode>
                 String id = getId(clazz);
                 N node = ontologyMap.get(id);
                 if (visitor.isInterestedInNode(node)) {
-                    Set<OWLRestriction> owlRestrictions = null;
+                    Set<OWLRestriction> owlRestrictions;
                     try {
-                        owlRestrictions = OWLUtils.keep(ontology, clazz, property);
+                        owlRestrictions = OWLUtils.keep(session, ontology, clazz, property);
                         for (OWLRestriction restriction : owlRestrictions) {
                             for (OWLClass friend : restriction.getClassesInSignature()) {
                                 String friendId = getId(friend);
