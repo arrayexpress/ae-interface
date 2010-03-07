@@ -120,7 +120,7 @@
     </rule>
     <rule>
         <from>^/keywords.txt</from>
-        <to type="forward">/servlets/lookup/keywords?q=%{parameter:q}</to>
+        <to type="forward">/servlets/lookup/keywords?q=%{parameter:q}&amp;limit=%{parameter:limit}</to>
     </rule>
     <rule>
         <from>^/ae-stats.xml</from>

@@ -49,9 +49,14 @@ public class LookupServlet extends ApplicationServlet
 
         String type = "";
         String query = "";
+        Integer limit = null;
 
         if (null != request.getParameter("q")) {
             query = request.getParameter("q");
+        }
+
+        if (null != request.getParameter("limit")) {
+            limit = Integer.parseInt(request.getParameter("limit"));
         }
 
         if (null != requestArgs) {
@@ -81,7 +86,7 @@ public class LookupServlet extends ApplicationServlet
         } else if (type.equals("exptech")) {
             out.print(experiments.getAssaysByInstrument(query));
         } else if (type.equals("keywords")) {
-            out.print(experiments.getKeywords(query));
+            out.print(experiments.getKeywords(query, limit));
         }
     }
 }

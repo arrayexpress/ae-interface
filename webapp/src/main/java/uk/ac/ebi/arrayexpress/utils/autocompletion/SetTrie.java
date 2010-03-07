@@ -53,13 +53,17 @@ public class SetTrie<T extends IObjectWithAStringKey>
         return false;
     }
 
-    public List<T> findCompletions( String prefix )
+    public List<T> findCompletions( String prefix, Integer limit )
     {
         List<T> completions = new ArrayList<T>();
         Set<String> tailSet = lines.tailSet(prefix);
+        int count = 0;
         for (String tail : tailSet) {
             if (tail.startsWith(prefix)) {
                 completions.add(objects.get(tail));
+                if (null != limit && ++count >= limit) {
+                    break;
+                }
             } else {
                 break;
             }

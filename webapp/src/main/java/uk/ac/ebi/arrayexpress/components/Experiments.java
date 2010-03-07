@@ -156,10 +156,10 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public String getKeywords( String prefix )
+    public String getKeywords( String prefix, Integer limit )
     {
         StringBuilder sb = new StringBuilder("");
-        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix);
+        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix, limit);
         for (AutocompleteData match : matches) {
             sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
         }
