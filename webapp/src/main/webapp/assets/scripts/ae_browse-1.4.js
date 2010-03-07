@@ -179,12 +179,36 @@ function
 aeACFormatResult(data, value)
 {
     if ("f" == data[1]) {
-        value = value + ":";
+        return value + ":";
     }
+
     if (-1 != String(value).indexOf(" ")) {
-        return "\"" + value + "\"";
+        return "\"" + value + "\" ";
     } else
-        return value;
+        return value + " ";
+}
+
+function
+aeACFormatItem(data, pos, max, value, term)
+{
+    var result = value;
+    if ("f" == data.data[1]) {
+        value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
+    } else if ("o" == data.data[1]) {
+        value = value + "<span class=\"ac_efo\">efo</span>";
+
+        if (null != data.treeLevel) {
+            if (data.treeId) {
+                value = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + value;
+            } else if (0 < data.treeLevel) {
+                value = "<div class=\"ac_tree_level\"/>" + value;
+            }
+            for(var j = 0; j < data.treeLevel; j++) {
+                value = "<div class=\"ac_tree_level\"/>" + value;
+            }
+        }
+    }
+    return value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +250,7 @@ $(document).ready( function() {
                 , max: 50
                 , parse: aeACParseData
                 , formatResult: aeACFormatResult
+                , formatItem: aeACFormatItem
                 , requestTreeUrl: browseUrl.replace(/browse\.html/, "efotree.txt")
             }
         );

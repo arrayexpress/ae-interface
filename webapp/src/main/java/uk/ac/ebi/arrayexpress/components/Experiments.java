@@ -178,7 +178,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         for (String childId : efoChildIds) {
             sb.append(this.efoTermById.get(childId)).append("|o|");
             if (this.efoChildIdsById.containsKey(childId)) {
-                sb.append(childId).append('|');
+                sb.append(childId);
             }
             sb.append("\n");
         }

@@ -360,3 +360,13 @@ body.dev_preview {
 .ac_inner {
     padding: 1px;
 }
+
+.ac_field {
+    float: right;
+    font-style: italic;
+}
+
+.ac_efo {
+    float: right;
+    font-weight: bold;
+}

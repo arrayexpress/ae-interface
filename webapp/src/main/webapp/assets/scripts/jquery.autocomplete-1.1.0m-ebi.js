@@ -244,7 +244,8 @@ $.Autocompleter = function(input, options) {
 				//$.Autocompleter.Selection(input, progress + seperator, progress + seperator);
 				v = words.join( options.multipleSeparator );
 			}
-			v += options.multipleSeparator;
+			// TODO: this must be rethought and rewritten somewhere, but for now we just remove and re-delegate
+			//v += options.multipleSeparator;
 		}
 
 		$input.val(v);
@@ -306,7 +307,7 @@ $.Autocompleter = function(input, options) {
 	// fills in the input box w/the first match (assumed to be the best match)
 	// q: the term entered
 	// sValue: the first matching result
-	function autoFill(q, sValue){
+	function autoFill(q, sValue) {
 		// autofill in the complete box w/the first match as long as the user hasn't entered in more data
 		// if the last user key pressed was backspace, don't autofill
 		if( options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE ) {
@@ -400,8 +401,7 @@ $.Autocompleter = function(input, options) {
 	};
 
 	function parse(data) {
-        alert("shit!");
-		var parsed = [];
+ 		var parsed = [];
 		var rows = data.split("\n");
 		for (var i=0; i < rows.length; i++) {
 			var row = $.trim(rows[i]);
@@ -440,7 +440,7 @@ $.Autocompleter.defaults = {
 	mustMatch: false,
 	extraParams: {},
 	selectFirst: true,
-	formatItem: function(row) { return row[0]; },
+	formatItem: function(row) { return row.value; },
 	formatMatch: null,
 	autoFill: false,
 	width: 0,
@@ -479,7 +479,7 @@ $.Autocompleter.Cache = function(options) {
 		data[q] = value;
 	}
 
-	function populate(){
+	function populate() {
 		if( !options.data ) return false;
 		// track the matches
 		var stMatchSets = {},
@@ -534,7 +534,7 @@ $.Autocompleter.Cache = function(options) {
 	// populate any existing data
 	setTimeout(populate, 25);
 
-	function flush(){
+	function flush() {
 		data = {};
 		length = 0;
 	}
@@ -803,21 +803,11 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		for (var i=0; i < max; i++) {
 			if (!data[i])
 				continue;
-			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
+            var html = options.highlight(data[i].value, term);
+			var formatted = options.formatItem(data[i], i+1, max, html, term);
 			if ( formatted === false )
 				continue;
-            var html = options.highlight(formatted, term);
-            if (null != data[i].treeLevel) { //
-                if (data[i].treeId) {
-                    html = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + html;
-                } else if (0 < data[i].treeLevel) {
-                    html = "<div class=\"ac_tree_level\"/>" + html;
-                }
-                for(var j = 0; j < data[i].treeLevel; j++) {
-                    html = "<div class=\"ac_tree_level\"/>" + html;
-                }
-            }
-			var li = $("<li/>").html(html).addClass(i%2 == 0 ? "ac_even" : "ac_odd").addClass(data[i].treeId ? (data[i].treeIsExpanded ? "ac_tree_expanded" : "ac_tree_collapsed") : "").appendTo(list)[0];
+			var li = $("<li/>").html(formatted).addClass(i%2 == 0 ? "ac_even" : "ac_odd").addClass(data[i].treeId ? (data[i].treeIsExpanded ? "ac_tree_expanded" : "ac_tree_collapsed") : "").appendTo(list)[0];
 			$.data(li, "ac_data", data[i]);
 		}
 		listItems = list.find("li");
@@ -952,7 +942,7 @@ $.fn.selection = function(start, end) {
 			start: caretAt,
 			end: caretAt + textLength
 		}
-	} else if( field.selectionStart !== undefined ){
+	} else if( field.selectionStart !== undefined ) {
 		return {
 			start: field.selectionStart,
 			end: field.selectionEnd
