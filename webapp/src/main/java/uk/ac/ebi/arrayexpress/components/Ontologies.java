@@ -51,10 +51,13 @@ public class Ontologies extends ApplicationComponent
             EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(getPreferences().getString("ae.efo.index.location"));
             ix.addMaps(efoSynonymMap, efoFullExpansionMap);
 
+            Map<String, String> efoTermById = efoHelper.getTermByIdMap();
+            Map<String, Set<String>> efoChildIdsById = efoHelper.getOntologyIdExpansionMap();
+            ((Experiments)getComponent("Experiments")).setEfoMaps(efoTermById, efoChildIdsById);
+
             Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
             c.setQueryExpander(new EFOQueryExpander(ix));
             c.setQueryHighlighter(new EFOExpandedHighlighter());
-
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }

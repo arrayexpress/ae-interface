@@ -68,7 +68,7 @@ public class EFOOntologyHelper
      *
      * @return Map ontology term id -> name.
      */
-    public Map<String, String> getId2NameMap()
+    public Map<String, String> getTermByIdMap()
     {
         Map<String, String> result = new HashMap<String, String>();
         for (String id : efoMap.keySet()) {
@@ -87,7 +87,7 @@ public class EFOOntologyHelper
      *
      * @return Map to expand ontology term
      */
-    public Map<String, Set<String>> getOntologyExpansionMap()
+    public Map<String, Set<String>> getOntologyIdExpansionMap()
     {
         Map<String, Set<String>> result = new HashMap<String, Set<String>>();
         for (String id : efoMap.keySet()) {

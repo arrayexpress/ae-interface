@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Experiments extends ApplicationComponent implements DocumentSource
 {
@@ -47,6 +48,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
     private SetTrie<AutocompleteData> autocompleteStore;
+    private Map<String, String> efoTermById;
+    private Map<String, Set<String>> efoChildIdsById;
 
     private SaxonEngine saxon;
     private SearchEngine search;
@@ -166,6 +169,37 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return sb.toString();
     }
 
+    public String getEfoTree( String efoId )
+    {
+        StringBuilder sb = new StringBuilder();
+        Set<String> efoChildIds = this.efoChildIdsById.get(efoId);
+
+        for (String childId : efoChildIds) {
+            sb.append(this.efoTermById.get(childId)).append("|o|");
+            if (this.efoChildIdsById.containsKey(childId)) {
+                sb.append(childId).append('|');
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public void setEfoMaps( Map<String, String> efoTermById, Map<String, Set<String>> efoChildIdsById )
+    {
+        this.efoTermById = efoTermById;
+        this.efoChildIdsById = efoChildIdsById;
+
+        for (String efoId : efoTermById.keySet()) {
+            this.autocompleteStore.add(
+                    new AutocompleteData(
+                            this.efoTermById.get(efoId)
+                            , AutocompleteData.DATA_EFO_NODE
+                            , efoChildIdsById.containsKey(efoId) ? efoId : ""
+                    )
+            );
+        }
+    }
+
     public String getDataSource()
     {
         if (null == this.dataSource) {
@@ -222,7 +256,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
             List<String> keywords = search.getController().getTerms("experiments", "keywords", 10);
             autocompleteStore.clear();
             for (String keyword : keywords) {
-                autocompleteStore.load(new AutocompleteData(keyword, AutocompleteData.DATA_TEXT, ""));
+                autocompleteStore.add(new AutocompleteData(keyword, AutocompleteData.DATA_TEXT, ""));
             }
             logger.debug("Retrieved experiment keywords list, size [{}]", keywords.size());
         } catch (Exception x) {

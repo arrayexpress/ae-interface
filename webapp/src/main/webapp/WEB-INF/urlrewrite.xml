@@ -123,6 +123,10 @@
         <to type="forward">/servlets/lookup/keywords?q=%{parameter:q}&amp;limit=%{parameter:limit}</to>
     </rule>
     <rule>
+        <from>^/efotree.txt</from>
+        <to type="forward">/servlets/lookup/efotree?efoid=%{parameter:efoid}</to>
+    </rule>
+    <rule>
         <from>^/ae-stats.xml</from>
         <to type="forward">/servlets/query/stats</to>
     </rule>

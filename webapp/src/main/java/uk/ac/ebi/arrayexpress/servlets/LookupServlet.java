@@ -87,6 +87,9 @@ public class LookupServlet extends ApplicationServlet
             out.print(experiments.getAssaysByInstrument(query));
         } else if (type.equals("keywords")) {
             out.print(experiments.getKeywords(query, limit));
+        } else if (type.equals("efotree")) {
+            String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
+            out.print(experiments.getEfoTree(efoId));
         }
     }
 }

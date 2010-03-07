@@ -36,7 +36,7 @@ public class SetTrie<T extends IObjectWithAStringKey>
         objects.clear();
     }
 
-    public void load( T object )
+    public void add( T object )
     {
         lines.add(object.getKey());
         objects.put(object.getKey(), object);

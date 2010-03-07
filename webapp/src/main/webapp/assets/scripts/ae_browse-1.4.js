@@ -226,7 +226,7 @@ $(document).ready( function() {
                 , max: 50
                 , parse: aeACParseData
                 , formatResult: aeACFormatResult
-                , requestTreeUrl: browseUrl.replace(/browse\.html/, "test/efotree.txt")
+                , requestTreeUrl: browseUrl.replace(/browse\.html/, "efotree.txt")
             }
         );
 
