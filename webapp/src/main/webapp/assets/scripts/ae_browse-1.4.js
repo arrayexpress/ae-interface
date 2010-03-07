@@ -217,7 +217,7 @@ $(document).ready( function() {
     var browseUrl = decodeURI(window.location.pathname);
 
     $("#ae_keywords").autocomplete(
-            browseUrl.replace(/browse\.html/, "test/keywords.txt")
+            browseUrl.replace(/browse\.html/, "keywords.txt")
             , { multiple: true
                 , multipleSeparator: " "
                 , matchContains: false

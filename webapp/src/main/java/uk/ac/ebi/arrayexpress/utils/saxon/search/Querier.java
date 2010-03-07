@@ -40,7 +40,7 @@ public class Querier
         this.env = env;
     }
 
-    public List<String> getTerms( String fieldName )
+    public List<String> getTerms( String fieldName, int minFreq )
     {
         List<String> termsList = null;
 
@@ -50,8 +50,9 @@ public class Querier
             while (fieldName.equals(terms.term().field())) {
                 if (null == termsList)
                     termsList = new ArrayList<String>();
-
-                termsList.add(terms.term().text());
+                if (terms.docFreq() >= minFreq) {
+                    termsList.add(terms.term().text());
+                }
                 if (!terms.next())
                     break;
             }

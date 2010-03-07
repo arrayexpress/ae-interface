@@ -123,4 +123,9 @@ public class IndexEnvironment
             logger.error("Caught an exception:", x);
         }
     }
+
+    public boolean doesFieldExist( String fieldName )
+    {
+        return fields.containsKey(fieldName);
+    }
 }

@@ -21,6 +21,8 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
+import uk.ac.ebi.arrayexpress.utils.autocompletion.SetTrie;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
@@ -42,11 +44,12 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
     private TextFilePersistence<PersistableString> arrays;
-    //private TextFilePersistence<PersistableString> experimentTypes;
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
+    private SetTrie<AutocompleteData> autocompleteStore;
 
     private SaxonEngine saxon;
+    private SearchEngine search;
 
     public Experiments()
     {
@@ -56,6 +59,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     public void initialize()
     {
         saxon = (SaxonEngine)getComponent("SaxonEngine");
+        search = (SearchEngine)getComponent("SearchEngine");
 
         this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer()
@@ -78,11 +82,6 @@ public class Experiments extends ApplicationComponent implements DocumentSource
                 , new File(getPreferences().getString("ae.arrays.file.location"))
         );
 
-        //this.experimentTypes = new TextFilePersistence<PersistableString>(
-        //        new PersistableString()
-        //        , new File(getPreferences().getString("ae.exptypes.file.location"))
-        //);
-
         this.assaysByMolecule = new HashMap<String, String>();
         assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"metabolomic profiling\">Metabolite assay</option><option value=\"protein assay\">Protein assay</option><option value=\"RNA assay\">RNA assay</option>");
         assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
@@ -96,6 +95,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
+        this.autocompleteStore = new SetTrie<AutocompleteData>();
         indexExperiments();
         saxon.registerDocumentSource(this);
     }
@@ -156,6 +156,16 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return this.assaysByInstrument.get(key);
     }
 
+    public String getKeywords( String prefix )
+    {
+        StringBuilder sb = new StringBuilder("");
+        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix);
+        for (AutocompleteData match : matches) {
+            sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
+        }
+        return sb.toString();
+    }
+
     public String getDataSource()
     {
         if (null == this.dataSource) {
@@ -207,9 +217,14 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private void indexExperiments()
     {
         try {
-            ((SearchEngine)getComponent("SearchEngine")).getController().index("experiments", experiments.getObject().getDocument());
-            //List<String> expDesign = Controller.getInstance().getTerms("experiments", "expdesign");
-            //logger.debug("Retrieved experiment design list, size [{}]", expDesign.size());
+            search.getController().index("experiments", experiments.getObject().getDocument());
+
+            List<String> keywords = search.getController().getTerms("experiments", "keywords", 10);
+            autocompleteStore.clear();
+            for (String keyword : keywords) {
+                autocompleteStore.load(new AutocompleteData(keyword, AutocompleteData.DATA_TEXT, ""));
+            }
+            logger.debug("Retrieved experiment keywords list, size [{}]", keywords.size());
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

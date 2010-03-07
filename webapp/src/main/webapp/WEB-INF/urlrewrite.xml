@@ -119,6 +119,10 @@
         <to type="forward">/servlets/lookup/exptech?q=%{parameter:q}</to>
     </rule>
     <rule>
+        <from>^/keywords.txt</from>
+        <to type="forward">/servlets/lookup/keywords?q=%{parameter:q}</to>
+    </rule>
+    <rule>
         <from>^/ae-stats.xml</from>
         <to type="forward">/servlets/query/stats</to>
     </rule>

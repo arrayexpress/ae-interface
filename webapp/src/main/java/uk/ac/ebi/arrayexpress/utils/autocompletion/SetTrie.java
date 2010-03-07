@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils;
+package uk.ac.ebi.arrayexpress.utils.autocompletion;
 
 /*
  * Copyright 2009-2010 Microarray Informatics Group, European Bioinformatics Institute
@@ -17,23 +17,29 @@ package uk.ac.ebi.arrayexpress.utils;
  *
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
-public class SetTrie
+public class SetTrie<T extends IObjectWithAStringKey>
 {
     private TreeSet<String> lines;
+    private HashMap<String, T> objects;
 
     public SetTrie()
     {
         lines = new TreeSet<String>();
+        objects = new HashMap<String, T>();
     }
 
-    public void load( String line )
+    public void clear()
     {
-        lines.add(line);
+        lines.clear();
+        objects.clear();
+    }
+
+    public void load( T object )
+    {
+        lines.add(object.getKey());
+        objects.put(object.getKey(), object);
     }
 
     public boolean matchPrefix( String prefix )
@@ -47,13 +53,13 @@ public class SetTrie
         return false;
     }
 
-    public List<String> findCompletions( String prefix )
+    public List<T> findCompletions( String prefix )
     {
-        List<String> completions = new ArrayList<String>();
+        List<T> completions = new ArrayList<T>();
         Set<String> tailSet = lines.tailSet(prefix);
         for (String tail : tailSet) {
             if (tail.startsWith(prefix)) {
-                completions.add(tail);
+                completions.add(objects.get(tail));
             } else {
                 break;
             }

@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,15 @@ public class Controller
         logger.info("Indexing for index id [{}] completed", indexId);
     }
 
-    public List<String> getTerms( String indexId, String fieldName )
+    public List<String> getTerms( String indexId, String fieldName, int minFreq )
     {
-        return new Querier(getEnvironment(indexId)).getTerms(fieldName);
+        IndexEnvironment env = getEnvironment(indexId);
+        if (!env.doesFieldExist(fieldName)) {
+            logger.error("Field [{}] for index id [{}] does not exist, returning empty list");
+            return new ArrayList<String>();
+        } else {
+            return new Querier(env).getTerms(fieldName, minFreq);
+        }
     }
 
     public Integer addQuery( String indexId, Map<String, String[]> queryParams )

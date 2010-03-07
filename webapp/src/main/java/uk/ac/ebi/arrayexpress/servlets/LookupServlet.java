@@ -80,6 +80,8 @@ public class LookupServlet extends ApplicationServlet
             out.print(experiments.getAssaysByMolecule(query));
         } else if (type.equals("exptech")) {
             out.print(experiments.getAssaysByInstrument(query));
+        } else if (type.equals("keywords")) {
+            out.print(experiments.getKeywords(query));
         }
     }
 }
