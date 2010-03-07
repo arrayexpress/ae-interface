@@ -52,6 +52,7 @@ public class IndexEnvironment
     public class FieldInfo
     {
         public String name;
+        public String title;
         public String type;
         public String path;
         public boolean shouldAnalyze;
@@ -62,6 +63,7 @@ public class IndexEnvironment
         public FieldInfo( HierarchicalConfiguration fieldConfig )
         {
             this.name = fieldConfig.getString("[@name]");
+            this.title = fieldConfig.containsKey("[@title]") ? fieldConfig.getString("[@title]") : null;
             this.type = fieldConfig.getString("[@type]");
             this.path = fieldConfig.getString("[@path]");
             if ("string".equals(this.type)) {

@@ -99,6 +99,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
         this.autocompleteStore = new SetTrie<AutocompleteData>();
+
         indexExperiments();
         saxon.registerDocumentSource(this);
     }
@@ -188,16 +189,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         this.efoTermById = efoTermById;
         this.efoChildIdsById = efoChildIdsById;
-
-        for (String efoId : efoTermById.keySet()) {
-            this.autocompleteStore.add(
-                    new AutocompleteData(
-                            this.efoTermById.get(efoId)
-                            , AutocompleteData.DATA_EFO_NODE
-                            , efoChildIdsById.containsKey(efoId) ? efoId : ""
-                    )
-            );
-        }
+        buildAutocompletion();
     }
 
     public String getDataSource()
@@ -252,15 +244,55 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         try {
             search.getController().index("experiments", experiments.getObject().getDocument());
-
-            List<String> keywords = search.getController().getTerms("experiments", "keywords", 10);
-            autocompleteStore.clear();
-            for (String keyword : keywords) {
-                autocompleteStore.add(new AutocompleteData(keyword, AutocompleteData.DATA_TEXT, ""));
-            }
-            logger.debug("Retrieved experiment keywords list, size [{}]", keywords.size());
+            buildAutocompletion();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
+        }
+    }
+
+    private void buildAutocompletion()
+    {
+        autocompleteStore.clear();
+
+        // adding keywords (that present in 10 or more documents)
+        for (String keyword : search.getController().getTerms("experiments", "keywords", 10)) {
+            autocompleteStore.add(
+                    new AutocompleteData(
+                            keyword
+                            , AutocompleteData.DATA_TEXT
+                            , ""
+                    )
+                    , false
+            );
+        }
+
+        // adding efo terms (if present)
+        if (null != this.efoTermById) {
+            for (String efoId : this.efoTermById.keySet()) {
+                this.autocompleteStore.add(
+                        new AutocompleteData(
+                                this.efoTermById.get(efoId)
+                                , AutocompleteData.DATA_EFO_NODE
+                                , efoChildIdsById.containsKey(efoId) ? efoId : ""
+                        )
+                        , true // override data if already there
+                );
+            }
+        }
+
+        // adding field names
+        for (String fieldName : search.getController().getFieldNames("experiments")) {
+            String fieldTitle = search.getController().getFieldTitle("experiments", fieldName);
+            if (!"".equals(fieldTitle)) {
+                this.autocompleteStore.add(
+                        new AutocompleteData(
+                                fieldName
+                                , AutocompleteData.DATA_FIELD
+                                , fieldTitle
+                        )
+                        , true
+                );
+            }
         }
     }
 
@@ -271,8 +303,5 @@ public class Experiments extends ApplicationComponent implements DocumentSource
 
         String arraysString = saxon.transformToString(doc, "build-arrays-list-html.xsl", null);
         this.arrays.setObject(new PersistableString(arraysString));
-
-        //String expTypesString = saxon.transformToString(doc, "build-exptypes-list-html.xsl", null);
-        //this.experimentTypes.setObject(new PersistableString(expTypesString));
     }
 }

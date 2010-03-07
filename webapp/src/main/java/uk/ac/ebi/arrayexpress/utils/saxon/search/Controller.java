@@ -23,10 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Controller
 {
@@ -84,6 +81,18 @@ public class Controller
         } else {
             return new Querier(env).getTerms(fieldName, minFreq);
         }
+    }
+
+    public Set<String> getFieldNames( String indexId )
+    {
+        IndexEnvironment env = getEnvironment(indexId);
+        return (null != env ? env.fields.keySet() : null);
+    }
+
+    public String getFieldTitle( String indexId, String fieldName )
+    {
+        IndexEnvironment env = getEnvironment(indexId);
+        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).title : null);        
     }
 
     public Integer addQuery( String indexId, Map<String, String[]> queryParams )

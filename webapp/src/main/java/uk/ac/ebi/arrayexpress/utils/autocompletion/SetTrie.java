@@ -17,10 +17,16 @@ package uk.ac.ebi.arrayexpress.utils.autocompletion;
  *
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 public class SetTrie<T extends IObjectWithAStringKey>
 {
+    // logging machinery
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private TreeSet<String> lines;
     private HashMap<String, T> objects;
 
@@ -36,10 +42,21 @@ public class SetTrie<T extends IObjectWithAStringKey>
         objects.clear();
     }
 
-    public void add( T object )
+    public void add( T object, boolean shouldOverride )
     {
-        lines.add(object.getKey());
-        objects.put(object.getKey(), object);
+        String key = object.getKey();
+        if (lines.contains(key)) {
+            if (!shouldOverride) {
+                logger.warn("Set already contains [{}], ignoring object [{}]", key, object.toString());
+                return;
+            } else {
+                logger.warn("Set already contains [{}], overriding with object [{}]", key, object.toString());
+                lines.remove(key);
+                objects.remove(key);
+            }
+        }
+        lines.add(key);
+        objects.put(key, object);
     }
 
     public boolean matchPrefix( String prefix )

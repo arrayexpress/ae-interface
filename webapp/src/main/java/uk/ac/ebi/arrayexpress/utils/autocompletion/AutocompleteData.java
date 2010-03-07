@@ -36,7 +36,11 @@ public class AutocompleteData implements IObjectWithAStringKey
 
     public String getKey()
     {
-        return this.text;
+        if (DATA_FIELD == this.dataType) { // in this case we have a unique key
+            return this.text + "_" + this.dataType;
+        } else {
+            return this.text;
+        }
     }
 
     public String getText()
@@ -52,5 +56,10 @@ public class AutocompleteData implements IObjectWithAStringKey
     public Character getDataType()
     {
         return this.dataType;
+    }
+
+    public String toString()
+    {
+        return this.text + "|" + this.dataType + "|" + this.data;
     }
 }
