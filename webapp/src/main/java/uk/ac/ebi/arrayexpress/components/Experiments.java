@@ -254,9 +254,9 @@ public class Experiments extends ApplicationComponent implements DocumentSource
             buildAutocompletion();
 
 
-            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "keywords");
-            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "sa");
-            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "efv");
+            // search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "keywords");
+            // search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "sa");
+            // search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "efv");
 
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
