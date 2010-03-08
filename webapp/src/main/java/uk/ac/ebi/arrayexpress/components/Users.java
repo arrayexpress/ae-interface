@@ -36,7 +36,7 @@ public class Users extends ApplicationComponent
         super("Users");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
         userList = new TextFilePersistence<PersistableUserList>(
                 new PersistableUserList()
@@ -46,7 +46,7 @@ public class Users extends ApplicationComponent
         authHelper = new AuthenticationHelper();
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
     }
 

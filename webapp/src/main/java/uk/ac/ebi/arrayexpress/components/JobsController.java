@@ -46,7 +46,7 @@ public class JobsController extends ApplicationComponent
         super("JobsController");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
         //addTriggerListener(new ApplicationTriggerListener());
         addJob("rescan-files", RescanFilesJob.class);
@@ -59,6 +59,11 @@ public class JobsController extends ApplicationComponent
         startScheduler();
     }
 
+    public void terminate() throws Exception
+    {
+        terminateJobs();
+    }
+
     private void startScheduler()
     {
         try {
@@ -66,11 +71,6 @@ public class JobsController extends ApplicationComponent
         } catch ( SchedulerException x ) {
             logger.error("Caught an exception:", x);
         }
-    }
-
-    public void terminate()
-    {
-        terminateJobs();
     }
 
     public void executeJob( String name )

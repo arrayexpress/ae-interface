@@ -25,6 +25,10 @@ import org.apache.lucene.search.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +44,15 @@ public class Querier
         this.env = env;
     }
 
-    public List<String> getTerms( String fieldName, int minFreq )
+    public List<String> getTerms( String fieldName, int minFreq ) throws IOException
     {
         List<String> termsList = null;
+        IndexReader ir = null;
+        TermEnum terms = null;
 
         try {
-            IndexReader ir = IndexReader.open(this.env.indexDirectory, true);
-            TermEnum terms = ir.terms(new Term(fieldName, ""));
+            ir = IndexReader.open(this.env.indexDirectory, true);
+            terms = ir.terms(new Term(fieldName, ""));
             while (fieldName.equals(terms.term().field())) {
                 if (null == termsList)
                     termsList = new ArrayList<String>();
@@ -56,13 +62,41 @@ public class Querier
                 if (!terms.next())
                     break;
             }
-            // TODO: this should go to 'finally' clause
+            terms.close();
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            if (null != terms) {
+                terms.close();
+            }
+            if (null != ir) {
+                ir.close();
+            }
+        }
+        return termsList;
+    }
+
+    public void dumpTerms( String fieldName )
+    {
+        try {
+            IndexReader ir = IndexReader.open(this.env.indexDirectory, true);
+            TermEnum terms = ir.terms(new Term(fieldName, ""));
+            File f = new File(System.getProperty("java.io.tmpdir"), fieldName + "_terms.txt");
+            BufferedWriter w = new BufferedWriter(new FileWriter(f));
+            StringBuilder sb = new StringBuilder();
+            Integer count = 0;
+            while (fieldName.equals(terms.term().field())) {
+                sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append('\n');
+                if (!terms.next())
+                    break;
+            }
+            w.write(sb.toString());
+            w.close();
             terms.close();
             ir.close();
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
-        return termsList;
     }
 
     public List<NodeInfo> query( Query query )

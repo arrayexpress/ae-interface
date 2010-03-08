@@ -22,6 +22,7 @@ import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -72,7 +73,7 @@ public class Controller
         logger.info("Indexing for index id [{}] completed", indexId);
     }
 
-    public List<String> getTerms( String indexId, String fieldName, int minFreq )
+    public List<String> getTerms( String indexId, String fieldName, int minFreq ) throws IOException
     {
         IndexEnvironment env = getEnvironment(indexId);
         if (!env.doesFieldExist(fieldName)) {
@@ -80,6 +81,14 @@ public class Controller
             return new ArrayList<String>();
         } else {
             return new Querier(env).getTerms(fieldName, minFreq);
+        }
+    }
+
+    public void dumpTerms( String indexId, String fieldName )
+    {
+        IndexEnvironment env = getEnvironment(indexId);
+        if (env.doesFieldExist(fieldName)) {
+            new Querier(env).dumpTerms(fieldName);
         }
     }
 

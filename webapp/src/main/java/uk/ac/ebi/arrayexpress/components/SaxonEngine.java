@@ -62,21 +62,17 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         super("SaxonEngine");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
-        try {
-            // This is so we make sure we use Saxon and not anything else 
-            trFactory = (TransformerFactoryImpl)TransformerFactoryImpl.newInstance();
-            trFactory.setErrorListener(this);
-            trFactory.setURIResolver(this);
+        // This is so we make sure we use Saxon and not anything else
+        trFactory = (TransformerFactoryImpl)TransformerFactoryImpl.newInstance();
+        trFactory.setErrorListener(this);
+        trFactory.setURIResolver(this);
 
-            loggerWriter = new LoggerWriter(logger);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
+        loggerWriter = new LoggerWriter(logger);
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
         loggerWriter = null;
     }

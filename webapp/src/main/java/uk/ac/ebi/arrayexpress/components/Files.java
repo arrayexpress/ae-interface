@@ -42,7 +42,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         super("Files");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
         saxon = (SaxonEngine)getComponent("SaxonEngine");
 
@@ -54,7 +54,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         saxon.registerDocumentSource(this);
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
         saxon = null;
     }

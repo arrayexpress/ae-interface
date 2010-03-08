@@ -26,6 +26,7 @@ import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,10 +41,12 @@ public class Ontologies extends ApplicationComponent
         super("Ontologies");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
+        InputStream is = null;
         try {
-            EFOOntologyHelper efoHelper = new EFOOntologyHelper(this.getApplication().getResource("/WEB-INF/classes/efo.owl").openStream());
+            is = this.getApplication().getResource("/WEB-INF/classes/efo.owl").openStream();
+            EFOOntologyHelper efoHelper = new EFOOntologyHelper(is);
 
             Map<String, Set<String>> efoFullExpansionMap = efoHelper.getFullOntologyExpansionMap();
             Map<String, Set<String>> efoSynonymMap = efoHelper.getSynonymMap();
@@ -58,12 +61,14 @@ public class Ontologies extends ApplicationComponent
             Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
             c.setQueryExpander(new EFOQueryExpander(ix));
             c.setQueryHighlighter(new EFOExpandedHighlighter());
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+        } finally {
+            if (null != is) {
+                is.close();
+            }
         }
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
     }
 }

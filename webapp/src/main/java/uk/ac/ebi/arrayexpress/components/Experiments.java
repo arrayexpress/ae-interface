@@ -30,6 +30,7 @@ import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +55,14 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private SaxonEngine saxon;
     private SearchEngine search;
 
+    public final String EXPERIMENTS_INDEX_ID = "experiments";
+
     public Experiments()
     {
         super("Experiments");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
         saxon = (SaxonEngine)getComponent("SaxonEngine");
         search = (SearchEngine)getComponent("SearchEngine");
@@ -104,7 +107,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         saxon.registerDocumentSource(this);
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
         saxon = null;
     }
@@ -189,7 +192,11 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         this.efoTermById = efoTermById;
         this.efoChildIdsById = efoChildIdsById;
-        buildAutocompletion();
+        try {
+            buildAutocompletion();
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
     }
 
     public String getDataSource()
@@ -243,19 +250,25 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private void indexExperiments()
     {
         try {
-            search.getController().index("experiments", experiments.getObject().getDocument());
+            search.getController().index(EXPERIMENTS_INDEX_ID, experiments.getObject().getDocument());
             buildAutocompletion();
+
+
+            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "keywords");
+            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "sa");
+            search.getController().dumpTerms(EXPERIMENTS_INDEX_ID, "efv");
+
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
     }
 
-    private void buildAutocompletion()
+    private void buildAutocompletion() throws IOException
     {
         autocompleteStore.clear();
 
         // adding keywords (that present in 10 or more documents)
-        for (String keyword : search.getController().getTerms("experiments", "keywords", 10)) {
+        for (String keyword : search.getController().getTerms(EXPERIMENTS_INDEX_ID, "keywords", 10)) {
             autocompleteStore.add(
                     new AutocompleteData(
                             keyword
@@ -281,8 +294,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         }
 
         // adding field names
-        for (String fieldName : search.getController().getFieldNames("experiments")) {
-            String fieldTitle = search.getController().getFieldTitle("experiments", fieldName);
+        for (String fieldName : search.getController().getFieldNames(EXPERIMENTS_INDEX_ID)) {
+            String fieldTitle = search.getController().getFieldTitle(EXPERIMENTS_INDEX_ID, fieldName);
             if (!"".equals(fieldTitle)) {
                 this.autocompleteStore.add(
                         new AutocompleteData(

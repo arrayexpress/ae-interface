@@ -130,7 +130,7 @@ public class QueryServlet extends ApplicationServlet
                 }
             }
 
-            Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery("experiments", params);
+            Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(experiments.EXPERIMENTS_INDEX_ID, params);
             params.put("queryid", String.valueOf(queryId));
 
             SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");

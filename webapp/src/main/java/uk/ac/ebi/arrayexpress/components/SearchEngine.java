@@ -35,18 +35,13 @@ public class SearchEngine extends ApplicationComponent
         super("SearchEngine");
     }
 
-    public void initialize()
+    public void initialize() throws Exception
     {
-        try {
-            this.controller = new Controller(getApplication().getResource("/WEB-INF/classes/aeindex.xml"));
-            SearchExtension.setController(getController());
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-
+        this.controller = new Controller(getApplication().getResource("/WEB-INF/classes/aeindex.xml"));
+        SearchExtension.setController(getController());
     }
 
-    public void terminate()
+    public void terminate() throws Exception
     {
         SearchExtension.setController(null);
     }

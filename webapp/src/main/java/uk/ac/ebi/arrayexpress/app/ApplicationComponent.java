@@ -46,7 +46,7 @@ abstract public class ApplicationComponent
         return Application.getInstance().getPreferences();
     }
 
-    public abstract void initialize();
+    public abstract void initialize() throws Exception;
 
-    public abstract void terminate();
+    public abstract void terminate() throws Exception;
 }
