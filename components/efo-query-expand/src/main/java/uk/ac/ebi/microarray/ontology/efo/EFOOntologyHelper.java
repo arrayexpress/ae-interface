@@ -80,7 +80,6 @@ public class EFOOntologyHelper
         return result;
     }
 
-
     /**
      * Returns Map ontology term id -> set of
      * ids of all its parts (part_of relationship) and subclasses (is_a).

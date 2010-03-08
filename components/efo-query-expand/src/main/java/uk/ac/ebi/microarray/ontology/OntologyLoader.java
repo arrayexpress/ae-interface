@@ -66,7 +66,9 @@ public class OntologyLoader<N extends IOntologyNode>
         try {
             ontology = manager.loadOntology(ontologyInput);
         } catch (OWLOntologyCreationException e) {
-            throw new RuntimeException("Can't load ontology", e);
+            throw new RuntimeException("Unable to load ontology", e);
+        } finally {
+            sessionManager.destroy();
         }
 
     }
@@ -83,22 +85,33 @@ public class OntologyLoader<N extends IOntologyNode>
                                 IPropertyVisitor<N>... propertyVisitors )
     {
         Map<String, N> ontologyMap = new HashMap<String, N>();
-        ReasonerSession session = sessionManager.acquireReasonerSession(ontology);
-        try {
-            reasoner = session.getReasoner();
-            for (OWLClass cls : ontology.getReferencedClasses()) {
-                loadClass(cls, annotationVisitor, ontologyMap);
-            }
+        if (null != sessionManager) {
+            ReasonerSession session = sessionManager.acquireReasonerSession(ontology);
+            if (null != session) {
+                try {
+                    reasoner = session.getReasoner();
+                    if (null != reasoner) {
+                        try {
+                            for (OWLClass cls : ontology.getReferencedClasses()) {
+                                loadClass(cls, annotationVisitor, ontologyMap);
+                            }
 
-            for (IPropertyVisitor<N> visitor : propertyVisitors) {
-                loadProperties(session, visitor, ontologyMap);
+                            for (IPropertyVisitor<N> visitor : propertyVisitors) {
+                                loadProperties(session, visitor, ontologyMap);
+                            }
+                        } catch (OWLReasonerException e) {
+                                throw new RuntimeException(e);
+                        } finally {
+                            reasoner.dispose();
+                        }
+                    }
+                } catch (OWLReasonerException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    session.releaseSession();
+                }
             }
-        } catch (OWLReasonerException e) {
-                throw new RuntimeException(e);
-        } finally {
-            session.releaseSession();
         }
-
         return ontologyMap;
     }
 
@@ -123,8 +136,8 @@ public class OntologyLoader<N extends IOntologyNode>
                                 visitor.inRelationship(node, ontologyMap.get(friendId));
                             }
                         }
-                    } catch (OWLTransformationException e1) {
-                        e1.printStackTrace();
+                    } catch (OWLTransformationException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
