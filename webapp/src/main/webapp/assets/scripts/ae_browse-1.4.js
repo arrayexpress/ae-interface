@@ -182,7 +182,7 @@ aeACFormatResult(data, value)
         return value + ":";
     }
 
-    if (-1 != String(value).indexOf(" ")) {
+    if (/^[+-]/.test(value) || /[ ]/.test(value)) {
         return "\"" + value + "\" ";
     } else
         return value + " ";
