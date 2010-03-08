@@ -162,7 +162,7 @@ aeACParseData(data)
             row = row.split("|");
             parsed[parsed.length] = {
                 data: row,
-                value: row[0],
+                value: "f" == row[1] ? row[0] + ":" : row[0],
                 result: aeACFormatResult(row, row[0]),
                 type: row[1],
                 fieldName: "f" == row[1] ? row[2] : null,

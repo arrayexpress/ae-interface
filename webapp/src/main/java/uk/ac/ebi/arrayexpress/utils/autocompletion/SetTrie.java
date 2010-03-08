@@ -50,7 +50,7 @@ public class SetTrie<T extends IObjectWithAStringKey>
                 logger.warn("Set already contains [{}], ignoring object [{}]", key, object.toString());
                 return;
             } else {
-                logger.warn("Set already contains [{}], overriding with object [{}]", key, object.toString());
+                logger.debug("Set already contains [{}], overriding with object [{}]", key, object.toString());
                 lines.remove(key);
                 objects.remove(key);
             }
