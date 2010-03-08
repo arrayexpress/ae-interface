@@ -47,7 +47,7 @@ public class QueryHighlighter implements IQueryHighlighter
             Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(queryInfo.getQuery(), fieldName, this.env.defaultField));
             highlighter.setTextFragmenter(new NullFragmenter());
 
-            String str = highlighter.getBestFragment(this.env.indexAnalyzer, fieldName, text);
+            String str = highlighter.getBestFragment(this.env.indexAnalyzer, "".equals(fieldName) ? this.env.defaultField : fieldName, text);
 
             return null != str ? str : text;
         } catch (Exception x) {
