@@ -55,7 +55,7 @@
         <dependency>
             <groupId>net.sourceforge.fluxion</groupId>
             <artifactId>fluxion-utils</artifactId>
-            <version>1.0-alpha</version>
+            <version>1.0-alpha-2</version>
         </dependency>
     </dependencies>
 </project>

@@ -62,6 +62,7 @@ public class OntologyLoader<N extends IOntologyNode>
     public OntologyLoader( StreamInputSource ontologyInput )
     {
         sessionManager = ReasonerSessionManager.createManager();
+        sessionManager.setRecycleAfter(0); // don't cache reasoner resources
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         try {
             ontology = manager.loadOntology(ontologyInput);
