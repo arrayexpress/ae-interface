@@ -353,7 +353,7 @@ $.Autocompleter = function(input, options) {
 
     function lastTerm(value)
     {
-        value = value.replace(/\"$/, "").replace(/\"[^\"]*\"/, "");
+        value = value.replace(/\"$/, "").replace(/\"[^\"]*\"/g, "");
         if (-1 != value.indexOf("\"")) {
             return matchFirst(value, /([^ ]*\".*)$/);
         } else {
