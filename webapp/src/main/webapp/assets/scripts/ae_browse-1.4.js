@@ -238,20 +238,18 @@ $(document).ready( function() {
     }
 
     // added autocompletion
-    var browseUrl = decodeURI(window.location.pathname);
+    var basePath = decodeURI(window.location.pathname).replace(/\/\w+\.\w+$/,"/");
 
     $("#ae_keywords").autocomplete(
-            browseUrl.replace(/browse\.html/, "keywords.txt")
+            basePath + "keywords.txt"
             , { multiple: true
                 , multipleSeparator: " "
                 , matchContains: false
                 , selectFirst: false
                 , scroll: true
                 , max: 50
-                , parse: aeACParseData
-                , formatResult: aeACFormatResult
                 , formatItem: aeACFormatItem
-                , requestTreeUrl: browseUrl.replace(/browse\.html/, "efotree.txt")
+                , requestTreeUrl: basePath + "efotree.txt"
             }
         );
 

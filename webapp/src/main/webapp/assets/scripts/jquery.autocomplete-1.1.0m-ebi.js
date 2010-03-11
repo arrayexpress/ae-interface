@@ -151,8 +151,6 @@ $.Autocompleter = function(input, options) {
 				}
 				break;
 
-			// matches also semicolon
-			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
 			case KEY.TAB:
 			case KEY.RETURN:
 				if( selectCurrent() ) {
@@ -227,40 +225,43 @@ $.Autocompleter = function(input, options) {
 		var v = selected.result;
 		previousValue = v;
 
-		if ( options.multiple ) {
-			var words = trimWords($input.val());
-			if ( words.length > 1 ) {
-				var separator = options.multipleSeparator.length;
-				var cursorAt = $(input).selection().start;
-				var wordAt, progress = 0;
-				$.each(words, function(i, word) {
-					progress += word.length;
-					if (cursorAt <= progress) {
-						wordAt = i;
-						return false;
-					}
-					progress += separator;
-				});
-				words[wordAt] = v;
-				// TODO this should set the cursor to the right position, but it gets overriden somewhere
-				//$.Autocompleter.Selection(input, progress + seperator, progress + seperator);
-				v = words.join( options.multipleSeparator );
-			}
-			// TODO: this must be rethought and rewritten somewhere, but for now we just remove and re-delegate
-			//v += options.multipleSeparator;
-		}
+        var value = $input.val();
+        var term = currentTerm(value);
+        var newTerm = replaceTermText(term, v);
+        var pos = 0;
+        var lastPos = 0;
+        var cursorPos = $input.selection().start;
+        var shouldAppendSuffix = cursorPos == value.length;
 
-		$input.val(v);
+        do {
+            pos = value.indexOf(term, lastPos);
+            if (-1 != pos && pos <= cursorPos && cursorPos <= pos + term.length) {
+                var beforePos = value.substring(0, pos);
+                var afterPos = value.substring(pos).replace(term, newTerm);
+                value = beforePos + afterPos;
+                break;
+            }
+            lastPos = pos + term.length;
+
+        } while(-1 != pos);
+
+        if (shouldAppendSuffix) {
+            value += ("f" == selected.type ? ":" : " ");
+        }
+
+        $input.val(value);
+        
 		hideResultsNow();
 		$input.trigger("result", [selected.data, selected.value]);
 		return true;
 	}
 
 	function onChange(crap, skipPrevCheck) {
-		if( lastKeyPressCode == KEY.DEL ) {
-			select.hide();
-			return;
-		}
+        // not sure why this was included?
+		//if( lastKeyPressCode == KEY.DEL ) {
+		//	select.hide();
+		//	return;
+		//}
 
 		var currentValue = $input.val();
 
@@ -269,61 +270,132 @@ $.Autocompleter = function(input, options) {
 
 		previousValue = currentValue;
 
-		currentValue = lastWord(currentValue);
-		if ( currentValue.length >= options.minChars) {
+        var term = currentTerm(currentValue);
+        var text = getTermText(term);
+		if ( text.length >= options.minChars) {
 			$input.addClass(options.loadingClass);
-			if (!options.matchCase)
-				currentValue = currentValue.toLowerCase();
-			request(currentValue, receiveData, hideResultsNow);
+			request(term, receiveData, hideResultsNow);
 		} else {
 			stopLoading();
 			select.hide();
 		}
-	};
+	}
 
 	function trimWords(value) {
 		if (!value)
 			return [""];
-		if (!options.multiple)
-			return [$.trim(value)];
-		return $.map(value.split(options.multipleSeparator), function(word) {
+		return $.map(value.split(" "), function(word) {
 			return $.trim(value).length ? $.trim(word) : null;
 		});
 	}
 
-	function lastWord(value) {
-		if ( !options.multiple )
-			return value;
-		var words = trimWords(value);
-		if (words.length == 1)
-			return words[0];
-		var cursorAt = $(input).selection().start;
-		if (cursorAt == value.length) {
-			words = trimWords(value)
-		} else {
-			words = trimWords(value.replace(value.substring(cursorAt), ""));
-		}
-		return words[words.length - 1];
+    function getTermModifier(term)
+    {
+        return matchFirst(term, /^[+-]/);
+    }
+
+    function getTermField(term)
+    {
+        if (-1 != term.indexOf(":")) {
+            return matchFirst(term, /([^:]+)/);
+        } else {
+            return "";
+        }
+    }
+
+    function getTermText(term)
+    {
+        var quotePos = term.indexOf("\"");
+        if (-1 != quotePos) {
+            return substringBeforeFirst(term.substring(quotePos + 1), "\""); 
+        } else {
+            term = term.replace(/^[+-]/, "");
+            term = term.replace(/^\w+:/, "");
+            return term;
+        }
+    }
+
+    function replaceTermText(term, text)
+    {
+        var field = getTermField(term);
+
+        var isTextMultiWord = -1 != text.indexOf(" ");
+        return getTermModifier(term)
+                + (field.length > 0 ? field + ":" : "")
+                + (isTextMultiWord ? "\"" : "") + text + (isTextMultiWord ? "\"" : "");
+    }
+
+    function currentTerm(value, position)
+    {
+        var cursorPosition = $(input).selection().start;
+
+        var beforeCursor = cursorPosition > 0 ? value.substring(0, cursorPosition) : "";
+        var afterCursor = value.substring(cursorPosition);
+
+        value = firstTerm(lastTerm(beforeCursor) + afterCursor);
+        return value;
 	}
 
-	// fills in the input box w/the first match (assumed to be the best match)
-	// q: the term entered
-	// sValue: the first matching result
-	function autoFill(q, sValue) {
-		// autofill in the complete box w/the first match as long as the user hasn't entered in more data
-		// if the last user key pressed was backspace, don't autofill
-		if( options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE ) {
-			// fill in the value (keep the case the user has typed)
-			$input.val($input.val() + sValue.substring(lastWord(previousValue).length));
-			// select the portion of the value not typed by the user (so the next character will erase)
-			$(input).selection(previousValue.length, previousValue.length + sValue.length);
-		}
-	};
+    function firstTerm(value)
+    {
+        if (/^[^ ]*\"/.test(value)) { // term is multi-worded
+            var openQuotePos = value.indexOf("\"");
+            var beforeQuote = value.substring(0, openQuotePos);
+            var afterQuote = value.substring(openQuotePos + 1);
+            return beforeQuote
+                    + "\""
+                    + substringBeforeFirst(afterQuote, "\"")
+                    + (-1 != afterQuote.indexOf("\"") ? "\"" : "");
+        } else {
+            return substringBeforeFirst(value, " ");
+        }
+    }
+
+    function lastTerm(value)
+    {
+        value = value.replace(/\"$/, "").replace(/\"[^\"]*\"/, "");
+        if (-1 != value.indexOf("\"")) {
+            return matchFirst(value, /([^ ]*\".*)$/);
+        } else {
+            value = substringAfterLast(value, " ");
+            return value;
+        }
+    }
+
+    function matchFirst(string, regex)
+    {
+        var matches = string.match(regex);
+        if (null != matches && matches.length > 0) {
+            return matches[0];
+        } else {
+            return "";
+        }
+    }
+
+    function substringBeforeFirst(string, searchstring)
+    {
+        var pos = string.indexOf(searchstring);
+        if (-1 == pos) {
+            return string;
+        } else {
+            return string.substring(0, pos);
+        }
+    }
+
+    function substringAfterLast(string, searchstring)
+    {
+        var pos = string.lastIndexOf(searchstring);
+        if (-1 == pos) {
+            return string;
+        } else {
+            return string.substring(pos + 1);
+        }
+    }
 
 	function hideResults() {
 		clearTimeout(timeout);
 		timeout = setTimeout(hideResultsNow, 200);
-	};
+	}
 
 	function hideResultsNow() {
 		var wasVisible = select.visible();
@@ -333,41 +405,36 @@ $.Autocompleter = function(input, options) {
 		if (options.mustMatch) {
 			// call search and run callback
 			$input.search(
-				function (result){
+				function (result) {
 					// if no value found, clear the input box
 					if( !result ) {
-						if (options.multiple) {
-							var words = trimWords($input.val()).slice(0, -1);
-							$input.val( words.join(options.multipleSeparator) + (words.length ? options.multipleSeparator : "") );
-						}
-						else {
-							$input.val( "" );
-							$input.trigger("result", null);
-						}
+                        var words = trimWords($input.val()).slice(0, -1);
+                        $input.val( words.join(" ") + (words.length ? " " : "") );
 					}
 				}
 			);
 		}
-	};
+	}
 
 	function receiveData(q, data) {
 		if ( data && data.length && hasFocus ) {
 			stopLoading();
 			select.display(data, q);
-			autoFill(q, data[0].value);
 			select.show();
 		} else {
 			hideResultsNow();
 		}
-	};
+	}
 
 	function request(term, success, failure) {
+        var text = getTermText(term);
+        var field = getTermField(term);
 		if (!options.matchCase)
-			term = term.toLowerCase();
+			text = text.toLowerCase();
 		var data = cache.load(term);
 		// recieve the cached data
 		if (data && data.length) {
-			success(term, data);
+			success(text, data);
 		// if an AJAX url has been supplied, try loading the data now
 		} else if( (typeof options.url == "string") && (options.url.length > 0) ){
 
@@ -386,46 +453,48 @@ $.Autocompleter = function(input, options) {
 				dataType: options.dataType,
 				url: options.url,
 				data: $.extend({
-					q: lastWord(term),
+					q: text,
+                    field: field,
 					limit: options.max
 				}, extraParams),
 				success: function(data) {
 					var parsed = options.parse && options.parse(data) || parse(data);
-					cache.add(term, parsed);
-					success(term, parsed);
+					cache.add(text, parsed);
+					success(text, parsed);
 				}
 			});
 		} else {
 			// if we have a failure, we need to empty the list -- this prevents the the [TAB] key from selecting the last successful match
 			select.emptyList();
-			failure(term);
+			failure(text);
 		}
-	};
+	}
 
 	function parse(data) {
- 		var parsed = [];
-		var rows = data.split("\n");
-		for (var i=0; i < rows.length; i++) {
-			var row = $.trim(rows[i]);
-			if (row) {
-				row = row.split("|");
-				parsed[parsed.length] = {
-					data: row,
-					value: row[0],
-					result: options.formatResult && options.formatResult(row, row[0]) || row[0],
+        var parsed = [];
+        var rows = data.split("\n");
+        for (var i=0; i < rows.length; i++) {
+            var row = $.trim(rows[i]);
+            if (row) {
+                row = row.split("|");
+                parsed[parsed.length] = {
+                    data: row,
+                    value: "f" == row[1] ? row[0] + ":" : row[0],
+                    result: row[0],
+                    type: row[1],
+                    fieldName: "f" == row[1] ? row[2] : null,
                     treeId: "o" == row[1] ? row[2] : null,
                     treeLevel: "o" == row[1] ? 0 : null,
                     treeIsExpanded: false
-				};
-			}
-		}
-		return parsed;
-	};
+                };
+            }
+        }
+        return parsed;
+    }
 
 	function stopLoading() {
 		$input.removeClass(options.loadingClass);
-	};
-
+	}
 };
 
 $.Autocompleter.defaults = {
@@ -444,10 +513,7 @@ $.Autocompleter.defaults = {
 	selectFirst: true,
 	formatItem: function(row) { return row.value; },
 	formatMatch: null,
-	autoFill: false,
 	width: 0,
-	multiple: false,
-	multipleSeparator: ", ",
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
@@ -469,7 +535,7 @@ $.Autocompleter.Cache = function(options) {
 		}
 		if (i == -1) return false;
 		return i == 0 || options.matchContains;
-	};
+	}
 
 	function add(q, value) {
 		if (length > options.cacheLength){
@@ -768,7 +834,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
                 success(elt, parsed);
             }
         });
-	};
+	}
 
 	function moveSelect(step) {
 		listItems.slice(active, active + 1).removeClass(CLASSES.ACTIVE);
@@ -785,7 +851,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
                 list.scrollTop(offset);
             }
         }
-	};
+	}
 
 	function movePosition(step) {
 		active += step;
