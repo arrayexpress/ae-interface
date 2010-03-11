@@ -297,6 +297,7 @@ $.Autocompleter = function(input, options) {
     function getTermField(term)
     {
         if (-1 != term.indexOf(":")) {
+            term = term.replace(/^[+-]/, "");
             return matchFirst(term, /([^:]+)/);
         } else {
             return "";
