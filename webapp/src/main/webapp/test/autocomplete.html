@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="eng">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta http-equiv="Content-Language" content="en-GB"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>
+
+    <title>Autocomplete | Test | ArrayExpress Archive | EBI</title>
+
+    <link rel="stylesheet" href="../assets/stylesheets/ae_common-1.4.css" type="text/css"/>
+    <link rel="stylesheet" href="../assets/stylesheets/ae_browse-1.4.css" type="text/css"/>
+    <script src="../assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="../assets/scripts/jsdeferred.jquery.js" type="text/javascript"></script>
+    <script src="../assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
+    <script src="../assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"></script>
+    <script src="../assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    //
+    function
+    aeACParseData(data)
+    {
+        var parsed = [];
+        var rows = data.split("\n");
+        for (var i=0; i < rows.length; i++) {
+            var row = $.trim(rows[i]);
+            if (row) {
+                row = row.split("|");
+                parsed[parsed.length] = {
+                    data: row,
+                    value: "f" == row[1] ? row[0] + ":" : row[0],
+                    result: aeACFormatResult(row, row[0]),
+                    type: row[1],
+                    fieldName: "f" == row[1] ? row[2] : null,
+                    treeId: "o" == row[1] ? row[2] : null,
+                    treeLevel: "o" == row[1] ? 0 : null,
+                    treeIsExpanded: false
+                };
+            }
+        }
+        return parsed;
+    }
+
+    function
+    aeACFormatResult(data, value)
+    {
+        if ("f" == data[1]) {
+            return value + ":";
+        }
+
+        if (/^[+-]/.test(value) || /[ ]/.test(value)) {
+            return "\"" + value + "\" ";
+        } else
+            return value + " ";
+    }
+
+    function
+    aeACFormatItem(data, pos, max, value, term)
+    {
+        var result = value;
+        if ("f" == data.data[1]) {
+            value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
+        } else if ("o" == data.data[1]) {
+            value = value + "<span class=\"ac_efo\">efo</span>";
+
+            if (null != data.treeLevel) {
+                if (data.treeId) {
+                    value = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + value;
+                } else if (0 < data.treeLevel) {
+                    value = "<div class=\"ac_tree_level\"/>" + value;
+                }
+                for(var j = 0; j < data.treeLevel; j++) {
+                    value = "<div class=\"ac_tree_level\"/>" + value;
+                }
+            }
+        }
+        return value;
+    }
+
+    $(document).ready( function() {
+
+        // added autocompletion
+        var basePath = decodeURI(window.location.pathname).replace(/\/\w+\.\w+$/,"/");
+
+        $("#ae_keywords").autocomplete(
+                basePath + "keywords.txt"
+                , { multiple: true
+                    , multipleSeparator: " "
+                    , matchContains: false
+                    , selectFirst: false
+                    , scroll: true
+                    , max: 50
+                    , parse: aeACParseData
+                    , formatResult: aeACFormatResult
+                    , formatItem: aeACFormatItem
+                    , requestTreeUrl: basePath + "efotree.txt"
+                }
+            );
+    });
+    </script>
+</head>
+
+<body>
+<div id="ae_contents">
+    <div class="ae_centered_container_100pc assign_font">
+        <div id="ae_keywords_filters_area">
+            <div id="ae_keywords_filters_box">
+                    <div id="ae_keywords_filters_inner_box">
+                        <form method="get" action="autocomplete.html">
+                            <fieldset id="ae_keywords_box">
+                                <label for="ae_keywords">Experiment, citation, sample and factor annotations</label>
+                                <input id="ae_keywords" name="keywords" maxlength="200">
+                            </fieldset>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

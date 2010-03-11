@@ -118,16 +118,18 @@ $.Autocompleter = function(input, options) {
 				break;
 
 			case KEY.LEFT:
-				event.preventDefault();
 				if ( select.visible() ) {
-					select.collapseTree();
+					if (select.collapseTree()) {
+                        event.preventDefault();
+                    }
 				}
 				break;
 
 			case KEY.RIGHT:
-				event.preventDefault();
 				if ( select.visible() ) {
-					select.expandTree();
+					if (select.expandTree()) {
+                        event.preventDefault();
+                    }
 				}
 				break;
 
@@ -682,13 +684,17 @@ $.Autocompleter.Select = function (options, input, select, config) {
     function collapseSubTree(element) {
         if ($(element).hasClass("ac_tree_expanded")) {
             removeSubTree($(element));
+            return true;
         }
+        return false;
     }
 
     function expandSubTree(element) {
         if ($(element).hasClass("ac_tree_collapsed")) {
             requestSubTree($(element), appendSubTree, appendSubTree);
+            return true;
         }
+        return false;
     }
 
     function appendSubTree(element, newData) {
@@ -859,10 +865,10 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			return this.visible() && (listItems.filter("." + CLASSES.ACTIVE)[0] || options.selectFirst && listItems[0]);
 		},
         collapseTree: function() {
-            collapseSubTree(this.current());
+            return collapseSubTree(this.current());
         },
         expandTree: function() {
-           expandSubTree(this.current());
+           return expandSubTree(this.current());
         },
 		show: function() {
 			var offset = $(input).offset();
