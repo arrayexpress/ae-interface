@@ -359,11 +359,12 @@ onExperimentQuery( tableHtml )
         if (null != headerPrintElt) {
             headerPrintElt.attr("onClick", "").attr("target", "_top").attr("href", decodeURI(window.location.pathname).replace(/browse/, "browse.printer") + $.query.toString());
         }
+        var queryString = $.query.toString();
         // assign valid hrefs to print, save and rss feed elements
-        $("#ae_results_print a").attr("href", "browse.printer.html" + $.query.toString());
-        $("#ae_results_save a").attr("href", "ArrayExpress-Experiments.txt" + $.query.toString());
-        $("#ae_results_save_xls a").attr("href", "ArrayExpress-Experiments.xls" + $.query.toString());
-        $("#ae_results_save_feed a").attr("href", "rss/experiments" + $.query.toString());
+        $("#ae_results_print a").attr("href", "browse.printer.html" + queryString);
+        $("#ae_results_save a").attr("href", "ArrayExpress-Experiments.txt" + queryString);
+        $("#ae_results_save_xls a").attr("href", "ArrayExpress-Experiments.xls" + queryString);
+        $("#ae_results_save_feed a").attr("href", "rss/experiments" + queryString);
         // show controls
         $(".status_icon").show();
 
