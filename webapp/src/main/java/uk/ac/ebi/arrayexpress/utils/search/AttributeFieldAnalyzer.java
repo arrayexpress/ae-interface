@@ -36,7 +36,7 @@ public class AttributeFieldAnalyzer extends Analyzer
 
         protected boolean isTokenChar(char c)
         {
-            return super.isTokenChar(c) && (',' != c) && (';' != c);
+            return super.isTokenChar(c) && !(',' == c ||  ';' == c || '(' == c || ')' == c);
         }
 
         protected char normalize(char c)
