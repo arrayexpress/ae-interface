@@ -163,7 +163,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public String getKeywords( String prefix, Integer limit )
+    public String getKeywords( String prefix, String field, Integer limit )
     {
         StringBuilder sb = new StringBuilder("");
         List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix, limit);
@@ -296,7 +296,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         // adding field names
         for (String fieldName : search.getController().getFieldNames(EXPERIMENTS_INDEX_ID)) {
             String fieldTitle = search.getController().getFieldTitle(EXPERIMENTS_INDEX_ID, fieldName);
-            if (!"".equals(fieldTitle)) {
+            if (null != fieldTitle && fieldTitle.length() > 0) {
                 this.autocompleteStore.add(
                         new AutocompleteData(
                                 fieldName

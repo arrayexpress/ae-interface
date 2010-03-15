@@ -86,7 +86,8 @@ public class LookupServlet extends ApplicationServlet
         } else if (type.equals("exptech")) {
             out.print(experiments.getAssaysByInstrument(query));
         } else if (type.equals("keywords")) {
-            out.print(experiments.getKeywords(query, limit));
+            String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
+            out.print(experiments.getKeywords(query, field, limit));
         } else if (type.equals("efotree")) {
             String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
             out.print(experiments.getEfoTree(efoId));
