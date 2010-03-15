@@ -104,6 +104,12 @@ public class Controller
         return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).title : null);        
     }
 
+    public String getFieldType( String indexId, String fieldName )
+    {
+        IndexEnvironment env = getEnvironment(indexId);
+        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
+    }
+
     public Integer addQuery( String indexId, Map<String, String[]> queryParams )
     {
         return queryPool.addQuery(new QueryConstructor(getEnvironment(indexId)), queryParams, queryExpander);

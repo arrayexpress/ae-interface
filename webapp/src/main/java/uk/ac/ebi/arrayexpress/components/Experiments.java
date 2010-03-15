@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
-import uk.ac.ebi.arrayexpress.utils.autocompletion.SetTrie;
+import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
@@ -48,7 +48,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private TextFilePersistence<PersistableString> arrays;
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
-    private SetTrie<AutocompleteData> autocompleteStore;
+    private AutocompleteStore autocompleteStore;
     private Map<String, String> efoTermById;
     private Map<String, Set<String>> efoChildIdsById;
 
@@ -101,7 +101,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
-        this.autocompleteStore = new SetTrie<AutocompleteData>();
+        this.autocompleteStore = new AutocompleteStore();
 
         indexExperiments();
         saxon.registerDocumentSource(this);
@@ -166,7 +166,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     public String getKeywords( String prefix, String field, Integer limit )
     {
         StringBuilder sb = new StringBuilder("");
-        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix, limit);
+        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix, field, limit);
         for (AutocompleteData match : matches) {
             sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
         }
@@ -267,43 +267,42 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         autocompleteStore.clear();
 
-        // adding keywords (that present in 10 or more documents)
-        for (String keyword : search.getController().getTerms(EXPERIMENTS_INDEX_ID, "keywords", 10)) {
-            autocompleteStore.add(
-                    new AutocompleteData(
-                            keyword
-                            , AutocompleteData.DATA_TEXT
-                            , ""
-                    )
-                    , false
-            );
+        // adding field terms (for all non-numerical fields) and names (if there is a description)
+        Set<String> fields = search.getController().getFieldNames(EXPERIMENTS_INDEX_ID);
+        for (String field : fields) {
+            String fieldTitle = search.getController().getFieldTitle(EXPERIMENTS_INDEX_ID, field);
+            if (null != fieldTitle && fieldTitle.length() > 0) {
+                this.autocompleteStore.addData(
+                        new AutocompleteData(
+                                field
+                                , AutocompleteData.DATA_FIELD
+                                , fieldTitle
+                        )
+                );
+            }
+            String fieldType = search.getController().getFieldType(EXPERIMENTS_INDEX_ID, field);
+            if (null != fieldType && !"integer".equals(fieldType)) {
+                for (String term : search.getController().getTerms(EXPERIMENTS_INDEX_ID, field, "keywords".equals(field) ? 10 : 1)) {
+                    autocompleteStore.addData(
+                        new AutocompleteData(
+                                term
+                                , AutocompleteData.DATA_TEXT
+                                , field
+                        )
+                    );
+                }
+            }
         }
 
         // adding efo terms (if present)
         if (null != this.efoTermById) {
             for (String efoId : this.efoTermById.keySet()) {
-                this.autocompleteStore.add(
+                this.autocompleteStore.addData(
                         new AutocompleteData(
                                 this.efoTermById.get(efoId)
                                 , AutocompleteData.DATA_EFO_NODE
                                 , efoChildIdsById.containsKey(efoId) ? efoId : ""
                         )
-                        , true // override data if already there
-                );
-            }
-        }
-
-        // adding field names
-        for (String fieldName : search.getController().getFieldNames(EXPERIMENTS_INDEX_ID)) {
-            String fieldTitle = search.getController().getFieldTitle(EXPERIMENTS_INDEX_ID, fieldName);
-            if (null != fieldTitle && fieldTitle.length() > 0) {
-                this.autocompleteStore.add(
-                        new AutocompleteData(
-                                fieldName
-                                , AutocompleteData.DATA_FIELD
-                                , fieldTitle
-                        )
-                        , true
                 );
             }
         }

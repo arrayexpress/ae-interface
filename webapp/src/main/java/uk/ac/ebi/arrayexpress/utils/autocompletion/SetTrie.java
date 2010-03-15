@@ -17,46 +17,28 @@ package uk.ac.ebi.arrayexpress.utils.autocompletion;
  *
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-import java.util.*;
-
-public class SetTrie<T extends IObjectWithAStringKey>
+public class SetTrie
 {
-    // logging machinery
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     private TreeSet<String> lines;
-    private HashMap<String, T> objects;
 
     public SetTrie()
     {
         lines = new TreeSet<String>();
-        objects = new HashMap<String, T>();
     }
 
     public void clear()
     {
         lines.clear();
-        objects.clear();
     }
 
-    public void add( T object, boolean shouldOverride )
+    public void add( String line )
     {
-        String key = object.getKey();
-        if (lines.contains(key)) {
-            if (!shouldOverride) {
-                logger.warn("Set already contains [{}], ignoring object [{}]", key, object.toString());
-                return;
-            } else {
-                logger.debug("Set already contains [{}], overriding with object [{}]", key, object.toString());
-                lines.remove(key);
-                objects.remove(key);
-            }
-        }
-        lines.add(key);
-        objects.put(key, object);
+        lines.add(line);
     }
 
     public boolean matchPrefix( String prefix )
@@ -70,17 +52,13 @@ public class SetTrie<T extends IObjectWithAStringKey>
         return false;
     }
 
-    public List<T> findCompletions( String prefix, Integer limit )
+    public List<String> findCompletions( String prefix )
     {
-        List<T> completions = new ArrayList<T>();
+        List<String> completions = new ArrayList<String>();
         Set<String> tailSet = lines.tailSet(prefix);
-        int count = 0;
         for (String tail : tailSet) {
             if (tail.startsWith(prefix)) {
-                completions.add(objects.get(tail));
-                if (null != limit && ++count >= limit) {
-                    break;
-                }
+                completions.add(tail);
             } else {
                 break;
             }

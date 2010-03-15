@@ -29,7 +29,7 @@ $.fn.extend({
 		// if the formatMatch option is not specified, then use formatItem for backwards compatibility
 		options.formatMatch = options.formatMatch || options.formatItem;
 
-		return this.each(function() {
+ 		return this.each(function() {
 			new $.Autocompleter(this, options);
 		});
 	},
@@ -459,7 +459,7 @@ $.Autocompleter = function(input, options) {
 					limit: options.max
 				}, extraParams),
 				success: function(data) {
-					var parsed = options.parse && options.parse(data) || parse(data);
+					var parsed = options.parse(data);
 					cache.add(text, parsed);
 					success(text, parsed);
 				}
@@ -470,28 +470,6 @@ $.Autocompleter = function(input, options) {
 			failure(text);
 		}
 	}
-
-	function parse(data) {
-        var parsed = [];
-        var rows = data.split("\n");
-        for (var i=0; i < rows.length; i++) {
-            var row = $.trim(rows[i]);
-            if (row) {
-                row = row.split("|");
-                parsed[parsed.length] = {
-                    data: row,
-                    value: "f" == row[1] ? row[0] + ":" : row[0],
-                    result: row[0],
-                    type: row[1],
-                    fieldName: "f" == row[1] ? row[2] : null,
-                    treeId: "o" == row[1] ? row[2] : null,
-                    treeLevel: "o" == row[1] ? 0 : null,
-                    treeIsExpanded: false
-                };
-            }
-        }
-        return parsed;
-    }
 
 	function stopLoading() {
 		$input.removeClass(options.loadingClass);
@@ -518,6 +496,27 @@ $.Autocompleter.defaults = {
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
+    parse: function(data) {
+        var parsed = [];
+        var rows = data.split("\n");
+        for (var i=0; i < rows.length; i++) {
+            var row = $.trim(rows[i]);
+            if (row) {
+                row = row.split("|");
+                parsed[parsed.length] = {
+                    data: row,
+                    value: "f" == row[1] ? row[0] + ":" : row[0],
+                    result: row[0],
+                    type: row[1],
+                    fieldName: "f" == row[1] ? row[2] : null,
+                    treeId: "o" == row[1] ? row[2] : null,
+                    treeLevel: "o" == row[1] ? 0 : null,
+                    treeIsExpanded: false
+                };
+            }
+        }
+        return parsed;
+    },
     scroll: true,
     scrollHeight: 242 // that is a really magic number, hehe :)
 };

@@ -17,8 +17,8 @@ package uk.ac.ebi.arrayexpress.utils.autocompletion;
  *
  */
 
-public class AutocompleteData implements IObjectWithAStringKey
-{
+public class AutocompleteData {
+
     public static final Character DATA_TEXT = 't';
     public static final Character DATA_EFO_NODE = 'o';
     public static final Character DATA_FIELD = 'f';
@@ -36,11 +36,7 @@ public class AutocompleteData implements IObjectWithAStringKey
 
     public String getKey()
     {
-        if (DATA_FIELD == this.dataType) { // in this case we have a unique key
-            return this.text + "_" + this.dataType;
-        } else {
-            return this.text;
-        }
+        return this.text + "_" + this.dataType + "_" + this.data;
     }
 
     public String getText()
