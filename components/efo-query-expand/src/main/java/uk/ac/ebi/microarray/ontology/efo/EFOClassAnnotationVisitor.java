@@ -41,6 +41,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     private Map<String, Set<String>> nameToAlternativesMap;
 
     private String term;
+    private String efoUri;
     private boolean isBranchRoot;
     private boolean isOrganizational;
     private Set<String> alternatives = new HashSet<String>();
@@ -62,6 +63,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     public void newNode()
     {
         this.term = null;
+        this.efoUri = null;
         this.isBranchRoot = false;
         this.isOrganizational = false;
         this.alternatives.clear();
@@ -85,6 +87,8 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
             this.isOrganizational = Boolean.valueOf(annotation.getAnnotationValue().getLiteral());
         } else if (annotation.getAnnotationURI().toString().contains("ArrayExpress_label")) {
             this.term = annotation.getAnnotationValue().getLiteral();
+        } else if (annotation.getAnnotationURI().toString().contains("EFO_URI")) {
+            this.efoUri = annotation.getAnnotationValue().getLiteral();
         } else if (annotation.getAnnotationURI().toString().contains("alternative_term")) {
             String alternativeTerm = annotation.getAnnotationValue().getLiteral();
             if (-1 != alternativeTerm.indexOf("[accessedResource: CHEBI:")) {
@@ -113,6 +117,16 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     public String getTerm()
     {
         return this.term;
+    }
+
+    /**
+     * Returns EFO URI if specified.
+     *
+     * @return EFO URI
+     */
+    public String getEfoUri()
+    {
+        return this.efoUri;
     }
 
     /**
@@ -153,7 +167,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
      */
     public EFONode getOntologyNode( String id )
     {
-        EFONode node = new EFONode(id, getTerm(), isBranchRoot());
+        EFONode node = new EFONode(id, null != getEfoUri() ? getEfoUri()  : id, getTerm(), isBranchRoot());
         if (!isOrganizational()) {
             addAlternativesToMap(getTerm());
         }

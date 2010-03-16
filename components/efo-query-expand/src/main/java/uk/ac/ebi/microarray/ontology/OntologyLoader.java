@@ -162,14 +162,14 @@ public class OntologyLoader<N extends IOntologyNode>
     }
 
     /**
-     * Returns class id with special symbols ^*./ removed.
+     * Returns class id
      *
      * @param cls Class that id is looked for.
      * @return Id of the specified class.
      */
     public String getId( OWLClass cls )
     {
-        return cls.getURI().getPath().replaceAll("^.*/", "");
+        return cls.getURI().toString();
     }
 
     /*

@@ -34,6 +34,7 @@ import java.util.TreeSet;
 public class EFONode implements IOntologyNode
 {
     private String id;
+    private String efoUri;
     private String term;
     private boolean isBranchRoot;
 
@@ -51,9 +52,10 @@ public class EFONode implements IOntologyNode
     private SortedSet<EFONode> children = new TreeSet<EFONode>(TERM_COMPARATOR);
     private SortedSet<EFONode> parents = new TreeSet<EFONode>(TERM_COMPARATOR);
 
-    protected EFONode( String id, String term, boolean isBranchRoot )
+    protected EFONode( String id, String efoUri, String term, boolean isBranchRoot )
     {
         this.setId(id);
+        this.setEfoUri(efoUri);
         this.setTerm(term);
         this.setIsBranchRoot(isBranchRoot);
     }
@@ -90,6 +92,16 @@ public class EFONode implements IOntologyNode
     public void setId( String id )
     {
         this.id = id;
+    }
+
+   public String getEfoUri()
+    {
+        return efoUri;
+    }
+
+    public void setEfoUri( String efoUri )
+    {
+        this.efoUri = efoUri;
     }
 
     public String getTerm()
