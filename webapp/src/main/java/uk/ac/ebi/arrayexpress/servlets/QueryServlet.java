@@ -17,8 +17,11 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.lucene.queryParser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
@@ -27,6 +30,7 @@ import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -34,8 +38,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QueryServlet extends ApplicationServlet
 {
@@ -130,19 +137,39 @@ public class QueryServlet extends ApplicationServlet
                 }
             }
 
-            Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(experiments.EXPERIMENTS_INDEX_ID, params);
-            params.put("queryid", String.valueOf(queryId));
+            try {
+                Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(experiments.EXPERIMENTS_INDEX_ID, params);
+                params.put("queryid", String.valueOf(queryId));
 
-            SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
-            if (!saxonEngine.transformToWriter(
-                    experiments.getDocument(),
-                    stylesheetName,
-                    params,
-                    out)) {
+                SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
+                if (!saxonEngine.transformToWriter(
+                        experiments.getDocument(),
+                        stylesheetName,
+                        params,
+                        out)) {
+                    throw new Exception("Transformation returned an error");
+                }
+            } catch (ParseException x) {
+                reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
+            } catch (Exception x) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         }
         out.close();
+    }
+
+    private void reportQueryError( PrintWriter out, String templateName, String query )
+    {
+        try {
+            URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/templates/" + templateName);
+            String template = StringTools.streamToString(resource.openStream());
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("variable.query", query);
+            StrSubstitutor sub = new StrSubstitutor(params);
+            out.print(sub.replace(template));
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        }
     }
 }
 

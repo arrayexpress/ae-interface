@@ -39,28 +39,20 @@ public class QueryConstructor
         this.env = env;
     }
 
-    public Query construct( Map<String, String[]> querySource )
+    public Query construct( Map<String, String[]> querySource ) throws ParseException
     {
         BooleanQuery result = new BooleanQuery();
-        try {
-            for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
-                if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
-                    QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), this.env.indexAnalyzer);
-                    parser.setDefaultOperator(QueryParser.Operator.AND);
-                    try {
-                        for ( String value : queryItem.getValue() ) {
-                            if (!"".equals(value)) {
-                                Query q = parser.parse(value);
-                                result.add(q, BooleanClause.Occur.MUST);
-                            }
-                        }
-                    } catch (ParseException x) {
-                        logger.error(x.getMessage()); //todo: this should be communicated to the user, will deal with this at a later stage
+        for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
+            if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
+                QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), this.env.indexAnalyzer);
+                parser.setDefaultOperator(QueryParser.Operator.AND);
+                for ( String value : queryItem.getValue() ) {
+                    if (!"".equals(value)) {
+                        Query q = parser.parse(value);
+                        result.add(q, BooleanClause.Occur.MUST);
                     }
                 }
             }
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
         }
         return result;
     }

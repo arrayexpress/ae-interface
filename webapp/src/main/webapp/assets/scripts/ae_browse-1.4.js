@@ -195,7 +195,7 @@ aeACFormatItem(data, pos, max, value, term)
     if ("f" == data.data[1]) {
         value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
     } else if ("o" == data.data[1]) {
-        value = value + "<span class=\"ac_efo\">efo</span>";
+        value = value + "<span class=\"ac_efo\">EFO</span>";
 
         if (null != data.treeLevel) {
             if (data.treeId) {

@@ -236,6 +236,7 @@
                                 <include>WEB-INF/web.xml</include>
                                 <include>WEB-INF/urlrewrite.xml</include>
                                 <include>WEB-INF/server-assets/stylesheets/*.xsl</include>
+                                <include>WEB-INF/server-assets/templates/*.txt</include>
                                 <include>META-INF/context.xml</include>
                             </includes>
                             <filtering>true</filtering>
@@ -369,6 +370,11 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
         </dependency>
     </dependencies>
 </project>

@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
+import org.apache.lucene.queryParser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +111,7 @@ public class Controller
         return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
     }
 
-    public Integer addQuery( String indexId, Map<String, String[]> queryParams )
+    public Integer addQuery( String indexId, Map<String, String[]> queryParams ) throws ParseException
     {
         return queryPool.addQuery(new QueryConstructor(getEnvironment(indexId)), queryParams, queryExpander);
     }

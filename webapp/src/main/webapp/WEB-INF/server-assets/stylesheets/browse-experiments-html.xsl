@@ -81,19 +81,8 @@
             <xsl:otherwise>
                 <tr class="ae_results_tr_error">
                     <td colspan="9">
-                        <xsl:choose>
-                            <xsl:when test="matches($keywords,'^E-.+-\d+$','i')">
-                                <div><strong>The experiment with accession number '<xsl:value-of select="$keywords"/>' is not available.</strong></div>
-                                <div>If you believe this is an error, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:variable name="vArrayName" select="//arraydesign[id=$array]/name"/>
-                                <div>There are no experiments <strong><xsl:value-of select="ae:describeQuery($queryid)"/></strong> found in ArrayExpress Archive.</div>
-                                <div>Try shortening the query term e.g. 'embryo' will match embryo, embryoid, embryonic across all annotation fields.</div>
-                                <div>Note that '*' is <strong>not</strong> supported as a wild card. More information available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
-                            </xsl:otherwise>
-                        </xsl:choose>
-
+                            <div>There are no experiments matching your search criteria found in ArrayExpress Archive.</div>
+                            <div>More information on query syntax available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
                     </td>
                 </tr>
             </xsl:otherwise>
@@ -123,6 +112,7 @@
                     <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="name"/>
+                            <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                     </div>
                 </td>
@@ -367,6 +357,7 @@
                                                         <td class="attr_name">
                                                             <xsl:call-template name="highlight">
                                                                 <xsl:with-param name="pText" select="category"/>
+                                                                <xsl:with-param name="pFieldName"/>
                                                             </xsl:call-template>
                                                         </td>
                                                         <td class="attr_value">
@@ -392,24 +383,27 @@
     <xsl:template match="bibliography">
         <div>
             <xsl:variable name="publication_title">
-                <xsl:if test="string-length(title) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="ae:trimTrailingDot(title)"/></xsl:call-template>. </xsl:if>
-                <xsl:if test="string-length(authors) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="ae:trimTrailingDot(authors)"/></xsl:call-template>. </xsl:if>
+                <xsl:if test="string-length(title) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="ae:trimTrailingDot(title)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
+                <xsl:if test="string-length(authors) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="ae:trimTrailingDot(authors)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
             </xsl:variable>
             <xsl:variable name="publication_link_title">
                 <xsl:if test="string-length(publication) > 0">
                     <em>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="publication"/>
+                            <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                     </em><xsl:text>&#160;</xsl:text></xsl:if>
                 <xsl:if test="string-length(volume) > 0">
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="volume"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                     <xsl:if test="string-length(issue) > 0">
                         <xsl:text>(</xsl:text>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="issue"/>
+                            <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                         <xsl:text>)</xsl:text>
                     </xsl:if>
@@ -418,12 +412,14 @@
                     <xsl:text>:</xsl:text>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="pages"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                 </xsl:if>
                 <xsl:if test="string-length(year) > 0">
                     <xsl:text>&#160;(</xsl:text>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="publication"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                     <xsl:text>)</xsl:text>
                 </xsl:if>
@@ -440,6 +436,7 @@
                         <xsl:text> (</xsl:text>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="uri"/>
+                            <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                         <xsl:text>)</xsl:text>
                     </xsl:if>
@@ -528,12 +525,14 @@
                     <a href="mailto:{email}">
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="concat(contact, ' &lt;', email, '&gt;')"/>
+                            <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                     </a>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="contact"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
@@ -548,6 +547,7 @@
                 <div>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="substring-before($pText, '&lt;br&gt;')"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                 </div>
                 <xsl:call-template name="description">
@@ -558,6 +558,7 @@
                 <div>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="$pText"/>
+                        <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                 </div>
             </xsl:otherwise>

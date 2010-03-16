@@ -1,0 +1,6 @@
+<tr class="ae_results_tr_error">
+<td colspan="9">
+<div>There is a syntax problem with your query "${variable.query}".</div>
+<div>More information on query syntax available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
+</td>
+</tr>

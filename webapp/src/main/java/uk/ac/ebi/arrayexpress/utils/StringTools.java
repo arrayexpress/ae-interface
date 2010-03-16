@@ -1,5 +1,10 @@
 package uk.ac.ebi.arrayexpress.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 /*
  * Copyright 2009-2010 Microarray Informatics Group, European Bioinformatics Institute
  *
@@ -23,7 +28,7 @@ public class StringTools
     {
     }
 
-    public static String arrayToString(String[] a, String separator)
+    public static String arrayToString( String[] a, String separator )
     {
         if (a == null || separator == null) {
             return null;
@@ -32,7 +37,7 @@ public class StringTools
         StringBuilder result = new StringBuilder();
         if (a.length > 0) {
             result.append(a[0]);
-            for (int i=1; i < a.length; i++) {
+            for (int i = 1; i < a.length; i++) {
                 result.append(separator);
                 result.append(a[i]);
             }
@@ -40,4 +45,22 @@ public class StringTools
         return result.toString();
     }
 
+    public static String streamToString( InputStream is ) throws IOException
+    {
+        if (is != null) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+            } finally {
+                is.close();
+            }
+            return sb.toString();
+        } else {
+            return "";
+        }
+    }
 }

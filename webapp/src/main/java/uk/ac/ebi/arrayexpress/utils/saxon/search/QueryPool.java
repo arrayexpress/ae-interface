@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
+import org.apache.lucene.queryParser.ParseException;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
 
 import java.util.Collections;
@@ -37,7 +38,7 @@ public class QueryPool
         this.queryId = new AtomicInteger(0);
     }
 
-    public Integer addQuery( QueryConstructor queryConstructor, Map<String, String[]> queryParams, IQueryExpander queryExpander )
+    public Integer addQuery( QueryConstructor queryConstructor, Map<String, String[]> queryParams, IQueryExpander queryExpander ) throws ParseException
     {
         QueryInfo info;
 
