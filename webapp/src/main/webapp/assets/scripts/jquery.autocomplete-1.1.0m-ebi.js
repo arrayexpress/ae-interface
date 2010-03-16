@@ -1001,7 +1001,12 @@ $.fn.selection = function(start, end) {
 		});
 	}
 	var field = this[0];
-	if ( field.createTextRange ) {
+	if( field.selectionStart !== undefined ) {
+		return {
+			start: field.selectionStart,
+			end: field.selectionEnd
+		}
+    } else if ( field.createTextRange ) {
 		var range = document.selection.createRange(),
 			orig = field.value,
 			teststring = "<->",
@@ -1013,11 +1018,6 @@ $.fn.selection = function(start, end) {
 		return {
 			start: caretAt,
 			end: caretAt + textLength
-		}
-	} else if( field.selectionStart !== undefined ) {
-		return {
-			start: field.selectionStart,
-			end: field.selectionEnd
 		}
 	}
 };
