@@ -20,17 +20,17 @@ package uk.ac.ebi.arrayexpress.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegExpHelper
+public class RegexHelper
 {
     private Pattern pattern = null;
     private String flags = "";
 
-    public RegExpHelper( String regexp )
+    public RegexHelper( String regexp )
     {
         pattern = Pattern.compile(regexp);
     }
 
-    public RegExpHelper( String regexp, String aFlags )
+    public RegexHelper( String regexp, String aFlags )
     {
         if (null != aFlags) {
             flags = aFlags.toLowerCase();

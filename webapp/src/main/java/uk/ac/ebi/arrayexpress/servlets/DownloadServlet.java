@@ -24,7 +24,7 @@ import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -91,7 +91,7 @@ public class DownloadServlet extends ApplicationServlet
         String name = null;
         File file;
 
-        String[] requestArgs = new RegExpHelper("servlets/download/([^/]+)/?([^/]*)", "i")
+        String[] requestArgs = new RegexHelper("servlets/download/([^/]+)/?([^/]*)", "i")
                 .match(request.getRequestURL().toString());
         if (null != requestArgs) {
             if (requestArgs[1].equals("")) {

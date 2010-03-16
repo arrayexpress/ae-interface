@@ -7,7 +7,7 @@
     <!-- experiment by accession page -->
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="redirect">${interface.application.base.path}/browse.html?keywords=$1&amp;detailedview=on</to>
+        <to type="redirect">${interface.application.base.path}/browse.html?accession=$1&amp;detailedview=on</to>
     </rule>
     <!-- available files by accession page -->
     <rule>
@@ -41,6 +41,11 @@
         <from>^/rss/experiments$</from>
         <to type="forward">/servlets/query/experiments-rss/xml</to>
     </rule>
+    <rule>
+        <from>^/rss/v2/experiments$</from>
+        <to type="forward">/servlets/query/experiments-rss/xml</to>
+    </rule>
+
     <!-- rest interfaces support -->
     <rule>
         <from>^/xml/experiments$</from>
@@ -48,7 +53,7 @@
     </rule>
     <rule>
         <from>^/xml/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/xml?keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
     </rule>
     <rule>
         <from>^/xml/files$</from>

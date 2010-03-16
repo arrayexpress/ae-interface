@@ -34,6 +34,7 @@ public class Controller
 
     private Configuration config;
     private QueryPool queryPool;
+    private IQueryConstructor queryConstructor;
     private IQueryExpander queryExpander;
     private IQueryHighlighter queryHighlighter;
 
@@ -43,6 +44,11 @@ public class Controller
     {
         this.config = new Configuration(configFile);
         this.queryPool = new QueryPool();
+    }
+
+    public void setQueryConstructor( IQueryConstructor queryConstructor )
+    {
+        this.queryConstructor = queryConstructor;
     }
 
     public void setQueryExpander( IQueryExpander queryExpander )
@@ -66,19 +72,19 @@ public class Controller
 
     public void index( String indexId, DocumentInfo document )
     {
-        logger.info("Started indexing for index id [{}]", indexId);
+        this.logger.info("Started indexing for index id [{}]", indexId);
         getEnvironment(indexId).putDocumentInfo(
                 document.hashCode()
                 , new Indexer(getEnvironment(indexId)).index(document)
         );
-        logger.info("Indexing for index id [{}] completed", indexId);
+        this.logger.info("Indexing for index id [{}] completed", indexId);
     }
 
     public List<String> getTerms( String indexId, String fieldName, int minFreq ) throws IOException
     {
         IndexEnvironment env = getEnvironment(indexId);
         if (!env.doesFieldExist(fieldName)) {
-            logger.error("Field [{}] for index id [{}] does not exist, returning empty list");
+            this.logger.error("Field [{}] for index id [{}] does not exist, returning empty list");
             return new ArrayList<String>();
         } else {
             return new Querier(env).getTerms(fieldName, minFreq);
@@ -113,20 +119,26 @@ public class Controller
 
     public Integer addQuery( String indexId, Map<String, String[]> queryParams ) throws ParseException
     {
-        return queryPool.addQuery(new QueryConstructor(getEnvironment(indexId)), queryParams, queryExpander);
+        if (null == this.queryConstructor) {
+            // sort of lazy init if we forgot to specify more advanced highlighter
+            this.setQueryConstructor(new QueryConstructor());
+        }
+
+        this.queryConstructor.setEnvironment(getEnvironment(indexId));
+        return this.queryPool.addQuery(this.queryConstructor, queryParams, this.queryExpander);
     }
 
     public List<NodeInfo> queryIndex( String indexId, Integer queryId )
     {
-        return new Querier(getEnvironment(indexId)).query(queryPool.getQueryInfo(queryId).getQuery());
+        return new Querier(getEnvironment(indexId)).query(this.queryPool.getQueryInfo(queryId).getQuery());
     }
 
     public String highlightQuery( String indexId, Integer queryId, String fieldName, String text )
     {
-        if (null == queryHighlighter) {
+        if (null == this.queryHighlighter) {
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryHighlighter(new QueryHighlighter());
         }
-        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(queryPool.getQueryInfo(queryId), fieldName, text);
+        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(this.queryPool.getQueryInfo(queryId), fieldName, text);
     }
 }

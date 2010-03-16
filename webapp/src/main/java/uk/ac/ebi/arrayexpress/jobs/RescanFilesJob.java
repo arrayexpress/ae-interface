@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Files;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -33,7 +33,7 @@ public class RescanFilesJob extends ApplicationJob
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     public void doExecute( JobExecutionContext jec ) throws InterruptedException
     {
         StringBuilder xmlString = new StringBuilder(20000000);
@@ -116,31 +116,31 @@ public class RescanFilesJob extends ApplicationJob
    private String getFileKind( String name )
     {
         if (null != name && !name.equals("")) {
-            if (fgemArchiveRegExp.test(name)) {
+            if (FGEM_ARCHIVE_REGEX.test(name)) {
                 return "fgem";
             }
-            if (rawArchiveRegExp.test(name)) {
+            if (RAW_ARCHIVE_REGEX.test(name)) {
                 return "raw";
             }
-            if (celArchiveRegExp.test(name)) {
+            if (CEL_ARCHIVE_REGEX.test(name)) {
                 return "cel";
             }
-            if (magemlArchiveRegExp.test(name)) {
+            if (MAGEML_ARCHIVE_REGEX.test(name)) {
                 return "mageml";
             }
-            if (adfFileRegExp.test(name)) {
+            if (ADF_FILE_REGEX.test(name)) {
                 return "adf";
             }
-            if (idfFileRegExp.test(name)) {
+            if (IDF_FILE_REGEX.test(name)) {
                 return "idf";
             }
-            if (sdrfFileRegExp.test(name)) {
+            if (SDRF_FILE_REGEX.test(name)) {
                 return "sdrf";
             }
-            if (twoColsFileRegExp.test(name)) {
+            if (TWO_COLS_FILE_REGEX.test(name)) {
                 return "twocolumns";
             }
-            if (biosamplesFileRegExp.test(name)) {
+            if (BIOSAMPLES_FILE_REGEX.test(name)) {
                 return "biosamples";
             }
 
@@ -151,44 +151,44 @@ public class RescanFilesJob extends ApplicationJob
     private String getFileExtension( String name )
     {
         if (null != name && !name.equals("")) {
-            return extensionRegExp.matchFirst(name);
+            return EXTENSION_REGEX.matchFirst(name);
         }
         return "";
     }
 
-//    private static final RegExpHelper accessionRegExp
-//            = new RegExpHelper("/([AE]-\\w{4}-\\d+)/", "i");
+//    private static final RegexHelper accessionRegExp
+//            = new RegexHelper("/([AE]-\\w{4}-\\d+)/", "i");
 //
-//    private static final RegExpHelper nameRegExp
-//            = new RegExpHelper("/([^/]+)$");
+//    private static final RegexHelper nameRegExp
+//            = new RegexHelper("/([^/]+)$");
 
-    private static final RegExpHelper extensionRegExp
-            = new RegExpHelper("\\.([^.]+|tar\\.gz)$", "i");
+    private static final RegexHelper EXTENSION_REGEX
+            = new RegexHelper("\\.([^.]+|tar\\.gz)$", "i");
 
-    private static final RegExpHelper fgemArchiveRegExp
-            = new RegExpHelper("\\.processed\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
+    private static final RegexHelper FGEM_ARCHIVE_REGEX
+            = new RegexHelper("\\.processed\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
 
-    private static final RegExpHelper rawArchiveRegExp
-            = new RegExpHelper("\\.raw\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
+    private static final RegexHelper RAW_ARCHIVE_REGEX
+            = new RegexHelper("\\.raw\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
 
-    private static final RegExpHelper celArchiveRegExp
-            = new RegExpHelper("\\.cel\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
+    private static final RegexHelper CEL_ARCHIVE_REGEX
+            = new RegexHelper("\\.cel\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
 
-    private static final RegExpHelper adfFileRegExp
-            = new RegExpHelper("\\.adf\\.txt|\\.adf\\.xls", "i");
+    private static final RegexHelper ADF_FILE_REGEX
+            = new RegexHelper("\\.adf\\.txt|\\.adf\\.xls", "i");
 
-    private static final RegExpHelper idfFileRegExp
-            = new RegExpHelper("\\.idf\\.txt|\\.idf\\.xls", "i");
+    private static final RegexHelper IDF_FILE_REGEX
+            = new RegexHelper("\\.idf\\.txt|\\.idf\\.xls", "i");
 
-    private static final RegExpHelper sdrfFileRegExp
-            = new RegExpHelper("\\.sdrf\\.txt|\\.sdrf\\.xls", "i");
+    private static final RegexHelper SDRF_FILE_REGEX
+            = new RegexHelper("\\.sdrf\\.txt|\\.sdrf\\.xls", "i");
 
-    private static final RegExpHelper twoColsFileRegExp
-            = new RegExpHelper("\\.2columns\\.txt|\\.2columns\\.xls", "i");
+    private static final RegexHelper TWO_COLS_FILE_REGEX
+            = new RegexHelper("\\.2columns\\.txt|\\.2columns\\.xls", "i");
 
-    private static final RegExpHelper biosamplesFileRegExp
-            = new RegExpHelper("\\.biosamples\\.map|\\.biosamples\\.png|\\.biosamples\\.svg", "i");
+    private static final RegexHelper BIOSAMPLES_FILE_REGEX
+            = new RegexHelper("\\.biosamples\\.map|\\.biosamples\\.png|\\.biosamples\\.svg", "i");
 
-    private static final RegExpHelper magemlArchiveRegExp
-            = new RegExpHelper("\\.mageml\\.zip|\\.mageml\\.tgz|\\.mageml\\.tar\\.gz", "i");
+    private static final RegexHelper MAGEML_ARCHIVE_REGEX
+            = new RegexHelper("\\.mageml\\.zip|\\.mageml\\.tgz|\\.mageml\\.tar\\.gz", "i");
 }

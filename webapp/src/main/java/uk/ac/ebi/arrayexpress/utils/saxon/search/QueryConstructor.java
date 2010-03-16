@@ -27,24 +27,25 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class QueryConstructor
+public class QueryConstructor implements IQueryConstructor
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private IndexEnvironment env;
 
-    public QueryConstructor( IndexEnvironment env )
+    public IQueryConstructor setEnvironment( IndexEnvironment env )
     {
         this.env = env;
+        return this;
     }
 
     public Query construct( Map<String, String[]> querySource ) throws ParseException
     {
         BooleanQuery result = new BooleanQuery();
         for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
-            if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
-                QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), this.env.indexAnalyzer);
+            if (this.env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
+                QueryParser parser = new EnhancedQueryParser(this.env, queryItem.getKey(), this.env.indexAnalyzer);
                 parser.setDefaultOperator(QueryParser.Operator.AND);
                 for ( String value : queryItem.getValue() ) {
                     if (!"".equals(value)) {

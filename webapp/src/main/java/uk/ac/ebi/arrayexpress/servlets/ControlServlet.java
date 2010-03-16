@@ -23,7 +23,7 @@ import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +49,7 @@ public class ControlServlet extends ApplicationServlet
         String command = "";
         String params = "";
 
-        String[] requestArgs = new RegExpHelper("servlets/control/([^/]+)/?(.*)", "i")
+        String[] requestArgs = new RegexHelper("servlets/control/([^/]+)/?(.*)", "i")
                 .match(request.getRequestURL().toString());
         if (null != requestArgs) {
             command = requestArgs[0];

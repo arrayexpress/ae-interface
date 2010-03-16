@@ -21,7 +21,7 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
@@ -165,7 +165,7 @@ public class Files extends ApplicationComponent implements DocumentSource
 
     public String getAccession( String fileLocation )
     {
-        String[] nameFolder = new RegExpHelper("^(.+)/([^/]+)$", "i")
+        String[] nameFolder = new RegexHelper("^(.+)/([^/]+)$", "i")
                 .match(fileLocation);
         if (null == nameFolder || 2 != nameFolder.length) {
             logger.error("Unable to parse the location [{}]", fileLocation);

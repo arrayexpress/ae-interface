@@ -23,7 +23,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -49,7 +49,7 @@ public class HttpProxyServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        String path = new RegExpHelper("servlets/proxy/(.+)", "i")
+        String path = new RegexHelper("servlets/proxy/(.+)", "i")
                 .matchFirst(request.getRequestURL().toString());
         String queryString = request.getQueryString();
 

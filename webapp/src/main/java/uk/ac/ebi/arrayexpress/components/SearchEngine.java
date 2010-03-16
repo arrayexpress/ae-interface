@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension;
+import uk.ac.ebi.arrayexpress.utils.search.BackwardsCompatibleQueryConstructor;
 
 public class SearchEngine extends ApplicationComponent
 {
@@ -39,6 +40,7 @@ public class SearchEngine extends ApplicationComponent
     {
         this.controller = new Controller(getApplication().getResource("/WEB-INF/classes/aeindex.xml"));
         SearchExtension.setController(getController());
+        getController().setQueryConstructor(new BackwardsCompatibleQueryConstructor());
     }
 
     public void terminate() throws Exception

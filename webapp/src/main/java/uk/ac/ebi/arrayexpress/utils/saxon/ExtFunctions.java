@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -175,7 +175,7 @@ public class ExtFunctions
         boolean result = false;
 
         try {
-            return new RegExpHelper(pattern, flags).test(input);
+            return new RegexHelper(pattern, flags).test(input);
         } catch (Exception t) {
             logger.debug("Caught an exception:", t);
         }

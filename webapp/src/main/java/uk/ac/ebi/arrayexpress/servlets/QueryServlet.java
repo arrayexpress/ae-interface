@@ -29,7 +29,7 @@ import uk.ac.ebi.arrayexpress.components.SearchEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
@@ -62,7 +62,7 @@ public class QueryServlet extends ApplicationServlet
         String type = "xml";
         String stylesheet = "default";
 
-        String[] requestArgs = new RegExpHelper("servlets/query/([^/]+)/?([^/]*)", "i")
+        String[] requestArgs = new RegexHelper("servlets/query/([^/]+)/?([^/]*)", "i")
                 .match(request.getRequestURL().toString());
         if (null != requestArgs) {
             if (!requestArgs[0].equals("")) {
@@ -150,6 +150,7 @@ public class QueryServlet extends ApplicationServlet
                     throw new Exception("Transformation returned an error");
                 }
             } catch (ParseException x) {
+                logger.error("Caught lucene parse exception:", x);
                 reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
             } catch (Exception x) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

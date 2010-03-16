@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class LookupServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        String[] requestArgs = new RegExpHelper("servlets/lookup/([^/]+)", "i")
+        String[] requestArgs = new RegexHelper("servlets/lookup/([^/]+)", "i")
                 .match(request.getRequestURL().toString());
 
         String type = "";
