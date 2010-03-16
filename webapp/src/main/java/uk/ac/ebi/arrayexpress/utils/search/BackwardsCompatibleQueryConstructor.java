@@ -33,7 +33,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
     private QueryConstructor originalConstructor;
     private IndexEnvironment env;
 
-    private final RegexHelper LUCENE_SPECIAL_CHARS_REGEX = new RegexHelper("([\\+\\-\\!\\(\\)\\{\\}\\[\\]\\^\\~\\*\\?\\:\\\\]|&&|||)", "ig");
+    private final RegexHelper LUCENE_SPECIAL_CHARS_REGEX = new RegexHelper("([\\+\\-\\!\\(\\)\\{\\}\\[\\]\\^\\~\\*\\?\\:\\\\]|\\&\\&|\\|\\|)", "ig");
 
     public BackwardsCompatibleQueryConstructor()
     {
@@ -62,11 +62,16 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
                         if (null != value) {
                             value = value.trim();
                             if (0 != value.length()) {
-                                value = LUCENE_SPECIAL_CHARS_REGEX.replace(value, "\\$1");
-                                Query q = useWildcards
-                                        ? new WildcardQuery(new Term(queryItem.getKey(), "*" + value + "*"))
-                                        : new TermQuery(new Term(queryItem.getKey(), value));
-                                result.add(q, BooleanClause.Occur.MUST);
+                                String[] tokens = value.split("\\s+");
+                                for (String token : tokens) {
+                                    token = LUCENE_SPECIAL_CHARS_REGEX.replace(token, "\\$1");
+                                    // we use wildcards for keywords depending on "wholewords" switch,
+                                    // *ALWAYS* for other fields, *NEVER* for user id
+                                    Query q = !"userid".equals(queryItem.getKey()) && (useWildcards || !"keywords".equals(queryItem.getKey()))
+                                            ? new WildcardQuery(new Term(queryItem.getKey(), "*" + token + "*"))
+                                            : new TermQuery(new Term(queryItem.getKey(), token));
+                                    result.add(q, BooleanClause.Occur.MUST);
+                                }
                             }
                         }
 
