@@ -294,6 +294,7 @@ body.dev_preview {
 	display: block;
 	height: 16px;
 	overflow: hidden;
+    position: relative;
 }
 
 .ac_tree_level
@@ -322,6 +323,11 @@ body.dev_preview {
 
 .ac_over {
 	background-color: #006666; /* url('../images/ac_select.gif') 0 0 repeat-x; */
+	color: white;
+}
+
+.ac_over .ac_efo
+, .ac_over .ac_field {
 	color: white;
 }
 
@@ -361,12 +367,18 @@ body.dev_preview {
     padding: 1px;
 }
 
+.ac_field
+, .ac_efo {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    color: #006666;
+}
+
 .ac_field {
-    float: right;
     font-style: italic;
 }
 
 .ac_efo {
-    float: right;
     font-weight: bold;
 }
