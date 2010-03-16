@@ -892,6 +892,11 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			list.bgiframe();
 	}
 
+    function onWinResize() {
+        var adjust = $.browser.mozilla ? 2 : 4;
+        element.width($(input).width() + adjust);
+    }
+
 	return {
 		display: function(d, q) {
 			init();
@@ -920,6 +925,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			}
 		},
 		hide: function() {
+            $(window).unbind("resize", onWinResize);
+            
 			element && element.hide();
 			listItems && listItems.removeClass(CLASSES.ACTIVE);
 			active = -1;
@@ -934,35 +941,35 @@ $.Autocompleter.Select = function (options, input, select, config) {
             return collapseSubTree(this.current());
         },
         expandTree: function() {
-           return expandSubTree(this.current());
+            return expandSubTree(this.current());
         },
 		show: function() {
 			var offset = $(input).offset();
+            onWinResize();
 			element.css({
-				width: typeof options.width == "string" || options.width > 0 ? options.width : $(input).width() + 2, // oh, man, this is hacky as hell (input width excludes border in our case)
 				top: offset.top + input.offsetHeight + 2, // that looks much cooler visually
 				left: offset.left
 			}).show();
-            if(options.scroll) {
+            $(window).resize(onWinResize);
+            if (options.scroll) {
                 list.scrollTop(0);
                 list.css({
 					maxHeight: options.scrollHeight,
 					overflow: 'auto'
 				});
 
-                if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
-					var listHeight = 0;
-					listItems.each(function() {
-						listHeight += this.offsetHeight;
-					});
-					var scrollbarsVisible = listHeight > options.scrollHeight;
+                if ($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+                    var listHeight = 0;
+                    listItems.each(function() {
+                        listHeight += this.offsetHeight;
+                    });
+                    var scrollbarsVisible = listHeight > options.scrollHeight;
                     list.css('height', scrollbarsVisible ? options.scrollHeight : listHeight );
-					if (!scrollbarsVisible) {
-						// IE doesn't recalculate width when scrollbar disappears
-						listItems.width( list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")) );
-					}
+                    if (!scrollbarsVisible) {
+                        // IE doesn't recalculate width when scrollbar disappears
+                        listItems.width( list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")) );
+                    }
                 }
-
             }
 		},
 		selected: function() {
