@@ -15,16 +15,8 @@
         <to type="forward">/servlets/query/browse-files/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/?\?(.+)$</from>
-        <to type="forward">/servlets/query/browse-files/html?accession=$1&amp;$2</to>
-    </rule>
-    <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/index.html$</from>
         <to type="forward">/servlets/query/browse-files/html?accession=$1</to>
-    </rule>
-    <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/index.html\?(.+)$</from>
-        <to type="forward">/servlets/query/browse-files/html?accession=$1&amp;$2</to>
     </rule>
     <!-- files download support -->
     <rule>
@@ -41,15 +33,11 @@
         <from>^/rss/experiments$</from>
         <to type="forward">/servlets/query/experiments-rss/xml</to>
     </rule>
-    <rule>
-        <from>^/rss/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments-rss/xml</to>
-    </rule>
 
     <!-- rest interfaces support -->
     <rule>
         <from>^/xml/experiments$</from>
-        <to type="forward">/servlets/query/experiments/xml</to>
+        <to type="forward">/servlets/query/experiments/xml?queryversion=1</to>
     </rule>
     <rule>
         <from>^/xml/experiments/([eE]-\w{4}-\d+)$</from>
@@ -57,11 +45,11 @@
     </rule>
     <rule>
         <from>^/xml/files$</from>
-        <to type="forward">/servlets/query/files/xml</to>
+        <to type="forward">/servlets/query/files/xml?queryversion=1</to>
     </rule>
     <rule>
         <from>^/xml/files/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/files/xml?keywords=$1</to>
+        <to type="forward">/servlets/query/files/xml?accession=$1</to>
     </rule>
     <!-- search results export in tab format -->
     <rule>

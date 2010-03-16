@@ -290,6 +290,8 @@ $(document).ready( function() {
         query.sortby = getQueryStringParam("sortby", "releasedate");
         query.sortorder = getQueryStringParam("sortorder", "descending");
         query.detailedview = getQueryBooleanParam("detailedview");
+        query.queryversion = getQueryStringParam("queryversion", "2");
+        query.wholewords = getQueryStringParam("wholewords", "");
     }
     
     initControls();

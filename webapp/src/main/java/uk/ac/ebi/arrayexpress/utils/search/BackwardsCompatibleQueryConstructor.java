@@ -33,7 +33,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
     private QueryConstructor originalConstructor;
     private IndexEnvironment env;
 
-    private final RegexHelper LUCENE_SPECIAL_CHARS_REGEX = new RegexHelper("([\\+\\-\\!\\(\\)\\{\\}\\[\\]\\^\\~\\*\\?\\:\\\\]|\\&\\&|\\|\\|)", "ig");
+    private final RegexHelper ACCESSION_REGEX = new RegexHelper("^[aAeE]-\\w{4}-\\d+$", "i");
 
     public BackwardsCompatibleQueryConstructor()
     {
@@ -57,20 +57,32 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             String wholeWords = StringTools.arrayToString(querySource.get("wholewords"), "");
             boolean useWildcards = !("on".equals(wholeWords) || "true".equals(wholeWords));
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
-                if (this.env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
+                String field = queryItem.getKey();
+                if (this.env.fields.containsKey(field) && queryItem.getValue().length > 0) {
                     for ( String value : queryItem.getValue() ) {
                         if (null != value) {
-                            value = value.trim();
+                            value = value.trim().toLowerCase();
                             if (0 != value.length()) {
-                                String[] tokens = value.split("\\s+");
-                                for (String token : tokens) {
-                                    token = LUCENE_SPECIAL_CHARS_REGEX.replace(token, "\\$1");
-                                    // we use wildcards for keywords depending on "wholewords" switch,
-                                    // *ALWAYS* for other fields, *NEVER* for user id
-                                    Query q = !"userid".equals(queryItem.getKey()) && (useWildcards || !"keywords".equals(queryItem.getKey()))
-                                            ? new WildcardQuery(new Term(queryItem.getKey(), "*" + token + "*"))
-                                            : new TermQuery(new Term(queryItem.getKey(), token));
+                                if ("keywords".equals(field) && ACCESSION_REGEX.test(value)) {
+                                    result.add(new TermQuery(new Term("accession", value)), BooleanClause.Occur.MUST);
+                                } else if ("keywords".equals(field) && '"' == value.charAt(0) && '"' == value.charAt(value.length() - 1)) {
+                                    value = value.substring(1, value.length() - 1);
+                                    PhraseQuery q = new PhraseQuery();
+                                    String[] tokens = value.split("\\s+");
+                                    for (String token : tokens) {
+                                        q.add(new Term(field, token));
+                                    }
                                     result.add(q, BooleanClause.Occur.MUST);
+                                } else {
+                                    String[] tokens = value.split("\\s+");
+                                    for (String token : tokens) {
+                                        // we use wildcards for keywords depending on "wholewords" switch,
+                                        // *ALWAYS* for other fields, *NEVER* for user id and accession
+                                        Query q = -1 == " userid  accession ".indexOf(" " + field + " ") && (useWildcards || (-1 == " keywords ".indexOf(" " + field + " ")))
+                                                ? new WildcardQuery(new Term(field, "*" + token + "*"))
+                                                : new TermQuery(new Term(field, token));
+                                        result.add(q, BooleanClause.Occur.MUST);
+                                    }
                                 }
                             }
                         }
