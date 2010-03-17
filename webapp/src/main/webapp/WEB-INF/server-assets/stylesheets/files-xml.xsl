@@ -52,7 +52,7 @@
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
                 <xsl:variable name="vArrayAccession" select="string(accession)"/>
-                <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file">
+                <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file[@kind = 'adf']">
                     <xsl:call-template name="file-for-accession">
                         <xsl:with-param name="pAccession" select="$vArrayAccession"/>
                         <xsl:with-param name="pFile" select="."/>
