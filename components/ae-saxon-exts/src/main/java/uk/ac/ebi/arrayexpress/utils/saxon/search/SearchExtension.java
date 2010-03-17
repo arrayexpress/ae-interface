@@ -30,7 +30,7 @@ public final class SearchExtension
         return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
     }
 
-    public static String highlightQuery( String indexId, String queryId, String fieldName, String text, String openMark, String closeMark)
+    public static String highlightQuery( String indexId, String queryId, String fieldName, String text )
     {
         return text;
     }
