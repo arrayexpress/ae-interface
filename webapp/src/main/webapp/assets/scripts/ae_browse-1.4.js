@@ -303,7 +303,7 @@ onExperimentQuery( tableHtml )
         $("#ae_results_print a").attr("href", "browse.printer.html" + queryString);
         $("#ae_results_save a").attr("href", "ArrayExpress-Experiments.txt" + queryString);
         $("#ae_results_save_xls a").attr("href", "ArrayExpress-Experiments.xls" + queryString);
-        $("#ae_results_save_feed a").attr("href", "rss/experiments" + queryString);
+        $("#ae_results_save_feed a").attr("href", "rss/v2/experiments" + queryString);
         // show controls
         $(".status_icon").show();
 

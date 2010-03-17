@@ -28,9 +28,15 @@
         <from>^/download/(.+)$</from>
         <to type="forward">/servlets/download/$1</to>
     </rule>
-    <!-- rss feeds support -->
+    <!-- rss feeds support, old scheme -->
     <rule>
         <from>^/rss/experiments$</from>
+        <to type="forward">/servlets/query/experiments-rss/xml?queryversion=1</to>
+    </rule>
+
+    <!-- rss feeds support, current scheme -->
+    <rule>
+        <from>^/rss/v2/experiments$</from>
         <to type="forward">/servlets/query/experiments-rss/xml</to>
     </rule>
 
