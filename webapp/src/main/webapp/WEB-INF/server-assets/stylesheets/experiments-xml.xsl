@@ -26,7 +26,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
-        <experiments version="1.1" revision="080925"
+        <experiments version="1.1" revision="100317"
                      total="{$vTotal}"
                      total-samples="{sum($vFilteredExperiments/samples)}"
                      total-assays="{sum($vFilteredExperiments/assays)}">
