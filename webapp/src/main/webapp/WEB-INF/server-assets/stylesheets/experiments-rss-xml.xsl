@@ -36,7 +36,7 @@
                     <xsl:if test="string-length($vQueryDesc) > 0">
                         <xsl:text> </xsl:text><xsl:value-of select="$vQueryDesc"/>
                     </xsl:if>
-                    <xsl:if test="$pagesize &lt; $vTotal">
+                    <xsl:if test="number($pagesize) &lt; $vTotal">
                         <xsl:text> (first </xsl:text>
                         <xsl:value-of select="$pagesize"/>
                         <xsl:text> of </xsl:text>
@@ -47,7 +47,7 @@
                 <link>
                     <xsl:value-of select="$vBaseUrl"/>
                     <xsl:text>/browse.html?</xsl:text>
-                    <xsl:value-of select="ae:getQueryString($queryid)"/>
+                    <xsl:value-of select="search:getQueryString($queryid)"/>
                </link>
                 <description><xsl:text>ArrayExpress is a public repository for transcriptomics data, which is aimed at storing MIAME- and MINSEQE- compliant data in accordance with MGED recommendations.</xsl:text></description>
                 <language><xsl:text>en</xsl:text></language>
@@ -74,7 +74,7 @@
     <xsl:template match="experiment">
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
-        <xsl:if test="position() &gt;= $pFrom and position() &lt;= $pTo">
+        <xsl:if test="position() &gt;= number($pFrom) and position() &lt;= number($pTo)">
             <item>
                 <title>
                     <xsl:value-of select="accession"/>

@@ -23,9 +23,19 @@ import java.util.Map;
 
 public class QueryInfo
 {
+    private String queryString;
     private Map<String, String[]> params;
     private Query query;
 
+    public void setQueryString( String queryString )
+    {
+        this.queryString = queryString;
+    }
+
+    public String getQueryString()
+    {
+        return queryString;
+    }
     public void setParams( Map<String, String[]> params )
     {
         this.params = params;

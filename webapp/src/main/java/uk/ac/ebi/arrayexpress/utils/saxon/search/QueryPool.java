@@ -38,7 +38,7 @@ public class QueryPool
         this.queryId = new AtomicInteger(0);
     }
 
-    public Integer addQuery( IQueryConstructor queryConstructor, Map<String, String[]> queryParams, IQueryExpander queryExpander ) throws ParseException
+    public Integer addQuery( IQueryConstructor queryConstructor, Map<String, String[]> queryParams, String queryString, IQueryExpander queryExpander ) throws ParseException
     {
         QueryInfo info;
 
@@ -48,6 +48,7 @@ public class QueryPool
             info = new QueryInfo();
         }
 
+        info.setQueryString(queryString);
         info.setParams(queryParams);
         info.setQuery(queryConstructor.construct(queryParams));
         if (null != queryExpander) {

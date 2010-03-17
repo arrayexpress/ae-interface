@@ -117,7 +117,7 @@ public class Controller
         return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
     }
 
-    public Integer addQuery( String indexId, Map<String, String[]> queryParams ) throws ParseException
+    public Integer addQuery( String indexId, Map<String, String[]> queryParams, String queryString ) throws ParseException
     {
         if (null == this.queryConstructor) {
             // sort of lazy init if we forgot to specify more advanced highlighter
@@ -125,7 +125,13 @@ public class Controller
         }
 
         this.queryConstructor.setEnvironment(getEnvironment(indexId));
-        return this.queryPool.addQuery(this.queryConstructor, queryParams, this.queryExpander);
+        return this.queryPool.addQuery(this.queryConstructor, queryParams, queryString, this.queryExpander);
+    }
+
+    public String getQueryString( Integer queryId )
+    {
+        QueryInfo info = this.queryPool.getQueryInfo(queryId);
+        return null != info ? info.getQueryString() : null;
     }
 
     public List<NodeInfo> queryIndex( String indexId, Integer queryId )

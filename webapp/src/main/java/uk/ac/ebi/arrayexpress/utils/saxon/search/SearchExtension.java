@@ -45,6 +45,12 @@ public final class SearchExtension
         return getController().highlightQuery(indexId, Integer.decode(queryId), fieldName, text);
     }
 
+    public static String getQueryString( String queryId )
+    {
+        return getController().getQueryString( Integer.decode(queryId));
+    }
+
+    // get/set
     public static void setController( Controller ctrl )
     {
         controller = ctrl;
