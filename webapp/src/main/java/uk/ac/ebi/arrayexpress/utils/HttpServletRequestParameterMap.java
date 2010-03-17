@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class HttpServletRequestParameterMap extends HashMap<String,String[]>
 {
-    private final static RegexHelper ALL_SANS_SQUARE_BRACKETS = new RegexHelper("^(.*)\\[\\]$", "ig");
+    private final static RegexHelper ALL_SANS_SQUARE_BRACKETS = new RegexHelper("^(.*)\\[\\d*\\]$", "ig");
 
     public HttpServletRequestParameterMap( HttpServletRequest request )
     {
