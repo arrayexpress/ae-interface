@@ -21,6 +21,7 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
@@ -203,7 +204,10 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     public String getDataSource()
     {
         if (null == this.dataSource) {
-            this.dataSource = getPreferences().getString("ae.experiments.db.datasources");
+            this.dataSource = StringTools.arrayToString(
+                    getPreferences().getStringArray("ae.experiments.db.datasources")
+                    , ","
+            );
         }
 
         return this.dataSource;
