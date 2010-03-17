@@ -177,13 +177,14 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         StringBuilder sb = new StringBuilder();
         Set<String> efoChildIds = this.efoChildIdsById.get(efoId);
-
-        for (String childId : efoChildIds) {
-            sb.append(this.efoTermById.get(childId)).append("|o|");
-            if (this.efoChildIdsById.containsKey(childId)) {
-                sb.append(childId);
+        if (null != efoChildIds) {
+            for (String childId : efoChildIds) {
+                sb.append(this.efoTermById.get(childId)).append("|o|");
+                if (this.efoChildIdsById.containsKey(childId)) {
+                    sb.append(childId);
+                }
+                sb.append("\n");
             }
-            sb.append("\n");
         }
         return sb.toString();
     }

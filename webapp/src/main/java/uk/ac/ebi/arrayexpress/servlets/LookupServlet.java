@@ -90,6 +90,8 @@ public class LookupServlet extends ApplicationServlet
             out.print(experiments.getKeywords(query, field, limit));
         } else if (type.equals("efotree")) {
             String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
+            // todo: remove this hack at all
+            efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
             out.print(experiments.getEfoTree(efoId));
         }
     }
