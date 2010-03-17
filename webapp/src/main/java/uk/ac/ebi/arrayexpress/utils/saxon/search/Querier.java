@@ -46,7 +46,7 @@ public class Querier
 
     public List<String> getTerms( String fieldName, int minFreq ) throws IOException
     {
-        List<String> termsList = null;
+        List<String> termsList = new ArrayList<String>();
         IndexReader ir = null;
         TermEnum terms = null;
 
@@ -54,8 +54,6 @@ public class Querier
             ir = IndexReader.open(this.env.indexDirectory, true);
             terms = ir.terms(new Term(fieldName, ""));
             while (fieldName.equals(terms.term().field())) {
-                if (null == termsList)
-                    termsList = new ArrayList<String>();
                 if (terms.docFreq() >= minFreq) {
                     termsList.add(terms.term().text());
                 }
