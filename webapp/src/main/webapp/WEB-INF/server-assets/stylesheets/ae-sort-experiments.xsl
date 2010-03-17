@@ -85,7 +85,7 @@
             </xsl:when>
             <xsl:when test="$pSortBy='fgem'">
                 <xsl:apply-templates select="$pExperiments">
-                    <xsl:sort select="file[kind = 'fgem']/bioassays" order="{$pSortOrder}" data-type="number"/>
+                    <xsl:sort select="fgemdatafiles" order="{$pSortOrder}" data-type="number"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
                     <!-- sort by experiment 4-letter code -->
@@ -98,7 +98,7 @@
             </xsl:when>
             <xsl:when test="$pSortBy='raw'">
                 <xsl:apply-templates select="$pExperiments">
-                    <xsl:sort select="file[kind = 'raw']/bioassays" order="{$pSortOrder}" data-type="number"/>
+                    <xsl:sort select="rawdatafiles" order="{$pSortOrder}" data-type="number"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
                     <!-- sort by experiment 4-letter code -->
