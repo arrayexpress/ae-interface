@@ -302,18 +302,20 @@ body.dev_preview {
     float: left;
     width: 16px;
     height: 16px;
-    padding: 4px 4px 3px 3px;
+}
+
+.ac_tree_control div {
+    width: 9px;
+    height: 9px;
+    margin: 3px 3px 3px 3px;
+    overflow: hidden;
 }
 
 .ac_tree_collapsed .ac_tree_control div {
-    width: 9px;
-    height: 9px;
     background: url( ../images/tminmax.gif ) 0 0 no-repeat;
 }
 
 .ac_tree_expanded .ac_tree_control div {
-    width: 9px;
-    height: 9px;
     background: url( ../images/tminmax.gif ) 0 -9px no-repeat;
 }
 

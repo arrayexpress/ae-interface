@@ -151,66 +151,6 @@ aeToggleExpand( id, shouldUpdateState )
     }
 }
 
-function
-aeACParseData(data)
-{
-    var parsed = [];
-    var rows = data.split("\n");
-    for (var i=0; i < rows.length; i++) {
-        var row = $.trim(rows[i]);
-        if (row) {
-            row = row.split("|");
-            parsed[parsed.length] = {
-                data: row,
-                value: "f" == row[1] ? row[0] + ":" : row[0],
-                result: aeACFormatResult(row, row[0]),
-                type: row[1],
-                fieldName: "f" == row[1] ? row[2] : null,
-                treeId: "o" == row[1] ? row[2] : null,
-                treeLevel: "o" == row[1] ? 0 : null,
-                treeIsExpanded: false
-            };
-        }
-    }
-    return parsed;
-}
-
-function
-aeACFormatResult(data, value)
-{
-    if ("f" == data[1]) {
-        return value + ":";
-    }
-
-    if (/^[+-]/.test(value) || /[ ]/.test(value)) {
-        return "\"" + value + "\" ";
-    } else
-        return value + " ";
-}
-
-function
-aeACFormatItem(data, pos, max, value, term)
-{
-    var result = value;
-    if ("f" == data.data[1]) {
-        value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
-    } else if ("o" == data.data[1]) {
-        value = value + "<span class=\"ac_efo\">EFO</span>";
-
-        if (null != data.treeLevel) {
-            if (data.treeId) {
-                value = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + value;
-            } else if (0 < data.treeLevel) {
-                value = "<div class=\"ac_tree_level\"/>" + value;
-            }
-            for(var j = 0; j < data.treeLevel; j++) {
-                value = "<div class=\"ac_tree_level\"/>" + value;
-            }
-        }
-    }
-    return value;
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready( function() {
@@ -232,7 +172,7 @@ $(document).ready( function() {
 
     if ($.browser.opera && $.browser.version < 9.5) {
         onWindowResize();
-        $(window).resize( onWindowResize );
+        $(window).bind('resize', onWindowResize);
     } else {
         onWindowResize();
     }
@@ -242,13 +182,10 @@ $(document).ready( function() {
 
     $("#ae_keywords").autocomplete(
             basePath + "keywords.txt"
-            , { multiple: true
-                , multipleSeparator: " "
-                , matchContains: false
+            , { matchContains: false
                 , selectFirst: false
                 , scroll: true
                 , max: 50
-                , formatItem: aeACFormatItem
                 , requestTreeUrl: basePath + "efotree.txt"
             }
         );

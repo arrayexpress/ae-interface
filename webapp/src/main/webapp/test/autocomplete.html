@@ -18,43 +18,30 @@
     <script src="../assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"></script>
     <script type="text/javascript">
     //
+
     function
-    aeACFormatItem(data, pos, max, value, term)
-    {
-        var result = value;
-        if ("f" == data.data[1]) {
-            value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
-        } else if ("o" == data.data[1]) {
-            value = value + "<span class=\"ac_efo\">efo</span>";
+    onWindowResize() {
 
-            if (null != data.treeLevel) {
-                if (data.treeId) {
-                    value = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + value;
-                } else if (0 < data.treeLevel) {
-                    value = "<div class=\"ac_tree_level\"/>" + value;
-                }
-                for(var j = 0; j < data.treeLevel; j++) {
-                    value = "<div class=\"ac_tree_level\"/>" + value;
-                }
-            }
-        }
-        return value;
     }
-
+    
     $(document).ready( function() {
+
+        if ($.browser.opera && $.browser.version < 9.5) {
+            onWindowResize();
+            $(window).bind('resize', onWindowResize);
+        } else {
+            onWindowResize();
+        }
 
         // added autocompletion
         var basePath = decodeURI(window.location.pathname).replace(/\/\w+\.\w+$/,"/");
 
         $("#ae_keywords").autocomplete(
                 basePath + "keywords.txt"
-                , { multiple: true
-                    , multipleSeparator: " "
-                    , matchContains: false
+                , {matchContains: false
                     , selectFirst: false
                     , scroll: true
                     , max: 50
-                    , formatItem: aeACFormatItem
                     , requestTreeUrl: basePath + "efotree.txt"
                 }
             );

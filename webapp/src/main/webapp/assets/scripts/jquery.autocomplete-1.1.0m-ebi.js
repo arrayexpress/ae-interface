@@ -26,9 +26,6 @@ $.fn.extend({
 		// if highlight is set to false, replace it with a do-nothing function
 		options.highlight = options.highlight || function(value) { return value; };
 
-		// if the formatMatch option is not specified, then use formatItem for backwards compatibility
-		options.formatMatch = options.formatMatch || options.formatItem;
-
  		return this.each(function() {
 			new $.Autocompleter(this, options);
 		});
@@ -490,8 +487,6 @@ $.Autocompleter.defaults = {
 	mustMatch: false,
 	extraParams: {},
 	selectFirst: true,
-	formatItem: function(row) { return row.value; },
-	formatMatch: null,
 	width: 0,
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
@@ -517,6 +512,26 @@ $.Autocompleter.defaults = {
         }
         return parsed;
     },
+    formatItem: function(data, pos, max, value, term) {
+        var result = value;
+        if ("f" == data.data[1]) {
+            value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
+        } else if ("o" == data.data[1]) {
+            value = value + "<span class=\"ac_efo\">EFO</span>";
+
+            if (null != data.treeLevel) {
+                if (data.treeId) {
+                    value = "<a href=\"javascript:void(0);\"><div class=\"ac_tree_control\"><div/></div></a>" + value;
+                } else if (0 < data.treeLevel) {
+                    value = "<div class=\"ac_tree_level\"/>" + value;
+                }
+                for(var j = 0; j < data.treeLevel; j++) {
+                    value = "<div class=\"ac_tree_level\"/>" + value;
+                }
+            }
+        }
+    return value;
+    },
     scroll: true,
     scrollHeight: 242 // that is a really magic number, hehe :)
 };
@@ -538,7 +553,7 @@ $.Autocompleter.Cache = function(options) {
 	}
 
 	function add(q, value) {
-		if (length > options.cacheLength){
+		if (length > options.cacheLength) {
 			flush();
 		}
 		if (!data[q]){
@@ -565,7 +580,7 @@ $.Autocompleter.Cache = function(options) {
 			// if rawValue is a string, make an array otherwise just reference the array
 			rawValue = (typeof rawValue == "string") ? [rawValue] : rawValue;
 
-			var value = options.formatMatch(rawValue, i+1, options.data.length);
+			var value = options.formatItem(rawValue, i+1, options.data.length);
 			if ( value === false )
 				continue;
 
@@ -925,7 +940,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			}
 		},
 		hide: function() {
-            $(window).unbind("resize", onWinResize);
+            //$(window).unbind("resize", onWinResize);
             
 			element && element.hide();
 			listItems && listItems.removeClass(CLASSES.ACTIVE);
@@ -950,7 +965,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 				top: offset.top + input.offsetHeight + 2, // that looks much cooler visually
 				left: offset.left
 			}).show();
-            $(window).resize(onWinResize);
+            $(window).bind('resize', onWinResize);
             if (options.scroll) {
                 list.scrollTop(0);
                 list.css({
