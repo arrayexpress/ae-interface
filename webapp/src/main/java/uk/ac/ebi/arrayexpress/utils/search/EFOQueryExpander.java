@@ -56,7 +56,8 @@ public final class EFOQueryExpander implements IQueryExpander
         }
 
         if (null != queryInfo) {
-            queryInfo.setExpandEfoFlag("true".equals(StringTools.arrayToString(info.getParams().get("expandefo"), " ")));
+            String expandEfo = StringTools.arrayToString(info.getParams().get("expandefo"), "");
+            queryInfo.setExpandEfoFlag("on".equals(expandEfo) || "true".equals(expandEfo));
             queryInfo.setOriginalQuery(queryInfo.getQuery());
 
             return expand(queryInfo, queryInfo.getQuery());
