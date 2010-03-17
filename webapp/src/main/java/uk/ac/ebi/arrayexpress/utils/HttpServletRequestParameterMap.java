@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.utils;
  */
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,18 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
             Map params = request.getParameterMap();
             for ( Object param : params.entrySet() ) {
                 Map.Entry p = (Map.Entry) param;
-                this.put(filterArrayBrackets((String)p.getKey()), (String[])p.getValue());
+                String key = filterArrayBrackets((String)p.getKey());
+                String[] newValue = (String[])p.getValue();
+                if (this.containsKey(key) && null != newValue) {
+                    String[] combined = Arrays.copyOf(this.get(key), this.get(key).length + newValue.length);
+                    int pos = this.get(key).length;
+                    for (String v : newValue) {
+                        combined[pos++] = v;
+                    }
+                    this.put(key, combined);
+                } else {
+                    this.put(key, newValue);
+                }
             }
         }
     }
