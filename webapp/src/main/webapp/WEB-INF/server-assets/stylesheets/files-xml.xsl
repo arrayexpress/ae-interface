@@ -27,7 +27,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
-        <files version="1.1" revision="080925"
+        <files version="1.1" revision="100317"
                      total-experiments="{$vTotal}">
             <xsl:call-template name="ae-sort-experiments">
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
@@ -40,25 +40,45 @@
     </xsl:template>
 
     <xsl:template match="experiment">
+        <xsl:variable name="vAccession" select="accession"/>
         <experiment>
-            <xsl:apply-templates select="accession|file" mode="copy"/>
+            <accession><xsl:value-of select="$vAccession"/></accession>
+            <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vAccession]/file">
+                <xsl:call-template name="file-for-accession">
+                    <xsl:with-param name="pAccession" select="$vAccession"/>
+                    <xsl:with-param name="pFile" select="."/>
+                </xsl:call-template>
+            </xsl:for-each>
+            <xsl:for-each select="arraydesign">
+                <xsl:sort select="accession" order="ascending"/>
+                <xsl:variable name="vArrayAccession" select="string(accession)"/>
+                <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file">
+                    <xsl:call-template name="file-for-accession">
+                        <xsl:with-param name="pAccession" select="$vArrayAccession"/>
+                        <xsl:with-param name="pFile" select="."/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:for-each>
         </experiment>
     </xsl:template>
 
-    <xsl:template match="accession" mode="copy">
-        <xsl:copy>
-            <xsl:apply-templates/>
-        </xsl:copy>
-    </xsl:template>
-
-    <xsl:template match="file" mode="copy">
+    <xsl:template name="file-for-accession">
+        <xsl:param name="pAccession"/>
+        <xsl:param name="pFile"/>
+        
         <xsl:element name="file">
-            <xsl:for-each select="*[name() != 'relativepath']">
-                <xsl:copy-of select="."/>
-            </xsl:for-each>
-            <xsl:element name="url">
-                <xsl:value-of select="$vBaseUrl"/>/<xsl:value-of select="relativepath"/>
-            </xsl:element>
+            <xsl:if test="$pFile/@*">
+                <xsl:for-each select="$pFile/@*">
+                    <xsl:element name="{lower-case(name())}">
+                        <xsl:value-of select="." />
+                    </xsl:element>
+                </xsl:for-each>
+                <xsl:if test="$pFile/@name">
+                    <xsl:element name="url">
+                        <xsl:value-of select="$vBaseUrl"/>/<xsl:value-of select="$pAccession"/>/<xsl:value-of select="$pFile/@name"/>
+                    </xsl:element>
+                </xsl:if>
+            </xsl:if>
         </xsl:element>
     </xsl:template>
 
