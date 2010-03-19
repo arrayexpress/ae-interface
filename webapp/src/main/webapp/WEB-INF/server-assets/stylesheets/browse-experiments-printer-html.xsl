@@ -17,8 +17,7 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-
-    <xsl:variable name="vQueryDesc" select="ae:describeQuery($queryid)"/>
+    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="ISO-8859-1" />
 
@@ -29,15 +28,14 @@
         <html lang="en">
             <xsl:call-template name="page-header-plain">
                 <xsl:with-param name="pTitle">
-                    <xsl:text>ArrayExpress Archive Experiments</xsl:text>
-                    <xsl:if test="string-length($vQueryDesc)>0">
-                        <xsl:text> </xsl:text><xsl:value-of select="$vQueryDesc"/>
-                    </xsl:if>
+                    <xsl:text>Experiments | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="assets/stylesheets/ae_common-1.4.css" type="text/css"/>
                     <link rel="stylesheet" href="assets/stylesheets/ae_browse_printer-1.4.css" type="text/css"/>
-                    <script src="assets/scripts/jquery-1.3.1.min.js" type="text/javascript"/>
+                    <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
+                    <script src="assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
+                    <script src="assets/scripts/ae_browse_printer-1.4.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body-plain"/>
@@ -50,7 +48,7 @@
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <div class="ae_left_container_100pc assign_font">
-            <div id="ae_header"><img src="assets/images/ae_header.gif" alt="ArrayExpress"/></div>
+            <div id="ae_header"><img src="{$basepath}/assets/images/ae_header.gif" alt="ArrayExpress"/></div>
             <xsl:choose>
                 <xsl:when test="$vTotal&gt;0">
                     <div id="ae_results_header">
@@ -65,56 +63,55 @@
                                 <xsl:text> experiments </xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <strong><xsl:value-of select="$vQueryDesc"/></strong>
-                        <xsl:text> found in ArrayExpress Archive.</xsl:text>
+                        <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
                         <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
                     </div>
                     <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="col_accession">
+                                <th class="col_accession sortable">
                                     <xsl:text>ID</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'accession'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_title">
+                                <th class="col_name sortable">
                                     <xsl:text>Title</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'name'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_assays">
+                                <th class="col_assays sortable">
                                     <xsl:text>Assays</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'assays'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_species">
+                                <th class="col_species sortable">
                                     <xsl:text>Species</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'species'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_releasedate">
+                                <th class="col_releasedate sortable">
                                     <xsl:text>Release Date</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'releasedate'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_processed">
+                                <th class="col_fgem sortable">
                                     <xsl:text>Processed</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'fgem'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_raw">
+                                <th class="col_raw sortable">
                                     <xsl:text>Raw</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'raw'"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_inatlas">
+                                <th class="col_atlas sortable">
                                     <xsl:text>Atlas</xsl:text>
                                     <xsl:call-template name="add-sort">
                                         <xsl:with-param name="pKind" select="'atlas'"/>
@@ -135,7 +132,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <div id="ae_infotext">
-                        <div>There are no experiments <strong><xsl:value-of select="$vQueryDesc"/></strong> found in ArrayExpress Archive.</div>
+                        <div>There are no experiments matching your search criteria found in ArrayExpress Archive.</div>
                     </div>
                 </xsl:otherwise>
             </xsl:choose>
@@ -143,32 +140,35 @@
     </xsl:template>
 
     <xsl:template match="experiment">
-        <xsl:variable name="vExpId" select="id"/>
+        <xsl:variable name="vAccession" select="accession"/>
+        
         <tr>
             <td class="col_accession">
                 <div>
-                    <xsl:apply-templates select="accession" mode="highlight" />
+                    <a href="{$basepath}/experiments/{accession}">
+                        <xsl:apply-templates select="accession" mode="copy" />
+                    </a>
                     <xsl:if test="not(user = '1')">
                         <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
                     </xsl:if>
                 </div>
             </td>
-            <td class="col_title">
+            <td class="col_name">
                 <div>
-                    <xsl:apply-templates select="name" mode="highlight" />
+                    <xsl:apply-templates select="name" mode="copy" />
                     <xsl:if test="count(name) = 0">&#160;</xsl:if>
                 </div>
             </td>
             <td class="col_assays">
                 <div>
-                    <xsl:apply-templates select="assays" mode="highlight" />
+                    <xsl:apply-templates select="assays" mode="copy" />
                     <xsl:if test="count(assays) = 0">&#160;</xsl:if>
                 </div>
             </td>
             <td class="col_species">
                 <div>
                     <xsl:for-each select="species">
-                        <xsl:apply-templates select="." mode="highlight" />
+                        <xsl:apply-templates select="." mode="copy" />
                         <xsl:if test="position() != last()">, </xsl:if>
                     </xsl:for-each>
                     <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
@@ -176,21 +176,27 @@
             </td>
             <td class="col_releasedate">
                 <div>
-                    <xsl:apply-templates select="releasedate" mode="highlight" />
+                    <xsl:apply-templates select="releasedate" mode="copy" />
                     <xsl:if test="count(releasedate) = 0">&#160;</xsl:if>
                 </div>
             </td>
-            <td class="col_processed">
+            <td class="col_fgem">
                 <div>
-                    <xsl:call-template name="data-files-main"><xsl:with-param name="pKind" select="'fgem'"/></xsl:call-template>
+                    <xsl:call-template name="data-files-main">
+                        <xsl:with-param name="pAccession" select="$vAccession"/>
+                        <xsl:with-param name="pKind" select="'fgem'"/>
+                    </xsl:call-template>
                 </div>
             </td>
             <td class="col_raw">
                 <div>
-                    <xsl:call-template name="data-files-main"><xsl:with-param name="pKind" select="'raw'"/></xsl:call-template>
+                    <xsl:call-template name="data-files-main">
+                        <xsl:with-param name="pAccession" select="$vAccession"/>
+                        <xsl:with-param name="pKind" select="'raw'"/>
+                    </xsl:call-template>
                 </div>
             </td>
-            <td class="col_inatlas">
+            <td class="col_atlas">
                 <div>
                     <xsl:choose>
                         <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{accession}"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>
@@ -202,8 +208,9 @@
     </xsl:template>
 
     <xsl:template name="data-files-main">
+        <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
-        <xsl:variable name="vFiles" select="file[kind = $pKind]"/>
+        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $pAccession]/file[@kind = $pKind]"/>
         <xsl:choose>
             <xsl:when test="$vFiles"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
@@ -220,7 +227,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="*" mode="highlight">
+    <xsl:template match="*" mode="copy">
         <xsl:value-of select="."/>
     </xsl:template>
 </xsl:stylesheet>

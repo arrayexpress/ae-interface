@@ -11,7 +11,7 @@
  * Based on revision: $Id: jquery.autocomplete.js 15 2009-08-22 10:30:27Z joern.zaefferer $
  */
 
-;(function($) {
+(function($) {
 
 $.fn.extend({
 	autocomplete: function(urlOrData, options) {

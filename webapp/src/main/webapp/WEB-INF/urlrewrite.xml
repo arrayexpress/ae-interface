@@ -4,6 +4,13 @@
         "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
 
 <urlrewrite>
+    <!-- show a list of experiments for googlebots -->
+    <rule>
+        <from>^/browse\.html$</from>
+        <condition name="user-agent">googlebot.*</condition>
+        <to type="forward">/servlets/query/browse-experiments-noajax/html</to>
+    </rule>
+
     <!-- experiment by accession page -->
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)$</from>
