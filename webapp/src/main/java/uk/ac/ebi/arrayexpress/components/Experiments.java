@@ -21,6 +21,7 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
@@ -41,6 +42,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
     private String dataSource;
     private TextFilePersistence<PersistableDocumentContainer> experiments;
@@ -129,6 +132,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         if ("0".equals(userId)) {
             return true;
+        } else if (arrayAccessionRegex.test(accession)) {
+            return true; // we allow array queries
         } else {
             return Boolean.parseBoolean(
                 saxon.evaluateXPathSingle(
