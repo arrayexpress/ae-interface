@@ -94,7 +94,7 @@ th {
 }
 
 .table_header_filler {
-    background: url( ../images/thead.gif ) 0 0 repeat-x;
+    background: url( ../images/thead.gif ) 0 -44px repeat-x;
 }
 
 .table_header_border_left {

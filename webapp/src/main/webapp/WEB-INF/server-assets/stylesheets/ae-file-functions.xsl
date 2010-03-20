@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
-                extension-element-prefixes="ae"
-                exclude-result-prefixes="ae"
+                xmlns:aeext="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                extension-element-prefixes="ae aeext"
+                exclude-result-prefixes="ae aeext"
                 version="2.0">
 
     <xsl:function name="ae:dataformats">
@@ -19,5 +20,10 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:value-of select="string-join(distinct-values($pBDG[isderived = $vIsDerived]/dataformat), ', ')"/>
+    </xsl:function>
+
+    <xsl:function name="ae:formatfilesize">
+        <xsl:param name="pSize"/>
+        <xsl:value-of select="aeext:formatFileSize($pSize)"/>
     </xsl:function>
 </xsl:stylesheet>

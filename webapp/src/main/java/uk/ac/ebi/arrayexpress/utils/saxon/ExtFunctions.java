@@ -17,12 +17,10 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +30,7 @@ public class ExtFunctions
     // logging machinery
     private static final Logger logger = LoggerFactory.getLogger(ExtFunctions.class);
 
-    public static String fileSizeToString( long size )
+    public static String formatFileSize( long size )
     {
         StringBuilder str = new StringBuilder();
         if (922L > size) {
@@ -47,50 +45,6 @@ public class ExtFunctions
         return str.toString();
     }
 
-    private static boolean testCheckbox( String check )
-    {
-        return (null != check && (check.toLowerCase().equals("true") || check.toLowerCase().equals("on")));
-    }
-    
-    public static String describeQuery( String queryId )
-    {
-        StringBuilder desc = new StringBuilder();
-        /**
-        if (!keywords.trim().equals("")) {
-            desc.append("'").append(keywords).append("'");
-        }
-        if (!species.trim().equals("")) {
-            if (0 != desc.length()) {
-                desc.append(" and ");
-            }
-            desc.append("species '").append(species).append("'");
-        }
-        if (!array.trim().equals("")) {
-            if (0 != desc.length()) {
-                desc.append(" and ");
-            }
-            desc.append("array '").append(array).append("'");
-        }
-        if (!experimentType.trim().equals("")) {
-            if (0 != desc.length()) {
-                desc.append(" and ");
-            }
-            desc.append("experiment type '").append(experimentType).append("'");
-        }
-
-        if (0 != desc.length()) {
-            desc.insert(0, "matching ");
-        }
-
-        if (testCheckbox(inAtlas)) {
-            if (0 != desc.length()) {
-                desc.append(" and ");
-            }
-            desc.append("present in ArrayExpress Atlas");
-        }
-        **/
-        return desc.toString();
-    }
 
     public static String trimTrailingDot( String str )
     {
@@ -121,7 +75,6 @@ public class ExtFunctions
         return dateString;
     }
 
-    /* ***************************************************** */
     public static boolean isExperimentInAtlas( String accession )
     {
         return ((Experiments)Application.getAppComponent("Experiments"))
@@ -132,54 +85,5 @@ public class ExtFunctions
     {
         return ((Experiments)Application.getAppComponent("Experiments"))
                 .isAccessible(accession, userId);
-    }
-
-    public static NodeInfo getFilesForAccession( String accession ) throws InterruptedException
-    {
-        /**
-        try {
-            List<FtpFileEntry> files = ((Files)Application.getAppComponent("Files"))
-                    .getFilesMap()
-                    .getEntriesByAccession(accession);
-            if (null != files) {
-                StringBuilder sb = new StringBuilder("<files>");
-                for (FtpFileEntry file : files) {
-                    sb.append("<file kind=\"")
-                            .append(FtpFileEntry.getKind(file))
-                            .append("\" extension=\"")
-                            .append(FtpFileEntry.getExtension(file))
-                            .append("\" name=\"")
-                            .append(FtpFileEntry.getName(file))
-                            .append("\" size=\"")
-                            .append(String.valueOf(file.getSize()))
-                            .append("\" lastmodified=\"")
-                            .append(new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(new Date(file.getLastModified())))
-                            .append("\"/>");
-                    Thread.sleep(1);
-                }
-                sb.append("</files>");
-                return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(sb.toString());
-            }
-        } catch (InterruptedException x) {
-            logger.warn("Method interrupted");
-            throw x;
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-        **/
-        return null;
-    }
-
-    public static boolean testRegexp( String input, String pattern, String flags )
-    {
-        boolean result = false;
-
-        try {
-            return new RegexHelper(pattern, flags).test(input);
-        } catch (Exception t) {
-            logger.debug("Caught an exception:", t);
-        }
-
-        return result;
     }
 }

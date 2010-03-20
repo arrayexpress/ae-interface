@@ -17,19 +17,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import uk.ac.ebi.arrayexpress.utils.RegExpHelper;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExtFunctions
 {
-    public static String capitalize(String str)
-    {
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
-    }
-
-    public static String fileSizeToString(long size)
+    public static String formatFileSize(long size)
     {
         StringBuilder str = new StringBuilder();
         if (922L > size) {
@@ -43,48 +36,6 @@ public class ExtFunctions
         }
         return str.toString();
     }
-
-    private static boolean testCheckbox(String check)
-    {
-        return (null != check && (check.toLowerCase().equals("true") || check.toLowerCase().equals("on")));
-    }
-
-    public static String describeQuery( String queryId )
-    {
-        return "Query Description is here :)";
-    }
-
-    public static String normalizeSpecies(String species)
-    {
-        // if more than one word: "First second", otherwise "First"
-        String[] spArray = species.trim().split("\\s");
-        if (0 == spArray.length) {
-            return "";
-        } else if (1 == spArray.length) {
-            return capitalize(spArray[0]);
-        } else {
-            return capitalize(spArray[0] + ' ' + spArray[1]);
-        }
-    }
-
-    public static String[] normalizeAuthors(String authors)
-    {
-        String[] authorsArray = authors.trim().split("([,;] and )|( and )|([,;]and )|[,;]");
-        String[] resultsArray = new String[authorsArray.length];
-        int counter = 0;
-        for (String author : authorsArray) {
-            StringBuilder authorString = new StringBuilder();
-            String[] nameArray = author.trim().split("\\s");
-            for (String name : nameArray) {
-                if (name.length() > 0) {
-                    authorString.append(capitalize(name)).append(" ");
-                }
-            }
-            resultsArray[counter++] = authorString.toString();
-        }
-        return resultsArray;
-    }
-
 
     public static String trimTrailingDot(String str)
     {
@@ -125,19 +76,5 @@ public class ExtFunctions
     public static boolean isExperimentAccessible(String accession, String userId)
     {
         return true;
-    }
-
-    public static boolean testRegexp(String input, String pattern, String flags)
-    {
-        boolean result = false;
-
-        try {
-            return new RegExpHelper(pattern, flags).test(input);
-        } catch (Exception t) {
-            //logger.debug("Caught an exception:", t);
-        }
-
-        return result;
-
     }
 }

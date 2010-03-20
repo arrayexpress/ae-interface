@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="http://www.ebi.ac.uk/arrayexpress"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 extension-element-prefixes="ae html"
                 exclude-result-prefixes="ae html"
@@ -13,6 +13,8 @@
     <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
+
+    <xsl:include href="ae-file-functions.xsl"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>   
     
@@ -113,7 +115,7 @@
                     <xsl:sort select="lower-case(@name)" order="ascending"/>
                     <tr>
                         <td class="td_name"><a href="{$vBaseUrl}/files/{$pAccession}/{@name}"><xsl:value-of select="@name"/></a></td>
-                        <td class="td_size"><xsl:value-of select="ae:filesize2string(@size)"/></td>
+                        <td class="td_size"><xsl:value-of select="ae:formatfilesize(@size)"/></td>
                         <td class="td_date"><xsl:value-of select="@lastmodified"/></td>
                     </tr>
                 </xsl:for-each>
@@ -121,11 +123,4 @@
         </table>
     </xsl:template>
 
-    <xsl:function name="ae:filesize2string">
-        <xsl:param name="pSize"/>
-        <xsl:choose>
-            <xsl:when test="$pSize &lt; 922"><xsl:value-of select="string($pSize)"/> B</xsl:when>
-            <xsl:otherwise><xsl:value-of select="'Unknown'"/></xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
 </xsl:stylesheet>

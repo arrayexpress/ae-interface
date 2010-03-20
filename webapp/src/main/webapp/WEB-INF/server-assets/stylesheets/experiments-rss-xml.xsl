@@ -32,10 +32,6 @@
                 <xsl:variable name="vCurrentDate" select="ae:dateToRfc822()"/>
                 <title>
                     <xsl:text>ArrayExpress Archive - Experiments</xsl:text>
-                    <xsl:variable name="vQueryDesc" select="ae:describeQuery($queryid)"/>
-                    <xsl:if test="string-length($vQueryDesc) > 0">
-                        <xsl:text> </xsl:text><xsl:value-of select="$vQueryDesc"/>
-                    </xsl:if>
                     <xsl:if test="number($pagesize) &lt; $vTotal">
                         <xsl:text> (first </xsl:text>
                         <xsl:value-of select="$pagesize"/>
