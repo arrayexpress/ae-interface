@@ -16,6 +16,7 @@
  */
 
 var user = "";
+var unavail = "Information is unavailable at the moment";
 
 function
 aeShowLoginForm()
@@ -136,10 +137,14 @@ $(document).ready(function()
     });
 
     // populate stats from atlas
-    $.get("${interface.application.link.atlas.stats.url}").next( function(data) {
-        data = String(data).replace(/\nAtlas Data Release \d+\.\d+: /, "");
-        $("#atlas_avail_info").text(data);
-    });
+    $.get("${interface.application.link.atlas.stats.url}")
+            .next( function(data) {
+                data = String(data).replace(/\nAtlas Data Release \d+\.\d+: /, "");
+                $("#atlas_avail_info").text(data);
+            })
+            .error( function() {
+                $("#atlas_avail_info").text(unavail);
+            });
 
     var _user = $.cookie("AeLoggedUser");
     var _token = $.cookie("AeLoginToken");
@@ -160,7 +165,7 @@ $(document).ready(function()
         );
 
     // gets aer stats and updates the page
-    $.get("ae-stats.xml").next(updateAerStats);
+    $.get("ae-stats.xml").next(updateAeStats).error(onAeStatsError);
 
     // loads news page
     $("#ae_news").load("${interface.application.link.news_xml.url} div ul");
@@ -177,9 +182,16 @@ trimString(stringToTrim)
 }
 
 function
-updateAerStats(xml)
+onAeStatsError()
 {
-    var aer_avail_info = "The information is unavailable at the moment";
+    // update with empty argument results in "unavail" message set
+    updateAeStats();
+}
+
+function
+updateAeStats(xml)
+{
+    var aer_avail_info = unavail;
     if (undefined != xml) {
         var ae_repxml = $($(xml).find("experiments")[0]);
         var etotal = ae_repxml.attr("total");

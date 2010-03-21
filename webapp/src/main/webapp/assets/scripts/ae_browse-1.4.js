@@ -246,8 +246,7 @@ $(document).ready( function() {
     
     initControls();
 
-    $("#ae_results_body_inner").ajaxError(onQueryError);
-    $.get( "browse-table.html", query ).next(onExperimentQuery);
+    $.get( "browse-table.html", query ).next(onExperimentQuery).error(onQueryError);
 });
 
 function
@@ -362,7 +361,9 @@ onExperimentQuery( tableHtml )
 function
 onQueryError()
 {
-    $(this).removeClass("ae_results_tbl_loading");
+    // remove progress gif
+    $("#ae_results_body_inner").removeClass("ae_results_tbl_loading");
+    // report problem to the user
     $("#ae_results_tbody").html("<tr class=\"ae_results_tr_error\"><td colspan=\"9\">There was an error processing the query. Please try again later.</td></tr>");
 }
 
