@@ -24,6 +24,8 @@ import uk.ac.ebi.arrayexpress.components.Experiments;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExtFunctions
 {
@@ -81,9 +83,41 @@ public class ExtFunctions
                 .isInAtlas(accession);
     }
 
-    public static boolean isExperimentAccessible( String accession, String userId )
+    // todo: this is experimental feature, that should get moved somewhere
+
+    private static Map<String, Map<String, String>> acceleratorMapRegistry = null;
+
+    public synchronized static void clearAccelerator( String acceleratorName )
     {
-        return ((Experiments)Application.getAppComponent("Experiments"))
-                .isAccessible(accession, userId);
+        if (null != acceleratorMapRegistry && acceleratorMapRegistry.containsKey(acceleratorName)) {
+            acceleratorMapRegistry.get(acceleratorName).clear();
+        }
+    }
+
+    public synchronized static void addAcceleratorValue( String acceleratorName, String key, String value )
+    {
+        if (null == acceleratorMapRegistry) {
+            acceleratorMapRegistry = new HashMap<String, Map<String, String>>();
+        }
+
+        if (!acceleratorMapRegistry.containsKey(acceleratorName)) {
+            acceleratorMapRegistry.put(acceleratorName, new HashMap<String, String>());
+        }
+
+        Map<String, String> acceleratorMap = acceleratorMapRegistry.get(acceleratorName);
+        if (acceleratorMap.containsKey(key)) {
+            logger.warn("Accelerator [{}] already contains value for key [{}], overriding", acceleratorName, key);
+        }
+
+        acceleratorMap.put(key, value);
+    }
+
+    public synchronized static String getAcceleratorValue( String acceleratorName, String key )
+    {
+        if (null != acceleratorMapRegistry && acceleratorMapRegistry.containsKey(acceleratorName)) {
+            return acceleratorMapRegistry.get(acceleratorName).get(key);
+        } else {
+            return null;
+        }
     }
 }

@@ -72,9 +72,4 @@ public class ExtFunctions
     {
         return true;
     }
-
-    public static boolean isExperimentAccessible(String accession, String userId)
-    {
-        return true;
-    }
 }

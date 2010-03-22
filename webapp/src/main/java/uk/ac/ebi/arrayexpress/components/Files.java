@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -25,8 +26,14 @@ import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.util.List;
 
 public class Files extends ApplicationComponent implements DocumentSource
 {
@@ -52,6 +59,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         );
         
         saxon.registerDocumentSource(this);
+        updateAccelerators();
     }
 
     public void terminate() throws Exception
@@ -75,6 +83,7 @@ public class Files extends ApplicationComponent implements DocumentSource
     {
         if (null != doc) {
             this.files.setObject(new PersistableDocumentContainer(doc));
+            updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");
         }
@@ -98,6 +107,38 @@ public class Files extends ApplicationComponent implements DocumentSource
         return doc;
     }
 
+    private void updateAccelerators()
+    {
+        logger.debug("Will re-created accelerators for files");
+
+        ExtFunctions.clearAccelerator("raw-files");
+        ExtFunctions.clearAccelerator("fgem-files");
+
+        try {
+            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
+            XPathExpression xpe = xp.compile("/files/folder[@kind = 'experiment']");
+            List documentNodes = (List)xpe.evaluate(getDocument(), XPathConstants.NODESET);
+
+            XPathExpression accessionXpe = xp.compile("@accession");
+            XPathExpression rawFilePresentXpe = xp.compile("count(file[@kind = 'raw'])");
+            XPathExpression fgemFilePresentXpe = xp.compile("count(file[@kind = 'fgem'])");
+            for (Object node : documentNodes) {
+
+                try {
+                    // get all the expressions taken care of
+                    String accession = (String)accessionXpe.evaluate(node);
+                    ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
+                    ExtFunctions.addAcceleratorValue("fgem-files", accession,  fgemFilePresentXpe.evaluate(node));
+                } catch (XPathExpressionException x) {
+                    logger.error("Caught an exception:", x);
+                }
+            }
+            logger.debug("Accelerators updated");
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        }
+    }
+
     public synchronized void setRootFolder( String folder )
     {
         if (null != folder && 0 < folder.length()) {
@@ -107,7 +148,7 @@ public class Files extends ApplicationComponent implements DocumentSource
                 rootFolder = folder + File.separator;
             }
         } else {
-            logger.error("setRootFolder called with null or empty parameter, expect probilems down the road");
+            logger.error("setRootFolder called with null or empty parameter, expect problems down the road");
         }
     }
 
