@@ -753,8 +753,7 @@ a:active .table_header_label {
 
 #ae_results_pager a,
 #ae_results_pager span {
-    padding-left: 3px;
-    padding-right: 3px;
+    padding: 2px 3px;
 }
 
 .status_icon {

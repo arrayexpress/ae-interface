@@ -255,10 +255,10 @@ onWindowResize()
 {
     var outerWidth = $("#ae_results_body").width();
     var innerWidth = $("#ae_results_body table").width();
-    var padding = outerWidth - innerWidth;
-    if ( padding > 0 && padding < 30 ) {
+    var padding = outerWidth - innerWidth - 1;
+    if ( padding >= 0 && padding < 30 ) {
         $("#ae_results_hdr").css( "right", padding + "px" );
-    } else if ( padding == 0 && $.browser.opera && $.browser.version < 9.5 ) {
+    } else if ( padding <= 0 && $.browser.opera && $.browser.version < 9.5 ) {
         $("#ae_results_hdr").css( "right", "-1px" );
     }
 }
