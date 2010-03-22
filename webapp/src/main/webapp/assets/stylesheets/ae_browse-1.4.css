@@ -231,6 +231,7 @@ a:active .table_header_label {
 }
 
 #ae_help_link img,
+#ae_login_link img,
 #ae_login_info img {
     vertical-align: text-bottom;
     margin: 0 2px 0 0;
@@ -743,6 +744,17 @@ a:active .table_header_label {
     float: left;
     padding: 2px 4px 0;
     line-height: 12px;
+}
+
+#ae_results_pager .pager_current {
+    background-color: #9e9e9e;
+    color: white;
+}
+
+#ae_results_pager a,
+#ae_results_pager span {
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .status_icon {

@@ -46,7 +46,7 @@
         var sortby = $.query.get("sortby") || "releasedate";
         var sortorder = $.query.get("sortorder") || "descending";
 
-        var pageName = /\/?([^\/\?]+)[^\/]*$/.exec(window.location)[1];
+        var pageName = /\/?([^\/]+)$/.exec(decodeURI(window.location.pathname))[1];
 
         $("th.sortable").each( function() {
             var thisObj = $(this);

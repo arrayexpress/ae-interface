@@ -86,6 +86,7 @@
     text-align: right;
 }
 
+#aer_login_link img,
 #aer_login_info img,
 #aer_help_link img {
     vertical-align: text-bottom;

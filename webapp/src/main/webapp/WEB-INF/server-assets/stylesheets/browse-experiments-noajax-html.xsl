@@ -63,7 +63,7 @@
                                 <xsl:text> experiments </xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                        <xsl:text>matching your search criteria found in ArrayExpress Archive.</xsl:text>
                         <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
                     </div>
                     <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
@@ -210,7 +210,7 @@
     <xsl:template name="data-files-main">
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $pAccession]/file[@kind = $pKind]"/>
+        <xsl:variable name="vFiles" select="$vFilesDoc/experiments/$pAccession/@raw"/>
         <xsl:choose>
             <xsl:when test="$vFiles"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>

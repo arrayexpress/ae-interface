@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
@@ -8,8 +9,8 @@
                 version="2.0">
 
     <xsl:param name="queryid" />
-    <xsl:param name="page">1</xsl:param>
-    <xsl:param name="pagesize">25</xsl:param>
+    <xsl:param name="page"/>
+    <xsl:param name="pagesize"/>
     <xsl:param name="sortby">releasedate</xsl:param>
     <xsl:param name="sortorder">descending</xsl:param>
 
@@ -43,17 +44,31 @@
         <xsl:variable name="vTotalSamples" select="sum($vFilteredExperiments/samples)"/>
         <xsl:variable name="vTotalAssays" select="sum($vFilteredExperiments/assays)"/>
 
-        <xsl:variable name="vFrom">
+        <xsl:variable name="vPage" as="xs:integer">
             <xsl:choose>
-                <xsl:when test="number($page) > 0"><xsl:value-of select="1 + ( number($page) - 1 ) * number($pagesize)"/></xsl:when>
+                <xsl:when test="$page"><xsl:value-of select="number($page)"/></xsl:when>
+                <xsl:otherwise>1</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="vPageSize" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$pagesize"><xsl:value-of select="number($pagesize)"/></xsl:when>
+                <xsl:otherwise>25</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="vFrom" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
                 <xsl:when test="$vTotal = 0">0</xsl:when>
                 <xsl:otherwise>1</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="vTo">
+        <xsl:variable name="vTo" as="xs:integer">
             <xsl:choose>
-                <xsl:when test="( $vFrom + number($pagesize) - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
-                <xsl:otherwise><xsl:value-of select="$vFrom + number($pagesize) - 1"/></xsl:otherwise>
+                <xsl:when test="( $vFrom + $vPageSize - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="$vFrom + $vPageSize - 1"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
 
@@ -64,8 +79,8 @@
                 <div id="ae_results_total_assays"><xsl:value-of select="$vTotalAssays"/></div>
                 <div id="ae_results_from"><xsl:value-of select="$vFrom"/></div>
                 <div id="ae_results_to"><xsl:value-of select="$vTo"/></div>
-                <div id="ae_results_page"><xsl:value-of select="$page"/></div>
-                <div id="ae_results_pagesize"><xsl:value-of select="$pagesize"/></div>
+                <div id="ae_results_page"><xsl:value-of select="$vPage"/></div>
+                <div id="ae_results_pagesize"><xsl:value-of select="$vPageSize"/></div>
             </td>
         </tr>
         <xsl:choose>

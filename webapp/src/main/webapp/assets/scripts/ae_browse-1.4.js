@@ -19,6 +19,7 @@
 var query = new Object();
 var user = "";
 var headerPrintElt = null;
+var pageName = /\/?([^\/]+)$/.exec(decodeURI(window.location.pathname))[1];
 
 function
 aeClearKeywords()
@@ -139,7 +140,7 @@ aeSort( sortby )
                 sortorder = "ascending";
         }
         var newQuery = $.query.set( "sortby", sortby ).set( "sortorder", sortorder ).toString();
-        window.location.href = "browse.html" + newQuery;
+        window.location.href = pageName + newQuery;
     }
 }
 
@@ -308,7 +309,7 @@ onExperimentQuery( tableHtml )
 
         // fix a header print icon so it does the right thing :)
         if (null != headerPrintElt) {
-            headerPrintElt.attr("onClick", "").attr("target", "_top").attr("href", decodeURI(window.location.pathname).replace(/browse/, "browse.printer") + $.query.toString());
+            headerPrintElt.attr("onClick", "").attr("target", "_top").attr("href", decodeURI(window.location.pathname).replace(pageName, "browse.printer.html") + $.query.toString());
         }
         var queryString = $.query.toString();
         // assign valid hrefs to print, save and rss feed elements
@@ -330,17 +331,14 @@ onExperimentQuery( tableHtml )
             var pagerHtml = "Pages: ";
             for ( var page = 1; page <= totalPages; page++ ) {
                 if ( curpage == page ) {
-                    pagerHtml = pagerHtml + "" + page + "";
+                    pagerHtml = pagerHtml + "<span class=\"pager_current\">" + page + "</span>";
                 } else if ( 2 == page && curpage > 6 && totalPages > 11 ) {
                     pagerHtml = pagerHtml + "..";
                 } else if ( totalPages - 1 == page && totalPages - curpage > 5 && totalPages > 11 ) {
                     pagerHtml = pagerHtml + "..";
                 } else if ( 1 == page || ( curpage < 7 && page < 11 ) || ( Math.abs( page - curpage ) < 5 ) || ( totalPages - curpage < 6 && totalPages - page < 10 ) || totalPages == page || totalPages <= 11 ) {
                     var newQuery = $.query.set( "page", page ).set( "pagesize", pagesize ).toString();
-                    pagerHtml = pagerHtml + "<a href=\"browse.html" + newQuery + "\">" + page + "</a>";
-                }
-                if ( page < totalPages ) {
-                    pagerHtml = pagerHtml + " ";
+                    pagerHtml = pagerHtml + "<a href=\"" + pageName + newQuery + "\">" + page + "</a>";
                 }
             }
             $("#ae_results_pager").html( pagerHtml );
