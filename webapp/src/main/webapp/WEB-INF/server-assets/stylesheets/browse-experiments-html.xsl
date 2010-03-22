@@ -739,7 +739,7 @@
                 <td class="attr_value">
                     <xsl:for-each select="$vFiles">
                         <xsl:sort select="@name"/>
-                        <a href="{$vBaseUrl}/files/{$vArrayAccession}/{@name}"><xsl:value-of select="@name"/></a>
+                        <a href="{$vBaseUrl}/files/{../@accession}/{@name}"><xsl:value-of select="@name"/></a>
                         <xsl:if test="position() != last()">
                             <xsl:text>, </xsl:text>
                         </xsl:if>
