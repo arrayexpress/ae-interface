@@ -17,7 +17,6 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="ISO-8859-1" />
 
@@ -184,7 +183,7 @@
                 <div>
                     <xsl:call-template name="data-files-main">
                         <xsl:with-param name="pAccession" select="$vAccession"/>
-                        <xsl:with-param name="pKind" select="'fgem'"/>
+                        <xsl:with-param name="pKind" select="'fgem-files'"/>
                     </xsl:call-template>
                 </div>
             </td>
@@ -192,7 +191,7 @@
                 <div>
                     <xsl:call-template name="data-files-main">
                         <xsl:with-param name="pAccession" select="$vAccession"/>
-                        <xsl:with-param name="pKind" select="'raw'"/>
+                        <xsl:with-param name="pKind" select="'raw-files'"/>
                     </xsl:call-template>
                 </div>
             </td>
@@ -210,9 +209,8 @@
     <xsl:template name="data-files-main">
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $pAccession]/file[@kind = $pKind]"/>
         <xsl:choose>
-            <xsl:when test="$vFiles"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></xsl:when>
+            <xsl:when test="'0' != ae:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
