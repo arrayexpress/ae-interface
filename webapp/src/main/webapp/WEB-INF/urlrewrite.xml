@@ -47,7 +47,7 @@
         <to type="forward">/servlets/query/experiments-rss/xml</to>
     </rule>
 
-    <!-- rest interfaces support -->
+    <!-- rest api support -->
     <rule>
         <from>^/xml/experiments$</from>
         <to type="forward">/servlets/query/experiments/xml?queryversion=1</to>
@@ -63,6 +63,28 @@
     <rule>
         <from>^/xml/files/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/files/xml?accession=$1</to>
+    </rule>
+
+    <!-- rest api v2 support -->
+    <rule>
+        <from>^/xml/v2/experiments$</from>
+        <to type="forward">/servlets/query/experiments/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/experiments/([eE]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files$</from>
+        <to type="forward">/servlets/query/files/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files/([eE]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/files/xml?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/experiments/ebeye$</from>
+        <to type="forward">/servlets/query/experiments-ebeye/xml</to>
     </rule>
     <!-- search results export in tab format -->
     <rule>
