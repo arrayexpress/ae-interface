@@ -20,7 +20,12 @@
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="ISO-8859-1"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
-    
+
+    <xsl:function name="ae:formatDate">
+        <xsl:param name="pDate"/>
+        <xsl:value-of select="fn:format-date($pDate, '[D01]-[MN,*-3]-[Y0001]')"/>
+    </xsl:function>
+
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
@@ -30,7 +35,7 @@
             <name>ArrayExpress Archive</name>
             <description>The ArrayExpress Archive is a database of functional genomics experiments</description>
             <release>1.2.1</release>
-            <release_date><xsl:value-of select="fn:format-date(fn:current-date(), '[D01]-[MN,*-3]-[Y0001]')"/></release_date>
+            <release_date><xsl:value-of select="ae:formatDate(fn:current-date())"/></release_date>
             <entry_count><xsl:value-of select="$vTotal"/></entry_count>
             <entries>
                 <xsl:call-template name="ae-sort-experiments">
@@ -56,7 +61,7 @@
             </description>
             <authors><xsl:value-of select="fn:string-join(provider[not(contact = ' ' or contact = '')]/contact, ', ')"/></authors>
             <keywords><xsl:value-of select="fn:string-join(experimentdesign, ', ')"/></keywords>
-            <dates><xsl:if test="releasedate"><date type="release" value="{releasedate}"/></xsl:if></dates>
+            <dates><xsl:if test="releasedate"><date type="release" value="{ae:formatDate(releasedate)}"/></xsl:if></dates>
             <cross_references>
                 <xsl:if test="@loadedinatlas">
                     <ref dbkey="{accession}" dbname="ArrayExpress Warehouse"/>
