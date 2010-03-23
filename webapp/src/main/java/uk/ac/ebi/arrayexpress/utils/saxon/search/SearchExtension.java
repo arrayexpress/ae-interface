@@ -47,7 +47,7 @@ public final class SearchExtension
 
     public static String getQueryString( String queryId )
     {
-        return getController().getQueryString( Integer.decode(queryId));
+        return getController().getQueryString(Integer.decode(queryId));
     }
 
     // get/set

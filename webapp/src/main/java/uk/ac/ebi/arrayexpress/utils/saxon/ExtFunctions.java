@@ -22,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,27 +52,6 @@ public class ExtFunctions
             return str.substring(0, str.length() - 1);
         } else
             return str;
-    }
-
-    public static String dateToRfc822()
-    {
-        return new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date());
-    }
-
-    public static String dateToRfc822( String dateString )
-    {
-        if (null != dateString && 0 < dateString.length()) {
-            try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-                dateString = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(date);
-            } catch (Exception x) {
-                logger.debug("Caught an exception:", x);
-            }
-        } else {
-            dateString = "";
-        }
-
-        return dateString;
     }
 
     public static boolean isExperimentInAtlas( String accession )

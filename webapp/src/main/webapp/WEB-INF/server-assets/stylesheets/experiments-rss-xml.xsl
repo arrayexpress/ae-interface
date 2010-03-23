@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="ae search"
-                exclude-result-prefixes="ae search"
+                extension-element-prefixes="ae fn search"
+                exclude-result-prefixes="ae fn search"
                 version="2.0">
 
     <xsl:param name="pagesize">25</xsl:param>
@@ -22,6 +24,11 @@
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
+    <xsl:function name="ae:dateTimeToRfc822">
+        <xsl:param name="pDateTime"/>
+        <xsl:value-of select="fn:format-dateTime($pDateTime, '[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0000', 'en', (), ())"/>
+    </xsl:function>
+
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
@@ -29,7 +36,7 @@
 
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
             <channel>
-                <xsl:variable name="vCurrentDate" select="ae:dateToRfc822()"/>
+                <xsl:variable name="vCurrentDate" select="ae:dateTimeToRfc822(fn:current-dateTime())"/>
                 <title>
                     <xsl:text>ArrayExpress Archive - Experiments</xsl:text>
                     <xsl:if test="number($pagesize) &lt; $vTotal">
@@ -115,7 +122,7 @@
                     </category>
                 </xsl:for-each>
                 <pubDate>
-                    <xsl:value-of select="ae:dateToRfc822(releasedate)"/>
+                    <xsl:value-of select="ae:dateTimeToRfc822(fn:dateTime(releasedate, xs:time('00:00:00')))"/>
                 </pubDate>
             </item>
         </xsl:if>

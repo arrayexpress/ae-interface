@@ -34,4 +34,9 @@ public final class SearchExtension
     {
         return text;
     }
+
+    public static String getQueryString( String queryId )
+    {
+        return "sample=querystring";
+    }
 }

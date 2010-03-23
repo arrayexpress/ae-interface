@@ -17,9 +17,6 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class ExtFunctions
 {
     public static String formatFileSize(long size)
@@ -44,28 +41,6 @@ public class ExtFunctions
         } else
             return str;
     }
-
-    public static String dateToRfc822()
-    {
-        return new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date());
-    }
-
-    public static String dateToRfc822(String dateString)
-    {
-        if (null != dateString && 0 < dateString.length()) {
-            try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-                dateString = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(date);
-            } catch (Exception x) {
-                //logger.debug("Caught an exception:", x);
-            }
-        } else {
-            dateString = "";
-        }
-
-        return dateString;
-    }
-
 
     /* ***************************************************** */
     public static boolean isExperimentInAtlas(String accession)
