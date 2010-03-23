@@ -15,7 +15,7 @@
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
-    <xsl:output omit-xml-declaration="yes" method="xml" indent="no" encoding="ISO-8859-1"/>
+    <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="ISO-8859-1"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
