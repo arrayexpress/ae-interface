@@ -52,7 +52,7 @@
                     <xsl:text>/browse.html?</xsl:text>
                     <xsl:value-of select="search:getQueryString($queryid)"/>
                </link>
-                <description><xsl:text>ArrayExpress is a public repository for transcriptomics data, which is aimed at storing MIAME- and MINSEQE- compliant data in accordance with MGED recommendations.</xsl:text></description>
+                <description><xsl:text>The ArrayExpress Archive is a database of functional genomics experiments including gene expression where you can query and download data collected to MIAME and MINSEQE standards</xsl:text></description>
                 <language><xsl:text>en</xsl:text></language>
                 <pubDate><xsl:value-of select="$vCurrentDate"/></pubDate>
                 <lastBuildDate><xsl:value-of select="$vCurrentDate"/></lastBuildDate>
@@ -109,7 +109,8 @@
                     <xsl:if test="(count(description[contains(text, 'Generated description')]) > 0)">
                         <xsl:text>&lt;br/&gt;&lt;br/&gt;</xsl:text>
                     </xsl:if>
-                    <xsl:for-each select="description[string-length(text) > 0 and not(contains(text, 'Generated description'))]">
+                    <xsl:for-each select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]">
+                        <xsl:sort select="id" data-type="number"/>
                         <xsl:copy-of select="text"/>
                         <xsl:if test="position() != last()">
                             <xsl:text>&lt;br/&gt;</xsl:text>
