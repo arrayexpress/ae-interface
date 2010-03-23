@@ -182,12 +182,13 @@
                 <td colspan="9" class="td_ext">
                     <div class="tbl">
                         <table cellpadding="0" cellspacing="0" border="0">
-                            <xsl:variable name="vDescription" select="description[string-length(text) > 0 and not(contains(text, 'Generated description'))]"/>
+                            <xsl:variable name="vDescription" select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]"/>
                             <xsl:if test="$vDescription">
                                 <tr>
                                     <td class="name"><div>Description</div></td>
                                     <td class="value">
                                         <xsl:for-each select="$vDescription">
+                                            <xsl:sort select="id" data-type="number"/>
                                             <xsl:call-template name="description">
                                                 <xsl:with-param name="pText" select="text"/>
                                             </xsl:call-template>
