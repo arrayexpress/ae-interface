@@ -22,5 +22,5 @@ import net.sf.saxon.om.DocumentInfo;
 public interface DocumentSource
 {
     public String getDocumentURI();
-    public DocumentInfo getDocument();
+    public DocumentInfo getDocument() throws Exception;
 }

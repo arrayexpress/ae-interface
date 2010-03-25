@@ -85,7 +85,7 @@ public class DownloadServlet extends ApplicationServlet
     }
 
     private File validateRequest( HttpServletRequest request, HttpServletResponse response )
-            throws IOException, DownloadServletException
+            throws Exception
     {
         String accession = null;
         String name = null;

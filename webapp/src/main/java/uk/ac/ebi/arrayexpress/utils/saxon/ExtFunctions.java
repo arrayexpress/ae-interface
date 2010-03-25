@@ -54,7 +54,7 @@ public class ExtFunctions
             return str;
     }
 
-    public static boolean isExperimentInAtlas( String accession )
+    public static boolean isExperimentInAtlas( String accession ) throws Exception
     {
         return ((Experiments)Application.getAppComponent("Experiments"))
                 .isInAtlas(accession);

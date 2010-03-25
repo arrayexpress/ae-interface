@@ -27,11 +27,11 @@ package uk.ac.ebi.arrayexpress.utils.persistence;
  */
 public interface Persistable
 {
-    public String toPersistence();
+    public String toPersistence() throws Exception;
 
-    public void fromPersistence( String str );
+    public void fromPersistence( String str ) throws Exception;
 
-    public boolean isEmpty();
+    public boolean isEmpty() throws Exception;
 
     public final static String EOL = System.getProperty("line.separator");
 }

@@ -2,10 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
+                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="ae fn search"
-                exclude-result-prefixes="ae fn search"
+                extension-element-prefixes="ae xs fn saxon search"
+                exclude-result-prefixes="ae xs fn saxon search"
                 version="2.0">
 
     <xsl:param name="pagesize">25</xsl:param>
@@ -20,7 +21,7 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:output omit-xml-declaration="yes" method="xml" encoding="ISO-8859-1"/>
+    <xsl:output name="xml" omit-xml-declaration="yes" method="xml" encoding="ISO-8859-1"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
@@ -83,7 +84,7 @@
                     <xsl:value-of select="accession"/>
                     <xsl:text> - </xsl:text>
                     <xsl:choose>
-                        <xsl:when test="string-length(name) > 0">
+                        <xsl:when test="fn:string-length(name) > 0">
                             <xsl:value-of select="name"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -100,18 +101,18 @@
                 </guid>
 
                 <description>
-                    <xsl:for-each select="description[contains(text, 'Generated description')]">
-                        <xsl:value-of select="substring(text, 25)"/>
+                    <xsl:for-each select="description[contains(text, '(Generated description)')]">
+                        <xsl:value-of select="fn:replace(text, '[(]Generated description[)]', '', 'i')"/>
                         <xsl:if test="position() != last()">
                             <xsl:text>&lt;br/&gt;</xsl:text>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:if test="(count(description[contains(text, 'Generated description')]) > 0)">
+                    <xsl:if test="(count(description[contains(text, '(Generated description)')]) > 0)">
                         <xsl:text>&lt;br/&gt;&lt;br/&gt;</xsl:text>
                     </xsl:if>
                     <xsl:for-each select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]">
                         <xsl:sort select="id" data-type="number"/>
-                        <xsl:copy-of select="text"/>
+                        <xsl:value-of select="saxon:serialize(text, 'xml')"/>
                         <xsl:if test="position() != last()">
                             <xsl:text>&lt;br/&gt;</xsl:text>
                         </xsl:if>

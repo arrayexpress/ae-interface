@@ -1,9 +1,6 @@
 package uk.ac.ebi.arrayexpress.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /*
  * Copyright 2009-2010 Microarray Informatics Group, European Bioinformatics Institute
@@ -62,5 +59,12 @@ public class StringTools
         } else {
             return "";
         }
+    }
+
+    public static void stringToFile( String string, File file ) throws IOException
+    {
+        BufferedWriter w = new BufferedWriter(new FileWriter(file));
+        w.write(string);
+        w.close();
     }
 }

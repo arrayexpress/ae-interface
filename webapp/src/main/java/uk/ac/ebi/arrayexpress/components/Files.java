@@ -74,12 +74,12 @@ public class Files extends ApplicationComponent implements DocumentSource
     }
 
     // implementation of DocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument()
+    public synchronized DocumentInfo getDocument() throws Exception
     {
         return this.files.getObject().getDocument();
     }
 
-    private synchronized void setFiles( DocumentInfo doc )
+    private synchronized void setFiles( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
             this.files.setObject(new PersistableDocumentContainer(doc));
@@ -89,7 +89,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         }
     }
 
-    public void reload( String xmlString )
+    public void reload( String xmlString ) throws Exception
     {
         DocumentInfo doc = loadFilesFromString(xmlString);
         if (null != doc) {
@@ -97,14 +97,9 @@ public class Files extends ApplicationComponent implements DocumentSource
         }
     }
 
-    private DocumentInfo loadFilesFromString( String xmlString )
+    private DocumentInfo loadFilesFromString( String xmlString ) throws Exception
     {
-        DocumentInfo doc = saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
-        if (null == doc) {
-            this.logger.error("Transformation [preprocess-files-xml.xsl] returned an error, returning null");
-            return null;
-        }
-        return doc;
+        return saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
     }
 
     private void updateAccelerators()
@@ -161,7 +156,7 @@ public class Files extends ApplicationComponent implements DocumentSource
     }
 
     // returns true is file is registered in the registry
-    public boolean doesExist( String accession, String name )
+    public boolean doesExist( String accession, String name ) throws Exception
     {
         if (null != accession && accession.length() > 0) {
             return Boolean.parseBoolean(
@@ -181,7 +176,7 @@ public class Files extends ApplicationComponent implements DocumentSource
     }
 
     // returns absolute file location (if file exists, null otherwise) in local filesystem
-    public String getLocation( String accession, String name )
+    public String getLocation( String accession, String name ) throws Exception
     {
         String folderLocation;
 
@@ -204,7 +199,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         }
     }
 
-    public String getAccession( String fileLocation )
+    public String getAccession( String fileLocation ) throws Exception
     {
         String[] nameFolder = new RegexHelper("^(.+)/([^/]+)$", "i")
                 .match(fileLocation);

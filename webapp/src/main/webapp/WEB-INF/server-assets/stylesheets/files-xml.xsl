@@ -27,7 +27,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
-        <files version="1.1" revision="100317"
+        <files version="1.1" revision="100325"
                      total-experiments="{$vTotal}">
             <xsl:call-template name="ae-sort-experiments">
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>

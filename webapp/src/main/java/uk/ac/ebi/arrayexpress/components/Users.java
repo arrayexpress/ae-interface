@@ -50,12 +50,12 @@ public class Users extends ApplicationComponent
     {
     }
 
-    public void setUserList( UserList _userList )
+    public void setUserList( UserList userList ) throws Exception
     {
-        userList.setObject(new PersistableUserList(_userList));
+        this.userList.setObject(new PersistableUserList(userList));
     }
 
-    public String hashLogin( String username, String password, String suffix )
+    public String hashLogin( String username, String password, String suffix ) throws Exception
     {
         if ( null != username && null != password && null != suffix
                 && userList.getObject().containsKey(username) ) {
@@ -68,7 +68,7 @@ public class Users extends ApplicationComponent
         return "";
     }
 
-    public boolean verifyLogin( String username, String hash, String suffix )
+    public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
         if ( null != username && null != hash && null != suffix
                 && userList.getObject().containsKey(username) ) {
@@ -78,7 +78,7 @@ public class Users extends ApplicationComponent
         return false;
     }
 
-    public UserRecord getUserRecord( String username )
+    public UserRecord getUserRecord( String username ) throws Exception
     {
         return ( null != username ) ? userList.getObject().get(username) : null;
     }

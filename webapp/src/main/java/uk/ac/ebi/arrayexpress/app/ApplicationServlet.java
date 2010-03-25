@@ -90,7 +90,8 @@ public abstract class ApplicationServlet extends HttpServlet
                 doRequest(request, response, requestType);
             } else {
                 logger.error("Request of type [{}] is unsupported", requestType.toString());
-                response.sendError(405, "The request of type " + requestType.toString() + " is not allowed here");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST
+                        , "The request of type " + requestType.toString() + " is not allowed here");
             }
         } catch (Throwable x) {
             logger.error("[SEVERE] Runtime error while processing request:", x);
@@ -98,7 +99,7 @@ public abstract class ApplicationServlet extends HttpServlet
                     "[SEVERE] Runtime error while processing " + requestToString(request, requestType)
                     , x
             );
-            response.sendError(500);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         }
     }

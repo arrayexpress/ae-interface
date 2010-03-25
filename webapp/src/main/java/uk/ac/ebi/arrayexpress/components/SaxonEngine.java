@@ -21,10 +21,12 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
 import net.sf.saxon.event.SequenceWriter;
+import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.instruct.TerminationException;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.tinytree.TinyBuilder;
+import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +34,14 @@ import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
@@ -69,6 +73,13 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
 
+        // ok so we attempt to register some extension function now :)
+        Configuration c = trFactory.getConfiguration();
+        FunctionLibraryList extLibraries = new FunctionLibraryList();
+        extLibraries.addFunctionLibrary(c.getExtensionBinder("java"));
+        extLibraries.addFunctionLibrary(new UserFunctionLibrary());
+        c.setExtensionBinder("java", extLibraries);
+        
         loggerWriter = new LoggerWriter(logger);
     }
 
@@ -129,109 +140,77 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         logger.warn("There was a warning while transforming:", x);
     }
 
-    public String serializeDocument( DocumentInfo document )
+    public String serializeDocument( DocumentInfo document ) throws Exception
     {
         String string = null;
-        try {
-            Transformer transformer = trFactory.newTransformer();
-            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        Transformer transformer = trFactory.newTransformer();
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty(OutputKeys.INDENT, "no");
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "no");
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 
-            transformer.transform(document, new StreamResult(outStream));
-            string = outStream.toString(XML_STRING_ENCODING);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-
-        return string;
+        transformer.transform(document, new StreamResult(outStream));
+        return outStream.toString(XML_STRING_ENCODING);
     }
 
-    public DocumentInfo buildDocument( String xml )
+    public DocumentInfo buildDocument( String xml ) throws XPathException
     {
         StringReader reader = new StringReader(xml);
-        DocumentInfo document = null;
-        try {
-            Configuration config = trFactory.getConfiguration();
-            document = config.buildDocument(new StreamSource(reader));
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-
-        return document;
+        Configuration config = trFactory.getConfiguration();
+        return config.buildDocument(new StreamSource(reader));
     }
 
-    public String evaluateXPathSingle( DocumentInfo doc, String xpath )
+    public String evaluateXPathSingle( DocumentInfo doc, String xpath ) throws XPathExpressionException
     {
-        try {
-            XPath xp = new XPathEvaluator(trFactory.getConfiguration());
-            XPathExpression xpe = xp.compile(xpath);
-            return xpe.evaluate(doc);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-
-        return null;
+        XPath xp = new XPathEvaluator(trFactory.getConfiguration());
+        XPathExpression xpe = xp.compile(xpath);
+        return xpe.evaluate(doc);
     }
 
-    public boolean transformToWriter( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, Writer dstWriter )
+    public boolean transformToWriter( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, Writer dstWriter ) throws Exception
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));
     }
 
-    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, File dstFile )
+    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params, File dstFile ) throws Exception
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstFile));
     }
 
-    public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params )
+    public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params ) throws Exception
     {
         String str = null;
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         if (transform(srcDocument, stylesheet, params, new StreamResult(outStream))) {
-            try {
-                str = outStream.toString(XML_STRING_ENCODING);
-            } catch (Exception x) {
-                logger.error("Caught an exception:", x);
-            }
+            str = outStream.toString(XML_STRING_ENCODING);
             return str;
         } else {
             return null;
         }
     }
 
-    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String,String[]> params )
+    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String,String[]> params ) throws Exception
     {
-        try {
-            Source src = new StreamSource(new StringReader(srcXmlString));
-            TinyBuilder dstDocument = new TinyBuilder();
-            if (transform(src, stylesheet, params, dstDocument)) {
-                return (DocumentInfo)dstDocument.getCurrentRoot();
-            }
-        } catch ( Exception x ) {
-            logger.error("Caught an exception:", x);
+        Source src = new StreamSource(new StringReader(srcXmlString));
+        TinyBuilder dstDocument = new TinyBuilder();
+        if (transform(src, stylesheet, params, dstDocument)) {
+            return (DocumentInfo)dstDocument.getCurrentRoot();
         }
         return null;
     }
 
-    public DocumentInfo transform( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params )
+    public DocumentInfo transform( DocumentInfo srcDocument, String stylesheet, Map<String,String[]> params ) throws Exception
     {
-        try {
-            TinyBuilder dstDocument = new TinyBuilder();
-            if (transform(srcDocument, stylesheet, params, dstDocument)) {
-                return (DocumentInfo)dstDocument.getCurrentRoot();
-            }
-        } catch ( Exception x ) {
-            logger.error("Caught an exceptiom:", x);
+        TinyBuilder dstDocument = new TinyBuilder();
+        if (transform(srcDocument, stylesheet, params, dstDocument)) {
+            return (DocumentInfo)dstDocument.getCurrentRoot();
         }
-
         return null;
     }
 
-    private boolean transform( Source src, String stylesheet, Map<String,String[]> params, Result dst )
+    private boolean transform( Source src, String stylesheet, Map<String,String[]> params, Result dst ) throws Exception
     {
         boolean result = false;
         try {
@@ -267,12 +246,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             result = true;
         } catch (TerminationException x ) {
             logger.error("Transformation has been terminated by xsl instruction, please inspect log for details");
-        } catch ( Exception x ) {
-            if (x.getMessage().contains("java.lang.InterruptedException")) {
-                logger.error("Transformation has been interruped");
-            } else {
-                logger.error("Caught an exception transforming [" + stylesheet + "]:", x);
-            }
         }
         return result;
     }

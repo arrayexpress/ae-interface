@@ -6,10 +6,24 @@
                 exclude-result-prefixes="search html"
                 version="2.0">
 
+    <xsl:template match="*" mode="highlight">
+        <xsl:element name="{if (name() = 'text') then 'div' else name() }">
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="highlight"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="highlight">
+        <xsl:call-template name="highlight">
+            <xsl:with-param name="pText" select="."/>
+            <xsl:with-param name="pFieldName"/>
+        </xsl:call-template>
+    </xsl:template>
+
     <xsl:template name="highlight">
         <xsl:param name="pText"/>
         <xsl:param name="pFieldName"/>
-        <xsl:variable name="vText" select="normalize-space($pText)"/>
+        <xsl:variable name="vText" select="$pText"/>
         <xsl:choose>
             <xsl:when test="string-length($vText)!=0">
                 <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText)"/>

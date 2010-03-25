@@ -4,8 +4,8 @@
                 xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae search html"
-                exclude-result-prefixes="ae search html"
+                extension-element-prefixes="xs ae search html"
+                exclude-result-prefixes="xs ae search html"
                 version="2.0">
 
     <xsl:param name="queryid" />
@@ -189,9 +189,7 @@
                                     <td class="value">
                                         <xsl:for-each select="$vDescription">
                                             <xsl:sort select="id" data-type="number"/>
-                                            <xsl:call-template name="description">
-                                                <xsl:with-param name="pText" select="text"/>
-                                            </xsl:call-template>
+                                            <xsl:apply-templates select="text" mode="highlight"/>
                                         </xsl:for-each>
                                     </td>
                                 </tr>
@@ -560,7 +558,7 @@
         <xsl:param name="pText"/>
         <xsl:choose>
             <xsl:when test="contains($pText, '&lt;br&gt;')">
-                <div>
+                <div class="desc">
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="substring-before($pText, '&lt;br&gt;')"/>
                         <xsl:with-param name="pFieldName"/>
@@ -571,7 +569,7 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <div>
+                <div class="desc">
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="$pText"/>
                         <xsl:with-param name="pFieldName"/>

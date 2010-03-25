@@ -47,8 +47,11 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
         if (null != ds) {
             exps = new ExperimentListInAtlasDatabaseRetriever(ds).getExperimentList();
             Thread.sleep(1);
-
-            ((Experiments) app.getComponent("Experiments")).setExperimentsInAtlas(exps);
+            try {
+                ((Experiments) app.getComponent("Experiments")).setExperimentsInAtlas(exps);
+            } catch (Exception x) {
+                throw new RuntimeException(x);
+            }
             logger.info("Got [{}] experiments listed in Atlas", exps.size());
         } else {
             logger.warn("No data sources available, reload aborted");

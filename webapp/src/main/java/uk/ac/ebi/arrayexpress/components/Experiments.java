@@ -68,8 +68,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine)getComponent("SaxonEngine");
-        search = (SearchEngine)getComponent("SearchEngine");
+        saxon = (SaxonEngine) getComponent("SaxonEngine");
+        search = (SearchEngine) getComponent("SearchEngine");
 
         this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer()
@@ -123,12 +123,12 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     }
 
     // implementation of DocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument()
+    public synchronized DocumentInfo getDocument() throws Exception
     {
         return this.experiments.getObject().getDocument();
     }
 
-    public boolean isAccessible( String accession, String userId )
+    public boolean isAccessible( String accession, String userId ) throws Exception
     {
         if ("0".equals(userId)) {
             return true;
@@ -136,25 +136,25 @@ public class Experiments extends ApplicationComponent implements DocumentSource
             return true; // we allow array queries
         } else {
             return Boolean.parseBoolean(
-                saxon.evaluateXPathSingle(
-                        getDocument()
-                        , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
-                )
+                    saxon.evaluateXPathSingle(
+                            getDocument()
+                            , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
+                    )
             );
         }
     }
 
-    public boolean isInAtlas( String accession )
+    public boolean isInAtlas( String accession ) throws Exception
     {
         return this.experimentsInAtlas.getObject().contains(accession);
     }
 
-    public String getSpecies()
+    public String getSpecies() throws Exception
     {
         return this.species.getObject().get();
     }
 
-    public String getArrays()
+    public String getArrays() throws Exception
     {
         return this.arrays.getObject().get();
     }
@@ -223,7 +223,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         this.dataSource = dataSource;
     }
 
-    public void reload( String xmlString )
+    public void reload( String xmlString ) throws Exception
     {
         DocumentInfo doc = loadExperimentsFromString(xmlString);
         if (null != doc) {
@@ -233,12 +233,12 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         }
     }
 
-    public void setExperimentsInAtlas( List<String> expList )
+    public void setExperimentsInAtlas( List<String> expList ) throws Exception
     {
         this.experimentsInAtlas.setObject(new PersistableStringList(expList));
     }
 
-    private synchronized void setExperiments( DocumentInfo doc )
+    private synchronized void setExperiments( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
             this.experiments.setObject(new PersistableDocumentContainer(doc));
@@ -247,14 +247,9 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         }
     }
 
-    private DocumentInfo loadExperimentsFromString( String xmlString )
+    private DocumentInfo loadExperimentsFromString( String xmlString ) throws Exception
     {
-        DocumentInfo doc = saxon.transform(xmlString, "preprocess-experiments-xml.xsl", null);
-        if (null == doc) {
-            this.logger.error("Transformation [preprocess-experiments-xml.xsl] returned an error, returning null");
-            return null;
-        }
-        return doc;
+        return saxon.transform(xmlString, "preprocess-experiments-xml.xsl", null);
     }
 
     private void indexExperiments()
@@ -288,11 +283,11 @@ public class Experiments extends ApplicationComponent implements DocumentSource
             if (null != fieldType && !"integer".equals(fieldType)) {
                 for (String term : search.getController().getTerms(EXPERIMENTS_INDEX_ID, field, "keywords".equals(field) ? 10 : 1)) {
                     autocompleteStore.addData(
-                        new AutocompleteData(
-                                term
-                                , AutocompleteData.DATA_TEXT
-                                , field
-                        )
+                            new AutocompleteData(
+                                    term
+                                    , AutocompleteData.DATA_TEXT
+                                    , field
+                            )
                     );
                 }
             }
@@ -312,7 +307,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         }
     }
 
-    private void buildSpeciesArraysExpTypes( DocumentInfo doc )
+    private void buildSpeciesArraysExpTypes( DocumentInfo doc ) throws Exception
     {
         String speciesString = saxon.transformToString(doc, "build-species-list-html.xsl", null);
         this.species.setObject(new PersistableString(speciesString));

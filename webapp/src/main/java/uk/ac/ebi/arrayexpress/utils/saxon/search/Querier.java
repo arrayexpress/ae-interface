@@ -53,14 +53,16 @@ public class Querier
         try {
             ir = IndexReader.open(this.env.indexDirectory, true);
             terms = ir.terms(new Term(fieldName, ""));
-            while (fieldName.equals(terms.term().field())) {
-                if (terms.docFreq() >= minFreq) {
-                    termsList.add(terms.term().text());
+            if (null != terms) {
+                while (null != terms.term() && fieldName.equals(terms.term().field())) {
+                    if (terms.docFreq() >= minFreq) {
+                        termsList.add(terms.term().text());
+                    }
+                    if (!terms.next())
+                        break;
                 }
-                if (!terms.next())
-                    break;
+                terms.close();
             }
-            terms.close();
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         } finally {

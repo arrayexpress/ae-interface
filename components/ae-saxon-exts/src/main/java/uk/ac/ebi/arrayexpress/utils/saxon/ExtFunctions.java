@@ -47,4 +47,17 @@ public class ExtFunctions
     {
         return true;
     }
+
+    public synchronized static void clearAccelerator( String acceleratorName )
+    {
+    }
+
+    public synchronized static void addAcceleratorValue( String acceleratorName, String key, String value )
+    {
+    }
+
+    public synchronized static String getAcceleratorValue( String acceleratorName, String key )
+    {
+        return "1";
+    }
 }

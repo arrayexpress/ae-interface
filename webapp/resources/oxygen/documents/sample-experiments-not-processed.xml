@@ -1,28 +1,75 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <experiments total="4">
-	<experiment id="13850163" accession="E-SNGR-9" name="Transcription profiling of fission yeast cell cycle data (log normalised data from E-SNGR-2-7)">
+	<experiment id="1712209901" accession="E-GEOD-14011"
+		name="Transcription profiling of human myeloma cell lines treated with 500 nM pristimerin or DMSO vehicle alone for 4 hours during high-throughput chemical library screens for compounds that induce suppression of cyclin D2"
+		releasedate="2009-01-12">
 		<user>1</user>
-		<sampleattribute category="Genotype" value="h+/h+ ade6-M210/ade6-M216"/>
-		<sampleattribute category="Genotype" value="h+/h+ pat1-114/pat1-114 ade6-M210/ade6-M216"/>
-		<sampleattribute category="Genotype" value="h+/h- ade6-M210/ade6-M216"/>
-		<sampleattribute category="Genotype" value="h90_atf21::kanR"/>
-		<sampleattribute category="Organism" value="Schizosaccharomyces pombe"/>
-		<sampleattribute category="Genotype" value="h90_atf31::kanR"/>
-		<sampleattribute category="Genotype" value="h90"/>
+		<secondaryaccession>GSE14011</secondaryaccession>
+		<sampleattribute category="Organism" value="Homo sapiens"/>
 		<experimentalfactor value=" "/>
-		<miamescore name="ReporterSequenceScore" value="0"/>
+		<miamescore name="ReporterSequenceScore" value="1"/>
 		<miamescore name="FactorValueScore" value="0"/>
-		<miamescore name="MeasuredBioAssayDataScore" value="0"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="1"/>
 		<miamescore name="ProtocolScore" value="1"/>
 		<miamescore name="DerivedBioAssayDataScore" value="1"/>
-		<bioassaydatagroup id="1341901624" name="DED:A-SNGR-1_composites" bioassaydatacubes="11" arraydesignprovider="SNGR" dataformat="tab delimited" bioassays="11" isderived="1"/>
-		<bioassaydatagroup id="1341914572" name="DED:A-SNGR-1_composites" bioassaydatacubes="66" arraydesignprovider="SNGR" dataformat="tab delimited" bioassays="66" isderived="1"/>
-		<provider contact="Juan Mata" email="jm6@sanger.ac.uk" role="submitter"/>
-		<experimentdesign>time series</experimentdesign>
-		<experimenttype>transcription profiling</experimenttype>
-		<description id="13850164">This experiment contains the log normalized data for ArrayExpress experiments E-SNGR-2 to E-SNGR-7</description>
-		<description id="1341914638">(Generated description) Experiment with 77 hybridizations, using 10 samples of species [Schizosaccharomyces pombe],  producing 0 raw data files and 77 transformed and/or normalized data files.</description>
+		<arraydesign id="405156763" accession="A-AFFY-44"
+			name="Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]" count="4"/>
+		<bioassaydatagroup id="1712220796" name="Affymetrix:FeatureDimension:HG-U133_Plus_2"
+			bioassaydatacubes="4" arraydesignprovider="AFFY" dataformat="CELv4" bioassays="4"
+			isderived="0"/>
+		<bioassaydatagroup id="1712221897"
+			name="ebi.ac.uk:MAGETabulator:E-GEOD-14011.HG-U133_Plus_2.1.CompositeSequenceDimension"
+			bioassaydatacubes="4" arraydesignprovider="AFFY" dataformat="tab delimited"
+			bioassays="4" isderived="1"/>
+		<provider contact="rodger tiedemann" email="tiedemann.rodger@mayo.edu" role="submitter"/>
+		<experimentdesign>unknown experiment type</experimentdesign>
+		<experimenttype>transcription profiling by array</experimenttype>
+		<description id="1712209917">As multiple myeloma tumors universally dysregulate cyclin D
+			genes we conducted high-throughput chemical library screens for compounds that induce
+			suppression of cyclin D2. The top-ranked compound was a natural triterpenoid,
+			pristimerin. We used gene expression microarray studies to identify co-regulated
+			pristimerin-response genes and to deduce the compound s direct molecular target(s),
+			utilizing pattern-matching algorithms available at the Connectivity Map (Cmap). The
+			early transcriptional response of cells treated with pristimerin closely resembles
+			cellular responses elicited by proteosome inhibitors, with rapid induction of heat shock
+			proteins, activating transcription factor (ATF) 3 and CHOP. Enzymatic assays and
+			immunoblotting confirm that pristimerin rapidly (&lt;90min) and specifically
+			inhibits chymotrypsin-like proteosome activity at low concentrations (&lt;100nM) and
+			causes accumulation of cellular ubiquitinated proteins. Notably, cytotoxic triterpenoids
+			including pristimerin inhibit NF-kB activation via inhibition of IKKa or IKKb while
+			proteosome inhibitors instead suppress NF-kB function by impairing degradation of
+			ubiquitinated-IkB. By inhibiting both IKK and the proteosome pristimerin causes overt
+			suppression of constitutive NF-kB activity in myeloma cells that may mediate its
+			suppression of cyclin D. Multiple myeloma is exquisitely sensitive to proteosome or
+			NF-kB pathway inhibition. Consistent with this, pristimerin is potently and selectively
+			lethal to primary myeloma cells (IC50&lt;100nM), inhibits xenografted plasmacytoma
+			tumors in mice and is synergistically cytotoxic with bortezomib providing the rationale
+			for pharmaceutical development of triterpenoid dual-function proteosome/NF-kB inhibitors
+			as therapeutics for human multiple myeloma and related malignancies. Experiment Overall
+			Design: H929 and U266 human myeloma cell lines were treated with pristimerin 500nM (~2x
+			IC50) or DMSO vehicle and harvested at 4h, prior to the appearance of any macroscopic
+			evidence of perturbed viability. RNA was isolated using Trizol, column purified (Qiagen,
+			Valencia, CA) and hybridized to Hg_U133_plus_2 microarrays (Affymetrix, Santa Clara, CA)
+			according to the manufacturer s instructions. Probe-set signal intensities were
+			PLIER16-normalized using Affymetrix Expression Console software and flagged using
+			Affymetrix Microarray Suite 5 (MAS5) Present/Absent/Marginal detection calls. Expression
+			data was analyzed with GeneSpring 7 (Agilent Technologies, Santa Clara CA) software,
+			with drug-treated samples normalized per cell line to DMSO-treated controls. Gene lists
+			were filtered to exclude non-expressed probe-sets with MAS5 Absent detection calls
+			across all samples tested (treated and untreated). Probe-sets upregulated or suppressed
+			by pristimerin in each cell line were delineated by volcano plot filter (&gt;1.5
+			fold change, FDR&lt;0.25) and the Venn intersection of probe-sets modulated by drug
+			in both cell lines was used in deriving a pristimerin signature.</description>
+		<description id="1712225489">(Generated description) Experiment with 4 hybridizations, using
+			4 samples of species [Homo sapiens], using 4 arrays of array design [Affymetrix GeneChip
+			Human Genome U133 Plus 2.0 [HG-U133_Plus_2]], producing 4 raw data files and 4
+			transformed and/or normalized data files.</description>
+		<description id="1712225489">&lt;br&gt;Experiment&lt;ahref="oh.my.god"&gt;oh my&lt;/a&gt;with 4 hybridizations, using
+			4 samples of species [Homo sapiens], using 4 arrays of array design [Affymetrix GeneChip
+			Human Genome U133 Plus 2.0 [HG-U133_Plus_2]], producing 4 raw data files and 4
+			transformed and/or normalized data files. (http://downloads.yeastgenome.org/sequence/fungal_genomes/S_bayanus/WashU/contig/) and S. cerevisiae (ftp://ftp.yeastgenome.org/yeast/data_download/sequence/NCBI_genome_source/) reference genomes </description>
 	</experiment>
+	<!--
 	<experiment id="352682122" accession="E-AFMX-2" name="Transcription profiling of human and chimp brain tissues" releasedate="2004-09-16">
 		<user>1</user>
 		<sampleattribute category="Age" value="12 years since birth"/>
@@ -388,8 +435,8 @@
 		<experimenttype>transcription profiling</experimenttype>
 		<description id="1673822003">(Generated description) Experiment with 2 hybridizations, using samples of species [Mycobacterium tuberculosis], using 1 arrays of array design [A-BUGS-1], producing 114 raw data files and 12 transformed and/or normalized data files.</description>
 		<description id="1673780808">We describe an analysis, applicable to any spotted microarray dataset produced using genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a genome-wide scale.  Applying this to Mycobacterium tuberculosis, we validate the technique, show a correlation between level of expression and biological importance, define the complement of invariant genes and analyse absolute levels of expression by functional class to develop ways of understanding an organism   s biology without comparison to another growth condition.</description>
-		<description id="1673780816">Data is also available from &lt;ahref="http://bugs.sgul.ac.uk/E-BUGS-60" target="_blank"&gt;BuG@Sbase&lt;/a&gt;</description>
+		<description id="1673780816">Data is also available from &lt;ahref="http://bugs.sgul.ac.uk/E-BUGS-60" target="_blank"&gt;BuG@Sbase&lt;/a&gt; or http://bugs.sgul.ac.uk/E-BUGS-60.</description>
 		<description id="1751040287"/>
 		<description id="1680985362"/>
-	</experiment>
+	</experiment>-->
 </experiments>

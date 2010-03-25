@@ -1,5 +1,126 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<experiments version="" total="5">
+<experiments version="" total="4">
+    <experiment loadedinatlas="true">
+        <id>1712209901</id>
+        <accession>E-GEOD-14011</accession>
+        <name>Transcription profiling of human myeloma cell lines treated with 500 nM pristimerin or
+            DMSO vehicle alone for 4 hours during high-throughput chemical library screens for
+            compounds that induce suppression of cyclin D2</name>
+        <releasedate>2009-01-12</releasedate>
+        <species>Homo sapiens</species>
+        <miamescores>
+            <reportersequencescore>1</reportersequencescore>
+            <factorvaluescore>0</factorvaluescore>
+            <measuredbioassaydatascore>1</measuredbioassaydatascore>
+            <protocolscore>1</protocolscore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <overallscore>4</overallscore>
+        </miamescores>
+        <assays>4</assays>
+        <samples>0</samples>
+        <rawdatafiles/>
+        <fgemdatafiles/>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Homo sapiens</value>
+        </sampleattribute>
+        <user>1</user>
+        <secondaryaccession>GSE14011</secondaryaccession>
+        <arraydesign>
+            <id>405156763</id>
+            <accession>A-AFFY-44</accession>
+            <name>Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]</name>
+            <count>4</count>
+        </arraydesign>
+        <bioassaydatagroup>
+            <id>1712220796</id>
+            <name>Affymetrix:FeatureDimension:HG-U133_Plus_2</name>
+            <bioassaydatacubes>4</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>CELv4</dataformat>
+            <bioassays>4</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id>1712221897</id>
+            <name>ebi.ac.uk:MAGETabulator:E-GEOD-14011.HG-U133_Plus_2.1.CompositeSequenceDimension</name>
+            <bioassaydatacubes>4</bioassaydatacubes>
+            <arraydesignprovider>AFFY</arraydesignprovider>
+            <dataformat>tab delimited</dataformat>
+            <bioassays>4</bioassays>
+            <isderived>1</isderived>
+        </bioassaydatagroup>
+        <provider>
+            <contact>rodger tiedemann</contact>
+            <email>tiedemann.rodger@mayo.edu</email>
+            <role>submitter</role>
+        </provider>
+        <experimentdesign>unknown experiment type</experimentdesign>
+        <experimenttype>transcription profiling by array</experimenttype>
+        <description>
+            <id>1712209917</id>
+            <text>As multiple myeloma tumors universally dysregulate cyclin D genes we conducted
+                high-throughput chemical library screens for compounds that induce suppression of
+                cyclin D2. The top-ranked compound was a natural triterpenoid, pristimerin. We used
+                gene expression microarray studies to identify co-regulated pristimerin-response
+                genes and to deduce the compound s direct molecular target(s), utilizing
+                pattern-matching algorithms available at the Connectivity Map (Cmap). The early
+                transcriptional response of cells treated with pristimerin closely resembles
+                cellular responses elicited by proteosome inhibitors, with rapid induction of heat
+                shock proteins, activating transcription factor (ATF) 3 and CHOP. Enzymatic assays
+                and immunoblotting confirm that pristimerin rapidly (&lt;90min) and specifically
+                inhibits chymotrypsin-like proteosome activity at low concentrations (&lt;100nM)
+                and causes accumulation of cellular ubiquitinated proteins. Notably, cytotoxic
+                triterpenoids including pristimerin inhibit NF-kB activation via inhibition of IKKa
+                or IKKb while proteosome inhibitors instead suppress NF-kB function by impairing
+                degradation of ubiquitinated-IkB. By inhibiting both IKK and the proteosome
+                pristimerin causes overt suppression of constitutive NF-kB activity in myeloma cells
+                that may mediate its suppression of cyclin D. Multiple myeloma is exquisitely
+                sensitive to proteosome or NF-kB pathway inhibition. Consistent with this,
+                pristimerin is potently and selectively lethal to primary myeloma cells
+                (IC50&lt;100nM), inhibits xenografted plasmacytoma tumors in mice and is
+                synergistically cytotoxic with bortezomib providing the rationale for pharmaceutical
+                development of triterpenoid dual-function proteosome/NF-kB inhibitors as
+                therapeutics for human multiple myeloma and related malignancies. Experiment Overall
+                Design: H929 and U266 human myeloma cell lines were treated with pristimerin 500nM
+                (~2x IC50) or DMSO vehicle and harvested at 4h, prior to the appearance of any
+                macroscopic evidence of perturbed viability. RNA was isolated using Trizol, column
+                purified (Qiagen, Valencia, CA) and hybridized to Hg_U133_plus_2 microarrays
+                (Affymetrix, Santa Clara, CA) according to the manufacturer s instructions.
+                Probe-set signal intensities were PLIER16-normalized using Affymetrix Expression
+                Console software and flagged using Affymetrix Microarray Suite 5 (MAS5)
+                Present/Absent/Marginal detection calls. Expression data was analyzed with
+                GeneSpring 7 (Agilent Technologies, Santa Clara CA) software, with drug-treated
+                samples normalized per cell line to DMSO-treated controls. Gene lists were filtered
+                to exclude non-expressed probe-sets with MAS5 Absent detection calls across all
+                samples tested (treated and untreated). Probe-sets upregulated or suppressed by
+                pristimerin in each cell line were delineated by volcano plot filter (&gt;1.5
+                fold change, FDR&lt;0.25) and the Venn intersection of probe-sets modulated by
+                drug in both cell lines was used in deriving a pristimerin signature.</text>
+        </description>
+        <description>
+            <id>1712225489</id>
+            <text>(Generated description) Experiment with 4 hybridizations, using 4 samples of
+                species [Homo sapiens], using 4 arrays of array design [Affymetrix GeneChip Human
+                Genome U133 Plus 2.0 [HG-U133_Plus_2]], producing 4 raw data files and 4 transformed
+                and/or normalized data files.</text>
+        </description>
+        <description>
+            <id>1712225489</id>
+            <text><br clear="none"/>Experiment<a shape="rect" href="oh.my.god">oh my</a>with 4
+                hybridizations, using 4 samples of species [Homo sapiens], using 4 arrays of array
+                design [Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]], producing
+                4 raw data files and 4 transformed and/or normalized data files. (<a shape="rect"
+                    href="http://downloads.yeastgenome.org/sequence/fungal_genomes/S_bayanus/WashU/contig/"
+                    target="_blank"
+                    >http://downloads.yeastgenome.org/sequence/fungal_genomes/S_bayanus/WashU/contig/</a>)
+                and S. cerevisiae (<a shape="rect"
+                    href="ftp://ftp.yeastgenome.org/yeast/data_download/sequence/NCBI_genome_source/"
+                    target="_blank">ftp://ftp.yeastgenome.org/yeast/data_download/sequence/NCBI_genome_source/</a>)
+                reference genomes </text>
+        </description>
+    </experiment>
+
     <experiment loadedinatlas="true">
         <id>1673780805</id>
         <accession>E-BUGS-60</accession>
@@ -147,14 +268,16 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>1673822003</id>
-            <text>(Generated description) Experiment with 2 hybridizations, using samples of species
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >(Generated description) Experiment with 2 hybridizations, using samples of species
                 [Mycobacterium tuberculosis], using 1 arrays of array design [A-BUGS-1], producing
                 114 raw data files and 12 transformed and/or normalized data files.</text>
         </description>
         <description>
             <id>1673780808</id>
-            <text>We describe an analysis, applicable to any spotted microarray dataset produced
-                using genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">We
+                describe an analysis, applicable to any spotted microarray dataset produced using
+                genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a
                 genome-wide scale. Applying this to Mycobacterium tuberculosis, we validate the
                 technique, show a correlation between level of expression and biological importance,
                 define the complement of invariant genes and analyse absolute levels of expression
@@ -163,16 +286,19 @@
         </description>
         <description>
             <id>1673780816</id>
-            <text>Data is also available from &lt;ahref="http://bugs.sgul.ac.uk/E-BUGS-60"
-                target="_blank"&gt;BuG@Sbase&lt;/a&gt;</text>
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >Data is also available from <a shape="rect" href="http://bugs.sgul.ac.uk/E-BUGS-60"
+                    target="_blank">BuG@Sbase</a> or <a shape="rect"
+                    href="http://bugs.sgul.ac.uk/E-BUGS-60" target="_blank"
+                    >http://bugs.sgul.ac.uk/E-BUGS-60</a>.</text>
         </description>
         <description>
             <id>1751040287</id>
-            <text/>
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"/>
         </description>
         <description>
             <id>1680985362</id>
-            <text/>
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"/>
         </description>
     </experiment>
     <experiment loadedinatlas="true">
@@ -570,8 +696,9 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>366346723</id>
-            <text>The tissue-specific pattern of mRNA expression can indicate important clues about
-                gene function. High-density oligonucleotide arrays offer the opportunity to examine
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">The
+                tissue-specific pattern of mRNA expression can indicate important clues about gene
+                function. High-density oligonucleotide arrays offer the opportunity to examine
                 patterns of gene expression on a genome scale. Toward this end, we have designed
                 custom arrays that interrogate the expression of the vast majority of
                 protein-encoding human and mouse genes and have used them to profile a panel of 79
@@ -586,7 +713,8 @@
         </description>
         <description>
             <id>1342434336</id>
-            <text>(Generated description) Experiment with 316 hybridizations, using 160 samples of
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >(Generated description) Experiment with 316 hybridizations, using 160 samples of
                 species [Homo sapiens], using 316 arrays of array design [Affymetrix Custom Array -
                 Novartis Human [gnGNF1Ba], Affymetrix GeneChip Human Genome HG-U133A [HG-U133A]],
                 producing 316 raw data files and 311 transformed and/or normalized data
@@ -785,7 +913,8 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>1342093112</id>
-            <text>(Generated description) Experiment with 141 hybridizations, using 141 samples of
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >(Generated description) Experiment with 141 hybridizations, using 141 samples of
                 species [Homo sapiens, Pan troglodytes], using 141 arrays of array design
                 [Affymetrix GeneChip Human Genome U95Av2 [HG_U95Av2], Affymetrix GeneChip Human
                 Genome U95E [HG_U95E], Affymetrix GeneChip Human Genome U95B [HG_U95B], Affymetrix
@@ -795,17 +924,18 @@
         </description>
         <description>
             <id>352682123</id>
-            <text>We have analyzed gene expression in various brain regions of humans and
-                chimpanzees. Within both human and chimpanzee individuals, the transcriptomes of the
-                cerebral cortex are very similar to each other and differ more between individuals
-                than among regions within an individual. In contrast, the transcriptomes of the
-                cerebral cortex, the caudate nucleus, and the cerebellum differ substantially from
-                each other. Between humans and chimpanzees, 10% of genes differ in their expression
-                in at least one region of the brain. The majority of these expression differences
-                are shared among all brain regions. Whereas genes encoding proteins involved in
-                signal transduction and cell differentiation differ significantly between brain
-                regions within individuals, no such pattern is seen between the species. However, a
-                subset of genes that show expression differences between humans and chimpanzees are
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">We
+                have analyzed gene expression in various brain regions of humans and chimpanzees.
+                Within both human and chimpanzee individuals, the transcriptomes of the cerebral
+                cortex are very similar to each other and differ more between individuals than among
+                regions within an individual. In contrast, the transcriptomes of the cerebral
+                cortex, the caudate nucleus, and the cerebellum differ substantially from each
+                other. Between humans and chimpanzees, 10% of genes differ in their expression in at
+                least one region of the brain. The majority of these expression differences are
+                shared among all brain regions. Whereas genes encoding proteins involved in signal
+                transduction and cell differentiation differ significantly between brain regions
+                within individuals, no such pattern is seen between the species. However, a subset
+                of genes that show expression differences between humans and chimpanzees are
                 distributed nonrandomly across the genome. Furthermore, genes that show an elevated
                 expression level in humans are statistically significantly enriched in regions that
                 are recently duplicated in humans</text>
@@ -870,214 +1000,16 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>13850164</id>
-            <text>This experiment contains the log normalized data for ArrayExpress experiments
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >This experiment contains the log normalized data for ArrayExpress experiments
                 E-SNGR-2 to E-SNGR-7</text>
         </description>
         <description>
             <id>1341914638</id>
-            <text>(Generated description) Experiment with 77 hybridizations, using 10 samples of
+            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
+                >(Generated description) Experiment with 77 hybridizations, using 10 samples of
                 species [Schizosaccharomyces pombe], producing 0 raw data files and 77 transformed
                 and/or normalized data files.</text>
         </description>
     </experiment>
-    <experiment>
-        <id>1648458864</id>
-        <accession>E-MEXP-1738</accession>
-        <name>Transcription profiling of Salmonella enterica serovar Typhimurium exposed to
-            adrenalin</name>
-        <releasedate>2008-07-29</releasedate>
-        <species>Salmonella typhimurium</species>
-        <miamescores>
-            <reportersequencescore>1</reportersequencescore>
-            <factorvaluescore>1</factorvaluescore>
-            <measuredbioassaydatascore>1</measuredbioassaydatascore>
-            <protocolscore>1</protocolscore>
-            <derivedbioassaydatascore>0</derivedbioassaydatascore>
-            <overallscore>4</overallscore>
-        </miamescores>
-        <assays>12</assays>
-        <samples>7</samples>
-        <rawdatafiles>12</rawdatafiles>
-        <fgemdatafiles>0</fgemdatafiles>
-        <sampleattribute>
-            <category>Organism</category>
-            <value>Salmonella typhimurium</value>
-        </sampleattribute>
-        <sampleattribute>
-            <category>StrainOrLine</category>
-            <value>SL1344</value>
-        </sampleattribute>
-        <experimentalfactor>
-            <name>COMPOUND</name>
-            <value> </value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Compound</name>
-            <value>adrenaline</value>
-            <value>none</value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>DOSE</name>
-            <value> </value>
-            <value>0</value>
-            <value>50</value>
-        </experimentalfactor>
-        <arraydesign>
-            <id>1230624584</id>
-            <accession>A-MEXP-596</accession>
-            <name>IFR SALSA S. typhimurium June 2005 decon</name>
-            <count>12</count>
-        </arraydesign>
-        <bioassaydatagroup>
-            <id>1648459207</id>
-            <name>ebi.ac.uk:MAGETabulator:E-MEXP-1738.A-MEXP-596.1.FeatureDimension</name>
-            <bioassaydatacubes>12</bioassaydatacubes>
-            <arraydesignprovider>MEXP</arraydesignprovider>
-            <dataformat>tab delimited</dataformat>
-            <bioassays>12</bioassays>
-            <isderived>0</isderived>
-        </bioassaydatagroup>
-        <bibliography/>
-        <provider>
-            <contact>Mark Alston</contact>
-            <email>mark.alston@bbsrc.ac.uk</email>
-            <role>submitter</role>
-        </provider>
-        <experimentdesign>co-expression</experimentdesign>
-        <experimentdesign>reference</experimentdesign>
-        <experimentdesign>stimulus or stress</experimentdesign>
-        <experimenttype>transcription profiling by array</experimenttype>
-        <description>
-            <id>1648460940</id>
-            <text>(Generated description) Experiment with 12 hybridizations, using 7 samples of
-                species [Salmonella typhimurium], using 12 arrays of array design [IFR SALSA June
-                2005 decon], producing 12 raw data files and 0 transformed and/or normalized data
-                files.</text>
-        </description>
-        <description>
-            <id>1648458878</id>
-            <text>To determine the effect of adrenaline on the transcriptome of the gut pathogen
-                Salmonella enterica serovar Typhimurium</text>
-        </description>
-    </experiment>
-    <experiment>
-        <id>1645133280</id>
-        <accession>E-TABM-506</accession>
-        <name>Transcription profiling of mouse muscle tissue after in-vivo intramuscularly
-            administration of MF59, CpG, MF59+CpG, alum and PBS</name>
-        <releasedate>2008-07-10</releasedate>
-        <species>Mus musculus</species>
-        <miamescores>
-            <reportersequencescore>1</reportersequencescore>
-            <factorvaluescore>1</factorvaluescore>
-            <measuredbioassaydatascore>1</measuredbioassaydatascore>
-            <protocolscore>1</protocolscore>
-            <derivedbioassaydatascore>0</derivedbioassaydatascore>
-            <overallscore>4</overallscore>
-        </miamescores>
-        <assays>91</assays>
-        <samples>91</samples>
-        <rawdatafiles>94</rawdatafiles>
-        <fgemdatafiles>0</fgemdatafiles>
-        <sampleattribute>
-            <category>Organism</category>
-            <value>Mus musculus</value>
-        </sampleattribute>
-        <sampleattribute>
-            <category>OrganismPart</category>
-            <value>muscle</value>
-        </sampleattribute>
-        <sampleattribute>
-            <category>StrainOrLine</category>
-            <value>Balb/c</value>
-        </sampleattribute>
-        <experimentalfactor>
-            <name>Compound</name>
-            <value> </value>
-            <value>Alum</value>
-            <value>CpG</value>
-            <value>none</value>
-            <value>PBS</value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Compound1</name>
-            <value>MF59</value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Compound2</name>
-            <value> </value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Dose1</name>
-            <value> </value>
-            <value>0</value>
-            <value>100</value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Dose2</name>
-            <value> </value>
-            <value>20</value>
-            <value>200</value>
-        </experimentalfactor>
-        <experimentalfactor>
-            <name>Time</name>
-            <value>0</value>
-            <value>12</value>
-            <value>24</value>
-            <value>3</value>
-            <value>48</value>
-            <value>6</value>
-            <value>96</value>
-        </experimentalfactor>
-        <arraydesign>
-            <id>1459850555</id>
-            <accession>A-MEXP-829</accession>
-            <name>Agilent Whole Mouse Genome 012694 G4122A (GenePix layout)</name>
-            <count>91</count>
-        </arraydesign>
-        <bioassaydatagroup>
-            <id>1646354369</id>
-            <name>ebi.ac.uk:Tab2MAGE:E-TABM-506.A-MEXP-829.1.FeatureDimension</name>
-            <bioassaydatacubes>94</bioassaydatacubes>
-            <arraydesignprovider>MEXP</arraydesignprovider>
-            <dataformat>tab delimited</dataformat>
-            <bioassays>91</bioassays>
-            <isderived>0</isderived>
-        </bioassaydatagroup>
-        <bibliography>
-            <accession>18650390</accession>
-            <publication>Proc Natl Acad Sci U S A</publication>
-            <authors>Mosca, F.; Tritto, E.; Muzzi, A.; Monaci, E.; Bagnoli, F.; Iavarone, C.; O
-                Hagan, D.; Rappuoli, R.; De Gregorio, E.</authors>
-            <title>Molecular and cellular signatures of human vaccine adjuvants</title>
-            <year>2008</year>
-            <volume>105</volume>
-            <issue>30</issue>
-            <pages>10501</pages>
-            <uri>http://dx.doi.org/10.1073/pnas.0804699105</uri>
-        </bibliography>
-        <provider>
-            <contact>Mosca Flaviana</contact>
-            <email>flaviana.mosca@novartis.com</email>
-            <role>submitter</role>
-        </provider>
-        <experimentdesign>co-expression</experimentdesign>
-        <experimentdesign>compound treatment</experimentdesign>
-        <experimentdesign>in vivo</experimentdesign>
-        <experimentdesign>time series</experimentdesign>
-        <experimenttype>transcription profiling by array</experimenttype>
-        <description>
-            <id>1645133286</id>
-            <text>Analysis of whole mouse muscle gene expression signature induced by in-vivo
-                intramuscularly administration of MF59, CpG, MF59+CpG, alum and PBS. MF59 and alum
-                are licensed human vaccine adjuvants; CpG is a TLR-agonist adjuvant.</text>
-        </description>
-        <description>
-            <id>1646354380</id>
-            <text>(Generated description) Experiment with 91 hybridizations, using 91 samples of
-                species [Mus musculus], using 91 arrays of array design [Agilent Whole Mouse Genome
-                G4122A for GenePix], producing 94 raw data files and 0 transformed and/or normalized
-                data files.</text>
-        </description>
-    </experiment>    
 </experiments>

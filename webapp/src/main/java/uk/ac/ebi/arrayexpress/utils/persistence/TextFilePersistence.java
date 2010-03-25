@@ -40,7 +40,7 @@ public class TextFilePersistence<Object extends Persistable>
         persistenceFile = file;
     }
 
-    public Object getObject()
+    public Object getObject() throws Exception
     {
         if (null != object) {
             if (object.isEmpty()) {
@@ -50,61 +50,47 @@ public class TextFilePersistence<Object extends Persistable>
         return object;
     }
 
-    public void setObject( Object obj )
+    public void setObject( Object obj ) throws Exception
     {
         object = obj;
         save(object.toPersistence());
     }
 
-    private void loadObject()
+    private void loadObject() throws Exception
     {
         object.fromPersistence(load());
     }
 
-    private String load()
+    private String load() throws Exception
     {
         logger.debug("Retrieving persistable object [{}] from [{}]", object.getClass().toString(), persistenceFile.getName());
 
         StringBuilder result = new StringBuilder();
-        try {
-            if (persistenceFile.exists()) {
-                BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(persistenceFile)));
-                while ( r.ready() ) {
-                    String str = r.readLine();
-                    // null means stream has reached the end
-                    if (null != str) {
-                        result.append(str).append(Object.EOL);
-                    } else {
-                        break;
-                    }
+        if (persistenceFile.exists()) {
+            BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(persistenceFile)));
+            while ( r.ready() ) {
+                String str = r.readLine();
+                // null means stream has reached the end
+                if (null != str) {
+                    result.append(str).append(Object.EOL);
+                } else {
+                    break;
                 }
-                logger.debug("Object successfully retrieved");
-            } else {
-                logger.warn("Persistence file [{}] not found", persistenceFile.getAbsolutePath());
             }
-        } catch ( IOException x ) {
-            // IOException here needs to be reported
-            throw new RuntimeException(x);
-        } catch ( Exception x ) {
-            logger.error("Caught an exception:", x);
+            logger.debug("Object successfully retrieved");
+        } else {
+            logger.warn("Persistence file [{}] not found", persistenceFile.getAbsolutePath());
         }
+
         return result.toString();
     }
 
-    private void save( String objectString )
+    private void save( String objectString ) throws Exception
     {
         logger.debug("Saving persistable object [{}] to [{}]", object.getClass().toString(), persistenceFile.getName());
-        try {
-            BufferedWriter w = new BufferedWriter(new FileWriter(persistenceFile));
-            w.write(objectString);
-            w.close();
-            logger.debug("Object successfully saved");
-
-        } catch ( IOException x ) {
-            // IOException here needs to be reported
-            throw new RuntimeException(x);
-        } catch ( Exception x ) {
-            logger.error("Caught an exception:", x);
-        }
+        BufferedWriter w = new BufferedWriter(new FileWriter(persistenceFile));
+        w.write(objectString);
+        w.close();
+        logger.debug("Object successfully saved");
     }
 }

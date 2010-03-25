@@ -45,12 +45,12 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         }
     }
 
-    public String toPersistence()
+    public String toPersistence() throws Exception
     {
         return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(getDocument());
     }
 
-    public void fromPersistence( String str )
+    public void fromPersistence( String str ) throws Exception
     {
         setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str));
         
@@ -59,7 +59,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         }
     }
 
-    public boolean isEmpty()
+    public boolean isEmpty() throws Exception
     {
         if (null == getDocument())
             return true;
@@ -71,7 +71,11 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
 
     private void createDocument()
     {
-        setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>"));
+        try {
+            setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>"));
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        }
 
         if (null == getDocument()) {
             logger.error("The document WAS NOT created, expect problems down the road");

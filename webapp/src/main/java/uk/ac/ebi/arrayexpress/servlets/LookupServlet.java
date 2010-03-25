@@ -76,24 +76,29 @@ public class LookupServlet extends ApplicationServlet
 
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
-        Experiments experiments = (Experiments)getComponent("Experiments");
-        if (type.equals("arrays")) {
-            out.print(experiments.getArrays());
-        } else if (type.equals("species")) {
-            out.print(experiments.getSpecies());
-        } else if (type.equals("expdesign")) {
-            out.print(experiments.getAssaysByMolecule(query));
-        } else if (type.equals("exptech")) {
-            out.print(experiments.getAssaysByInstrument(query));
-        } else if (type.equals("keywords")) {
-            String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
-            out.print(experiments.getKeywords(query, field, limit));
-        } else if (type.equals("efotree")) {
-            String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
-            // todo: remove this hack at all
-            efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
-            out.print(experiments.getEfoTree(efoId));
+        try {
+            Experiments experiments = (Experiments)getComponent("Experiments");
+            if (type.equals("arrays")) {
+                out.print(experiments.getArrays());
+            } else if (type.equals("species")) {
+                out.print(experiments.getSpecies());
+            } else if (type.equals("expdesign")) {
+                out.print(experiments.getAssaysByMolecule(query));
+            } else if (type.equals("exptech")) {
+                out.print(experiments.getAssaysByInstrument(query));
+            } else if (type.equals("keywords")) {
+                String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
+                out.print(experiments.getKeywords(query, field, limit));
+            } else if (type.equals("efotree")) {
+                String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
+                // todo: remove this hack at all
+                efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
+                out.print(experiments.getEfoTree(efoId));
+            }
+        } catch (Exception x) {
+            throw new RuntimeException(x);
         }
+        out.close();
     }
 }
 

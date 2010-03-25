@@ -28,12 +28,14 @@ import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.db.DataSourceFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.UserListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.users.UserList;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.util.List;
 
 public class ReloadExperimentsJob extends ApplicationJob implements JobListener
@@ -50,60 +52,69 @@ public class ReloadExperimentsJob extends ApplicationJob implements JobListener
 
     public void doExecute( JobExecutionContext jec ) throws InterruptedException
     {
-        Application app = Application.getInstance();
-        Long threads = app.getPreferences().getLong("ae.experiments.reload.threads");
-        if (null != threads) {
-            int numThreadsForRetrieval = threads.intValue();
-            numThreadsCompleted = 0;
-            xmlBuffer = new StringBuffer(20000000);
+        try {
+            Application app = Application.getInstance();
+            Long threads = app.getPreferences().getLong("ae.experiments.reload.threads");
+            if (null != threads) {
+                int numThreadsForRetrieval = threads.intValue();
+                numThreadsCompleted = 0;
+                xmlBuffer = new StringBuffer(20000000);
 
-            JobDataMap jdm = jec.getMergedJobDataMap();
-            String dsNames = jdm.getString("param");
-            if (null == dsNames || 0 == dsNames.length()) {
-                dsNames = ((Experiments) app.getComponent("Experiments")).getDataSource();
-            }
-            logger.info("Reload of experiment data from [{}] requested", dsNames);
-
-            ds = new DataSourceFinder().findDataSource(dsNames);
-            if (null != ds) {
-                UserList userList = new UserListDatabaseRetriever(ds).getUserList();
-                ((Users)app.getComponent("Users")).setUserList(userList);
-                logger.info("Reloaded the user list from the database");
-
-                exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
-                Thread.sleep(1);
-
-                logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
-                xmlBuffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><experiments total=\"").append(exps.size()).append("\">");
-
-                ((JobsController) app.getComponent("JobsController")).setJobListener(this);
-
-                if (exps.size() > 0) {
-                    if (exps.size() <= numThreadsForRetrieval) {
-                        numThreadsForRetrieval = 1;
-                    }
-                    // split list into several pieces
-                    expsPerThread = (int) Math.ceil(((double)exps.size()) / ((double)numThreadsForRetrieval));
-                    for ( int i = 0; i < numThreadsForRetrieval; ++i ) {
-                        ((JobsController) app.getComponent("JobsController")).executeJobWithParam("retrieve-xml", String.valueOf(i));
-                        Thread.sleep(1);
-                    }
-
-                    while ( numThreadsCompleted < numThreadsForRetrieval ) {
-                        Thread.sleep(1000);
-                    }
-
-                    ((JobsController) app.getComponent("JobsController")).setJobListener(null);
-                    xmlBuffer.append("</experiments>");
-                    ((Experiments) app.getComponent("Experiments")).reload(xmlBuffer.toString().replaceAll("[^\\p{Print}]", " "));
-                    logger.info("Reload of experiment data completed");
-                    xmlBuffer = null;
-                } else {
-                    logger.warn("No experiments found, reload aborted");
+                JobDataMap jdm = jec.getMergedJobDataMap();
+                String dsNames = jdm.getString("param");
+                if (null == dsNames || 0 == dsNames.length()) {
+                    dsNames = ((Experiments) app.getComponent("Experiments")).getDataSource();
                 }
-            } else {
-                logger.warn("No data sources available, reload aborted");
+                logger.info("Reload of experiment data from [{}] requested", dsNames);
+
+                ds = new DataSourceFinder().findDataSource(dsNames);
+                if (null != ds) {
+                    UserList userList = new UserListDatabaseRetriever(ds).getUserList();
+                    ((Users)app.getComponent("Users")).setUserList(userList);
+                    logger.info("Reloaded the user list from the database");
+
+                    exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
+                    Thread.sleep(1);
+
+                    logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
+                    xmlBuffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><experiments total=\"").append(exps.size()).append("\">");
+
+                    ((JobsController) app.getComponent("JobsController")).setJobListener(this);
+
+                    if (exps.size() > 0) {
+                        if (exps.size() <= numThreadsForRetrieval) {
+                            numThreadsForRetrieval = 1;
+                        }
+                        // split list into several pieces
+                        expsPerThread = (int) Math.ceil(((double)exps.size()) / ((double)numThreadsForRetrieval));
+                        for ( int i = 0; i < numThreadsForRetrieval; ++i ) {
+                            ((JobsController) app.getComponent("JobsController")).executeJobWithParam("retrieve-xml", String.valueOf(i));
+                            Thread.sleep(1);
+                        }
+
+                        while ( numThreadsCompleted < numThreadsForRetrieval ) {
+                            Thread.sleep(1000);
+                        }
+
+                        ((JobsController) app.getComponent("JobsController")).setJobListener(null);
+                        xmlBuffer.append("</experiments>");
+
+                        String xmlString = xmlBuffer.toString().replaceAll("[^\\p{Print}]", " ");
+                        if (logger.isDebugEnabled()) {
+                            StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
+                        }
+                        ((Experiments) app.getComponent("Experiments")).reload(xmlString);
+                        logger.info("Reload of experiment data completed");
+                        xmlBuffer = null;
+                    } else {
+                        logger.warn("No experiments found, reload aborted");
+                    }
+                } else {
+                    logger.warn("No data sources available, reload aborted");
+                }
             }
+        } catch (Exception x) {
+            throw new RuntimeException(x);
         }
     }
 
