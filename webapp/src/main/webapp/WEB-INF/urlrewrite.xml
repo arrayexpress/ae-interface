@@ -140,11 +140,11 @@
     </rule>
     <rule>
         <from>^/expdesign-list.html</from>
-        <to type="forward">/servlets/lookup/expdesign?q=%{parameter:q}</to>
+        <to type="forward">/servlets/lookup/expdesign</to>
     </rule>
     <rule>
         <from>^/exptech-list.html</from>
-        <to type="forward">/servlets/lookup/exptech?q=%{parameter:q}</to>
+        <to type="forward">/servlets/lookup/exptech</to>
     </rule>
     <rule>
         <from>^/keywords.txt</from>
@@ -186,7 +186,7 @@
     <!-- experimental noajax browse interface -->
     <rule>
         <from>^/browse-noajax.html$</from>
-        <to type="forward">/servlets/query/browse-experiments-noajax/html</to>
+        <to type="forward">/servlets/query/browse-experiments-noajax/html?cache=true</to>
     </rule>
 
 </urlrewrite>

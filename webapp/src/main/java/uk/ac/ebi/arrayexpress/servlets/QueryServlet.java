@@ -91,11 +91,13 @@ public class QueryServlet extends ApplicationServlet
             // Set content type for HTML/XML/plain
             response.setContentType("text/" + type + "; charset=ISO-8859-1");
         }
-        // Disable cache no matter what (or we're fucked on IE side)
-        response.addHeader("Pragma", "no-cache");
-        response.addHeader("Cache-Control", "no-cache");
-        response.addHeader("Cache-Control", "must-revalidate");
-        response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
+        // tell client to not cache the page unless we want to
+        if (!"true".equalsIgnoreCase(request.getParameter("cache"))) {
+            response.addHeader("Pragma", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+            response.addHeader("Cache-Control", "must-revalidate");
+            response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
+        }
 
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
