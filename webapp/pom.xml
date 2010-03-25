@@ -339,12 +339,17 @@
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon9</artifactId>
-            <version>9.1.0.6</version>
+            <version>9.1.0.8</version>
         </dependency>
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon9-xpath</artifactId>
-            <version>9.1.0.6</version>
+            <version>9.1.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ccil.cowan.tagsoup</groupId>
+            <artifactId>tagsoup</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
