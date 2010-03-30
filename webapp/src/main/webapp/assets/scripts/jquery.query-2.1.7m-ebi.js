@@ -7,7 +7,7 @@
  * @author Blair Mitchelmore
  * @version 2.1.7.m-ebi
  *
- * Portions written by Microarray Informatics Group, European Bioinformatics Institute
+ * Portions written by Functional Genomics Group, European Bioinformatics Institute
  **/
 new function(settings) {
   // Various Settings
