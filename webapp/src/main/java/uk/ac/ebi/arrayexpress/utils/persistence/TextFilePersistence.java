@@ -58,7 +58,10 @@ public class TextFilePersistence<Object extends Persistable>
 
     private void loadObject() throws Exception
     {
-        object.fromPersistence(load());
+        String text = load();
+        if (null != text) {
+            object.fromPersistence(text);
+        }
     }
 
     private String load() throws Exception
@@ -80,6 +83,7 @@ public class TextFilePersistence<Object extends Persistable>
             logger.debug("Object successfully retrieved");
         } else {
             logger.warn("Persistence file [{}] not found", persistenceFile.getAbsolutePath());
+            return null;
         }
 
         return result.toString();

@@ -115,7 +115,8 @@ public class Querier
             IndexSearcher isearcher = new IndexSearcher(ir);
             logger.info("Will search index [{}], query [{}]", this.env.indexId, query.toString());
 
-            TopDocs hits = isearcher.search(query, this.env.documentNodes.size());
+            // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
+            TopDocs hits = isearcher.search(query, this.env.documentNodes.size() + 1);
             logger.info("Search returned [{}] hits", hits.totalHits);
 
             result = new ArrayList<NodeInfo>(hits.totalHits);
