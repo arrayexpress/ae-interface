@@ -74,7 +74,7 @@ aeDoLoginNext(text)
         $("#aer_login_info").show();
         $("#aer_help_link").show();
         $("#aer_avail_info").text("Updating data, please wait...");
-        $.get("ae-stats.xml").next(updateAerStats);
+        updateAeStats();
     } else {
         user = "";
         $("#aer_login_status").text("Incorrect user name or password. Please try again.");
@@ -93,7 +93,7 @@ aeDoLogout(shouldUpdateStats)
     user = "";
     if (undefined == shouldUpdateStats || shouldUpdateStats) {
         $("#aer_avail_info").text("Updating data, please wait...");
-        $.get("ae-stats.xml").next(updateAerStats);
+       updateAeStats();
     }
 }
 
@@ -164,8 +164,7 @@ $(document).ready(function()
             }
         );
 
-    // gets aer stats and updates the page
-    $.get("ae-stats.xml").next(updateAeStats).error(onAeStatsError);
+    updateAeStats();
 
     // loads news page
     $("#ae_news").load("${interface.application.link.news_xml.url} div ul");
@@ -182,14 +181,20 @@ trimString(stringToTrim)
 }
 
 function
-onAeStatsError()
+updateAeStats()
 {
-    // update with empty argument results in "unavail" message set
-    updateAeStats();
+    // gets aer stats and updates the page
+    $.get("ae-stats.xml").next(onAeStatsSuccess).error(onAeStatsError);
 }
 
 function
-updateAeStats(xml)
+onAeStatsError()
+{
+    $("#aer_avail_info").text("");
+}
+
+function
+onAeStatsSuccess(xml)
 {
     var aer_avail_info = unavail;
     if (undefined != xml) {
