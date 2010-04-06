@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,7 +122,7 @@ public class QueryServlet extends ApplicationServlet
                 CookieMap cookies = new CookieMap(request.getCookies());
                 if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
                     Users users = (Users)getComponent("Users");
-                    String user = cookies.get("AeLoggedUser").getValue();
+                    String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
                     String passwordHash = cookies.get("AeLoginToken").getValue();
                     if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
                         if (0 != users.getUserRecord(user).getId()) { // 0 - curator (superuser) -> remove user restriction
