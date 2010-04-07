@@ -56,7 +56,7 @@ public class Ontologies extends ApplicationComponent
 
             Map<String, String> efoTermById = efoHelper.getTermByIdMap();
             Map<String, Set<String>> efoChildIdsById = efoHelper.getOntologyIdExpansionMap();
-            ((Experiments)getComponent("Experiments")).setEfoMaps(efoTermById, efoChildIdsById);
+            ((Experiments)getComponent("Experiments")).setEfoMaps(efoTermById, efoChildIdsById, efoSynonymMap);
 
             Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
             c.setQueryExpander(new EFOQueryExpander(ix));

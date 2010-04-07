@@ -55,6 +55,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private AutocompleteStore autocompleteStore;
     private Map<String, String> efoTermById;
     private Map<String, Set<String>> efoChildIdsById;
+    private Map<String, Set<String>> efoSynonyms;
 
     private SaxonEngine saxon;
     private SearchEngine search;
@@ -195,10 +196,11 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return sb.toString();
     }
 
-    public void setEfoMaps( Map<String, String> efoTermById, Map<String, Set<String>> efoChildIdsById )
+    public void setEfoMaps( Map<String, String> efoTermById, Map<String, Set<String>> efoChildIdsById, Map<String, Set<String>> efoSynonyms )
     {
         this.efoTermById = efoTermById;
         this.efoChildIdsById = efoChildIdsById;
+        this.efoSynonyms = efoSynonyms;
         try {
             buildAutocompletion();
         } catch (Exception x) {
@@ -303,6 +305,21 @@ public class Experiments extends ApplicationComponent implements DocumentSource
                                 , efoChildIdsById.containsKey(efoId) ? efoId : ""
                         )
                 );
+            }
+        }
+
+        // adding efo synonyms (if present)
+        if (null != this.efoSynonyms) {
+            for (String efoTerm : this.efoSynonyms.keySet()) {
+                for (String syn : this.efoSynonyms.get(efoTerm)) {
+                    this.autocompleteStore.addData(
+                            new AutocompleteData(
+                                    syn
+                                    , AutocompleteData.DATA_EFO_NODE
+                                    , ""
+                            )
+                    );
+                }
             }
         }
     }
