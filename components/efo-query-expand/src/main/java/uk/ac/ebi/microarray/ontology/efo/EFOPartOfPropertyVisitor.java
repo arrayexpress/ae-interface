@@ -26,9 +26,6 @@ import uk.ac.ebi.microarray.ontology.IPropertyVisitor;
 
 import java.util.*;
 
-import static uk.ac.ebi.microarray.ontology.efo.Utils.isStopWord;
-import static uk.ac.ebi.microarray.ontology.efo.Utils.trimLowercaseString;
-
 /**
  * Visits nodes that are in part_of relationships and builds
  * map node name -> set of its part names
@@ -78,7 +75,7 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
      */
     public boolean isInterestedInNode( String nodeName )
     {
-        return !isStopWord(nodeName);
+        return !Utils.isStopTerm(nodeName);
     }
 
     /**
@@ -125,7 +122,7 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
      */
     public String getName( EFONode node )
     {
-        return trimLowercaseString(node.getTerm());
+        return Utils.safeStringTrim(node.getTerm());
     }
 
     /**

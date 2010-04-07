@@ -28,8 +28,6 @@ import uk.ac.ebi.microarray.ontology.IClassAnnotationVisitor;
 
 import java.util.*;
 
-import static uk.ac.ebi.microarray.ontology.efo.Utils.*;
-
 /**
  * Visits annotations of the EFO ontology class,
  * stores useful information and then is able to create appropriate node.
@@ -91,12 +89,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
             this.efoUri = annotation.getAnnotationValue().getLiteral();
         } else if (annotation.getAnnotationURI().toString().contains("alternative_term")) {
             String alternativeTerm = annotation.getAnnotationValue().getLiteral();
-            if (-1 != alternativeTerm.indexOf("[accessedResource: CHEBI:")) {
-                alternativeTerm = preprocessChebiString(alternativeTerm);
-            } else {
-                alternativeTerm = preprocessAlternativeTermString(alternativeTerm);
-            }
-            this.alternatives.add(alternativeTerm);
+            this.alternatives.add(Utils.preprocessAlternativeTermString(alternativeTerm));
         }
     }
 
@@ -200,20 +193,20 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
      */
     private void addAlternativesToMap( String term )
     {
-        String lowerCaseTerm = trimLowercaseString(term);
-        if (!isStopWord(lowerCaseTerm)) {
+        term = Utils.safeStringTrim(term);
+        if (!Utils.isStopTerm(term)) {
             Set<String> alternatives = getAlternatives();
             if (!alternatives.isEmpty()) {
-                Set<String> existingAlternatives = getNameToAlternativesMap().get(lowerCaseTerm);
+                Set<String> existingAlternatives = getNameToAlternativesMap().get(term);
                 if (null == existingAlternatives) {
                     existingAlternatives = new HashSet<String>();
-                    this.nameToAlternativesMap.put(lowerCaseTerm, existingAlternatives);
+                    this.nameToAlternativesMap.put(term, existingAlternatives);
                 }
                 for (String alternativeTerm : alternatives) {
-                    if (isStopWord(alternativeTerm)) {
+                    if (Utils.isStopSynonym(alternativeTerm)) {
                         continue;
                     }
-                    if (lowerCaseTerm.equals(alternativeTerm)) {
+                    if (term.equalsIgnoreCase(alternativeTerm)) {
                         continue;
                     }
                     existingAlternatives.add(alternativeTerm);

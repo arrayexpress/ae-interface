@@ -24,7 +24,6 @@ package uk.ac.ebi.microarray.ontology.efo;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Class providing methods of string normalization and map format conversion.
@@ -33,72 +32,61 @@ import java.util.regex.Pattern;
 public final class Utils
 {
     /**
-     * Checks if the given string is null, empty or of 1 char length.
+     * Checks if the given string should not be added to the list of terms.
+     * Current rule is that we filter out null strings or strings shorter than 3 characters
      *
      * @param str String to check.
-     * @return true if the given string is null, empty or of 1 char length.
+     * @return true if the given string is a stop word (i.e. should not be added to the index)
      */
-    public static boolean isStopWord( String str )
+    public static boolean isStopTerm( String str )
     {
-        return null == str || str.length() < 2;
+        return null == str || str.length() < 3;
+    }
+
+    /**
+     * Checks if the given string should not be added to the list of synonyms.
+     * Current rule is that we filter out null strings, strings shorter than 3 characters
+     * and strings contain some patterns that we established
+     *
+     * @param str String to check.
+     * @return true if the given string is a stop word (i.e. should not be added to the index)
+     */
+    public static boolean isStopSynonym( String str )
+    {
+        return isStopTerm(str) || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
     }
 
     /**
      * For null string returns an empty one,
-     * for not null strings returns its lowercased copy
+     * for not null strings returns its trimmed copy
      * with leading and trailing white spaces removed.
      *
-     * @param str String to trim and lowercase.
+     * @param str String to trim.
      * @return an empty string if the given one was null,
-     *         lowercased copy of the given one
+     *         trimmed copy of the given one
      *         with leading and trailing white spaces removed otherwise.
      */
-    public static String trimLowercaseString( String str )
+    public static String safeStringTrim( String str )
     {
-        return null == str ? "" : str.trim().toLowerCase();
+        return null == str ? "" : str.trim();
     }
 
 
     /**
      * For null string returns an empty one,
-     * for not null strings returns its lowercased copy
-     * with leading and trailing white spaces and everything in braces removed
-     * and all not-letter not-digit not-whitespace not '/' not '-' characters
-     * replaced with whitespace ' '.
-     * Example: "   Hello my [dear] {nice} () world! Yours, Anna-Maria/Mary\\\4u " -->
-     * "hello my    world  yours  anna-maria/mary   4u"
+     * for not null strings returns its trimmed copy with EFO-specific information removed
      *
-     * @param str String to normalize.
+     * @param str String to preprocess.
      * @return an empty string if the given one was null,
-     *         otherwise lowercased copy of the given one
-     *         with leading and trailing white spaces and everything in braces removed
-     *         and all not-letter not-digit not-whitespace not '/' not '-' characters
-     *         replaced with whitespace ' '.
+     *         otherwise preprocessed string.
      */
     public static String preprocessAlternativeTermString( String str )
     {
         if (null == str) {
             return "";
         }
-        // removing everything in braces: "lala (la) al {a} [lalal]" --> "lala al "
-        Pattern pattern = Pattern.compile("(\\[[^\\]]*\\])|(\\([^\\)]*\\))|(\\{[^\\}]*\\})");
-        str = pattern.matcher(str).replaceAll("");
-        // replacing all not-letter not-digit not-whitespace not '/' not '-' characters with whitespace
-        pattern = Pattern.compile("[^(\\d\\w\\s'\\-/)]|( \\- )|( /)|(/ )|(NOS)");
-        str = pattern.matcher(str).replaceAll("").trim().toLowerCase();
-        return str;
-    }
-
-    public static String preprocessChebiString( String str )
-    {
-        if (null == str) {
-            return "";
-        }
         // removing service
-        Pattern pattern = Pattern.compile("(\\[accessedResource:[^\\]]+\\])|(\\[accessDate:[^\\]]+\\])");
-        str = pattern.matcher(str).replaceAll("").trim().toLowerCase();
-        return str;
-        
+        return str.replaceAll("(\\[accessedResource:[^\\]]+\\])|(\\[accessDate:[^\\]]+\\])", "").trim();
     }
 
     /**

@@ -26,9 +26,6 @@ import uk.ac.ebi.microarray.ontology.OntologyLoader;
 import java.io.InputStream;
 import java.util.*;
 
-import static uk.ac.ebi.microarray.ontology.efo.Utils.isStopWord;
-import static uk.ac.ebi.microarray.ontology.efo.Utils.trimLowercaseString;
-
 public class EFOOntologyHelper
 {
 
@@ -50,8 +47,8 @@ public class EFOOntologyHelper
     {
         Map<String, Set<String>> result = new HashMap<String, Set<String>>();
         for (String id : efoMap.keySet()) {
-            String name = trimLowercaseString(getTermNameById(id));
-            if (!isStopWord(name)) {
+            String name = Utils.safeStringTrim(getTermNameById(id));
+            if (!Utils.isStopTerm(name)) {
                 Set<String> expansionSet = new LinkedHashSet<String>();
                 addPartsRecursively(expansionSet, nameToPartsMap.get(name));
                 addChildrenRecursively(expansionSet, id);
@@ -72,8 +69,8 @@ public class EFOOntologyHelper
     {
         Map<String, String> result = new HashMap<String, String>();
         for (String id : efoMap.keySet()) {
-            String name = trimLowercaseString(getTermNameById(id));
-            if (!isStopWord(name)) {
+            String name = Utils.safeStringTrim(getTermNameById(id));
+            if (!Utils.isStopTerm(name)) {
                 result.put(id, name);
             }
         }
@@ -90,8 +87,8 @@ public class EFOOntologyHelper
     {
         Map<String, Set<String>> result = new HashMap<String, Set<String>>();
         for (String id : efoMap.keySet()) {
-            String name = trimLowercaseString(getTermNameById(id));
-            if (!isStopWord(name)) {
+            String name = Utils.safeStringTrim(getTermNameById(id));
+            if (!Utils.isStopTerm(name)) {
                 Set<String> expansionSet = new LinkedHashSet<String>();
                 addParts(expansionSet, getIdToPartIdsMap().get(id));
                 addChildren(expansionSet, id);
@@ -232,8 +229,8 @@ public class EFOOntologyHelper
     private void collectChildrenNames( Collection<String> result, EFONode node )
     {
         for (EFONode n : node.getChildren()) {
-            String name = trimLowercaseString(n.getTerm());
-            if (!isStopWord(name)) {
+            String name = Utils.safeStringTrim(n.getTerm());
+            if (!Utils.isStopTerm(name)) {
                 result.add(name);
             }
             collectChildrenNames(result, n);
@@ -269,8 +266,8 @@ public class EFOOntologyHelper
         Set<String> names = new HashSet<String>(null == node ? 0 : node.getChildren().size());
         if (null != node) {
             collectChildrenNames(names, node);
-            String name = trimLowercaseString(node.getTerm());
-            if (!isStopWord(name)) {
+            String name = Utils.safeStringTrim(node.getTerm());
+            if (!Utils.isStopTerm(name)) {
                 names.add(name);
             }
         }
