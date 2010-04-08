@@ -82,6 +82,11 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                         Set<String> efoTerms = efoMap.get(term);
                         for (String efoTerm : efoTerms) {
                             addIndexField(d, "efo", efoTerm, false, true);
+                            if (synonymMap.containsKey(efoTerm)) {
+                                for (String syn : synonymMap.get(efoTerm)) {
+                                    addIndexField(d, "efo", syn, false, true);    
+                                }
+                            }
                             hasJustAddedSomething = true;
                         }
                     }
