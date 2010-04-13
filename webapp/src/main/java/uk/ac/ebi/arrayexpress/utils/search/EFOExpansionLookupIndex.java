@@ -159,12 +159,14 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
         private void addIndexField( Document document, String name, String value, boolean shouldAnalyze, boolean shouldStore )
         {
+            value = value.replaceAll("[^\\d\\w-]", " ").toLowerCase();
             document.add(
                     new Field(
                             name
                             , value
                             , shouldStore ? Field.Store.YES : Field.Store.NO
                             , shouldAnalyze ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED
+                            , Field.TermVector.NO
                     )
             );
         }
@@ -216,7 +218,6 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                         text.append(t.text()).append(' ');
                     }
                     query = new TermQuery(new Term(fieldName, text.toString().trim()));
-
                 } else {
                     logger.error("Unsupported query type [{}]", origQuery.getClass().getCanonicalName());
                 }
