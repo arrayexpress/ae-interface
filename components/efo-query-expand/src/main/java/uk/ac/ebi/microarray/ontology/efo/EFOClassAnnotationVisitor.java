@@ -197,11 +197,10 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
         if (!Utils.isStopTerm(term)) {
             Set<String> alternatives = getAlternatives();
             if (!alternatives.isEmpty()) {
-                Set<String> existingAlternatives = getNameToAlternativesMap().get(term);
-                if (null == existingAlternatives) {
-                    existingAlternatives = new HashSet<String>();
-                    this.nameToAlternativesMap.put(term, existingAlternatives);
-                }
+                Set<String> existingAlternatives =
+                        this.nameToAlternativesMap.containsKey(term)
+                                ? this.nameToAlternativesMap.get(term)
+                                : new HashSet<String>();
                 for (String alternativeTerm : alternatives) {
                     if (Utils.isStopSynonym(alternativeTerm)) {
                         continue;
@@ -210,6 +209,9 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
                         continue;
                     }
                     existingAlternatives.add(alternativeTerm);
+                    if (!this.nameToAlternativesMap.containsKey(term)) {
+                        this.nameToAlternativesMap.put(term, existingAlternatives);
+                    }
                 }
             }
         }
