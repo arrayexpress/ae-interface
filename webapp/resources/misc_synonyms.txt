@@ -1,0 +1,3 @@
+# spaces-delimited file; every line contains variable number of variants or spelling of a term
+"Ewing's sarcoma"   "Ewings sarcoma"    "Ewing sarcoma"
+"Parkinson disease" "Parkinsons disease"

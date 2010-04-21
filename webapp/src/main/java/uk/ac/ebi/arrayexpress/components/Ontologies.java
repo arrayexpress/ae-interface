@@ -51,12 +51,14 @@ public class Ontologies extends ApplicationComponent
             Map<String, Set<String>> efoFullExpansionMap = efoHelper.getFullOntologyExpansionMap();
             Map<String, Set<String>> efoSynonymMap = efoHelper.getSynonymMap();
 
-            EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(getPreferences().getString("ae.efo.index.location"));
-            ix.addMaps(efoSynonymMap, efoFullExpansionMap);
+            String[] synFiles = getPreferences().getStringArray("ae.synonmym.file.name");
 
             Map<String, String> efoTermById = efoHelper.getTermByIdMap();
             Map<String, Set<String>> efoChildIdsById = efoHelper.getOntologyIdExpansionMap();
             ((Experiments)getComponent("Experiments")).setEfoMaps(efoTermById, efoChildIdsById, efoSynonymMap);
+
+            EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(getPreferences().getString("ae.efo.index.location"));
+            ix.addMaps(efoSynonymMap, efoFullExpansionMap);
 
             Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
             c.setQueryExpander(new EFOQueryExpander(ix));
