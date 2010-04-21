@@ -706,6 +706,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		}).click(function(event) {
             if (isTreeControlHit(event)) {
                 expandCollapseTree(event);
+                input.focus();
             } else {
 			    $(target(event)).addClass(CLASSES.ACTIVE);
 			    select();
