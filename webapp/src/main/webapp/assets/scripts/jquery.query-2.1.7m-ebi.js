@@ -7,7 +7,7 @@
  * @author Blair Mitchelmore
  * @version 2.1.7.m-ebi
  *
- * Portions written by Functional Genomics Group, European Bioinformatics Institute
+ * Portions written by European Molecular Biology Laboratory
  **/
 new function(settings) {
   // Various Settings
