@@ -1322,6 +1322,8 @@
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl"/>
             <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl"/>
+            <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl"/>
