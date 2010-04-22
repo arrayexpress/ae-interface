@@ -88,6 +88,8 @@ public class QueryServlet extends ApplicationServlet
             response.setContentType("text/plain; charset=ISO-8859-1");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".txt\"");
             type = "tab";
+        } else if (type.equals("json")) {
+            response.setContentType("application/json; charset=UTF-8");
         } else {
             // Set content type for HTML/XML/plain
             response.setContentType("text/" + type + "; charset=ISO-8859-1");
