@@ -22,12 +22,12 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.jobs.ReloadExperimentsJob;
-import uk.ac.ebi.arrayexpress.jobs.RescanFilesJob;
-import uk.ac.ebi.arrayexpress.jobs.RetrieveExperimentsListFromAtlasJob;
-import uk.ac.ebi.arrayexpress.jobs.RetrieveExperimentsXmlJob;
+import uk.ac.ebi.arrayexpress.jobs.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class JobsController extends ApplicationComponent
@@ -41,6 +41,8 @@ public class JobsController extends ApplicationComponent
     // quartz scheduler
     private Scheduler scheduler;
 
+    private Map monitoredFiles;
+
     public JobsController()
     {
         super("JobsController");
@@ -48,11 +50,15 @@ public class JobsController extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        //addTriggerListener(new ApplicationTriggerListener());
+        this.monitoredFiles = Collections.synchronizedMap(new HashMap<String, Object>());
+        
         addJob("rescan-files", RescanFilesJob.class);
         addJob("reload-xml", ReloadExperimentsJob.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
+        addJob("monitor-files", FileMonitoringJob.class);
+        setJobParam("monitor-files", "files", this.monitoredFiles);
+        scheduleIntervalJob("monitor-files", 10000L);    // we will monitor files every 10 secs
         scheduleJob("rescan-files", "ae.files.rescan");
         scheduleJob("reload-xml", "ae.experiments.reload");
         scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
@@ -120,20 +126,34 @@ public class JobsController extends ApplicationComponent
         return scheduler;
     }
 
-    private void addTriggerListener( TriggerListener tl )
+    private void addJob( String name, Class c )
     {
+        JobDetail j = new JobDetail(
+                name
+                , AE_JOBS_GROUP
+                , c
+                , true      // volatilily
+                , true      // durability
+                , false     // recover
+        );
+
         try {
-            getScheduler().addGlobalTriggerListener(tl);
-        } catch (Exception x ) {
+            getScheduler().addJob(j, false);
+        } catch ( Exception x ) {
             logger.error("Caught an exception:", x);
         }
     }
-    
-    private void addJob( String name, Class c )
+
+    private void setJobParam( String name, String paramName, Object paramValue )
     {
-        JobDetail j = new JobDetail(name, AE_JOBS_GROUP, c, true /* volatilily */, true /*durability */, false /* recover */);
         try {
-            getScheduler().addJob(j, false);
+            JobDetail j = getScheduler().getJobDetail(name, AE_JOBS_GROUP);
+            JobDataMap d = j.getJobDataMap();
+            if (null == d) {
+                d = new JobDataMap();
+            }
+            d.put(paramName, paramValue);
+            j.setJobDataMap(d);
         } catch ( Exception x ) {
             logger.error("Caught an exception:", x);
         }
@@ -164,17 +184,8 @@ public class JobsController extends ApplicationComponent
         boolean hasScheduledInterval = false;
 
         if (null != interval) {
-            SimpleTrigger intervalTrigger = new SimpleTrigger(name + "_interval_trigger", AE_JOBS_GROUP, SimpleTrigger.REPEAT_INDEFINITELY, interval);
-
-            intervalTrigger.setJobName(name);
-            intervalTrigger.setJobGroup(AE_JOBS_GROUP);
-
-            try {
-                getScheduler().scheduleJob(intervalTrigger);
-                hasScheduledInterval = true;
-            } catch ( Exception x ) {
-                logger.error("Caught an exception:", x);
-            }
+            scheduleIntervalJob(name, interval);
+            hasScheduledInterval = true;
         }
 
         if ((null != atStart && atStart) && !hasScheduledInterval) {
@@ -188,6 +199,24 @@ public class JobsController extends ApplicationComponent
             } catch ( Exception x ) {
                 logger.error("Caught an exception:", x);
             }
+        }
+    }
+
+    private void scheduleIntervalJob( String name, Long interval )
+    {
+        SimpleTrigger intervalTrigger = new SimpleTrigger(
+                name + "_interval_trigger"
+                , AE_JOBS_GROUP
+                , SimpleTrigger.REPEAT_INDEFINITELY, interval
+        );
+
+        intervalTrigger.setJobName(name);
+        intervalTrigger.setJobGroup(AE_JOBS_GROUP);
+
+        try {
+            getScheduler().scheduleJob(intervalTrigger);
+        } catch ( Exception x ) {
+            logger.error("Caught an exception:", x);
         }
     }
 
