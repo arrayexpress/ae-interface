@@ -75,7 +75,7 @@
                 </xsl:for-each>
                 <xsl:if test="$pFile/@name">
                     <xsl:element name="url">
-                        <xsl:value-of select="$vBaseUrl"/>/<xsl:value-of select="$pAccession"/>/<xsl:value-of select="$pFile/@name"/>
+                        <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>/<xsl:value-of select="$pFile/@name"/>
                     </xsl:element>
                 </xsl:if>
             </xsl:if>
