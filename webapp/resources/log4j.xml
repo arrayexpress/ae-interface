@@ -67,6 +67,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="org.quartz.core.JobRunShell" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <root>
         <priority value="${interface.application.log.default.priority}"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>
