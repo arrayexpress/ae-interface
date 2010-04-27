@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.jobs;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
@@ -34,12 +33,11 @@ public class RescanFilesJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void doExecute( JobExecutionContext jec ) throws InterruptedException
+    public void doExecute( JobExecutionContext jec ) throws Exception
     {
         StringBuilder xmlString = new StringBuilder(20000000);
-        Application app = Application.getInstance();
 
-        String rootFolder = ((Files)app.getComponent("Files")).getRootFolder();
+        String rootFolder = ((Files)getComponent("Files")).getRootFolder();
         this.logger.info("Rescan of downloadable files from [{}] requested", rootFolder);
         if (null != rootFolder) {
             File root = new File(rootFolder);
@@ -53,7 +51,7 @@ public class RescanFilesJob extends ApplicationJob
                             .append("<files root=\"").append(root.getAbsolutePath()).append("\">");
                     rescanFolder(root, xmlString);
                     xmlString.append("</files>");
-                    ((Files)app.getComponent("Files")).reload(xmlString.toString());
+                    ((Files)getComponent("Files")).reload(xmlString.toString());
                     this.logger.info("Rescan of downloadable files completed");
                 } catch ( InterruptedException x ) {
                     throw x;

@@ -48,12 +48,27 @@ abstract public class ApplicationJob implements InterruptableJob, StatefulJob
         myThread = null;
     }
 
-    public abstract void doExecute( JobExecutionContext jec ) throws InterruptedException;
+    public abstract void doExecute( JobExecutionContext jec ) throws Exception;
 
     public void interrupt() throws UnableToInterruptJobException
     {
         logger.debug("Attempting to interrupt job");
         if (null != myThread)
             myThread.interrupt();
+    }
+
+    protected Application getApplication()
+    {
+        return Application.getInstance();
+    }
+
+    protected ApplicationPreferences getPreferences()
+    {
+        return getApplication().getPreferences();
+    }
+
+    protected ApplicationComponent getComponent(String name)
+    {
+        return getApplication().getComponent(name);
     }
 }

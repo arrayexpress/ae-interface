@@ -41,7 +41,7 @@ public class JobsController extends ApplicationComponent
     // quartz scheduler
     private Scheduler scheduler;
 
-    private Map monitoredFiles;
+    private Map<String, Object> monitoredFiles;
 
     public JobsController()
     {
@@ -50,33 +50,25 @@ public class JobsController extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        this.monitoredFiles = Collections.synchronizedMap(new HashMap<String, Object>());
+        initializeFileMonitor();
         
+        // here we add jobs
         addJob("rescan-files", RescanFilesJob.class);
         addJob("reload-xml", ReloadExperimentsJob.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
-        addJob("monitor-files", FileMonitoringJob.class);
-        setJobParam("monitor-files", "files", this.monitoredFiles);
-        scheduleIntervalJob("monitor-files", 10000L);    // we will monitor files every 10 secs
+        addJob("reload-ontology", ReloadOntologyJob.class);
+
         scheduleJob("rescan-files", "ae.files.rescan");
         scheduleJob("reload-xml", "ae.experiments.reload");
         scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
+
         startScheduler();
     }
 
     public void terminate() throws Exception
     {
         terminateJobs();
-    }
-
-    private void startScheduler()
-    {
-        try {
-            getScheduler().start();
-        } catch ( SchedulerException x ) {
-            logger.error("Caught an exception:", x);
-        }
     }
 
     public void executeJob( String name )
@@ -88,17 +80,16 @@ public class JobsController extends ApplicationComponent
         }
     }
 
-    public void executeJobWithParam( String name, String param )
+    public void executeJobWithParam( String name, String paramName, String paramValue )
     {
         try {
             JobDataMap map = new JobDataMap();
-            map.put("param", param);
+            map.put(paramName, paramValue);
             getScheduler().triggerJob(name, AE_JOBS_GROUP, map);
         } catch ( Exception x ) {
             logger.error("Caught an exception:", x);
         }
     }
-
 
     public void setJobListener( JobListener jl )
     {
@@ -109,6 +100,23 @@ public class JobsController extends ApplicationComponent
                 getScheduler().removeGlobalJobListener("job-listener");
             }
         } catch ( Exception x ) {
+            logger.error("Caught an exception:", x);
+        }
+    }
+
+    private void initializeFileMonitor()
+    {
+        // internal job that will monitor files and trigger other jobs if file is changed
+        this.monitoredFiles = Collections.synchronizedMap(new HashMap<String, Object>());
+        addJob("monitor-files", FileMonitoringJob.class);
+        scheduleIntervalJob("monitor-files", 10000L);    // we will monitor files every 10 secs
+    }
+
+    private void startScheduler()
+    {
+        try {
+            getScheduler().start();
+        } catch ( SchedulerException x ) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -144,26 +152,12 @@ public class JobsController extends ApplicationComponent
         }
     }
 
-    private void setJobParam( String name, String paramName, Object paramValue )
-    {
-        try {
-            JobDetail j = getScheduler().getJobDetail(name, AE_JOBS_GROUP);
-            JobDataMap d = j.getJobDataMap();
-            if (null == d) {
-                d = new JobDataMap();
-            }
-            d.put(paramName, paramValue);
-            j.setJobDataMap(d);
-        } catch ( Exception x ) {
-            logger.error("Caught an exception:", x);
-        }
-    }
-
     private void scheduleJob( String name, String preferencePrefix )
     {
         String schedule = getPreferences().getString(preferencePrefix + ".schedule");
         Long interval = getPreferences().getLong(preferencePrefix + ".interval");
         Boolean atStart = getPreferences().getBoolean(preferencePrefix + ".atstart");
+        String file = getPreferences().getString(preferencePrefix + ".file.location");
 
         if (null != schedule && 0 < schedule.length()) {
             CronTrigger cronTrigger = new CronTrigger(name + "_schedule_trigger", null);
@@ -179,6 +173,10 @@ public class JobsController extends ApplicationComponent
             } catch ( Exception x ) {
                 logger.error("Caught an exception:", x);
             }
+        }
+
+        if (null != file) {
+            this.monitoredFiles.put(file, file);
         }
 
         boolean hasScheduledInterval = false;

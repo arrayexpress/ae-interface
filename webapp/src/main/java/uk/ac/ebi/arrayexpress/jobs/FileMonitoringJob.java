@@ -1,9 +1,8 @@
 package uk.ac.ebi.arrayexpress.jobs;
 
-import org.quartz.JobExecutionContext;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -22,12 +21,22 @@ import uk.ac.ebi.arrayexpress.app.ApplicationJob;
  *
  */
 
-public class FileMonitoringJob extends ApplicationJob
+public class FileMonitoringJob implements InterruptableJob, StatefulJob
 {
-    // logging machinery
+    // logging facitlity
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    // worker thread object
+    private Thread myThread;
 
-    public void doExecute( JobExecutionContext jec ) throws InterruptedException
+    public void execute( JobExecutionContext jec ) throws JobExecutionException
     {
+        this.myThread = Thread.currentThread();
+    }
+
+    public void interrupt() throws UnableToInterruptJobException
+    {
+        logger.debug("Attempting to interrupt job");
+        if (null != this.myThread)
+            this.myThread.interrupt();
     }
 }

@@ -20,15 +20,6 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
-import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
-import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
-import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
-import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
-
-import java.io.InputStream;
-import java.util.Map;
-import java.util.Set;
 
 
 public class Ontologies extends ApplicationComponent
@@ -43,31 +34,7 @@ public class Ontologies extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        InputStream is = null;
-        try {
-            is = this.getApplication().getResource("/WEB-INF/classes/efo.owl").openStream();
-            EFOOntologyHelper efoHelper = new EFOOntologyHelper(is);
-
-            Map<String, Set<String>> efoFullExpansionMap = efoHelper.getFullOntologyExpansionMap();
-            Map<String, Set<String>> efoSynonymMap = efoHelper.getSynonymMap();
-
-            String[] synFiles = getPreferences().getStringArray("ae.synonmym.file.name");
-
-            Map<String, String> efoTermById = efoHelper.getTermByIdMap();
-            Map<String, Set<String>> efoChildIdsById = efoHelper.getOntologyIdExpansionMap();
-            ((Experiments)getComponent("Experiments")).setEfoMaps(efoTermById, efoChildIdsById, efoSynonymMap);
-
-            EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(getPreferences().getString("ae.efo.index.location"));
-            ix.addMaps(efoSynonymMap, efoFullExpansionMap);
-
-            Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
-            c.setQueryExpander(new EFOQueryExpander(ix));
-            c.setQueryHighlighter(new EFOExpandedHighlighter());
-        } finally {
-            if (null != is) {
-                is.close();
-            }
-        }
+        ((JobsController)getComponent("JobsController")).executeJob("reload-ontology");
     }
 
     public void terminate() throws Exception

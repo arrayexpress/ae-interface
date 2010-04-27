@@ -59,7 +59,7 @@ public class ControlServlet extends ApplicationServlet
         if (command.equals("reload-atlas-info")) {
             ((JobsController) getComponent("JobsController")).executeJob(command);
         } else if (command.equals("reload-xml")) {
-            ((JobsController) getComponent("JobsController")).executeJobWithParam(command, params);
+            ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "dsnames", params);
         } else if (command.equals("rescan-files")) {
             if (0 < params.length()) {
                 ((Files) getComponent("Files")).setRootFolder(params);

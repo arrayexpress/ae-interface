@@ -34,7 +34,7 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void doExecute( JobExecutionContext jec ) throws InterruptedException
+    public void doExecute( JobExecutionContext jec ) throws Exception
     {
         List<String> exps;
         DataSource ds;
