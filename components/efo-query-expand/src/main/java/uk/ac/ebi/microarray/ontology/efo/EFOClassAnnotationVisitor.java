@@ -26,7 +26,9 @@ import org.semanticweb.owl.model.OWLConstantAnnotation;
 import org.semanticweb.owl.model.OWLObjectAnnotation;
 import uk.ac.ebi.microarray.ontology.IClassAnnotationVisitor;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Visits annotations of the EFO ontology class,
@@ -36,23 +38,11 @@ import java.util.*;
 public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONode>
 {
 
-    private Map<String, Set<String>> nameToAlternativesMap;
-
     private String term;
     private String efoUri;
     private boolean isBranchRoot;
     private boolean isOrganizational;
     private Set<String> alternatives = new HashSet<String>();
-
-    public EFOClassAnnotationVisitor()
-    {
-        this(new HashMap<String, Set<String>>());
-    }
-
-    public EFOClassAnnotationVisitor( Map<String, Set<String>> nameToAlternativesMap )
-    {
-        this.nameToAlternativesMap = nameToAlternativesMap;
-    }
 
      /**
      * Clears internal state before visiting a new node
@@ -103,9 +93,43 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     }
 
     /**
-     * Returns label of just visited class.
+     * Given a class if creates a EFONode.
      *
-     * @return Label of just visited class.
+     * @param id Id of the ontology class given.
+     * @return EFONode created.
+     */
+    public EFONode getOntologyNode( String id )
+    {
+        return new EFONode(
+                id
+                , null != getEfoUri() ? getEfoUri() : id
+                , getTerm()
+                , getAlternatives()
+                , isBranchRoot()
+                , isOrganizational()
+        );
+    }
+
+    /**
+     * Given the node corresponding to the ontology class and nodes corresponding to its children
+     * and information if this class is organisational updates this ontology node children set
+     * and their parents sets (if the given node is not organizational).
+     *
+     * @param node                 IOntologyNode given.
+     * @param children             Child nodes.
+     */
+    public void updateOntologyNode( EFONode node, Collection<EFONode> children )
+    {
+        for (EFONode child : children) {
+            node.getChildren().add(child);
+            child.getParents().add(node);
+        }
+    }
+
+    /**
+     * Returns the value of "ArrayExpress_label" annotation property.
+     *
+     * @return Value of "ArrayExpress_label" annotation property.
      */
     public String getTerm()
     {
@@ -123,9 +147,9 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     }
 
     /**
-     * Returns if just visited class is annotated as a banch root.
+     * Returns the value of "branch_class" annotation property.
      *
-     * @return If just visited class is annotated as a banch root.
+     * @return Value of "branch_class" annotation property.
      */
     public boolean isBranchRoot()
     {
@@ -133,9 +157,9 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     }
 
     /**
-     * Returns if just visited class is annotated as an organizational one.
+     * Returns the value of "organizational_class" annotation property.
      *
-     * @return If just visited class is annotated as an organizational one.
+     * @return Value of "organization_class" annotation property.
      */
     public boolean isOrganizational()
     {
@@ -143,87 +167,12 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     }
 
     /**
-     * Returns set of "alternative_term" annotations for just visited class.
+     * Returns set of "alternative_term" annotation properties.
      *
-     * @return Set of "alternative_term" annotations for just visited class.
+     * @return Set of "alternative_term" annotation properties.
      */
     public Set<String> getAlternatives()
     {
         return this.alternatives;
-    }
-
-    /**
-     * Given a class if creates a EFONode.
-     *
-     * @param id Id of the ontology class given.
-     * @return EFONode created.
-     */
-    public EFONode getOntologyNode( String id )
-    {
-        EFONode node = new EFONode(id, null != getEfoUri() ? getEfoUri()  : id, getTerm(), isBranchRoot());
-        if (!isOrganizational()) {
-            addAlternativesToMap(getTerm());
-        }
-        return node;
-    }
-
-    /**
-     * Given the node corresponding to the ontology class and nodes corresponding to its children
-     * and information if this class is organisational updates this ontology node children set
-     * and their parents sets (if the given node is not organizational).
-     *
-     * @param node                 IOntologyNode given.
-     * @param children             Child nodes.
-     * @param isNodeOrganizational If the given node is organizational.
-     */
-    public void updateOntologyNode( EFONode node, Collection<EFONode> children, boolean isNodeOrganizational )
-    {
-        for (EFONode child : children) {
-            node.getChildren().add(child);
-            if (!isNodeOrganizational) {
-                child.getParents().add(node);
-            }
-        }
-    }
-
-    /**
-     * Given a term updates alternative map.
-     *
-     * @param term Given term.
-     */
-    private void addAlternativesToMap( String term )
-    {
-        term = Utils.safeStringTrim(term);
-        if (!Utils.isStopTerm(term)) {
-            Set<String> alternatives = getAlternatives();
-            if (!alternatives.isEmpty()) {
-                Set<String> existingAlternatives =
-                        this.nameToAlternativesMap.containsKey(term)
-                                ? this.nameToAlternativesMap.get(term)
-                                : new HashSet<String>();
-                for (String alternativeTerm : alternatives) {
-                    if (Utils.isStopSynonym(alternativeTerm)) {
-                        continue;
-                    }
-                    if (term.equalsIgnoreCase(alternativeTerm)) {
-                        continue;
-                    }
-                    existingAlternatives.add(alternativeTerm);
-                    if (!this.nameToAlternativesMap.containsKey(term)) {
-                        this.nameToAlternativesMap.put(term, existingAlternatives);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Returns map node name (term) -> set of alternative names.
-     *
-     * @return Unmodifiable map node name (term) -> set of alternative names.
-     */
-    public Map<String, Set<String>> getNameToAlternativesMap()
-    {
-        return Collections.unmodifiableMap(nameToAlternativesMap);
     }
 }

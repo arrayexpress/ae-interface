@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
@@ -48,16 +49,14 @@ public class LookupServlet extends ApplicationServlet
                 .match(request.getRequestURL().toString());
 
         String type = "";
-        String query = "";
-        Integer limit = null;
+        String query = null != request.getParameter("q") ? request.getParameter("q") : "";
+        Integer limit = null != request.getParameter("limit") ? Integer.parseInt(request.getParameter("limit")) : null;
 
-        if (null != request.getParameter("q")) {
-            query = request.getParameter("q");
-        }
+        String efoId = null != request.getParameter("efoid") ? request.getParameter("efoid") : "";
+        // todo: remove this hack at all
+        efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
 
-        if (null != request.getParameter("limit")) {
-            limit = Integer.parseInt(request.getParameter("limit"));
-        }
+        String jsonp = null != request.getParameter("jsonp") ? request.getParameter("jsonp") : "";
 
         if (null != requestArgs) {
             if (!requestArgs[0].equals("")) {
@@ -65,9 +64,11 @@ public class LookupServlet extends ApplicationServlet
             }
         }
 
-        // Set content type for HTML/XML/plain
-        response.setContentType("text/plain; charset=ISO-8859-1");
-
+        if (type.contains("json")) {
+            response.setContentType("application/json; charset=UTF-8");
+        } else {
+            response.setContentType("text/plain; charset=ISO-8859-1");
+        }
         // Disable cache no matter what (or we're fucked on IE side)
         response.addHeader("Pragma", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
@@ -78,6 +79,7 @@ public class LookupServlet extends ApplicationServlet
         PrintWriter out = response.getWriter();
         try {
             Experiments experiments = (Experiments)getComponent("Experiments");
+            Ontologies ontologies = (Ontologies)getComponent("Ontologies");
             if (type.equals("arrays")) {
                 out.print(experiments.getArrays());
             } else if (type.equals("species")) {
@@ -90,10 +92,11 @@ public class LookupServlet extends ApplicationServlet
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(experiments.getKeywords(query, field, limit));
             } else if (type.equals("efotree")) {
-                String efoId = (null != request.getParameter("efoid") ? request.getParameter("efoid") : "");
-                // todo: remove this hack at all
-                efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
                 out.print(experiments.getEfoTree(efoId));
+            } else if (type.equals("efotreejson")) {
+                out.print(ontologies.getEfoTreeJson(efoId, jsonp));
+            } else if (type.equals("efodictjson")) {
+                out.print(ontologies.getEfoDictJson(jsonp));
             }
         } catch (Exception x) {
             throw new RuntimeException(x);

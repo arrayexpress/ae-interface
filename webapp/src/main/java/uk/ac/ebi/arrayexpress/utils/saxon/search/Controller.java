@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +92,16 @@ public class Controller
         }
     }
 
+    public Integer getDocCount( String indexId, Map<String, String[]> queryParams ) throws IOException, ParseException
+    {
+        IndexEnvironment env = getEnvironment(indexId);
+        this.queryConstructor.setEnvironment(env);
+
+        Query query = queryConstructor.construct(queryParams);
+        return new Querier(env).getDocCount(query);
+
+    }
+
     public void dumpTerms( String indexId, String fieldName )
     {
         IndexEnvironment env = getEnvironment(indexId);
@@ -134,7 +145,7 @@ public class Controller
         return null != info ? info.getQueryString() : null;
     }
 
-    public List<NodeInfo> queryIndex( String indexId, Integer queryId )
+    public List<NodeInfo> queryIndex( String indexId, Integer queryId ) throws IOException
     {
         return new Querier(getEnvironment(indexId)).query(this.queryPool.getQueryInfo(queryId).getQuery());
     }

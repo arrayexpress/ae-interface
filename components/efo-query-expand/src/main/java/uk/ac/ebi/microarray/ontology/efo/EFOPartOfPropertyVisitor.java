@@ -24,7 +24,9 @@ package uk.ac.ebi.microarray.ontology.efo;
 
 import uk.ac.ebi.microarray.ontology.IPropertyVisitor;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Visits nodes that are in part_of relationships and builds
@@ -40,42 +42,11 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
      */
     public static final String PART_OF = "part_of";
 
-    private Map<String, Set<String>> nameToPartsMap;
-    private Map<String, Set<String>> idToPartIdsMap;
+    private Map<String, Set<String>> partOfIdMap;
 
-    public EFOPartOfPropertyVisitor()
+    public EFOPartOfPropertyVisitor( Map<String, Set<String>> partOfIdMap )
     {
-        this(new HashMap<String, Set<String>>(), new HashMap<String, Set<String>>());
-    }
-
-    public EFOPartOfPropertyVisitor( Map<String, Set<String>> nameToPartsMap, Map<String, Set<String>> idToPartIdsMap )
-    {
-        this.nameToPartsMap = nameToPartsMap;
-        this.idToPartIdsMap = idToPartIdsMap;
-    }
-
-    /**
-     * We want to look for property relationships of this node
-     * only if it's not null and we are interesed in its name.
-     *
-     * @param node Node.
-     * @return true if we the specified node is not null and we are interesed in its name.
-     */
-    public boolean isInterestedInNode( EFONode node )
-    {
-        return null != node && isInterestedInNode(getName(node));
-    }
-
-    /**
-     * We want to look for property relationships of the node with the specified name
-     * only if the name is not a stop word.
-     *
-     * @param nodeName Name of the node.
-     * @return true if we the specified name is not a stop word.
-     */
-    public boolean isInterestedInNode( String nodeName )
-    {
-        return !Utils.isStopTerm(nodeName);
+        this.partOfIdMap = partOfIdMap;
     }
 
     /**
@@ -87,20 +58,14 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
      */
     public void inRelationship( EFONode node, EFONode friend )
     {
-        String nodeName = getName(node);
-        String parentName = getName(friend);
-        if (null == friend || !isInterestedInNode(parentName) || parentName.equals(nodeName)) {
+        if (null == node || null == friend || friend.getId().equals(node.getId())) {
             return;
         }
-        Set<String> parentParts = this.nameToPartsMap.get(parentName);
-        Set<String> parentPartIds = this.idToPartIdsMap.get(friend.getId());
-        if (null == parentParts) {
-            parentParts = new HashSet<String>();
+        Set<String> parentPartIds = this.partOfIdMap.get(friend.getId());
+        if (null == parentPartIds) {
             parentPartIds = new HashSet<String>();
-            this.nameToPartsMap.put(parentName, parentParts);
-            this.idToPartIdsMap.put(friend.getId(), parentPartIds);
+            this.partOfIdMap.put(friend.getId(), parentPartIds);
         }
-        parentParts.add(nodeName);
         parentPartIds.add(node.getId());
     }
 
@@ -112,36 +77,5 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
     public String getPropertyName()
     {
         return PART_OF;
-    }
-
-    /**
-     * Returns name of the node given.
-     *
-     * @param node Node which name we are interested in.
-     * @return Name of the given node.
-     */
-    public String getName( EFONode node )
-    {
-        return Utils.safeStringTrim(node.getTerm());
-    }
-
-    /**
-     * Getter for map node name -> set of part names.
-     *
-     * @return Unmodifiable map node name -> set of part names.
-     */
-    public Map<String, Set<String>> getNameToPartsMap()
-    {
-        return Collections.unmodifiableMap(nameToPartsMap);
-    }
-
-    /**
-     * Getter for map node id -> set of part ids.
-     *
-     * @return Unmodifiable map node id -> set of part ids.
-     */
-    public Map<String, Set<String>> getIdToPartIdsMap()
-    {
-        return Collections.unmodifiableMap(idToPartIdsMap);
     }
 }

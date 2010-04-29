@@ -84,7 +84,6 @@ public class Querier
             File f = new File(System.getProperty("java.io.tmpdir"), fieldName + "_terms.txt");
             BufferedWriter w = new BufferedWriter(new FileWriter(f));
             StringBuilder sb = new StringBuilder();
-            Integer count = 0;
             while (fieldName.equals(terms.term().field())) {
                 sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append('\n');
                 if (!terms.next())
@@ -99,11 +98,40 @@ public class Querier
         }
     }
 
-    public List<NodeInfo> query( Query query )
+    public Integer getDocCount( Query query ) throws IOException
+    {
+        Integer count = null;
+        IndexReader ir = null;
+        IndexSearcher isearcher = null;
+        try {
+            ir = IndexReader.open(this.env.indexDirectory, true);
+
+            isearcher = new IndexSearcher(ir);
+
+            // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
+            TopDocs hits = isearcher.search(query, this.env.documentNodes.size() + 1);
+
+
+            count = hits.totalHits;
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            if (null != isearcher)
+                isearcher.close();
+            if (null != ir)
+                ir.close();
+        }
+
+        return count;
+    }
+
+    public List<NodeInfo> query( Query query ) throws IOException
     {
         List<NodeInfo> result = null;
+        IndexReader ir = null;
+        IndexSearcher isearcher = null;
         try {
-            IndexReader ir = IndexReader.open(this.env.indexDirectory, true);
+            ir = IndexReader.open(this.env.indexDirectory, true);
 
             // empty query returns everything
             if (query instanceof BooleanQuery && ((BooleanQuery)query).clauses().isEmpty()) {
@@ -112,7 +140,7 @@ public class Querier
             }
 
             // to show _all_ available nodes
-            IndexSearcher isearcher = new IndexSearcher(ir);
+            isearcher = new IndexSearcher(ir);
             logger.info("Will search index [{}], query [{}]", this.env.indexId, query.toString());
 
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
@@ -128,6 +156,11 @@ public class Querier
             ir.close();
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
+        } finally {
+            if (null != isearcher)
+                isearcher.close();
+            if (null != ir)
+                ir.close();
         }
 
         return result;

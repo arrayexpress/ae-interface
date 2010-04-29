@@ -24,6 +24,7 @@ package uk.ac.ebi.microarray.ontology.efo;
 import uk.ac.ebi.microarray.ontology.IOntologyNode;
 
 import java.util.Comparator;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -37,6 +38,8 @@ public class EFONode implements IOntologyNode
     private String efoUri;
     private String term;
     private boolean isBranchRoot;
+    private boolean isOrganizational;
+    private Set<String> alternativeTerms;
 
     /**
      * Comparator comparing 2 nodes by comparing their terms lexicographically.
@@ -52,12 +55,14 @@ public class EFONode implements IOntologyNode
     private SortedSet<EFONode> children = new TreeSet<EFONode>(TERM_COMPARATOR);
     private SortedSet<EFONode> parents = new TreeSet<EFONode>(TERM_COMPARATOR);
 
-    protected EFONode( String id, String efoUri, String term, boolean isBranchRoot )
+    protected EFONode( String id, String efoUri, String term, Set<String> alternativeTerms, boolean isBranchRoot, boolean isOrganizational )
     {
         this.setId(id);
         this.setEfoUri(efoUri);
         this.setTerm(term);
+        this.setAlternativeTerms(alternativeTerms);
         this.setIsBranchRoot(isBranchRoot);
+        this.setIsOrganizational(isOrganizational);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class EFONode implements IOntologyNode
 
     public String getId()
     {
-        return id;
+        return this.id;
     }
 
     public void setId( String id )
@@ -94,9 +99,9 @@ public class EFONode implements IOntologyNode
         this.id = id;
     }
 
-   public String getEfoUri()
+    public String getEfoUri()
     {
-        return efoUri;
+        return this.efoUri;
     }
 
     public void setEfoUri( String efoUri )
@@ -106,12 +111,22 @@ public class EFONode implements IOntologyNode
 
     public String getTerm()
     {
-        return term;
+        return this.term;
     }
 
     public void setTerm( String term )
     {
         this.term = term;
+    }
+
+    public Set<String> getAlternativeTerms()
+    {
+        return this.alternativeTerms;
+    }
+
+    public void setAlternativeTerms( Set<String> terms )
+    {
+        this.alternativeTerms = terms;
     }
 
     public boolean isBranchRoot()
@@ -124,6 +139,21 @@ public class EFONode implements IOntologyNode
         this.isBranchRoot = isBranchRoot;
     }
 
+    public boolean isOrganizational()
+    {
+        return isOrganizational;
+    }
+
+    public void setIsOrganizational( boolean isOrganizational )
+    {
+        this.isOrganizational = isOrganizational;
+    }
+
+    public boolean hasChildren()
+    {
+        return children.size() > 0;
+    }
+    
     @SuppressWarnings("unchecked")
     public SortedSet<EFONode> getChildren()
     {

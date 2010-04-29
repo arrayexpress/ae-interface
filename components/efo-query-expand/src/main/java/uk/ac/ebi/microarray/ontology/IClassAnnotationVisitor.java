@@ -26,18 +26,11 @@ import org.semanticweb.owl.model.OWLAnnotationVisitor;
 import java.util.Collection;
 
 /**
- * Visits annotations of the ontology class, stores usefull information and then is able to create appropriate node.
+ * Visits annotations of the ontology class, stores useful information and then is able to create appropriate node.
  *
  */
 public interface IClassAnnotationVisitor<N extends IOntologyNode> extends OWLAnnotationVisitor
 {
-    /**
-     * If just loaded node is a fake one and should not be put into ontology map.
-     *
-     * @return If just loaded node is a fake one.
-     */
-    boolean isOrganizational();
-
     /**
      * Given the id of the ontology class constructs IOntologyNode.
      *
@@ -52,9 +45,8 @@ public interface IClassAnnotationVisitor<N extends IOntologyNode> extends OWLAnn
      *
      * @param node                 IOntologyNode given.
      * @param children             Child nodes.
-     * @param isNodeOrganizational If the given node is organizational.
      */
-    void updateOntologyNode( N node, Collection<N> children, boolean isNodeOrganizational );
+    void updateOntologyNode( N node, Collection<N> children );
 
 
     /**

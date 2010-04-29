@@ -53,6 +53,8 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
     private AutocompleteStore autocompleteStore;
+
+    // efo-related structures (todo: should be separated)
     private Map<String, String> efoTermById;
     private Map<String, Set<String>> efoChildIdsById;
     private Map<String, Set<String>> efoSynonyms;
@@ -194,6 +196,11 @@ public class Experiments extends ApplicationComponent implements DocumentSource
             }
         }
         return sb.toString();
+    }
+
+    public String getExperimentCount( String query )
+    {
+        return "";
     }
 
     public void setEfoMaps( Map<String, String> efoTermById, Map<String, Set<String>> efoChildIdsById, Map<String, Set<String>> efoSynonyms )

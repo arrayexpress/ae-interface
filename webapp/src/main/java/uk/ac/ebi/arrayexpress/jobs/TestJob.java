@@ -4,10 +4,6 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.Ontologies;
-import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
-
-import java.io.InputStream;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -26,25 +22,12 @@ import java.io.InputStream;
  *
  */
 
-public class ReloadOntologyJob extends ApplicationJob
+public class TestJob extends ApplicationJob
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void doExecute( JobExecutionContext jec ) throws Exception
+    public void doExecute( JobExecutionContext jec ) throws InterruptedException
     {
-        String efoLocation = "/WEB-INF/classes/efo.owl";
-        logger.info("Loading EFO ontology from [{}]", efoLocation);
-        InputStream is = null;
-        try {
-            is = getApplication().getResource(efoLocation).openStream();
-            ((Ontologies)getComponent("Ontologies")).setOntology(new EFOOntologyHelper(is));
-            logger.info("EFO loading completed");
-        } finally {
-            if (null != is) {
-                is.close();
-            }
-        }
-
     }
 }

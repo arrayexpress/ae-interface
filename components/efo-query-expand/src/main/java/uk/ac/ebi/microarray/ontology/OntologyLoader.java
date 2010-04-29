@@ -127,19 +127,17 @@ public class OntologyLoader<N extends IOntologyNode>
             for (OWLClass clazz : ontology.getReferencedClasses()) {
                 String id = getId(clazz);
                 N node = ontologyMap.get(id);
-                if (visitor.isInterestedInNode(node)) {
-                    Set<OWLRestriction> owlRestrictions;
-                    try {
-                        owlRestrictions = OWLUtils.keep(session, ontology, clazz, property);
-                        for (OWLRestriction restriction : owlRestrictions) {
-                            for (OWLClass friend : restriction.getClassesInSignature()) {
-                                String friendId = getId(friend);
-                                visitor.inRelationship(node, ontologyMap.get(friendId));
-                            }
+                Set<OWLRestriction> owlRestrictions;
+                try {
+                    owlRestrictions = OWLUtils.keep(session, ontology, clazz, property);
+                    for (OWLRestriction restriction : owlRestrictions) {
+                        for (OWLClass friend : restriction.getClassesInSignature()) {
+                            String friendId = getId(friend);
+                            visitor.inRelationship(node, ontologyMap.get(friendId));
                         }
-                    } catch (OWLTransformationException e) {
-                        throw new RuntimeException(e);
                     }
+                } catch (OWLTransformationException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -196,21 +194,16 @@ public class OntologyLoader<N extends IOntologyNode>
                     annotation.accept(annotationVisitor);
                 }
                 node = annotationVisitor.getOntologyNode(id);
-                boolean isOrganizational = annotationVisitor.isOrganizational();
                 Set<Set<OWLClass>> children = reasoner.getSubClasses(clazz);
                 for (Set<OWLClass> setOfClasses : children) {
                     for (OWLClass child : setOfClasses) {
                         if (!child.equals(clazz)) {
                             Collection<N> loadedChildren = loadClass(child, annotationVisitor, ontologyMap);
-                            annotationVisitor.updateOntologyNode(node, loadedChildren, isOrganizational);
+                            annotationVisitor.updateOntologyNode(node, loadedChildren);
                         }
                     }
                 }
-                if (isOrganizational)
-                    return node.getChildren();
-                else {
-                    ontologyMap.put(id, node);
-                }
+                ontologyMap.put(id, node);
             }
             return Collections.singletonList(node);
         }

@@ -30,6 +30,13 @@ import java.util.Collection;
 public interface IOntologyNode
 {
     /**
+     * Returns true if node has children.
+     *
+     * @return True if node has children.
+     */
+    boolean hasChildren();
+    
+    /**
      * Returns children.
      *
      * @return Child collection.

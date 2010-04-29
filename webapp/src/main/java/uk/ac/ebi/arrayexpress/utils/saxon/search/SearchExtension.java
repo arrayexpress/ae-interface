@@ -21,6 +21,7 @@ import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.NodeListIterator;
 import net.sf.saxon.om.SequenceIterator;
 
+import java.io.IOException;
 import java.util.List;
 
 public final class SearchExtension
@@ -30,7 +31,7 @@ public final class SearchExtension
 
     private static Controller controller;
 
-    public static SequenceIterator queryIndex( String indexId, String queryId )
+    public static SequenceIterator queryIndex( String indexId, String queryId ) throws IOException
     {
         List<NodeInfo> nodes = getController().queryIndex(indexId, Integer.decode(queryId));
         if (null != nodes) {
