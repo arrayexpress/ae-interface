@@ -24,10 +24,8 @@ import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.io.IOException;
+import java.util.*;
 
 
 public class Ontologies extends ApplicationComponent
@@ -43,6 +41,10 @@ public class Ontologies extends ApplicationComponent
 
     private final String EFO_NOT_LOADED_YET = "";
 
+    private Experiments experiments;
+    private SearchEngine search;
+    private Autocompletion autocompletion;
+
     public Ontologies()
     {
         super("Ontologies");
@@ -50,6 +52,10 @@ public class Ontologies extends ApplicationComponent
 
     public void initialize() throws Exception
     {
+        experiments = (Experiments) getComponent("Experiments");
+        search = (SearchEngine) getComponent("SearchEngine");
+        autocompletion = (Autocompletion) getComponent("Autocompletion");
+
         this.expCountByEfoId = new HashMap<String, Integer>();
         ((JobsController)getComponent("JobsController")).executeJob("reload-ontology");
     }
@@ -58,15 +64,46 @@ public class Ontologies extends ApplicationComponent
     {
     }
 
-    public void setOntology( EFOOntologyHelper efoOntology )
+    public void setOntology( EFOOntologyHelper efoOntology ) throws IOException
     {
         this.ontology = efoOntology;
-        buildExpCountMap();
+
+        rebuildExpCountMap();
+        autocompletion.rebuild();
     }
+
+    public EFOOntologyHelper getOntology()
+    {
+        return this.ontology;
+    }
+
+    public String getEfoChildren( String efoId )
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (null != getOntology()) {
+            EFONode node = getOntology().getEfoMap().get(efoId);
+            if (null != node) {
+                Set<EFONode> children = node.getChildren();
+                if (null != children) {
+                    for (EFONode child : children) {
+                        sb.append(child.getTerm()).append("|o|");
+                        if (child.hasChildren()) {
+                            sb.append(child.getId());
+                        }
+                        sb.append("\n");
+                    }
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
 
     public String getEfoTreeJson( String efoId, String jsonp )
     {
-        if (null == this.ontology) {
+        if (null == getOntology()) {
             return EFO_NOT_LOADED_YET;
         }
 
@@ -83,7 +120,7 @@ public class Ontologies extends ApplicationComponent
 
     private String getEfoNodeJson( String efoId )
     {
-        EFONode node = ontology.getEfoMap().get(efoId);
+        EFONode node = getOntology().getEfoMap().get(efoId);
         if (null != node) {
             StringBuilder sb = new StringBuilder();
             sb.append('"').append(node.getId()).append("\":");
@@ -108,7 +145,7 @@ public class Ontologies extends ApplicationComponent
 
     public String getEfoDictJson( String jsonp )
     {
-        if (null == ontology) {
+        if (null == getOntology()) {
             return EFO_NOT_LOADED_YET;
         }
 
@@ -119,11 +156,11 @@ public class Ontologies extends ApplicationComponent
             sb.append(jsonp).append("(");
         }
         sb.append("{");
-        SortedSet<String> sortedKeys= new TreeSet<String>(ontology.getEfoMap().keySet());
+        SortedSet<String> sortedKeys= new TreeSet<String>(getOntology().getEfoMap().keySet());
         int count = sortedKeys.size();
         for (String key : sortedKeys) {
             --count;
-            EFONode node = ontology.getEfoMap().get(key);
+            EFONode node = getOntology().getEfoMap().get(key);
             if (null != node ) {
                 sb.append('"')
                   .append(key)
@@ -148,12 +185,12 @@ public class Ontologies extends ApplicationComponent
         return sb.toString();
     }
 
-    private void buildExpCountMap()
+    private void rebuildExpCountMap()
     {
         // build experiment count map
         logger.debug("Building experiment count map for EFO terms");
 
-        Controller c = ((SearchEngine)getComponent("SearchEngine")).getController();
+        Controller c = search.getController();
 
         Map<String, String[]> q = new HashMap<String, String[]>();
         q.put("userid", new String[]{"1"}); // do this only for public data
@@ -161,12 +198,13 @@ public class Ontologies extends ApplicationComponent
 
         this.expCountByEfoId.clear();
         
-        for (EFONode node : ontology.getEfoMap().values()) {
+        for (EFONode node : getOntology().getEfoMap().values()) {
             q.get("efv")[0] = node.getTerm();
                 try {
-                    Integer docs = c.getDocCount("experiments", q);
+                    Integer docs = c.getDocCount(experiments.INDEX_ID, q);
                     this.expCountByEfoId.put(node.getId(), docs);
                 } catch (Exception x) {
+                    logger.debug("Caught an exception while querying term [" + node.getTerm() + "]", x);
                 }
 
         }

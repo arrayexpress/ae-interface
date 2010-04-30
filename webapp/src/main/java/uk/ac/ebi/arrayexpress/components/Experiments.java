@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
-import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
@@ -32,11 +30,9 @@ import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Experiments extends ApplicationComponent implements DocumentSource
 {
@@ -52,17 +48,12 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private TextFilePersistence<PersistableString> arrays;
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
-    private AutocompleteStore autocompleteStore;
-
-    // efo-related structures (todo: should be separated)
-    private Map<String, String> efoTermById;
-    private Map<String, Set<String>> efoChildIdsById;
-    private Map<String, Set<String>> efoSynonyms;
 
     private SaxonEngine saxon;
     private SearchEngine search;
+    private Autocompletion autocompletion;
 
-    public final String EXPERIMENTS_INDEX_ID = "experiments";
+    public final String INDEX_ID = "experiments";
 
     public Experiments()
     {
@@ -73,6 +64,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     {
         saxon = (SaxonEngine) getComponent("SaxonEngine");
         search = (SearchEngine) getComponent("SearchEngine");
+        autocompletion = (Autocompletion) getComponent("Autocompletion");
 
         this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer()
@@ -107,8 +99,6 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
-
-        this.autocompleteStore = new AutocompleteStore();
 
         indexExperiments();
         saxon.registerDocumentSource(this);
@@ -172,49 +162,6 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public String getKeywords( String prefix, String field, Integer limit )
-    {
-        StringBuilder sb = new StringBuilder("");
-        List<AutocompleteData> matches = this.autocompleteStore.findCompletions(prefix, field, limit);
-        for (AutocompleteData match : matches) {
-            sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
-        }
-        return sb.toString();
-    }
-
-    public String getEfoTree( String efoId )
-    {
-        StringBuilder sb = new StringBuilder();
-        Set<String> efoChildIds = this.efoChildIdsById.get(efoId);
-        if (null != efoChildIds) {
-            for (String childId : efoChildIds) {
-                sb.append(this.efoTermById.get(childId)).append("|o|");
-                if (this.efoChildIdsById.containsKey(childId)) {
-                    sb.append(childId);
-                }
-                sb.append("\n");
-            }
-        }
-        return sb.toString();
-    }
-
-    public String getExperimentCount( String query )
-    {
-        return "";
-    }
-
-    public void setEfoMaps( Map<String, String> efoTermById, Map<String, Set<String>> efoChildIdsById, Map<String, Set<String>> efoSynonyms )
-    {
-        this.efoTermById = efoTermById;
-        this.efoChildIdsById = efoChildIdsById;
-        this.efoSynonyms = efoSynonyms;
-        try {
-            buildAutocompletion();
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
-        }
-    }
-
     public String getDataSource()
     {
         if (null == this.dataSource) {
@@ -264,70 +211,10 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private void indexExperiments()
     {
         try {
-            search.getController().index(EXPERIMENTS_INDEX_ID, experiments.getObject().getDocument());
-            buildAutocompletion();
+            search.getController().index(INDEX_ID, experiments.getObject().getDocument());
+            autocompletion.rebuild();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
-        }
-    }
-
-    private void buildAutocompletion() throws IOException
-    {
-        autocompleteStore.clear();
-
-        // adding field terms (for all non-numerical fields) and names (if there is a description)
-        Set<String> fields = search.getController().getFieldNames(EXPERIMENTS_INDEX_ID);
-        for (String field : fields) {
-            String fieldTitle = search.getController().getFieldTitle(EXPERIMENTS_INDEX_ID, field);
-            if (null != fieldTitle && fieldTitle.length() > 0) {
-                this.autocompleteStore.addData(
-                        new AutocompleteData(
-                                field
-                                , AutocompleteData.DATA_FIELD
-                                , fieldTitle
-                        )
-                );
-            }
-            String fieldType = search.getController().getFieldType(EXPERIMENTS_INDEX_ID, field);
-            if (null != fieldType && !"integer".equals(fieldType)) {
-                for (String term : search.getController().getTerms(EXPERIMENTS_INDEX_ID, field, "keywords".equals(field) ? 10 : 1)) {
-                    autocompleteStore.addData(
-                            new AutocompleteData(
-                                    term
-                                    , AutocompleteData.DATA_TEXT
-                                    , field
-                            )
-                    );
-                }
-            }
-        }
-
-        // adding efo terms (if present)
-        if (null != this.efoTermById) {
-            for (String efoId : this.efoTermById.keySet()) {
-                this.autocompleteStore.addData(
-                        new AutocompleteData(
-                                this.efoTermById.get(efoId)
-                                , AutocompleteData.DATA_EFO_NODE
-                                , efoChildIdsById.containsKey(efoId) ? efoId : ""
-                        )
-                );
-            }
-        }
-
-        // adding efo synonyms (if present)
-        if (null != this.efoSynonyms) {
-            for (String efoTerm : this.efoSynonyms.keySet()) {
-                for (String syn : this.efoSynonyms.get(efoTerm)) {
-                    this.autocompleteStore.addData(
-                            new AutocompleteData(
-                                    syn
-                                    , AutocompleteData.DATA_EFO_NODE
-                                    , ""
-                            )
-                    );
-                }
-            }
         }
     }
 

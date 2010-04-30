@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
+import uk.ac.ebi.arrayexpress.components.Autocompletion;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
@@ -80,6 +81,7 @@ public class LookupServlet extends ApplicationServlet
         try {
             Experiments experiments = (Experiments)getComponent("Experiments");
             Ontologies ontologies = (Ontologies)getComponent("Ontologies");
+            Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
             if (type.equals("arrays")) {
                 out.print(experiments.getArrays());
             } else if (type.equals("species")) {
@@ -90,9 +92,9 @@ public class LookupServlet extends ApplicationServlet
                 out.print(experiments.getAssaysByInstrument(query));
             } else if (type.equals("keywords")) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
-                out.print(experiments.getKeywords(query, field, limit));
+                out.print(autocompletion.getKeywords(query, field, limit));
             } else if (type.equals("efotree")) {
-                out.print(experiments.getEfoTree(efoId));
+                out.print(ontologies.getEfoChildren(efoId));
             } else if (type.equals("efotreejson")) {
                 out.print(ontologies.getEfoTreeJson(efoId, jsonp));
             } else if (type.equals("efodictjson")) {

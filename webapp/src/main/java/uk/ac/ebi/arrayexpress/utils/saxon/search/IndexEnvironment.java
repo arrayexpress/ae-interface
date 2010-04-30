@@ -58,6 +58,7 @@ public class IndexEnvironment
         public boolean shouldAnalyze;
         public String analyzer;
         public boolean shouldStore;
+        public boolean shouldEscape;
         public boolean forcePhraseQuery;
 
         public FieldInfo( HierarchicalConfiguration fieldConfig )
@@ -70,6 +71,7 @@ public class IndexEnvironment
                 this.shouldAnalyze = fieldConfig.getBoolean("[@analyze]");
                 this.analyzer = fieldConfig.getString("[@analyzer]");
                 this.shouldStore = fieldConfig.getBoolean("[@store]");
+                this.shouldEscape = fieldConfig.getBoolean("[@escape]");
                 this.forcePhraseQuery = fieldConfig.containsKey("[@forcePhraseQuery]") && fieldConfig.getBoolean("[@forcePhraseQuery]");
             }
         }

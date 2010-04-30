@@ -49,12 +49,12 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             this.indexLocation = indexLocation;
         }
 
-        public void addMaps( Map<String, Set<String>> synonymMap, Map<String, Set<String>> efoMap )
+        public void addMaps( Map<String, Set<String>> synonymMap, Map<String, Set<String>> expansionMap )
         {
             // 1. create a joint set of keys from both maps
             Set<String> allTerms = new HashSet<String>();
             allTerms.addAll(synonymMap.keySet());
-            allTerms.addAll(efoMap.keySet());
+            allTerms.addAll(expansionMap.keySet());
 
             // 2. iterate over the set
             try {
@@ -78,8 +78,8 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                         }
                     }
 
-                    if (efoMap.containsKey(term)) {
-                        Set<String> efoTerms = efoMap.get(term);
+                    if (expansionMap.containsKey(term)) {
+                        Set<String> efoTerms = expansionMap.get(term);
                         for (String efoTerm : efoTerms) {
                             addIndexField(d, "efo", efoTerm, false, true);
                             if (synonymMap.containsKey(efoTerm)) {

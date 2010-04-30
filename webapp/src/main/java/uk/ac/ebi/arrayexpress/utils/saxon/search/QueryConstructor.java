@@ -49,6 +49,9 @@ public class QueryConstructor implements IQueryConstructor
                 parser.setDefaultOperator(QueryParser.Operator.AND);
                 for ( String value : queryItem.getValue() ) {
                     if (!"".equals(value)) {
+                        if (this.env.fields.get(queryItem.getKey()).shouldEscape) {
+                            value = value.replaceAll("([+\"!()\\[\\]{}^~*?:\\\\-]|&&|\\|\\|)", "\\\\$1");
+                        }
                         Query q = parser.parse(value);
                         result.add(q, BooleanClause.Occur.MUST);
                     }
