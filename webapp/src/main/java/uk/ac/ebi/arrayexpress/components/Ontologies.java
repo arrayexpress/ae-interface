@@ -37,8 +37,6 @@ public class Ontologies extends ApplicationComponent
 
     private Map<String, Integer> expCountByEfoId;
 
-    private final String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
-
     private final String EFO_NOT_LOADED_YET = "";
 
     private Experiments experiments;
@@ -108,7 +106,7 @@ public class Ontologies extends ApplicationComponent
         }
 
         if (null == efoId || "".equals(efoId)) {
-            efoId = EFO_ROOT_ID;
+            efoId = ontology.EFO_ROOT_ID;
         }
 
         if ("".endsWith(jsonp)) {

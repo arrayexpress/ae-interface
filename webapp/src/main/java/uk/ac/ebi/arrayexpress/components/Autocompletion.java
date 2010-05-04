@@ -94,26 +94,33 @@ public class Autocompletion extends ApplicationComponent
         }
 
         if (null != ontologies.getOntology()) {
-            for (String efoId : ontologies.getOntology().getEfoMap().keySet()) {
-                EFONode node = ontologies.getOntology().getEfoMap().get(efoId);
-                if (null != node) {
-                    getStore().addData(
-                            new AutocompleteData(
-                                    node.getTerm()
-                                    , AutocompleteData.DATA_EFO_NODE
-                                    , node.hasChildren() ? node.getId() : ""
-                            )
-                    );
-                    for (String syn : node.getAlternativeTerms()) {
-                        this.autocompleteStore.addData(
-                                new AutocompleteData(
-                                        syn
-                                        , AutocompleteData.DATA_EFO_NODE
-                                        , ""
-                                )
-                        );
-                    }
+            addEfoNodeWithDescendants(ontologies.getOntology().EFO_ROOT_ID);
+        }
+    }
 
+    private void addEfoNodeWithDescendants( String nodeId )
+    {
+        EFONode node = ontologies.getOntology().getEfoMap().get(nodeId);
+        if (null != node) {
+            getStore().addData(
+                    new AutocompleteData(
+                            node.getTerm()
+                            , AutocompleteData.DATA_EFO_NODE
+                            , node.hasChildren() ? node.getId() : ""
+                    )
+            );
+            for (String syn : node.getAlternativeTerms()) {
+                this.autocompleteStore.addData(
+                        new AutocompleteData(
+                                syn
+                                , AutocompleteData.DATA_EFO_NODE
+                                , ""
+                        )
+                );
+            }
+            if (node.hasChildren()) {
+                for (EFONode child : node.getChildren()) {
+                    addEfoNodeWithDescendants(child.getId());
                 }
             }
         }

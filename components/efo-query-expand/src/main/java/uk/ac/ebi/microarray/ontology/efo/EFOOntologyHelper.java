@@ -57,4 +57,5 @@ public class EFOOntologyHelper
         return partOfIdMap;
     }
 
+    public final String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
 }
