@@ -37,7 +37,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.util.List;
 
-public class ReloadExperimentsJob extends ApplicationJob implements JobListener
+public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobListener
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
