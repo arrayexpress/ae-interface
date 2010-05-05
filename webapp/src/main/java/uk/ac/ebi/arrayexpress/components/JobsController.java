@@ -54,7 +54,7 @@ public class JobsController extends ApplicationComponent
         
         // here we add jobs
         addJob("rescan-files", RescanFilesJob.class);
-        addJob("reload-xml", ReloadExperimentsJob.class);
+        addJob("reload-xml", ReloadExperimentsFromDbJob.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-ontology", ReloadOntologyJob.class);
