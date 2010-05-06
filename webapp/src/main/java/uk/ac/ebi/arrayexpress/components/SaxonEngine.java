@@ -52,9 +52,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    // logging writer for the transformations
-    private LoggerWriter loggerWriter;
-
     public TransformerFactoryImpl trFactory;
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
     private Map<String, DocumentSource> documentSources = new HashMap<String, DocumentSource>();
@@ -79,13 +76,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         extLibraries.addFunctionLibrary(c.getExtensionBinder("java"));
         extLibraries.addFunctionLibrary(new UserFunctionLibrary());
         c.setExtensionBinder("java", extLibraries);
-        
-        loggerWriter = new LoggerWriter(logger);
     }
 
     public void terminate() throws Exception
     {
-        loggerWriter = null;
     }
 
     public void registerDocumentSource(DocumentSource documentSource)
@@ -229,7 +223,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             Transformer xslt = templates.newTransformer();
 
             // redirect all messages to logger
-            ((Controller)xslt).setMessageEmitter(loggerWriter);
+            ((Controller)xslt).setMessageEmitter(new LoggerWriter(logger));
 
             // assign the parameters (if not null)
             if (null != params) {
