@@ -24,6 +24,7 @@ import uk.ac.ebi.arrayexpress.utils.EmailSender;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedHashMap;
@@ -139,10 +140,17 @@ public abstract class Application
     public void sendExceptionReport( String message, Throwable x )
     {
         Thread currentThread = Thread.currentThread();
+        String hostName = "unknown";
+        try {
+            InetAddress localMachine = InetAddress.getLocalHost();
+            hostName = localMachine.getHostName();
+        } catch (Exception xx) {
+            logger.debug("Caught an exception:", xx);
+        }
 
         sendEmail("Application [" + getName() + "] Runtime Exception Report"
                 , message + ": " + x.getMessage()
-                        + "\n\nThread [" + currentThread.getName() + "]"
+                        + "\nHost [" + hostName + "]\nThread [" + currentThread.getName() + "]"
                         + "\n" + getStackTrace(x)
         );
     }
