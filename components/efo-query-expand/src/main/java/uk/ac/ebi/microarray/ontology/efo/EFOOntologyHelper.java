@@ -75,10 +75,12 @@ public class EFOOntologyHelper
                     terms.addAll(node.getAlternativeTerms());
                 }
             }
-            
-            if (node.hasChildren()) {
-                for (EFONode child : node.getChildren()) {
-                    terms.addAll(getTerms(child, includeFlags | INCLUDE_SELF));
+
+            if ((includeFlags & INCLUDE_CHILD_TERMS) > 0) {
+                if (node.hasChildren()) {
+                    for (EFONode child : node.getChildren()) {
+                        terms.addAll(getTerms(child, includeFlags | INCLUDE_SELF));
+                    }
                 }
             }
 
