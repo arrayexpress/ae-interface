@@ -74,6 +74,8 @@ public class EFOOntologyHelper
     {
         Set<String> terms = new HashSet<String>();
         if (null != node) {
+            terms.add(node.getTerm());
+            
             if ((includeFlags | INCLUDE_ALT_TERMS) > 0) {
                 terms.addAll(node.getAlternativeTerms());
             }
