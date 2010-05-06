@@ -58,39 +58,35 @@ public class EFOOntologyHelper
         return partOfIdMap;
     }
 
-    public Set<String> getChildTerms( String efoId, int includeFlags )
+    public Set<String> getTerms( String efoId, int includeFlags )
     {
         EFONode node = getEfoMap().get(efoId);
-        Set<String> terms = new HashSet<String>();
-        if (node.hasChildren()) {
-            for (EFONode child : node.getChildren()) {
-                terms.addAll(addChildTerms(child, includeFlags));
-            }
-        }
-        return terms;
+        return getTerms(node, includeFlags);
     }
 
-    private Set<String> addChildTerms( EFONode node, int includeFlags )
+    private Set<String> getTerms( EFONode node, int includeFlags )
     {
         Set<String> terms = new HashSet<String>();
         if (null != node) {
-            terms.add(node.getTerm());
-            
-            if ((includeFlags | INCLUDE_ALT_TERMS) > 0) {
-                terms.addAll(node.getAlternativeTerms());
-            }
+            if ((includeFlags & INCLUDE_SELF) > 0) {
+                terms.add(node.getTerm());
 
+                if ((includeFlags & INCLUDE_ALT_TERMS) > 0) {
+                    terms.addAll(node.getAlternativeTerms());
+                }
+            }
+            
             if (node.hasChildren()) {
                 for (EFONode child : node.getChildren()) {
-                    terms.addAll(addChildTerms(child, includeFlags));
+                    terms.addAll(getTerms(child, includeFlags | INCLUDE_SELF));
                 }
             }
 
-            if ((includeFlags | INCLUDE_PART_OF_TERMS) > 0) {
+            if ((includeFlags & INCLUDE_PART_OF_TERMS) > 0) {
                 if (getEfoPartOfIdMap().containsKey(node.getId())) {
                     for (String partOfId : getEfoPartOfIdMap().get(node.getId())) {
                         EFONode partOfNode = getEfoMap().get(partOfId);
-                        terms.addAll(addChildTerms(partOfNode, includeFlags));
+                        terms.addAll(getTerms(partOfNode, includeFlags | INCLUDE_SELF));
                     }
                 }
             }
@@ -101,7 +97,19 @@ public class EFOOntologyHelper
 
     public final static String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
 
-    public final static int INCLUDE_ALT_TERMS = 1;
-    public final static int INCLUDE_PART_OF_TERMS = 2;
-    public final static int INCLUDE_ALL = INCLUDE_ALT_TERMS + INCLUDE_PART_OF_TERMS;
+    public final static int INCLUDE_SELF = 1;
+    public final static int INCLUDE_ALT_TERMS = 2;
+    public final static int INCLUDE_CHILD_TERMS = 4;
+    public final static int INCLUDE_PART_OF_TERMS = 8;
+
+    public final static int INCLUDE_ALL =
+            INCLUDE_SELF
+            + INCLUDE_ALT_TERMS
+            + INCLUDE_CHILD_TERMS
+            + INCLUDE_PART_OF_TERMS;
+
+    public final static int INCLUDE_CHILDREN =
+            INCLUDE_ALT_TERMS
+            + INCLUDE_CHILD_TERMS
+            + INCLUDE_PART_OF_TERMS;
 }

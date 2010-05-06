@@ -78,7 +78,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     {
         String term = node.getTerm();
         Set<String> synonyms = node.getAlternativeTerms();
-        Set<String> childTerms = ontology.getChildTerms(node.getId(), EFOOntologyHelper.INCLUDE_ALL);
+        Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
         if (synonyms.size() > 0 || childTerms.size() > 0) {
 
