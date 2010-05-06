@@ -25,6 +25,7 @@ import uk.ac.ebi.microarray.ontology.OntologyLoader;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,5 +58,48 @@ public class EFOOntologyHelper
         return partOfIdMap;
     }
 
-    public final String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
+    public Set<String> getChildTerms( String efoId, int includeFlags )
+    {
+        EFONode node = getEfoMap().get(efoId);
+        Set<String> terms = new HashSet<String>();
+        if (node.hasChildren()) {
+            for (EFONode child : node.getChildren()) {
+                terms.addAll(addChildTerms(child, includeFlags));
+            }
+        }
+        return terms;
+    }
+
+    private Set<String> addChildTerms( EFONode node, int includeFlags )
+    {
+        Set<String> terms = new HashSet<String>();
+        if (null != node) {
+            if ((includeFlags | INCLUDE_ALT_TERMS) > 0) {
+                terms.addAll(node.getAlternativeTerms());
+            }
+
+            if (node.hasChildren()) {
+                for (EFONode child : node.getChildren()) {
+                    terms.addAll(addChildTerms(child, includeFlags));
+                }
+            }
+
+            if ((includeFlags | INCLUDE_PART_OF_TERMS) > 0) {
+                if (getEfoPartOfIdMap().containsKey(node.getId())) {
+                    for (String partOfId : getEfoPartOfIdMap().get(node.getId())) {
+                        EFONode partOfNode = getEfoMap().get(partOfId);
+                        terms.addAll(addChildTerms(partOfNode, includeFlags));
+                    }
+                }
+            }
+        }
+
+        return terms;
+    }
+
+    public final static String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
+
+    public final static int INCLUDE_ALT_TERMS = 1;
+    public final static int INCLUDE_PART_OF_TERMS = 2;
+    public final static int INCLUDE_ALL = INCLUDE_ALT_TERMS + INCLUDE_PART_OF_TERMS;
 }

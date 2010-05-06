@@ -42,7 +42,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
     private String efoUri;
     private boolean isBranchRoot;
     private boolean isOrganizational;
-    private Set<String> alternatives = new HashSet<String>();
+    private Set<String> alternatives;
 
      /**
      * Clears internal state before visiting a new node
@@ -54,7 +54,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
         this.efoUri = null;
         this.isBranchRoot = false;
         this.isOrganizational = false;
-        this.alternatives.clear();
+        this.alternatives = new HashSet<String>();
     }
 
     /**
