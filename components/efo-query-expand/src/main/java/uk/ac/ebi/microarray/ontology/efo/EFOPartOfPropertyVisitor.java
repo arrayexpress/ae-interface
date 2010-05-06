@@ -51,7 +51,6 @@ public class EFOPartOfPropertyVisitor implements IPropertyVisitor<EFONode>
 
     /**
      * Process relationship forced by the part_of property.
-     * If we are interested in both nodes given updating nameToPartsMap and idToPartIdsMap.
      *
      * @param node   First node.
      * @param friend Second node.
