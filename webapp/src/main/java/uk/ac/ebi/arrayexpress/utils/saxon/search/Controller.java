@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ public class Controller
     {
         this.config = new Configuration(configFile);
         this.queryPool = new QueryPool();
+        BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
     }
 
     public void setQueryConstructor( IQueryConstructor queryConstructor )

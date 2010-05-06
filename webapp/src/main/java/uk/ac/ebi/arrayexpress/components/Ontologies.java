@@ -21,6 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
+import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
+import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
+import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
@@ -68,6 +71,17 @@ public class Ontologies extends ApplicationComponent
 
         rebuildExpCountMap();
         autocompletion.rebuild();
+
+
+        EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
+                getPreferences().getString("ae.efo.index.location")
+        );
+
+        ix.setOntology(getOntology());
+
+        Controller c = search.getController();
+        c.setQueryExpander(new EFOQueryExpander(ix));
+        c.setQueryHighlighter(new EFOExpandedHighlighter());
     }
 
     public EFOOntologyHelper getOntology()

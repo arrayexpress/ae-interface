@@ -29,11 +29,11 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.microarray.ontology.efo.EFONode;
+import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class EFOExpansionLookupIndex implements IEFOExpansionLookup
@@ -49,57 +49,43 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             this.indexLocation = indexLocation;
         }
 
-        public void addMaps( Map<String, Set<String>> synonymMap, Map<String, Set<String>> expansionMap )
+        public void setOntology( EFOOntologyHelper ontology )
         {
-            // 1. create a joint set of keys from both maps
-            Set<String> allTerms = new HashSet<String>();
-            allTerms.addAll(synonymMap.keySet());
-            allTerms.addAll(expansionMap.keySet());
-
-            // 2. iterate over the set
             try {
                 this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
                 IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
 
-                for (String term : allTerms) {
-                    Document d = new Document();
+                logger.debug("Building expansion lookup index");
+                for (String nodeId : ontology.getEfoMap().keySet()) {
+                    EFONode node = ontology.getEfoMap().get(nodeId);
+                    // 1. get set of alternative terms for the node
 
-                    boolean hasJustAddedSomething = false;
+                    String term = node.getTerm();
+                    Set<String> synonyms = node.getAlternativeTerms();
+                    Set<String> childTerms = ontology.getChildTerms(nodeId, EFOOntologyHelper.INCLUDE_ALL);
 
-                    if (synonymMap.containsKey(term)) {
-                        Set<String> syns = synonymMap.get(term);
-                        for (String syn : syns) {
-                            if (allTerms.contains(syn)) {
-                                this.logger.warn("Synonym [{}] for term [{}] is present as a different term itelf, skipping", syn, term);
+                    if (synonyms.size() > 0 || childTerms.size() > 0) {
+
+                        Document d = new Document();
+
+                        for (String syn : synonyms) {
+                            if (childTerms.contains(syn)) {
+                                this.logger.warn("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
                             } else {
                                 addIndexField(d, "term", syn, true, true);
-                                hasJustAddedSomething = true;
                             }
                         }
-                    }
 
-                    if (expansionMap.containsKey(term)) {
-                        Set<String> efoTerms = expansionMap.get(term);
-                        for (String efoTerm : efoTerms) {
+                        for (String efoTerm : childTerms) {
                             addIndexField(d, "efo", efoTerm, false, true);
-                            if (synonymMap.containsKey(efoTerm)) {
-                                for (String syn : synonymMap.get(efoTerm)) {
-                                    addIndexField(d, "efo", syn, false, true);    
-                                }
-                            }
-                            hasJustAddedSomething = true;
                         }
-                    }
 
-                    if (hasJustAddedSomething) {
                         addIndexField(d, "term", term, true, true);
                         addIndexDocument(w, d);
-                    } else {
-                        this.logger.warn("Data for term [{}] wasn't included as there were no synonyms or child terms found", term);
                     }
                 }
                 commitIndex(w);
-
+                logger.debug("Building completed");
             } catch (Exception x) {
                 logger.error("Caught an exception:", x);
             }
