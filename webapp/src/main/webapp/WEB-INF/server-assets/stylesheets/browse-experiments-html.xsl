@@ -493,26 +493,9 @@
                         </xsl:call-template>
                     </a>
                 </xsl:when>
-                <xsl:when test="substring(., 1, 3)='SRP'">
-                    <a href="ftp://ftp.ncbi.nlm.nih.gov/sra/Studies/{substring(.,1,6)}/{.}/">
-                        <xsl:text>NCBI SRA - </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pText" select="."/>
-                            <xsl:with-param name="pFieldName" select="'accession'"/>
-                        </xsl:call-template>
-                    </a>
-                </xsl:when>
-                <xsl:when test="substring(., 1, 3)='ERA'">
-                    <a href="ftp://ftp.era.ebi.ac.uk/vol1/{substring(.,1,6)}/{.}/">
-                        <xsl:text>EBI SRA Data - </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pText" select="."/>
-                            <xsl:with-param name="pFieldName" select="'accession'"/>
-                        </xsl:call-template>
-                    </a>
-                    <xsl:text>, </xsl:text>
-                    <a href="ftp://ftp.era-xml.ebi.ac.uk/{substring(.,1,6)}/{.}/">
-                        <xsl:text>EBI SRA Meta-data - </xsl:text>
+                <xsl:when test="substring(., 1, 3)='SRP' or substring(., 1, 3)='ERP'">
+                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
+                        <xsl:text>ENA - </xsl:text>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="."/>
                             <xsl:with-param name="pFieldName" select="'accession'"/>
