@@ -43,16 +43,6 @@
             <version>3.0.1</version>
         </dependency>
         <dependency>
-            <groupId>owlapi</groupId>
-            <artifactId>api</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>owlapi</groupId>
-            <artifactId>apibinding</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.sourceforge.fluxion</groupId>
             <artifactId>fluxion-utils</artifactId>
             <version>1.0-alpha-2</version>
