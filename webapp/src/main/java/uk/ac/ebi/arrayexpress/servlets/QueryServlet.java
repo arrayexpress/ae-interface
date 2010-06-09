@@ -149,10 +149,10 @@ public class QueryServlet extends ApplicationServlet
 
                     SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
                     if (!saxonEngine.transformToWriter(
-                            experiments.getDocument(),
-                            stylesheetName,
-                            params,
-                            out)) {
+                            experiments.getDocument(),  // xml document in memory (all experiments)
+                            stylesheetName,             // xslt transformation stylesheet
+                            params,                     // parameters
+                            out)) {                     // where to dump resulting text
                         throw new Exception("Transformation returned an error");
                     }
                 } catch (ParseException x) {
