@@ -131,7 +131,7 @@ public class OntologyLoader<N extends IOntologyNode>
                 try {
                     owlRestrictions = OWLUtils.keep(session, ontology, clazz, property);
                     for (OWLRestriction restriction : owlRestrictions) {
-                        for (OWLClass friend : restriction.getClassesInSignature()) {
+                        for (OWLClass friend :  OWLUtils.getReferencedClasses(session, restriction)) {
                             String friendId = getId(friend);
                             visitor.inRelationship(node, ontologyMap.get(friendId));
                         }
