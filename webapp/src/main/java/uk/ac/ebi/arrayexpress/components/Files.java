@@ -34,14 +34,18 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.List;
 
-public class Files extends ApplicationComponent implements DocumentSource
+public class Files extends ApplicationComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String rootFolder;
-    private TextFilePersistence<PersistableDocument> files;
+//    private TextFilePersistence<PersistableDocument> files;
     private SaxonEngine saxon;
+
+    private DocumentContainer documentContainer;
+
+    public final String DOCUMENT_ID = "files";
 
     public Files()
     {
@@ -52,12 +56,15 @@ public class Files extends ApplicationComponent implements DocumentSource
     {
         saxon = (SaxonEngine)getComponent("SaxonEngine");
 
-        files = new TextFilePersistence<PersistableDocument>(
-                new PersistableDocument(),
-                new File(getPreferences().getString("ae.files.persistence.file.location"))
-        );
-        
-        saxon.registerDocumentSource(this);
+        //ToDo: fix persistence problem
+//        files = new TextFilePersistence<PersistableDocument>(
+//                new PersistableDocument(),
+//                new File(getPreferences().getString("ae.files.persistence.file.location"))
+//        );
+
+        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
+
+//        saxon.registerDocumentSource(this);
         updateAccelerators();
     }
 
@@ -75,13 +82,15 @@ public class Files extends ApplicationComponent implements DocumentSource
     // implementation of DocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
-        return this.files.getObject().getDocument();
+//        return this.files.getObject().getDocument();
+        return documentContainer.getDocument(DOCUMENT_ID);
     }
 
     private synchronized void setFiles( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.files.setObject(new PersistableDocument(doc));
+//            this.files.setObject(new PersistableDocument(doc));
+            documentContainer.putDocument(DOCUMENT_ID, doc);
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");

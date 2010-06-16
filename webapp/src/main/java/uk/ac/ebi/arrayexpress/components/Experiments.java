@@ -171,7 +171,7 @@ public class Experiments extends ApplicationComponent
         if (null != doc) {
             setExperiments(doc);
             buildSpeciesArraysExpTypes(doc);
-            indexExperiments();
+//            indexExperiments();
         }
     }
 
