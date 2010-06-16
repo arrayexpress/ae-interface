@@ -23,9 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocument;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 
 import javax.xml.xpath.XPath;
@@ -41,7 +40,7 @@ public class Files extends ApplicationComponent implements DocumentSource
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String rootFolder;
-    private TextFilePersistence<PersistableDocumentContainer> files;
+    private TextFilePersistence<PersistableDocument> files;
     private SaxonEngine saxon;
 
     public Files()
@@ -53,8 +52,8 @@ public class Files extends ApplicationComponent implements DocumentSource
     {
         saxon = (SaxonEngine)getComponent("SaxonEngine");
 
-        files = new TextFilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer(),
+        files = new TextFilePersistence<PersistableDocument>(
+                new PersistableDocument(),
                 new File(getPreferences().getString("ae.files.persistence.file.location"))
         );
         
@@ -82,7 +81,7 @@ public class Files extends ApplicationComponent implements DocumentSource
     private synchronized void setFiles( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.files.setObject(new PersistableDocumentContainer(doc));
+            this.files.setObject(new PersistableDocument(doc));
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");

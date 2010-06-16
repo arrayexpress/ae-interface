@@ -67,9 +67,9 @@ public class Autocompletion extends ApplicationComponent
         getStore().clear();
 
         // adding field terms (for all non-numerical fields) and names (if there is a description)
-        Set<String> fields = search.getController().getFieldNames(experiments.INDEX_ID);
+        Set<String> fields = search.getController().getFieldNames(experiments.DOCUMENT_ID);
         for (String field : fields) {
-            String fieldTitle = search.getController().getFieldTitle(experiments.INDEX_ID, field);
+            String fieldTitle = search.getController().getFieldTitle(experiments.DOCUMENT_ID, field);
             if (null != fieldTitle && fieldTitle.length() > 0) {
                 getStore().addData(
                         new AutocompleteData(
@@ -79,9 +79,9 @@ public class Autocompletion extends ApplicationComponent
                         )
                 );
             }
-            String fieldType = search.getController().getFieldType(experiments.INDEX_ID, field);
+            String fieldType = search.getController().getFieldType(experiments.DOCUMENT_ID, field);
             if (null != fieldType && !"integer".equals(fieldType)) {
-                for (String term : search.getController().getTerms(experiments.INDEX_ID, field, "keywords".equals(field) ? 10 : 1)) {
+                for (String term : search.getController().getTerms(experiments.DOCUMENT_ID, field, "keywords".equals(field) ? 10 : 1)) {
                     getStore().addData(
                             new AutocompleteData(
                                     term

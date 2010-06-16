@@ -213,7 +213,7 @@ public class Ontologies extends ApplicationComponent
         for (EFONode node : getOntology().getEfoMap().values()) {
             q.get("efv")[0] = node.getTerm();
                 try {
-                    Integer docs = c.getDocCount(experiments.INDEX_ID, q);
+                    Integer docs = c.getDocCount(experiments.DOCUMENT_ID, q);
                     this.expCountByEfoId.put(node.getId(), docs);
                 } catch (Exception x) {
                     logger.debug("Caught an exception while querying term [" + node.getTerm() + "]", x);

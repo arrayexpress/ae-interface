@@ -23,18 +23,16 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Experiments extends ApplicationComponent implements DocumentSource
+public class Experiments extends ApplicationComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,7 +40,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
     private String dataSource;
-    private TextFilePersistence<PersistableDocumentContainer> experiments;
+
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
     private TextFilePersistence<PersistableString> arrays;
@@ -52,8 +50,9 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private SaxonEngine saxon;
     private SearchEngine search;
     private Autocompletion autocompletion;
+    private DocumentContainer documentContainer;
 
-    public final String INDEX_ID = "experiments";
+    public final String DOCUMENT_ID = "experiments";
 
     public Experiments()
     {
@@ -65,11 +64,13 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         saxon = (SaxonEngine) getComponent("SaxonEngine");
         search = (SearchEngine) getComponent("SearchEngine");
         autocompletion = (Autocompletion) getComponent("Autocompletion");
+        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
 
-        this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer()
-                , new File(getPreferences().getString("ae.experiments.file.location"))
-        );
+        // TODO
+        // this.experiments = new TextFilePersistence<PersistableDocument>(
+        //        new PersistableDocument()
+        //        , new File(getPreferences().getString("ae.experiments.file.location"))
+        //);
 
         this.experimentsInAtlas = new TextFilePersistence<PersistableStringList>(
                 new PersistableStringList()
@@ -99,26 +100,11 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
-
-        indexExperiments();
-        saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
     {
         saxon = null;
-    }
-
-    // implementation of DocumentSource.getDocument()
-    public String getDocumentURI()
-    {
-        return "experiments.xml";
-    }
-
-    // implementation of DocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
-    {
-        return this.experiments.getObject().getDocument();
     }
 
     public boolean isAccessible( String accession, String userId ) throws Exception
@@ -130,7 +116,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         } else {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
-                            getDocument()
+                            documentContainer.getDocument(DOCUMENT_ID)
                             , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
                     )
             );
@@ -197,7 +183,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private synchronized void setExperiments( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.experiments.setObject(new PersistableDocumentContainer(doc));
+            documentContainer.putDocument(DOCUMENT_ID, doc);
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
@@ -211,7 +197,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
     private void indexExperiments()
     {
         try {
-            search.getController().index(INDEX_ID, experiments.getObject().getDocument());
+            search.getController().index(DOCUMENT_ID, documentContainer.getDocument(DOCUMENT_ID));
             autocompletion.rebuild();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);

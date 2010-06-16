@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
 
 import javax.xml.transform.*;
@@ -54,9 +53,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public TransformerFactoryImpl trFactory;
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
-    private Map<String, DocumentSource> documentSources = new HashMap<String, DocumentSource>();
 
     private final String XML_STRING_ENCODING = "ISO-8859-1";
+
+    private DocumentContainer documentContainer;
 
     public SaxonEngine()
     {
@@ -76,15 +76,12 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         extLibraries.addFunctionLibrary(c.getExtensionBinder("java"));
         extLibraries.addFunctionLibrary(new UserFunctionLibrary());
         c.setExtensionBinder("java", extLibraries);
+
+        documentContainer = (DocumentContainer)getComponent("DocumentContainer");
     }
 
     public void terminate() throws Exception
     {
-    }
-
-    public void registerDocumentSource(DocumentSource documentSource)
-    {
-        this.documentSources.put(documentSource.getDocumentURI(), documentSource);
     }
 
     // implements URIResolver.resolve
@@ -92,9 +89,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     {
         Source src;
         try {
-            // try document sources first
-            if (documentSources.containsKey(href)) {
-                return documentSources.get(href).getDocument();    
+            // try document sources first (experiments.xml)
+            // trim .xml then try to access document container
+            String document = href.replaceAll("\\.xml$", "");
+            if (documentContainer.hasDocument(document)) {
+                return documentContainer.getDocument(document);
             } else {
                 URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/stylesheets/" + href);
                 if (null == resource) {
