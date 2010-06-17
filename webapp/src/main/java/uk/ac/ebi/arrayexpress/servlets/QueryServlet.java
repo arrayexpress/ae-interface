@@ -148,24 +148,24 @@ public class QueryServlet extends ApplicationServlet
 
                     response.addCookie(userCookie);
                 }
-
-                try {
-                    Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(documentId, params, request.getQueryString());
-                    params.put("queryid", String.valueOf(queryId));
-
-                    SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
-                    if (!saxonEngine.transformToWriter(
-                            documentContainer.getDocument(documentId),  // xml document in memory (all experiments)
-                            stylesheetName,             // xslt transformation stylesheet
-                            params,                     // parameters
-                            out)) {                     // where to dump resulting text
-                        throw new Exception("Transformation returned an error");
-                    }
-                } catch (ParseException x) {
-                    logger.error("Caught lucene parse exception:", x);
-                    reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
-                }
             }
+            try {
+                Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(documentId, params, request.getQueryString());
+                params.put("queryid", String.valueOf(queryId));
+
+                SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
+                if (!saxonEngine.transformToWriter(
+                        documentContainer.getDocument(documentId),  // xml document in memory (all experiments)
+                        stylesheetName,             // xslt transformation stylesheet
+                        params,                     // parameters
+                        out)) {                     // where to dump resulting text
+                    throw new Exception("Transformation returned an error");
+                }
+            } catch (ParseException x) {
+                logger.error("Caught lucene parse exception:", x);
+                reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
+            }
+
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
