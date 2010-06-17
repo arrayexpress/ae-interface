@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
@@ -214,7 +215,8 @@ public class Ontologies extends ApplicationComponent
         for (EFONode node : getOntology().getEfoMap().values()) {
             q.get("efv")[0] = node.getTerm();
                 try {
-                    Integer docs = c.getDocCount(experiments.DOCUMENT_ID, q);
+                    // TODO: this shouldn't be hardcoded here
+                    Integer docs = c.getDocCount(DocumentTypes.EXPERIMENTS.getTextName(), q);
                     this.expCountByEfoId.put(node.getId(), docs);
                 } catch (Exception x) {
                     logger.debug("Caught an exception while querying term [" + node.getTerm() + "]", x);

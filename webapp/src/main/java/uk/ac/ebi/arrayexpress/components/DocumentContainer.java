@@ -59,43 +59,6 @@ public class DocumentContainer extends ApplicationComponent
     }
 
     /**
-     * Checks if the document with given ID exists in the storage container
-     *
-     * @param documentId
-     * @return
-     */
-    //ToDo: maybe it's better to use Enum instead of Strings
-    public boolean hasDocument( String documentId )
-    {
-        return documents.containsKey(documentId);
-    }
-
-    /**
-     * Returns Saxon TinyTree document object by its document ID
-     *
-     * @param documentId
-     * @return
-     */
-    public DocumentInfo getDocument( String documentId ) throws Exception
-    {
-        return getDocument(DocumentTypes.getInstanceByName(documentId));
-    }
-
-    /**
-     * Puts Saxon TinyTree document associated with its ID
-     *
-     * @param documentId
-     * @param document
-     */
-    public void putDocument( String documentId, DocumentInfo document )
-    {
-
-        putDocument(DocumentTypes.getInstanceByName(documentId), document);
-
-    }
-
-
-    /**
      * Returns Saxon TinyTree document object by its document ID
      *
      * @param documentId
@@ -126,6 +89,17 @@ public class DocumentContainer extends ApplicationComponent
 
         //persist document
         documentPersister.saveObject(document, getPreferences().getString(documentId.getPersistenceDocumentLocation()));
+    }
+
+    /**
+     * Checks if the document with given name exists in the storage container
+     *
+     * @param documentName
+     * @return
+     */
+    public boolean hasDocument( String documentName )
+    {
+        return documents.containsKey(DocumentTypes.getInstanceByName(documentName));
     }
 
     /**

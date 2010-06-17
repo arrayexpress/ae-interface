@@ -21,6 +21,7 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
@@ -51,8 +52,6 @@ public class Experiments extends ApplicationComponent
     private SearchEngine search;
     private Autocompletion autocompletion;
     private DocumentContainer documentContainer;
-
-    public final String DOCUMENT_ID = "experiments";
 
     public Experiments()
     {
@@ -116,7 +115,7 @@ public class Experiments extends ApplicationComponent
         } else {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
-                            documentContainer.getDocument(DOCUMENT_ID)
+                            documentContainer.getDocument(DocumentTypes.EXPERIMENTS)
                             , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
                     )
             );
@@ -183,7 +182,7 @@ public class Experiments extends ApplicationComponent
     private synchronized void setExperiments( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            documentContainer.putDocument(DOCUMENT_ID, doc);
+            documentContainer.putDocument(DocumentTypes.EXPERIMENTS, doc);
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
@@ -197,7 +196,7 @@ public class Experiments extends ApplicationComponent
     private void indexExperiments()
     {
         try {
-            search.getController().index(DOCUMENT_ID, documentContainer.getDocument(DOCUMENT_ID));
+            search.getController().index(DocumentTypes.EXPERIMENTS.getTextName(), documentContainer.getDocument(DocumentTypes.EXPERIMENTS));
             autocompletion.rebuild();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);

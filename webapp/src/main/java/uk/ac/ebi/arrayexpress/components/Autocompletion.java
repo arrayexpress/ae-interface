@@ -1,6 +1,7 @@
 package uk.ac.ebi.arrayexpress.components;
 
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
@@ -67,9 +68,10 @@ public class Autocompletion extends ApplicationComponent
         getStore().clear();
 
         // adding field terms (for all non-numerical fields) and names (if there is a description)
-        Set<String> fields = search.getController().getFieldNames(experiments.DOCUMENT_ID);
+        // TODO: this shouldn't be hardcoded here
+        Set<String> fields = search.getController().getFieldNames(DocumentTypes.EXPERIMENTS.getTextName());
         for (String field : fields) {
-            String fieldTitle = search.getController().getFieldTitle(experiments.DOCUMENT_ID, field);
+            String fieldTitle = search.getController().getFieldTitle(DocumentTypes.EXPERIMENTS.getTextName(), field);
             if (null != fieldTitle && fieldTitle.length() > 0) {
                 getStore().addData(
                         new AutocompleteData(
@@ -79,9 +81,10 @@ public class Autocompletion extends ApplicationComponent
                         )
                 );
             }
-            String fieldType = search.getController().getFieldType(experiments.DOCUMENT_ID, field);
+            // TODO: this shouldn't be hardcoded here
+            String fieldType = search.getController().getFieldType(DocumentTypes.EXPERIMENTS.getTextName(), field);
             if (null != fieldType && !"integer".equals(fieldType)) {
-                for (String term : search.getController().getTerms(experiments.DOCUMENT_ID, field, "keywords".equals(field) ? 10 : 1)) {
+                for (String term : search.getController().getTerms(DocumentTypes.EXPERIMENTS.getTextName(), field, "keywords".equals(field) ? 10 : 1)) {
                     getStore().addData(
                             new AutocompleteData(
                                     term

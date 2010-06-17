@@ -47,7 +47,7 @@ public enum DocumentTypes
     public static DocumentTypes getInstanceByName( String name )
     {
         for (DocumentTypes resourceType : DocumentTypes.values()) {
-            if (resourceType.textName.equals(name)) return resourceType;
+            if (resourceType.textName.equalsIgnoreCase(name)) return resourceType;
         }
         throw new IllegalArgumentException("There is no DocumentTypes with name: " + name);
     }

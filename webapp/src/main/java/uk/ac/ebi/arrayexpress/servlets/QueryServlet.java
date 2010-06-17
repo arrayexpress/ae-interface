@@ -27,10 +27,7 @@ import uk.ac.ebi.arrayexpress.components.DocumentContainer;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.components.SearchEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.CookieMap;
-import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -61,7 +58,7 @@ public class QueryServlet extends ApplicationServlet
         logRequest(logger, request, requestType);
 
         String outputFormat = "xml";        // by default we output XML
-        String documentId = "experiments";  // default document/index ID
+        String documentName = DocumentTypes.EXPERIMENTS.getTextName();  // default document/index ID
         String stylesheet = "default";      // default stylesheet name
 
         // we have two groups of parameters; first one:
@@ -79,7 +76,7 @@ public class QueryServlet extends ApplicationServlet
                 outputFormat = requestArgs[0];
             }
             if (!requestArgs[1].equals("")) {
-                documentId = requestArgs[1];
+                documentName = requestArgs[1];
             }
             if (!requestArgs[2].equals("")) {
                 stylesheet = requestArgs[2];
@@ -150,12 +147,12 @@ public class QueryServlet extends ApplicationServlet
                 }
             }
             try {
-                Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(documentId, params, request.getQueryString());
+                Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(documentName, params, request.getQueryString());
                 params.put("queryid", String.valueOf(queryId));
 
                 SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
                 if (!saxonEngine.transformToWriter(
-                        documentContainer.getDocument(documentId),  // xml document in memory (all experiments)
+                        documentContainer.getDocument(DocumentTypes.getInstanceByName(documentName)),  // xml document in memory (all experiments)
                         stylesheetName,             // xslt transformation stylesheet
                         params,                     // parameters
                         out)) {                     // where to dump resulting text

@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
 
@@ -91,9 +92,9 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         try {
             // try document sources first (experiments.xml)
             // trim .xml then try to access document container
-            String document = href.replaceAll("\\.xml$", "");
-            if (documentContainer.hasDocument(document)) {
-                return documentContainer.getDocument(document);
+            String documentName = href.replaceAll("\\.xml$", "");
+            if (documentContainer.hasDocument(documentName)) {
+                return documentContainer.getDocument(DocumentTypes.getInstanceByName(documentName));
             } else {
                 URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/stylesheets/" + href);
                 if (null == resource) {

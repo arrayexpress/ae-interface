@@ -22,6 +22,7 @@ import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 
@@ -41,8 +42,6 @@ public class Files extends ApplicationComponent
     private SaxonEngine saxon;
 
     private DocumentContainer documentContainer;
-
-    public final String DOCUMENT_ID = "files";
 
     public Files()
     {
@@ -65,7 +64,7 @@ public class Files extends ApplicationComponent
     private synchronized void setFiles( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            documentContainer.putDocument(DOCUMENT_ID, doc);
+            documentContainer.putDocument(DocumentTypes.FILES, doc);
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");
@@ -93,9 +92,9 @@ public class Files extends ApplicationComponent
         ExtFunctions.clearAccelerator("fgem-files");
 
         try {
-            XPath xp = new XPathEvaluator(documentContainer.getDocument(DOCUMENT_ID).getConfiguration());
+            XPath xp = new XPathEvaluator(documentContainer.getDocument(DocumentTypes.FILES).getConfiguration());
             XPathExpression xpe = xp.compile("/files/folder[@kind = 'experiment']");
-            List documentNodes = (List)xpe.evaluate(documentContainer.getDocument(DOCUMENT_ID), XPathConstants.NODESET);
+            List documentNodes = (List)xpe.evaluate(documentContainer.getDocument(DocumentTypes.FILES), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("@accession");
             XPathExpression rawFilePresentXpe = xp.compile("count(file[@kind = 'raw'])");
@@ -144,14 +143,14 @@ public class Files extends ApplicationComponent
         if (null != accession && accession.length() > 0) {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
-                            documentContainer.getDocument(DOCUMENT_ID)
+                            documentContainer.getDocument(DocumentTypes.FILES)
                             , "exists(//folder[@accession = '" + accession + "']/file[@name = '" + name + "'])"
                     )
             );
         } else {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
-                            documentContainer.getDocument(DOCUMENT_ID)
+                            documentContainer.getDocument(DocumentTypes.FILES)
                             , "exists(//file[@name = '" + name + "'])"
                     )
             );
@@ -165,12 +164,12 @@ public class Files extends ApplicationComponent
 
         if (null != accession && accession.length() > 0) {
             folderLocation = saxon.evaluateXPathSingle(
-                    documentContainer.getDocument(DOCUMENT_ID)
+                    documentContainer.getDocument(DocumentTypes.FILES)
                     , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
             );
         } else {
             folderLocation = saxon.evaluateXPathSingle(
-                    documentContainer.getDocument(DOCUMENT_ID)
+                    documentContainer.getDocument(DocumentTypes.FILES)
                     , "//folder[file/@name = '" + name + "']/@location"
             );
         }
@@ -192,7 +191,7 @@ public class Files extends ApplicationComponent
         }
 
         return saxon.evaluateXPathSingle(
-                documentContainer.getDocument(DOCUMENT_ID)
+                documentContainer.getDocument(DocumentTypes.FILES)
                 , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
             );
     }
