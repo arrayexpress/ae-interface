@@ -64,6 +64,11 @@ public class Controller
         this.queryHighlighter = queryHighlighter;
     }
 
+    public boolean hasEnvironment( String indexId )
+    {
+        return this.environment.containsKey(indexId);
+    }
+
     public IndexEnvironment getEnvironment( String indexId )
     {
         if (!this.environment.containsKey(indexId)) {

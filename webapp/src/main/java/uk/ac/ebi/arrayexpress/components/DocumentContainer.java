@@ -1,17 +1,5 @@
 package uk.ac.ebi.arrayexpress.components;
 
-import net.sf.saxon.om.DocumentInfo;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
-import uk.ac.ebi.arrayexpress.utils.persistence.DocumentPersister;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocument;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-
-import java.io.File;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
  *
@@ -29,14 +17,25 @@ import java.util.Map;
  *
  */
 
-public class DocumentContainer extends ApplicationComponent {
+import net.sf.saxon.om.DocumentInfo;
+import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
+import uk.ac.ebi.arrayexpress.utils.persistence.DocumentPersister;
+
+import java.util.EnumMap;
+
+public class DocumentContainer extends ApplicationComponent
+{
 
     private EnumMap<DocumentTypes, DocumentInfo> documents = new EnumMap<DocumentTypes, DocumentInfo>(DocumentTypes.class);
 
     //ToDo: it's better to use dependency injection
     private DocumentPersister documentPersister = new DocumentPersister();
+    private SearchEngine searchEngine;
 
-    public DocumentContainer() {
+
+    public DocumentContainer()
+    {
         super("DocumentContainer");
     }
 
@@ -45,7 +44,9 @@ public class DocumentContainer extends ApplicationComponent {
      *
      * @throws Exception
      */
-    public void initialize() throws Exception {
+    public void initialize() throws Exception
+    {
+        searchEngine = (SearchEngine) getComponent("SearchEngine");
     }
 
     /**
@@ -53,7 +54,8 @@ public class DocumentContainer extends ApplicationComponent {
      *
      * @throws Exception
      */
-    public void terminate() throws Exception {
+    public void terminate() throws Exception
+    {
     }
 
     /**
@@ -63,7 +65,8 @@ public class DocumentContainer extends ApplicationComponent {
      * @return
      */
     //ToDo: maybe it's better to use Enum instead of Strings
-    public boolean hasDocument(String documentId) {
+    public boolean hasDocument( String documentId )
+    {
         return documents.containsKey(documentId);
     }
 
@@ -73,8 +76,9 @@ public class DocumentContainer extends ApplicationComponent {
      * @param documentId
      * @return
      */
-    public DocumentInfo getDocument(String documentId) throws Exception {
-       return getDocument(DocumentTypes.getInstanceByName(documentId));
+    public DocumentInfo getDocument( String documentId ) throws Exception
+    {
+        return getDocument(DocumentTypes.getInstanceByName(documentId));
     }
 
     /**
@@ -83,7 +87,8 @@ public class DocumentContainer extends ApplicationComponent {
      * @param documentId
      * @param document
      */
-    public void putDocument(String documentId, DocumentInfo document) {
+    public void putDocument( String documentId, DocumentInfo document )
+    {
 
         putDocument(DocumentTypes.getInstanceByName(documentId), document);
 
@@ -96,11 +101,13 @@ public class DocumentContainer extends ApplicationComponent {
      * @param documentId
      * @return
      */
-    public DocumentInfo getDocument(DocumentTypes documentId) throws Exception {
+    public DocumentInfo getDocument( DocumentTypes documentId ) throws Exception
+    {
         DocumentInfo document = documents.get(documentId);
         if (document == null || documentPersister.isEmpty(document)) {
 
-            document = documentPersister.loadObject(getPreferences().getString(documentId.getPersistenceDocumetLocation()));
+            document = documentPersister.loadObject(getPreferences().getString(documentId.getPersistenceDocumentLocation()));
+            indexDocument(documentId, document);
         }
         return document;
     }
@@ -111,25 +118,31 @@ public class DocumentContainer extends ApplicationComponent {
      * @param documentId
      * @param document
      */
-    public void putDocument(DocumentTypes documentId, DocumentInfo document) {
+    public void putDocument( DocumentTypes documentId, DocumentInfo document )
+    {
         documents.put(documentId, document);
-        // do index that doc as well
-        SearchEngine search = (SearchEngine) getComponent("SearchEngine");
-        search.getController().index(documentId.getTextName(), document);
+        indexDocument(documentId, document);
 
         //persist document
-        documentPersister.saveObject(document, getPreferences().getString(documentId.getPersistenceDocumetLocation()));
+        documentPersister.saveObject(document, getPreferences().getString(documentId.getPersistenceDocumentLocation()));
     }
 
-     /**
+    /**
      * Checks if the document with given ID exists in the storage container
      *
      * @param documentId
      * @return
      */
-    //ToDo: maybe it's better to use Enum instead of Strings
-    public boolean hasDocument(DocumentTypes documentId) {
+    public boolean hasDocument( DocumentTypes documentId )
+    {
         return documents.containsKey(documentId);
+    }
+
+    private void indexDocument( DocumentTypes documentId, DocumentInfo document )
+    {
+        if (searchEngine.getController().hasEnvironment(documentId.getTextName())) {
+            searchEngine.getController().index(documentId.getTextName(), document);
+        }
     }
 
 }

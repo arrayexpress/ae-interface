@@ -17,34 +17,39 @@ package uk.ac.ebi.arrayexpress.utils;
  *
  */
 
-public enum DocumentTypes {
+public enum DocumentTypes
+{
     EXPERIMENTS("experiments", "ae.experiments.file.location"),
     FILES("files", "ae.files.persistence.file.location"),
     PROTOCOLS("protocols", "ae.protocols.file.location"),
     ARRAYDESIGNS("array_designs", "ae.designs.file.location");
 
     private final String textName;
-    private final String persistenceDocumetLocation;
+    private final String persistenceDocumentLocation;
 
 
-    DocumentTypes(String textName, String persistenceDocumetLocation) {
+    DocumentTypes( String textName, String persistenceDocumentLocation )
+    {
         this.textName = textName;
-        this.persistenceDocumetLocation = persistenceDocumetLocation;
+        this.persistenceDocumentLocation = persistenceDocumentLocation;
     }
 
-    public String getTextName() {
+    public String getTextName()
+    {
         return textName;
     }
 
-    public String getPersistenceDocumetLocation() {
-        return persistenceDocumetLocation;
+    public String getPersistenceDocumentLocation()
+    {
+        return persistenceDocumentLocation;
     }
 
-    public static DocumentTypes getInstanceByName(String name) {
-		for (DocumentTypes resourceType : DocumentTypes.values()) {
-			if (resourceType.textName.equals(name)) return resourceType;
-		}
-		throw new IllegalArgumentException("There is no DocumentTypes with name: " + name);
-	}
+    public static DocumentTypes getInstanceByName( String name )
+    {
+        for (DocumentTypes resourceType : DocumentTypes.values()) {
+            if (resourceType.textName.equals(name)) return resourceType;
+        }
+        throw new IllegalArgumentException("There is no DocumentTypes with name: " + name);
+    }
 
 }
