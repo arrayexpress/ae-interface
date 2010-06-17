@@ -18,19 +18,33 @@ package uk.ac.ebi.arrayexpress.utils;
  */
 
 public enum DocumentTypes {
-    EXPERIMENTS("experiments"),
-    FILES("files"),
-    PROTOCOLS("protocols"),
-    ARRAYDESIGNS("array_designs");
+    EXPERIMENTS("experiments", "ae.experiments.file.location"),
+    FILES("files", "ae.files.file.location"),
+    PROTOCOLS("protocols", "ae.protocols.file.location"),
+    ARRAYDESIGNS("array_designs", "ae.designs.file.location");
 
     private final String textName;
+    private final String persistenceDocumetLocation;
 
 
-    DocumentTypes(String textName) {
+    DocumentTypes(String textName, String persistenceDocumetLocation) {
         this.textName = textName;
+        this.persistenceDocumetLocation = persistenceDocumetLocation;
     }
 
     public String getTextName() {
         return textName;
     }
+
+    public String getPersistenceDocumetLocation() {
+        return persistenceDocumetLocation;
+    }
+
+    public static DocumentTypes getInstanceByName(String name) {
+		for (DocumentTypes resourceType : DocumentTypes.values()) {
+			if (resourceType.textName.equals(name)) return resourceType;
+		}
+		throw new IllegalArgumentException("There is no DocumentTypes with name: " + name);
+	}
+
 }
