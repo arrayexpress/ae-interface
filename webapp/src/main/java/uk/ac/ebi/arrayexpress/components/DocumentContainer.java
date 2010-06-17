@@ -100,7 +100,7 @@ public class DocumentContainer extends ApplicationComponent {
         DocumentInfo document = documents.get(documentId);
         if (document == null || documentPersister.isEmpty(document)) {
 
-            document = documentPersister.loadObject(documentId.getPersistenceDocumetLocation());
+            document = documentPersister.loadObject(getPreferences().getString(documentId.getPersistenceDocumetLocation()));
         }
         return document;
     }
@@ -117,8 +117,8 @@ public class DocumentContainer extends ApplicationComponent {
         SearchEngine search = (SearchEngine) getComponent("SearchEngine");
         search.getController().index(documentId.getTextName(), document);
 
-        //Todo: persist document
-        documentPersister.saveObject(document, documentId.getPersistenceDocumetLocation());
+        //persist document
+        documentPersister.saveObject(document, getPreferences().getString(documentId.getPersistenceDocumetLocation()));
     }
 
      /**
