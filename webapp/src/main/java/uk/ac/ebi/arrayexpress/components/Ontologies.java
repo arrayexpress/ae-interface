@@ -69,7 +69,8 @@ public class Ontologies extends ApplicationComponent
     {
         this.ontology = efoOntology;
 
-        rebuildExpCountMap();
+        // TODO: make this work when index isn't there yet
+        // rebuildExpCountMap();
         autocompletion.rebuild();
 
 

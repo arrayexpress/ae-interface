@@ -22,7 +22,7 @@ public enum DocumentTypes
     EXPERIMENTS("experiments", "ae.experiments.file.location"),
     FILES("files", "ae.files.persistence.file.location"),
     PROTOCOLS("protocols", "ae.protocols.file.location"),
-    ARRAYDESIGNS("array_designs", "ae.designs.file.location");
+    ARRAYS("arrays", "ae.arrays.file.location");
 
     private final String textName;
     private final String persistenceDocumentLocation;

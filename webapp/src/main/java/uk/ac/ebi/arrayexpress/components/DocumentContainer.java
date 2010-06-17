@@ -104,9 +104,10 @@ public class DocumentContainer extends ApplicationComponent
     public DocumentInfo getDocument( DocumentTypes documentId ) throws Exception
     {
         DocumentInfo document = documents.get(documentId);
-        if (document == null || documentPersister.isEmpty(document)) {
+        if (document == null) {
 
             document = documentPersister.loadObject(getPreferences().getString(documentId.getPersistenceDocumentLocation()));
+            this.documents.put(documentId, document);
             indexDocument(documentId, document);
         }
         return document;
@@ -120,7 +121,7 @@ public class DocumentContainer extends ApplicationComponent
      */
     public void putDocument( DocumentTypes documentId, DocumentInfo document )
     {
-        documents.put(documentId, document);
+        this.documents.put(documentId, document);
         indexDocument(documentId, document);
 
         //persist document

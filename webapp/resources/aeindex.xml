@@ -25,14 +25,14 @@
             <field name="miamescore" title="MIAME Score" type="integer" path="(if (miamescores/overallscore castable as xs:integer) then miamescores/overallscore else 0) cast as xs:integer" />
         </document>
     </index>
-    <index id="protocols">
-        <document path="/protocols/protocol">
-            <field name="keywords" path="string-join(.//text(), ' ')" analyze="true" store="false" />
+    <index id="protocols" location="${sys:java.io.tmpdir}/index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <document path="/protocols/protocol" defaultField="keywords">
+            <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
         </document>
     </index>
-    <index id="arrays">
-        <document path="/arrays/array">
-            <field name="keywords" path="string-join(.//text(), ' ')" analyze="true" store="false" />
+    <index id="arrays" location="${sys:java.io.tmpdir}/index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <document path="/arrays/array" defaultField="keywords">
+            <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
         </document>
     </index>
 </configuration>

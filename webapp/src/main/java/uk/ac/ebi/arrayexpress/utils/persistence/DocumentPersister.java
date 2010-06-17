@@ -63,9 +63,4 @@ public class DocumentPersister
             throw new PersistenceException("Problem with persisting document ", e);
         }
     }
-
-    public boolean isEmpty( DocumentInfo document ) throws Exception
-    {
-        return (null != document);
-    }
 }

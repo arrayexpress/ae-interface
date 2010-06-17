@@ -85,7 +85,7 @@ public class Experiments extends ApplicationComponent
 
         this.arrays = new TextFilePersistence<PersistableString>(
                 new PersistableString()
-                , new File(getPreferences().getString("ae.arrays.file.location"))
+                , new File(getPreferences().getString("ae.arraylist.file.location"))
         );
 
         this.assaysByMolecule = new HashMap<String, String>();
