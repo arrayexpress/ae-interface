@@ -22,7 +22,8 @@ public enum DocumentTypes
     EXPERIMENTS("experiments", "ae.experiments.file.location"),
     FILES("files", "ae.files.persistence.file.location"),
     PROTOCOLS("protocols", "ae.protocols.file.location"),
-    ARRAYS("arrays", "ae.arrays.file.location");
+    ARRAYS("arrays", "ae.arrays.file.location"),
+    OTHER("other", "");
 
     private final String textName;
     private final String persistenceDocumentLocation;
@@ -49,7 +50,7 @@ public enum DocumentTypes
         for (DocumentTypes resourceType : DocumentTypes.values()) {
             if (resourceType.textName.equalsIgnoreCase(name)) return resourceType;
         }
-        throw new IllegalArgumentException("There is no DocumentTypes with name: " + name);
+        return OTHER;
     }
 
 }
