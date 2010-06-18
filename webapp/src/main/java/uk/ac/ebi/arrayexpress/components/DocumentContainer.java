@@ -18,14 +18,19 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.persistence.DocumentPersister;
 
 import java.util.EnumMap;
 
-public class DocumentContainer extends ApplicationComponent
-{
+public class DocumentContainer extends ApplicationComponent {
+
+    // logging machinery
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private EnumMap<DocumentTypes, DocumentInfo> documents = new EnumMap<DocumentTypes, DocumentInfo>(DocumentTypes.class);
 
@@ -33,9 +38,7 @@ public class DocumentContainer extends ApplicationComponent
     private DocumentPersister documentPersister = new DocumentPersister();
     private SearchEngine searchEngine;
 
-
-    public DocumentContainer()
-    {
+    public DocumentContainer() {
         super("DocumentContainer");
     }
 
@@ -44,8 +47,7 @@ public class DocumentContainer extends ApplicationComponent
      *
      * @throws Exception
      */
-    public void initialize() throws Exception
-    {
+    public void initialize() throws Exception {
         searchEngine = (SearchEngine) getComponent("SearchEngine");
     }
 
@@ -54,8 +56,7 @@ public class DocumentContainer extends ApplicationComponent
      *
      * @throws Exception
      */
-    public void terminate() throws Exception
-    {
+    public void terminate() throws Exception {
     }
 
     /**
@@ -64,12 +65,16 @@ public class DocumentContainer extends ApplicationComponent
      * @param documentId
      * @return
      */
-    public DocumentInfo getDocument( DocumentTypes documentId ) throws Exception
-    {
+    public DocumentInfo getDocument(DocumentTypes documentId) throws Exception {
         DocumentInfo document = documents.get(documentId);
         if (document == null) {
 
             document = documentPersister.loadObject(getPreferences().getString(documentId.getPersistenceDocumentLocation()));
+
+            if (isEmptyDocument(document, documentId)) {
+                document = createDocument(documentId);
+            }
+
             this.documents.put(documentId, document);
             indexDocument(documentId, document);
         }
@@ -82,8 +87,7 @@ public class DocumentContainer extends ApplicationComponent
      * @param documentId
      * @param document
      */
-    public void putDocument( DocumentTypes documentId, DocumentInfo document )
-    {
+    public void putDocument(DocumentTypes documentId, DocumentInfo document) {
         this.documents.put(documentId, document);
         indexDocument(documentId, document);
 
@@ -97,8 +101,7 @@ public class DocumentContainer extends ApplicationComponent
      * @param documentName
      * @return
      */
-    public boolean hasDocument( String documentName )
-    {
+    public boolean hasDocument(String documentName) {
         return documents.containsKey(DocumentTypes.getInstanceByName(documentName));
     }
 
@@ -108,16 +111,38 @@ public class DocumentContainer extends ApplicationComponent
      * @param documentId
      * @return
      */
-    public boolean hasDocument( DocumentTypes documentId )
-    {
+    public boolean hasDocument(DocumentTypes documentId) {
         return documents.containsKey(documentId);
     }
 
-    private void indexDocument( DocumentTypes documentId, DocumentInfo document )
-    {
+    private void indexDocument(DocumentTypes documentId, DocumentInfo document) {
         if (searchEngine.getController().hasEnvironment(documentId.getTextName())) {
             searchEngine.getController().index(documentId.getTextName(), document);
         }
+    }
+
+    private boolean isEmptyDocument(DocumentInfo document, DocumentTypes type) throws Exception {
+        if (null == document)
+            return true;
+
+        String total = ((SaxonEngine) Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(document, type.getCountDocXpath());
+
+        return (null == total || total.equals("0"));
+    }
+
+    private DocumentInfo createDocument(DocumentTypes type) {
+        DocumentInfo document = null;
+        try {
+            document = ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(type.getEmptyDocument());
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        }
+
+        if (null == document) {
+            logger.error("The document WAS NOT created, expect problems down the road");
+        }
+
+        return document;
     }
 
 }

@@ -19,20 +19,24 @@ package uk.ac.ebi.arrayexpress.utils;
 
 public enum DocumentTypes
 {
-    EXPERIMENTS("experiments", "ae.experiments.file.location"),
-    FILES("files", "ae.files.persistence.file.location"),
-    PROTOCOLS("protocols", "ae.protocols.file.location"),
-    ARRAYS("arrays", "ae.arrays.file.location"),
-    OTHER("other", "");
+    EXPERIMENTS("experiments", "ae.experiments.file.location", "<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>", "/experiments/@total"),
+    FILES("files", "ae.files.persistence.file.location", "<?xml version=\"1.0\"?><files total=\"0\"></files>", "/files/@total"),
+    PROTOCOLS("protocols", "ae.protocols.file.location", "<?xml version=\"1.0\"?><protocols total=\"0\"></protocols>", "/protocols/@total"),
+    ARRAYS("arrays", "ae.arrays.file.location", "<?xml version=\"1.0\"?><arrays total=\"0\"></arrays>", "/arrays/@total"),
+    OTHER("other", "", "", "");
 
     private final String textName;
     private final String persistenceDocumentLocation;
+    private final String emptyDocument;
+    private final String countDocXpath;
 
 
-    DocumentTypes( String textName, String persistenceDocumentLocation )
+    DocumentTypes(String textName, String persistenceDocumentLocation, String emptyDocument, String countDocXpath)
     {
         this.textName = textName;
         this.persistenceDocumentLocation = persistenceDocumentLocation;
+        this.emptyDocument = emptyDocument;
+        this.countDocXpath = countDocXpath;
     }
 
     public String getTextName()
@@ -43,6 +47,14 @@ public enum DocumentTypes
     public String getPersistenceDocumentLocation()
     {
         return persistenceDocumentLocation;
+    }
+
+    public String getEmptyDocument() {
+        return emptyDocument;
+    }
+
+    public String getCountDocXpath() {
+        return countDocXpath;
     }
 
     public static DocumentTypes getInstanceByName( String name )

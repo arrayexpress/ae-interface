@@ -36,15 +36,14 @@ public class DocumentPersister
 
     public DocumentInfo loadObject( String fileLocation )
     {
+
         DocumentInfo document = null;
 
         try {
             String strDocument = StringTools.fileToString(new File(fileLocation));
-            if (null == strDocument) {
-                strDocument = emptyXml;
+            if (strDocument != null) {
+                document = ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(strDocument);
             }
-            document = ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(strDocument);
-
 
         } catch (Exception e) {
             throw new PersistenceException("Problem with loading ", e);

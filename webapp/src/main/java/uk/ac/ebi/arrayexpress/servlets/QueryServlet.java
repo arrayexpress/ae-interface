@@ -113,7 +113,7 @@ public class QueryServlet extends ApplicationServlet
 
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
-        try {
+//        try {
             DocumentContainer documentContainer = (DocumentContainer)getComponent("DocumentContainer");
             String stylesheetName = new StringBuilder(stylesheet).append('-').append(outputFormat).append(".xsl").toString();
 
@@ -130,20 +130,24 @@ public class QueryServlet extends ApplicationServlet
                 Users users = (Users)getComponent("Users");
                 String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
                 String passwordHash = cookies.get("AeLoginToken").getValue();
-                if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                    if (0 != users.getUserRecord(user).getId()) { // 0 - curator (superuser) -> remove user restriction
-                        params.put("userid", String.valueOf(users.getUserRecord(user).getId()));
+                try {
+                    if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
+                        if (0 != users.getUserRecord(user).getId()) { // 0 - curator (superuser) -> remove user restriction
+                            params.put("userid", String.valueOf(users.getUserRecord(user).getId()));
+                        } else {
+                            params.remove("userid");
+                        }
                     } else {
-                        params.remove("userid");
-                    }
-                } else {
-                    logger.warn("Removing invalid session cookie for user [{}]", user);
-                    // resetting cookies
-                    Cookie userCookie = new Cookie("AeLoggedUser", "");
-                    userCookie.setPath("/");
-                    userCookie.setMaxAge(0);
+                        logger.warn("Removing invalid session cookie for user [{}]", user);
+                        // resetting cookies
+                        Cookie userCookie = new Cookie("AeLoggedUser", "");
+                        userCookie.setPath("/");
+                        userCookie.setMaxAge(0);
 
-                    response.addCookie(userCookie);
+                        response.addCookie(userCookie);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
             try {
@@ -158,14 +162,14 @@ public class QueryServlet extends ApplicationServlet
                         out)) {                     // where to dump resulting text
                     throw new Exception("Transformation returned an error");
                 }
-            } catch (ParseException x) {
+            } catch (Exception x) {
                 logger.error("Caught lucene parse exception:", x);
                 reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
             }
 
-        } catch (Exception x) {
-            throw new RuntimeException(x);
-        }
+//        } catch (Exception x) {
+//            throw new RuntimeException(x);
+//        }
         out.close();
     }
 
