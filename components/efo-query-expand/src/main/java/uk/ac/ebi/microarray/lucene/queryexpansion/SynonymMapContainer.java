@@ -1,4 +1,4 @@
-package uk.ac.ebi.microarray.lucene.query;
+package uk.ac.ebi.microarray.lucene.queryexpansion;
 
 /**
  * Copyright 2009-2010 European Molecular Biology Laboratory
