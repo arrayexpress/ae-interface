@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.search;
+package uk.ac.ebi.microarray.lucene.queryexpansion;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.utils.search;
  *
  */
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -33,35 +32,41 @@ import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 
-public class EFOExpansionLookupIndex implements IEFOExpansionLookup
+public class IndexBasedExpansionLookup implements IOntologyExpansionLookup
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String indexLocation;
+    private String analyzerClass;
     private Directory indexDirectory;
 
-    public EFOExpansionLookupIndex( String indexLocation )
+    public IndexBasedExpansionLookup( String indexLocation, String analyzerClass )
     {
         this.indexLocation = indexLocation;
+        this.analyzerClass = analyzerClass;
     }
 
-    public void setOntology( EFOOntologyHelper ontology )
+    public void setOntology( EFOOntologyHelper ontology ) throws IOException
     {
+        this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
+        Analyzer analyzer;
         try {
-            this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
-            IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
-
-            logger.debug("Building expansion lookup index");
-            addNodeAndChildren(ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), ontology, w);
-            commitIndex(w);
-            logger.debug("Building completed");
+            analyzer = (Analyzer)Class.forName(analyzerClass).newInstance();
         } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            throw new IllegalArgumentException("Exception while creating analyzer of class [" + analyzerClass + "]" , x);
         }
+
+        IndexWriter w = createIndex(this.indexDirectory, analyzer);
+
+        logger.debug("Building expansion lookup index");
+        addNodeAndChildren(ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), ontology, w);
+        commitIndex(w);
+        logger.debug("Building completed");
     }
 
     private void addNodeAndChildren( EFONode node, EFOOntologyHelper ontology, IndexWriter w )
@@ -101,9 +106,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    public EFOExpansionTerms getExpansionTerms( Query origQuery )
+    public OntologyExpansionTerms getExpansionTerms( Query origQuery )
     {
-        EFOExpansionTerms expansion = new EFOExpansionTerms();
+        OntologyExpansionTerms expansion = new OntologyExpansionTerms();
 
         try {
             IndexReader ir = IndexReader.open(this.indexDirectory, true);
@@ -120,13 +125,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                 Document doc = isearcher.doc(d.doc);
                 String[] terms = doc.getValues("term");
                 String[] efo = doc.getValues("efo");
-                logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
+                //logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(children, ", "));
                 if (0 != terms.length) {
-                    expansion.synonyms.addAll(Arrays.asList(terms));
+                    expansion.addSynonyms(Arrays.asList(terms));
                 }
 
                 if (0 != efo.length) {
-                    expansion.efo.addAll(Arrays.asList(efo));
+                    expansion.addChildren(Arrays.asList(efo));
                 }
             }
 

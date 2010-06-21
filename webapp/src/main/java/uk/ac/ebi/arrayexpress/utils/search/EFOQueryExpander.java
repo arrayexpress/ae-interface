@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryExpander;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryInfo;
+import uk.ac.ebi.microarray.lucene.queryexpansion.IOntologyExpansionLookup;
+import uk.ac.ebi.microarray.lucene.queryexpansion.OntologyExpansionTerms;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,9 +35,9 @@ public final class EFOQueryExpander implements IQueryExpander
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private IEFOExpansionLookup lookup;
+    private IOntologyExpansionLookup lookup;
 
-    public EFOQueryExpander( IEFOExpansionLookup lookup )
+    public EFOQueryExpander( IOntologyExpansionLookup lookup )
     {
         this.lookup = lookup;
     }
@@ -98,13 +100,13 @@ public final class EFOQueryExpander implements IQueryExpander
 
             boolean shouldExpandEfo = queryInfo.getExpandEfoFlag() || "exptype".equals(field);   // exptype always expands
 
-            EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
-            if ((shouldExpandEfo && (0 != expansionTerms.efo.size())) || 0 != expansionTerms.synonyms.size()) {
+            OntologyExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
+            if ((shouldExpandEfo && (0 != expansionTerms.getChildren().size())) || 0 != expansionTerms.getChildren().size()) {
                 BooleanQuery boolQuery = new BooleanQuery();
 
                 boolQuery.add(query, BooleanClause.Occur.SHOULD);
 
-                for (String term : expansionTerms.synonyms) {
+                for (String term : expansionTerms.getSynonyms()) {
                     Query synonymPart = newQueryFromString(term.trim(), field);
                     if (!queryPartIsRedundant(query, synonymPart)) {
                         boolQuery.add(synonymPart, BooleanClause.Occur.SHOULD);
@@ -113,7 +115,7 @@ public final class EFOQueryExpander implements IQueryExpander
                 }
 
                 if (shouldExpandEfo) {
-                    for (String term : expansionTerms.efo) {
+                    for (String term : expansionTerms.getChildren()) {
                         Query expansionPart = newQueryFromString(term.trim(), field);
                         boolQuery.add(expansionPart, BooleanClause.Occur.SHOULD);
                         queryInfo.addToEfoExpansionPartQuery(expansionPart);

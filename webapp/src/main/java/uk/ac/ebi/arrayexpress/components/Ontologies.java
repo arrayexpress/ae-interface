@@ -23,8 +23,9 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
-import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
+import uk.ac.ebi.arrayexpress.utils.search.LowercaseAnalyzer;
+import uk.ac.ebi.microarray.lucene.queryexpansion.IndexBasedExpansionLookup;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
@@ -75,8 +76,9 @@ public class Ontologies extends ApplicationComponent
         autocompletion.rebuild();
 
 
-        EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
+        IndexBasedExpansionLookup ix = new IndexBasedExpansionLookup(
                 getPreferences().getString("ae.efo.index.location")
+                , LowercaseAnalyzer.class.getName() // todo: should remove hardcode here
         );
 
         ix.setOntology(getOntology());

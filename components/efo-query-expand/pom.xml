@@ -47,5 +47,10 @@
             <artifactId>fluxion-utils</artifactId>
             <version>1.0-alpha-2</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.6</version>
+        </dependency>
     </dependencies>
 </project>

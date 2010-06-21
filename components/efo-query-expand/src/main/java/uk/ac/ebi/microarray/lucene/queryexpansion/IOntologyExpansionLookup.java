@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.search;
+package uk.ac.ebi.microarray.lucene.queryexpansion;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -19,7 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.search;
 
 import org.apache.lucene.search.Query;
 
-public interface IEFOExpansionLookup
+public interface IOntologyExpansionLookup
 {
-    public EFOExpansionTerms getExpansionTerms( Query query );
+    public OntologyExpansionTerms getExpansionTerms( Query query );
 }
