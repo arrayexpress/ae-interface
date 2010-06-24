@@ -23,6 +23,7 @@ public enum DocumentTypes
     FILES("files", "ae.files.persistence.file.location", "<?xml version=\"1.0\"?><files total=\"0\"></files>", "/files/@total"),
     PROTOCOLS("protocols", "ae.protocols.file.location", "<?xml version=\"1.0\"?><protocols total=\"0\"></protocols>", "/protocols/@total"),
     ARRAYS("arrays", "ae.arrays.file.location", "<?xml version=\"1.0\"?><arrays total=\"0\"></arrays>", "/arrays/@total"),
+    USERS("users", "ae.users.file.location", "<?xml version=\"1.0\"?><users total=\"0\"></users>", "/users/@total"),
     OTHER("other", "", "", "");
 
     private final String textName;
