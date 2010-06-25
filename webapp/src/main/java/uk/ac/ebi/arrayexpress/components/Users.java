@@ -68,6 +68,7 @@ public class Users extends ApplicationComponent
     }
 
     public void reload( String xmlString ) throws Exception {
+        //ToDo: create "users.xsl" file
         DocumentInfo users = saxon.transform(xmlString, "users.xsl", null);
         if (users != null) {
             documentContainer.putDocument(DocumentTypes.USERS, users);
@@ -77,35 +78,53 @@ public class Users extends ApplicationComponent
     }
 
 
-    public String hashLoginAE2( String username, String password, String suffix ) throws Exception
-    {
-        //ToDo: implement based on XML Document
+    public String hashLoginAE2(String username, String password, String suffix) throws Exception {
+
+        if (null != username && null != password && null != suffix
+                && userExists(username)) {
+
+            //ToDo: extract a single user's password
+            String pass = "";
+
+            if (pass.equals(password)) {
+                return authHelper.generateHash(username, password, suffix);
+            }
+        }
+        // otherwise
         return "";
     }
 
     public boolean verifyLoginAE2( String username, String hash, String suffix ) throws Exception
     {
 
+        if ( null != username && null != hash && null != suffix
+                && userExists(username) ) {
+
+            //ToDo: extract a single user's password
+            String pass = "";
+
+            return authHelper.verifyHash(hash, username, pass, suffix);
+        }
+        return false;
+    }
+
+    //ToDo: Original method  getUserRecord( String username ) is only used to retrieve a UserId -
+    //ToDo: replace usage of getUserRecord with getUserId method
+    public String getUserId( String username ) throws Exception
+    {
+        //ToDo: extract a single user's id
+        String userId = "";
+        return ( null != username ) ? userId : null;
+    }
+
+    private boolean userExists(String username) throws Exception {
         boolean userExists = Boolean.parseBoolean(
                 saxon.evaluateXPathSingle(
                         documentContainer.getDocument(DocumentTypes.EXPERIMENTS)
                         , "exists(//user[name = '" + username + "'])"
                 ));
-
-        if ( null != username && null != hash && null != suffix
-                && userExists ) {
-
-            //ToDo: extract a single user
-            //ToDo: rewrite  authHelper.verifyHash(..) method
-        }
-        return false;
+        return userExists;
     }
-
-    public UserRecord getUserRecordAE2( String username ) throws Exception
-    {
-        return ( null != username ) ? userList.getObject().get(username) : null;
-    }
-
 
     //------------------
     //    Methods to work with UserList generated from AE1

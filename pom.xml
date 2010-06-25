@@ -10,9 +10,9 @@
     <url>http://www.ebi.ac.uk/arrayexpress</url>
 
     <scm>
-        <connection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</connection>
-        <developerConnection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</developerConnection>
-        <url>svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</url>
+        <connection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface</connection>
+        <developerConnection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface</developerConnection>
+        <url>svn://bar.ebi.ac.uk/trunk/arrayexpress-interface</url>
     </scm>
 
     <developers>
