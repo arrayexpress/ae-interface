@@ -69,7 +69,7 @@ public class Users extends ApplicationComponent
 
     public void reload( String xmlString ) throws Exception {
         //ToDo: create "users.xsl" file
-        DocumentInfo users = saxon.transform(xmlString, "users.xsl", null);
+        DocumentInfo users = saxon.transform(xmlString, "preprocess-users-xml.xsl", null);
         if (users != null) {
             documentContainer.putDocument(DocumentTypes.USERS, users);
         } else {
