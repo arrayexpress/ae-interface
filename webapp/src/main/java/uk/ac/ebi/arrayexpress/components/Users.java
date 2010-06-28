@@ -78,34 +78,42 @@ public class Users extends ApplicationComponent
     }
 
 
-    public String hashLoginAE2(String username, String password, String suffix) throws Exception {
+    public String hashLoginAE2( String username, String password, String suffix ) throws Exception
+    {
+        String correctPassword = getPasswordAE2(username);
 
-        if (null != username && null != password && null != suffix
-                && userExists(username)) {
-
-            //ToDo: extract a single user's password
-            String pass = "";
-
-            if (pass.equals(password)) {
-                return authHelper.generateHash(username, password, suffix);
-            }
+        if ( null != username && null != suffix && null != password && password.equals(correctPassword)) {
+            return authHelper.generateHash(username, password, suffix);
         }
-        // otherwise
         return "";
     }
 
     public boolean verifyLoginAE2( String username, String hash, String suffix ) throws Exception
     {
+        String password = getPasswordAE2(username);
 
-        if ( null != username && null != hash && null != suffix
-                && userExists(username) ) {
-
-            //ToDo: extract a single user's password
-            String pass = "";
-
-            return authHelper.verifyHash(hash, username, pass, suffix);
+        if ( null != username && null != hash && null != suffix && null != password ) {
+            return authHelper.verifyHash(hash, username, password, suffix);
         }
         return false;
+    }
+
+    private String getPasswordAE2( String username ) throws Exception
+    {
+        return saxon.evaluateXPathSingle(
+                documentContainer.getDocument(DocumentTypes.USERS)
+                , "/users/user[name = '" + username + "']/password"
+            );
+
+    }
+
+    private String getUserIdAE2( String username ) throws Exception
+    {
+        return saxon.evaluateXPathSingle(
+                documentContainer.getDocument(DocumentTypes.USERS)
+                , "/users/user[name = '" + username + "']/id"
+            );
+
     }
 
     //ToDo: Original method  getUserRecord( String username ) is only used to retrieve a UserId -
@@ -115,15 +123,6 @@ public class Users extends ApplicationComponent
         //ToDo: extract a single user's id
         String userId = "";
         return ( null != username ) ? userId : null;
-    }
-
-    private boolean userExists(String username) throws Exception {
-        boolean userExists = Boolean.parseBoolean(
-                saxon.evaluateXPathSingle(
-                        documentContainer.getDocument(DocumentTypes.EXPERIMENTS)
-                        , "exists(//user[name = '" + username + "'])"
-                ));
-        return userExists;
     }
 
     //------------------
@@ -155,10 +154,5 @@ public class Users extends ApplicationComponent
             return authHelper.verifyHash(hash, username, user.getPassword(), suffix);
         }
         return false;
-    }
-
-    public UserRecord getUserRecord( String username ) throws Exception
-    {
-        return ( null != username ) ? userList.getObject().get(username) : null;
     }
 }
