@@ -107,52 +107,26 @@ public class Users extends ApplicationComponent
 
     }
 
-    private String getUserIdAE2( String username ) throws Exception
-    {
-        return saxon.evaluateXPathSingle(
-                documentContainer.getDocument(DocumentTypes.USERS)
-                , "/users/user[name = '" + username + "']/id"
-            );
-
-    }
 
     //ToDo: Original method  getUserRecord( String username ) is only used to retrieve a UserId -
     //ToDo: replace usage of getUserRecord with getUserId method
-    public String getUserId( String username ) throws Exception
+    public Long getUserId( String username ) throws Exception
     {
-        //ToDo: extract a single user's id
-        String userId = "";
-        return ( null != username ) ? userId : null;
-    }
+        String idString = saxon.evaluateXPathSingle(
+                documentContainer.getDocument(DocumentTypes.USERS)
+                , "/users/user[name = '" + username + "']/id"
+        );
 
-    //------------------
-    //    Methods to work with UserList generated from AE1
-    //------------------
-    public void setUserList( UserList userList ) throws Exception
-    {
-        this.userList.setObject(new PersistableUserList(userList));
-    }
-
-    public String hashLogin( String username, String password, String suffix ) throws Exception
-    {
-        if ( null != username && null != password && null != suffix
-                && userList.getObject().containsKey(username) ) {
-            UserRecord user = userList.getObject().get(username);
-            if ( user.getPassword().equals(password) ) {
-                return authHelper.generateHash(username, password, suffix);
+        Long id = Long.valueOf(-1l);
+        if (id != null) {
+            try {
+                id = Long.valueOf(idString.trim());
+                logger.debug("User ID = " + id);
+            } catch (NumberFormatException nfe) {
+                logger.error("User ID is not a number: " + nfe.getMessage());
             }
         }
-        // otherwise
-        return "";
-    }
 
-    public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
-    {
-        if ( null != username && null != hash && null != suffix
-                && userList.getObject().containsKey(username) ) {
-            UserRecord user = userList.getObject().get(username);
-            return authHelper.verifyHash(hash, username, user.getPassword(), suffix);
-        }
-        return false;
+        return id;
     }
 }

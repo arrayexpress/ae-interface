@@ -131,9 +131,9 @@ public class QueryServlet extends ApplicationServlet
                 String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
                 String passwordHash = cookies.get("AeLoginToken").getValue();
                 try {
-                    if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                        if (0 != users.getUserRecord(user).getId()) { // 0 - curator (superuser) -> remove user restriction
-                            params.put("userid", String.valueOf(users.getUserRecord(user).getId()));
+                    if (users.verifyLoginAE2(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
+                        if (0 != users.getUserId(user)) { // 0 - curator (superuser) -> remove user restriction
+                            params.put("userid", String.valueOf(users.getUserId(user)));
                         } else {
                             params.remove("userid");
                         }

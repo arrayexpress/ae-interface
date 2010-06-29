@@ -21,8 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,27 +106,8 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
     {
         if (resultSet.next()) {
             Clob xmlClob = resultSet.getClob(1);
-            experimentXml.append(ClobToString(xmlClob));
+            experimentXml.append(clobToString(xmlClob));
         }
     }
 
-    private String ClobToString( Clob cl ) throws SQLException
-    {
-        if (cl == null)
-            return null;
-
-        StringBuilder strOut = new StringBuilder();
-
-        BufferedReader br = new BufferedReader(cl.getCharacterStream());
-        try {
-            String aux;
-            while ( (aux = br.readLine()) != null )
-                strOut.append(aux);
-        } catch ( IOException x ) {
-            logger.error("Caught an exception:", x);
-            strOut = new StringBuilder();
-        }
-
-        return strOut.toString();
-    }
 }

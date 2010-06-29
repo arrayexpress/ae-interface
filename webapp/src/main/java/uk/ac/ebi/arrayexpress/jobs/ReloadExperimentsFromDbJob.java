@@ -30,8 +30,7 @@ import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.db.DataSourceFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
-import uk.ac.ebi.arrayexpress.utils.db.UserListDatabaseRetriever;
-import uk.ac.ebi.arrayexpress.utils.users.UserList;
+import uk.ac.ebi.arrayexpress.utils.db.UserXMLDatabaseRetriever;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -67,8 +66,8 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
 
                 ds = new DataSourceFinder().findDataSource(dsNames);
                 if (null != ds) {
-                    UserList userList = new UserListDatabaseRetriever(ds).getUserList();
-                    ((Users)getComponent("Users")).setUserList(userList);
+                    String xmlUserString = new UserXMLDatabaseRetriever(ds).getUserXml();
+                    ((Users)getComponent("Users")).reload(xmlUserString);
                     logger.info("Reloaded the user list from the database");
 
                     exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
