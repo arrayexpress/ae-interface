@@ -46,6 +46,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
             " , ( select XmlAgg( XmlElement( \"experimentdesign\", expdesign ) ) from ( select  /*+ index(ed) */ distinct ed.t_experiment_id as id, translate(replace(oe.value,'_design',''),'_',' ') as expdesign from tt_experimentdesign ed, tt_types_t_experimentdesign tte, tt_ontologyentry oe where tte.t_experimentdesign_id = ed.id and oe.id = tte.types_id and oe.category = 'ExperimentDesignType' ) t where t.id = e.id )" +
             " , ( select XmlAgg( XmlElement( \"experimenttype\", exptype ) ) from ( select distinct don.t_describable_id as id, oe.value as exptype from tt_ontologyentry oe, tt_annotations_t_descriptio ano, tt_description don where don.id =+ ano.t_description_id and ano.annotations_id =+ oe.id and oe.category = 'AEExperimentType' ) t where t.id = e.id )" +
             " , XmlAgg( XmlElement( \"description\", XmlAttributes( d.id as \"id\" ), d.text ) ) " +
+            " , ( select XmlAgg( XmlElement( protocol, XmlAttributes( protocol.protocols_id as id, protocol_accession.identifier as accession ) ) ) from tt_protocols_experiments protocol left outer join tt_identifiable protocol_accession on protocol_accession.id = protocol.protocols_id  where protocol.experiments_id = e.id )" +
             " ).getClobVal() as xml" +
             " from tt_experiment e" +
             "  left outer join tt_description d on d.t_describable_id = e.id" +
