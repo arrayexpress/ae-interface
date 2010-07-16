@@ -22,20 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableUserList;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.users.UserList;
-import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
-
-import java.io.File;
 
 public class Users extends ApplicationComponent
 {
      // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private TextFilePersistence<PersistableUserList> userList;
 
     private AuthenticationHelper authHelper;
 
@@ -53,12 +45,6 @@ public class Users extends ApplicationComponent
         saxon = (SaxonEngine)getComponent("SaxonEngine");
         documentContainer = (DocumentContainer) getComponent("DocumentContainer");
 
-        //ToDO: remove when only XML is used
-        userList = new TextFilePersistence<PersistableUserList>(
-                new PersistableUserList()
-                , new File(getPreferences().getString("ae.users.file.location"))
-        );
-
         authHelper = new AuthenticationHelper();
     }
 
@@ -67,6 +53,7 @@ public class Users extends ApplicationComponent
          saxon = null;
     }
 
+    //ToDo: do refactoring - extract this method in supper-class
     public void reload( String xmlString ) throws Exception {
         //ToDo: create "users.xsl" file
         DocumentInfo users = saxon.transform(xmlString, "preprocess-users-xml.xsl", null);

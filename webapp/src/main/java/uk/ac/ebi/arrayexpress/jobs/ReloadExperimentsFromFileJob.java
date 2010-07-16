@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.Protocols;
 import uk.ac.ebi.arrayexpress.components.Users;
 
 import java.io.*;
@@ -37,6 +38,7 @@ public class ReloadExperimentsFromFileJob extends ApplicationJob
     {
         loadExperiments();
         loadUsers();
+        loadProtocols();
     }
 
     private void loadExperiments() {
@@ -75,6 +77,25 @@ public class ReloadExperimentsFromFileJob extends ApplicationJob
             throw new RuntimeException(x);
         }
     }
+
+    private void loadProtocols() {
+        try {
+
+            //ToDO: put file name in configuration
+            String xmlString = readXMLString("protocols");
+
+            if (xmlString.length() > 0) {
+                ((Protocols)getComponent("Protocols")).reload(xmlString);
+                logger.info("Reload of protocols data completed");
+            } else {
+                logger.warn("No users protocols, reload aborted");
+            }
+
+        } catch (Exception x) {
+            throw new RuntimeException(x);
+        }
+    }
+
 
     private String readXMLString(String dataType) throws IOException {
         StringBuilder xmlBuffer = new StringBuilder(20000000);
