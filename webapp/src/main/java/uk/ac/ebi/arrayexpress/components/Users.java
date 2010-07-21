@@ -17,22 +17,17 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
-public class Users extends ApplicationComponent
+public class Users extends XMLDocumentComponent
 {
      // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private AuthenticationHelper authHelper;
-
-    private SaxonEngine saxon;
-    private DocumentContainer documentContainer;
 
 
     public Users()
@@ -42,9 +37,7 @@ public class Users extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine)getComponent("SaxonEngine");
-        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
-
+        super.initialize();
         authHelper = new AuthenticationHelper();
     }
 
@@ -53,15 +46,9 @@ public class Users extends ApplicationComponent
          saxon = null;
     }
 
-    //ToDo: do refactoring - extract this method in supper-class
     public void reload( String xmlString ) throws Exception {
-        //ToDo: create "users.xsl" file
-        DocumentInfo users = saxon.transform(xmlString, "preprocess-users-xml.xsl", null);
-        if (users != null) {
-            documentContainer.putDocument(DocumentTypes.USERS, users);
-        } else {
-            this.logger.error("Users NOT updated, NULL document passed");
-        }
+
+        loadXMLString(DocumentTypes.USERS, xmlString);
     }
 
 

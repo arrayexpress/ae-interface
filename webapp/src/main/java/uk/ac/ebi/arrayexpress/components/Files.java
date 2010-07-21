@@ -21,7 +21,6 @@ import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
@@ -33,15 +32,12 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.List;
 
-public class Files extends ApplicationComponent
+public class Files extends XMLDocumentComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String rootFolder;
-    private SaxonEngine saxon;
-
-    private DocumentContainer documentContainer;
 
     public Files()
     {
@@ -50,38 +46,16 @@ public class Files extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine)getComponent("SaxonEngine");
-        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
-
+        super.initialize();
         updateAccelerators();
-    }
-
-    public void terminate() throws Exception
-    {
-        saxon = null;
-    }
-
-    private synchronized void setFiles( DocumentInfo doc ) throws Exception
-    {
-        if (null != doc) {
-            documentContainer.putDocument(DocumentTypes.FILES, doc);
-            updateAccelerators();
-        } else {
-            this.logger.error("Files NOT updated, NULL document passed");
-        }
     }
 
     public void reload( String xmlString ) throws Exception
     {
-        DocumentInfo doc = loadFilesFromString(xmlString);
+        DocumentInfo doc = loadXMLString(DocumentTypes.FILES, xmlString);
         if (null != doc) {
-            setFiles(doc);
+            updateAccelerators();;
         }
-    }
-
-    private DocumentInfo loadFilesFromString( String xmlString ) throws Exception
-    {
-        return saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
     }
 
     private void updateAccelerators()

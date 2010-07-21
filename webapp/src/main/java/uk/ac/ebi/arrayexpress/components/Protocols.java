@@ -17,50 +17,23 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableUserList;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
-import java.io.File;
-
-public class Protocols extends ApplicationComponent
+public class Protocols extends XMLDocumentComponent
 {
-     // logging machinery
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private SaxonEngine saxon;
-    private DocumentContainer documentContainer;
-
 
     public Protocols()
     {
         super("Protocols");
     }
 
-    public void initialize() throws Exception
-    {
-        saxon = (SaxonEngine)getComponent("SaxonEngine");
-        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
-
-    }
-
-    public void terminate() throws Exception
-    {
-         saxon = null;
+    @Override
+    public void initialize() throws Exception {
+        super.initialize();  
     }
 
     public void reload( String xmlString ) throws Exception {
-        DocumentInfo users = saxon.transform(xmlString, "preprocess-protocols-xml.xsl", null);
-        if (users != null) {
-            documentContainer.putDocument(DocumentTypes.PROTOCOLS, users);
-        } else {
-            this.logger.error("Protocols NOT updated, NULL document passed");
-        }
+        loadXMLString(DocumentTypes.PROTOCOLS, xmlString);
     }
 
 }

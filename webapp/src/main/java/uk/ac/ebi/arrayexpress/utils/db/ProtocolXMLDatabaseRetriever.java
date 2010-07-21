@@ -40,7 +40,10 @@ public class ProtocolXMLDatabaseRetriever extends SqlStatementExecutor
             "from\n" +
             "tt_identifiable protocol_id\n" +
             "inner join tt_protocol protocol on protocol.id = protocol_id.id\n" +
-            "left outer join tt_ontologyentry protocol_type on protocol.type_id = protocol_type.id";
+            "left outer join tt_ontologyentry protocol_type on protocol.type_id = protocol_type.id "
+//            + "where \n" +
+//            "rownum<100"
+            ;
 
     private String xmlProtocolString;
 
@@ -80,6 +83,7 @@ public class ProtocolXMLDatabaseRetriever extends SqlStatementExecutor
         xmlBuffer.append("</protocols>");
 
         xmlProtocolString = xmlBuffer.toString();
+        System.out.println("xmlProtocolString = " + xmlProtocolString);
     }
 
 

@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
@@ -33,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Experiments extends ApplicationComponent
+public class Experiments extends XMLDocumentComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -48,10 +47,8 @@ public class Experiments extends ApplicationComponent
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
 
-    private SaxonEngine saxon;
     private SearchEngine search;
     private Autocompletion autocompletion;
-    private DocumentContainer documentContainer;
 
     public Experiments()
     {
@@ -60,10 +57,9 @@ public class Experiments extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine) getComponent("SaxonEngine");
+        super.initialize();
         search = (SearchEngine) getComponent("SearchEngine");
         autocompletion = (Autocompletion) getComponent("Autocompletion");
-        documentContainer = (DocumentContainer) getComponent("DocumentContainer");
 
         // TODO
         // this.experiments = new TextFilePersistence<PersistableDocument>(
@@ -166,41 +162,15 @@ public class Experiments extends ApplicationComponent
 
     public void reload( String xmlString ) throws Exception
     {
-        DocumentInfo doc = loadExperimentsFromString(xmlString);
+        DocumentInfo doc = loadXMLString(DocumentTypes.EXPERIMENTS, xmlString);
         if (null != doc) {
-            setExperiments(doc);
             buildSpeciesArraysExpTypes(doc);
-//            indexExperiments();
         }
     }
 
     public void setExperimentsInAtlas( List<String> expList ) throws Exception
     {
         this.experimentsInAtlas.setObject(new PersistableStringList(expList));
-    }
-
-    private synchronized void setExperiments( DocumentInfo doc ) throws Exception
-    {
-        if (null != doc) {
-            documentContainer.putDocument(DocumentTypes.EXPERIMENTS, doc);
-        } else {
-            this.logger.error("Experiments NOT updated, NULL document passed");
-        }
-    }
-
-    private DocumentInfo loadExperimentsFromString( String xmlString ) throws Exception
-    {
-        return saxon.transform(xmlString, "preprocess-experiments-xml.xsl", null);
-    }
-
-    private void indexExperiments()
-    {
-        try {
-            search.getController().index(DocumentTypes.EXPERIMENTS.getTextName(), documentContainer.getDocument(DocumentTypes.EXPERIMENTS));
-            autocompletion.rebuild();
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
-        }
     }
 
     private void buildSpeciesArraysExpTypes( DocumentInfo doc ) throws Exception
