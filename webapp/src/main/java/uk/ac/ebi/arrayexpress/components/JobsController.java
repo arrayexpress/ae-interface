@@ -24,10 +24,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.jobs.*;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class JobsController extends ApplicationComponent
@@ -41,8 +38,6 @@ public class JobsController extends ApplicationComponent
     // quartz scheduler
     private Scheduler scheduler;
 
-    private Map<String, Object> monitoredFiles;
-
     public JobsController()
     {
         super("JobsController");
@@ -50,8 +45,6 @@ public class JobsController extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        initializeFileMonitor();
-        
         // here we add jobs
         addJob("rescan-files", RescanFilesJob.class);
         addJob("reload-xml", ReloadExperimentsFromDbJob.class);
@@ -104,14 +97,6 @@ public class JobsController extends ApplicationComponent
         }
     }
 
-    private void initializeFileMonitor()
-    {
-        // internal job that will monitor files and trigger other jobs if file is changed
-        this.monitoredFiles = Collections.synchronizedMap(new HashMap<String, Object>());
-        addJob("monitor-files", FileMonitoringJob.class);
-        scheduleIntervalJob("monitor-files", 10000L);    // we will monitor files every 10 secs
-    }
-
     private void startScheduler()
     {
         try {
@@ -157,7 +142,6 @@ public class JobsController extends ApplicationComponent
         String schedule = getPreferences().getString(preferencePrefix + ".schedule");
         Long interval = getPreferences().getLong(preferencePrefix + ".interval");
         Boolean atStart = getPreferences().getBoolean(preferencePrefix + ".atstart");
-        String file = getPreferences().getString(preferencePrefix + ".file.location");
 
         if (null != schedule && 0 < schedule.length()) {
             CronTrigger cronTrigger = new CronTrigger(name + "_schedule_trigger", null);
@@ -173,10 +157,6 @@ public class JobsController extends ApplicationComponent
             } catch ( Exception x ) {
                 logger.error("Caught an exception:", x);
             }
-        }
-
-        if (null != file) {
-            this.monitoredFiles.put(file, file);
         }
 
         boolean hasScheduledInterval = false;
