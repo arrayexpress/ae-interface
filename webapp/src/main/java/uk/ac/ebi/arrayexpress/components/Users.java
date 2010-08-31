@@ -17,18 +17,19 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
+import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.persistence.PersistableUserList;
+import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
+import uk.ac.ebi.arrayexpress.utils.users.UserList;
+import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
-public class Users extends XMLDocumentComponent
+import java.io.File;
+
+public class Users extends ApplicationComponent
 {
-     // logging machinery
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
+    private TextFilePersistence<PersistableUserList> userList;
     private AuthenticationHelper authHelper;
-
 
     public Users()
     {
@@ -37,70 +38,48 @@ public class Users extends XMLDocumentComponent
 
     public void initialize() throws Exception
     {
-        super.initialize();
+        userList = new TextFilePersistence<PersistableUserList>(
+                new PersistableUserList()
+                , new File(getPreferences().getString("ae.users.file.location"))
+        );
+
         authHelper = new AuthenticationHelper();
     }
 
     public void terminate() throws Exception
     {
-         saxon = null;
     }
 
-    public void reload( String xmlString ) throws Exception {
-
-        loadXMLString(DocumentTypes.USERS, xmlString);
-    }
-
-
-    public String hashLoginAE2( String username, String password, String suffix ) throws Exception
+    public void setUserList( UserList userList ) throws Exception
     {
-        String correctPassword = getPasswordAE2(username);
+        this.userList.setObject(new PersistableUserList(userList));
+    }
 
-        if ( null != username && null != suffix && null != password && password.equals(correctPassword)) {
-            return authHelper.generateHash(username, password, suffix);
+    public String hashLogin( String username, String password, String suffix ) throws Exception
+    {
+        if ( null != username && null != password && null != suffix
+                && userList.getObject().containsKey(username) ) {
+            UserRecord user = userList.getObject().get(username);
+            if ( user.getPassword().equals(password) ) {
+                return authHelper.generateHash(username, password, suffix);
+            }
         }
+        // otherwise
         return "";
     }
 
-    public boolean verifyLoginAE2( String username, String hash, String suffix ) throws Exception
+    public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
-        String password = getPasswordAE2(username);
-
-        if ( null != username && null != hash && null != suffix && null != password ) {
-            return authHelper.verifyHash(hash, username, password, suffix);
+        if ( null != username && null != hash && null != suffix
+                && userList.getObject().containsKey(username) ) {
+            UserRecord user = userList.getObject().get(username);
+            return authHelper.verifyHash(hash, username, user.getPassword(), suffix);
         }
         return false;
     }
 
-    private String getPasswordAE2( String username ) throws Exception
+    public UserRecord getUserRecord( String username ) throws Exception
     {
-        return saxon.evaluateXPathSingle(
-                documentContainer.getDocument(DocumentTypes.USERS)
-                , "/users/user[name = '" + username + "']/password"
-            );
-
-    }
-
-
-    //ToDo: Original method  getUserRecord( String username ) is only used to retrieve a UserId -
-    //ToDo: replace usage of getUserRecord with getUserId method
-    public Long getUserId( String username ) throws Exception
-    {
-        String idString = saxon.evaluateXPathSingle(
-                documentContainer.getDocument(DocumentTypes.USERS)
-                , "/users/user[name = '" + username + "']/id"
-        );
-
-        Long id = Long.valueOf(-1l);
-        if (id != null) {
-            try {
-                id = Long.valueOf(idString.trim());
-                logger.debug("User ID = " + id);
-            } catch (NumberFormatException nfe) {
-                logger.error("User ID is not a number: " + nfe.getMessage());
-            }
-        }
-
-        return id;
+        return ( null != username ) ? userList.getObject().get(username) : null;
     }
 }

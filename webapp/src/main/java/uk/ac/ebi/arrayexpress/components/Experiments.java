@@ -20,19 +20,21 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
+import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Experiments extends XMLDocumentComponent
+public class Experiments extends ApplicationComponent implements DocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -40,15 +42,18 @@ public class Experiments extends XMLDocumentComponent
     private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
     private String dataSource;
-
+    private TextFilePersistence<PersistableDocumentContainer> experiments;
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
     private TextFilePersistence<PersistableString> arrays;
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
 
+    private SaxonEngine saxon;
     private SearchEngine search;
     private Autocompletion autocompletion;
+
+    public final String INDEX_ID = "experiments";
 
     public Experiments()
     {
@@ -57,15 +62,14 @@ public class Experiments extends XMLDocumentComponent
 
     public void initialize() throws Exception
     {
-        super.initialize();
+        saxon = (SaxonEngine) getComponent("SaxonEngine");
         search = (SearchEngine) getComponent("SearchEngine");
         autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        // TODO
-        // this.experiments = new TextFilePersistence<PersistableDocument>(
-        //        new PersistableDocument()
-        //        , new File(getPreferences().getString("ae.experiments.file.location"))
-        //);
+        this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
+                new PersistableDocumentContainer()
+                , new File(getPreferences().getString("ae.experiments.file.location"))
+        );
 
         this.experimentsInAtlas = new TextFilePersistence<PersistableStringList>(
                 new PersistableStringList()
@@ -80,7 +84,7 @@ public class Experiments extends XMLDocumentComponent
 
         this.arrays = new TextFilePersistence<PersistableString>(
                 new PersistableString()
-                , new File(getPreferences().getString("ae.arraylist.file.location"))
+                , new File(getPreferences().getString("ae.arrays.file.location"))
         );
 
         this.assaysByMolecule = new HashMap<String, String>();
@@ -95,11 +99,26 @@ public class Experiments extends XMLDocumentComponent
         assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
+
+        indexExperiments();
+        saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
     {
         saxon = null;
+    }
+
+    // implementation of DocumentSource.getDocument()
+    public String getDocumentURI()
+    {
+        return "experiments.xml";
+    }
+
+    // implementation of DocumentSource.getDocument()
+    public synchronized DocumentInfo getDocument() throws Exception
+    {
+        return this.experiments.getObject().getDocument();
     }
 
     public boolean isAccessible( String accession, String userId ) throws Exception
@@ -111,7 +130,7 @@ public class Experiments extends XMLDocumentComponent
         } else {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
-                            documentContainer.getDocument(DocumentTypes.EXPERIMENTS)
+                            getDocument()
                             , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
                     )
             );
@@ -162,15 +181,41 @@ public class Experiments extends XMLDocumentComponent
 
     public void reload( String xmlString ) throws Exception
     {
-        DocumentInfo doc = loadXMLString(DocumentTypes.EXPERIMENTS, xmlString);
+        DocumentInfo doc = loadExperimentsFromString(xmlString);
         if (null != doc) {
+            setExperiments(doc);
             buildSpeciesArraysExpTypes(doc);
+            indexExperiments();
         }
     }
 
     public void setExperimentsInAtlas( List<String> expList ) throws Exception
     {
         this.experimentsInAtlas.setObject(new PersistableStringList(expList));
+    }
+
+    private synchronized void setExperiments( DocumentInfo doc ) throws Exception
+    {
+        if (null != doc) {
+            this.experiments.setObject(new PersistableDocumentContainer(doc));
+        } else {
+            this.logger.error("Experiments NOT updated, NULL document passed");
+        }
+    }
+
+    private DocumentInfo loadExperimentsFromString( String xmlString ) throws Exception
+    {
+        return saxon.transform(xmlString, "preprocess-experiments-xml.xsl", null);
+    }
+
+    private void indexExperiments()
+    {
+        try {
+            search.getController().index(INDEX_ID, experiments.getObject().getDocument());
+            autocompletion.rebuild();
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
     }
 
     private void buildSpeciesArraysExpTypes( DocumentInfo doc ) throws Exception

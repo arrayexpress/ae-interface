@@ -5,10 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.components.Protocols;
-import uk.ac.ebi.arrayexpress.components.Users;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -36,88 +37,49 @@ public class ReloadExperimentsFromFileJob extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        loadExperiments();
-        loadUsers();
-        loadProtocols();
-    }
-
-    private void loadExperiments() {
         try {
+            StringBuilder xmlBuffer = new StringBuilder(20000000);
 
-            //ToDO: put file name in configuration
-            String xmlString = readXMLString("experiments");
+            String fileName = getPreferences().getString("ae.experiments.reload.src.file.location");
+            logger.info("Reload of experiment data from [{}] requested", fileName);
 
-            if (xmlString.length() > 0) {
-                //ToDo: refactor Component -  add "reload(xmlString)" method, then merge load... methods
-                ((Experiments)getComponent("Experiments")).reload(xmlString);
+            File f = new File(fileName);
+            if (f.exists() && f.canRead()) {
+                BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+                while ( r.ready() ) {
+                    String str = r.readLine();
+                // null means stream has reached the end
+                    if (null != str) {
+                        xmlBuffer.append(str).append(EOL);
+                    } else {
+                        break;
+                    }
+                    logger.debug("File successfully read");
+                }
+            } else {
+                logger.warn("File [{}] not found or cannot be opened to read", fileName);
+            }
+
+            if (xmlBuffer.length() > 0) {
+                //UserList userList = new UserListDatabaseRetriever(ds).getUserList();
+                //((Users)getComponent("Users")).setUserList(userList);
+                //logger.info("Reloaded the user list from the database");
+
+                //exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
+                //Thread.sleep(1);
+
+                //logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
+                //xmlBuffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><experiments total=\"").append(exps.size()).append("\">");
+
+
+                ((Experiments)getComponent("Experiments")).reload(xmlBuffer.toString());
                 logger.info("Reload of experiment data completed");
+                xmlBuffer = null;
             } else {
                 logger.warn("No experiments found, reload aborted");
             }
-
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
-    }
-
-    private void loadUsers() {
-        try {
-
-            //ToDO: put file name in configuration
-            String xmlString = readXMLString("users");
-
-            if (xmlString.length() > 0) {
-                ((Users)getComponent("Users")).reload(xmlString);
-                logger.info("Reload of users data completed");
-            } else {
-                logger.warn("No users found, reload aborted");
-            }
-
-        } catch (Exception x) {
-            throw new RuntimeException(x);
-        }
-    }
-
-    private void loadProtocols() {
-        try {
-
-            //ToDO: put file name in configuration
-            String xmlString = readXMLString("protocols");
-
-            if (xmlString.length() > 0) {
-                ((Protocols)getComponent("Protocols")).reload(xmlString);
-                logger.info("Reload of protocols data completed");
-            } else {
-                logger.warn("No users protocols, reload aborted");
-            }
-
-        } catch (Exception x) {
-            throw new RuntimeException(x);
-        }
-    }
-
-
-    private String readXMLString(String dataType) throws IOException {
-        StringBuilder xmlBuffer = new StringBuilder(20000000);
-        String fileName = getPreferences().getString("ae.reload.xml.file.location") +"/" + dataType + ".xml";
-        logger.info("Reload of " + dataType + " data from [{}] requested", fileName);
-
-        File f = new File(fileName);
-        if (f.exists() && f.canRead()) {
-            BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-            while ( r.ready() ) {
-                String str = r.readLine();
-            // null means stream has reached the end
-                if (null != str) {
-                    xmlBuffer.append(str).append(EOL);
-                } else {
-                    break;
-                }
-                logger.debug("File successfully read");
-            }
-        } else {
-            logger.warn("File [{}] not found or cannot be opened to read", fileName);
-        }
-        return xmlBuffer.toString();
     }
 }

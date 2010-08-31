@@ -10,9 +10,9 @@
     <url>http://www.ebi.ac.uk/arrayexpress</url>
 
     <scm>
-        <connection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</connection>
-        <developerConnection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</developerConnection>
-        <url>svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</url>
+        <connection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface/webapp</connection>
+        <developerConnection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface/webapp</developerConnection>
+        <url>svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface/webapp</url>
     </scm>
 
     <!-- default values for repository related properties -->
@@ -269,7 +269,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.2</version>
+            <version>4.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -320,14 +320,14 @@
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>quartz</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.0</version>
         </dependency>
-        <dependency> <!-- required by quartz 1.6.1 -->
+        <dependency> <!-- required by quartz 1.6.0 -->
             <groupId>javax.transaction</groupId>
             <artifactId>transaction-api</artifactId>
             <version>1.1</version>
         </dependency>
-        <dependency> <!-- required by quartz 1.6.1 -->
+        <dependency> <!-- required by quartz 1.6.0 -->
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
@@ -382,7 +382,6 @@
             <artifactId>commons-lang</artifactId>
             <version>2.4</version>
         </dependency>
-
     </dependencies>
 </project>
 

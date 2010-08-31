@@ -20,12 +20,10 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
+import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
-import uk.ac.ebi.arrayexpress.utils.search.LowercaseAnalyzer;
-import uk.ac.ebi.microarray.lucene.queryexpansion.IndexBasedExpansionLookup;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
@@ -71,14 +69,12 @@ public class Ontologies extends ApplicationComponent
     {
         this.ontology = efoOntology;
 
-        // TODO: make this work when index isn't there yet
-        // rebuildExpCountMap();
+        rebuildExpCountMap();
         autocompletion.rebuild();
 
 
-        IndexBasedExpansionLookup ix = new IndexBasedExpansionLookup(
+        EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
                 getPreferences().getString("ae.efo.index.location")
-                , LowercaseAnalyzer.class.getName() // todo: should remove hardcode here
         );
 
         ix.setOntology(getOntology());
@@ -217,8 +213,7 @@ public class Ontologies extends ApplicationComponent
         for (EFONode node : getOntology().getEfoMap().values()) {
             q.get("efv")[0] = node.getTerm();
                 try {
-                    // TODO: this shouldn't be hardcoded here
-                    Integer docs = c.getDocCount(DocumentTypes.EXPERIMENTS.getTextName(), q);
+                    Integer docs = c.getDocCount(experiments.INDEX_ID, q);
                     this.expCountByEfoId.put(node.getId(), docs);
                 } catch (Exception x) {
                     logger.debug("Caught an exception while querying term [" + node.getTerm() + "]", x);

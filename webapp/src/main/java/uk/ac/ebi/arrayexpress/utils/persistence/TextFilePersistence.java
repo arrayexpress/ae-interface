@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-public class TextFilePersistence<Obj extends Persistable>
+public class TextFilePersistence<Object extends Persistable>
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -31,16 +31,16 @@ public class TextFilePersistence<Obj extends Persistable>
     private File persistenceFile;
 
     // internal object holder
-    private Obj object;
+    private Object object;
 
-    public TextFilePersistence( Obj obj, File file )
+    public TextFilePersistence( Object obj, File file )
     {
         // TODO: check object and file
         object = obj;
         persistenceFile = file;
     }
 
-    public Obj getObject() throws Exception
+    public Object getObject() throws Exception
     {
         if (null != object) {
             if (object.isEmpty()) {
@@ -50,7 +50,7 @@ public class TextFilePersistence<Obj extends Persistable>
         return object;
     }
 
-    public void setObject( Obj obj ) throws Exception
+    public void setObject( Object obj ) throws Exception
     {
         object = obj;
         save(object.toPersistence());
@@ -75,7 +75,7 @@ public class TextFilePersistence<Obj extends Persistable>
                 String str = r.readLine();
                 // null means stream has reached the end
                 if (null != str) {
-                    result.append(str).append(Obj.EOL);
+                    result.append(str).append(Object.EOL);
                 } else {
                     break;
                 }

@@ -22,50 +22,49 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentContainer;
 
-// TODO - this thing is seriously obsolete
+// TODO - check XML version on persistence events
 
-public class PersistableDocument implements Persistable
+public class PersistableDocumentContainer extends DocumentContainer implements Persistable
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private DocumentInfo document;
-
-    public PersistableDocument()
+    public PersistableDocumentContainer()
     {
         createDocument();
     }
 
-    public PersistableDocument( DocumentInfo doc )
+    public PersistableDocumentContainer( DocumentInfo doc )
     {
         if (null == doc) {
             createDocument();
         } else {
-            this.document = doc;
+            setDocument(doc);
         }
     }
 
     public String toPersistence() throws Exception
     {
-        return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(this.document);
+        return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(getDocument());
     }
 
     public void fromPersistence( String str ) throws Exception
     {
-        this.document = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str);
+        setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str));
         
-        if (null == this.document) {
+        if (null == getDocument()) {
             createDocument();
         }
     }
 
     public boolean isEmpty() throws Exception
     {
-        if (null == this.document)
+        if (null == getDocument())
             return true;
 
-        String total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(this.document, "/experiments/@total");
+        String total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "/experiments/@total");
 
         return (null == total || total.equals("0"));
     }
@@ -73,12 +72,12 @@ public class PersistableDocument implements Persistable
     private void createDocument()
     {
         try {
-            this.document = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>");
+            setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>"));
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
 
-        if (null == this.document) {
+        if (null == getDocument()) {
             logger.error("The document WAS NOT created, expect problems down the road");
         }
 

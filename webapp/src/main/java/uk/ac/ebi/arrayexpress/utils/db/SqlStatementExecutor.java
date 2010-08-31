@@ -21,9 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public abstract class SqlStatementExecutor
 {
@@ -104,23 +105,4 @@ public abstract class SqlStatementExecutor
         }
     }
 
-    protected String clobToString( Clob cl ) throws SQLException
-    {
-        if (cl == null)
-            return null;
-
-        StringBuilder strOut = new StringBuilder();
-
-        BufferedReader br = new BufferedReader(cl.getCharacterStream());
-        try {
-            String aux;
-            while ( (aux = br.readLine()) != null )
-                strOut.append(aux);
-        } catch ( IOException x ) {
-            logger.error("Caught an exception:", x);
-            strOut = new StringBuilder();
-        }
-
-        return strOut.toString();
-    }
 }

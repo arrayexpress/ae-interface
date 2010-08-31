@@ -23,11 +23,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
-import uk.ac.ebi.arrayexpress.components.DocumentContainer;
+import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.components.SearchEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.*;
+import uk.ac.ebi.arrayexpress.utils.CookieMap;
+import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -57,51 +60,39 @@ public class QueryServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        String outputFormat = "xml";        // by default we output XML
-        String documentName = DocumentTypes.EXPERIMENTS.getTextName();  // default document/index ID
-        String stylesheet = "default";      // default stylesheet name
+        String type = "xml";
+        String stylesheet = "default";
 
-        // we have two groups of parameters; first one:
-        //  output format (xml, text, html etc)
-        //  document/index to use (experiments, files, arrays, protocols etc)
-        //  XSLT stylesheet name
-        // we specify these in URL, like: servlets/query/format/document/stlyesheet
-        //
-        // the other group of params is forwarded to search/transformation
-
-        String[] requestArgs = new RegexHelper("servlets/query/([^/]+)/([^/]+)/?([^/]*)", "i")
+        String[] requestArgs = new RegexHelper("servlets/query/([^/]+)/?([^/]*)", "i")
                 .match(request.getRequestURL().toString());
         if (null != requestArgs) {
             if (!requestArgs[0].equals("")) {
-                outputFormat = requestArgs[0];
+                stylesheet = requestArgs[0];
             }
             if (!requestArgs[1].equals("")) {
-                documentName = requestArgs[1];
-            }
-            if (!requestArgs[2].equals("")) {
-                stylesheet = requestArgs[2];
+                type = requestArgs[1];
             }
         }
 
-        if (outputFormat.equals("xls")) {
+        if (type.equals("xls")) {
             // special case for Excel docs
             // we actually send tab-delimited file but mimick it as XLS doc
             String timestamp = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".xls\"");
-            outputFormat = "tab";
-        } else if (outputFormat.equals("tab")) {
+            type = "tab";
+        } else if (type.equals("tab")) {
             // special case for tab-delimited files
             // we send tab-delimited file as an attachment
             String timestamp = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
             response.setContentType("text/plain; charset=ISO-8859-1");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".txt\"");
-            outputFormat = "tab";
-        } else if (outputFormat.equals("json")) {
+            type = "tab";
+        } else if (type.equals("json")) {
             response.setContentType("application/json; charset=UTF-8");
         } else {
             // Set content type for HTML/XML/plain
-            response.setContentType("text/" + outputFormat + "; charset=ISO-8859-1");
+            response.setContentType("text/" + type + "; charset=ISO-8859-1");
         }
         // tell client to not cache the page unless we want to
         if (!"true".equalsIgnoreCase(request.getParameter("cache"))) {
@@ -113,27 +104,31 @@ public class QueryServlet extends ApplicationServlet
 
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
-//        try {
-            DocumentContainer documentContainer = (DocumentContainer)getComponent("DocumentContainer");
-            String stylesheetName = new StringBuilder(stylesheet).append('-').append(outputFormat).append(".xsl").toString();
+        try {
+            Experiments experiments = (Experiments)getComponent("Experiments");
+            if (stylesheet.equals("arrays-select")) {
+                out.print(experiments.getArrays());
+            } else if (stylesheet.equals("species-select")) {
+                out.print(experiments.getSpecies());
+            } else {
+                String stylesheetName = new StringBuilder(stylesheet).append('-').append(type).append(".xsl").toString();
 
-            HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
-            // to make sure nobody sneaks in the other value w/o proper authentication
-            params.put("userid", "1");
+                HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
+                // to make sure nobody sneaks in the other value w/o proper authentication
+                params.put("userid", "1");
 
-            // adding "host" request header so we can dynamically create FQDN URLs
-            params.put("host", request.getHeader("host"));
-            params.put("basepath", request.getContextPath());
+                // adding "host" request header so we can dynamically create FQDN URLs
+                params.put("host", request.getHeader("host"));
+                params.put("basepath", request.getContextPath());
 
-            CookieMap cookies = new CookieMap(request.getCookies());
-            if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
-                Users users = (Users)getComponent("Users");
-                String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
-                String passwordHash = cookies.get("AeLoginToken").getValue();
-                try {
-                    if (users.verifyLoginAE2(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                        if (0 != users.getUserId(user)) { // 0 - curator (superuser) -> remove user restriction
-                            params.put("userid", String.valueOf(users.getUserId(user)));
+                CookieMap cookies = new CookieMap(request.getCookies());
+                if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
+                    Users users = (Users)getComponent("Users");
+                    String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
+                    String passwordHash = cookies.get("AeLoginToken").getValue();
+                    if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
+                        if (0 != users.getUserRecord(user).getId()) { // 0 - curator (superuser) -> remove user restriction
+                            params.put("userid", String.valueOf(users.getUserRecord(user).getId()));
                         } else {
                             params.remove("userid");
                         }
@@ -146,30 +141,28 @@ public class QueryServlet extends ApplicationServlet
 
                         response.addCookie(userCookie);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+
+                try {
+                    Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(experiments.INDEX_ID, params, request.getQueryString());
+                    params.put("queryid", String.valueOf(queryId));
+
+                    SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
+                    if (!saxonEngine.transformToWriter(
+                            experiments.getDocument(),  // xml document in memory (all experiments)
+                            stylesheetName,             // xslt transformation stylesheet
+                            params,                     // parameters
+                            out)) {                     // where to dump resulting text
+                        throw new Exception("Transformation returned an error");
+                    }
+                } catch (ParseException x) {
+                    logger.error("Caught lucene parse exception:", x);
+                    reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
                 }
             }
-            try {
-                Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(documentName, params, request.getQueryString());
-                params.put("queryid", String.valueOf(queryId));
-
-                SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
-                if (!saxonEngine.transformToWriter(
-                        documentContainer.getDocument(DocumentTypes.getInstanceByName(documentName)),  // xml document in memory (all experiments)
-                        stylesheetName,             // xslt transformation stylesheet
-                        params,                     // parameters
-                        out)) {                     // where to dump resulting text
-                    throw new Exception("Transformation returned an error");
-                }
-            } catch (Exception x) {
-                logger.error("Caught lucene parse exception:", x);
-                reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
-            }
-
-//        } catch (Exception x) {
-//            throw new RuntimeException(x);
-//        }
+        } catch (Exception x) {
+            throw new RuntimeException(x);
+        }
         out.close();
     }
 

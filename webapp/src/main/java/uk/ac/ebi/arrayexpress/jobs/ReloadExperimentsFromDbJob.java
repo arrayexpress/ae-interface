@@ -26,13 +26,12 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
-import uk.ac.ebi.arrayexpress.components.Protocols;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.db.DataSourceFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
-import uk.ac.ebi.arrayexpress.utils.db.ProtocolXMLDatabaseRetriever;
-import uk.ac.ebi.arrayexpress.utils.db.UserXMLDatabaseRetriever;
+import uk.ac.ebi.arrayexpress.utils.db.UserListDatabaseRetriever;
+import uk.ac.ebi.arrayexpress.utils.users.UserList;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -68,13 +67,9 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
 
                 ds = new DataSourceFinder().findDataSource(dsNames);
                 if (null != ds) {
-                    String xmlUserString = new UserXMLDatabaseRetriever(ds).getUserXml();
-                    ((Users)getComponent("Users")).reload(xmlUserString);
+                    UserList userList = new UserListDatabaseRetriever(ds).getUserList();
+                    ((Users)getComponent("Users")).setUserList(userList);
                     logger.info("Reloaded the user list from the database");
-
-                    String xmlProtocolString = new ProtocolXMLDatabaseRetriever(ds).getProtocolXml();
-                    ((Protocols) getComponent("Protocols")).reload(xmlProtocolString);
-                    logger.info("Reloaded the Protocols list from the database");
 
                     exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
                     Thread.sleep(1);

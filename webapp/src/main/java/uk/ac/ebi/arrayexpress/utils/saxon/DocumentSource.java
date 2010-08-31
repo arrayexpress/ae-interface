@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.components;
+package uk.ac.ebi.arrayexpress.utils.saxon;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -17,23 +17,10 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import uk.ac.ebi.arrayexpress.utils.DocumentTypes;
+import net.sf.saxon.om.DocumentInfo;
 
-public class Protocols extends XMLDocumentComponent
+public interface DocumentSource
 {
-
-    public Protocols()
-    {
-        super("Protocols");
-    }
-
-    @Override
-    public void initialize() throws Exception {
-        super.initialize();  
-    }
-
-    public void reload( String xmlString ) throws Exception {
-        loadXMLString(DocumentTypes.PROTOCOLS, xmlString);
-    }
-
+    public String getDocumentURI();
+    public DocumentInfo getDocument() throws Exception;
 }

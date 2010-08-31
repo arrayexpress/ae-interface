@@ -21,8 +21,6 @@ import java.io.*;
 
 public class StringTools
 {
-    public final static String EOL = System.getProperty("line.separator");
-
     private StringTools()
     {
     }
@@ -69,26 +67,4 @@ public class StringTools
         w.write(string);
         w.close();
     }
-
-    public static String fileToString( File persistenceFile ) throws IOException
-    {
-        StringBuilder result = new StringBuilder();
-        if (persistenceFile.exists()) {
-            BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(persistenceFile)));
-            while (r.ready()) {
-                String str = r.readLine();
-                // null means stream has reached the end
-                if (null != str) {
-                    result.append(str).append(EOL);
-                } else {
-                    break;
-                }
-            }
-        } else {
-            return null;
-        }
-
-        return result.toString();
-    }
-
 }
