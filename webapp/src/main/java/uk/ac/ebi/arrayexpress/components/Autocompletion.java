@@ -109,6 +109,7 @@ public class Autocompletion extends ApplicationComponent
                             , node.hasChildren() ? node.getId() : ""
                     )
             );
+            /* no synonyms for now
             for (String syn : node.getAlternativeTerms()) {
                 this.autocompleteStore.addData(
                         new AutocompleteData(
@@ -118,6 +119,7 @@ public class Autocompletion extends ApplicationComponent
                         )
                 );
             }
+            */
             if (node.hasChildren()) {
                 for (EFONode child : node.getChildren()) {
                     addEfoNodeWithDescendants(child.getId());
