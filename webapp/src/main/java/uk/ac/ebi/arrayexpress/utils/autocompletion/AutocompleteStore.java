@@ -1,6 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.autocompletion;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,9 +27,27 @@ public class AutocompleteStore
     private SetTrie trie;
     private HashMap<String, AutocompleteData> objects;
 
+    private class AutocompleteComparator implements Comparator<String>
+    {
+        public int compare(String s1, String s2)
+        {
+            int pos1 = s1.lastIndexOf('|');
+            int pos2 = s2.lastIndexOf('|');
+
+            String text1 = s1.substring(0, (-1 != pos1 ? pos1 : s1.length() ));
+            String text2 = s2.substring(0, (-1 != pos2 ? pos2 : s2.length() ));
+
+            int comp = text1.compareTo(text2);
+            if (0 == comp && -1 != pos1 && -1 != pos2) {
+                comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
+            }
+        return comp;
+        }
+    }
+
     public AutocompleteStore()
     {
-        this.trie = new SetTrie();
+        this.trie = new SetTrie(new AutocompleteComparator());
         this.objects = new HashMap<String, AutocompleteData>();
     }
 
@@ -40,7 +59,7 @@ public class AutocompleteStore
     
     public void addData( AutocompleteData data )
     {
-        String key = data.getKey();
+        String key = data.getText() + "|" + data.getDataType() + "_" + data.getData();
         this.trie.add(key);
         this.objects.put(key, data);
     }
@@ -53,15 +72,36 @@ public class AutocompleteStore
 
             for (String key : matches) {
                 AutocompleteData data = this.objects.get(key);
+                boolean shouldAdd = false;
                 if ("".equals(fieldName)) {
                     // in this case we put "keyword" data, EFO and fieldNames, EFO will override keywords
                     if (AutocompleteData.DATA_TEXT == data.getDataType() && "keywords".equals(data.getData())
                             || AutocompleteData.DATA_TEXT != data.getDataType()) {
-                        comps.add(data);
+                        shouldAdd = true;
                     }
                 } else {
                     if ((AutocompleteData.DATA_TEXT == data.getDataType() && fieldName.equals(data.getData()))
                             || (-1 != "sa efv exptype".indexOf(fieldName) && AutocompleteData.DATA_EFO_NODE == data.getDataType())) {
+                        shouldAdd = true;
+                    }
+                }
+                // so if we want to add this match, check if we have the same text in the list already
+                // if we do, then either discard this one (if it's from the index), or swap with the match (if efo)
+                // or still add (field)
+                if (shouldAdd) {
+                    for (int compIndex = 0; compIndex < comps.size(); ++compIndex) {
+                        if (comps.get(compIndex).getText().equals(data.getText())) {
+                            if (AutocompleteData.DATA_EFO_NODE == comps.get(compIndex).getDataType() && AutocompleteData.DATA_TEXT == data.getDataType()) {
+                                shouldAdd = false;
+                                break;
+                            } else if (AutocompleteData.DATA_TEXT == comps.get(compIndex).getDataType() && AutocompleteData.DATA_EFO_NODE == data.getDataType()) {
+                                comps.set(compIndex, data);
+                                shouldAdd = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldAdd) {
                         comps.add(data);
                     }
                 }

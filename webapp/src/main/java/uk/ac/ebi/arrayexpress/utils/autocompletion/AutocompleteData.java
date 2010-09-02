@@ -34,11 +34,6 @@ public class AutocompleteData {
         this.data = data;
     }
 
-    public String getKey()
-    {
-        return (this.text + "_" + this.dataType + "_" + this.data).toLowerCase();
-    }
-
     public String getText()
     {
         return this.text;
@@ -56,6 +51,6 @@ public class AutocompleteData {
 
     public String toString()
     {
-        return this.getKey();
+        return this.text + "|" + this.dataType + "|" + this.data;
     }
 }

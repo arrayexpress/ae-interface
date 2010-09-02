@@ -95,10 +95,6 @@ public class LookupServlet extends ApplicationServlet
                 out.print(autocompletion.getKeywords(query, field, limit));
             } else if (type.equals("efotree")) {
                 out.print(ontologies.getEfoChildren(efoId));
-            } else if (type.equals("efotreejson")) {
-                out.print(ontologies.getEfoTreeJson(efoId, jsonp));
-            } else if (type.equals("efodictjson")) {
-                out.print(ontologies.getEfoDictJson(jsonp));
             }
         } catch (Exception x) {
             throw new RuntimeException(x);

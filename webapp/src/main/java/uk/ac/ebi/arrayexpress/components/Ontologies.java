@@ -28,7 +28,9 @@ import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Ontologies extends ApplicationComponent
@@ -69,7 +71,6 @@ public class Ontologies extends ApplicationComponent
     {
         this.ontology = efoOntology;
 
-        rebuildExpCountMap();
         autocompletion.rebuild();
 
 
@@ -109,118 +110,5 @@ public class Ontologies extends ApplicationComponent
             }
         }
         return sb.toString();
-    }
-
-
-
-    public String getEfoTreeJson( String efoId, String jsonp )
-    {
-        if (null == getOntology()) {
-            return EFO_NOT_LOADED_YET;
-        }
-
-        if (null == efoId || "".equals(efoId)) {
-            efoId = ontology.EFO_ROOT_ID;
-        }
-
-        if ("".endsWith(jsonp)) {
-            return "{" + getEfoNodeJson(efoId) + "}";
-        } else {
-            return jsonp + "({" + getEfoNodeJson(efoId) + "})";
-        }
-    }
-
-    private String getEfoNodeJson( String efoId )
-    {
-        EFONode node = getOntology().getEfoMap().get(efoId);
-        if (null != node) {
-            StringBuilder sb = new StringBuilder();
-            sb.append('"').append(node.getId()).append("\":");
-            if (node.hasChildren()) {
-                sb.append("{");
-                int count = node.getChildren().size();
-                for (EFONode child : node.getChildren()) {
-                    sb.append(getEfoNodeJson(child.getId()));
-                    if (--count > 0) {
-                        sb.append(",");
-                    }
-                }
-                sb.append("}");
-
-            } else {
-                sb.append("1");
-            }
-            return sb.toString();
-        } else
-            return "";
-    }
-
-    public String getEfoDictJson( String jsonp )
-    {
-        if (null == getOntology()) {
-            return EFO_NOT_LOADED_YET;
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-
-        if (!"".endsWith(jsonp)) {
-            sb.append(jsonp).append("(");
-        }
-        sb.append("{");
-        SortedSet<String> sortedKeys= new TreeSet<String>(getOntology().getEfoMap().keySet());
-        int count = sortedKeys.size();
-        for (String key : sortedKeys) {
-            --count;
-            EFONode node = getOntology().getEfoMap().get(key);
-            if (null != node ) {
-                sb.append('"')
-                  .append(key)
-                  .append("\":{")
-                  .append("\"term\":\"")
-                  .append(node.getTerm())
-                  .append("\", \"organizational_class\":")
-                  .append(node.isOrganizational() ? "\"true\"" : "\"false\"")
-                  .append(", \"experiments\":")
-                  .append(String.valueOf(this.expCountByEfoId.get(key)))
-                  .append("}");
-                if (count > 0 ) {
-                    sb.append(",");
-                }
-            }
-        }
-        sb.append("}");
-        if (!"".endsWith(jsonp)) {
-            sb.append(")");
-        }
-
-        return sb.toString();
-    }
-
-    private void rebuildExpCountMap()
-    {
-        // build experiment count map
-        logger.debug("Building experiment count map for EFO terms");
-
-        Controller c = search.getController();
-
-        Map<String, String[]> q = new HashMap<String, String[]>();
-        q.put("userid", new String[]{"1"}); // do this only for public data
-        q.put("efv", new String[]{""});     // query experimental factor values
-
-        this.expCountByEfoId.clear();
-        
-        for (EFONode node : getOntology().getEfoMap().values()) {
-            q.get("efv")[0] = node.getTerm();
-                try {
-                    Integer docs = c.getDocCount(experiments.INDEX_ID, q);
-                    this.expCountByEfoId.put(node.getId(), docs);
-                } catch (Exception x) {
-                    logger.debug("Caught an exception while querying term [" + node.getTerm() + "]", x);
-                }
-
-        }
-        logger.debug("Building completed");
-
     }
 }

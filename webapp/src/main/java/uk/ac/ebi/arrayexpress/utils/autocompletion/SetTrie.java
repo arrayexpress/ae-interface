@@ -17,10 +17,7 @@ package uk.ac.ebi.arrayexpress.utils.autocompletion;
  *
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetTrie
 {
@@ -29,6 +26,11 @@ public class SetTrie
     public SetTrie()
     {
         lines = new TreeSet<String>();
+    }
+
+    public SetTrie( Comparator comp )
+    {
+        lines = new TreeSet<String>(comp);
     }
 
     public void clear()

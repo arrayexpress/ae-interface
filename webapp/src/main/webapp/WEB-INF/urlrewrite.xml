@@ -95,16 +95,6 @@
         <from>^/json/v2/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/json?accession=$1</to>
     </rule>
-
-    <!-- api for nils -->
-    <rule>
-        <from>^/json/v2/efotree$</from>
-        <to type="forward">/servlets/lookup/efotreejson</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/efodict$</from>
-        <to type="forward">/servlets/lookup/efodictjson</to>
-    </rule>
     <!-- search results export in tab format -->
     <rule>
         <from>^/ArrayExpress-Experiments\.xls$</from>
