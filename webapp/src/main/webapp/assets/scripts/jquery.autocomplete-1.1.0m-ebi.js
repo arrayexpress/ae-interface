@@ -515,7 +515,7 @@ $.Autocompleter.defaults = {
     formatItem: function(data, pos, max, value, term) {
         var result = value;
         if ("f" == data.data[1]) {
-            value = value + "<span class=\"ac_field\">Filter by " + data.data[2] + "</span>";
+            value = value + "<span class=\"ac_field\">Filter " + data.data[2] + "</span>";
         } else if ("o" == data.data[1]) {
             value = value + "<span class=\"ac_efo\">EFO</span>";
 

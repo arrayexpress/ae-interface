@@ -25,7 +25,7 @@ function
 aeClearKeywords()
 {
     $("#ae_keywords").val("");
-    $("#ae_expandefo").removeAttr("checked");
+    $("#ae_directsub").removeAttr("checked");
 }
 
 function
@@ -228,6 +228,7 @@ $(document).ready( function() {
         query.detailedview = true;
     } else {
         query.keywords = getQueryStringParam("keywords");
+        query.directsub = getQueryBooleanParam("directsub") ? true : undefined;
         query.expandefo = getQueryBooleanParam("expandefo");
         query.species = getQueryStringParam("species");
         query.array = getQueryStringParam("array");
@@ -370,8 +371,8 @@ initControls()
 {
     // keywords
     $("#ae_keywords").val(query.keywords);
-    if (query.expandefo)
-        $("#ae_expandefo").attr("checked", "true");
+    if (query.directsub)
+        $("#ae_directsub").attr("checked", "true");
     
     $("#ae_sortby").val(query.sortby);
     $("#ae_sortorder").val(query.sortorder);

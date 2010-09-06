@@ -59,7 +59,7 @@
                                                                 <label for="ae_keywords">Experiment, citation, sample and factor annotations [<a href="javascript:aeClearKeywords()">clear</a>]</label>
                                                                 <input id="ae_keywords" name="keywords" maxlength="200">
                                                                 <span>
-                                                                    <input id="ae_expandefo" name="expandefo" type="checkbox" title="Search uses your term and searches for synonyms and child terms in the Experimental Factor Ontology e.g. cancer will be searched for synonyms for cancer and sub types of cancer"><label for="ae_expandefo" title="Search uses your term and searches for synonyms and child terms in the Experimental Factor Ontology e.g. cancer will be searched for synonyms for cancer and sub types of cancer">Expand search using <a href="${interface.application.link.www_domain}/efo/" target="_blank">Experimental Factor Ontology</a></label>
+                                                                    <input id="ae_directsub" name="directsub" type="checkbox" title=""><label for="ae_directsub" title="">(correctme: filter AE direct submissions)</a></label>
                                                                 </span>
                                                             </fieldset>
                                                             <fieldset id="ae_filters_box">
@@ -78,6 +78,7 @@
                                                                 <input id="ae_keyword_filters_submit" type="submit" value="Query">
                                                                 <input type="hidden" id="ae_sortby" name="sortby">
                                                                 <input type="hidden" id="ae_sortorder" name="sortorder">
+                                                                <input type="hidden" id="ae_expandefo" name="expandefo" value="on">
                                                                 <div><input id="ae_detailedview" name="detailedview" type="checkbox"><label for="ae_detailedview">Detailed view</label></div>
                                                             </fieldset>
                                                         </form>
