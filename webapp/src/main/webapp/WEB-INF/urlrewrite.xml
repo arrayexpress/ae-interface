@@ -128,11 +128,11 @@
     </rule>
     <rule>
         <from>^/atlas_list-species.html</from>
-        <to type="forward">/servlets/proxy/microarray-as/atlas/list-species.jsp</to>
+        <to type="forward">/servlets/proxy/gxa/list-species.jsp</to>
     </rule>
     <rule>
         <from>^/atlas_stats.txt</from>
-        <to type="forward">/servlets/proxy/microarray-as/atlas/stats.jsp</to>
+        <to type="forward">/servlets/proxy/gxa/stats.jsp</to>
     </rule>
     <!-- hiding browse helpers behind innocent names -->
     <rule>

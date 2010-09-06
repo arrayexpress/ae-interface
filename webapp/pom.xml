@@ -27,8 +27,8 @@
         <interface.application.link.browse_help>${interface.application.link.www_domain}/microarray/doc/help/browse_results.html</interface.application.link.browse_help>
         <interface.application.link.aer_old.base.url>/microarray-as/aer</interface.application.link.aer_old.base.url>
         <interface.application.link.atlas.base.url>/gxa</interface.application.link.atlas.base.url>
-        <interface.application.link.atlas.species_options.url>${interface.application.link.atlas.base.url}/list-species.jsp</interface.application.link.atlas.species_options.url>
-        <interface.application.link.atlas.stats.url>${interface.application.link.atlas.base.url}/stats.jsp</interface.application.link.atlas.stats.url>
+        <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+        <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
         <interface.application.link.aer_old.experiment_link.style/>
 
