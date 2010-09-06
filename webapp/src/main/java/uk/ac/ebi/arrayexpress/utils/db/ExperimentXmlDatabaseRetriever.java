@@ -34,10 +34,17 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
     // sql code
-    private final static String getExperimentXmlSql = "select XmlElement( \"experiment\"" +
-            " , XmlAttributes( e.id as \"id\", i.identifier as \"accession\", nvt_name.value as \"name\", nvt_releasedate.value as \"releasedate\", nvt_miamegold.value as \"miamegold\" )" +
+    private final static String getExperimentXmlSql = "select" +
+            " XmlElement( \"experiment\"" +
+            " , XmlElement( \"id\", e.id )" +
+            " , ( select XmlAgg( XmlElement( \"accession\", identifier ) ) from tt_identifiable i where i.id = e.id )" +
+            " , ( select XmlAgg( XmlElement( \"name\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'AEExperimentDisplayName' )" +
+            " , ( select XmlAgg( XmlElement( \"loaddate\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'ArrayExpressLoadDate' )" +
+            " , ( select XmlAgg( XmlElement( \"releasedate\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'ArrayExpressReleaseDate' )" +
             " , ( select XmlAgg( XmlElement( \"user\", v.user_id ) ) from tt_extendable ext left outer join pl_visibility v on v.label_id = ext.label_id where ext.id = e.id )" +
-            " , ( select XmlAgg( XmlElement( \"secondaryaccession\", sa.value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'SecondaryAccession' )" +
+            " , ( select XmlAgg( XmlElement( \"secondaryaccession\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'SecondaryAccession' )" +
+            " , ( select XmlAgg( XmlElement( \"seqdatauri\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'SequenceDataURI' )" +
+            " , ( select XmlAgg( XmlElement( \"miamegold\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'AEMIAMEGOLD' )" +
             " , ( select XmlAgg( XmlElement( \"sampleattribute\", XmlAttributes( i4samattr.category as \"category\", i4samattr.value as \"value\") ) ) from ( select  /*+ LEADING(b) INDEX(o) INDEX(c) INDEX(b)*/ distinct b.experiments_id as id, o.category as category, ( case when (o.category = o.value and o.readablevalue is not null ) then o.readablevalue else nvl(o.value, ' ') end ) as value from tt_ontologyentry o, tt_characteris_t_biomateri c, tt_biomaterials_experiments b where b.biomaterials_id = c.t_biomaterial_id and c.characteristics_id = o.id ) i4samattr where i4samattr.id = e.id group by i4samattr.id )" +
             " , ( select XmlAgg( XmlElement( \"experimentalfactor\", XmlAttributes( i4efvs.name as \"name\", i4efvs.value as \"value\") ) ) from (select /*+ leading(d) index(d) index(doe) index(tl) index(f) index(fi) index(fv) index(voe) index(m) */ distinct d.t_experiment_id as id, ( case when voe.category is not null then voe.category else fi.name end ) as name, nvl( case when voe.value is not null then voe.value else m.value end, ' ' ) as value from tt_experimentdesign d, tt_ontologyentry doe, tt_types_t_experimentdesign tl, tt_experimentalfactor f, tt_identifiable fi, tt_factorvalue fv, tt_ontologyentry voe, tt_measurement m where doe.id = tl.types_id and tl.t_experimentdesign_id = d.id and f.t_experimentdesign_id (+) = d.id and fv.experimentalfactor_id (+) = f.id and voe.id (+) = fv.value_id and fi.id (+) = f.id and m.id (+) = fv.measurement_id) i4efvs where i4efvs.id = e.id group by i4efvs.id )" +
             " , ( select XmlAgg( XmlElement( \"miamescore\", XmlAttributes( nvt_miamescores.name as \"name\", nvt_miamescores.value as \"value\" ) ) ) from tt_namevaluetype nvt_miamescores, tt_namevaluetype nvt_miame where nvt_miame.id = nvt_miamescores.t_namevaluetype_id and nvt_miame.t_extendable_id = e.id and nvt_miame.name = 'AEMIAMESCORE' group by nvt_miame.value )" +
@@ -47,22 +54,14 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
             " , ( select XmlAgg( XmlElement( \"provider\", XmlAttributes( pp.firstname || ' ' || pp.lastname AS \"contact\", c.email AS \"email\", value AS \"role\" ) ) ) from tt_identifiable ii, tt_ontologyentry o, tt_providers_t_experiment p, tt_roles_t_contact r, tt_person pp, tt_contact c where c.id = r.t_contact_id and ii.id = r.t_contact_id and r.roles_id = o.id and pp.id = ii.id and ii.id = p.providers_id and p.t_experiment_id = e.id )" +
             " , ( select XmlAgg( XmlElement( \"experimentdesign\", expdesign ) ) from ( select  /*+ index(ed) */ distinct ed.t_experiment_id as id, translate(replace(oe.value,'_design',''),'_',' ') as expdesign from tt_experimentdesign ed, tt_types_t_experimentdesign tte, tt_ontologyentry oe where tte.t_experimentdesign_id = ed.id and oe.id = tte.types_id and oe.category = 'ExperimentDesignType' ) t where t.id = e.id )" +
             " , ( select XmlAgg( XmlElement( \"experimenttype\", exptype ) ) from ( select distinct don.t_describable_id as id, oe.value as exptype from tt_ontologyentry oe, tt_annotations_t_descriptio ano, tt_description don where don.id =+ ano.t_description_id and ano.annotations_id =+ oe.id and oe.category = 'AEExperimentType' ) t where t.id = e.id )" +
-            " , XmlAgg( XmlElement( \"description\", XmlAttributes( d.id as \"id\" ), d.text ) ) " +
+            " , ( select XmlAgg( XmlElement( \"description\", XmlAttributes( id as \"id\" ), text ) ) from tt_description d where d.t_describable_id = e.id )" +
             " ).getClobVal() as xml" +
-            " from tt_experiment e" +
-            "  left outer join tt_description d on d.t_describable_id = e.id" +
-            "  left outer join tt_identifiable i on i.id = e.id" +
-            "  left outer join tt_namevaluetype nvt_releasedate on ( nvt_releasedate.t_extendable_id = e.id and nvt_releasedate.name = 'ArrayExpressLoadDate' )" +
-            "  left outer join tt_namevaluetype nvt_name on ( nvt_name.t_extendable_id = e.id and nvt_name.name = 'AEExperimentDisplayName' )" +
-            "  left outer join tt_namevaluetype nvt_miamegold on ( nvt_miamegold.t_extendable_id=e.id and nvt_miamegold.name='AEMIAMEGOLD' )" +
+            " from" +
+            "  tt_experiment e" +
             " where" +
             "  e.id = ?" +
             " group by" +
-            "  e.id" +
-            "  , i.identifier" +
-            "  , nvt_name.value" +
-            "  , nvt_releasedate.value" +
-            "  , nvt_miamegold.value";
+            "  e.id";
 
     // experiment list
     private List experimentList;

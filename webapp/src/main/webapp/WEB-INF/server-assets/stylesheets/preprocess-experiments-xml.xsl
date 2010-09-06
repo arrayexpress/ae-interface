@@ -9,24 +9,24 @@
                 version="2.0">
     <xsl:output method="xml" encoding="ISO-8859-1" indent="no"/>
 
-    <xsl:key name="experiment-sampleattribute-by-category" match="sampleattribute" use="fn:concat(ancestor::experiment/@id, @category)"/>
-    <xsl:key name="experiment-experimentalfactor-by-name" match="experimentalfactor" use="fn:concat(ancestor::experiment/@id, @name)"/>
+    <xsl:key name="experiment-sampleattribute-by-category" match="sampleattribute" use="fn:concat(ancestor::experiment/id, @category)"/>
+    <xsl:key name="experiment-experimentalfactor-by-name" match="experimentalfactor" use="fn:concat(ancestor::experiment/id, @name)"/>
     
     <xsl:template match="/experiments">
         <experiments
             version="{@version}" total="{fn:count(experiment)}">
 
             <xsl:apply-templates select="experiment">
-                <xsl:sort order="descending" select="fn:year-from-date(@releasedate)" data-type="number"/>
-                <xsl:sort order="descending" select="fn:month-from-date(@releasedate)" data-type="number"/>
-                <xsl:sort order="descending" select="fn:day-from-date(@releasedate)" data-type="number"/>
+                <xsl:sort order="descending" select="fn:year-from-date(loaddate)" data-type="number"/>
+                <xsl:sort order="descending" select="fn:month-from-date(loaddate)" data-type="number"/>
+                <xsl:sort order="descending" select="fn:day-from-date(loaddate)" data-type="number"/>
             </xsl:apply-templates>
         </experiments>
     </xsl:template>
 
     <xsl:template match="experiment">
         <experiment>
-            <xsl:variable name="vAccession" select="@accession"/>
+            <xsl:variable name="vAccession" select="accession"/>
             <xsl:message>[INFO] Processing  [<xsl:value-of select="$vAccession"/>]</xsl:message>
             <xsl:variable name="vGenDescription">
                 <xsl:variable name="vGenDescriptionRaw" select="description[contains(text(), '(Generated description)')]"/>
@@ -51,16 +51,10 @@
                     </xsl:matching-substring>
                 </xsl:analyze-string>
             </xsl:variable>
-            <xsl:if test="ae:isExperimentInAtlas(@accession)">
+            <xsl:if test="ae:isExperimentInAtlas($vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
-
-            <xsl:for-each select="@*">
-                <xsl:element name="{fn:lower-case(fn:name())}">
-                    <xsl:value-of select="." />
-                </xsl:element>
-            </xsl:for-each>
-
+            <releasedate><xsl:value-of select="loaddate"/></releasedate>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
@@ -137,7 +131,7 @@
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore | releasedate" mode="copy"/>
 
     <xsl:template match="secondaryaccession" mode="copy">
         <xsl:choose>
