@@ -224,11 +224,11 @@ $(document).ready( function() {
 
     query.accession = getQueryStringParam("accnum");
     query.accession = getQueryStringParam("accession");
-    if ("" != query.accession) {
+    if (undefined != query.accession && "" != query.accession) {
         query.detailedview = true;
     } else {
         query.keywords = getQueryStringParam("keywords");
-        query.directsub = getQueryBooleanParam("directsub") ? true : undefined;
+        query.directsub = getQueryBooleanParam("directsub");
         query.expandefo = getQueryBooleanParam("expandefo");
         query.species = getQueryStringParam("species");
         query.array = getQueryStringParam("array");
@@ -492,9 +492,6 @@ addHtmlToSelect( selectEltId, html )
 function
 getQueryStringParam( paramName, defaultValue )
 {
-    if (undefined == defaultValue) {
-        defaultValue = "";
-    }
     var param = $.query.get(paramName);
     if ("" !== param) {
         return param;
@@ -518,7 +515,7 @@ function
 getQueryBooleanParam( paramName )
 {
     var param = $.query.get(paramName);
-    return (true === param || "" != param);
+    return (true === param || "" != param) ? true : undefined;
 }
 
 function
