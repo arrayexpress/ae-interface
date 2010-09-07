@@ -756,6 +756,9 @@
         <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = $pKind]"/>
         <xsl:variable name="vImg">
             <xsl:choose>
+                <xsl:when test="$pKind = 'raw' and seqdatauri">
+                    <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16" alt="Link to sequence data"/>
+                </xsl:when>
                 <xsl:when test="$pKind = 'raw' and contains($vFiles[1]/@dataformat, 'CEL')">
                     <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16" alt="Click to download Affymetrix data"/>
                 </xsl:when>
@@ -770,6 +773,9 @@
 
         <xsl:variable name="vLinkUrl">
             <xsl:choose>
+                <xsl:when test="$pKind = 'raw' and seqdatauri">
+                    <xsl:value-of select="seqdatauri"/>
+                </xsl:when>
                 <xsl:when test="count($vFiles) > 1">
                     <xsl:value-of select="$basepath"/>
                     <xsl:text>/files/</xsl:text>
