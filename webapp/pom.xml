@@ -97,6 +97,31 @@
             </properties>
         </profile>
         <profile>
+            <id>preproduction-dukkha</id>
+            <properties>
+                <interface.application.base.path>/ae</interface.application.base.path>
+                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
+
+                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.link.query_help>${interface.application.link.www_domain}/microarray/doc/help/ae_help.html</interface.application.link.query_help>
+                <interface.application.link.browse_help>${interface.application.link.www_domain}/microarray/doc/help/browse_results.html</interface.application.link.browse_help>
+                <interface.application.link.atlas.base.url>${interface.application.link.www_domain_hack}/gxa</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
+                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
+
+                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
+                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
+
+                <interface.application.pref.experiments.datasources>aepub1</interface.application.pref.experiments.datasources>
+                <interface.application.pref.experiments.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.reload.schedule>
+
+                <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
+                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.body.class>dev_preview</interface.application.body.class>
+            </properties>
+        </profile>
+        <profile>
             <id>preproduction-aecur</id>
             <properties>
                 <interface.application.link.query_help>/microarray/doc/help/ae_help.html</interface.application.link.query_help>
