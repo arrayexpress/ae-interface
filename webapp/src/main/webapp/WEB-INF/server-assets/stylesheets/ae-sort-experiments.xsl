@@ -98,6 +98,9 @@
             </xsl:when>
             <xsl:when test="$pSortBy='raw'">
                 <xsl:apply-templates select="$pExperiments">
+                    <!-- sort by presence of seqdata -->
+                    <xsl:sort select="count(seqdatauri)" order="{$pSortOrder}" data-type="number"/>
+                    <!-- then by count of data files -->
                     <xsl:sort select="rawdatafiles" order="{$pSortOrder}" data-type="number"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
