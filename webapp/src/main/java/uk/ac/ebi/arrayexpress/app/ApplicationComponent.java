@@ -21,9 +21,9 @@ abstract public class ApplicationComponent
 {
     private String componentName;
 
-    public ApplicationComponent( String name )
+    public ApplicationComponent()
     {
-        componentName = name;
+        componentName = getClass().getName().replaceFirst("^.+\\.", "");
     }
 
     public String getName()

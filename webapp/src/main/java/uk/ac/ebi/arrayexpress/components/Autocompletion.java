@@ -36,7 +36,6 @@ public class Autocompletion extends ApplicationComponent
 
     public Autocompletion()
     {
-        super("Autocompletion");
     }
 
     public void initialize() throws Exception

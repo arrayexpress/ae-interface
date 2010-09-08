@@ -57,7 +57,6 @@ public class Experiments extends ApplicationComponent implements DocumentSource
 
     public Experiments()
     {
-        super("Experiments");
     }
 
     public void initialize() throws Exception

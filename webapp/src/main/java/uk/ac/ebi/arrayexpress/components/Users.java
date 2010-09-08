@@ -33,7 +33,6 @@ public class Users extends ApplicationComponent
 
     public Users()
     {
-        super("Users");
     }
 
     public void initialize() throws Exception

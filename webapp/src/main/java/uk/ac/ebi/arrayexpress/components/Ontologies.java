@@ -50,7 +50,6 @@ public class Ontologies extends ApplicationComponent
 
     public Ontologies()
     {
-        super("Ontologies");
     }
 
     public void initialize() throws Exception
@@ -72,7 +71,6 @@ public class Ontologies extends ApplicationComponent
         this.ontology = efoOntology;
 
         autocompletion.rebuild();
-
 
         EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
                 getPreferences().getString("ae.efo.index.location")

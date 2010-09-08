@@ -40,7 +40,6 @@ public class JobsController extends ApplicationComponent
 
     public JobsController()
     {
-        super("JobsController");
     }
 
     public void initialize() throws Exception

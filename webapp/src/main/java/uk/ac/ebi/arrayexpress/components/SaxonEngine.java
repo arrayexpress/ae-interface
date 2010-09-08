@@ -60,7 +60,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public SaxonEngine()
     {
-        super("SaxonEngine");
     }
 
     public void initialize() throws Exception

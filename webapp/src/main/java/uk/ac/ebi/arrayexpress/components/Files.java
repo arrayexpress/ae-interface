@@ -46,7 +46,6 @@ public class Files extends ApplicationComponent implements DocumentSource
 
     public Files()
     {
-        super("Files");
     }
 
     public void initialize() throws Exception

@@ -1,5 +1,9 @@
 package uk.ac.ebi.arrayexpress.components;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
  *
@@ -17,38 +21,20 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension;
-import uk.ac.ebi.arrayexpress.utils.search.BackwardsCompatibleQueryConstructor;
-
-public class SearchEngine extends ApplicationComponent
+public class DbConnectionPool extends ApplicationComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private Controller controller;
-
-    public SearchEngine()
+    public DbConnectionPool()
     {
     }
 
     public void initialize() throws Exception
     {
-        this.controller = new Controller(getApplication().getResource("/WEB-INF/classes/aeindex.xml"));
-        SearchExtension.setController(getController());
-        getController().setQueryConstructor(new BackwardsCompatibleQueryConstructor());
     }
 
     public void terminate() throws Exception
     {
-        SearchExtension.setController(null);
-    }
-
-    public Controller getController()
-    {
-        return this.controller;
     }
 }
