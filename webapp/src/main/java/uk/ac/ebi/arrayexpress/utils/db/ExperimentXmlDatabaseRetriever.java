@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.utils.db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Clob;
@@ -70,9 +69,9 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
     // current experiment id (being executed)
     private Long experimentId;
 
-    public ExperimentXmlDatabaseRetriever( DataSource ds, List expList )
+    public ExperimentXmlDatabaseRetriever( String connName, List expList )
     {
-        super(ds, getExperimentXmlSql);
+        super(connName, getExperimentXmlSql);
         experimentList = expList;
         experimentXml = new StringBuilder(4000 * expList.size());
     }

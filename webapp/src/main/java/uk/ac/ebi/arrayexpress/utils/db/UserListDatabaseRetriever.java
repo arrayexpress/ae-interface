@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.users.UserList;
 import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,9 +41,9 @@ public class UserListDatabaseRetriever extends SqlStatementExecutor
     // user list
     private UserList userList;
 
-    public UserListDatabaseRetriever( DataSource ds )
+    public UserListDatabaseRetriever( String connName )
     {
-        super(ds, getUserListSql);
+        super(connName, getUserListSql);
         userList = new UserList();
     }
 

@@ -28,12 +28,11 @@ import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.db.DataSourceFinder;
+import uk.ac.ebi.arrayexpress.utils.db.ConnectionFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.UserListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.users.UserList;
 
-import javax.sql.DataSource;
 import java.io.File;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<Long> exps;
-    private DataSource ds;
+    private String connName;
     private StringBuffer xmlBuffer;
 
     private int numThreadsCompleted;
@@ -59,19 +58,19 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                 xmlBuffer = new StringBuffer(20000000);
 
                 JobDataMap jdm = jec.getMergedJobDataMap();
-                String dsNames = jdm.getString("dsnames");
-                if (null == dsNames || 0 == dsNames.length()) {
-                    dsNames = ((Experiments) getComponent("Experiments")).getDataSource();
+                String connNames = jdm.getString("connections");
+                if (null == connNames || 0 == connNames.length()) {
+                    connNames = ((Experiments) getComponent("Experiments")).getConnectionName();
                 }
-                logger.info("Reload of experiment data from [{}] requested", dsNames);
+                logger.info("Reload of experiment data from [{}] requested", connNames);
 
-                ds = new DataSourceFinder().findDataSource(dsNames);
-                if (null != ds) {
-                    UserList userList = new UserListDatabaseRetriever(ds).getUserList();
+                connName = new ConnectionFinder().findAvailableConnection(connNames);
+                if (!"".equals(connName)) {
+                    UserList userList = new UserListDatabaseRetriever(connName).getUserList();
                     ((Users)getComponent("Users")).setUserList(userList);
                     logger.info("Reloaded the user list from the database");
 
-                    exps = new ExperimentListDatabaseRetriever(ds).getExperimentList();
+                    exps = new ExperimentListDatabaseRetriever(connName).getExperimentList();
                     Thread.sleep(1);
 
                     logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
@@ -128,7 +127,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
             JobDataMap jdm = jec.getMergedJobDataMap();
             int index = Integer.parseInt(jdm.getString("index"));
             jdm.put("xmlBuffer", xmlBuffer);
-            jdm.put("ds", ds);
+            jdm.put("connection", connName);
             jdm.put("exps", exps.subList(index * expsPerThread, Math.min(((index + 1) * expsPerThread), exps.size())));
         }
     }
@@ -149,7 +148,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
         if (jec.getJobDetail().getName().equals("retrieve-xml")) {
             JobDataMap jdm = jec.getMergedJobDataMap();
             jdm.remove("xmlObject");
-            jdm.remove("ds");
+            jdm.remove("connection");
             jdm.remove("exps");
 
             incrementCompletedThreadsCounter();

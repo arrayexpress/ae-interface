@@ -91,6 +91,11 @@ public class ApplicationPreferences
         return value;
     }
 
+    public Configuration getConfSubset( String key )
+    {
+        return prefs.subset(key);
+    }
+
     private void load()
     {
         // todo: what to do if file is not there? must be a clear error message + shutdown

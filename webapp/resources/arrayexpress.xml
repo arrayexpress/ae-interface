@@ -8,8 +8,55 @@
         </reports>
     </app>
     <ae>
+        <db>
+            <connections>
+                <connection>
+                    <name>aepub1</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEPUB1</url>
+                    <username>${interface.application.db.username}</username>
+                    <password>${interface.application.db.password}</password>
+                    
+                </connection>
+                <connection>
+                    <name>aepub2</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@moe.ebi.ac.uk:1521:AEPUB2</url>
+                    <username>${interface.application.db.username}</username>
+                    <password>${interface.application.db.password}</password>
+                </connection>
+                <connection>
+                    <name>aepub3</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@smithers.ebi.ac.uk:1521:AEPUB3</url>
+                    <username>${interface.application.db.username}</username>
+                    <password>${interface.application.db.password}</password>
+                </connection>
+                <connection>
+                    <name>aecur</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@moe.ebi.ac.uk:1521:AECUR</url>
+                    <username>${interface.application.db.username}</username>
+                    <password>${interface.application.db.password}</password>
+                </connection>
+                <connection>
+                    <name>dwp.smithers</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@smithers.ebi.ac.uk:1521:AEDWP</url>
+                    <username>${interface.application.atlasdb.username}</username>
+                    <password>${interface.application.atlasdb.password}</password>
+                </connection>
+                <connection>
+                    <name>dwp.otto</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEDWP</url>
+                    <username>${interface.application.atlasdb.username}</username>
+                    <password>${interface.application.atlasdb.password}</password>
+                </connection>
+            </connections>
+        </db>
         <experiments>
-            <db><datasources>${interface.application.pref.experiments.datasources}</datasources></db>
+            <db><connections>${interface.application.pref.experiments.connections}</connections></db>
             <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</location></file>
             <reload>
                 <atstart>false</atstart>
@@ -18,7 +65,7 @@
             </reload>
         </experiments>
         <atlasexperiments>
-            <datasources>dwp.smithers, dwp.otto</datasources>
+            <connections>dwp.smithers, dwp.otto</connections>
             <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</location></file>
             <reload>
                 <atstart>false</atstart>

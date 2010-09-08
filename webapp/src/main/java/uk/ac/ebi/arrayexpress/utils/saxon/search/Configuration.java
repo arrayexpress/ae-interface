@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +43,8 @@ public class Configuration
             XMLConfiguration xmlConfig = new XMLConfiguration(configResource);
             List indexList = xmlConfig.configurationsAt("index");
 
-            for (Iterator it = indexList.iterator(); it.hasNext();) {
-                HierarchicalConfiguration indexConfig = (HierarchicalConfiguration)it.next();
+            for (Object conf : indexList) {
+                HierarchicalConfiguration indexConfig = (HierarchicalConfiguration)conf;
                 String indexId = indexConfig.getString("[@id]");
                 this.indicesConfig.put(indexId, indexConfig);
             }

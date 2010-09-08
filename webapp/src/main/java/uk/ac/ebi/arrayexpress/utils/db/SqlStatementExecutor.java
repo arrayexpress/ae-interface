@@ -19,8 +19,9 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
+import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,10 +35,10 @@ public abstract class SqlStatementExecutor
     // statement
     private PreparedStatement statement;
 
-    public SqlStatementExecutor( DataSource ds, String sql )
+    public SqlStatementExecutor( String conn, String sql )
     {
-        if (null != sql && null != ds) {
-            statement = prepareStatement(ds, sql);
+        if (null != sql && null != conn) {
+            statement = prepareStatement(conn, sql);
         }
     }
 
@@ -78,14 +79,14 @@ public abstract class SqlStatementExecutor
     // overridable method that would allow user to parse the result set upon successful execution
     protected abstract void processResultSet( ResultSet resultSet ) throws SQLException;
 
-    private PreparedStatement prepareStatement( DataSource ds, String sql )
+    private PreparedStatement prepareStatement( String connName, String sql )
     {
         PreparedStatement stmt = null;
-        if (null != ds) {
+        if (null != connName) {
             try {
-                Connection conn = ds.getConnection();
+                Connection conn = ((DbConnectionPool) Application.getInstance().getComponent("DbConnectionPool")).getConnection(connName);
                 stmt = conn.prepareStatement(sql);
-            } catch ( SQLException x ) {
+            } catch ( Exception x ) {
                 logger.error("Caught an exception:", x);
             }
         }

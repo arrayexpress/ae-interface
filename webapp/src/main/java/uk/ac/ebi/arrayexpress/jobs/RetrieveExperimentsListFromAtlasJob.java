@@ -23,10 +23,9 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.db.DataSourceFinder;
+import uk.ac.ebi.arrayexpress.utils.db.ConnectionFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListInAtlasDatabaseRetriever;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
@@ -37,15 +36,15 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         List<String> exps;
-        DataSource ds;
+        String connName;
 
         Application app = Application.getInstance();
-        String dsNames = app.getPreferences().getString("ae.atlasexperiments.datasources");
-        logger.info("Reload of list of Atlas experiments from [{}] requested", dsNames);
+        String connNames = app.getPreferences().getString("ae.atlasexperiments.connections");
+        logger.info("Reload of list of Atlas experiments from [{}] requested", connNames);
 
-        ds = new DataSourceFinder().findDataSource(dsNames);
-        if (null != ds) {
-            exps = new ExperimentListInAtlasDatabaseRetriever(ds).getExperimentList();
+        connName = new ConnectionFinder().findAvailableConnection(connNames);
+        if (null != connName) {
+            exps = new ExperimentListInAtlasDatabaseRetriever(connName).getExperimentList();
             Thread.sleep(1);
             try {
                 ((Experiments) app.getComponent("Experiments")).setExperimentsInAtlas(exps);

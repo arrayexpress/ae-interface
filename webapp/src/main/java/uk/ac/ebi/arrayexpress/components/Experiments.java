@@ -41,7 +41,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
 
     private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
-    private String dataSource;
+    private String connName;
     private TextFilePersistence<PersistableDocumentContainer> experiments;
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
@@ -161,21 +161,16 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public String getDataSource()
+    public String getConnectionName()
     {
-        if (null == this.dataSource) {
-            this.dataSource = StringTools.arrayToString(
-                    getPreferences().getStringArray("ae.experiments.db.datasources")
+        if (null == this.connName) {
+            this.connName = StringTools.arrayToString(
+                    getPreferences().getStringArray("ae.experiments.db.connections")
                     , ","
             );
         }
 
-        return this.dataSource;
-    }
-
-    public void setDataSource( String dataSource )
-    {
-        this.dataSource = dataSource;
+        return this.connName;
     }
 
     public void reload( String xmlString ) throws Exception

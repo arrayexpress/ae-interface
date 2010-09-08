@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.utils.db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,9 +41,9 @@ public class ExperimentListDatabaseRetriever extends SqlStatementExecutor
     // experiment list
     private List<Long> experimentList;
 
-    public ExperimentListDatabaseRetriever( DataSource ds )
+    public ExperimentListDatabaseRetriever( String connName )
     {
-        super(ds, getExperimentListSql);
+        super(connName, getExperimentListSql);
         experimentList = new ArrayList<Long>();
     }
 
