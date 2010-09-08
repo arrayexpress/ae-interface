@@ -17,8 +17,9 @@ package uk.ac.ebi.arrayexpress.app;
  *
  */
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConversionException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class ApplicationPreferences
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String prefsFileName;
-    private PropertiesConfiguration prefs;
+    private Configuration prefs;
 
     public ApplicationPreferences( String fileName )
     {
@@ -95,12 +96,14 @@ public class ApplicationPreferences
         // todo: what to do if file is not there? must be a clear error message + shutdown
         InputStream prefsStream = null;
         try {
-            prefs = new PropertiesConfiguration();
-            prefsStream = Application.getInstance().getResource(
-                    "/WEB-INF/classes/" + prefsFileName + ".properties"
-            ).openStream();
+            XMLConfiguration xmlConfig = new XMLConfiguration();
 
-            prefs.load(prefsStream);
+            prefsStream = Application.getInstance().getResource(
+                    "/WEB-INF/classes/" + prefsFileName + ".xml"
+            ).openStream();
+            xmlConfig.load(prefsStream);
+
+            prefs = xmlConfig;
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         } finally {
