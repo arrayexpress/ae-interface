@@ -24,12 +24,13 @@ import org.quartz.JobListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
+import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.db.ConnectionFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
+import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 import uk.ac.ebi.arrayexpress.utils.db.UserListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.users.UserList;
 
@@ -42,7 +43,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<Long> exps;
-    private String connName;
+    private IConnectionSource connectionSource;
     private StringBuffer xmlBuffer;
 
     private int numThreadsCompleted;
@@ -64,13 +65,14 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                 }
                 logger.info("Reload of experiment data from [{}] requested", connNames);
 
-                connName = new ConnectionFinder().findAvailableConnection(connNames);
-                if (!"".equals(connName)) {
-                    UserList userList = new UserListDatabaseRetriever(connName).getUserList();
+                connectionSource = ((DbConnectionPool)getComponent("DbConnectionPool")).getConnectionSource(connNames);
+
+                if (null != connectionSource) {
+                    UserList userList = new UserListDatabaseRetriever(connectionSource).getUserList();
                     ((Users)getComponent("Users")).setUserList(userList);
                     logger.info("Reloaded the user list from the database");
 
-                    exps = new ExperimentListDatabaseRetriever(connName).getExperimentList();
+                    exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
                     Thread.sleep(1);
 
                     logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
@@ -107,11 +109,16 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         logger.warn("No experiments found, reload aborted");
                     }
                 } else {
-                    logger.warn("No data sources available, reload aborted");
+                    logger.warn("No connections available from [{}], reload aborted", connNames);
                 }
             }
         } catch (Exception x) {
             throw new RuntimeException(x);
+        } finally {
+            if (null != connectionSource) {
+                connectionSource.close();
+                connectionSource = null;
+            }
         }
     }
 
@@ -127,7 +134,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
             JobDataMap jdm = jec.getMergedJobDataMap();
             int index = Integer.parseInt(jdm.getString("index"));
             jdm.put("xmlBuffer", xmlBuffer);
-            jdm.put("connection", connName);
+            jdm.put("connectionSource", connectionSource);
             jdm.put("exps", exps.subList(index * expsPerThread, Math.min(((index + 1) * expsPerThread), exps.size())));
         }
     }
@@ -148,7 +155,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
         if (jec.getJobDetail().getName().equals("retrieve-xml")) {
             JobDataMap jdm = jec.getMergedJobDataMap();
             jdm.remove("xmlObject");
-            jdm.remove("connection");
+            jdm.remove("connectionSource");
             jdm.remove("exps");
 
             incrementCompletedThreadsCounter();

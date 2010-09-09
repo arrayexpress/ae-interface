@@ -22,9 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
+import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.db.ConnectionFinder;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListInAtlasDatabaseRetriever;
+import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 
 import java.util.List;
 
@@ -36,20 +37,21 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         List<String> exps;
-        String connName;
 
         Application app = Application.getInstance();
         String connNames = app.getPreferences().getString("ae.atlasexperiments.connections");
         logger.info("Reload of list of Atlas experiments from [{}] requested", connNames);
 
-        connName = new ConnectionFinder().findAvailableConnection(connNames);
-        if (null != connName) {
-            exps = new ExperimentListInAtlasDatabaseRetriever(connName).getExperimentList();
+        IConnectionSource connectionSource = ((DbConnectionPool)getComponent("DbConnectionPool")).getConnectionSource(connNames);
+        if (null != connectionSource) {
+            exps = new ExperimentListInAtlasDatabaseRetriever(connectionSource).getExperimentList();
             Thread.sleep(1);
             try {
                 ((Experiments) app.getComponent("Experiments")).setExperimentsInAtlas(exps);
             } catch (Exception x) {
                 throw new RuntimeException(x);
+            } finally {
+                connectionSource.close();
             }
             logger.info("Got [{}] experiments listed in Atlas", exps.size());
         } else {

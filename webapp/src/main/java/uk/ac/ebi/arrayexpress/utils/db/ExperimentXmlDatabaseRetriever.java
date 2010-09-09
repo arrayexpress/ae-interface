@@ -69,9 +69,9 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
     // current experiment id (being executed)
     private Long experimentId;
 
-    public ExperimentXmlDatabaseRetriever( String connName, List expList )
+    public ExperimentXmlDatabaseRetriever( IConnectionSource connSource, List expList )
     {
-        super(connName, getExperimentXmlSql);
+        super(connSource, getExperimentXmlSql);
         experimentList = expList;
         experimentXml = new StringBuilder(4000 * expList.size());
     }
@@ -92,7 +92,11 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
         } catch ( InterruptedException x ) {
             logger.debug("Retrieval aborted");
         } finally {
-            closeConnection();
+            try {
+                closeConnection();
+            } catch ( SQLException x ) {
+                logger.error("Caught an exception:", x);
+            }
         }
         return experimentXml.toString();
     }

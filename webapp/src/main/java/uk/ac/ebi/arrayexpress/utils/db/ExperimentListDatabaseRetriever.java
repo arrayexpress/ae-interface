@@ -41,9 +41,9 @@ public class ExperimentListDatabaseRetriever extends SqlStatementExecutor
     // experiment list
     private List<Long> experimentList;
 
-    public ExperimentListDatabaseRetriever( String connName )
+    public ExperimentListDatabaseRetriever( IConnectionSource connSource )
     {
-        super(connName, getExperimentListSql);
+        super(connSource, getExperimentListSql);
         experimentList = new ArrayList<Long>();
     }
 

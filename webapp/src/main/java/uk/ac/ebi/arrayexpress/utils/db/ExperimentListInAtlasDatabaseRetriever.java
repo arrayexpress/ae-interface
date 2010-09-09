@@ -38,9 +38,9 @@ public class ExperimentListInAtlasDatabaseRetriever extends SqlStatementExecutor
     // experiment list
     private List<String> experimentList;
 
-    public ExperimentListInAtlasDatabaseRetriever( String connName )
+    public ExperimentListInAtlasDatabaseRetriever( IConnectionSource connSource )
     {
-        super(connName, getExperimentListSql);
+        super(connSource, getExperimentListSql);
         experimentList = new ArrayList<String>();
     }
 

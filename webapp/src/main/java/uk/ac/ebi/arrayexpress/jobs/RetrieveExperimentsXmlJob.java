@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentXmlDatabaseRetriever;
+import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 
 import java.util.List;
 
@@ -37,12 +38,12 @@ public class RetrieveExperimentsXmlJob implements InterruptableJob
         myThread = Thread.currentThread();
         try {
             JobDataMap jdm = jec.getMergedJobDataMap();
-            String connName = (String)jdm.get("connection");
+            IConnectionSource connSource = (IConnectionSource)jdm.get("connectionSource");
             List exps = (List) jdm.get("exps");
             StringBuffer xmlBuffer = (StringBuffer) jdm.get("xmlBuffer");
             xmlBuffer.append(
                     new ExperimentXmlDatabaseRetriever(
-                            connName,
+                            connSource,
                             exps).getExperimentXml()
             );
         } catch ( InterruptedException x ) {

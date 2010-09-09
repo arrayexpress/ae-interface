@@ -41,9 +41,9 @@ public class UserListDatabaseRetriever extends SqlStatementExecutor
     // user list
     private UserList userList;
 
-    public UserListDatabaseRetriever( String connName )
+    public UserListDatabaseRetriever( IConnectionSource connSource )
     {
-        super(connName, getUserListSql);
+        super(connSource, getUserListSql);
         userList = new UserList();
     }
 

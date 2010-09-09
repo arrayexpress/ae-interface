@@ -6,8 +6,10 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +36,7 @@ public class DbConnectionPool extends ApplicationComponent
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private Map<String, BoneCPConfig> connPoolConfigs = new HashMap<String, BoneCPConfig>();
-    private Map<String, BoneCP> connPools = new HashMap<String, BoneCP>();
+    private Map<String, BoneCPConfig> configs = new HashMap<String, BoneCPConfig>();
 
     public void initialize() throws Exception
     {
@@ -56,32 +57,71 @@ public class DbConnectionPool extends ApplicationComponent
                 cpConf.setJdbcUrl(connConf.getString("url"));
                 cpConf.setUsername(connConf.getString("username"));
                 cpConf.setPassword(connConf.getString("password"));
-
-                this.connPoolConfigs.put(connName, cpConf);
+                cpConf.setConnectionTestStatement(connConf.getString("testStatement"));
+                cpConf.setMinConnectionsPerPartition(connConf.getInt("minConnections"));
+                cpConf.setMaxConnectionsPerPartition(connConf.getInt("maxConnections"));
+                cpConf.setPartitionCount(1);
+                this.configs.put(connName, cpConf);
             }
         }
     }
 
     public void terminate() throws Exception
     {
-        for (BoneCP pool : connPools.values()) {
-            pool.shutdown();
-        }
     }
 
-    public Connection getConnection( String poolName ) throws Exception
+    public IConnectionSource getConnectionSource( String connectionNames ) throws Exception
     {
-        if (!connPoolConfigs.containsKey(poolName)) {
-            logger.error("Connection [{}] is not defined, returning null");
-            return null;
+        if (null != connectionNames) {
+            String[] conns = connectionNames.trim().split("\\s*,\\s*");
+            for ( String conn : conns ) {
+                logger.info("Checking connection [{}]", conn);
+                if (!configs.containsKey(conn)) {
+                    logger.error("Connection [{}] is not configured", conn);
+                } else {
+                    try {
+                        IConnectionSource source = new ConnectionSource(conn, configs.get(conn));
+                        logger.info("Will use available connection [{}]", conn);
+                        return source;
+                    } catch (SQLException x) {
+                        logger.warn("Connection [{}] is unavailable", conn);
+                        logger.debug("Exception was:", x);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public class ConnectionSource implements IConnectionSource
+    {
+        private BoneCP connectionPool;
+        private String name;
+
+        public ConnectionSource( String name, BoneCPConfig cpConfig ) throws SQLException
+        {
+            this.name = name;
+            this.connectionPool = new BoneCP(cpConfig);
         }
 
-        if (!connPools.containsKey(poolName)) {
-            BoneCP connectionPool = new BoneCP(connPoolConfigs.get(poolName));
-            connPools.put(poolName, connectionPool);
+        public String getName()
+        {
+            return this.name;
         }
 
-        BoneCP pool = connPools.get(poolName);
-        return pool.getConnection();
+        public Connection getConnection() throws SQLException
+        {
+            if (null != this.connectionPool) {
+                return this.connectionPool.getConnection();
+            } else {
+                throw new SQLException("Unable to obtain a connection from pool [" + this.name + "], pool is not created or closed");
+            }
+        }
+
+        public void close()
+        {
+            this.connectionPool.shutdown();
+            this.connectionPool = null;
+        }
     }
 }

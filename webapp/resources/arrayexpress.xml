@@ -16,7 +16,9 @@
                     <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEPUB1</url>
                     <username>${interface.application.db.username}</username>
                     <password>${interface.application.db.password}</password>
-                    
+                    <minConnections>30</minConnections>
+                    <maxConnections>30</maxConnections>
+                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
                 </connection>
                 <connection>
                     <name>aepub2</name>
@@ -24,6 +26,9 @@
                     <url>jdbc:oracle:thin:@moe.ebi.ac.uk:1521:AEPUB2</url>
                     <username>${interface.application.db.username}</username>
                     <password>${interface.application.db.password}</password>
+                    <minConnections>30</minConnections>
+                    <maxConnections>30</maxConnections>
+                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
                 </connection>
                 <connection>
                     <name>aepub3</name>
@@ -31,6 +36,9 @@
                     <url>jdbc:oracle:thin:@smithers.ebi.ac.uk:1521:AEPUB3</url>
                     <username>${interface.application.db.username}</username>
                     <password>${interface.application.db.password}</password>
+                    <minConnections>30</minConnections>
+                    <maxConnections>30</maxConnections>
+                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
                 </connection>
                 <connection>
                     <name>aecur</name>
@@ -38,6 +46,9 @@
                     <url>jdbc:oracle:thin:@moe.ebi.ac.uk:1521:AECUR</url>
                     <username>${interface.application.db.username}</username>
                     <password>${interface.application.db.password}</password>
+                    <minConnections>30</minConnections>
+                    <maxConnections>30</maxConnections>
+                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
                 </connection>
                 <connection>
                     <name>dwp.smithers</name>
@@ -45,6 +56,9 @@
                     <url>jdbc:oracle:thin:@smithers.ebi.ac.uk:1521:AEDWP</url>
                     <username>${interface.application.atlasdb.username}</username>
                     <password>${interface.application.atlasdb.password}</password>
+                    <minConnections>5</minConnections>
+                    <maxConnections>5</maxConnections>
+                    <testStatement>select 1 from ae1__experiment__main where rownum = 1</testStatement>
                 </connection>
                 <connection>
                     <name>dwp.otto</name>
@@ -52,6 +66,9 @@
                     <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEDWP</url>
                     <username>${interface.application.atlasdb.username}</username>
                     <password>${interface.application.atlasdb.password}</password>
+                    <minConnections>5</minConnections>
+                    <maxConnections>5</maxConnections>
+                    <testStatement>select 1 from ae1__experiment__main where rownum = 1</testStatement>
                 </connection>
             </connections>
         </db>

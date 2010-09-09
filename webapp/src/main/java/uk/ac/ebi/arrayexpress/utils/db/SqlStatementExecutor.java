@@ -19,8 +19,6 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.Application;
-import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,10 +33,15 @@ public abstract class SqlStatementExecutor
     // statement
     private PreparedStatement statement;
 
-    public SqlStatementExecutor( String conn, String sql )
+    public SqlStatementExecutor( IConnectionSource source, String sql )
     {
-        if (null != sql && null != conn) {
-            statement = prepareStatement(conn, sql);
+        if (null != sql && null != source) {
+            try {
+                Connection conn = source.getConnection();
+                statement = prepareStatement(conn, sql);
+            } catch ( SQLException x ) {
+                logger.error("Caught an exception:", x);
+            }
         }
     }
 
@@ -52,7 +55,7 @@ public abstract class SqlStatementExecutor
                 rs = statement.executeQuery();
                 processResultSet(rs);
                 result = true;
-            } catch ( Exception x ) {
+            } catch ( SQLException x ) {
                 logger.error("Caught an exception:", x);
             } finally {
                 if (null != rs) {
@@ -64,7 +67,11 @@ public abstract class SqlStatementExecutor
                 }
 
                 if (!shouldRetainConnection) {
-                    closeConnection();
+                    try {
+                        closeConnection();
+                    } catch ( SQLException x ) {
+                        logger.error("Caught an exception:", x);
+                    }
                 }
             }
         } else {
@@ -79,29 +86,20 @@ public abstract class SqlStatementExecutor
     // overridable method that would allow user to parse the result set upon successful execution
     protected abstract void processResultSet( ResultSet resultSet ) throws SQLException;
 
-    private PreparedStatement prepareStatement( String connName, String sql )
+    private PreparedStatement prepareStatement( Connection conn, String sql ) throws SQLException
     {
         PreparedStatement stmt = null;
-        if (null != connName) {
-            try {
-                Connection conn = ((DbConnectionPool) Application.getInstance().getComponent("DbConnectionPool")).getConnection(connName);
-                stmt = conn.prepareStatement(sql);
-            } catch ( Exception x ) {
-                logger.error("Caught an exception:", x);
-            }
+        if (null != conn) {
+            stmt = conn.prepareStatement(sql);
         }
 
         return stmt;
     }
 
-    protected void closeConnection()
+    protected void closeConnection() throws SQLException
     {
         if (null != statement) {
-            try {
-                statement.getConnection().close();
-            } catch ( SQLException x ) {
-                logger.error("Caught an exception:", x);
-            }
+            statement.getConnection().close();
             statement = null;
         }
     }
