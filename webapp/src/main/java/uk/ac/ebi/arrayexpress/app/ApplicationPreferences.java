@@ -101,6 +101,9 @@ public class ApplicationPreferences
         // todo: what to do if file is not there? must be a clear error message + shutdown
         InputStream prefsStream = null;
         try {
+            // set list delimiter to bogus value to disable list parsing in configuration values
+            XMLConfiguration.setDefaultListDelimiter('\uffff');
+
             XMLConfiguration xmlConfig = new XMLConfiguration();
 
             prefsStream = Application.getInstance().getResource(
