@@ -105,21 +105,21 @@
             <fgemdatafiles>
                 <xsl:value-of select="$vGenDescription/fgemdatafiles"/>    
             </fgemdatafiles>
-            <xsl:for-each select="sampleattribute[@category][fn:generate-id() = fn:generate-id(fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/@id, @category))[1])]">
+            <xsl:for-each select="sampleattribute[@category][fn:generate-id() = fn:generate-id(fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/id, @category))[1])]">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
                 <sampleattribute>
                     <category><xsl:value-of select="@category"/></category>
-                    <xsl:for-each select="fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/@id, @category))">
+                    <xsl:for-each select="fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/id, @category))">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
 					</xsl:for-each>
                 </sampleattribute>
             </xsl:for-each>
-            <xsl:for-each select="experimentalfactor[@name][fn:generate-id() = fn:generate-id(fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/@id, @name))[1])]">
+            <xsl:for-each select="experimentalfactor[@name][fn:generate-id() = fn:generate-id(fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/id, @name))[1])]">
                 <xsl:sort select="fn:lower-case(@name)" order="ascending"/>
                 <experimentalfactor>
                     <name><xsl:value-of select="@name"/></name>
-                    <xsl:for-each select="fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/@id, @name))">
+                    <xsl:for-each select="fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/id, @name))">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
 					</xsl:for-each>
