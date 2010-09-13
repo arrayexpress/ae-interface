@@ -25,4 +25,4 @@ sail21|i|
 sail22|i|
 sail23|i|
 sample|o|EFO_0000311|
-sample call|o|EFO_0001639|
+sample cell|o|EFO_0001639|

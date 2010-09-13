@@ -213,6 +213,11 @@ $.Autocompleter = function(input, options) {
 		$(input.form).unbind(".autocomplete");
 	});
 
+    function debugLog(text) {
+    //  if ($.browser.safari) {
+    //      window.console.log(text);
+    //  }
+    }
 
 	function selectCurrent() {
 		var selected = select.selected();
@@ -267,8 +272,11 @@ $.Autocompleter = function(input, options) {
 
 		previousValue = currentValue;
 
+        debugLog("[onChange] currentValue: [" + currentValue + "]");
         var term = currentTerm(currentValue);
+        debugLog("[onChange] term: [" + term + "]");
         var text = getTermText(term);
+        debugLog("[onChange] text: [" + text + "]");
 		if ( text.length >= options.minChars) {
 			$input.addClass(options.loadingClass);
 			request(term, receiveData, hideResultsNow);
@@ -326,38 +334,53 @@ $.Autocompleter = function(input, options) {
     function currentTerm(value, position)
     {
         var cursorPosition = $(input).caret().start;
-
         var beforeCursor = cursorPosition > 0 ? value.substring(0, cursorPosition) : "";
         var afterCursor = value.substring(cursorPosition);
-
+        debugLog("[currentTerm] beforeCursor: [" + beforeCursor + "]");
+        debugLog("[currentTerm] lastTerm(beforeCursor): [" + lastTerm(beforeCursor) + "]");
+        debugLog("[currentTerm] afterCursor: [" + afterCursor + "]");
         value = firstTerm(lastTerm(beforeCursor) + afterCursor);
+
         return value;
 	}
 
+    function stripQuotes(text)
+    {
+        return String(text).replace("\"", "");   
+    }
+
     function firstTerm(value)
     {
+        debugLog("[firstTerm] value(1): [" + value + "]");
         if (/^[^ ]*\"/.test(value)) { // term is multi-worded
             var openQuotePos = value.indexOf("\"");
             var beforeQuote = value.substring(0, openQuotePos);
             var afterQuote = value.substring(openQuotePos + 1);
-            return beforeQuote
+            value = beforeQuote
                     + "\""
                     + substringBeforeFirst(afterQuote, "\"")
                     + (-1 != afterQuote.indexOf("\"") ? "\"" : "");
+            debugLog("[firstTerm] value(2): [" + value + "]");
         } else {
-            return substringBeforeFirst(value, " ");
+            value = substringBeforeRegex(value, /AND|OR|NOT|\s\+|\s\-/g).replace(/\s*$/, "");
+            debugLog("[firstTerm] value(3): [" + value + "]");
         }
+        return value;
     }
 
     function lastTerm(value)
     {
+        debugLog("[lastTerm] value(1): [" + value + "]");
         value = value.replace(/\"$/, "").replace(/\"[^\"]*\"/g, "");
+        debugLog("[lastTerm] value(2): [" + value + "]");
         if (-1 != value.indexOf("\"")) {
-            return matchFirst(value, /([^ ]*\".*)$/);
+            value = matchFirst(value, /([^ ]*\".*)$/);
+            debugLog("[lastTerm] value(3): [" + value + "]");
         } else {
-            value = substringAfterLast(value, " ");
-            return value;
+            value = substringAfterRegex(value, /AND|OR|NOT|\s\+|\s\-/g);
+            debugLog("[lastTerm] value(4): [" + value + "]");
         }
+        return value;
     }
 
     function matchFirst(string, regex)
@@ -367,6 +390,28 @@ $.Autocompleter = function(input, options) {
             return matches[0];
         } else {
             return "";
+        }
+    }
+
+    function substringBeforeRegex(string, regex)
+    {
+        var pos = string.search(regex);
+        if (-1 == pos) {
+            return string;
+        } else {
+            var matches = string.split(regex);
+            return matches[0];
+        }
+    }
+
+    function substringAfterRegex(string, regex)
+    {
+        var pos = string.search(regex);
+        if (-1 == pos) {
+            return string;
+        } else {
+            var matches = string.split(regex);
+            return matches[matches.length - 1];
         }
     }
 
