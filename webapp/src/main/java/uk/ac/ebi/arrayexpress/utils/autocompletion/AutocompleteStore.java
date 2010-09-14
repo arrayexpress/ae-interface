@@ -38,8 +38,14 @@ public class AutocompleteStore
             String text2 = s2.substring(0, (-1 != pos2 ? pos2 : s2.length() ));
 
             int comp = text1.compareTo(text2);
-            if (0 == comp && -1 != pos1 && -1 != pos2) {
-                comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
+            if (0 == comp) {
+                if (-1 == pos1 && -1 != pos2) {
+                    comp = -1;
+                } else if (-1 != pos1 && -1 == pos2) {
+                    comp = 1;
+                } else {
+                    comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
+                }
             }
         return comp;
         }
@@ -60,6 +66,13 @@ public class AutocompleteStore
     public void addData( AutocompleteData data )
     {
         String key = data.getText() + "|" + data.getDataType() + "_" + data.getData();
+//        List<String> matches = this.trie.findCompletions(data.getText());
+//        for (String matchKey : matches) {
+//            AutocompleteData match = this.objects.get(matchKey);
+//            if (match.getText().equals(data.getText())) {
+//                
+//            }
+//        }
         this.trie.add(key);
         this.objects.put(key, data);
     }
