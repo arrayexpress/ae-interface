@@ -66,13 +66,7 @@ public class AutocompleteStore
     public void addData( AutocompleteData data )
     {
         String key = data.getText() + "|" + data.getDataType() + "_" + data.getData();
-//        List<String> matches = this.trie.findCompletions(data.getText());
-//        for (String matchKey : matches) {
-//            AutocompleteData match = this.objects.get(matchKey);
-//            if (match.getText().equals(data.getText())) {
-//                
-//            }
-//        }
+
         this.trie.add(key);
         this.objects.put(key, data);
     }
