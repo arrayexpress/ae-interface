@@ -68,6 +68,7 @@
     <modules>
         <module>components</module>
         <module>webapp</module>
+        <module>redirector</module>
     </modules>
 </project>
 

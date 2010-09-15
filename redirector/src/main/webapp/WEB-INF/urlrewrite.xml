@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite
+        PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+
+<urlrewrite>
+    <!-- test rule: proxy everything -->
+    <!--
+    <rule>
+        <from>^/(.*)$</from>
+        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/$1</to>
+    </rule>
+    -->
+    <!-- rss feeds should be proxied -->
+    <rule>
+        <from>^/rss/(.+)$</from>
+        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/rss/$1</to>
+    </rule>
+
+    <!-- xml rest api should be proxied -->
+    <rule>
+        <from>^/xml/(.+)$</from>
+        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/xml/$1</to>
+    </rule>
+
+    <!-- json rest api should be proxied -->
+    <rule>
+        <from>^/json/(.+)$</from>
+        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/json/$1</to>
+    </rule>
+
+    <!-- verify-login.txt should be proxied -->
+    <rule>
+        <from>^/verify-login.txt$</from>
+        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/verify-login.txt</to>
+    </rule>
+
+    <!-- the rest should be redirected (with or without query string) -->
+    <rule>
+        <from>^/(.*)$</from>
+        <condition type="query-string">.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/$1?%{query-string}</to>
+    </rule>
+
+    <rule>
+        <from>^/(.*)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/$1</to>
+    </rule>
+</urlrewrite>
