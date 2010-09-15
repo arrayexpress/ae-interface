@@ -20,7 +20,7 @@
         <interface.application.log.default.priority>INFO</interface.application.log.default.priority>
         <interface.application.log.appender.ref>ROLLINGFILE</interface.application.log.appender.ref>
 
-        <interface.application.base.path>/microarray-as/ae</interface.application.base.path>
+        <interface.application.base.path>/arrayexpress</interface.application.base.path>
         <interface.application.link.www_domain/>
         <interface.application.link.www_domain_hack>http://www.embl-ebi.ac.uk</interface.application.link.www_domain_hack>
         <interface.application.link.query_help>${interface.application.link.www_domain}/microarray/doc/help/ae_help.html</interface.application.link.query_help>
@@ -37,7 +37,6 @@
 
         <interface.application.pref.experiments.connections>aepub3,aepub2</interface.application.pref.experiments.connections>
         <interface.application.pref.experiments.reload.schedule>0 0 6 * * ?</interface.application.pref.experiments.reload.schedule>
-        <interface.application.pref.experiments.reload.src.file.location>/ebi/microarray/home/arrayexpress/ae2_funtest/software/browse/ae-browse.xml</interface.application.pref.experiments.reload.src.file.location>
         <interface.application.pref.files.root.location>/ebi/ArrayExpress-ftp</interface.application.pref.files.root.location>
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>3600000</interface.application.pref.files.rescan.interval>
@@ -99,7 +98,6 @@
         <profile>
             <id>preproduction-dukkha</id>
             <properties>
-                <interface.application.base.path>/arrayexpress</interface.application.base.path>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
                 <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
