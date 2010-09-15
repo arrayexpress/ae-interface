@@ -114,8 +114,12 @@ public class HttpProxyServlet extends HttpServlet
                     out.close();
                 }
             } catch ( Exception x ) {
-                logger.error("Caught an exception:", x);
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
+                if (x.getClass().getName().equals("org.apache.catalina.connector.ClientAbortException")) {
+                    logger.warn("Client aborted connection");
+                } else {
+                    logger.error("Caught an exception:", x);
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
+                }
             } finally {
                 getMethod.releaseConnection();
             }
