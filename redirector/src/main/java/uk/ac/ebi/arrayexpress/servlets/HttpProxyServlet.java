@@ -53,7 +53,7 @@ public class HttpProxyServlet extends HttpServlet
 
         if (0 < url.length()) {
             if (!hostUrlRegex.test(url)) { // no host here, will self
-                url = "http://localhost:" + String.valueOf(request.getServerPort()) + "/" + url;
+                url = "http://localhost:" + String.valueOf(request.getLocalPort()) + "/" + url;
             }
             url = new StringBuilder(url).append(null != queryString ? "?" + queryString : "").toString();
             logger.debug("Will access [{}]", url);
