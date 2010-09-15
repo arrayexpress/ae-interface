@@ -16,6 +16,7 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
+    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="xml" indent="no"/>
     
@@ -26,7 +27,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
-        <experiments version="1.2" revision="100906"
+        <experiments version="1.2" revision="100915"
                      total="{$vTotal}"
                      total-samples="{sum($vFilteredExperiments/samples)}"
                      total-assays="{sum($vFilteredExperiments/assays)}">
@@ -52,17 +53,33 @@ to obtain detailed information on files available for the experiment.
 For more information, please go to:
     http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
                 </xsl:comment>
-                <raw name="{accession}.raw.zip"
-                     count="{sum(bioassaydatagroup[isderived = '0']/bioassays)}"
-                     celcount="{sum(bioassaydatagroup[isderived = '0'][contains(dataformat, 'CEL')]/bioassays)}"/>
-                <fgem name="{accession}.processed.zip"
-                      count="{sum(bioassaydatagroup[isderived = '1']/bioassays)}"/>
-                <idf name="{accession}.idf.txt"/>
-                <sdrf name="{accession}.sdrf.txt"/>
-                <biosamples>
-                        <png name="{accession}.biosamples.png"/>
-                        <svg name="{accession}.biosamples.svg"/>
-                </biosamples>
+                <xsl:variable name="vAccession" select="accession"/>
+                <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]"/>
+                <xsl:if test="$vFiles/file[@kind = 'raw' and position() = 1]">
+                    <raw name="{$vFiles/file[@kind = 'raw' and position() = 1]/@name}"
+                         count="{sum(bioassaydatagroup[isderived = '0']/bioassays)}"
+                         celcount="{sum(bioassaydatagroup[isderived = '0'][contains(dataformat, 'CEL')]/bioassays)}"/>
+                </xsl:if>
+                <xsl:if test="$vFiles/file[@kind = 'fgem' and position() = 1]">
+                    <fgem name="{$vFiles/file[@kind = 'fgem' and position() = 1]/@name}"
+                          count="{sum(bioassaydatagroup[isderived = '1']/bioassays)}"/>
+                </xsl:if>
+                <xsl:if test="$vFiles/file[@kind = 'idf' and @extension = 'txt']">
+                    <idf name="{$vFiles/file[@kind = 'idf' and @extension = 'txt']/@name}"/>
+                </xsl:if>
+                <xsl:if test="$vFiles/file[@kind = 'sdrf' and @extension = 'txt']">
+                    <sdrf name="{$vFiles/file[@kind = 'sdrf' and @extension = 'txt']/@name}"/>
+                </xsl:if>
+                <xsl:if test="$vFiles/file[@kind = 'biosamples']">
+                    <biosamples>
+                        <xsl:if test="$vFiles/file[@kind = 'biosamples' and @extension = 'png']">
+                            <png name="{$vFiles/file[@kind = 'biosamples' and @extension = 'png']/@name}"/>
+                        </xsl:if>
+                        <xsl:if test="$vFiles/file[@kind = 'biosamples' and @extension = 'svg']">
+                            <png name="{$vFiles/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
+                        </xsl:if>
+                    </biosamples>
+                </xsl:if>
             </files>
         </experiment>
     </xsl:template>

@@ -33,7 +33,7 @@
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <xsl:variable name="vOutput">
-            <experiments version="1.2" revision="100906"
+            <experiments version="1.2" revision="100915"
                          total="{$vTotal}"
                          total-samples="{sum($vFilteredExperiments/samples)}"
                          total-assays="{sum($vFilteredExperiments/assays)}">
