@@ -43,10 +43,12 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     private String indexLocation;
     private Directory indexDirectory;
+    private Set<String> stopWords;
 
-    public EFOExpansionLookupIndex( String indexLocation )
+    public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords )
     {
         this.indexLocation = indexLocation;
+        this.stopWords = stopWords;
     }
 
     public void setOntology( EFOOntologyHelper ontology )
@@ -80,24 +82,35 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> synonyms = node.getAlternativeTerms();
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
-        if (synonyms.size() > 0 || childTerms.size() > 0) {
+        if (isStopTerm(term)) {
+            this.logger.warn("Term [{}] is a stop-word, skipping", term);
+        } else {
 
-            Document d = new Document();
+            if (synonyms.size() > 0 || childTerms.size() > 0) {
 
-            for (String syn : synonyms) {
-                if (childTerms.contains(syn)) {
-                    this.logger.warn("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
-                } else {
-                    addIndexField(d, "term", syn, true, true);
+                Document d = new Document();
+
+                for (String syn : synonyms) {
+                    if (childTerms.contains(syn)) {
+                        this.logger.warn("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
+                    } else if (isStopExpansionTerm(syn)) {
+                        this.logger.warn("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
+                    } else {
+                        addIndexField(d, "term", syn, true, true);
+                    }
                 }
-            }
 
-            for (String efoTerm : childTerms) {
-                addIndexField(d, "efo", efoTerm, false, true);
-            }
+                for (String efoTerm : childTerms) {
+                    if (isStopExpansionTerm(efoTerm)) {
+                        this.logger.warn("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
+                    } else {
+                        addIndexField(d, "efo", efoTerm, false, true);
+                    }
+                }
 
-            addIndexField(d, "term", term, true, true);
-            addIndexDocument(w, d);
+                addIndexField(d, "term", term, true, true);
+                addIndexDocument(w, d);
+            }
         }
     }
 
@@ -224,4 +237,16 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
         return query;
     }
+
+    private boolean isStopTerm( String str )
+    {
+        return null == str || str.length() < 3 || stopWords.contains(str.toLowerCase());
+    }
+
+    private boolean isStopExpansionTerm( String str )
+    {
+        return isStopTerm(str) || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
+    }
+
+
 }

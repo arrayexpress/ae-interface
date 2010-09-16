@@ -28,31 +28,6 @@ package uk.ac.ebi.microarray.ontology.efo;
 public final class Utils
 {
     /**
-     * Checks if the given string should not be added to the list of terms.
-     * Current rule is that we filter out null strings or strings shorter than 3 characters
-     *
-     * @param str String to check.
-     * @return true if the given string is a stop word (i.e. should not be added to the index)
-     */
-    public static boolean isStopTerm( String str )
-    {
-        return null == str || str.length() < 3;
-    }
-
-    /**
-     * Checks if the given string should not be added to the list of synonyms.
-     * Current rule is that we filter out null strings, strings shorter than 3 characters
-     * and strings contain some patterns that we established
-     *
-     * @param str String to check.
-     * @return true if the given string is a stop word (i.e. should not be added to the index)
-     */
-    public static boolean isStopSynonym( String str )
-    {
-        return isStopTerm(str) || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
-    }
-
-    /**
      * For null string returns an empty one,
      * for not null strings returns its trimmed copy
      * with leading and trailing white spaces removed.

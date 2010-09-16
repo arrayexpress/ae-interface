@@ -28,9 +28,7 @@ import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class Ontologies extends ApplicationComponent
@@ -72,8 +70,14 @@ public class Ontologies extends ApplicationComponent
 
         autocompletion.rebuild();
 
+        Set<String> stopWords = new HashSet<String>();
+        String[] words = getPreferences().getString("ae.efo.stopWords").split("\\s*,\\s*");
+        if (null != words && words.length > 0) {
+            stopWords.addAll(Arrays.asList(words));
+        }
         EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
                 getPreferences().getString("ae.efo.index.location")
+                , stopWords
         );
 
         ix.setOntology(getOntology());
