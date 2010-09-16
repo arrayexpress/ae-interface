@@ -37,8 +37,8 @@ public class HttpProxyServlet extends HttpServlet
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final RegexHelper paramRegex = new RegexHelper("servlets/proxy/+(.+)", "i");
-    private final RegexHelper hostUrlRegex = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
+    private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
+    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
 
     private final int PROXY_BUFFER_SIZE = 64000;
 
@@ -48,11 +48,11 @@ public class HttpProxyServlet extends HttpServlet
     {
         logRequest(logger, request, "GET");
 
-        String url = paramRegex.matchFirst(request.getRequestURL().toString());
+        String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
         String queryString = request.getQueryString();
 
         if (0 < url.length()) {
-            if (!hostUrlRegex.test(url)) { // no host here, will self
+            if (!TEST_HOST_IN_URL_REGEX.test(url)) { // no host here, will self
                 url = "http://localhost:" + String.valueOf(request.getLocalPort()) + "/" + url;
             }
             url = new StringBuilder(url).append(null != queryString ? "?" + queryString : "").toString();

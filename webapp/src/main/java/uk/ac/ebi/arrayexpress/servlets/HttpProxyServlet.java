@@ -26,17 +26,21 @@ import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.CharBuffer;
+import java.util.Enumeration;
 
 public class HttpProxyServlet extends ApplicationServlet
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
+    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
+
+    private final int PROXY_BUFFER_SIZE = 64000;
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
@@ -49,17 +53,27 @@ public class HttpProxyServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        String path = new RegexHelper("servlets/proxy/(.+)", "i")
-                .matchFirst(request.getRequestURL().toString());
+        String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
         String queryString = request.getQueryString();
 
-        if (0 < path.length()) {
-            // todo: wtf is this hardcoded?
-            String url = new StringBuilder("http://www.ebi.ac.uk/").append(path).append(null != queryString ? "?" + queryString : "").toString();
+        if (0 < url.length()) {
+            if (!TEST_HOST_IN_URL_REGEX.test(url)) { // no host here, will self
+                url = "http://localhost:" + String.valueOf(request.getLocalPort()) + "/" + url;
+            }
+            url = new StringBuilder(url).append(null != queryString ? "?" + queryString : "").toString();
             logger.debug("Will access [{}]", url);
 
             HttpClient httpClient = new HttpClient();
             GetMethod getMethod = new GetMethod(url);
+
+            Enumeration requestHeaders = request.getHeaderNames();
+            while (requestHeaders.hasMoreElements()) {
+                String name = (String) requestHeaders.nextElement();
+                String value = request.getHeader(name);
+                if (null != value) {
+                    getMethod.setRequestHeader(name, value);
+                }
+            }
 
             try {
                 // establish a connection within 5 seconds
@@ -67,38 +81,50 @@ public class HttpProxyServlet extends ApplicationServlet
 
                 httpClient.executeMethod(getMethod);
 
-                int responseStatus = getMethod.getStatusCode();
-                Header contentLength = getMethod.getResponseHeader("Content-Length");
+                int statusCode = getMethod.getStatusCode();
+                long contentLength = getMethod.getResponseContentLength();
+                logger.debug("Got response [{}], length [{}]", statusCode, contentLength);
 
-                logger.debug("Response: http status [{}], length [{}]", String.valueOf(responseStatus), null != contentLength ? contentLength.getValue() : "null");
-
-                if (null != contentLength && 0 < Long.parseLong(contentLength.getValue()) && 200 == responseStatus) {
-
-                    Header contentType = getMethod.getResponseHeader("Content-Type");
-                    if (null != contentType) {
-                        response.setContentType(contentType.getValue());
+                Header[] responseHeaders = getMethod.getResponseHeaders();
+                for (Header responseHeader : responseHeaders) {
+                    String name = responseHeader.getName();
+                    String value = responseHeader.getValue();
+                    if ( null != name
+                            && null != value
+                            && !(name.equals("Server") || name.equals("Date") || name.equals("Transfer-Encoding"))
+                            ) {
+                        response.setHeader(responseHeader.getName(), responseHeader.getValue());
                     }
+                }
 
+                if (200 != statusCode) {
+                    response.setStatus(statusCode);
+                }
+
+                InputStream inStream = getMethod.getResponseBodyAsStream();
+                if (null != inStream) {
                     BufferedReader in = new BufferedReader(
-                            new InputStreamReader(getMethod.getResponseBodyAsStream()));
+                            new InputStreamReader(inStream));
 
-                    ServletOutputStream out = response.getOutputStream();
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
 
-                    String inputLine;
-                    while ( (inputLine = in.readLine()) != null ) {
-                        out.println(inputLine);
+                    CharBuffer buffer = CharBuffer.allocate(PROXY_BUFFER_SIZE);
+                    while ( in.read(buffer) >= 0 ) {
+                        buffer.flip();
+                        out.append(buffer);
+                        buffer.clear();
                     }
 
                     in.close();
                     out.close();
-                } else {
-                    String err = "Response from [" + url + "] was invalid: http status [" + String.valueOf(responseStatus) + "], length [" + (null == contentLength ? "null" : contentLength.getValue())  + "]";
-                    logger.error(err);
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, err);
                 }
             } catch ( Exception x ) {
-                logger.error("Caught an exception:", x);
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
+                if (x.getClass().getName().equals("org.apache.catalina.connector.ClientAbortException")) {
+                    logger.warn("Client aborted connection");
+                } else {
+                    logger.error("Caught an exception:", x);
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
+                }
             } finally {
                 getMethod.releaseConnection();
             }
