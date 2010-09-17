@@ -16,6 +16,12 @@
         <from>^/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="redirect">${interface.application.base.path}/browse.html?accession=$1&amp;detailedview=on</to>
     </rule>
+
+    <rule>
+        <from>^/experiments-test/([eE]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/browse-experiment/html?accession=$1</to>
+    </rule>
+
     <!-- available files by accession page -->
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/?$</from>

@@ -36,15 +36,12 @@
                     <xsl:text>Your browser does not support inline frames or is currently configured not to display inline frames. Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/head.html</xsl:text>
                 </iframe>
             </div>
-            <div class="contents" id="contents">
-                <table class="contentspane" id="contentspane" summary="The main content pane of the page" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="contentsarea" id="contentsarea">
-                            <div id="ae_contents"><xsl:call-template name="ae-contents"/></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <noscript>
+                <div id="ae_noscript" class="assign_font">
+                    <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+                </div>
+            </noscript>
+            <div id="ae_contents"><xsl:call-template name="ae-contents"/></div>
             <div id="ebi_footer">
                 <iframe src="${interface.application.link.www_domain}/inc/foot.html"
                         name="foot" frameborder="0" marginwidth="0px" marginheight="0px"

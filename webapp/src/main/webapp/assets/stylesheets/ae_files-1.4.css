@@ -1,3 +1,11 @@
+#ae_contents {
+    position: absolute;
+    top: 57px;
+    bottom: 22px;
+    left: 0;
+    width: 100%;
+}
+
 .ae_left_container_100pc {
     width: 100%;
     min-width: 950px;
