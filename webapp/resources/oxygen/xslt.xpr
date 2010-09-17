@@ -11,6 +11,28 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String xml:space="preserve">preprocess-experiments-xml</String>
                                 </field>
                                 <field name="type">
@@ -28,7 +50,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -39,18 +61,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html (big xml)</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -77,13 +88,13 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">preprocess-files-xml</String>
+                                    <String xml:space="preserve">browse-experiments-html (big xml)</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -94,18 +105,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -116,18 +116,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -1374,7 +1363,6 @@
     </meta>
     <projectTree name="xslt.xpr">
         <folder name="documents">
-            <file name="documents/ae-experiments.xml"/>
             <file name="documents/sample-experiments.xml"/>
             <file name="documents/sample-experiments-not-processed.xml"/>
             <file name="documents/sample-files-not-processed.xml"/>
@@ -1386,6 +1374,8 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-html-page.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-experiments.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl"/>
             <file
