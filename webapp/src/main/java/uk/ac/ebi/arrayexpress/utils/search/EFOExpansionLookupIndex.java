@@ -83,7 +83,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
         if (isStopTerm(term)) {
-            this.logger.warn("Term [{}] is a stop-word, skipping", term);
+            this.logger.debug("Term [{}] is a stop-word, skipping", term);
         } else {
 
             if (synonyms.size() > 0 || childTerms.size() > 0) {
@@ -92,9 +92,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
                 for (String syn : synonyms) {
                     if (childTerms.contains(syn)) {
-                        this.logger.warn("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
+                        this.logger.debug("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
                     } else if (isStopExpansionTerm(syn)) {
-                        this.logger.warn("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
+                        this.logger.debug("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
                     } else {
                         addIndexField(d, "term", syn, true, true);
                     }
@@ -102,7 +102,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
                 for (String efoTerm : childTerms) {
                     if (isStopExpansionTerm(efoTerm)) {
-                        this.logger.warn("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
+                        this.logger.debug("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
                     } else {
                         addIndexField(d, "efo", efoTerm, false, true);
                     }
@@ -124,16 +124,16 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             // to show _all_ available nodes
             IndexSearcher isearcher = new IndexSearcher(ir);
             Query q = overrideQueryField(origQuery, "term");
-            logger.debug("Looking up synonyms for query [{}]", q.toString());
+            this.logger.debug("Looking up synonyms for query [{}]", q.toString());
 
             TopDocs hits = isearcher.search(q, 128); // todo: wtf is this hardcoded?
-            logger.debug("Query returned [{}] hits", hits.totalHits);
+            this.logger.debug("Query returned [{}] hits", hits.totalHits);
 
             for (ScoreDoc d : hits.scoreDocs) {
                 Document doc = isearcher.doc(d.doc);
                 String[] terms = doc.getValues("term");
                 String[] efo = doc.getValues("efo");
-                logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
+                this.logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
                 if (0 != terms.length) {
                     expansion.synonyms.addAll(Arrays.asList(terms));
                 }
@@ -146,7 +146,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             isearcher.close();
             ir.close();
         } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            this.logger.error("Caught an exception:", x);
         }
 
         return expansion;
@@ -228,10 +228,10 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                 }
                 query = new TermQuery(new Term(fieldName, text.toString().trim()));
             } else {
-                logger.error("Unsupported query type [{}]", origQuery.getClass().getCanonicalName());
+                this.logger.error("Unsupported query type [{}]", origQuery.getClass().getCanonicalName());
             }
         } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            this.logger.error("Caught an exception:", x);
         }
 
 
