@@ -113,19 +113,19 @@
     <!-- redirects to some pages at www.ebi.ac.uk (via proxy servlet) -->
     <rule>
         <from>^/ae-news.xml</from>
-        <to type="forward">/servlets/proxy/${interface.application.link.www_domain}/microarray-srv/ae/ae-main-news.xml</to>
+        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/microarray-srv/ae/ae-main-news.xml</to>
     </rule>
     <rule>
         <from>^/ae-links.xml</from>
-        <to type="forward">/servlets/proxy/${interface.application.link.www_domain}/microarray-srv/ae/ae-main-links.xml</to>
+        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/microarray-srv/ae/ae-main-links.xml</to>
     </rule>
     <rule>
         <from>^/atlas_list-species.html</from>
-        <to type="forward">/servlets/proxy/${interface.application.link.www_domain}/gxa/list-species.jsp</to>
+        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/list-species.jsp</to>
     </rule>
     <rule>
         <from>^/atlas_stats.txt</from>
-        <to type="forward">/servlets/proxy/${interface.application.link.www_domain}/gxa/stats.jsp</to>
+        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/stats.jsp</to>
     </rule>
     <!-- hiding browse helpers behind innocent names -->
     <rule>
