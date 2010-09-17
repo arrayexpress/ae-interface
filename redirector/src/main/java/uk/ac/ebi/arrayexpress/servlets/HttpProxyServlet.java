@@ -39,6 +39,7 @@ public class HttpProxyServlet extends HttpServlet
 
     private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
     private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
+    private final RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
 
     private final int PROXY_BUFFER_SIZE = 64000;
 
@@ -55,11 +56,15 @@ public class HttpProxyServlet extends HttpServlet
             if (!TEST_HOST_IN_URL_REGEX.test(url)) { // no host here, will self
                 url = "http://localhost:" + String.valueOf(request.getLocalPort()) + "/" + url;
             }
-            url = new StringBuilder(url).append(null != queryString ? "?" + queryString : "").toString();
             logger.debug("Will access [{}]", url);
 
             HttpClient httpClient = new HttpClient();
             GetMethod getMethod = new GetMethod(url);
+
+            if (null != queryString) {
+                queryString = SQUARE_BRACKETS_REGEX.replace(queryString, "%5B%5D");
+                getMethod.setQueryString(queryString);
+            }
 
             Enumeration requestHeaders = request.getHeaderNames();
             while (requestHeaders.hasMoreElements()) {
