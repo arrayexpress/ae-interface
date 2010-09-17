@@ -55,14 +55,14 @@ For more information, please go to:
                 </xsl:comment>
                 <xsl:variable name="vAccession" select="accession"/>
                 <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]"/>
-                <xsl:if test="$vFiles/file[@kind = 'raw' and position() = 1]">
-                    <raw name="{$vFiles/file[@kind = 'raw' and position() = 1]/@name}"
-                         count="{sum(bioassaydatagroup[isderived = '0']/bioassays)}"
+                <xsl:if test="$vFiles/file[@kind = 'raw']">
+                    <raw name="{$vFiles/file[@kind = 'raw']/@name}"
+                         count="{rawdatafiles}"
                          celcount="{sum(bioassaydatagroup[isderived = '0'][contains(dataformat, 'CEL')]/bioassays)}"/>
                 </xsl:if>
-                <xsl:if test="$vFiles/file[@kind = 'fgem' and position() = 1]">
-                    <fgem name="{$vFiles/file[@kind = 'fgem' and position() = 1]/@name}"
-                          count="{sum(bioassaydatagroup[isderived = '1']/bioassays)}"/>
+                <xsl:if test="$vFiles/file[@kind = 'fgem']">
+                    <fgem name="{$vFiles/file[@kind = 'fgem']/@name}"
+                          count="{fgemdatafiles}"/>
                 </xsl:if>
                 <xsl:if test="$vFiles/file[@kind = 'idf' and @extension = 'txt']">
                     <idf name="{$vFiles/file[@kind = 'idf' and @extension = 'txt']/@name}"/>
@@ -76,7 +76,7 @@ For more information, please go to:
                             <png name="{$vFiles/file[@kind = 'biosamples' and @extension = 'png']/@name}"/>
                         </xsl:if>
                         <xsl:if test="$vFiles/file[@kind = 'biosamples' and @extension = 'svg']">
-                            <png name="{$vFiles/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
+                            <svg name="{$vFiles/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
                         </xsl:if>
                     </biosamples>
                 </xsl:if>
