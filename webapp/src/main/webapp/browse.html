@@ -59,17 +59,17 @@
                                                                 <label for="ae_keywords">Experiment, citation, sample and factor annotations [<a href="javascript:aeClearKeywords()">clear</a>]</label>
                                                                 <input id="ae_keywords" name="keywords" maxlength="200">
                                                                 <span>
-                                                                    <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</a></label>
+                                                                    <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                                                 </span>
                                                             </fieldset>
                                                             <fieldset id="ae_filters_box">
                                                                 <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>
-                                                                <select id="ae_species" name="species" disabled="true"><option value="">All species (loading options)</option></select>
-                                                                <select id="ae_array" name="array" disabled="true"><option value="">All arrays (loading options)</option></select>
+                                                                <select id="ae_species" name="species" disabled><option value="">All species (loading options)</option></select>
+                                                                <select id="ae_array" name="array" disabled><option value="">All arrays (loading options)</option></select>
                                                                 <div id="ae_exptype_selector">
-                                                                    <select id="ae_expdesign" name="exptype[]" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
+                                                                    <select id="ae_expdesign" name="exptype[]" disabled><option value="">All assays by molecule (loading options)</option></select>
                                                                     <span>by</span>
-                                                                    <select id="ae_exptech" name="exptype[]" disabled="true"><option value="">All technologies (loading options)</option></select>
+                                                                    <select id="ae_exptech" name="exptype[]" disabled><option value="">All technologies (loading options)</option></select>
                                                                 </div>
                                                             </fieldset>
                                                             <fieldset id="ae_options_box">
@@ -118,8 +118,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="assets/images/silk_help.gif" width="16" height="16">ArrayExpress Browser Help</a></div>
-                                                        <div id="ae_login_link"><a href="javascript:aeShowLoginForm();"><img src="assets/images/mini_key.gif" width="16" height="16">Submitter/reviewer login</a></div>
+                                                        <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="assets/images/silk_help.gif" width="16" height="16" alt="">ArrayExpress Browser Help</a></div>
+                                                        <div id="ae_login_link"><a href="javascript:aeShowLoginForm();"><img src="assets/images/mini_key.gif" width="16" height="16" alt="">Submitter/reviewer login</a></div>
                                                         <div id="ae_login_info" style="display:none"><img src="assets/images/mini_user.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
                                                         <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"></a></div>
                                                     </div>
