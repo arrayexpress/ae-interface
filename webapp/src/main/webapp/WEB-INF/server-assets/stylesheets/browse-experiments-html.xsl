@@ -696,20 +696,33 @@
 
     <xsl:template name="magetab-files">
         <xsl:variable name="vAccession" select="string(accession)"/>
-        <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]">
-            <xsl:sort select="kind"/>
-            <tr>
-                <td class="attr_name">
-                    <xsl:choose>
-                        <xsl:when test="@kind = 'idf'">Investigation Description</xsl:when>
-                        <xsl:when test="@kind = 'sdrf'">Sample and Data Relationship</xsl:when>
-                    </xsl:choose>
-                </td>
-                <td class="attr_value">
-                    <a href="{$vBaseUrl}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a>
-                </td>
-            </tr>
-        </xsl:for-each>
+        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
+        <xsl:if test="$vFiles">
+            <xsl:for-each-group select="$vFiles" group-by="@kind">
+                <xsl:sort select="@kind"/>
+                <tr>
+                    <td class="attr_name">
+                        <xsl:choose>
+                            <xsl:when test="current-grouping-key() = 'idf'">Investigation Description</xsl:when>
+                            <xsl:when test="current-grouping-key() = 'sdrf'">Sample and Data Relationship</xsl:when>
+                        </xsl:choose>
+                    </td>
+                    <td class="attr_value">
+                        <xsl:for-each select="current-group()">
+                            <xsl:sort select="lower-case(@name)"/>
+                            <a href="{$vBaseUrl}/files/{$vAccession}/{@name}">
+                                <xsl:value-of select="@name"/>
+                            </a>
+                            <xsl:if test="position() != last()">
+                                <xsl:text>, </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </td>
+                </tr>
+
+            </xsl:for-each-group>
+
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="magetab-files-array">
