@@ -27,7 +27,7 @@
 
     <xsl:template match="/experiments">
         <html lang="en">
-            <xsl:call-template name="page-header-plain">
+            <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
                     <xsl:value-of select="$vAccession"/><xsl:text> | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
