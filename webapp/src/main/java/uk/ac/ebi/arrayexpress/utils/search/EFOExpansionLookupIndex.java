@@ -47,6 +47,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     private Set<String> stopWords;
     private Map<String, Set<String>> customSynonyms;
 
+    // maximum number of index documents to be processed; in reality shouldn't be more than 2
+    private final int MAX_INDEX_HITS = 16;
+
     public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords )
     {
         this.indexLocation = indexLocation;
@@ -82,18 +85,22 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     private void addCustomSynonyms( IndexWriter w )
     {
-        Set<String> addedTerms = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-        for (String term : this.customSynonyms.keySet()) {
-            if (!addedTerms.contains(term)) {
-                Document d = new Document();
+        // here we add all custom synonyms so those that weren't added during EFO processing
+        //  get a chance to be included, too. don't worry about duplication, dupes will be removed during retrieval
+        if (null != this.customSynonyms) {
+            Set<String> addedTerms = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+            for (String term : this.customSynonyms.keySet()) {
+                if (!addedTerms.contains(term)) {
+                    Document d = new Document();
 
-                Set<String> syns = this.customSynonyms.get(term);
-                for (String syn : syns) {
-                    addIndexField(d, "term", syn, true, true);
+                    Set<String> syns = this.customSynonyms.get(term);
+                    for (String syn : syns) {
+                        addIndexField(d, "term", syn, true, true);
 
+                    }
+                    addIndexDocument(w, d);
+                    addedTerms.addAll(syns);
                 }
-                addIndexDocument(w, d);
-                addedTerms.addAll(syns);
             }
         }
     }
@@ -114,6 +121,24 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> synonyms = node.getAlternativeTerms();
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
+        // here we add custom synonyms to EFO synonyms/child terms and their synonyms
+        if (null != this.customSynonyms) {
+            for (String syn : new HashSet<String>(synonyms)) {
+                if (null != syn && this.customSynonyms.containsKey(syn)) {
+                    synonyms.addAll(this.customSynonyms.get(syn));
+                }
+            }
+
+            if (this.customSynonyms.containsKey(term)) {
+                synonyms.addAll(this.customSynonyms.get(term));
+            }
+
+            for (String child : new HashSet<String>(childTerms)) {
+                if (null != child && this.customSynonyms.containsKey(child)) {
+                    childTerms.addAll(this.customSynonyms.get(child));
+                }
+            }
+        }
         if (synonyms.contains(term)) {
             synonyms.remove(term);
         }
@@ -161,7 +186,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             Query q = overrideQueryField(origQuery, "term");
             this.logger.debug("Looking up synonyms for query [{}]", q.toString());
 
-            TopDocs hits = isearcher.search(q, 128); // todo: wtf is this hardcoded?
+            TopDocs hits = isearcher.search(q, MAX_INDEX_HITS);
             this.logger.debug("Query returned [{}] hits", hits.totalHits);
 
             for (ScoreDoc d : hits.scoreDocs) {

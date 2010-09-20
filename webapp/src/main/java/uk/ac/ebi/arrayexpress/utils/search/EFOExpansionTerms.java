@@ -1,7 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.search;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 /*
@@ -30,7 +30,7 @@ public class EFOExpansionTerms
     public EFOExpansionTerms()
     {
         term = "";
-        synonyms = new HashSet<String>();
-        efo = new HashSet<String>();
+        synonyms = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        efo = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     }
 }
