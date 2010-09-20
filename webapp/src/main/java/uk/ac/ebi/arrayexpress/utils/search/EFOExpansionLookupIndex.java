@@ -34,7 +34,7 @@ import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,18 +99,27 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
         if (null != this.customSynonyms) {
-            for (String syn : Collections.unmodifiableSet(synonyms)) {
+            for (String syn : new HashSet<String>(synonyms)) {
                 if (null != syn && customSynonyms.containsKey(syn.toLowerCase())) {
                     synonyms.addAll(customSynonyms.get(syn.toLowerCase()));
                 }
             }
 
-            for (String child : Collections.unmodifiableSet(childTerms)) {
+            if (customSynonyms.containsKey(term.toLowerCase())) {
+                synonyms.addAll(customSynonyms.get(term.toLowerCase()));    
+            }
+
+            for (String child : new HashSet<String>(childTerms)) {
                 if (null != child && customSynonyms.containsKey(child.toLowerCase())) {
                     childTerms.addAll(customSynonyms.get(child.toLowerCase()));
                 }
             }
         }
+
+        if (synonyms.contains(term)) {
+            synonyms.remove(term);
+        }
+
         if (isStopTerm(term)) {
             this.logger.debug("Term [{}] is a stop-word, skipping", term);
         } else {
