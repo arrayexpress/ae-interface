@@ -34,6 +34,7 @@ import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 
 public class EFOExpansionLookupIndex implements IEFOExpansionLookup
@@ -43,7 +44,10 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     private String indexLocation;
     private Directory indexDirectory;
+
+    private EFOOntologyHelper ontology;
     private Set<String> stopWords;
+    private Map<String, Set<String>> customSynonyms;
 
     public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords )
     {
@@ -53,17 +57,28 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     public void setOntology( EFOOntologyHelper ontology )
     {
+        this.ontology = ontology;
+    }
+
+    public void setCustomSynonyms( Map<String, Set<String>> synonyms )
+    {
+        this.customSynonyms = synonyms;
+    }
+
+    public void buildIndex()
+    {
         try {
             this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
             IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
 
-            logger.debug("Building expansion lookup index");
-            addNodeAndChildren(ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), ontology, w);
+            this.logger.debug("Building expansion lookup index");
+            addNodeAndChildren(this.ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), this.ontology, w);
             commitIndex(w);
-            logger.debug("Building completed");
+            this.logger.debug("Building completed");
         } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            this.logger.error("Caught an exception:", x);
         }
+
     }
 
     private void addNodeAndChildren( EFONode node, EFOOntologyHelper ontology, IndexWriter w )

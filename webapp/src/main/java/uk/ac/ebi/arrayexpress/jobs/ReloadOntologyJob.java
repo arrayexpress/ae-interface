@@ -33,7 +33,7 @@ public class ReloadOntologyJob extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        String efoLocation = "/WEB-INF/classes/efo.owl";
+        String efoLocation = getPreferences().getString("ae.efo.source");
         logger.info("Loading EFO ontology from [{}]", efoLocation);
         InputStream is = null;
         try {
