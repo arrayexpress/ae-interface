@@ -1,11 +1,12 @@
 package uk.ac.ebi.arrayexpress.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -26,13 +27,36 @@ import java.util.Set;
 
 public class SynonymsFileReader extends CSVReader
 {
+    // logging machinery
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     public SynonymsFileReader( Reader ioReader )
     {
-        super(ioReader, ' ', '\"');    
+        super(ioReader, ',', '\"');    
     }
 
-    public Map<String, Set<String>> readSynonyms()
+    public Map<String, Set<String>> readSynonyms() throws IOException
     {
-        return new HashMap<String, Set<String>>();    
+        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
+        List<String[]> lines = this.readAll();
+        for (String[] line : lines) {
+            if (null != line && line.length > 0) {
+                if ('#' != line[0].charAt(0)) {
+                    Set<String> syns = new HashSet<String>(Arrays.asList(line));
+                    for (String syn : line) {
+                        if (result.containsKey(syn.toLowerCase())) {
+                            // already have one synonym in the list, need to merge sets
+                            Set<String> existingSyns = result.get(syn.toLowerCase());
+                            syns.addAll(existingSyns);
+                            this.logger.warn("Synonym [{}] already exists, merging sets", syn);
+                        }
+                    }
+                    for (String syn : syns) {
+                        result.put(syn.toLowerCase(), syns);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
