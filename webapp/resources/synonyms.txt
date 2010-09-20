@@ -1,4 +1,9 @@
-# spaces-delimited file; first column represents UK spelling, second - US variant
+# spaces-delimited file, phrases should be double-quoted
+# Custom synonym dictionary
+"Ewing's sarcoma"       "Ewings sarcoma"    "Ewing sarcoma"
+"Parkinson's disease"   "Parkinson disease" "Parkinsons disease"
+"cell line"     CellLine
+# UK/US spelling differences
 accessorise	accessorize
 accessorised	accessorized
 accessorises	accessorizes
