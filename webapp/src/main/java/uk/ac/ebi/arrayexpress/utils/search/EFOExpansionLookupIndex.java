@@ -34,6 +34,7 @@ import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -98,13 +99,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
         if (null != this.customSynonyms) {
-            for (String syn : synonyms) {
+            for (String syn : Collections.unmodifiableSet(synonyms)) {
                 if (null != syn && customSynonyms.containsKey(syn.toLowerCase())) {
                     synonyms.addAll(customSynonyms.get(syn.toLowerCase()));
                 }
             }
 
-            for (String child : childTerms) {
+            for (String child : Collections.unmodifiableSet(childTerms)) {
                 if (null != child && customSynonyms.containsKey(child.toLowerCase())) {
                     childTerms.addAll(customSynonyms.get(child.toLowerCase()));
                 }
