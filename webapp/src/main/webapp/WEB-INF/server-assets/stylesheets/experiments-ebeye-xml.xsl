@@ -4,8 +4,8 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"                
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="fn search"
-                exclude-result-prefixes="fn search"
+                extension-element-prefixes="ae fn search xs"
+                exclude-result-prefixes="ae fn search xs"
                 version="2.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>
@@ -22,8 +22,9 @@
     <xsl:include href="ae-sort-experiments.xsl"/>
 
     <xsl:function name="ae:formatDate">
-        <xsl:param name="pDate"/>
+        <xsl:param name="pDate" as="xs:date"/>
         <xsl:value-of select="fn:format-date($pDate, '[D01]-[MN,*-3]-[Y0001]')"/>
+        
     </xsl:function>
 
     <xsl:template match="/experiments">
@@ -61,7 +62,7 @@
             </description>
             <authors><xsl:value-of select="fn:string-join(provider[not(contact = ' ' or contact = '')]/contact, ', ')"/></authors>
             <keywords><xsl:value-of select="fn:string-join(experimentdesign, ', ')"/></keywords>
-            <dates><xsl:if test="releasedate"><date type="release" value="{ae:formatDate(releasedate)}"/></xsl:if></dates>
+            <dates><xsl:if test="releasedate > ''"><date type="release" value="{ae:formatDate(releasedate)}"/></xsl:if></dates>
             <cross_references>
                 <xsl:if test="@loadedinatlas">
                     <ref dbkey="{accession}" dbname="ArrayExpress Warehouse"/>
