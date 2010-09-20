@@ -98,13 +98,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
         if (null != this.customSynonyms) {
-            for (String syn : (String[])synonyms.toArray()) {
+            for (String syn : synonyms) {
                 if (null != syn && customSynonyms.containsKey(syn.toLowerCase())) {
                     synonyms.addAll(customSynonyms.get(syn.toLowerCase()));
                 }
             }
 
-            for (String child : (String[])childTerms.toArray()) {
+            for (String child : childTerms) {
                 if (null != child && customSynonyms.containsKey(child.toLowerCase())) {
                     childTerms.addAll(customSynonyms.get(child.toLowerCase()));
                 }
