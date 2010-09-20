@@ -96,6 +96,15 @@
         <from>^/json/v2/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/json?accession=$1</to>
     </rule>
+    <!-- proxy calls to json efo api for nils -->
+    <rule>
+        <from>^/json/v2/efotree$</from>
+        <to type="forward">/servlets/proxy/http://foo.ebi.ac.uk:8180/microarray-as/ae/json/v2/efotree</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/efodict$</from>
+        <to type="forward">/servlets/proxy/http://foo.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
+    </rule>
     <!-- search results export in tab format -->
     <rule>
         <from>^/ArrayExpress-Experiments\.xls$</from>
