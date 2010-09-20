@@ -34,7 +34,7 @@ public class ExperimentListDatabaseRetriever extends SqlStatementExecutor
     // (the parameter is either 0 for all experiments and 1 for public only)
     private final static String getExperimentListSql = "select distinct e.id" +
             " from tt_experiment e" +
-// test :)  "  where e.id in (2200649523, 13850163, 1673780805, 352682122, 366346722)" +
+//          "  where e.id in (1435022632, 2200649523, 13850163, 1673780805, 352682122, 366346722)" +
             " order by" +
             "  e.id asc";
 

@@ -11,7 +11,7 @@
 
     <xsl:key name="experiment-sampleattribute-by-category" match="sampleattribute" use="fn:concat(ancestor::experiment/id, @category)"/>
     <xsl:key name="experiment-experimentalfactor-by-name" match="experimentalfactor" use="fn:concat(ancestor::experiment/id, @name)"/>
-    
+
     <xsl:template match="/experiments">
         <experiments
             version="{@version}" total="{fn:count(experiment)}">
@@ -96,14 +96,14 @@
                     <xsl:when test="fn:number($vGenDescription/samples) > 0">
                         <xsl:value-of select="$vGenDescription/samples"/>
                     </xsl:when>
-                    <xsl:otherwise>0</xsl:otherwise>    
+                    <xsl:otherwise>0</xsl:otherwise>
                 </xsl:choose>
             </samples>
             <rawdatafiles>
                 <xsl:value-of select="$vGenDescription/rawdatafiles"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:value-of select="$vGenDescription/fgemdatafiles"/>    
+                <xsl:value-of select="$vGenDescription/fgemdatafiles"/>
             </fgemdatafiles>
             <xsl:for-each select="sampleattribute[@category][fn:generate-id() = fn:generate-id(fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/id, @category))[1])]">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
@@ -133,6 +133,12 @@
     <!-- this template prohibits default copying of these elements -->
     <xsl:template match="sampleattribute | experimentalfactor | miamescore | releasedate" mode="copy"/>
 
+    <xsl:template match="name" mode="copy">
+        <name>
+            <xsl:apply-templates mode="html" select="saxon:parse-html(fn:concat('&lt;body&gt;', ., '&lt;/body&gt;'))" />
+        </name>
+    </xsl:template>
+
     <xsl:template match="secondaryaccession" mode="copy">
         <xsl:choose>
             <xsl:when test="fn:string-length(.) = 0"/>
@@ -154,7 +160,7 @@
             <xsl:with-param name="element" select="'experimentdesign'"/>
         </xsl:call-template>
     </xsl:template>
-    
+
     <xsl:template match="experimenttype" mode="copy">
         <xsl:call-template name="split-string-to-elements">
             <xsl:with-param name="str" select="."/>
