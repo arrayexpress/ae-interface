@@ -37,22 +37,22 @@ public class SynonymsFileReader extends CSVReader
 
     public Map<String, Set<String>> readSynonyms() throws IOException
     {
-        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
+        Map<String, Set<String>> result = new TreeMap<String, Set<String>>(String.CASE_INSENSITIVE_ORDER);
         List<String[]> lines = this.readAll();
         for (String[] line : lines) {
             if (null != line && line.length > 0) {
                 if ('#' != line[0].charAt(0)) {
                     Set<String> syns = new HashSet<String>(Arrays.asList(line));
                     for (String syn : line) {
-                        if (result.containsKey(syn.toLowerCase())) {
+                        if (result.containsKey(syn)) {
                             // already have one synonym in the list, need to merge sets
-                            Set<String> existingSyns = result.get(syn.toLowerCase());
+                            Set<String> existingSyns = result.get(syn);
                             syns.addAll(existingSyns);
                             this.logger.warn("Synonym [{}] already exists, merging sets", syn);
                         }
                     }
                     for (String syn : syns) {
-                        result.put(syn.toLowerCase(), syns);
+                        result.put(syn, syns);
                     }
                 }
             }

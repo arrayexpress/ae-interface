@@ -33,10 +33,7 @@ import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 {
@@ -74,12 +71,31 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
             this.logger.debug("Building expansion lookup index");
             addNodeAndChildren(this.ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), this.ontology, w);
+            addCustomSynonyms(w);
             commitIndex(w);
             this.logger.debug("Building completed");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
 
+    }
+
+    private void addCustomSynonyms( IndexWriter w )
+    {
+        Set<String> addedTerms = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        for (String term : this.customSynonyms.keySet()) {
+            if (!addedTerms.contains(term)) {
+                Document d = new Document();
+
+                Set<String> syns = this.customSynonyms.get(term);
+                for (String syn : syns) {
+                    addIndexField(d, "term", syn, true, true);
+
+                }
+                addIndexDocument(w, d);
+                addedTerms.addAll(syns);
+            }
+        }
     }
 
     private void addNodeAndChildren( EFONode node, EFOOntologyHelper ontology, IndexWriter w )
@@ -98,24 +114,6 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         Set<String> synonyms = node.getAlternativeTerms();
         Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
 
-        if (null != this.customSynonyms) {
-            for (String syn : new HashSet<String>(synonyms)) {
-                if (null != syn && customSynonyms.containsKey(syn.toLowerCase())) {
-                    synonyms.addAll(customSynonyms.get(syn.toLowerCase()));
-                }
-            }
-
-            if (customSynonyms.containsKey(term.toLowerCase())) {
-                synonyms.addAll(customSynonyms.get(term.toLowerCase()));    
-            }
-
-            for (String child : new HashSet<String>(childTerms)) {
-                if (null != child && customSynonyms.containsKey(child.toLowerCase())) {
-                    childTerms.addAll(customSynonyms.get(child.toLowerCase()));
-                }
-            }
-        }
-
         if (synonyms.contains(term)) {
             synonyms.remove(term);
         }
@@ -123,7 +121,6 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         if (isStopTerm(term)) {
             this.logger.debug("Term [{}] is a stop-word, skipping", term);
         } else {
-
             if (synonyms.size() > 0 || childTerms.size() > 0) {
 
                 Document d = new Document();
