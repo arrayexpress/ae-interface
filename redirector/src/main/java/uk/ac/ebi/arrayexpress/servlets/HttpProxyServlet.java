@@ -47,8 +47,6 @@ public class HttpProxyServlet extends HttpServlet
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {
-        logRequest(logger, request, "GET");
-
         String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
         String queryString = request.getQueryString();
 
@@ -118,9 +116,12 @@ public class HttpProxyServlet extends HttpServlet
                     in.close();
                     out.close();
                 }
+
+                this.logger.info("Processed {}, {}", requestToString("GET", url, queryString), statusToString(statusCode, contentLength));
+
             } catch ( Exception x ) {
                 if (x.getClass().getName().equals("org.apache.catalina.connector.ClientAbortException")) {
-                    logger.warn("Client aborted connection");
+                    logger.debug("Client aborted connection");
                 } else {
                     logger.error("Caught an exception:", x);
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
@@ -131,21 +132,23 @@ public class HttpProxyServlet extends HttpServlet
         }
     }
 
-    private void logRequest( Logger logger, HttpServletRequest request, String requestType )
-    {
-        logger.info("Processing {}", requestToString(request, requestType));
-    }
-
-    protected String requestToString( HttpServletRequest request, String requestType )
+    private String requestToString( String requestType, String url, String queryString )
     {
         return "["
                 + requestType
                 + "] request ["
-                + request.getRequestURL().append(
-                    null != request.getQueryString() ? "?" + request.getQueryString() : ""
-                )
+                + url
+                + ( null != queryString ? "?" + queryString : "" )
                 + "]";
     }
 
+    private String statusToString( Integer statusCode, Long contentLength )
+    {
+        return "status ["
+                + String.valueOf(statusCode)
+                + "], length ["
+                + String.valueOf(contentLength)
+                + "]";
+    }
 }
 
