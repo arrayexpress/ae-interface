@@ -68,9 +68,9 @@
                                                                 <fieldset id="ae_keywords_box">
                                                                     <label for="ae_keywords">Experiment, citation, sample and factor annotations [<a href="javascript:aeClearKeywords()">clear</a>]</label>
                                                                     <input id="ae_keywords" name="keywords" maxlength="200"/>
-                                                                    <span>
+                                                                    <div id="ae_directsub_option">
                                                                         <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."/><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
-                                                                    </span>
+                                                                    </div>
                                                                     <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="{$basepath}/assets/images/silk_wand.gif" width="16" height="16" alt=""/>Advanced query syntax<img src="{$basepath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/></a></div>
                                                                 </fieldset>
                                                                 <fieldset id="ae_filters_box">

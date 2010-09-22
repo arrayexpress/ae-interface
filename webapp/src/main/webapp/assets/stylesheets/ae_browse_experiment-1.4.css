@@ -95,8 +95,8 @@ body {
     padding: 5px 5px 5px 10px;
 }
 
-#ae_keywords_box span {
-    margin-right: 10px;
+#ae_directsub_option {
+    float: left;
 }
 
 #ae_filters_box {
