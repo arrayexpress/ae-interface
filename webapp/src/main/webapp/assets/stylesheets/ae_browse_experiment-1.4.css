@@ -1,3 +1,7 @@
+body {
+    overflow-y: hidden;
+}
+
 #ae_noscript {
     position: absolute;
     top: 57px;
@@ -66,12 +70,13 @@
     right: 5px;
 }
 
-#ae_help_link {
-    position: absolute;
-    bottom: 10px;
+#ae_adv_query_link {
+    float: right;
 }
 
 #ae_help_link {
+    position: absolute;
+    bottom: 10px;
     left: 10px;
 }
 
@@ -179,9 +184,13 @@
     width: 100%;
 }
 
+.ae_detail .tbl {
+    margin: 5px    
+}
+
 .ae_detail table {
-    margin: 5px;
-    /* width: 100%; */
+    table-layout: fixed;
+    width: 100%;
 }
 
 .ae_detail th,

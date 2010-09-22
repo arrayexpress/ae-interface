@@ -214,6 +214,10 @@ a:active .table_header_label {
     right: 5px;
 }
 
+#ae_adv_query_link {
+    float: right;
+}
+
 #ae_help_link,
 #ae_login_link,
 #ae_login_info {

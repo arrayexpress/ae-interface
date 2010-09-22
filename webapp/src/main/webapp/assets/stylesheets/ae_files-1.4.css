@@ -11,9 +11,11 @@
     min-width: 950px;
     text-align: left;
     margin: 0;
-    overflow: hidden;
     font-size: 11px;
     line-height: 1.2em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    _height: expression(document.body.clientHeight-79);
 }
 
 #ae_files_content {

@@ -71,6 +71,7 @@
                                                                     <span>
                                                                         <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."/><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                                                     </span>
+                                                                    <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="{$basepath}/assets/images/silk_wand.gif" width="16" height="16" alt=""/>Advanced query syntax<img src="{$basepath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/></a></div>
                                                                 </fieldset>
                                                                 <fieldset id="ae_filters_box">
                                                                     <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>
@@ -78,7 +79,7 @@
                                                                     <select id="ae_array" name="array" disabled="true"><option value="">All arrays (loading options)</option></select>
                                                                     <div id="ae_exptype_selector">
                                                                         <select id="ae_expdesign" name="exptype[]" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
-                                                                        <span>by</span>
+                                                                        <span> by </span>
                                                                         <select id="ae_exptech" name="exptype[]" disabled="true"><option value="">All technologies (loading options)</option></select>
                                                                     </div>
                                                                 </fieldset>
@@ -198,17 +199,18 @@
                                                     <xsl:with-param name="pText" select="concat(accession, ' - ', name)"/>
                                                     <xsl:with-param name="pFieldName" select="'array'"/>
                                                 </xsl:call-template>
+                                                <xsl:text> (old interface)</xsl:text>
                                             </a>
                                         </div>
                                     </xsl:for-each>
                                 </xsl:if>
                                 <div>
                                     <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{id}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
-                                        <xsl:text>Experimental protocols</xsl:text>
+                                        <xsl:text>Experimental protocols (old interface)</xsl:text>
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={accession}">ArrayExpress Advanced Interface</a>
+                                    <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={accession}">Experiment Page (old interface)</a>
 
                                 </div>
                             </td>

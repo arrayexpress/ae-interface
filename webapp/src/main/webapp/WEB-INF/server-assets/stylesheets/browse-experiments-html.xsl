@@ -246,17 +246,18 @@
                                                         <xsl:with-param name="pText" select="concat(accession, ' - ', name)"/>
                                                         <xsl:with-param name="pFieldName" select="'array'"/>
                                                     </xsl:call-template>
+                                                    <xsl:text> (old interface)</xsl:text>
                                                 </a>
                                             </div>
                                         </xsl:for-each>
                                     </xsl:if>
                                     <div>
                                         <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpId}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
-                                            <xsl:text>Experimental protocols</xsl:text>
+                                            <xsl:text>Experimental protocols (old interface)</xsl:text>
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">ArrayExpress Advanced Interface</a>
+                                        <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">Experiment Page (old interface)</a>
 
                                     </div>
                                 </td>
