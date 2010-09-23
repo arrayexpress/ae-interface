@@ -200,4 +200,78 @@
         <to type="forward">/servlets/query/browse-experiments-noajax/html?cache=true</to>
     </rule>
 
+    <!-- legacy links -->
+    <rule>
+        <from>^/query/result$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray-as/aer/result?%{query-string}</to>
+    </rule>
+
+    <rule>
+        <from>^/query/(.+)$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray-as/aer/$1?%{query-string}</to>
+    </rule>
+
+    <rule>
+        <from>^/query/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/arrayexpress</to>
+    </rule>
+
+    <rule>
+        <from>^/genes/uniprot/(.*)$</from>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+    </rule>
+    <rule>
+        <from>^/genes/ensembl/(.*)$</from>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+    </rule>
+    <rule>
+        <from>^/genes/any/(.*)$</from>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+    </rule>
+    <!-- ArrayExpress old link redirects  -->
+    <rule>
+        <from>^/news_archive.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/General/News/news.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/faq.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/faq.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/stats/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/stats/</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/index.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/ae_help.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/ae_help.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Implementation/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/software/ae_index.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Schema/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/software/ae_index.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Standards/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/standards.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Submissions/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/submissions.html</to>
+    </rule>
+
 </urlrewrite>
