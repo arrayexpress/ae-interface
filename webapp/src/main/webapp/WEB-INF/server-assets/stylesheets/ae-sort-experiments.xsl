@@ -12,6 +12,12 @@
         <xsl:param name="pSortBy"/>
         <xsl:param name="pSortOrder"/>
         <xsl:choose>
+            <xsl:when test="$pSortBy = '' or $pSortOrder != 'ascending' or $pSortOrder != 'descending'">
+                <xsl:apply-templates select="$pExperiments">
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:when test="$pSortBy='accession'">
                 <xsl:apply-templates select="$pExperiments">
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
