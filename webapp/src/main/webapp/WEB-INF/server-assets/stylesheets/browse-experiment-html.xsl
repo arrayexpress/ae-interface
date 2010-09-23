@@ -87,8 +87,8 @@
                                                                     <label>Display options [<a href="javascript:aeResetOptions()">reset</a>]</label>
                                                                     <div class="select_margin"><select id="ae_pagesize" name="pagesize"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option></select><label for="ae_pagesize"> experiments per page</label></div>
                                                                     <input id="ae_keyword_filters_submit" type="submit" value="Query"/>
-                                                                    <input type="hidden" id="ae_sortby" name="sortby"/>
-                                                                    <input type="hidden" id="ae_sortorder" name="sortorder"/>
+                                                                    <input type="hidden" id="ae_sortby" name="sortby" value="releasedate"/>
+                                                                    <input type="hidden" id="ae_sortorder" name="sortorder" value="descending"/>
                                                                     <input type="hidden" id="ae_expandefo" name="expandefo" value="on"/>
                                                                     <div><input id="ae_detailedview" name="detailedview" type="checkbox"/><label for="ae_detailedview">Detailed view</label></div>
                                                                 </fieldset>
