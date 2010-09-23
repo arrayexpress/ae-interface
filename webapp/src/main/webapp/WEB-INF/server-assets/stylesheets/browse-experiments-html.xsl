@@ -11,8 +11,8 @@
     <xsl:param name="queryid" />
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
+    <xsl:param name="sortby"/>
+    <xsl:param name="sortorder"/>
 
     <xsl:param name="species" />
     <xsl:param name="array" />
