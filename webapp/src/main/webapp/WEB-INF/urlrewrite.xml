@@ -58,12 +58,20 @@
         <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
     </rule>
     <rule>
+        <from>^/xml/experiments/(.*)$</from>
+        <to type="forward">/servlets/query/experiments/xml?queryversion=1&amp;keywords=$1</to>
+    </rule>
+    <rule>
         <from>^/xml/files$</from>
         <to type="forward">/servlets/query/files/xml?queryversion=1</to>
     </rule>
     <rule>
         <from>^/xml/files/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/files/xml?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/xml/files/(.*)$</from>
+        <to type="forward">/servlets/query/files/xml?queryversion=1&amp;keywords=$1</to>
     </rule>
 
     <!-- rest api v2 support -->
@@ -76,12 +84,20 @@
         <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
     </rule>
     <rule>
+        <from>^/xml/v2/experiments/(.*)$</from>
+        <to type="forward">/servlets/query/experiments/xml?keywords=$1</to>
+    </rule>
+    <rule>
         <from>^/xml/v2/files$</from>
         <to type="forward">/servlets/query/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/files/xml?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files/(.*)$</from>
+        <to type="forward">/servlets/query/files/xml?keywords=$1</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/ebeye$</from>
@@ -95,6 +111,10 @@
     <rule>
         <from>^/json/v2/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/json?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/experiments/(.*)$</from>
+        <to type="forward">/servlets/query/experiments/json?keywords=$1</to>
     </rule>
     <!-- proxy calls to json efo api for nils -->
     <rule>
