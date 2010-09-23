@@ -56,6 +56,9 @@ body.dev_preview {
     text-align: right;
 }
 
+.nodisplay {
+    display: none;
+}
 /* layout element styles */
 
 #ae_contents a:link,
