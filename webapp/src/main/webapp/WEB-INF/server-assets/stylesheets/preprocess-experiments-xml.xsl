@@ -7,7 +7,7 @@
                 extension-element-prefixes="ae fn saxon"
                 exclude-result-prefixes="ae fn saxon html"
                 version="2.0">
-    <xsl:output method="xml" encoding="ISO-8859-1" indent="no"/>
+    <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
     <xsl:key name="experiment-sampleattribute-by-category" match="sampleattribute" use="fn:concat(ancestor::experiment/id, @category)"/>
     <xsl:key name="experiment-experimentalfactor-by-name" match="experimentalfactor" use="fn:concat(ancestor::experiment/id, @name)"/>
