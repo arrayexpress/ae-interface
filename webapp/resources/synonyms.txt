@@ -1,8 +1,13 @@
 # comma-separated file, phrases should be double-quoted
 # Custom synonym dictionary
+#
 "Ewing's sarcoma","Ewings sarcoma","Ewing sarcoma"
+"Kaposi's sarcoma","Kaposis sarcoma","Kaposi sarcoma"
 "Parkinson's disease","Parkinson disease","Parkinsons disease"
+#
 "cell line",CellLine
+species,organism
+#
 # UK/US spelling differences
 accessorise,accessorize
 accessorised,accessorized
