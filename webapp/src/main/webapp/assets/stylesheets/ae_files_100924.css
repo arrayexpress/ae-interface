@@ -1,3 +1,7 @@
+body {
+    overflow-y: hidden;
+}
+
 #ae_contents {
     position: absolute;
     top: 57px;
