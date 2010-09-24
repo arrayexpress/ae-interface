@@ -29,13 +29,13 @@ public class AutocompleteStore
 
     private class AutocompleteComparator implements Comparator<String>
     {
-        public int compare(String s1, String s2)
+        public int compare( String s1, String s2 )
         {
             int pos1 = s1.lastIndexOf('|');
             int pos2 = s2.lastIndexOf('|');
 
-            String text1 = s1.substring(0, (-1 != pos1 ? pos1 : s1.length() ));
-            String text2 = s2.substring(0, (-1 != pos2 ? pos2 : s2.length() ));
+            String text1 = s1.toLowerCase().substring(0, (-1 != pos1 ? pos1 : s1.length()));
+            String text2 = s2.toLowerCase().substring(0, (-1 != pos2 ? pos2 : s2.length()));
 
             int comp = text1.compareTo(text2);
             if (0 == comp) {
@@ -44,12 +44,12 @@ public class AutocompleteStore
                 } else if (-1 != pos1 && -1 == pos2) {
                     comp = 1;
                 } else if ((pos1 >= s1.length() - 1) || (pos1 >= s2.length() - 1)) {
-                    comp = s1.compareTo(s2);
+                    comp = s1.compareToIgnoreCase(s2);
                 } else {
                     comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
                 }
             }
-        return comp;
+            return comp;
         }
     }
 
@@ -64,7 +64,7 @@ public class AutocompleteStore
         trie.clear();
         objects.clear();
     }
-    
+
     public void addData( AutocompleteData data )
     {
         String key = data.getText() + "|" + data.getDataType() + "_" + data.getData();

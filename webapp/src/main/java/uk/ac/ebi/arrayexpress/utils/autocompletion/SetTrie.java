@@ -59,7 +59,7 @@ public class SetTrie
         List<String> completions = new ArrayList<String>();
         Set<String> tailSet = lines.tailSet(prefix);
         for (String tail : tailSet) {
-            if (tail.startsWith(prefix)) {
+            if (tail.toLowerCase().startsWith(prefix.toLowerCase())) {
                 completions.add(tail);
             } else {
                 break;
