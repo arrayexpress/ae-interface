@@ -9,7 +9,7 @@
                 exclude-result-prefixes="ae xs fn saxon search"
                 version="2.0">
 
-    <xsl:param name="pagesize">25</xsl:param>
+    <xsl:param name="pagesize">25000</xsl:param>
     <xsl:param name="sortby">releasedate</xsl:param>
     <xsl:param name="sortorder">descending</xsl:param>
 
@@ -123,9 +123,11 @@
                         <xsl:value-of select="."/>
                     </category>
                 </xsl:for-each>
-                <pubDate>
-                    <xsl:value-of select="ae:dateTimeToRfc822(fn:dateTime(releasedate, xs:time('00:00:00')))"/>
-                </pubDate>
+                <xsl:if test="releasedate > ''">
+                    <pubDate>
+                        <xsl:value-of select="ae:dateTimeToRfc822(fn:dateTime(releasedate, xs:time('00:00:00')))"/>
+                    </pubDate>
+                </xsl:if>
             </item>
         </xsl:if>
     </xsl:template>
