@@ -29,6 +29,7 @@ public class StringToolsTest
         assertEquals("hello world", StringTools.unescapeXMLDecimalEntities("hello world"));
         assertEquals("hello &# world", StringTools.unescapeXMLDecimalEntities("hello &# world"));
         assertEquals("hello &# world &#", StringTools.unescapeXMLDecimalEntities("hello &# world &#"));
-        assertEquals("hello &# world 0", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));        
+        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
+        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));       
     }
 }

@@ -86,7 +86,7 @@ public class StringTools
             }
             out.append(in.substring(currentIndex, entityStart));
             entityEnd = in.indexOf(";", entityStart);
-            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d+$")) {
+            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d{4,}$")) {
                 // good stuff, we found decimal entity
                 out.append((char)Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
                 currentIndex = entityEnd + 1;
@@ -97,7 +97,6 @@ public class StringTools
         }
         return out.toString();
     }
-
 
     /**
      * This method ensures that the output String has only
@@ -128,4 +127,37 @@ public class StringTools
         }
         return out.toString();
     }
+
+    private static char ILLEGAL_CHAR_REPRESENATION = 0x2327;
+    private static char C1_CONTROL_TRANSCODE_MAP[] = {
+            8364, ILLEGAL_CHAR_REPRESENATION, 8218, 402, 8222, 8230, 8224, 8225, 710, 8240, 352, 8249, 338, ILLEGAL_CHAR_REPRESENATION, 381, ILLEGAL_CHAR_REPRESENATION,
+            ILLEGAL_CHAR_REPRESENATION, 8216, 8217, 8220, 8221, 8226, 8211, 8212, 732, 8482, 353, 8250, 339, ILLEGAL_CHAR_REPRESENATION, 382, 376
+    };
+
+    public static String escapeChar( char in )
+    {
+        return "&#" + String.valueOf((int)in) + ";";
+    }
+    
+    public static String replaceIllegalHTMLCharacters( String in )
+    {
+        StringBuilder out = new StringBuilder(); // Used to hold the output.
+        char current; // Used to reference the current character.
+
+        if (in == null || ("".equals(in))) return ""; // vacancy test.
+        for (int i = 0; i < in.length(); i++) {
+            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
+            if (0x09 == current || 0x0a == current || 0x0d == current|| (current >= 0x20  &&  current <= 0x7e)) {
+                out.append(current);
+            } else if (current >= 0x80 && current <= 0x9f) {
+                out.append(escapeChar(C1_CONTROL_TRANSCODE_MAP[current-0x80]));
+            } else if ((current >= 0xa0 && current <= 0xd7ff) || (current >= 0xe000 && current <= 0xfffd) ||(current >= 0x10000 && current <= 0x10ffff)) {
+                out.append(escapeChar(current));
+            } else {
+                out.append(escapeChar(ILLEGAL_CHAR_REPRESENATION));
+            }
+        }
+        return out.toString();
+    }
+
 }
