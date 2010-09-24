@@ -9,8 +9,12 @@
 
     <xsl:output method="text" indent="no" encoding="ISO-8859-1"/>
 
-    <xsl:template match="//experimentInfo">
-        <xsl:value-of select="accession"/>
+    <xsl:template match="atlasResponse">
+        <xsl:apply-templates select="results/result/experimentInfo/accession"/>
+    </xsl:template>
+
+    <xsl:template match="accession">
+        <xsl:value-of select="."/>
         <xsl:text>&#10;</xsl:text>
     </xsl:template>
 
