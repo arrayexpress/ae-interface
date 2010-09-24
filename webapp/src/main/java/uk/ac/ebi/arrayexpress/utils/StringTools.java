@@ -68,6 +68,37 @@ public class StringTools
         w.close();
     }
 
+    public static String unescapeXMLDecimalEntities( String in )
+    {
+        StringBuilder out = new StringBuilder();
+
+        if (in == null || ("".equals(in))) return "";
+
+        int entityStart;
+        int entityEnd;
+        int currentIndex = 0;
+
+        while (currentIndex < in.length()) {
+            entityStart = in.indexOf("&#", currentIndex);
+            if (-1 == entityStart) {
+                out.append(in.substring(currentIndex));
+                break;
+            }
+            out.append(in.substring(currentIndex, entityStart));
+            entityEnd = in.indexOf(";", entityStart);
+            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d+$")) {
+                // good stuff, we found decimal entity
+                out.append((char)Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
+                currentIndex = entityEnd + 1;
+            } else {
+                out.append("&#");
+                currentIndex = entityStart + 2;
+            }
+        }
+        return out.toString();
+    }
+
+
     /**
      * This method ensures that the output String has only
      * valid XML unicode characters as specified by the
@@ -81,7 +112,7 @@ public class StringTools
      */
     public static String stripNonValidXMLCharacters( String in )
     {
-        StringBuffer out = new StringBuffer(); // Used to hold the output.
+        StringBuilder out = new StringBuilder(); // Used to hold the output.
         char current; // Used to reference the current character.
 
         if (in == null || ("".equals(in))) return ""; // vacancy test.
