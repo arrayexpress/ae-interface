@@ -101,15 +101,21 @@ aeDoLoginNext(text)
         $.cookie("AeLoggedUser", user, {expires: loginExpiration, path: '/'});
         $.cookie("AeLoginToken", text, {expires: loginExpiration, path: '/'});
 
-        $("#ae_login_info strong").text(user);
-        $("#ae_login_info").show();
-        window.location.href = decodeURI(window.location.pathname) + $.query.toString();        
+        aeShowLoginInfo();
+        window.location.href = decodeURI(window.location.pathname) + $.query.toString();
     } else {
         user = "";
         $("#ae_login_status").text("Incorrect user name or password. Please try again.");
         $("#ae_login_submit").removeAttr("disabled");
         $("#ae_user_field").focus();
     }
+}
+
+function
+aeShowLoginInfo()
+{
+    $("#ae_login_info strong").text(user);
+    $("#ae_login_info").show();
 }
 
 function
@@ -209,8 +215,7 @@ $(document).ready( function() {
     if ( undefined != _user && undefined != _token ) {
         user = _user;
         $("#ae_login_link").hide();
-        $("#ae_login_info strong").text(_user);
-        $("#ae_login_info").show();
+        aeShowLoginInfo();
     }
 
     // adds a callback to close a login form on escape

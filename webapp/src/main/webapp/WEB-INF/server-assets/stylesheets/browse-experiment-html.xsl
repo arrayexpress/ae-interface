@@ -33,14 +33,14 @@
                     <xsl:value-of select="$vAccession"/><xsl:text> | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common-1.4.css" type="text/css"/>
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_browse_experiment-1.4.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_100924.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_browse_experiment_100924.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.caret-range-1.0.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_browse_experiment-1.4.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_browse_experiment_100924.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>
@@ -71,7 +71,7 @@
                                                                     <div id="ae_directsub_option">
                                                                         <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."/><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                                                     </div>
-                                                                    <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="{$basepath}/assets/images/silk_wand.gif" width="16" height="16" alt=""/>Advanced query syntax<img src="{$basepath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/></a></div>
+                                                                    <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="{$basepath}/assets/images/basic_wand.gif" width="16" height="16" alt=""/>Advanced query syntax<img src="{$basepath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/></a></div>
                                                                 </fieldset>
                                                                 <fieldset id="ae_filters_box">
                                                                     <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>

@@ -105,28 +105,33 @@ body.dev_preview {
 /* ae warn/error area */
 
 .ae_warn_area,
+.ae_protected_area,
 .ae_error_area {
     background-color: #ffffff;
     background-repeat: no-repeat;
     background-position: 10px 50%;
     text-align: left;
     font-size: 12px;
-    line-height: 150%;
-    padding: 25px 15px 25px 80px;
-    margin: 20px 0 0 0;
-    border-top: 2px solid #ff614d;
-    border-bottom: 2px solid #ff614d;
+    line-height: 1.5em;
+    padding: 25px 15px 25px 90px;
+    margin: 60px 0 0 0;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
 }
 
 .ae_warn_area {
-    background-image: url( ../images/ae_warn.gif );
+    background-image: url(../images/basic_warning_64.gif);
+}
+.ae_protected_area {
+    background-image: url(../images/basic_lock_64.gif);
 }
 
 .ae_error_area {
-    background-image: url( ../images/ae_stop.gif );
+    background-image: url(../images/basic_block_64.gif);
 }
 
 .ae_warn_area div,
+.ae_protected_area div,
 .ae_error_area div {
     font-size: 12px;
     margin: 1em 0 1em 0;

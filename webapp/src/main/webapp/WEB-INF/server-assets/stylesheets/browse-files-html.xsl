@@ -30,8 +30,8 @@
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">Files for <xsl:value-of select="$vAccession"/> | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common-1.4.css" type="text/css"/>
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_files-1.4.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_100924.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_files_100924.css" type="text/css"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>

@@ -19,6 +19,12 @@ var user = "";
 var unavail = "Information is unavailable at the moment";
 
 function
+aeShowAdvQueryHelp()
+{
+    $("#dialog").dialog({modal: false});
+}
+
+function
 aeShowLoginForm()
 {
     $("#aer_login_link").hide();
@@ -70,8 +76,7 @@ aeDoLoginNext(text)
         $.cookie("AeLoggedUser", user, {expires: loginExpiration, path: '/'});
         $.cookie("AeLoginToken", text, {expires: loginExpiration, path: '/'});
 
-        $("#aer_login_info strong").text(user);
-        $("#aer_login_info").show();
+        aeShowLoginInfo();
         $("#aer_help_link").show();
         $("#aer_avail_info").text("Updating data, please wait...");
         updateAeStats();
@@ -81,6 +86,13 @@ aeDoLoginNext(text)
         $("#aer_login_submit").removeAttr("disabled");
         $("#aer_user_field").focus();
     }
+}
+
+function
+aeShowLoginInfo()
+{
+    $("#aer_login_info strong").text(user);
+    $("#aer_login_info").show();
 }
 
 function
@@ -151,8 +163,7 @@ $(document).ready(function()
     if ( undefined != _user && undefined != _token ) {
         user = _user;
         $("#aer_login_link").hide();
-        $("#aer_login_info strong").text(user);
-        $("#aer_login_info").show();
+        aeShowLoginInfo();
     }
 
     // adds a callback to close a login form on escape

@@ -537,7 +537,7 @@ a:active .table_header_label {
 }
 
 #ae_results_tbl tr.ae_results_tr_error td {
-    background: url( ../images/ae_warn.gif ) 50% 50% no-repeat;
+    background: url( ../images/basic_warning_64.gif ) 50% 50% no-repeat;
     text-align: center;
     color: black;
     font-size: 12px;

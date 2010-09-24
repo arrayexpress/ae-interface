@@ -13,15 +13,15 @@
     <script src="${interface.application.link.www_domain}/inc/js/contents.js" type="text/javascript"></script>
     <link rel="SHORTCUT ICON" href="${interface.application.link.www_domain}/bookmark.ico"/>
 
-    <link rel="stylesheet" href="assets/stylesheets/ae_common-1.4.css" type="text/css"/>
-    <link rel="stylesheet" href="assets/stylesheets/ae_browse-1.4.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/stylesheets/ae_common_100924.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/stylesheets/ae_browse_100924.css" type="text/css"/>
     <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
     <script src="assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.caret-range-1.0.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"></script>
-    <script src="assets/scripts/ae_browse-1.4.js" type="text/javascript"></script>
+    <script src="assets/scripts/ae_browse_100924.js" type="text/javascript"></script>
     <link rel="alternate" href="rss/v2/experiments"
               type="application/rss+xml" title="ArrayExpress Experiments Feed"/>    
 </head>
@@ -61,7 +61,7 @@
                                                                 <div id="ae_directsub_option">
                                                                     <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                                                 </div>
-                                                                <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="assets/images/silk_wand.gif" width="16" height="16" alt="">Advanced query syntax<img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"></a></div>
+                                                                <div id="ae_adv_query_link"><a href="javascript:aeShowAdvQueryHelp();"><img src="assets/images/basic_wand.gif" width="16" height="16" alt="">Advanced query syntax<img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"></a></div>
                                                             </fieldset>
                                                             <fieldset id="ae_filters_box">
                                                                 <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>
@@ -121,7 +121,7 @@
                                                         </div>
                                                         <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="assets/images/basic_help.gif" width="16" height="16" alt="">ArrayExpress Browser Help</a></div>
                                                         <div id="ae_login_link"><a href="javascript:aeShowLoginForm();"><img src="assets/images/basic_key.gif" width="16" height="16" alt="">Submitter/reviewer login</a></div>
-                                                        <div id="ae_login_info" style="display:none"><img src="assets/images/basic_user.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
+                                                        <div id="ae_login_info" style="display:none"><img src="assets/images/basic_suser.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
                                                         <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"></a></div>
                                                     </div>
                                                 </div>
