@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
 
 import javax.xml.transform.*;
@@ -54,7 +54,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public TransformerFactoryImpl trFactory;
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
-    private Map<String, DocumentSource> documentSources = new HashMap<String, DocumentSource>();
+    private Map<String, IDocumentSource> documentSources = new HashMap<String, IDocumentSource>();
 
     private final String XML_STRING_ENCODING = "ISO-8859-1";
 
@@ -81,7 +81,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     {
     }
 
-    public void registerDocumentSource( DocumentSource documentSource )
+    public void registerDocumentSource( IDocumentSource documentSource )
     {
         this.documentSources.put(documentSource.getDocumentURI(), documentSource);
     }

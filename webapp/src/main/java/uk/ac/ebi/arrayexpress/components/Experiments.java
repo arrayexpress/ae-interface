@@ -27,8 +27,8 @@ import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
+import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
 import java.io.File;
 import java.net.URL;
@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Experiments extends ApplicationComponent implements DocumentSource
+public class Experiments extends ApplicationComponent implements IDocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -111,13 +111,13 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         saxon = null;
     }
 
-    // implementation of DocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocument()
     public String getDocumentURI()
     {
         return "experiments.xml";
     }
 
-    // implementation of DocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
         return this.experiments.getObject().getDocument();

@@ -25,8 +25,8 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
+import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -35,7 +35,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.List;
 
-public class Files extends ApplicationComponent implements DocumentSource
+public class Files extends ApplicationComponent implements IDocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -66,13 +66,13 @@ public class Files extends ApplicationComponent implements DocumentSource
         saxon = null;
     }
 
-    // implementation of DocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocument()
     public String getDocumentURI()
     {
         return "files.xml";
     }
 
-    // implementation of DocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
         return this.files.getObject().getDocument();
