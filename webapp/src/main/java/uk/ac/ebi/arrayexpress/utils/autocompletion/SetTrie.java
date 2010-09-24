@@ -28,7 +28,7 @@ public class SetTrie
         lines = new TreeSet<String>();
     }
 
-    public SetTrie( Comparator comp )
+    public SetTrie( Comparator<? super String> comp )
     {
         lines = new TreeSet<String>(comp);
     }
@@ -38,12 +38,12 @@ public class SetTrie
         lines.clear();
     }
 
-    public void add( String line )
+    public synchronized void add( String line )
     {
         lines.add(line);
     }
 
-    public boolean matchPrefix( String prefix )
+    public synchronized boolean matchPrefix( String prefix )
     {
         Set<String> tailSet = lines.tailSet(prefix);
         for (String tail : tailSet) {
@@ -54,7 +54,7 @@ public class SetTrie
         return false;
     }
 
-    public List<String> findCompletions( String prefix )
+    public synchronized List<String> findCompletions( String prefix )
     {
         List<String> completions = new ArrayList<String>();
         Set<String> tailSet = lines.tailSet(prefix);
