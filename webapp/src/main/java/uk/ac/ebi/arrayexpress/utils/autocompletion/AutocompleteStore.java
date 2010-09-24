@@ -43,6 +43,8 @@ public class AutocompleteStore
                     comp = -1;
                 } else if (-1 != pos1 && -1 == pos2) {
                     comp = 1;
+                } else if ((pos1 >= s1.length() - 1) || (pos1 >= s2.length() - 1)) {
+                    comp = s1.compareTo(s2);
                 } else {
                     comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
                 }
