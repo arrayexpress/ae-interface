@@ -50,15 +50,15 @@ public class Files extends ApplicationComponent implements DocumentSource
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine)getComponent("SaxonEngine");
+        saxon = (SaxonEngine) getComponent("SaxonEngine");
 
         files = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer(),
                 new File(getPreferences().getString("ae.files.persistence.file.location"))
         );
-        
-        saxon.registerDocumentSource(this);
+
         updateAccelerators();
+        saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
@@ -103,7 +103,7 @@ public class Files extends ApplicationComponent implements DocumentSource
 
     private void updateAccelerators()
     {
-        logger.debug("Will re-created accelerators for files");
+        logger.debug("Updating accelerators for files");
 
         ExtFunctions.clearAccelerator("raw-files");
         ExtFunctions.clearAccelerator("fgem-files");
@@ -111,7 +111,7 @@ public class Files extends ApplicationComponent implements DocumentSource
         try {
             XPath xp = new XPathEvaluator(getDocument().getConfiguration());
             XPathExpression xpe = xp.compile("/files/folder[@kind = 'experiment']");
-            List documentNodes = (List)xpe.evaluate(getDocument(), XPathConstants.NODESET);
+            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("@accession");
             XPathExpression rawFilePresentXpe = xp.compile("count(file[@kind = 'raw'])");
@@ -120,9 +120,9 @@ public class Files extends ApplicationComponent implements DocumentSource
 
                 try {
                     // get all the expressions taken care of
-                    String accession = (String)accessionXpe.evaluate(node);
+                    String accession = (String) accessionXpe.evaluate(node);
                     ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
-                    ExtFunctions.addAcceleratorValue("fgem-files", accession,  fgemFilePresentXpe.evaluate(node));
+                    ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
                 } catch (XPathExpressionException x) {
                     logger.error("Caught an exception:", x);
                 }
@@ -210,6 +210,6 @@ public class Files extends ApplicationComponent implements DocumentSource
         return saxon.evaluateXPathSingle(
                 getDocument()
                 , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
-            );
+        );
     }
 }

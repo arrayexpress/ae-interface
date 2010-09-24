@@ -51,9 +51,11 @@
                     </xsl:matching-substring>
                 </xsl:analyze-string>
             </xsl:variable>
-            <xsl:if test="ae:isExperimentInAtlas($vAccession)">
+
+            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', accession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
+
             <releasedate><xsl:value-of select="loaddate"/></releasedate>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>

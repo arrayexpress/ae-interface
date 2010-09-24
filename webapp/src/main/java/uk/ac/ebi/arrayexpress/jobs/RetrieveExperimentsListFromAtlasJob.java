@@ -22,12 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.utils.db.ExperimentListInAtlasDatabaseRetriever;
-import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
-
-import java.util.List;
 
 public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
 {
@@ -36,26 +31,18 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        List<String> exps;
-
         Application app = Application.getInstance();
-        String connNames = app.getPreferences().getString("ae.atlasexperiments.connections");
-        logger.info("Reload of list of Atlas experiments from [{}] requested", connNames);
+        String srcLocation = app.getPreferences().getString("ae.atlasexperiments.source.location");
+        logger.info("Reloading a list of experiments present in GXA from [{}]", srcLocation);
 
-        IConnectionSource connectionSource = ((DbConnectionPool)getComponent("DbConnectionPool")).getConnectionSource(connNames);
-        if (null != connectionSource) {
-            exps = new ExperimentListInAtlasDatabaseRetriever(connectionSource).getExperimentList();
-            Thread.sleep(1);
+        if (null != srcLocation && srcLocation.length() > 0) {
             try {
-                ((Experiments) app.getComponent("Experiments")).setExperimentsInAtlas(exps);
+                ((Experiments) app.getComponent("Experiments")).reloadExperimentsInAtlas(srcLocation);
             } catch (Exception x) {
                 throw new RuntimeException(x);
-            } finally {
-                connectionSource.close();
             }
-            logger.info("Got [{}] experiments listed in Atlas", exps.size());
         } else {
-            logger.warn("No data sources available, reload aborted");
+            logger.warn("No source location specified, reload not completed");
         }
     }
 }

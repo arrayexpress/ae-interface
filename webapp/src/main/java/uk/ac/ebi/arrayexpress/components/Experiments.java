@@ -28,10 +28,12 @@ import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 
 import java.io.File;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Experiments extends ApplicationComponent implements DocumentSource
@@ -100,6 +102,7 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
         indexExperiments();
+        updateAccelerators();
         saxon.registerDocumentSource(this);
     }
 
@@ -134,11 +137,6 @@ public class Experiments extends ApplicationComponent implements DocumentSource
                     )
             );
         }
-    }
-
-    public boolean isInAtlas( String accession ) throws Exception
-    {
-        return this.experimentsInAtlas.getObject().contains(accession);
     }
 
     public String getSpecies() throws Exception
@@ -183,9 +181,20 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         }
     }
 
-    public void setExperimentsInAtlas( List<String> expList ) throws Exception
+    public void reloadExperimentsInAtlas( String sourceLocation ) throws Exception
     {
-        this.experimentsInAtlas.setObject(new PersistableStringList(expList));
+        URL source = new URL(sourceLocation);
+        String result = saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
+        if (null != result) {
+            String[] exps = result.split("\n");
+            if (exps.length > 0) {
+                this.experimentsInAtlas.setObject(new PersistableStringList(Arrays.asList(exps)));
+                updateAccelerators();
+                this.logger.info("Stored GXA info, [{}] experiments listed", exps.length);
+            } else {
+                this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
+            }
+        }
     }
 
     private synchronized void setExperiments( DocumentInfo doc ) throws Exception
@@ -207,6 +216,21 @@ public class Experiments extends ApplicationComponent implements DocumentSource
         try {
             search.getController().index(INDEX_ID, experiments.getObject().getDocument());
             autocompletion.rebuild();
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
+    }
+
+    private void updateAccelerators()
+    {
+        this.logger.debug("Updating accelerators for experiments");
+
+        ExtFunctions.clearAccelerator("is-in-atlas");
+        try {
+            for (String accession : this.experimentsInAtlas.getObject()) {
+                ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
+            }
+            this.logger.debug("Accelerators updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

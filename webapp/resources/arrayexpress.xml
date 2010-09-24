@@ -50,26 +50,6 @@
                     <maxConnections>30</maxConnections>
                     <testStatement>select 1 from tt_security where rownum = 1</testStatement>
                 </connection>
-                <connection>
-                    <name>dwp.smithers</name>
-                    <driver>oracle.jdbc.OracleDriver</driver>
-                    <url>jdbc:oracle:thin:@smithers.ebi.ac.uk:1521:AEDWP</url>
-                    <username>${interface.application.atlasdb.username}</username>
-                    <password>${interface.application.atlasdb.password}</password>
-                    <minConnections>5</minConnections>
-                    <maxConnections>5</maxConnections>
-                    <testStatement>select 1 from ae1__experiment__main where rownum = 1</testStatement>
-                </connection>
-                <connection>
-                    <name>dwp.otto</name>
-                    <driver>oracle.jdbc.OracleDriver</driver>
-                    <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEDWP</url>
-                    <username>${interface.application.atlasdb.username}</username>
-                    <password>${interface.application.atlasdb.password}</password>
-                    <minConnections>5</minConnections>
-                    <maxConnections>5</maxConnections>
-                    <testStatement>select 1 from ae1__experiment__main where rownum = 1</testStatement>
-                </connection>
             </connections>
         </db>
         <experiments>
@@ -82,7 +62,7 @@
             </reload>
         </experiments>
         <atlasexperiments>
-            <connections>dwp.smithers, dwp.otto</connections>
+            <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>
             <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</location></file>
             <reload>
                 <atstart>false</atstart>

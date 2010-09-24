@@ -65,11 +65,14 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                 }
                 logger.info("Reload of experiment data from [{}] requested", connNames);
 
-                connectionSource = ((DbConnectionPool)getComponent("DbConnectionPool")).getConnectionSource(connNames);
+                connectionSource = ((DbConnectionPool) getComponent("DbConnectionPool")).getConnectionSource(connNames);
 
                 if (null != connectionSource) {
+                    // kicks reload of atlas experiments just in case
+                    ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
+
                     UserList userList = new UserListDatabaseRetriever(connectionSource).getUserList();
-                    ((Users)getComponent("Users")).setUserList(userList);
+                    ((Users) getComponent("Users")).setUserList(userList);
                     logger.info("Reloaded the user list from the database");
 
                     exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
@@ -78,31 +81,31 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                     logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
                     xmlBuffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><experiments total=\"").append(exps.size()).append("\">");
 
-                    ((JobsController)getComponent("JobsController")).setJobListener(this);
+                    ((JobsController) getComponent("JobsController")).setJobListener(this);
 
                     if (exps.size() > 0) {
                         if (exps.size() <= numThreadsForRetrieval) {
                             numThreadsForRetrieval = 1;
                         }
                         // split list into several pieces
-                        expsPerThread = (int) Math.ceil(((double)exps.size()) / ((double)numThreadsForRetrieval));
-                        for ( int i = 0; i < numThreadsForRetrieval; ++i ) {
-                            ((JobsController)getComponent("JobsController")).executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
+                        expsPerThread = (int) Math.ceil(((double) exps.size()) / ((double) numThreadsForRetrieval));
+                        for (int i = 0; i < numThreadsForRetrieval; ++i) {
+                            ((JobsController) getComponent("JobsController")).executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
                             Thread.sleep(1);
                         }
 
-                        while ( numThreadsCompleted < numThreadsForRetrieval ) {
+                        while (numThreadsCompleted < numThreadsForRetrieval) {
                             Thread.sleep(1000);
                         }
 
-                        ((JobsController)getComponent("JobsController")).setJobListener(null);
+                        ((JobsController) getComponent("JobsController")).setJobListener(null);
                         xmlBuffer.append("</experiments>");
 
                         String xmlString = xmlBuffer.toString().replaceAll("[^\\p{Print}]", " ");
                         if (logger.isDebugEnabled()) {
                             StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
                         }
-                        ((Experiments)getComponent("Experiments")).reload(xmlString);
+                        ((Experiments) getComponent("Experiments")).reload(xmlString);
                         logger.info("Reload of experiment data completed");
                         xmlBuffer = null;
                     } else {
@@ -144,7 +147,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
         if (jec.getJobDetail().getName().equals("retrieve-xml")) {
             try {
                 interrupt();
-            } catch ( Exception x ) {
+            } catch (Exception x) {
                 logger.error("Caught an exception:", x);
             }
         }

@@ -19,7 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
 
 public class ExtFunctions
 {
-    public static String formatFileSize(long size)
+    public static String formatFileSize( long size )
     {
         StringBuilder str = new StringBuilder();
         if (922L > size) {
@@ -34,18 +34,12 @@ public class ExtFunctions
         return str.toString();
     }
 
-    public static String trimTrailingDot(String str)
+    public static String trimTrailingDot( String str )
     {
         if (str.endsWith(".")) {
             return str.substring(0, str.length() - 2);
         } else
             return str;
-    }
-
-    /* ***************************************************** */
-    public static boolean isExperimentInAtlas(String accession)
-    {
-        return true;
     }
 
     public synchronized static void clearAccelerator( String acceleratorName )

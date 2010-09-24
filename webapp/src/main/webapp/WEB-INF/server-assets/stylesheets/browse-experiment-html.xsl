@@ -94,7 +94,7 @@
                                                                 </fieldset>
                                                             </form>
 
-                                                            <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="{$basepath}/assets/images/silk_help.gif" width="16" height="16" alt=""/>ArrayExpress Browser Help</a></div>
+                                                            <div id="ae_help_link"><a href="${interface.application.link.browse_help}"><img src="{$basepath}/assets/images/basic_help.gif" width="16" height="16" alt=""/>ArrayExpress Browser Help</a></div>
                                                             <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="{$basepath}/assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"/></a></div>
                                                         </div>
                                                     </div>

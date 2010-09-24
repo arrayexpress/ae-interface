@@ -53,7 +53,8 @@ public class JobsController extends ApplicationComponent
 
         scheduleJob("rescan-files", "ae.files.rescan");
         scheduleJob("reload-xml", "ae.experiments.reload");
-        scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
+        // doesn't have an additional schedule for now, sync'd with the reload of experiments
+        // scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
 
         startScheduler();
     }
@@ -67,7 +68,7 @@ public class JobsController extends ApplicationComponent
     {
         try {
             getScheduler().triggerJob(name, AE_JOBS_GROUP);
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -78,7 +79,7 @@ public class JobsController extends ApplicationComponent
             JobDataMap map = new JobDataMap();
             map.put(paramName, paramValue);
             getScheduler().triggerJob(name, AE_JOBS_GROUP, map);
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -91,7 +92,7 @@ public class JobsController extends ApplicationComponent
             } else {
                 getScheduler().removeGlobalJobListener("job-listener");
             }
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -100,7 +101,7 @@ public class JobsController extends ApplicationComponent
     {
         try {
             getScheduler().start();
-        } catch ( SchedulerException x ) {
+        } catch (SchedulerException x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -111,7 +112,7 @@ public class JobsController extends ApplicationComponent
             try {
                 // Retrieve a scheduler from schedule factory
                 scheduler = new StdSchedulerFactory().getScheduler();
-            } catch ( Exception x ) {
+            } catch (Exception x) {
                 logger.error("Caught an exception:", x);
             }
         }
@@ -131,7 +132,7 @@ public class JobsController extends ApplicationComponent
 
         try {
             getScheduler().addJob(j, false);
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -153,7 +154,7 @@ public class JobsController extends ApplicationComponent
                 cronTrigger.setJobGroup(AE_JOBS_GROUP);
                 // schedule a job with JobDetail and Trigger
                 getScheduler().scheduleJob(cronTrigger);
-            } catch ( Exception x ) {
+            } catch (Exception x) {
                 logger.error("Caught an exception:", x);
             }
         }
@@ -173,7 +174,7 @@ public class JobsController extends ApplicationComponent
 
             try {
                 getScheduler().scheduleJob(intervalTrigger);
-            } catch ( Exception x ) {
+            } catch (Exception x) {
                 logger.error("Caught an exception:", x);
             }
         }
@@ -192,7 +193,7 @@ public class JobsController extends ApplicationComponent
 
         try {
             getScheduler().scheduleJob(intervalTrigger);
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
@@ -204,14 +205,14 @@ public class JobsController extends ApplicationComponent
             getScheduler().pauseAll();
 
             List runningJobs = getScheduler().getCurrentlyExecutingJobs();
-            for ( Object jec : runningJobs ) {
+            for (Object jec : runningJobs) {
                 JobDetail j = ((JobExecutionContext) jec).getJobDetail();
                 getScheduler().interrupt(j.getName(), j.getGroup());
             }
 
             getScheduler().shutdown(true);
 
-        } catch ( Exception x ) {
+        } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }
     }
