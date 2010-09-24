@@ -616,7 +616,7 @@
 
         <xsl:choose>
             <xsl:when test="$pValue='1'">
-                <img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/>
+                <img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/>
             </xsl:when>
             <xsl:otherwise>
                 <img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/>

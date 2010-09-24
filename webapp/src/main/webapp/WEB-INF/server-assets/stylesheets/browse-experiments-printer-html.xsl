@@ -198,7 +198,7 @@
             <td class="col_atlas">
                 <div>
                     <xsl:choose>
-                        <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{accession}"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>
+                        <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{accession}"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>
                         <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
                     </xsl:choose>
                 </div>
@@ -210,7 +210,7 @@
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
         <xsl:choose>
-            <xsl:when test="'0' != ae:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/silk_tick.gif" width="16" height="16" alt="*"/></xsl:when>
+            <xsl:when test="'0' != ae:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
