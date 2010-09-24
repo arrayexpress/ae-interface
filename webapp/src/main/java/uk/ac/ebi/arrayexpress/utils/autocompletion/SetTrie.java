@@ -35,17 +35,26 @@ public class SetTrie
 
     public void clear()
     {
-        lines.clear();
+        synchronized(this) {
+            lines.clear();
+        }
     }
 
-    public synchronized void add( String line )
+    public void add( String line )
     {
-        lines.add(line);
+        synchronized(this) {
+            lines.add(line);
+        }
     }
 
     public synchronized boolean matchPrefix( String prefix )
     {
-        Set<String> tailSet = lines.tailSet(prefix);
+        Set<String> tailSet;
+
+        synchronized(this) {
+            tailSet = lines.tailSet(prefix);
+        }
+
         for (String tail : tailSet) {
             if (tail.startsWith(prefix)) {
                 return true;
@@ -57,7 +66,12 @@ public class SetTrie
     public synchronized List<String> findCompletions( String prefix )
     {
         List<String> completions = new ArrayList<String>();
-        Set<String> tailSet = lines.tailSet(prefix);
+        Set<String> tailSet;
+
+        synchronized(this) {
+            tailSet = lines.tailSet(prefix);
+        }
+
         for (String tail : tailSet) {
             if (tail.toLowerCase().startsWith(prefix.toLowerCase())) {
                 completions.add(tail);
