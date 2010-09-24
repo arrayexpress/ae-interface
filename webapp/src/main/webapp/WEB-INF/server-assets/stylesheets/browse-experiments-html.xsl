@@ -8,17 +8,11 @@
                 exclude-result-prefixes="xs ae search html"
                 version="2.0">
 
-    <xsl:param name="queryid" />
+    <xsl:param name="queryid"/>
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
-
-    <xsl:param name="species" />
-    <xsl:param name="array" />
-    <xsl:param name="keywords" />
-    <xsl:param name="exptype" />
-    <xsl:param name="inatlas" />
 
     <xsl:param name="detailedview"/>
 
@@ -29,7 +23,7 @@
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
-    <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="ISO-8859-1" />
+    <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="ISO-8859-1"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>

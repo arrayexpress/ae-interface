@@ -22,7 +22,7 @@
     <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
-                indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" />
+                indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
     <xsl:include href="ae-html-page.xsl"/>
 
