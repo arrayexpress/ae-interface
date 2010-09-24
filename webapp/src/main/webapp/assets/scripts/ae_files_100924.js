@@ -20,9 +20,6 @@
 
    $(function() {
         // this will be executed when DOM is ready
-        if ($.query == undefined)
-            throw "jQuery.query not loaded";
-
         if ($.browser.msie) {
             $("#head")[0].allowTransparency = true;
             $("#ae_contents")[0].style.zIndex = 1;
