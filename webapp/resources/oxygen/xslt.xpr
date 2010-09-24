@@ -1435,6 +1435,7 @@
     </meta>
     <projectTree name="xslt.xpr">
         <folder name="documents">
+            <file name="documents/sample-atlas-exps-not-processed.xml"/>
             <file name="documents/sample-experiments.xml"/>
             <file name="documents/sample-experiments-not-processed.xml"/>
             <file name="documents/sample-files-not-processed.xml"/>
