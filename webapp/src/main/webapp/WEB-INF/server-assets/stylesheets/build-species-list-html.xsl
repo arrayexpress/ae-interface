@@ -7,7 +7,7 @@
         exclude-result-prefixes="ae html"
         version="2.0">
 
-    <xsl:output omit-xml-declaration="yes" method="html"/>
+    <xsl:output omit-xml-declaration="yes" method="html" encoding="ISO-8859-1" />
 
     <xsl:template match="/experiments">
         <option value="">All species</option>

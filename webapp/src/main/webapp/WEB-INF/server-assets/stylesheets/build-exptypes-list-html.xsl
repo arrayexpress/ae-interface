@@ -6,7 +6,7 @@
         exclude-result-prefixes="html"
         version="2.0">
 
-    <xsl:output omit-xml-declaration="yes" method="html"/>
+    <xsl:output omit-xml-declaration="yes" method="html" encoding="ISO-8859-1"/>
     <xsl:template match="/experiments">
         <option value="">All experiment types</option>
         <xsl:for-each-group select="experiment/experimenttype" group-by="text()" collation="http://saxon.sf.net/collation?ignore-case=yes">
