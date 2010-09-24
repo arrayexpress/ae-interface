@@ -79,7 +79,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                     Thread.sleep(1);
 
                     logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
-                    xmlBuffer.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><experiments total=\"").append(exps.size()).append("\">");
+                    xmlBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><experiments total=\"").append(exps.size()).append("\">");
 
                     ((JobsController) getComponent("JobsController")).setJobListener(this);
 
@@ -101,7 +101,7 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         ((JobsController) getComponent("JobsController")).setJobListener(null);
                         xmlBuffer.append("</experiments>");
 
-                        String xmlString = xmlBuffer.toString().replaceAll("[^\\p{Print}]", " ");
+                        String xmlString = StringTools.stripNonValidXMLCharacters(xmlBuffer.toString());
                         if (logger.isDebugEnabled()) {
                             StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
                         }

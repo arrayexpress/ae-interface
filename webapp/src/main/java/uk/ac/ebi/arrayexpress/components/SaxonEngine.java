@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
+import net.sf.saxon.event.SaxonOutputKeys;
 import net.sf.saxon.event.SequenceWriter;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.instruct.TerminationException;
@@ -56,7 +57,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
     private Map<String, IDocumentSource> documentSources = new HashMap<String, IDocumentSource>();
 
-    private final String XML_STRING_ENCODING = "ISO-8859-1";
+    private final String XML_STRING_ENCODING = "UTF-8";
 
     public SaxonEngine()
     {
@@ -136,12 +137,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     public String serializeDocument( DocumentInfo document ) throws Exception
     {
         String string = null;
+
         Transformer transformer = trFactory.newTransformer();
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(SaxonOutputKeys.CHARACTER_REPRESENTATION, "entity;decimal");
 
         transformer.transform(document, new StreamResult(outStream));
         return outStream.toString(XML_STRING_ENCODING);
