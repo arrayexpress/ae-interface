@@ -144,6 +144,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "US-ASCII");
         transformer.setOutputProperty(SaxonOutputKeys.CHARACTER_REPRESENTATION, "entity;decimal");
 
         transformer.transform(document, new StreamResult(outStream));

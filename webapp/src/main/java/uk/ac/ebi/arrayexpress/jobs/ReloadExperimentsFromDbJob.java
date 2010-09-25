@@ -102,7 +102,9 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         xmlBuffer.append("</experiments>");
 
                         String xmlString = StringTools.replaceIllegalHTMLCharacters(
-                                xmlBuffer.toString()
+                                StringTools.unescapeXMLDecimalEntities(
+                                xmlBuffer.toString().replaceAll("&amp;#(\\d+);", "&#$1;")
+                            )
                         );
                         if (logger.isDebugEnabled()) {
                             StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
