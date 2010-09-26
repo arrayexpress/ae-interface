@@ -21,7 +21,7 @@ var unavail = "Information is unavailable at the moment";
 function
 aeShowAdvQueryHelp()
 {
-    $("#dialog").dialog({modal: false});
+    $("#dialog").dialog({modal: false, resizable: false});
 }
 
 function
