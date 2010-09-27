@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public abstract class SqlStatementExecutor
             try {
                 Connection conn = source.getConnection();
                 statement = prepareStatement(conn, sql);
-            } catch ( SQLException x ) {
+            } catch (SQLException x) {
                 logger.error("Caught an exception:", x);
             }
         }
@@ -55,13 +56,15 @@ public abstract class SqlStatementExecutor
                 rs = statement.executeQuery();
                 processResultSet(rs);
                 result = true;
-            } catch ( SQLException x ) {
+            } catch (SQLException x) {
+                logger.error("Caught an exception:", x);
+            } catch (IOException x) {
                 logger.error("Caught an exception:", x);
             } finally {
                 if (null != rs) {
                     try {
                         rs.close();
-                    } catch ( SQLException x ) {
+                    } catch (SQLException x) {
                         logger.error("Caught an exception:", x);
                     }
                 }
@@ -69,7 +72,7 @@ public abstract class SqlStatementExecutor
                 if (!shouldRetainConnection) {
                     try {
                         closeConnection();
-                    } catch ( SQLException x ) {
+                    } catch (SQLException x) {
                         logger.error("Caught an exception:", x);
                     }
                 }
@@ -84,7 +87,7 @@ public abstract class SqlStatementExecutor
     protected abstract void setParameters( PreparedStatement stmt ) throws SQLException;
 
     // overridable method that would allow user to parse the result set upon successful execution
-    protected abstract void processResultSet( ResultSet resultSet ) throws SQLException;
+    protected abstract void processResultSet( ResultSet resultSet ) throws IOException, SQLException;
 
     private PreparedStatement prepareStatement( Connection conn, String sql ) throws SQLException
     {

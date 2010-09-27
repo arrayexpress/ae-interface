@@ -19,9 +19,10 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +81,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
     {
         logger.debug("Retrieving experiment data for [{}] experiments", experimentList.size());
         try {
-            for ( Object exp : experimentList ) {
+            for (Object exp : experimentList) {
                 experimentId = (Long) exp;
                 if (!execute(true)) {
                     experimentXml = new StringBuilder();
@@ -89,12 +90,12 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
                 Thread.sleep(1);
             }
             logger.debug("Retrieval completed");
-        } catch ( InterruptedException x ) {
+        } catch (InterruptedException x) {
             logger.debug("Retrieval aborted");
         } finally {
             try {
                 closeConnection();
-            } catch ( SQLException x ) {
+            } catch (SQLException x) {
                 logger.error("Caught an exception:", x);
             }
         }
@@ -106,31 +107,44 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
         stmt.setLong(1, experimentId);
     }
 
-    protected void processResultSet( ResultSet resultSet ) throws SQLException
+    protected void processResultSet( ResultSet resultSet ) throws IOException, SQLException
     {
         if (resultSet.next()) {
             Clob xmlClob = resultSet.getClob(1);
-            experimentXml.append(ClobToString(xmlClob));
+            if (null != xmlClob) {
+                experimentXml.append(
+                        StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
+                                StringTools.unescapeXMLDecimalEntities(     // convert &#dddd; entities to their Unicode values
+                                        StringTools.detectDecodeUTF8Sequences(  // attempt to intelligently convert UTF-8 to Unicode
+                                                ClobToString(xmlClob)
+                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")  // transform &amp;#dddd; -> &#dddd;
+                                )
+                        )
+                );
+            }
         }
     }
 
-    private String ClobToString( Clob cl ) throws SQLException
+    private String ClobToString( Clob cl ) throws IOException, SQLException
     {
         if (cl == null)
             return null;
 
-        StringBuilder strOut = new StringBuilder();
-
-        BufferedReader br = new BufferedReader(cl.getCharacterStream());
+        StringBuilder sb = new StringBuilder((int) cl.length());
+        InputStream in = cl.getAsciiStream();
+        int ch;
         try {
-            String aux;
-            while ( (aux = br.readLine()) != null )
-                strOut.append(aux);
-        } catch ( IOException x ) {
-            logger.error("Caught an exception:", x);
-            strOut = new StringBuilder();
+            while (true) {
+                ch = in.read();
+                if (-1 == ch) {
+                    break;
+                }
+                sb.append((char) ch);
+            }
+        } finally {
+            in.close();
         }
 
-        return strOut.toString();
+        return sb.toString();
     }
 }

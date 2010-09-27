@@ -88,7 +88,7 @@ public class StringTools
             entityEnd = in.indexOf(";", entityStart);
             if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d{4,}$")) {
                 // good stuff, we found decimal entity
-                out.append((char)Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
+                out.append((char) Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
                 currentIndex = entityEnd + 1;
             } else {
                 out.append("&#");
@@ -98,37 +98,7 @@ public class StringTools
         return out.toString();
     }
 
-    /**
-     * This method ensures that the output String has only
-     * valid XML unicode characters as specified by the
-     * XML 1.0 standard. For reference, please see
-     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty
-     * String if the input is null or empty.
-     *
-     * @param in The String whose non-valid characters we want to remove.
-     * @return The in String, stripped of non-valid characters.
-     */
-    public static String stripNonValidXMLCharacters( String in )
-    {
-        StringBuilder out = new StringBuilder(); // Used to hold the output.
-        char current; // Used to reference the current character.
-
-        if (in == null || ("".equals(in))) return ""; // vacancy test.
-        for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
-            if ((current == 0x9) ||
-                    (current == 0xA) ||
-                    (current == 0xD) ||
-                    ((current >= 0x20) && (current <= 0xD7FF)) ||
-                    ((current >= 0xE000) && (current <= 0xFFFD)) ||
-                    ((current >= 0x10000) && (current <= 0x10FFFF)))
-                out.append(current);
-        }
-        return out.toString();
-    }
-
-    private static char ILLEGAL_CHAR_REPRESENATION = 0x2327;
+    private static char ILLEGAL_CHAR_REPRESENATION = 0xfffd;
     private static char C1_CONTROL_TRANSCODE_MAP[] = {
             8364, ILLEGAL_CHAR_REPRESENATION, 8218, 402, 8222, 8230, 8224, 8225,
             710, 8240, 352, 8249, 338, ILLEGAL_CHAR_REPRESENATION, 381, ILLEGAL_CHAR_REPRESENATION,
@@ -138,28 +108,92 @@ public class StringTools
 
     public static String escapeChar( char in )
     {
-        return "&#" + String.valueOf((int)in) + ";";
+        return "&#" + String.valueOf((int) in) + ";";
     }
-    
+
     public static String replaceIllegalHTMLCharacters( String in )
     {
-        StringBuilder out = new StringBuilder(); // Used to hold the output.
-        char current; // Used to reference the current character.
+        if (null == in)
+            return null;
 
-        if (in == null || ("".equals(in))) return ""; // vacancy test.
+        StringBuilder out = new StringBuilder(in.length() * 2);
+        char current;
+
         for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
-            if (0x09 == current || 0x0a == current || 0x0d == current|| (current >= 0x20  &&  current <= 0x7e)) {
+            current = in.charAt(i);
+            if (0x09 == current || 0x0a == current || 0x0d == current || (current >= 0x20 && current <= 0x7e)) {
                 out.append(current);
             } else if (current >= 0x80 && current <= 0x9f) {
-                out.append(escapeChar(C1_CONTROL_TRANSCODE_MAP[current-0x80]));
-            } else if ((current >= 0xa0 && current <= 0xd7ff) || (current >= 0xe000 && current <= 0xfffd) ||(current >= 0x10000 && current <= 0x10ffff)) {
+                out.append(escapeChar(C1_CONTROL_TRANSCODE_MAP[current - 0x80]));
+            } else if ((current >= 0xa0 && current <= 0xd7ff) || (current >= 0xe000 && current <= 0xfffd) || (current >= 0x10000 && current <= 0x10ffff)) {
                 out.append(escapeChar(current));
             } else {
                 out.append(escapeChar(ILLEGAL_CHAR_REPRESENATION));
             }
         }
         return out.toString();
+    }
+
+    public static String detectDecodeUTF8Sequences( String in )
+    {
+        if (null == in)
+            return null;
+
+        StringBuilder sb = new StringBuilder(in.length() * 2);
+
+        char ch, decoded;
+        for (int ix = 0; ix < in.length(); ++ix) {
+            ch = in.charAt(ix);
+
+            if (ch <= 0x7f) {
+                // there are no problems with ascii
+                sb.append(ch);
+            } else if (ch >= 0xc2 && ch <= 0xdf && (ix + 1) < in.length()) {
+                // this is possibly a start of two-byte utf-8 sequence
+                // let's try to decode it and if it's any good, use it
+                // or just copy the original sequence
+                decoded = StringTools.decodeUTF8((byte) ch, (byte) in.charAt(ix + 1));
+                if (ILLEGAL_CHAR_REPRESENATION == decoded) {
+                    sb.append(ch);
+                } else {
+                    sb.append(decoded);
+                    ix++;
+                }
+            } else if (ch >= 0xe0 && ch <= 0xef && (ix + 2) < in.length()) {
+                // this is possibly a start of three-byte utf-8 sequence
+                // let's try to decode it and if it's any good, use it
+                // or just copy the original sequence
+                decoded = StringTools.decodeUTF8((byte) ch, (byte) in.charAt(ix + 1), (byte) in.charAt(ix + 2));
+                if (-1 == decoded) {
+                    sb.append(ch);
+                } else {
+                    sb.append(decoded);
+                    ix = +2;
+                }
+            } else {
+                // the rest is interpreted as pure unicode (we don't decode four-byte utf-8's)
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
+    public static char decodeUTF8( byte b0, byte b1 )
+    {
+        if ((0xc0 == (b0 & 0xe0)) && (0x80 == (b1 & 0xc0))) {
+            return (char) (((b0 & 0x1f) << 6) + (b1 & 0x3f));
+        } else {
+            return ILLEGAL_CHAR_REPRESENATION;
+        }
+    }
+
+    public static char decodeUTF8( byte b0, byte b1, byte b2 )
+    {
+        if ((0xe0 == (b0 & 0xf0)) && (0x80 == (b1 & 0xc0)) && (0x80 == (b2 & 0xc0))) {
+            return (char) (((b0 & 0x0f) << 12) + ((b1 & 0x3f) << 6) + (b2 & 0x3f));
+        } else {
+            return ILLEGAL_CHAR_REPRESENATION;
+        }
     }
 
 }
