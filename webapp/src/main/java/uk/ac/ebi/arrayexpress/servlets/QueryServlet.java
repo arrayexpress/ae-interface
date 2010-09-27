@@ -78,7 +78,7 @@ public class QueryServlet extends ApplicationServlet
             // special case for Excel docs
             // we actually send tab-delimited file but mimick it as XLS doc
             String timestamp = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
-            response.setContentType("application/vnd.ms-excel");
+            response.setContentType("application/vnd.ms-excel; charset=ISO-8859-1");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".xls\"");
             type = "tab";
         } else if (type.equals("tab")) {
@@ -90,10 +90,12 @@ public class QueryServlet extends ApplicationServlet
             type = "tab";
         } else if (type.equals("json")) {
             response.setContentType("application/json; charset=UTF-8");
+        } else if (type.equals("html")) {
+            response.setContentType("text/html; charset=ISO-8859-1");
         } else {
-            // Set content type for HTML/XML/plain
-            response.setContentType("text/" + type + "; charset=ISO-8859-1");
+            response.setContentType("text/" + type + "; charset=UTF-8");
         }
+
         // tell client to not cache the page unless we want to
         if (!"true".equalsIgnoreCase(request.getParameter("cache"))) {
             response.addHeader("Pragma", "no-cache");
@@ -105,7 +107,7 @@ public class QueryServlet extends ApplicationServlet
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
         try {
-            Experiments experiments = (Experiments)getComponent("Experiments");
+            Experiments experiments = (Experiments) getComponent("Experiments");
             if (stylesheet.equals("arrays-select")) {
                 out.print(experiments.getArrays());
             } else if (stylesheet.equals("species-select")) {
@@ -123,7 +125,7 @@ public class QueryServlet extends ApplicationServlet
 
                 CookieMap cookies = new CookieMap(request.getCookies());
                 if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
-                    Users users = (Users)getComponent("Users");
+                    Users users = (Users) getComponent("Users");
                     String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
                     String passwordHash = cookies.get("AeLoginToken").getValue();
                     if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
@@ -144,10 +146,10 @@ public class QueryServlet extends ApplicationServlet
                 }
 
                 try {
-                    Integer queryId = ((SearchEngine)getComponent("SearchEngine")).getController().addQuery(experiments.INDEX_ID, params, request.getQueryString());
+                    Integer queryId = ((SearchEngine) getComponent("SearchEngine")).getController().addQuery(experiments.INDEX_ID, params, request.getQueryString());
                     params.put("queryid", String.valueOf(queryId));
 
-                    SaxonEngine saxonEngine = (SaxonEngine)getComponent("SaxonEngine");
+                    SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
                     if (!saxonEngine.transformToWriter(
                             experiments.getDocument(),  // xml document in memory (all experiments)
                             stylesheetName,             // xslt transformation stylesheet
