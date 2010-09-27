@@ -102,6 +102,19 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         xmlBuffer.append("</experiments>");
 
                         String xmlString = xmlBuffer.toString();
+
+                        if (logger.isDebugEnabled()) {
+                            StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.txt"));
+                        }
+
+                        xmlString = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
+                                StringTools.unescapeXMLDecimalEntities(     // convert &#dddd; entities to their Unicode values
+                                        StringTools.detectDecodeUTF8Sequences(  // attempt to intelligently convert UTF-8 to Unicode
+                                                xmlString
+                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")  // transform &amp;#dddd; -> &#dddd;
+                                )
+                        );
+
                         if (logger.isDebugEnabled()) {
                             StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
                         }

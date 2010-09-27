@@ -19,7 +19,6 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -112,15 +111,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
         if (resultSet.next()) {
             Clob xmlClob = resultSet.getClob(1);
             if (null != xmlClob) {
-                experimentXml.append(
-                        StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
-                                StringTools.unescapeXMLDecimalEntities(     // convert &#dddd; entities to their Unicode values
-                                        StringTools.detectDecodeUTF8Sequences(  // attempt to intelligently convert UTF-8 to Unicode
-                                                ClobToString(xmlClob)
-                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")  // transform &amp;#dddd; -> &#dddd;
-                                )
-                        )
-                );
+                experimentXml.append(ClobToString(xmlClob));
             }
         }
     }
