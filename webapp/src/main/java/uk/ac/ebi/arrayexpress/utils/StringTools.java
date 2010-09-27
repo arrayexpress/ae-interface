@@ -70,9 +70,10 @@ public class StringTools
 
     public static String unescapeXMLDecimalEntities( String in )
     {
-        StringBuilder out = new StringBuilder();
+        if (null == in)
+            return null;
 
-        if (in == null || ("".equals(in))) return "";
+        StringBuilder out = new StringBuilder(in.length());
 
         int entityStart;
         int entityEnd;
