@@ -23,7 +23,7 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:output indent="no" omit-xml-declaration="yes" method="text" encoding="utf-8"/>
+    <xsl:output method="text" indent="no" encoding="UTF-8"/>
     
     <xsl:include href="ae-sort-experiments.xsl"/>
 

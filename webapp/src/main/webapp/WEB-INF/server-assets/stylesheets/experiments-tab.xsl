@@ -19,7 +19,7 @@
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
-    <xsl:output method="text" indent="no" encoding="ISO-8859-1"/>
+    <xsl:output method="text" indent="no" encoding="UTF-8"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
