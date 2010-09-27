@@ -165,11 +165,11 @@ public class StringTools
                 // let's try to decode it and if it's any good, use it
                 // or just copy the original sequence
                 decoded = StringTools.decodeUTF8((byte) ch, (byte) in.charAt(ix + 1), (byte) in.charAt(ix + 2));
-                if (-1 == decoded) {
+                if (ILLEGAL_CHAR_REPRESENATION == decoded) {
                     sb.append(ch);
                 } else {
                     sb.append(decoded);
-                    ix = +2;
+                    ix += 2;
                 }
             } else {
                 // the rest is interpreted as pure unicode (we don't decode four-byte utf-8's)

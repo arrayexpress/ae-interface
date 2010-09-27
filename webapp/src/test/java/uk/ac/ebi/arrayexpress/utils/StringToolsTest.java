@@ -30,6 +30,14 @@ public class StringToolsTest
         assertEquals("hello &# world", StringTools.unescapeXMLDecimalEntities("hello &# world"));
         assertEquals("hello &# world &#", StringTools.unescapeXMLDecimalEntities("hello &# world &#"));
         assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
-        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));       
+        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
+    }
+
+    @Test
+    public void testDetectDecodeUTF8Sequences()
+    {
+        String in = "Biomérieux \"Antonio Rodríguez-García\"";
+        String out = StringTools.detectDecodeUTF8Sequences(in);
+        assertEquals(in, out);
     }
 }
