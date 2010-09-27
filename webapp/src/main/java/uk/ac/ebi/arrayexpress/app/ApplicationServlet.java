@@ -99,7 +99,9 @@ public abstract class ApplicationServlet extends HttpServlet
                     "[SEVERE] Runtime error while processing " + requestToString(request, requestType)
                     , x
             );
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            if (!response.isCommitted()) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
 
         }
     }
