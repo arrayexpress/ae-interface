@@ -172,7 +172,7 @@ public class QueryServlet extends ApplicationServlet
     {
         try {
             URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/templates/" + templateName);
-            String template = StringTools.streamToString(resource.openStream());
+            String template = StringTools.streamToString(resource.openStream(), "ISO-8859-1");
             Map<String, String> params = new HashMap<String, String>();
             params.put("variable.query", query);
             StrSubstitutor sub = new StrSubstitutor(params);

@@ -39,5 +39,7 @@ public class StringToolsTest
         String in = "Biomérieux \"Antonio Rodríguez-García\"";
         String out = StringTools.detectDecodeUTF8Sequences(in);
         assertEquals(in, out);
+
+        assertEquals("\u2019", StringTools.detectDecodeUTF8Sequences("\u00e2\u0080\u0099"));
     }
 }

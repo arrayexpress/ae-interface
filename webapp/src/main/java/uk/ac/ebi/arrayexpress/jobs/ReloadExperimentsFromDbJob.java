@@ -108,10 +108,10 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         }
 
                         xmlString = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
-                                StringTools.unescapeXMLDecimalEntities(     // convert &#dddd; entities to their Unicode values
-                                        StringTools.detectDecodeUTF8Sequences(  // attempt to intelligently convert UTF-8 to Unicode
+                                StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
+                                        StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
                                                 xmlString
-                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")  // transform &amp;#dddd; -> &#dddd;
+                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
                                 )
                         );
 

@@ -42,13 +42,13 @@ public class StringTools
         return result.toString();
     }
 
-    public static String streamToString( InputStream is ) throws IOException
+    public static String streamToString( InputStream is, String encoding ) throws IOException
     {
         if (is != null) {
             StringBuilder sb = new StringBuilder();
             String line;
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding));
                 while ((line = reader.readLine()) != null) {
                     sb.append(line).append("\n");
                 }
