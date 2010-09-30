@@ -12,7 +12,8 @@
         <xsl:param name="pSortBy"/>
         <xsl:param name="pSortOrder"/>
         <xsl:choose>
-            <xsl:when test="$pSortBy = '' or $pSortOrder != 'ascending' or $pSortOrder != 'descending'">
+            <xsl:when test="$pSortBy = '' or ($pSortOrder != 'ascending' and $pSortOrder != 'descending')">
+                <xsl:message>[WARN] Default sorting applied, $pSortBy is [<xsl:value-of select="$pSortBy"/>], $pSortOrder is [<xsl:value-of select="$pSortOrder"/>]</xsl:message>
                 <xsl:apply-templates select="$pExperiments">
                     <xsl:with-param name="pFrom" select="$pFrom"/>
                     <xsl:with-param name="pTo" select="$pTo"/>
