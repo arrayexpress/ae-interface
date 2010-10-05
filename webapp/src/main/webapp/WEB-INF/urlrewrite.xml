@@ -126,8 +126,12 @@
 
     <!-- ebeye export -->
     <rule>
-        <from>^/ArrayExpress-Experiments-EBeye.xml$</from>
-        <to type="forward">/servlets/query/experiments-ebeye/xml</to>
+        <from>^/export/AER2EBeye.xml$</from>
+        <to type="forward">/servlets/query/experiments-ebeye/xml?version=1</to>
+    </rule>
+    <rule>
+        <from>^/export/ebeye_export.xml$</from>
+        <to type="forward">/servlets/query/experiments-ebeye/xml?version=2</to>
     </rule>
 
     <!-- search results export in tab format -->

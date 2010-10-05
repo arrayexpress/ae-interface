@@ -12,6 +12,7 @@
     <xsl:param name="sortorder">descending</xsl:param>
 
     <xsl:param name="queryid"/>
+    <xsl:param name="version"/>
 
     <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
@@ -65,7 +66,14 @@
             <dates><xsl:if test="releasedate > ''"><date type="release" value="{ae:formatDate(releasedate)}"/></xsl:if></dates>
             <cross_references>
                 <xsl:if test="@loadedinatlas">
-                    <ref dbkey="{accession}" dbname="ArrayExpress Warehouse"/>
+                    <xsl:choose>
+                        <xsl:when test="$version = '1'">
+                            <ref dbkey="{accession}" dbname="ArrayExpress Warehouse"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ref dbkey="{accession}" dbname="ATLAS_EXPERIMENTS"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:if>
                 <xsl:for-each select="fn:distinct-values(secondaryaccession[fn:starts-with(., 'GSE') or fn:starts-with(., 'GDS')])">
                     <ref dbkey="{.}" dbname="GEO"/>
