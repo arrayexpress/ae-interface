@@ -99,10 +99,7 @@
         <from>^/xml/v2/files/(.*)$</from>
         <to type="forward">/servlets/query/files/xml?keywords=$1</to>
     </rule>
-    <rule>
-        <from>^/xml/v2/experiments/ebeye$</from>
-        <to type="forward">/servlets/query/experiments-ebeye/xml</to>
-    </rule>
+
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
@@ -116,6 +113,7 @@
         <from>^/json/v2/experiments/(.*)$</from>
         <to type="forward">/servlets/query/experiments/json?keywords=$1</to>
     </rule>
+
     <!-- proxy calls to json efo api for nils -->
     <rule>
         <from>^/json/v2/efotree$</from>
@@ -125,6 +123,13 @@
         <from>^/json/v2/efodict$</from>
         <to type="forward">/servlets/proxy/http://foo.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
     </rule>
+
+    <!-- ebeye export -->
+    <rule>
+        <from>^/ArrayExpress-Experiments-EBeye.xml$</from>
+        <to type="forward">/servlets/query/experiments-ebeye/xml</to>
+    </rule>
+
     <!-- search results export in tab format -->
     <rule>
         <from>^/ArrayExpress-Experiments\.xls$</from>
@@ -134,11 +139,13 @@
         <from>^/ArrayExpress-Experiments\.txt$</from>
         <to type="forward">/servlets/query/experiments/tab</to>
     </rule>
+
     <!-- print-friendly layout for the experiments -->
     <rule>
         <from>^/browse\.printer\.html$</from>
         <to type="forward">/servlets/query/browse-experiments-printer/html</to>
     </rule>
+
     <!-- redirects to some pages at www.ebi.ac.uk (via proxy servlet) -->
     <rule>
         <from>^/ae-news.xml</from>
@@ -156,6 +163,7 @@
         <from>^/atlas_stats.txt</from>
         <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/stats.jsp</to>
     </rule>
+
     <!-- hiding browse helpers behind innocent names -->
     <rule>
         <from>^/browse-table.html</from>
@@ -193,6 +201,7 @@
         <from>^/verify-login.txt</from>
         <to type="forward">/servlets/control/verify-login</to>
     </rule>
+
     <!-- control links -->
     <rule>
         <from>^/reload-atlas-info</from>
@@ -214,6 +223,7 @@
         <from>^/rescan-ftp/(.+)</from>
         <to type="forward">/servlets/control/rescan-files/$1</to>
     </rule>
+
     <!-- experimental noajax browse interface -->
     <rule>
         <from>^/browse-noajax.html$</from>
