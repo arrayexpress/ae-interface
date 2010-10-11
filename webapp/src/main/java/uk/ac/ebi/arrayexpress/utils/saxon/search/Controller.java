@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
+import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
@@ -45,6 +46,13 @@ public class Controller
     public Controller( URL configFile )
     {
         this.config = new Configuration(configFile);
+        this.queryPool = new QueryPool();
+        BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
+    }
+
+    public Controller( HierarchicalConfiguration config )
+    {
+        this.config = new Configuration(config);
         this.queryPool = new QueryPool();
         BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
     }

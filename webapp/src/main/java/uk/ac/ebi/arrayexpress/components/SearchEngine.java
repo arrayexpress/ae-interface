@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
+import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -37,7 +38,7 @@ public class SearchEngine extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        this.controller = new Controller(getApplication().getResource("/WEB-INF/classes/aeindex.xml"));
+        this.controller = new Controller((HierarchicalConfiguration)getPreferences().getConfSubset("ae"));
         SearchExtension.setController(getController());
         getController().setQueryConstructor(new BackwardsCompatibleQueryConstructor());
     }

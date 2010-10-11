@@ -41,16 +41,15 @@ public class Configuration
             // set list delimiter to bogus value to disable list parsing in configuration values
             XMLConfiguration.setDefaultListDelimiter('\uffff');
             XMLConfiguration xmlConfig = new XMLConfiguration(configResource);
-            List indexList = xmlConfig.configurationsAt("index");
-
-            for (Object conf : indexList) {
-                HierarchicalConfiguration indexConfig = (HierarchicalConfiguration)conf;
-                String indexId = indexConfig.getString("[@id]");
-                this.indicesConfig.put(indexId, indexConfig);
-            }
+            readConfiguration(xmlConfig);
         } catch (ConfigurationException x) {
             logger.error("There was an exception thrown:", x);
         }
+    }
+
+    public Configuration( HierarchicalConfiguration config )
+    {
+        readConfiguration(config);
     }
 
     public HierarchicalConfiguration getIndexConfig( String indexId )
@@ -60,5 +59,16 @@ public class Configuration
         }
 
         return null;
+    }
+
+    private void readConfiguration( HierarchicalConfiguration config )
+    {
+        List indexList = config.configurationsAt("index");
+
+        for (Object conf : indexList) {
+            HierarchicalConfiguration indexConfig = (HierarchicalConfiguration)conf;
+            String indexId = indexConfig.getString("[@id]");
+            this.indicesConfig.put(indexId, indexConfig);
+        }
     }
 }
