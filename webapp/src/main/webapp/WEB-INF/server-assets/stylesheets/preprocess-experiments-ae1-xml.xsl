@@ -56,6 +56,7 @@
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
+            <source>ae1</source>
             <releasedate><xsl:value-of select="loaddate"/></releasedate>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>

@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
@@ -56,6 +57,20 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     private Autocompletion autocompletion;
 
     public final String INDEX_ID = "experiments";
+
+    public enum ExperimentSource
+    {
+        AE1, AE2;
+
+        public String getStylesheetName()
+        {
+            switch (this) {
+                case AE1:   return "preprocess-experiments-ae1-xml.xsl";
+                case AE2:   return "preprocess-experiments-ae2-xml.xsl";
+            }
+            return null;
+        }
+    }
 
     public Experiments()
     {
@@ -171,13 +186,44 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         return this.connName;
     }
 
-    public void reload( String xmlString ) throws Exception
+    class ExperimentsUpdater implements IDocumentSource
     {
-        DocumentInfo doc = loadExperimentsFromString(xmlString);
-        if (null != doc) {
-            setExperiments(doc);
-            buildSpeciesArraysExpTypes(doc);
-            indexExperiments();
+        private Experiments experiments;
+        private SaxonEngine saxon;
+        private DocumentInfo update;
+
+        public ExperimentsUpdater( DocumentInfo update )
+        {
+            this.experiments = (Experiments) Application.getAppComponent("Experiments");
+            this.saxon = (SaxonEngine) Application.getAppComponent("SaxonEngine");
+            this.update = update;
+        }
+
+        // implementation of IDocumentSource.getDocument()
+        public String getDocumentURI()
+        {
+            return "experiments-update.xml";
+        }
+
+        // implementation of IDocumentSource.getDocument()
+        public synchronized DocumentInfo getDocument() throws Exception
+        {
+            return this.update;
+        }
+
+        public void update() throws Exception
+        {
+            saxon.registerDocumentSource(this);
+            experiments.setDocument(saxon.transform(experiments.getDocument(), "update-experiments-xml.xsl", null));
+            saxon.unregisterDocumentSource(this);
+        }
+    }
+
+    public void update( String xmlString, ExperimentSource source ) throws Exception
+    {
+        DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
+        if (null != updateDoc) {
+            new ExperimentsUpdater(updateDoc).update();
         }
     }
 
@@ -197,24 +243,21 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private synchronized void setExperiments( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
             this.experiments.setObject(new PersistableDocumentContainer(doc));
+            buildSpeciesArraysExpTypes();
+            indexExperiments();
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
     }
 
-    private DocumentInfo loadExperimentsFromString( String xmlString ) throws Exception
-    {
-        return saxon.transform(xmlString, "preprocess-experiments-xml.xsl", null);
-    }
-
     private void indexExperiments()
     {
         try {
-            search.getController().index(INDEX_ID, experiments.getObject().getDocument());
+            search.getController().index(INDEX_ID, this.getDocument());
             autocompletion.rebuild();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
@@ -236,12 +279,12 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void buildSpeciesArraysExpTypes( DocumentInfo doc ) throws Exception
+    private void buildSpeciesArraysExpTypes() throws Exception
     {
-        String speciesString = saxon.transformToString(doc, "build-species-list-html.xsl", null);
+        String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);
         this.species.setObject(new PersistableString(speciesString));
 
-        String arraysString = saxon.transformToString(doc, "build-arrays-list-html.xsl", null);
+        String arraysString = saxon.transformToString(this.getDocument(), "build-arrays-list-html.xsl", null);
         this.arrays.setObject(new PersistableString(arraysString));
     }
 }
