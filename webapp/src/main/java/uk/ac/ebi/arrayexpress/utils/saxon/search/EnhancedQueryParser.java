@@ -18,10 +18,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  */
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 
@@ -66,22 +68,16 @@ public class EnhancedQueryParser extends QueryParser
 
     protected Query getFieldQuery( String field, String queryText, int slop ) throws ParseException
     {
-        Query query = super.getFieldQuery(field, queryText, slop);
-        if (env.fields.containsKey(field) && "integer".equals(env.fields.get(field).type)) {
-            return NumericRangeQuery.newLongRange(
-                    field,
-                    parseLong(queryText),
-                    parseLong(queryText),
-                    true,
-                    true);
-        } else {
-            return query;
-        }
+        return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText, slop), field, queryText);
     }
 
     protected Query getFieldQuery( String field, String queryText ) throws ParseException
     {
-        Query query = super.getFieldQuery(field, queryText);
+        return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText), field, queryText);
+    }
+
+    private Query rewriteNumericBooleanFieldQuery( Query query, String field, String queryText ) throws ParseException
+    {
         if (env.fields.containsKey(field) && "integer".equals(env.fields.get(field).type)) {
             return NumericRangeQuery.newLongRange(
                     field,
@@ -89,6 +85,14 @@ public class EnhancedQueryParser extends QueryParser
                     parseLong(queryText),
                     true,
                     true);
+        } else if (env.fields.containsKey(field) && "boolean".equals(env.fields.get(field).type)) {
+            if ("true".equalsIgnoreCase(queryText) || "on".equalsIgnoreCase(queryText) || "1".equalsIgnoreCase(queryText)) {
+                return new TermQuery(new Term(field, "true"));
+            } else if ("false".equalsIgnoreCase(queryText) || "0".equalsIgnoreCase(queryText)) {
+                return new TermQuery(new Term(field, "false"));
+            } else {
+                return new TermQuery(new Term(field, queryText));   // in this case we get no results, but the query will be properly logged
+            }
         } else {
             return query;
         }

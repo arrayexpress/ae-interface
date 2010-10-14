@@ -83,6 +83,8 @@ public class Indexer
                             } else if ("date".equals(field.type)) {
                                 // todo: addDateIndexField(d, field.name, v);
                                 logger.error("Date fields are not supported yet, field [{}] will not be created", field.name);
+                            } else if ("boolean".equals(field.type)) {
+                               addBooleanIndexField(d, field.name, v);
                             } else {
                                 addIndexField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
                             }
@@ -131,6 +133,20 @@ public class Indexer
         }
 
         document.add(new Field(name, stringValue, shouldStore ? Field.Store.YES : Field.Store.NO, shouldAnalyze ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED));
+    }
+
+    private void addBooleanIndexField( Document document, String name, Object value )
+    {
+        Boolean boolValue = null;
+        if (value instanceof Boolean) {
+            boolValue = (Boolean)value;
+        } else if (null != value ) {
+            String stringValue = value.toString().toLowerCase();
+            boolValue = stringValue.equals("true") || stringValue.equals("1");
+            logger.warn("Not sure if I handle string value of [{}] for the field [{}] correctly, relying on Object.toString()", value.getClass().getName(), name);
+        }
+
+        document.add(new Field(name, null == boolValue ? "" : boolValue.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
     }
 
     private void addIntIndexField( Document document, String name, Object value )
