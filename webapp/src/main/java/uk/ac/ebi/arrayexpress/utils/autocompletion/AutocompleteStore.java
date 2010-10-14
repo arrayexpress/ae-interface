@@ -31,6 +31,10 @@ public class AutocompleteStore
     {
         public int compare( String s1, String s2 )
         {
+            // the ultimate idea of this comparison is to get ontology terms before keywords
+            //
+            //
+            //
             int pos1 = s1.lastIndexOf('|');
             int pos2 = s2.lastIndexOf('|');
 
@@ -47,6 +51,9 @@ public class AutocompleteStore
                     comp = s1.compareToIgnoreCase(s2);
                 } else {
                     comp = s1.charAt(pos1 + 1) - s2.charAt(pos2 + 1);
+                    if (0 == comp) {
+                        comp = s1.compareToIgnoreCase(s2);
+                    }
                 }
             }
             return comp;
