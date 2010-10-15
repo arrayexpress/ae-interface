@@ -14,19 +14,19 @@
     <!-- rss feeds should be proxied -->
     <rule>
         <from>^/rss/(.+)$</from>
-        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/rss/$1</to>
+        <to type="forward">/servlets/proxy/http://%{header:host}${redirector.interface.base.path}/rss/$1</to>
     </rule>
 
     <!-- xml rest api should be proxied -->
     <rule>
         <from>^/xml/(.+)$</from>
-        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/xml/$1</to>
+        <to type="forward">/servlets/proxy/http://%{header:host}${redirector.interface.base.path}/xml/$1</to>
     </rule>
 
     <!-- json rest api should be proxied -->
     <rule>
         <from>^/json/(.+)$</from>
-        <to type="forward">/servlets/proxy/${redirector.interface.base.path}/json/$1</to>
+        <to type="forward">/servlets/proxy/http://%{header:host}${redirector.interface.base.path}/json/$1</to>
     </rule>
 
     <!-- verify-login.txt should be proxied -->
