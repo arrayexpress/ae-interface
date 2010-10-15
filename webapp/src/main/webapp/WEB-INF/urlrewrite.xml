@@ -237,6 +237,18 @@
     <!-- legacy links -->
     <rule>
         <from>^/query/result$</from>
+        <condition type="parameter" name="queryFor">Experiment</condition>
+        <condition type="parameter" name="eAccession">.+</condition>
+        <to type="permanent-redirect">http://%{header:host}%{context-path}/experiments/%{parameter:eAccession}</to>
+    </rule>
+    
+    <rule>
+        <from>^/query/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <to type="permanent-redirect">http://%{header:host}%{context-path}/browse.html</to>
+    </rule>
+    <rule>
+        <from>^/query/result$</from>
         <to type="permanent-redirect">http://www.ebi.ac.uk/microarray-as/aer/result?%{query-string}</to>
     </rule>
 
@@ -265,47 +277,47 @@
     <!-- ArrayExpress old link redirects  -->
     <rule>
         <from>^/news_archive.html$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/General/News/news.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/general/news.html</to>
     </rule>
 
     <rule>
         <from>^/Help/faq.html$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/faq.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/faq.html</to>
     </rule>
 
     <rule>
         <from>^/Help/stats/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/stats/</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/stats/index.html</to>
     </rule>
 
     <rule>
         <from>^/Help/index.html$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/ae_help.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/ae_help.html</to>
     </rule>
 
     <rule>
         <from>^/Help/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/help/ae_help.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/ae_help.html</to>
     </rule>
 
     <rule>
         <from>^/Implementation/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/software/ae_index.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
     </rule>
 
     <rule>
         <from>^/Schema/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/software/ae_index.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
     </rule>
 
     <rule>
         <from>^/Standards/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/doc/standards.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/standards.html</to>
     </rule>
 
     <rule>
         <from>^/Submissions/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray/submissions.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/submissions_overview.html</to>
     </rule>
 
 </urlrewrite>
