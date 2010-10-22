@@ -239,13 +239,13 @@
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect">http://%{header:host}%{context-path}/experiments/%{parameter:eAccession}</to>
+        <to type="permanent-redirect">${interface.application.urlrewrite.production.base}/experiments/%{parameter:eAccession}</to>
     </rule>
     
     <rule>
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect">http://%{header:host}%{context-path}/browse.html</to>
+        <to type="permanent-redirect">${interface.application.urlrewrite.production.base}/browse.html</to>
     </rule>
     <rule>
         <from>^/query/result$</from>
@@ -259,7 +259,7 @@
 
     <rule>
         <from>^/query/?$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/arrayexpress</to>
+        <to type="permanent-redirect">${interface.application.urlrewrite.production.base}</to>
     </rule>
 
     <rule>

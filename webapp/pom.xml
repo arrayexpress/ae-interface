@@ -21,6 +21,7 @@
         <interface.application.log.appender.ref>ROLLINGFILE</interface.application.log.appender.ref>
 
         <interface.application.base.path>/arrayexpress</interface.application.base.path>
+        <interface.application.urlrewrite.production.base>http://%{header:host}%{context-path}</interface.application.urlrewrite.production.base>
         <interface.application.link.www_domain/>
         <interface.application.link.www_domain_hack/>
         <interface.application.link.query_help>/fg/doc/help/ae_help.html</interface.application.link.query_help>
@@ -108,6 +109,7 @@
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
                 <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
                 <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
                 <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
                 <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
