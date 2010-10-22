@@ -161,14 +161,14 @@ public class Files extends ApplicationComponent implements IDocumentSource
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
                             getDocument()
-                            , "exists(//folder[@accession = '" + accession + "']/file[@name = '" + name + "'])"
+                            , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                     )
             );
         } else {
             return Boolean.parseBoolean(
                     saxon.evaluateXPathSingle(
                             getDocument()
-                            , "exists(//file[@name = '" + name + "'])"
+                            , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                     )
             );
         }
