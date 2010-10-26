@@ -61,6 +61,16 @@ public class StringTools
         }
     }
 
+    public static String fileToString( File f, String encoding ) throws IOException
+    {
+        if (f.exists() && f.canRead()) {
+            InputStream is = new FileInputStream(f);
+            return streamToString(is, encoding);
+        } else {
+            throw new IOException("File [" + f.getName() + "] not found or cannot be opened");
+        }
+    }
+
     public static void stringToFile( String string, File file ) throws IOException
     {
         BufferedWriter w = new BufferedWriter(new FileWriter(file));

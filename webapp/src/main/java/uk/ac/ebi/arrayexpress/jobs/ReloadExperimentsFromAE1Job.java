@@ -37,7 +37,7 @@ import uk.ac.ebi.arrayexpress.utils.users.UserList;
 import java.io.File;
 import java.util.List;
 
-public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobListener
+public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobListener
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -103,24 +103,24 @@ public class ReloadExperimentsFromDbJob extends ApplicationJob implements JobLis
                         ((JobsController) getComponent("JobsController")).setJobListener(null);
                         xmlBuffer.append("</experiments>");
 
-                        String xmlString = xmlBuffer.toString();
+                        String experimentsXmlText = xmlBuffer.toString();
 
                         if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.txt"));
+                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "raw-ae1-experiments.txt"));
                         }
 
-                        xmlString = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
+                        experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
                                 StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
                                         StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
-                                                xmlString
+                                                experimentsXmlText
                                         ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
                                 )
                         );
 
                         if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(xmlString, new File(System.getProperty("java.io.tmpdir"), "raw-experiments.xml"));
+                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "raw-ae1-experiments.xml"));
                         }
-                        ((Experiments) getComponent("Experiments")).update(xmlString, Experiments.ExperimentSource.AE1);
+                        ((Experiments) getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE1);
                         logger.info("Reload of experiment data completed");
                         xmlBuffer = null;
                     } else {

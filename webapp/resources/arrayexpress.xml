@@ -11,6 +11,16 @@
         <db>
             <connections>
                 <connection>
+                    <name>tunelled</name>
+                    <driver>oracle.jdbc.OracleDriver</driver>
+                    <url>jdbc:oracle:thin:@localhost:1521:AEPUB1</url>
+                    <username>${interface.application.db.username}</username>
+                    <password>${interface.application.db.password}</password>
+                    <minConnections>30</minConnections>
+                    <maxConnections>30</maxConnections>
+                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
+                </connection>
+                <connection>
                     <name>aepub1</name>
                     <driver>oracle.jdbc.OracleDriver</driver>
                     <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEPUB1</url>
@@ -56,9 +66,15 @@
             <db><connections>${interface.application.pref.experiments.connections}</connections></db>
             <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</location></file>
             <reload>
-                <atstart>false</atstart>
-                <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
-                <threads>25</threads>
+                <ae1>
+                    <atstart>false</atstart>
+                    <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
+                    <threads>25</threads>
+                </ae1>
+                <ae2>
+                    <atstart>false</atstart>
+                    <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
+                </ae2>
             </reload>
         </experiments>
         <atlasexperiments>
