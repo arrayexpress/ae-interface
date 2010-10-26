@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
@@ -172,18 +171,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     public String getAssaysByInstrument( String key )
     {
         return this.assaysByInstrument.get(key);
-    }
-
-    public String getConnectionName()
-    {
-        if (null == this.connName) {
-            this.connName = StringTools.arrayToString(
-                    getPreferences().getStringArray("ae.experiments.db.connections")
-                    , ","
-            );
-        }
-
-        return this.connName;
     }
 
     class ExperimentsUpdater implements IDocumentSource

@@ -212,12 +212,16 @@
         <to type="forward">/servlets/control/reload-atlas-info</to>
     </rule>
     <rule>
-        <from>^/reload-xml</from>
-        <to type="forward">/servlets/control/reload-xml</to>
+        <from>^/reload-ae1-xml</from>
+        <to type="forward">/servlets/control/reload-ae1-xml</to>
     </rule>
     <rule>
-        <from>^/reload-xml/(.+)</from>
-        <to type="forward">/servlets/control/reload-xml/$1</to>
+        <from>^/reload-ae1-xml/(.+)</from>
+        <to type="forward">/servlets/control/reload-ae1-xml/$1</to>
+    </rule>
+    <rule>
+        <from>^/reload-ae2-xml</from>
+        <to type="forward">/servlets/control/reload-ae2-xml</to>
     </rule>
     <rule>
         <from>^/rescan-ftp</from>

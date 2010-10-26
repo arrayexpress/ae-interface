@@ -53,8 +53,8 @@ public class JobsController extends ApplicationComponent
         addJob("reload-ontology", ReloadOntologyJob.class);
 
         scheduleJob("rescan-files", "ae.files.rescan");
-        scheduleJob("reload-ae1-xml", "ae.experiments.reload.ae1");
-        scheduleJob("reload-ae2-xml", "ae.experiments.reload.ae2");
+        scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
+        scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
         // doesn't have an additional schedule for now, sync'd with the reload of experiments
         // scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
 

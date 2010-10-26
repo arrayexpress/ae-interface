@@ -50,7 +50,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             //      logger.warn("User info XML [{}] is empty", usersFileLocation);
             // }
 
-            String experimentsFileLocation = getPreferences().getString("ae.experiments.source.location");
+            String experimentsFileLocation = getPreferences().getString("ae.experiments.ae2.source-location");
             logger.info("Reloading experiments from [{}]", experimentsFileLocation);
 
             String experimentsXmlText = StringTools.fileToString(new File(experimentsFileLocation), "UTF-8");

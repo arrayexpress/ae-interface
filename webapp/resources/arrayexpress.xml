@@ -63,19 +63,23 @@
             </connections>
         </db>
         <experiments>
-            <db><connections>${interface.application.pref.experiments.connections}</connections></db>
-            <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</location></file>
-            <reload>
-                <ae1>
+            <ae1>
+                <db-connections>${interface.application.pref.experiments.connections}</db-connections>
+                <reload>
                     <atstart>false</atstart>
                     <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
                     <threads>25</threads>
-                </ae1>
-                <ae2>
+                </reload>
+            </ae1>
+            <ae2>
+                <source-location>${interface.application.pref.experiments.source.location}</source-location>
+                <reload>
                     <atstart>false</atstart>
                     <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
-                </ae2>
-            </reload>
+                </reload>
+            </ae2>
+
+            <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</location></file>
         </experiments>
         <atlasexperiments>
             <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>

@@ -52,7 +52,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         try {
-            Long threads = getPreferences().getLong("ae.experiments.reload.threads");
+            Long threads = getPreferences().getLong("ae.experiments.ae1.reload.threads");
             if (null != threads) {
                 int numThreadsForRetrieval = threads.intValue();
                 numThreadsCompleted = 0;
@@ -61,7 +61,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 JobDataMap jdm = jec.getMergedJobDataMap();
                 String connNames = jdm.getString("connections");
                 if (null == connNames || 0 == connNames.length()) {
-                    connNames = ((Experiments) getComponent("Experiments")).getConnectionName();
+                    connNames = getPreferences().getString("ae.experiments.ae1.db-connections");
                 }
                 logger.info("Reload of experiment data from [{}] requested", connNames);
 
