@@ -17,6 +17,8 @@ package uk.ac.ebi.arrayexpress.utils.persistence;
  *
  */
 
+import uk.ac.ebi.arrayexpress.utils.StringTools;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +39,7 @@ public class PersistableStringList extends ArrayList<String> implements Persista
         StringBuilder sb = new StringBuilder();
 
         for ( String entry : this ) {
-            sb.append(entry).append(EOL);
+            sb.append(entry).append(StringTools.EOL);
         }
 
         return sb.toString();
@@ -46,7 +48,7 @@ public class PersistableStringList extends ArrayList<String> implements Persista
     public void fromPersistence( String str )
     {
         this.clear();
-        this.addAll(Arrays.asList(str.split("" + EOL)));
+        this.addAll(Arrays.asList(str.split("" + StringTools.EOL)));
     }
 
     public boolean isEmpty()

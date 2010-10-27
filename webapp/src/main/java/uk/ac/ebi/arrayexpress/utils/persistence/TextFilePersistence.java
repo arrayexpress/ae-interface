@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.*;
 
@@ -75,7 +76,7 @@ public class TextFilePersistence<Object extends Persistable>
                 String str = r.readLine();
                 // null means stream has reached the end
                 if (null != str) {
-                    result.append(str).append(Object.EOL);
+                    result.append(str).append(StringTools.EOL);
                 } else {
                     break;
                 }

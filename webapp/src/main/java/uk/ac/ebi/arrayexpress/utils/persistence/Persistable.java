@@ -31,6 +31,4 @@ public interface Persistable
     public void fromPersistence( String str ) throws Exception;
 
     public boolean isEmpty() throws Exception;
-
-    public final static String EOL = System.getProperty("line.separator");
 }

@@ -24,6 +24,7 @@ import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.search.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -85,7 +86,7 @@ public class Querier
             BufferedWriter w = new BufferedWriter(new FileWriter(f));
             StringBuilder sb = new StringBuilder();
             while (fieldName.equals(terms.term().field())) {
-                sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append('\n');
+                sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append(StringTools.EOL);
                 if (!terms.next())
                     break;
             }

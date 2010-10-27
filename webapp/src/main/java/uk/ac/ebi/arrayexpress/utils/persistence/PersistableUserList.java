@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.users.UserList;
 import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
 
@@ -50,7 +51,7 @@ public class PersistableUserList extends UserList implements Persistable
                     .append(user.getName()).append('\t')
                     .append(user.getPassword()).append('\t')
                     .append(nullToEmpty(user.getEmail())).append('\t')
-                    .append(user.isPrivileged()).append('\n');
+                    .append(user.isPrivileged()).append(StringTools.EOL);
         }
 
         return sb.toString();
@@ -61,7 +62,7 @@ public class PersistableUserList extends UserList implements Persistable
         this.clear();
 
         int beginIndex = 0;
-        int eolIndex = str.indexOf(EOL, beginIndex);
+        int eolIndex = str.indexOf(StringTools.EOL, beginIndex);
         while ( -1 != eolIndex && eolIndex < str.length() ) {
             String line = str.substring(beginIndex, eolIndex);
             String[] fields = line.split("\t");
@@ -78,7 +79,7 @@ public class PersistableUserList extends UserList implements Persistable
                 logger.warn("No enough TABs found while parsing persistence string, line from [{}] to [{}]", beginIndex, eolIndex);
             }
             beginIndex = eolIndex + 1;
-            eolIndex = str.indexOf(EOL, beginIndex);
+            eolIndex = str.indexOf(StringTools.EOL, beginIndex);
         }
     }
 

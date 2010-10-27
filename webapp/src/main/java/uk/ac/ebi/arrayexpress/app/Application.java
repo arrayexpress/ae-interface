@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.app;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.EmailSender;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -149,9 +150,9 @@ public abstract class Application
         }
 
         sendEmail("Application [" + getName() + "] Runtime Exception Report"
-                , message + ": " + x.getMessage()
-                        + "\nHost [" + hostName + "]\nThread [" + currentThread.getName() + "]"
-                        + "\n" + getStackTrace(x)
+                , message + ": " + x.getMessage() + StringTools.EOL
+                        + "Host [" + hostName + "]\nThread [" + currentThread.getName() + "]" + StringTools.EOL
+                        + getStackTrace(x)
         );
     }
 
