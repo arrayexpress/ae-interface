@@ -9,17 +9,14 @@
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
-    <xsl:key name="experiment-sampleattribute-by-category" match="sampleattribute" use="fn:concat(ancestor::experiment/id, @category)"/>
-    <xsl:key name="experiment-experimentalfactor-by-name" match="experimentalfactor" use="fn:concat(ancestor::experiment/id, @name)"/>
-
     <xsl:template match="/experiments">
         <experiments
             version="{@version}" total="{fn:count(experiment)}">
 
             <xsl:apply-templates select="experiment">
-                <xsl:sort order="descending" select="fn:year-from-date(loaddate)" data-type="number"/>
-                <xsl:sort order="descending" select="fn:month-from-date(loaddate)" data-type="number"/>
-                <xsl:sort order="descending" select="fn:day-from-date(loaddate)" data-type="number"/>
+                <xsl:sort select="substring-before(releasedate, '-')" order="descending" data-type="number"/>
+                <xsl:sort select="substring-before(substring-after(releasedate, '-'), '-')" order="descending" data-type="number"/>
+                <xsl:sort select="substring-after(substring-after(releasedate, '-'), '-')" order="descending"  data-type="number"/>
             </xsl:apply-templates>
         </experiments>
     </xsl:template>
@@ -108,26 +105,26 @@
             <fgemdatafiles>
                 <xsl:value-of select="$vGenDescription/fgemdatafiles"/>
             </fgemdatafiles>
-            <xsl:for-each select="sampleattribute[@category][fn:generate-id() = fn:generate-id(fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/id, @category))[1])]">
+            <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
                 <sampleattribute>
                     <category><xsl:value-of select="@category"/></category>
-                    <xsl:for-each select="fn:key('experiment-sampleattribute-by-category', fn:concat(ancestor::experiment/id, @category))">
+                    <xsl:for-each select="current-group()">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
 					</xsl:for-each>
                 </sampleattribute>
-            </xsl:for-each>
-            <xsl:for-each select="experimentalfactor[@name][fn:generate-id() = fn:generate-id(fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/id, @name))[1])]">
+            </xsl:for-each-group>
+            <xsl:for-each-group select="experimentalfactor[@value != '']" group-by="@name">
                 <xsl:sort select="fn:lower-case(@name)" order="ascending"/>
                 <experimentalfactor>
                     <name><xsl:value-of select="@name"/></name>
-                    <xsl:for-each select="fn:key('experiment-experimentalfactor-by-name', fn:concat(ancestor::experiment/id, @name))">
+                    <xsl:for-each select="current-group()">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
 					</xsl:for-each>
                 </experimentalfactor>
-            </xsl:for-each>
+            </xsl:for-each-group>
 
             <xsl:apply-templates select="*" mode="copy" />
         </experiment>
@@ -145,31 +142,27 @@
     <xsl:template match="secondaryaccession" mode="copy">
         <xsl:choose>
             <xsl:when test="fn:string-length(.) = 0"/>
-            <xsl:when test="fn:contains(., ';GDS')">
-                <xsl:call-template name="split-string-to-elements">
-                    <xsl:with-param name="str" select="."/>
-                    <xsl:with-param name="separator" select="';'"/>
-                    <xsl:with-param name="element" select="'secondaryaccession'"/>
-                </xsl:call-template>
+            <xsl:when test="fn:contains(., ';G')">
+            <xsl:variable name="vValues" select="fn:tokenize(., '\s*;\s*')"/>
+                <xsl:for-each select="$vValues">
+                    <xsl:message><xsl:value-of select="."/></xsl:message>
+                    <xsl:element name="secondaryaccession">
+                        <xsl:value-of select="."/>
+                    </xsl:element>
+                </xsl:for-each>
             </xsl:when>
             <xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="experimentdesign" mode="copy">
-        <xsl:call-template name="split-string-to-elements">
-            <xsl:with-param name="str" select="."/>
-            <xsl:with-param name="separator" select="','"/>
-            <xsl:with-param name="element" select="'experimentdesign'"/>
-        </xsl:call-template>
-    </xsl:template>
-
-    <xsl:template match="experimenttype" mode="copy">
-        <xsl:call-template name="split-string-to-elements">
-            <xsl:with-param name="str" select="."/>
-            <xsl:with-param name="separator" select="','"/>
-            <xsl:with-param name="element" select="'experimenttype'"/>
-        </xsl:call-template>
+    <xsl:template match="experimentdesign | experimenttype" mode="copy">
+        <xsl:variable name="vName" select="fn:name()"/>
+        <xsl:variable name="vValues" select="fn:tokenize(., '\s*,\s*')"/>
+        <xsl:for-each select="$vValues">
+            <xsl:element name="{$vName}">
+                <xsl:value-of select="."/>
+            </xsl:element>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="bibliography" mode="copy">
@@ -226,23 +219,4 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template name="split-string-to-elements">
-        <xsl:param name="str"/>
-        <xsl:param name="separator"/>
-        <xsl:param name="element"/>
-        <xsl:choose>
-            <xsl:when test="fn:string-length($str) = 0"/>
-            <xsl:when test="fn:contains($str, $separator)">
-                <xsl:element name="{$element}"><xsl:value-of select="fn:substring-before($str, $separator)"/></xsl:element>
-                <xsl:call-template name="split-string-to-elements">
-                    <xsl:with-param name="str" select="fn:substring-after($str, $separator)"/>
-                    <xsl:with-param name="separator" select="$separator"/>
-                    <xsl:with-param name="element" select="$element"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:element name="{$element}"><xsl:value-of select="$str"/></xsl:element>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
 </xsl:stylesheet>

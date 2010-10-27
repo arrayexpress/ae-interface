@@ -106,7 +106,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                         String experimentsXmlText = xmlBuffer.toString();
 
                         if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "raw-ae1-experiments.txt"));
+                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.txt"));
                         }
 
                         experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
@@ -118,7 +118,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                         );
 
                         if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "raw-ae1-experiments.xml"));
+                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.xml"));
                         }
                         ((Experiments) getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE1);
                         logger.info("Reload of experiment data completed");

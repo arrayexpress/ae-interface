@@ -64,18 +64,18 @@
         </db>
         <experiments>
             <ae1>
-                <db-connections>${interface.application.pref.experiments.connections}</db-connections>
+                <db-connections>${interface.application.pref.experiments.ae1.connections}</db-connections>
                 <reload>
                     <atstart>false</atstart>
-                    <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
+                    <schedule>${interface.application.pref.experiments.ae1.reload.schedule}</schedule>
                     <threads>25</threads>
                 </reload>
             </ae1>
             <ae2>
-                <source-location>${interface.application.pref.experiments.source.location}</source-location>
+                <source-location>${interface.application.pref.experiments.ae2.source.location}</source-location>
                 <reload>
                     <atstart>false</atstart>
-                    <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
+                    <schedule>${interface.application.pref.experiments.ae2.reload.schedule}</schedule>
                 </reload>
             </ae2>
 

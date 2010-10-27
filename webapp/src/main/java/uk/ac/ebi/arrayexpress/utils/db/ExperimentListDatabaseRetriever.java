@@ -31,7 +31,6 @@ public class ExperimentListDatabaseRetriever extends SqlStatementExecutor
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
     // sql to get a list of experiments from the database
-    // (the parameter is either 0 for all experiments and 1 for public only)
     private final static String getExperimentListSql = "select distinct e.id" +
             " from tt_experiment e" +
 //          "  where e.id in (2522376455, 1626185251, 366346722, 2196630218, 1435022632, 2200649523, 13850163, 1673780805, 352682122, 1231774901, 1111105774, 2502313950)" +
