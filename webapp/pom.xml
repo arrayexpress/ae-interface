@@ -40,8 +40,10 @@
         <interface.application.link.news_xml.url>/microarray-srv/ae/ae-main-news.xml</interface.application.link.news_xml.url>
         <interface.application.link.links_xml.url>/microarray-srv/ae/ae-main-links.xml</interface.application.link.links_xml.url>
 
-        <interface.application.pref.experiments.connections>aepub3,aepub2</interface.application.pref.experiments.connections>
-        <interface.application.pref.experiments.reload.schedule>0 0 6 * * ?</interface.application.pref.experiments.reload.schedule>
+        <interface.application.pref.experiments.ae1.connections>aepub3,aepub2</interface.application.pref.experiments.ae1.connections>
+        <interface.application.pref.experiments.ae1.reload.schedule>0 0 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+        <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
+        <interface.application.pref.experiments.ae2.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
         <interface.application.pref.files.root.location>/ebi/ArrayExpress-ftp</interface.application.pref.files.root.location>
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>3600000</interface.application.pref.files.rescan.interval>
@@ -70,8 +72,11 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.connections>aepub1</interface.application.pref.experiments.connections>
-                <interface.application.pref.experiments.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.reload.schedule>
+                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+
 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
@@ -95,8 +100,10 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.connections>aecur</interface.application.pref.experiments.connections>
-                <interface.application.pref.experiments.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.reload.schedule>
+                <interface.application.pref.experiments.ae1.connections>aecur</interface.application.pref.experiments.ae1.connections>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
                 <interface.application.pref.files.prefix>ae-aecur</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
@@ -122,8 +129,10 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.connections>aepub1</interface.application.pref.experiments.connections>
-                <interface.application.pref.experiments.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.reload.schedule>
+                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
