@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.*;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -82,6 +83,6 @@ public class AEInterfaceApplication extends Application implements ServletContex
 
         servletContext = null;
 
-        logger.info("****************************************************************************************************************************\n\n");
+        logger.info("****************************************************************************************************************************" + StringTools.EOL + StringTools.EOL);
     }
 }

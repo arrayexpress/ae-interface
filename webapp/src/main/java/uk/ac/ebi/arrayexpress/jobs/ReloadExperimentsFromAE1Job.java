@@ -63,71 +63,83 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 if (null == connNames || 0 == connNames.length()) {
                     connNames = getPreferences().getString("ae.experiments.ae1.db-connections");
                 }
+
                 logger.info("Reload of experiment data from [{}] requested", connNames);
 
-                connectionSource = ((DbConnectionPool) getComponent("DbConnectionPool")).getConnectionSource(connNames);
-
-                if (null != connectionSource) {
-                    // kicks reload of atlas experiments just in case
-                    ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
-
-                    UserList userList = new UserListDatabaseRetriever(connectionSource).getUserList();
-                    ((Users) getComponent("Users")).setUserList(userList);
-                    logger.info("Reloaded the user list from the database");
-
-                    exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
-                    Thread.sleep(1);
-
-                    logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
-                    xmlBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                            .append("<experiments total=\"").append(exps.size()).append("\">")
-                            ;
-
-                    ((JobsController) getComponent("JobsController")).setJobListener(this);
-
-                    if (exps.size() > 0) {
-                        if (exps.size() <= numThreadsForRetrieval) {
-                            numThreadsForRetrieval = 1;
-                        }
-                        // split list into several pieces
-                        expsPerThread = (int) Math.ceil(((double) exps.size()) / ((double) numThreadsForRetrieval));
-                        for (int i = 0; i < numThreadsForRetrieval; ++i) {
-                            ((JobsController) getComponent("JobsController")).executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
-                            Thread.sleep(1);
-                        }
-
-                        while (numThreadsCompleted < numThreadsForRetrieval) {
-                            Thread.sleep(1000);
-                        }
-
-                        ((JobsController) getComponent("JobsController")).setJobListener(null);
-                        xmlBuffer.append("</experiments>");
-
-                        String experimentsXmlText = xmlBuffer.toString();
-
-                        if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.txt"));
-                        }
-
-                        experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
-                                StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
-                                        StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
-                                                experimentsXmlText
-                                        ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
-                                )
-                        );
-
-                        if (logger.isDebugEnabled()) {
-                            StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.xml"));
-                        }
-                        ((Experiments) getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE1);
-                        logger.info("Reload of experiment data completed");
-                        xmlBuffer = null;
-                    } else {
-                        logger.warn("No experiments found, reload aborted");
-                    }
+                if ("rawfile".equals(connNames)) {
+                    ((Experiments) getComponent("Experiments")).update(
+                            StringTools.fileToString(
+                                    new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.xml")
+                                    , "UTF-8"
+                            )
+                            , Experiments.ExperimentSource.AE1
+                    );
                 } else {
-                    logger.warn("No connections available from [{}], reload aborted", connNames);
+
+                    connectionSource = ((DbConnectionPool) getComponent("DbConnectionPool")).getConnectionSource(connNames);
+
+                    if (null != connectionSource) {
+                        // kicks reload of atlas experiments just in case
+                        ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
+
+                        UserList userList = new UserListDatabaseRetriever(connectionSource).getUserList();
+                        ((Users) getComponent("Users")).setUserList(userList);
+                        logger.info("Reloaded the user list from the database");
+
+                        exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
+                        Thread.sleep(1);
+
+                        logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
+                        xmlBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+                                .append("<experiments total=\"").append(exps.size()).append("\">")
+                                ;
+
+                        ((JobsController) getComponent("JobsController")).setJobListener(this);
+
+                        if (exps.size() > 0) {
+                            if (exps.size() <= numThreadsForRetrieval) {
+                                numThreadsForRetrieval = 1;
+                            }
+                            // split list into several pieces
+                            expsPerThread = (int) Math.ceil(((double) exps.size()) / ((double) numThreadsForRetrieval));
+                            for (int i = 0; i < numThreadsForRetrieval; ++i) {
+                                ((JobsController) getComponent("JobsController")).executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
+                                Thread.sleep(1);
+                            }
+
+                            while (numThreadsCompleted < numThreadsForRetrieval) {
+                                Thread.sleep(1000);
+                            }
+
+                            ((JobsController) getComponent("JobsController")).setJobListener(null);
+                            xmlBuffer.append("</experiments>");
+
+                            String experimentsXmlText = xmlBuffer.toString();
+
+                            if (logger.isDebugEnabled()) {
+                                StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.txt"));
+                            }
+
+                            experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
+                                    StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
+                                            StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
+                                                    experimentsXmlText
+                                            ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
+                                    )
+                            );
+
+                            if (logger.isDebugEnabled()) {
+                                StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae1-raw-experiments.xml"));
+                            }
+                            ((Experiments) getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE1);
+                            logger.info("Reload of experiment data completed");
+                            xmlBuffer = null;
+                        } else {
+                            logger.warn("No experiments found, reload aborted");
+                        }
+                    } else {
+                        logger.warn("No connections available from [{}], reload aborted", connNames);
+                    }
                 }
             }
         } catch (Exception x) {
