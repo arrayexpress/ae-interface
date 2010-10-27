@@ -25,6 +25,8 @@ public class StringTools
     {
     }
 
+    public final static String EOL = System.getProperty("line.separator");
+
     public static String arrayToString( String[] a, String separator )
     {
         if (a == null || separator == null) {
@@ -50,7 +52,7 @@ public class StringTools
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding));
                 while ((line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
+                    sb.append(line).append(EOL);
                 }
             } finally {
                 is.close();
@@ -97,7 +99,7 @@ public class StringTools
             }
             out.append(in.substring(currentIndex, entityStart));
             entityEnd = in.indexOf(";", entityStart);
-            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d{4,}$")) {
+            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d{1,}$")) {
                 // good stuff, we found decimal entity
                 out.append((char) Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
                 currentIndex = entityEnd + 1;
@@ -139,7 +141,10 @@ public class StringTools
             } else if ((current >= 0xa0 && current <= 0xd7ff) || (current >= 0xe000 && current <= 0xfffd) || (current >= 0x10000 && current <= 0x10ffff)) {
                 out.append(escapeChar(current));
             } else {
-                out.append(escapeChar(ILLEGAL_CHAR_REPRESENATION));
+                // errors: illegal ascii - skip, illegal unicode -> show illegal char
+                if (current >= 0x80) {
+                    out.append(escapeChar(ILLEGAL_CHAR_REPRESENATION));
+                }
             }
         }
         return out.toString();
@@ -158,7 +163,23 @@ public class StringTools
 
             if (ch <= 0x7f) {
                 // there are no problems with ascii
-                sb.append(ch);
+
+                // wow, that's a hack
+                if (0x43 == ch && (ix + 3) < in.length() && 0x2 == in.charAt(ix + 1) && 0x42 == in.charAt(ix + 2) && (in.charAt(ix + 3) >= 0x12 && in.charAt(ix + 3) <= 0x14)) {
+                    switch (in.charAt(ix + 3)) {
+                        case 0x12:
+                            sb.append('\'');
+                            break;
+
+                        case 0x13:
+                        case 0x14:
+                            sb.append('"');
+                            break;
+                    }
+                    ix += 3;
+                } else {
+                    sb.append(ch);
+                }
             } else if (ch >= 0xc2 && ch <= 0xdf && (ix + 1) < in.length()) {
                 // this is possibly a start of two-byte utf-8 sequence
                 // let's try to decode it and if it's any good, use it

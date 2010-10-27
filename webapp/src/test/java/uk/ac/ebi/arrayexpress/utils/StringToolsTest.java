@@ -29,8 +29,12 @@ public class StringToolsTest
         assertEquals("hello world", StringTools.unescapeXMLDecimalEntities("hello world"));
         assertEquals("hello &# world", StringTools.unescapeXMLDecimalEntities("hello &# world"));
         assertEquals("hello &# world &#", StringTools.unescapeXMLDecimalEntities("hello &# world &#"));
-        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
-        assertEquals("hello &# world &#48;", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
+        assertEquals("hello &# world 0", StringTools.unescapeXMLDecimalEntities("hello &# world &#48;"));
+        String experimentsXmlText = "12 AgilentC&#2;B&#18;s C&#2;B&#19;44K whole genomeC&#2;B&#20; arrays";
+            experimentsXmlText = experimentsXmlText.replaceAll("&amp;#(\\d+);", "&#$1;");
+            experimentsXmlText = StringTools.unescapeXMLDecimalEntities(experimentsXmlText);
+            experimentsXmlText = StringTools.detectDecodeUTF8Sequences(experimentsXmlText);
+            experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText);
     }
 
     @Test
