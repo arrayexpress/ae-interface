@@ -16,7 +16,7 @@
                     <xsl:message>[INFO] Copying [<xsl:value-of select="accession"/>], source [<xsl:value-of select="source/@id"/>], multi [<xsl:value-of select="$vMulti"/>]</xsl:message>
                     <experiment>
                         <xsl:copy-of select="*[name() != 'source']|@*"/>
-                        <source id="{source/@id}" multi="{$vMulti}"/>
+                        <source id="{source/@id}" multi="{$vMulti}" preferred="{source/@id = 'ae2' or not($vMulti)}"/>
                     </experiment>
                 </xsl:for-each>
 

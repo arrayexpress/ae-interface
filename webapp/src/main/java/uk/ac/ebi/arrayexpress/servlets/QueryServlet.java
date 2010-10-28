@@ -145,6 +145,12 @@ public class QueryServlet extends ApplicationServlet
                     }
                 }
 
+                // setting "preferred" parameter to true allows only preferred experiments to be displayed, but if
+                // any of source control parameters are present in the query, it will not be added
+                if (!params.containsKey("multi") && !params.containsKey("sourceid") && !params.containsKey("preferred")) {
+                    params.put("preferred", "true");
+                }
+
                 try {
                     Integer queryId = ((SearchEngine) getComponent("SearchEngine")).getController().addQuery(experiments.INDEX_ID, params, request.getQueryString());
                     params.put("queryid", String.valueOf(queryId));
