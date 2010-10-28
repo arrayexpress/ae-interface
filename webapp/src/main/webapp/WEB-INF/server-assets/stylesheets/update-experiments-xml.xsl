@@ -13,10 +13,11 @@
             <xsl:for-each-group select="$vCombinedExperiments" group-by="accession">
                 <xsl:variable name="vMulti" select="count(current-group()) > 1"/>
                 <xsl:for-each select="current-group()">
-                    <xsl:message>[INFO] Copying [<xsl:value-of select="accession"/>], source [<xsl:value-of select="source/@id"/>], multi [<xsl:value-of select="$vMulti"/>]</xsl:message>
+                    <xsl:variable name="vPreferred" select="source/@id = 'ae2' or not($vMulti)"/>
+                    <xsl:message>[INFO] Copying [<xsl:value-of select="accession"/>], source id [<xsl:value-of select="source/@id"/>], multi [<xsl:value-of select="$vMulti"/>], preferred [<xsl:value-of select="$vPreferred"/>]</xsl:message>
                     <experiment>
                         <xsl:copy-of select="*[name() != 'source']|@*"/>
-                        <source id="{source/@id}" multi="{$vMulti}" preferred="{source/@id = 'ae2' or not($vMulti)}"/>
+                        <source id="{source/@id}" multi="{$vMulti}" preferred="{$vPreferred}"/>
                     </experiment>
                 </xsl:for-each>
 
