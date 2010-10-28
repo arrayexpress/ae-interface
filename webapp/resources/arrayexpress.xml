@@ -11,16 +11,6 @@
         <db>
             <connections>
                 <connection>
-                    <name>tunelled</name>
-                    <driver>oracle.jdbc.OracleDriver</driver>
-                    <url>jdbc:oracle:thin:@localhost:1521:AEPUB1</url>
-                    <username>${interface.application.db.username}</username>
-                    <password>${interface.application.db.password}</password>
-                    <minConnections>30</minConnections>
-                    <maxConnections>30</maxConnections>
-                    <testStatement>select 1 from tt_security where rownum = 1</testStatement>
-                </connection>
-                <connection>
                     <name>aepub1</name>
                     <driver>oracle.jdbc.OracleDriver</driver>
                     <url>jdbc:oracle:thin:@otto.ebi.ac.uk:1521:AEPUB1</url>
