@@ -147,7 +147,17 @@ public class QueryServlet extends ApplicationServlet
 
                 // setting "preferred" parameter to true allows only preferred experiments to be displayed, but if
                 // any of source control parameters are present in the query, it will not be added
-                if (!params.containsKey("multi") && !params.containsKey("sourceid") && !params.containsKey("preferred")) {
+                String[] keywords = params.get("keywords");
+
+                if (!(
+                        params.containsKey("multi")
+                        || params.containsKey("sourceid")
+                        || params.containsKey("preferred")
+                        || ( null != keywords && keywords[0].matches(".*\\bmulti:.*"))
+                        || ( null != keywords && keywords[0].matches(".*\\bsourceid:.*"))
+                        || ( null != keywords && keywords[0].matches(".*\\bpreferred:.*"))
+                        )) {
+
                     params.put("preferred", "true");
                 }
 
