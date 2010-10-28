@@ -92,7 +92,7 @@ public class Autocompletion extends ApplicationComponent
             }
         }
 
-        if (null != ontologies) {
+        if (null != ontologies && null != ontologies.getOntology()) {
             addEfoNodeWithDescendants(ontologies.getOntology().EFO_ROOT_ID);
         }
     }
