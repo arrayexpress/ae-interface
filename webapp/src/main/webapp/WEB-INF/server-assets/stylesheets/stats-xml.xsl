@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                extension-element-prefixes="search"
+                exclude-result-prefixes="search"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
-    <xsl:param name="userid"/>
+
+    <xsl:param name="queryid"/>
 
     <xsl:template match="/experiments">
-        <experiments total="{count(experiment[user = '1' or user = $userid or not($userid)])}"
-                     total-samples="{sum(experiment[user = '1' or user = $userid  or not($userid)]/samples)}"
-                     total-assays="{sum(experiment[user ='1' or user = $userid or not($userid)]/assays)}"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <experiments total="{count($vFilteredExperiments)}"
+                     total-samples="{sum($vFilteredExperiments/samples)}"
+                     total-assays="{sum($vFilteredExperiments/assays)}"/>
     </xsl:template>
 
 </xsl:stylesheet>

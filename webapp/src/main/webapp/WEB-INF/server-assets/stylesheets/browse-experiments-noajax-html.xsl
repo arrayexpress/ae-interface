@@ -148,7 +148,7 @@
                     <a href="{$basepath}/experiments/{accession}">
                         <xsl:apply-templates select="accession" mode="copy" />
                     </a>
-                    <xsl:if test="not(user = '1')">
+                    <xsl:if test="not(user/@id = '1')">
                         <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
                     </xsl:if>
                 </div>

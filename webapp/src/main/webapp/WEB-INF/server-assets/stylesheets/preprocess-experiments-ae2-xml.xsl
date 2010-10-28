@@ -29,8 +29,8 @@
             <xsl:if test="ae:getAcceleratorValue('is-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
-            <source>ae2</source>
-            <user>1</user>
+            <source id="ae2"/>
+            <user id="1"/>
 
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>

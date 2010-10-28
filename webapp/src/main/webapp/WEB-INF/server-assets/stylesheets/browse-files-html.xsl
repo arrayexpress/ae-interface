@@ -47,7 +47,7 @@
             <div id="ae_files_content">
                 <xsl:choose>
                     <xsl:when test="$vExperiment">
-                        <xsl:variable name="vUserMatch" select="$vExperiment/user[text() = $userid]"/>
+                        <xsl:variable name="vUserMatch" select="$vExperiment/user[@id = $userid]"/>
                         <xsl:choose>
                             <xsl:when test="not($userid) or $vUserMatch">
                                 <div class="ae_accession">Experiment <xsl:value-of select="$vAccession"/></div>
@@ -63,7 +63,7 @@
                                             <xsl:text>Due to the large amount of data there are multiple archive files for download.</xsl:text>
                                         </div>
                                     </xsl:if>
-                                    <xsl:if test="($vExperiment/user = '1') and (count($vExperiment/file[size>2048000000])>0)">
+                                    <xsl:if test="($vExperiment/user/@id = '1') and (count($vExperiment/file[size>2048000000])>0)">
                                         <div>
                                             <xsl:text>Some files are larger that 2 GB, please use </xsl:text>
                                             <a href="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/{substring($vAccession, 3, 4)}/{$vAccession}">ArrayExpress FTP</a>

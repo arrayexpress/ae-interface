@@ -40,7 +40,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
             " , ( select XmlAgg( XmlElement( \"name\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'AEExperimentDisplayName' )" +
             " , ( select XmlAgg( XmlElement( \"loaddate\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'ArrayExpressLoadDate' )" +
             " , ( select XmlAgg( XmlElement( \"releasedate\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'ArrayExpressReleaseDate' )" +
-            " , ( select XmlAgg( XmlElement( \"user\", v.user_id ) ) from tt_extendable ext left outer join pl_visibility v on v.label_id = ext.label_id where ext.id = e.id )" +
+            " , ( select XmlAgg( XmlElement( \"user\", XmlAttributes( v.user_id as \"id\" ) ) ) from tt_extendable ext left outer join pl_visibility v on v.label_id = ext.label_id where ext.id = e.id )" +
             " , ( select XmlAgg( XmlElement( \"secondaryaccession\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'SecondaryAccession' )" +
             " , ( select XmlAgg( XmlElement( \"seqdatauri\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'SequenceDataURI' )" +
             " , ( select XmlAgg( XmlElement( \"miamegold\", value ) ) from tt_namevaluetype sa where sa.t_extendable_id = e.id and sa.name = 'AEMIAMEGOLD' )" +

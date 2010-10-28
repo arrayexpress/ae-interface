@@ -113,7 +113,7 @@
                             <xsl:with-param name="pFieldName" select="'accession'" />
                         </xsl:call-template>
                     </div>
-                    <xsl:if test="not(user = '1')">
+                    <xsl:if test="not(user/@id = '1')">
                         <div class="lock">&#160;</div>
                     </xsl:if>
                 </td>

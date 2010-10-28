@@ -53,7 +53,9 @@
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
-            <source>ae1</source>
+            <source id="ae1"/>
+            <xsl:copy-of select="user"/>
+
             <releasedate><xsl:value-of select="loaddate"/></releasedate>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
@@ -131,7 +133,7 @@
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescore | releasedate" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore | releasedate | user" mode="copy"/>
 
     <xsl:template match="name" mode="copy">
         <name>
