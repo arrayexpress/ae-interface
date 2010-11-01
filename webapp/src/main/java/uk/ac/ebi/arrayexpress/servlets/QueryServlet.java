@@ -152,13 +152,13 @@ public class QueryServlet extends ApplicationServlet
                 if (!(
                         params.containsKey("multi")
                         || params.containsKey("sourceid")
-                        || params.containsKey("preferred")
+                        || params.containsKey("visible")
                         || ( null != keywords && keywords[0].matches(".*\\bmulti:.*"))
                         || ( null != keywords && keywords[0].matches(".*\\bsourceid:.*"))
-                        || ( null != keywords && keywords[0].matches(".*\\bpreferred:.*"))
+                        || ( null != keywords && keywords[0].matches(".*\\bvisible:.*"))
                         )) {
 
-                    params.put("preferred", "true");
+                    params.put("visible", "true");
                 }
 
                 try {

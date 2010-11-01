@@ -113,7 +113,7 @@
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="multi" type="boolean" path="source/@multi = 'true'"/>
-                <field name="preferred" type="boolean" path="source/@preferred = 'true'"/>
+                <field name="visible" type="boolean" path="source/@preferred = 'true'"/>
                 <!-- numeric fields -->
                 <field name="assaycount" title="Number of Assays" type="integer" path="(if (assays castable as xs:integer) then assays else 0) cast as xs:integer" />
                 <field name="samplecount" title="Number of Samples" type="integer" path="(if (samples castable as xs:integer) then samples else 0) cast as xs:integer" />

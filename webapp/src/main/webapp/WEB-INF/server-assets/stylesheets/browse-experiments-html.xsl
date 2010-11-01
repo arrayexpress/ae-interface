@@ -9,6 +9,7 @@
                 version="2.0">
 
     <xsl:param name="queryid"/>
+    <xsl:param name="userid"/>
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
     <xsl:param name="sortby"/>
@@ -113,6 +114,13 @@
                             <xsl:with-param name="pFieldName" select="'accession'" />
                         </xsl:call-template>
                     </div>
+                    <xsl:if test="not($userid)"> <!-- curator logged in -->
+                        <xsl:choose>
+                            <xsl:when test="source/@id = 'ae1' and source/@multi != 'true'"><span class="ae1"><xsl:if test="source/@preferred = 'true'">*</xsl:if>1</span></xsl:when>
+                            <xsl:when test="source/@id = 'ae1' and source/@multi = 'true'"><span class="ae1m"><xsl:if test="source/@preferred = 'true'">*</xsl:if>m1</span></xsl:when>
+                            <xsl:when test="source/@id = 'ae2'"><span class="ae2"><xsl:if test="source/@preferred = 'true'">*</xsl:if><xsl:if test="source/@multi = 'true'">m</xsl:if>2</span></xsl:when>
+                        </xsl:choose>
+                    </xsl:if>
                     <xsl:if test="not(user/@id = '1')">
                         <div class="lock">&#160;</div>
                     </xsl:if>
