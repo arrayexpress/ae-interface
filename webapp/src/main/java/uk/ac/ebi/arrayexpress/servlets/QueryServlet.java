@@ -150,11 +150,11 @@ public class QueryServlet extends ApplicationServlet
                 String[] keywords = params.get("keywords");
 
                 if (!(
-                        params.containsKey("multi")
-                        || params.containsKey("sourceid")
+                        params.containsKey("migrated")
+                        || params.containsKey("source")
                         || params.containsKey("visible")
-                        || ( null != keywords && keywords[0].matches(".*\\bmulti:.*"))
-                        || ( null != keywords && keywords[0].matches(".*\\bsourceid:.*"))
+                        || ( null != keywords && keywords[0].matches(".*\\bmigrated:.*"))
+                        || ( null != keywords && keywords[0].matches(".*\\bsource:.*"))
                         || ( null != keywords && keywords[0].matches(".*\\bvisible:.*"))
                         )) {
 

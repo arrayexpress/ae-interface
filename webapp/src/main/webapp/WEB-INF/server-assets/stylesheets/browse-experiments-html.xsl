@@ -108,22 +108,48 @@
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass}">
-                    <div class="table_row_accession">
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pText" select="accession" />
-                            <xsl:with-param name="pFieldName" select="'accession'" />
-                        </xsl:call-template>
+                    <div class="acc">
+                        <div>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pText" select="accession" />
+                                <xsl:with-param name="pFieldName" select="'accession'" />
+                            </xsl:call-template>
+                        </div>
+                        <div>
+                            <xsl:attribute name="class">
+                                <xsl:text>acc_status</xsl:text>
+                            <xsl:if test="source/@migrated = 'true'">
+                                <xsl:text> migrated</xsl:text>
+                            </xsl:if>
+                            <xsl:if test="source/@identical = 'true'">
+                                <xsl:text> identical</xsl:text>
+                            </xsl:if>
+                            </xsl:attribute>
+                        <xsl:if test="not($userid)"> <!-- curator logged in -->
+                            <xsl:choose>
+                                <xsl:when test="source/@id = 'ae1'">
+                                    <span>&#183;</span>
+                                    <span class="ae1">1</span>
+                                </xsl:when>
+                                <xsl:when test="source/@id = 'ae1' and source/@migrated = 'true'">
+                                    <span>2</span>
+                                    <span class="ae1">1</span>
+                                </xsl:when>
+                                <xsl:when test="source/@id = 'ae2' and source/@migrated = 'true'">
+                                    <span class="ae2">2</span>
+                                    <span>1</span>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <span class="ae2">2</span>
+                                    <span>&#183;</span>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:if>
+                        <xsl:if test="not(user/@id = '1')">
+                            <span class="lock">&#160;</span>
+                        </xsl:if>
+                        </div>
                     </div>
-                    <xsl:if test="not($userid)"> <!-- curator logged in -->
-                        <xsl:choose>
-                            <xsl:when test="source/@id = 'ae1' and source/@multi != 'true'"><span class="ae1"><xsl:if test="source/@preferred = 'true'">*</xsl:if>1</span></xsl:when>
-                            <xsl:when test="source/@id = 'ae1' and source/@multi = 'true'"><span class="ae1m"><xsl:if test="source/@preferred = 'true'">*</xsl:if>m1</span></xsl:when>
-                            <xsl:when test="source/@id = 'ae2'"><span class="ae2"><xsl:if test="source/@preferred = 'true'">*</xsl:if><xsl:if test="source/@multi = 'true'">m</xsl:if>2</span></xsl:when>
-                        </xsl:choose>
-                    </xsl:if>
-                    <xsl:if test="not(user/@id = '1')">
-                        <div class="lock">&#160;</div>
-                    </xsl:if>
                 </td>
                 <td class="{$vDetailedViewMainTdClass}">
                     <div>

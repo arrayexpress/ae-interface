@@ -506,9 +506,12 @@ a:active .table_header_label {
 }
 
 .ae_results_accession {
-    width: 122px;
+    width: 105px;
 }
 
+.ae_multisource .ae_results_accession {
+    width: 125px;
+}
 .ae_results_name {
 }
 
@@ -579,38 +582,54 @@ a:active .table_header_label {
     border-bottom: 0 none;
 }
 
-.td_main div.table_row_accession {
-    float: left;
-    width: 92px;
+.td_main div.acc {
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
 
-span.ae1
-, span.ae1m
-, span.ae2 {
+.td_main div.acc div.acc_status {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+div.acc_status span {
     float: right;
-    margin-top: 2px;
-    padding: 1px 1px;
+    margin: 0;
+    padding: 0 1px;
+    width: 9px;
+    text-align: center;
+}
+
+div.acc_status span.ae1 {
+    background-color: #ee3f3f;
     color: white;
 }
 
-span.ae1 {
-    background-color: #ee3f3f;
-}
-
-span.ae1m {
-    background-color: #dbc70d;
-}
-
-span.ae2 {
+div.acc_status span.ae2 {
     background-color: #2ead28;
+    color: white;
 }
 
-.td_main div.lock {
+div.acc_status.migrated span.ae1
+, div.acc_status.migrated span.ae2 {
+    background-color: #dbc70d;
+    color: white;
+}
+
+div.acc_status.migrated.identical span.ae1
+, div.acc_status.migrated.identical span.ae2 {
+    background-color: #2ead28;
+    color: white;
+}
+
+.td_main span.lock {
     background: url( ../images/silk_lock.gif ) 0 0 no-repeat;
     float: right;
     width: 10px;
     height: 10px;
-    margin: 5px 0 0 0;
+    margin: 3px 0 0 0;
     padding: 0;
 }
 
@@ -673,7 +692,6 @@ span.ae2 {
 }
 
 .td_ext td.name {
-    width: 118px;
     padding: 0;
     font-weight: bold;
     color: #005555;
@@ -681,6 +699,14 @@ span.ae2 {
     text-align: right;
     vertical-align: top;
     overflow: hidden;
+}
+
+.td_ext td.name {
+    width: 118px;
+}
+
+.ae_multisource .td_ext td.name {
+    width: 138px;
 }
 
 .td_ext td.name div {

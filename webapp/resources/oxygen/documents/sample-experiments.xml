@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <experiments version="" total="4">
     <experiment loadedinatlas="true">
-        <source id="ae1" multi="false"/>
+        <source id="ae1" migrated="false"/>
         <id>1712209901</id>
         <accession>E-GEOD-14011</accession>
         <name>Transcription profiling of human myeloma cell lines treated with 500 nM pristimerin or
@@ -123,7 +123,7 @@
     </experiment>
 
     <experiment loadedinatlas="true">
-        <source id="ae2" multi="false"/>
+        <source id="ae2" migrated="false"/>
         <id>1673780805</id>
         <accession>E-BUGS-60</accession>
         <name>Transcription profiling of Mycobacterium tuberculosis samples to develop a
@@ -304,7 +304,7 @@
         </description>
     </experiment>
     <experiment loadedinatlas="true">
-        <source id="ae1" multi="true"/>
+        <source id="ae1" migrated="true"/>
         <id>366346722</id>
         <accession>E-AFMX-5</accession>
         <name>Transcription profiling of human cell lines and tissues (GNF/Novartis)</name>
@@ -725,7 +725,7 @@
         </description>
     </experiment>
     <experiment loadedinatlas="true">
-        <source id="ae2" multi="true"/>
+        <source id="ae2" migrated="true"/>
         <id>352682122</id>
         <accession>E-AFMX-2</accession>
         <name>Transcription profiling of human and chimp brain tissues</name>
@@ -946,7 +946,7 @@
         </description>
     </experiment>
     <experiment loadedinatlas="true">
-        <source id="ae1" multi="false"/>
+        <source id="ae1" migrated="false"/>
         <id>13850163</id>
         <accession>E-SNGR-9</accession>
         <name>Transcription profiling of fission yeast cell cycle data (log normalised data from
