@@ -506,7 +506,7 @@ a:active .table_header_label {
 }
 
 .ae_results_accession {
-    width: 105px;
+    width: 122px;
 }
 
 .ae_results_name {
@@ -582,6 +582,27 @@ a:active .table_header_label {
 .td_main div.table_row_accession {
     float: left;
     width: 92px;
+}
+
+span.ae1
+, span.ae1m
+, span.ae2 {
+    float: right;
+    margin-top: 2px;
+    padding: 1px 1px;
+    color: white;
+}
+
+span.ae1 {
+    background-color: #ee3f3f;
+}
+
+span.ae1m {
+    background-color: #dbc70d;
+}
+
+span.ae2 {
+    background-color: #2ead28;
 }
 
 .td_main div.lock {
