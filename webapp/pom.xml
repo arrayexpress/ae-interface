@@ -160,7 +160,7 @@
 
                 <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 40 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_perftest/software/browse/</interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_perftest/software/browse/experiments.xml</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
                 <interface.application.pref.files.prefix>ae2-perftest</interface.application.pref.files.prefix>
