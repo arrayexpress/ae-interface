@@ -51,23 +51,27 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             // }
 
             String experimentsFileLocation = getPreferences().getString("ae.experiments.ae2.source-location");
-            logger.info("Reloading experiments from [{}]", experimentsFileLocation);
+            if (!"".equals(experimentsFileLocation)) {
+                logger.info("Reloading experiments from [{}]", experimentsFileLocation);
 
-            String experimentsXmlText = StringTools.fileToString(new File(experimentsFileLocation), "UTF-8");
-            experimentsXmlText = experimentsXmlText.replaceAll("&amp;#(\\d+);", "&#$1;");
-            experimentsXmlText = StringTools.unescapeXMLDecimalEntities(experimentsXmlText);
-            experimentsXmlText = StringTools.detectDecodeUTF8Sequences(experimentsXmlText);
-            experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText);
+                String experimentsXmlText = StringTools.fileToString(new File(experimentsFileLocation), "UTF-8");
+                experimentsXmlText = experimentsXmlText.replaceAll("&amp;#(\\d+);", "&#$1;");
+                experimentsXmlText = StringTools.unescapeXMLDecimalEntities(experimentsXmlText);
+                experimentsXmlText = StringTools.detectDecodeUTF8Sequences(experimentsXmlText);
+                experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText);
 
-            if (logger.isDebugEnabled()) {
-                StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae2-src-experiments.xml"));
-            }
+                if (logger.isDebugEnabled()) {
+                    StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae2-src-experiments.xml"));
+                }
 
-            if (experimentsXmlText.length() > 0) {
-                ((Experiments)getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE2);
-                logger.info("Reload of experiments completed");
+                if (experimentsXmlText.length() > 0) {
+                    ((Experiments)getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE2);
+                    logger.info("Reload of experiments completed");
+                } else {
+                    logger.warn("Experiments XML [{}] is empty", experimentsFileLocation);
+                }
             } else {
-                logger.warn("Experiments XML [{}] is empty", experimentsFileLocation);
+                logger.info("AE2 Experiments Source Location is not defined, skipping");
             }
         } catch (Exception x) {
             throw new RuntimeException(x);
