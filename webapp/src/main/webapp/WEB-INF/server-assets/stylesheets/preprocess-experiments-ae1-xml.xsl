@@ -24,7 +24,7 @@
     <xsl:template match="experiment">
         <experiment>
             <xsl:variable name="vAccession" select="accession"/>
-            <xsl:message>[INFO] Processing  [<xsl:value-of select="$vAccession"/>]</xsl:message>
+
             <xsl:variable name="vGenDescription">
                 <xsl:variable name="vGenDescriptionRaw" select="description[contains(text(), '(Generated description)')]"/>
                 <xsl:choose>

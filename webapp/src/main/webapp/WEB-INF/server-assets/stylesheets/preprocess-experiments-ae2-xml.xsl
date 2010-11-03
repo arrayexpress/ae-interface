@@ -24,7 +24,6 @@
     <xsl:template match="experiment">
         <experiment>
             <xsl:variable name="vAccession" select="accession"/>
-            <xsl:message>[INFO] Processing  [<xsl:value-of select="$vAccession"/>]</xsl:message>
 
             <xsl:if test="ae:getAcceleratorValue('is-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>

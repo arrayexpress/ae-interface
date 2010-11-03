@@ -6,32 +6,51 @@
                 exclude-result-prefixes="ae saxon"
                 version="2.0">
 
-    <!-- saxon:deep-equal(
-            saxon:sort(
-                    current-group()[1]/*[name() != 'source'], saxon:expression('name()')
-                )
-            , saxon:sort(
-                    current-group()[2]/*[name() != 'source'], saxon:expression('name()')
-                )
-            , 'http://saxon.sf.net/collation?ignore-case=yes'
-            , 'Sw?'
-        )
-    -->
+    <!-- checks if experiments contain equal set of elements/attributes (with a notable exception of source element) -->
     <xsl:function name="ae:are-experiments-identical">
         <xsl:param name="pExp1"/>
         <xsl:param name="pExp2"/>
-        <xsl:variable name="vResult">
-            <!-- ok, that works in principle
-            <xsl:for-each select="saxon:sort($pExp1/*, saxon:expression('name()'))">
-                <xsl:message>Exp 1 elt [<xsl:value-of select="name()"/>]</xsl:message>
+  <!--
+        <xsl:variable name="vSortedFilteredExp1">
+            <xsl:for-each select="$pExp1/*[not(name() = 'source')]">
+                <xsl:sort select="name()" order="ascending"/>
+                <xsl:copy-of select="."/>
             </xsl:for-each>
-            <xsl:for-each select="saxon:sort($pExp2/*, saxon:expression('name()'))">
-                <xsl:message>Exp 2 elt [<xsl:value-of select="name()"/>]</xsl:message>
-            </xsl:for-each>
-            -->
-           <xsl:value-of select="true()"/>
         </xsl:variable>
-        <xsl:value-of select="$vResult"/>
+        <xsl:variable name="vSortedFilteredExp2">
+            <xsl:for-each select="$pExp2/*[not(name() = 'source')]">
+                <xsl:sort select="name()" order="ascending"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:value-of select="saxon:deep-equal($vSortedFilteredExp1, $vSortedFilteredExp2, 'http://saxon.sf.net/collation?ignore-case=yes', 'Sw?')"/>
+  -->
+        <xsl:value-of select="false()"/>
     </xsl:function>
-
+<!--
+    <xsl:function name="ae:are-nodes-identical">
+        <xsl:param name="pNode1"/>
+        <xsl:param name="pNode2"/>
+        <xsl:variable name="vSortedNode1Attrs">
+            <xsl:for-each select="$pNode1/@*">
+                <xsl:sort select="name()" order="ascending"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="vSortedNode2Attrs">
+            <xsl:for-each select="$pNode2/@*">
+                <xsl:sort select="name()" order="ascending"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:choose>
+        <xsl:when test="not(saxon:deep-equal())">
+            <xsl:value-of select="false()"/>
+        </xsl:when>
+        <xsl:otherwise>
+            
+        </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+-->
 </xsl:stylesheet>
