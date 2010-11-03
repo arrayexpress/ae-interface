@@ -49,7 +49,7 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new Users());
         addComponent(new Files());
         addComponent(new JobsController());
-        //addComponent(new Ontologies());
+        addComponent(new Ontologies());
     }
 
     public URL getResource( String path ) throws MalformedURLException
