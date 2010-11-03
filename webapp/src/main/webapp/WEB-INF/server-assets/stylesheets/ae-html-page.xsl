@@ -28,7 +28,7 @@
     </xsl:template>
 
     <xsl:template name="page-body">
-        <body>
+        <body class="${interface.application.body.class}">
             <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
                 <iframe src="${interface.application.link.www_domain}/inc/head.html" name="head" id="head"
                         frameborder="0" marginwidth="0px" marginheight="0px" scrolling="no" width="100%"

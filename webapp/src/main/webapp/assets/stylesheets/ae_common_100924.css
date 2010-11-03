@@ -30,6 +30,11 @@ body.dev_preview {
     overflow: auto;
 }
 
+body.ae2_perftest {
+	background: #ffe6f5;
+    overflow: auto;
+}
+
 #ebi_footer {
     background-color: #dedede;
     border-top: 1px solid #bfbfbf;
