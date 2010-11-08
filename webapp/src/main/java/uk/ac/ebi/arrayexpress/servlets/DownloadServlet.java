@@ -112,7 +112,7 @@ public class DownloadServlet extends ApplicationServlet
             String user = cookies.get("AeLoggedUser").getValue();
             String passwordHash = cookies.get("AeLoginToken").getValue();
             if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                userId = String.valueOf(users.getUserRecord(user).getId());
+                userId = String.valueOf(users.getUserID(user));
             } else {
                 logger.warn("Removing invalid session cookie for user [{}]", user);
                 // resetting cookies

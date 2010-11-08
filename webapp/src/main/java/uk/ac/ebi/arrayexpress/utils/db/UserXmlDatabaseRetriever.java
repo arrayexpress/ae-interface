@@ -24,7 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserListDatabaseRetriever extends SqlStatementExecutor
+public class UserXmlDatabaseRetriever extends SqlStatementExecutor
 {
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -38,7 +38,7 @@ public class UserListDatabaseRetriever extends SqlStatementExecutor
 
     private String userXML;
 
-    public UserListDatabaseRetriever( IConnectionSource connSource )
+    public UserXmlDatabaseRetriever( IConnectionSource connSource )
     {
         super(connSource, getUserListSql);
     }

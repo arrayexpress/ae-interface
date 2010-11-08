@@ -35,15 +35,17 @@
         <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
 
-        <interface.application.link.aer_old.experiment_link.style/>
-
         <interface.application.link.news_xml.url>/microarray-srv/ae/ae-main-news.xml</interface.application.link.news_xml.url>
         <interface.application.link.links_xml.url>/microarray-srv/ae/ae-main-links.xml</interface.application.link.links_xml.url>
 
+        <interface.application.pref.experiments.ae1.source.location/>
         <interface.application.pref.experiments.ae1.connections>aepub3,aepub2</interface.application.pref.experiments.ae1.connections>
         <interface.application.pref.experiments.ae1.reload.schedule>0 0 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-        <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
-        <interface.application.pref.experiments.ae2.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+        <interface.application.pref.experiments.ae1.export.location/>
+
+        <interface.application.pref.experiments.ae2.source.location/>
+        <interface.application.pref.experiments.ae2.reload.schedule/>
+
         <interface.application.pref.files.root.location>/ebi/ArrayExpress-ftp</interface.application.pref.files.root.location>
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>3600000</interface.application.pref.files.rescan.interval>
@@ -55,6 +57,96 @@
             <id>debug</id>
             <properties>
                 <interface.application.log.default.priority>ALL</interface.application.log.default.priority>
+            </properties>
+        </profile>
+        <profile>
+            <id>dukkha.aepub1</id>
+            <properties>
+                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
+
+                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
+                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
+                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
+                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
+                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
+                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
+
+                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
+                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
+
+                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae1.export.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.export.location>
+
+                <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
+                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.body.class>dev_preview</interface.application.body.class>
+            </properties>
+        </profile>
+        <profile>
+            <id>foo.ae2_perftest</id>
+            <properties>
+                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
+
+                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
+                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
+                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
+                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
+                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
+                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
+
+                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
+                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
+
+                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.connections/>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+
+                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_perftest/software/browse/</interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+
+                <interface.application.pref.files.prefix>ae2-perftest</interface.application.pref.files.prefix>
+                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.body.class>ae2_perftest</interface.application.body.class>
+            </properties>
+        </profile>
+        <profile>
+            <id>foo.ae2_curator</id>
+            <properties>
+                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
+
+                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
+                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
+                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
+                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
+                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
+                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
+
+                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
+                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
+
+                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.connections/>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+
+                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_curator/software/browse/</interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+
+                <interface.application.pref.files.prefix>ae2-curator</interface.application.pref.files.prefix>
+                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.body.class>ae2_curator</interface.application.body.class>
             </properties>
         </profile>
         <profile>
@@ -72,11 +164,9 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-
+                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.connections/>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
@@ -84,119 +174,6 @@
             </properties>
         </profile>
         <profile>
-            <id>preproduction-aecur</id>
-            <properties>
-                <interface.application.link.www_domain/>
-                <interface.application.link.www_domain_hack>http://www.embl-ebi.ac.uk</interface.application.link.www_domain_hack>
-                <interface.application.link.query_help>/fg/doc/help/ae_help.html</interface.application.link.query_help>
-                <interface.application.link.browse_help>/fg/doc/help/browse_results.html</interface.application.link.browse_help>
-                <interface.application.link.aer_old.base.url>${interface.application.link.www_domain_hack}/microarray-as/aer</interface.application.link.aer_old.base.url>
-                <interface.application.link.atlas.base.url>${interface.application.link.www_domain_hack}/gxa</interface.application.link.atlas.base.url>
-                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
-                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
-                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
-                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
-
-                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
-                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
-
-                <interface.application.pref.experiments.ae1.connections>aecur</interface.application.pref.experiments.ae1.connections>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-
-                <interface.application.pref.files.prefix>ae-aecur</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>dev_preview</interface.application.body.class>
-            </properties>
-        </profile>
-        <profile>
-            <id>curators-dukkha-13500</id>
-            <properties>
-                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
-
-                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
-                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
-                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
-                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
-                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
-                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
-                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
-                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
-                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
-                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
-
-                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
-                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
-
-                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 20 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location></interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-
-                <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>dev_preview</interface.application.body.class>
-            </properties>
-        </profile>
-        <profile>
-            <id>ae2-perftest</id>
-            <properties>
-                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
-
-                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
-                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
-                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
-                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
-                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
-                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
-                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
-                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
-                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
-                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
-
-                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
-                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
-
-                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 40 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_perftest/software/browse/experiments.xml</interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-
-                <interface.application.pref.files.prefix>ae2-perftest</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>ae2_perftest</interface.application.body.class>
-            </properties>
-        </profile>
-        <profile>
-            <id>ae2-curators</id>
-            <properties>
-                <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
-
-                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
-                <interface.application.urlrewrite.production.base>${interface.application.link.www_domain}/arrayexpress</interface.application.urlrewrite.production.base>
-                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
-                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
-                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
-                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
-                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
-                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
-                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
-                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
-
-                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
-                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
-
-                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 50 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
-                <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_curator/software/browse/experiments.xml</interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-
-                <interface.application.pref.files.prefix>ae2-curator</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>ae2_curator</interface.application.body.class>
-            </properties>
-        </profile>        <profile>
             <id>production</id>
             <activation>
                 <activeByDefault>true</activeByDefault>

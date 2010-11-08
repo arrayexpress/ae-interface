@@ -10,7 +10,7 @@
 
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
 
-    <xsl:variable name="vUpdate" select="doc('experiments-update.xml')"/>
+    <xsl:variable name="vUpdate" select="doc('update-experiments.xml')"/>
     <xsl:variable name="vUpdateSource" select="$vUpdate/experiments/experiment[1]/source/@id"/>
 
     <xsl:template match="/experiments">

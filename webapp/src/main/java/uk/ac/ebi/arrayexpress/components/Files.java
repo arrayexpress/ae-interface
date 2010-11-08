@@ -66,7 +66,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         saxon = null;
     }
 
-    // implementation of IDocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocumentURI()
     public String getDocumentURI()
     {
         return "files.xml";
@@ -78,7 +78,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         return this.files.getObject().getDocument();
     }
 
-    private synchronized void setFiles( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
             this.files.setObject(new PersistableDocumentContainer(doc));
@@ -92,7 +92,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         DocumentInfo doc = loadFilesFromString(xmlString);
         if (null != doc) {
-            setFiles(doc);
+            setDocument(doc);
         }
     }
 

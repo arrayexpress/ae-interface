@@ -20,13 +20,13 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
@@ -125,7 +125,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         saxon = null;
     }
 
-    // implementation of IDocumentSource.getDocument()
+    // implementation of IDocumentSource.getDocumentURI()
     public String getDocumentURI()
     {
         return "experiments.xml";
@@ -135,6 +135,18 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     public synchronized DocumentInfo getDocument() throws Exception
     {
         return this.experiments.getObject().getDocument();
+    }
+
+    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    {
+        if (null != doc) {
+            this.experiments.setObject(new PersistableDocumentContainer(doc));
+            buildSpeciesArraysExpTypes();
+            indexExperiments();
+        } else {
+            this.logger.error("Experiments NOT updated, NULL document passed");
+        }
     }
 
     public boolean isAccessible( String accession, String userId ) throws Exception
@@ -173,44 +185,11 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    class ExperimentsUpdater implements IDocumentSource
-    {
-        private Experiments experiments;
-        private SaxonEngine saxon;
-        private DocumentInfo update;
-
-        public ExperimentsUpdater( DocumentInfo update )
-        {
-            this.experiments = (Experiments) Application.getAppComponent("Experiments");
-            this.saxon = (SaxonEngine) Application.getAppComponent("SaxonEngine");
-            this.update = update;
-        }
-
-        // implementation of IDocumentSource.getDocument()
-        public String getDocumentURI()
-        {
-            return "experiments-update.xml";
-        }
-
-        // implementation of IDocumentSource.getDocument()
-        public synchronized DocumentInfo getDocument() throws Exception
-        {
-            return this.update;
-        }
-
-        public void update() throws Exception
-        {
-            saxon.registerDocumentSource(this);
-            experiments.setDocument(saxon.transform(experiments.getDocument(), "update-experiments-xml.xsl", null));
-            saxon.unregisterDocumentSource(this);
-        }
-    }
-
     public void update( String xmlString, ExperimentSource source ) throws Exception
     {
         DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
         if (null != updateDoc) {
-            new ExperimentsUpdater(updateDoc).update();
+            new DocumentUpdater(this, updateDoc).update();
         }
     }
 
@@ -227,17 +206,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             } else {
                 this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
             }
-        }
-    }
-
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
-    {
-        if (null != doc) {
-            this.experiments.setObject(new PersistableDocumentContainer(doc));
-            buildSpeciesArraysExpTypes();
-            indexExperiments();
-        } else {
-            this.logger.error("Experiments NOT updated, NULL document passed");
         }
     }
 

@@ -23,4 +23,5 @@ public interface IDocumentSource
 {
     public String getDocumentURI();
     public DocumentInfo getDocument() throws Exception;
+    public void setDocument(DocumentInfo doc) throws Exception;
 }

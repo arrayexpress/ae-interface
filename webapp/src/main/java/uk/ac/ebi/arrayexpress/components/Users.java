@@ -17,19 +17,40 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
+import net.sf.saxon.om.DocumentInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableUserList;
+import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
-import uk.ac.ebi.arrayexpress.utils.users.UserList;
-import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
+import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
 import java.io.File;
 
-public class Users extends ApplicationComponent
+public class Users extends ApplicationComponent implements IDocumentSource
 {
-    private TextFilePersistence<PersistableUserList> userList;
+    // logging machinery
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private AuthenticationHelper authHelper;
+    private TextFilePersistence<PersistableDocumentContainer> users;
+    private SaxonEngine saxon;
+
+    public enum UserSource
+    {
+        AE1, AE2;
+
+        public String getStylesheetName()
+        {
+            switch (this) {
+                case AE1:   return "preprocess-users-ae1-xml.xsl";
+                case AE2:   return "preprocess-users-ae2-xml.xsl";
+            }
+            return null;
+        }
+    }
 
     public Users()
     {
@@ -37,9 +58,10 @@ public class Users extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        userList = new TextFilePersistence<PersistableUserList>(
-                new PersistableUserList()
-                , new File(getPreferences().getString("ae.users.file.location"))
+        saxon = (SaxonEngine) getComponent("SaxonEngine");
+        users = new TextFilePersistence<PersistableDocumentContainer>(
+                new PersistableDocumentContainer()
+                , new File(getPreferences().getString("ae.users.persistence-location"))
         );
 
         authHelper = new AuthenticationHelper();
@@ -49,13 +71,43 @@ public class Users extends ApplicationComponent
     {
     }
 
-    public void setUserList( UserList userList ) throws Exception
+    // implementation of IDocumentSource.getDocumentURI()
+    public String getDocumentURI()
     {
-        this.userList.setObject(new PersistableUserList(userList));
+        return "users.xml";
     }
 
+    // implementation of IDocumentSource.getDocument()
+    public synchronized DocumentInfo getDocument() throws Exception
+    {
+        return this.users.getObject().getDocument();
+    }
+
+    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    {
+        if (null != doc) {
+            this.users.setObject(new PersistableDocumentContainer(doc));
+        } else {
+            this.logger.error("Experiments NOT updated, NULL document passed");
+        }
+    }
+
+    public void update( String xmlString, UserSource source ) throws Exception
+    {
+        DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
+        if (null != updateDoc) {
+            new DocumentUpdater(this, updateDoc).update();
+        }
+    }
+
+    public Long getUserID( String username )
+    {
+        return 1L;
+    }
     public String hashLogin( String username, String password, String suffix ) throws Exception
     {
+/*
         if ( null != username && null != password && null != suffix
                 && userList.getObject().containsKey(username) ) {
             UserRecord user = userList.getObject().get(username);
@@ -63,22 +115,26 @@ public class Users extends ApplicationComponent
                 return authHelper.generateHash(username, password, suffix);
             }
         }
+*/
         // otherwise
         return "";
     }
 
     public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
+/*
         if ( null != username && null != hash && null != suffix
                 && userList.getObject().containsKey(username) ) {
             UserRecord user = userList.getObject().get(username);
             return authHelper.verifyHash(hash, username, user.getPassword(), suffix);
         }
+*/
         return false;
     }
-
+/*
     public UserRecord getUserRecord( String username ) throws Exception
     {
         return ( null != username ) ? userList.getObject().get(username) : null;
     }
+*/
 }

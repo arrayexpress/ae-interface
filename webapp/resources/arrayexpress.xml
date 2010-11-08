@@ -64,12 +64,14 @@
         </db>
         <experiments>
             <ae1>
+                <source-location>${interface.application.pref.experiments.ae1.source.location}</source-location>
                 <db-connections>${interface.application.pref.experiments.ae1.connections}</db-connections>
                 <reload>
                     <atstart>false</atstart>
                     <schedule>${interface.application.pref.experiments.ae1.reload.schedule}</schedule>
                     <threads>25</threads>
                 </reload>
+                <export-location>${interface.application.pref.experiments.ae1.export.location}</export-location>
             </ae1>
             <ae2>
                 <source-location>${interface.application.pref.experiments.ae2.source.location}</source-location>
@@ -92,7 +94,9 @@
         <species><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-species.xml</location></file></species>
         <arrays><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays.xml</location></file></arrays>
         <exptypes><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiment-types.xml</location></file></exptypes>
-        <users><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.txt</location></file></users>
+        <users>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.xml</persistence-location>
+        </users>
         <files>
             <root><location>${interface.application.pref.files.root.location}</location></root>
             <persistence><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</location></file></persistence>
