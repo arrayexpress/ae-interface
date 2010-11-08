@@ -19,8 +19,6 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.utils.users.UserList;
-import uk.ac.ebi.arrayexpress.utils.users.UserRecord;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,21 +36,19 @@ public class UserListDatabaseRetriever extends SqlStatementExecutor
             " order by" +
             "  id asc";
 
-    // user list
-    private UserList userList;
+    private String userXML;
 
     public UserListDatabaseRetriever( IConnectionSource connSource )
     {
         super(connSource, getUserListSql);
-        userList = new UserList();
     }
 
-    public UserList getUserList()
+    public String getUserXML()
     {
         if (!execute(false)) {
             logger.error("There was a problem retrieving the list of experiments, check log for errors or exceptions");
         }
-        return userList;
+        return userXML;
     }
 
     protected void setParameters( PreparedStatement stmt ) throws SQLException
@@ -62,11 +58,26 @@ public class UserListDatabaseRetriever extends SqlStatementExecutor
 
     protected void processResultSet( ResultSet resultSet ) throws SQLException
     {
-        while ( resultSet.next() ) {
-            UserRecord userRecord = new UserRecord(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getBoolean(5));
+        StringBuilder sb = new StringBuilder(4000000);
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+                .append("<users>")
+                ;
 
-            userList.put(userRecord.getName(), userRecord);
+        while ( resultSet.next() ) {
+            sb.append("<user><id>")
+                    .append(resultSet.getLong(1))
+                    .append("</id><name>")
+                    .append(resultSet.getString(2))
+                    .append("</name><password>")
+                    .append(resultSet.getString(3))
+                    .append("</password><email>")
+                    .append(resultSet.getString(4))
+                    .append("</email><is_privileged>")
+                    .append(resultSet.getBoolean(5))
+                    .append("</is_privileged></user>");
         }
+        sb.append("</users>");
+        userXML = sb.toString();
     }
 }
 
