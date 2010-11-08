@@ -140,7 +140,7 @@
             </properties>
         </profile>
         <profile>
-            <id>curators-ae2-perftest</id>
+            <id>ae2-perftest</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
@@ -169,7 +169,7 @@
             </properties>
         </profile>
         <profile>
-            <id>curators-ae2-perftest</id>
+            <id>ae2-curators</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
