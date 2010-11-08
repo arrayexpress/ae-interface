@@ -31,7 +31,7 @@
                     <xsl:text>Experiments | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="assets/stylesheets/ae_common_100924.css" type="text/css"/>
+                    <link rel="stylesheet" href="assets/stylesheets/ae_common_101108.css" type="text/css"/>
                     <link rel="stylesheet" href="assets/stylesheets/ae_browse_printer_100924.css" type="text/css"/>
                     <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>

@@ -4,6 +4,10 @@ body.ae2_perftest {
     overflow: auto;
 }
 
+body.ae2_perftest {
+	background: #ffe6f5 url(../images/ae2_curator.gif) no-repeat fixed 0 97%;
+    overflow: auto;
+}
 /* ae intro area */
 #ae_intro_area {
     margin: 20px 0 0 0;

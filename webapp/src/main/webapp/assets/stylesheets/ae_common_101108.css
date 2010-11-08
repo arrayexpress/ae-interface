@@ -30,7 +30,8 @@ body.dev_preview {
     overflow: auto;
 }
 
-body.ae2_perftest {
+body.ae2_perftest
+, body.ae2_curator {
 	background: #ffe6f5;
     overflow: auto;
 }
