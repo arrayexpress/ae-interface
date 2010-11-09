@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
+import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
@@ -34,47 +35,78 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
+        String experimentsXml = null;
+        String usersXml = null;
+
+        // kicks reload of atlas experiments just in case
+        ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
+
         try {
-            // kicks reload of atlas experiments just in case
-            ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
+            // check preferences and if source location is defined, use that
+            String sourceLocation = getPreferences().getString("ae.experiments.ae2.source-location");
+            if (!"".equals(sourceLocation)) {
+                logger.info("Reload of experiment data from [{}] requested", sourceLocation);
+                usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
 
-            // TODO: user info should be merged as well at some point
-            // String usersFileLocation = getPreferences().getString("ae.users.source.location");
-            // logger.info("Reloading user information from [{}]", usersFileLocation);
-            //
-            // String usersXmlText = StringTools.fileToString(new File(usersFileLocation), "UTF-8");
-            // if (usersXmlText.length() > 0) {
-            //      ((Users)getComponent("Users")).update(usersXmlText, "preprocess-ae2-users-txt.xsl");
-            //      logger.info("Reload of user information completed");
-            // } else {
-            //      logger.warn("User info XML [{}] is empty", usersFileLocation);
-            // }
+                experimentsXml = getXmlFromFile(new File(sourceLocation, "experiments.xml"));
 
-            String experimentsFileLocation = getPreferences().getString("ae.experiments.ae2.source-location");
-            if (!"".equals(experimentsFileLocation)) {
-                logger.info("Reloading experiments from [{}]", experimentsFileLocation);
-
-                String experimentsXmlText = StringTools.fileToString(new File(experimentsFileLocation), "UTF-8");
-                experimentsXmlText = experimentsXmlText.replaceAll("&amp;#(\\d+);", "&#$1;");
-                experimentsXmlText = StringTools.unescapeXMLDecimalEntities(experimentsXmlText);
-                experimentsXmlText = StringTools.detectDecodeUTF8Sequences(experimentsXmlText);
-                experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText);
-
-                if (logger.isDebugEnabled()) {
-                    StringTools.stringToFile(experimentsXmlText, new File(System.getProperty("java.io.tmpdir"), "ae2-src-experiments.xml"));
-                }
-
-                if (experimentsXmlText.length() > 0) {
-                    ((Experiments)getComponent("Experiments")).update(experimentsXmlText, Experiments.ExperimentSource.AE2);
-                    logger.info("Reload of experiments completed");
-                } else {
-                    logger.warn("Experiments XML [{}] is empty", experimentsFileLocation);
-                }
-            } else {
-                logger.info("AE2 Experiments Source Location is not defined, skipping");
             }
+
+            // export to temp directory anyway (only if debug is enabled)
+            if (logger.isDebugEnabled()) {
+                StringTools.stringToFile(
+                        experimentsXml
+                        , new File(
+                                System.getProperty("java.io.tmpdir")
+                                , "ae2-src-experiments.xml"
+                        )
+                );
+            }
+
+            if (!"".equals(usersXml)) {
+                updateUsers(usersXml);
+            }
+
+            if (!"".equals(experimentsXml)) {
+                updateExperiments(experimentsXml);
+            }
+
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
     }
+
+    private String getXmlFromFile(File xmlFile) throws Exception
+    {
+        logger.info("Getting XML from file [{}]", xmlFile);
+        String xml =  StringTools.fileToString(
+                xmlFile
+                , "UTF-8"
+        );
+        xml = xml.replaceAll("&amp;#(\\d+);", "&#$1;");
+        xml = StringTools.unescapeXMLDecimalEntities(xml);
+        xml = StringTools.detectDecodeUTF8Sequences(xml);
+        xml = StringTools.replaceIllegalHTMLCharacters(xml);
+        return xml;
+    }
+
+    private void updateUsers( String xmlString ) throws Exception
+    {
+        ((Users) getComponent("Users")).update(xmlString, Users.UserSource.AE2);
+
+        logger.info("User information reload completed");
+
+    }
+
+    private void updateExperiments( String xmlString ) throws Exception
+    {
+        ((Experiments) getComponent("Experiments")).update(
+                xmlString
+                , Experiments.ExperimentSource.AE2
+        );
+
+        logger.info("Experiment information reload completed");
+
+    }
+
 }

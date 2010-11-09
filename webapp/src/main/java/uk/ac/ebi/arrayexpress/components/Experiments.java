@@ -82,7 +82,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         autocompletion = (Autocompletion) getComponent("Autocompletion");
 
         this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer()
+                new PersistableDocumentContainer("experiments")
                 , new File(getPreferences().getString("ae.experiments.file.location"))
         );
 
@@ -141,7 +141,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.experiments.setObject(new PersistableDocumentContainer(doc));
+            this.experiments.setObject(new PersistableDocumentContainer("experiments", doc));
             buildSpeciesArraysExpTypes();
             indexExperiments();
         } else {

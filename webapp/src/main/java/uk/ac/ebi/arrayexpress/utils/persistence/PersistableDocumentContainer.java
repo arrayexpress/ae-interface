@@ -31,13 +31,17 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public PersistableDocumentContainer()
+    private String rootElement;
+
+    public PersistableDocumentContainer( String rootElement )
     {
+        this.rootElement = rootElement;
         createDocument();
     }
 
-    public PersistableDocumentContainer( DocumentInfo doc )
+    public PersistableDocumentContainer( String rootElement, DocumentInfo doc )
     {
+        this.rootElement = rootElement;
         if (null == doc) {
             createDocument();
         } else {
@@ -64,7 +68,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         if (null == getDocument())
             return true;
 
-        String total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "/experiments/@total");
+        String total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
 
         return (null == total || total.equals("0"));
     }
@@ -72,7 +76,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
     private void createDocument()
     {
         try {
-            setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><experiments total=\"0\"></experiments>"));
+            setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument("<?xml version=\"1.0\"?><" + this.rootElement + "/>"));
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }

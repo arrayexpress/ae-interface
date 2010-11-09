@@ -60,7 +60,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     {
         saxon = (SaxonEngine) getComponent("SaxonEngine");
         users = new TextFilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer()
+                new PersistableDocumentContainer("users")
                 , new File(getPreferences().getString("ae.users.persistence-location"))
         );
 
@@ -87,7 +87,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.users.setObject(new PersistableDocumentContainer(doc));
+            this.users.setObject(new PersistableDocumentContainer("users", doc));
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
@@ -101,40 +101,45 @@ public class Users extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public Long getUserID( String username )
+    public Long getUserID( String username ) throws Exception
     {
-        return 1L;
+        String id = saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
+                );
+        if ("".equals(id)) {
+            return null;
+        } else {
+            return Long.parseLong(id);
+        }
     }
+
+    private String getUserPassword( String username ) throws Exception
+    {
+        return saxon.evaluateXPathSingle(
+                getDocument()
+                , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
+        );
+    }
+
     public String hashLogin( String username, String password, String suffix ) throws Exception
     {
-/*
         if ( null != username && null != password && null != suffix
-                && userList.getObject().containsKey(username) ) {
-            UserRecord user = userList.getObject().get(username);
-            if ( user.getPassword().equals(password) ) {
+                && null != getUserID(username) ) {
+            if ( password.equals(getUserPassword(username)) ) {
                 return authHelper.generateHash(username, password, suffix);
             }
         }
-*/
         // otherwise
         return "";
     }
 
     public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
-/*
         if ( null != username && null != hash && null != suffix
-                && userList.getObject().containsKey(username) ) {
-            UserRecord user = userList.getObject().get(username);
-            return authHelper.verifyHash(hash, username, user.getPassword(), suffix);
+                && null != getUserID(username) ) {
+            return authHelper.verifyHash(hash, username, getUserPassword(username), suffix);
         }
-*/
         return false;
     }
-/*
-    public UserRecord getUserRecord( String username ) throws Exception
-    {
-        return ( null != username ) ? userList.getObject().get(username) : null;
-    }
-*/
 }

@@ -53,7 +53,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         saxon = (SaxonEngine) getComponent("SaxonEngine");
 
         files = new TextFilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer(),
+                new PersistableDocumentContainer("files"),
                 new File(getPreferences().getString("ae.files.persistence.file.location"))
         );
 
@@ -81,7 +81,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.files.setObject(new PersistableDocumentContainer(doc));
+            this.files.setObject(new PersistableDocumentContainer("files", doc));
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");

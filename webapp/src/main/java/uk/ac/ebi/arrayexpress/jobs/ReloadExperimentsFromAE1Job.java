@@ -162,7 +162,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 , Experiments.ExperimentSource.AE1
         );
 
-        logger.info("User information reload completed");
+        logger.info("Experiment information reload completed");
 
     }
 
@@ -220,7 +220,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     );
                 }
 
-                experimentsXml = StringTools.replaceIllegalHTMLCharacters(       // filter out all junk Unicode chars
+                experimentsXml = StringTools.replaceIllegalHTMLCharacters(  // filter out all junk Unicode chars
                         StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
                                 StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
                                         experimentsXml
