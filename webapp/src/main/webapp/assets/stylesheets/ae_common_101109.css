@@ -27,13 +27,15 @@ body {
 
 body.dev_preview {
 	background: #ffffff url(../images/ae_dev_bg.gif) repeat fixed top;
-    overflow: auto;
+}
+
+body.aepub1 {
+	background: #e6fff6;
 }
 
 body.ae2_perftest
 , body.ae2_curator {
 	background: #ffe6f5;
-    overflow: auto;
 }
 
 #ebi_footer {

@@ -1,12 +1,14 @@
 
+body.aepub1 {
+	background: #e6fff6 url(../images/aepub1.gif) no-repeat fixed 0 97%;
+}
+
 body.ae2_perftest {
 	background: #ffe6f5 url(../images/ae2_peftest.gif) no-repeat fixed 0 97%;
-    overflow: auto;
 }
 
 body.ae2_curator {
 	background: #ffe6f5 url(../images/ae2_curator.gif) no-repeat fixed 0 97%;
-    overflow: auto;
 }
 /* ae intro area */
 #ae_intro_area {

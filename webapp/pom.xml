@@ -84,7 +84,7 @@
 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>dev_preview</interface.application.body.class>
+                <interface.application.body.class>aepub1</interface.application.body.class>
             </properties>
         </profile>
         <profile>
