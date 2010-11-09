@@ -136,11 +136,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     // implements ErrorListener.warning
     public void warning( TransformerException x )
     {
-        if (logger.isDebugEnabled()) {
-            logger.debug("There was a warning while transforming:", x);
-        } else {
-            logger.warn(x.getLocalizedMessage());
-        }
+        //if (logger.isDebugEnabled()) {
+        //    logger.debug("There was a warning while transforming:", x);
+        //} else {
+        logger.warn(x.getLocalizedMessage());
+        //}
     }
 
     public String serializeDocument( DocumentInfo document ) throws Exception
