@@ -33,8 +33,11 @@ body.aepub1 {
 	background: #e6fff6;
 }
 
-body.ae2_perftest
-, body.ae2_curator {
+body.ae2_perftest {
+    background: #ffffdb;
+}
+
+body.ae2_curator {
 	background: #ffe6f5;
 }
 
