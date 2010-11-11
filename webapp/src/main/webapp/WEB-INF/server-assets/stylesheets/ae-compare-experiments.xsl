@@ -29,19 +29,22 @@
 
     <xsl:function name="ae:sort-elements-attributes">
         <xsl:param name="pNode"/>
-        <xsl:element name="{$pNode/name()}">
-            <xsl:for-each select="$pNode/@*">
-                <xsl:sort select="name()" order="ascending"/>
-                <xsl:copy-of select="."/>
-            </xsl:for-each>
-            <xsl:for-each select="$pNode/*">
-                <xsl:sort select="name()" order="ascending"/>
-                <xsl:sort select="text()[1]" order="ascending"/>
-                <xsl:sort select="id" order="ascending"/>
-                <xsl:copy-of select="ae:sort-elements-attributes(.)"/>
-            </xsl:for-each>
-            <xsl:value-of select="normalize-space(string-join($pNode/text(), ' '))"/>
-        </xsl:element>
+        <xsl:if test="$pNode/self::*">
+            <xsl:element name="{$pNode/name()}">
+                <xsl:for-each select="$pNode/@*">
+                    <xsl:sort select="name()" order="ascending"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:for-each select="$pNode/*">
+                    <xsl:sort select="name()" order="ascending"/>
+                    <xsl:sort select="text()[1]" order="ascending"/>
+                    <xsl:sort select="accession" order="ascending"/>
+                    <xsl:sort select="id" order="ascending"/>
+                    <xsl:copy-of select="ae:sort-elements-attributes(.)"/>
+                </xsl:for-each>
+                <xsl:value-of select="normalize-space(string-join($pNode/text(), ' '))"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:function>
 
     <xsl:template name="ae:copy-and-diff-node">

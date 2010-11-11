@@ -310,3 +310,7 @@ table.miame-tbl th {
     margin: 0 0 4px 0;
     text-align: left;
 }
+
+.diff_old {
+    text-decoration: line-through;
+}

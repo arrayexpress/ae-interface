@@ -17,6 +17,12 @@
         <to type="forward">/servlets/query/browse-experiment/html?accession=$1</to>
     </rule>
 
+    <!-- experiment by accession page -->
+    <rule>
+        <from>^/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
+        <to type="forward">/servlets/query/diff-experiment/html?accession=$1&amp;source=$2</to>
+    </rule>
+
     <!-- available files by accession page -->
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/?$</from>
@@ -56,6 +62,10 @@
     <rule>
         <from>^/xml/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
+    </rule>
+        <rule>
+        <from>^/xml/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
+        <to type="forward">/servlets/query/diff-experiment/xml?accession=$1&amp;source=$2</to>
     </rule>
     <rule>
         <from>^/xml/experiments/(.*)$</from>
