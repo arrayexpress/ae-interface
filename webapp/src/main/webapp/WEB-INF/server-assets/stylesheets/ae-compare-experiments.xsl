@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
-                xmlns:diff="http://www.ebi.ac.uk/arrayexpress/xslt/diff"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="ae saxon"
                 exclude-result-prefixes="ae saxon"
@@ -24,7 +23,8 @@
                 <xsl:copy-of select="ae:sort-elements-attributes(.)"/>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:value-of select="saxon:deep-equal($vSortedFilteredExp1, $vSortedFilteredExp2, 'http://saxon.sf.net/collation?ignore-case=yes', 'Sw?')"/>
+        <xsl:value-of
+                select="saxon:deep-equal($vSortedFilteredExp1, $vSortedFilteredExp2, 'http://saxon.sf.net/collation?ignore-case=yes', 'Sw?')"/>
     </xsl:function>
 
     <xsl:function name="ae:sort-elements-attributes">
@@ -47,13 +47,13 @@
     <xsl:template name="ae:copy-and-diff-node">
         <xsl:param name="pNode"/>
         <xsl:param name="pNodeDiffAgainst"/>
-        
+
         <xsl:for-each-group select="$pNode | $pNodeDiffAgainst" group-by="name()">
             <xsl:sort order="ascending"/>
-            <xsl:message><xsl:value-of select="current-grouping-key()"/></xsl:message>
             <xsl:variable name="vCurrentNodeName" select="current-grouping-key()"/>
             <xsl:variable name="vCurrentNodeList" select="$pNode[name() = current-grouping-key()]"/>
-            <xsl:variable name="vCurrentNodeDiffAgainstList" select="$pNodeDiffAgainst[name() = current-grouping-key()]"/>
+            <xsl:variable name="vCurrentNodeDiffAgainstList"
+                          select="$pNodeDiffAgainst[name() = current-grouping-key()]"/>
             <xsl:for-each select="$vCurrentNodeList">
                 <xsl:variable name="vPos" select="position()"/>
                 <xsl:variable name="vOtherElement" select="$vCurrentNodeDiffAgainstList[$vPos]"/>
@@ -74,9 +74,9 @@
                             </xsl:call-template>
                             <xsl:if test=" $vDiffText != ''">
                                 <xsl:element name="diff-text">
-                                    <xsl:value-of select="normalize-space(string-join($vOtherElement/text(), ' '))"/>    
+                                    <xsl:value-of select="normalize-space(string-join($vOtherElement/text(), ' '))"/>
                                 </xsl:element>
-                            </xsl:if>   
+                            </xsl:if>
                             <xsl:value-of select="normalize-space(string-join(text(), ' '))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -96,10 +96,10 @@
                     </xsl:element>
                 </xsl:if>
             </xsl:for-each>
-            
+
         </xsl:for-each-group>
     </xsl:template>
-    
+
     <xsl:function name="ae:are-attrs-differ">
         <xsl:param name="pNode1"/>
         <xsl:param name="pNode2"/>
@@ -115,10 +115,10 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        
+
         <xsl:value-of select="normalize-space($vDiffAtt)"/>
     </xsl:function>
-    
+
     <xsl:function name="ae:is-normalized-text-different">
         <xsl:param name="pNode1"/>
         <xsl:param name="pNode2"/>
@@ -127,7 +127,7 @@
                 <xsl:text>.</xsl:text>
             </xsl:if>
         </xsl:variable>
-        
+
         <xsl:value-of select="normalize-space($vDiffText)"/>
     </xsl:function>
 
