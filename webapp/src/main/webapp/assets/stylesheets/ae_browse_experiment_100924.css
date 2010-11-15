@@ -260,13 +260,13 @@ body {
     vertical-align: bottom;
 }
 
-table.miame-tbl {
+table.min-score-tbl {
     width: auto;
     table-layout: auto;
 }
 
-table.miame-tbl td,
-table.miame-tbl th {
+table.min-score-tbl td,
+table.min-score-tbl th {
     text-align: center;
     vertical-align: top;
     padding: 0 15px 2px 0;

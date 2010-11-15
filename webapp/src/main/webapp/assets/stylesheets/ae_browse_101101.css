@@ -728,13 +728,13 @@ div.acc_status.migrated.identical span.ae1
     vertical-align: bottom;
 }
 
-#ae_results_tbl table.miame-tbl {
+#ae_results_tbl table.min-score-tbl {
     width: auto;
     table-layout: auto;
 }
 
-.miame-tbl td,
-.miame-tbl th {
+.min-score-tbl td,
+.min-score-tbl th {
     text-align: center;
     vertical-align: top;
     padding: 0 15px 2px 0;

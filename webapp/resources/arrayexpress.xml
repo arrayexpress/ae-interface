@@ -137,6 +137,7 @@
                 <field name="efcount"  title="Number of Experimental Factors" type="integer" path="count(distinct-values(experimentalfactor/name, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
                 <field name="sacount" title="Number of Sample Attributes" type="integer" path="count(distinct-values(sampleattribute/category, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
                 <field name="miamescore" title="MIAME Score" type="integer" path="(if (miamescores/overallscore castable as xs:integer) then miamescores/overallscore else 0) cast as xs:integer" />
+                <field name="minseqescore" title="MINSEQE Score" type="integer" path="(if (minseqescores/overallscore castable as xs:integer) then minseqescores/overallscore else 0) cast as xs:integer" />
             </document>
         </index>
     </ae>

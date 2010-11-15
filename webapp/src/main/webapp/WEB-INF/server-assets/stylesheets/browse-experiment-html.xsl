@@ -148,12 +148,26 @@
                                 </td>
                             </tr>
                         </xsl:if>
+
+                        <xsl:if test="minseqescores">
+                            <tr>
+                                <td class="name"><div>MINSEQE score</div></td>
+                                <td class="value">
+                                    <div>
+                                        <xsl:call-template name="min-score">
+                                            <xsl:with-param name="pScores" select="minseqescores"/>
+                                        </xsl:call-template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </xsl:if>
+
                         <xsl:if test="miamescores">
                             <tr>
                                 <td class="name"><div>MIAME score</div></td>
                                 <td class="value">
                                     <div>
-                                        <xsl:call-template name="miame-score">
+                                        <xsl:call-template name="min-score">
                                             <xsl:with-param name="pScores" select="miamescores"/>
                                         </xsl:call-template>
                                     </div>
@@ -514,62 +528,10 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template name="miame-star">
-        <xsl:param name="stars" />
-        <xsl:param name="count" />
-        <xsl:if test="$count &lt; 5">
-            <xsl:choose>
-                <xsl:when test="$count &lt; $stars">
-                    <img src="{$basepath}/assets/images/miame_star.gif" width="14" height="13" alt="*"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <img src="{$basepath}/assets/images/miame_nostar.gif" width="14" height="13" alt="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:call-template name="miame-star">
-                <xsl:with-param name="stars" select="$stars"/>
-                <xsl:with-param name="count" select="$count + 1" />
-            </xsl:call-template>
-        </xsl:if>
-    </xsl:template>
-
-    <xsl:template name="miame-desc">
-        <xsl:param name="pScores"/>
-        <xsl:param name="pFilter"/>
-
-        <xsl:if test="$pScores/reportersequencescore = $pFilter">
-            <xsl:text>arrays</xsl:text>
-            <xsl:if test="($pScores//protocolscore = $pFilter) or ($pScores/factorvaluescore = $pFilter) or ($pScores/derivedbioassaydatascore = $pFilter) or ($pScores/measuredbioassaydatascore = $pFilter)">
-                <xsl:text>, </xsl:text>
-            </xsl:if>
-        </xsl:if>
-        <xsl:if test="$pScores/protocolscore = $pFilter">
-            <xsl:text>protocols</xsl:text>
-            <xsl:if test="($pScores/factorvaluescore = $pFilter) or ($pScores/derivedbioassaydatascore = $pFilter) or ($pScores/measuredbioassaydatascore = $pFilter)">
-                <xsl:text>, </xsl:text>
-            </xsl:if>
-        </xsl:if>
-        <xsl:if test="$pScores/factorvaluescore = $pFilter">
-            <xsl:text>factors</xsl:text>
-            <xsl:if test="($pScores/derivedbioassaydatascore = $pFilter) or ($pScores/measuredbioassaydatascore = $pFilter)">
-                <xsl:text>, </xsl:text>
-            </xsl:if>
-        </xsl:if>
-        <xsl:if test="$pScores/derivedbioassaydatascore = $pFilter">
-            <xsl:text>processed data</xsl:text>
-            <xsl:if test="$pScores/measuredbioassaydatascore = $pFilter">
-                <xsl:text>, </xsl:text>
-            </xsl:if>
-        </xsl:if>
-        <xsl:if test="$pScores/measuredbioassaydatascore = $pFilter">
-            <xsl:text>raw data</xsl:text>
-        </xsl:if>
-    </xsl:template>
-
-    <xsl:template name="miame-score">
+    <xsl:template name="min-score">
         <xsl:param name="pScores"/>
 
-        <table class="miame-tbl" border="0" cellpadding="0" cellspacing="0">
+        <table class="min-score-tbl" border="0" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <th>Array designs</th>
@@ -582,27 +544,27 @@
             <tbody>
                 <tr>
                     <td>
-                        <xsl:call-template name="miame-tick">
+                        <xsl:call-template name="min-score-tick">
                             <xsl:with-param name="pValue" select="$pScores/reportersequencescore"/>
                         </xsl:call-template>
                     </td>
                     <td>
-                        <xsl:call-template name="miame-tick">
+                        <xsl:call-template name="min-score-tick">
                             <xsl:with-param name="pValue" select="$pScores/protocolscore"/>
                         </xsl:call-template>
                     </td>
                     <td>
-                        <xsl:call-template name="miame-tick">
+                        <xsl:call-template name="min-score-tick">
                             <xsl:with-param name="pValue" select="$pScores/factorvaluescore"/>
                         </xsl:call-template>
                     </td>
                     <td>
-                        <xsl:call-template name="miame-tick">
+                        <xsl:call-template name="min-score-tick">
                             <xsl:with-param name="pValue" select="$pScores/derivedbioassaydatascore"/>
                         </xsl:call-template>
                     </td>
                     <td>
-                        <xsl:call-template name="miame-tick">
+                        <xsl:call-template name="min-score-tick">
                             <xsl:with-param name="pValue" select="$pScores/measuredbioassaydatascore"/>
                         </xsl:call-template>
                     </td>
@@ -611,7 +573,7 @@
         </table>
     </xsl:template>
 
-    <xsl:template name="miame-tick">
+    <xsl:template name="min-score-tick">
         <xsl:param name="pValue"/>
 
         <xsl:choose>
