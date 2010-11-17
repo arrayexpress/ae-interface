@@ -258,6 +258,7 @@
                                         <div>
                                             <xsl:call-template name="min-score">
                                                 <xsl:with-param name="pScores" select="minseqescores"/>
+                                                <xsl:with-param name="pKind" select="'minseqe'"/>
                                             </xsl:call-template>
                                         </div>
                                     </td>
@@ -271,6 +272,7 @@
                                         <div>
                                             <xsl:call-template name="min-score">
                                                 <xsl:with-param name="pScores" select="miamescores"/>
+                                                <xsl:with-param name="pKind" select="'miame'"/>
                                             </xsl:call-template>
                                         </div>
                                     </td>
@@ -634,23 +636,41 @@
 
     <xsl:template name="min-score">
         <xsl:param name="pScores"/>
+        <xsl:param name="pKind"/>
 
         <table class="min-score-tbl" border="0" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Array designs</th>
+                    <xsl:if test="$pKind = 'miame'">
+                        <th>Array designs</th>
+                    </xsl:if>
+                    <xsl:if test="$pKind = 'minseqe'">
+                        <th>Experiment design</th>
+                    </xsl:if>
                     <th>Protocols</th>
                     <th>Factors</th>
                     <th>Processed data</th>
-                    <th>Raw data</th>
+                    <xsl:if test="$pKind = 'miame'">
+                        <th>Raw data</th>
+                    </xsl:if>
+                    <xsl:if test="$pKind = 'minseqe'">
+                        <th>Sequence Reads</th>
+                    </xsl:if>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        <xsl:call-template name="min-score-tick">
-                            <xsl:with-param name="pValue" select="$pScores/reportersequencescore"/>
-                        </xsl:call-template>
+                        <xsl:if test="$pKind = 'miame'">
+                            <xsl:call-template name="min-score-tick">
+                                <xsl:with-param name="pValue" select="$pScores/reportersequencescore"/>
+                            </xsl:call-template>
+                        </xsl:if>
+                        <xsl:if test="$pKind = 'minseqe'">
+                            <xsl:call-template name="min-score-tick">
+                                <xsl:with-param name="pValue" select="'1'"/>
+                            </xsl:call-template>
+                       </xsl:if>
                     </td>
                     <td>
                         <xsl:call-template name="min-score-tick">
