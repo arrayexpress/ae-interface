@@ -11,6 +11,17 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String xml:space="preserve">preprocess-experiments-xml</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String xml:space="preserve">test-compate-experiments</String>
                                 </field>
                                 <field name="type">
@@ -22,13 +33,24 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
+                                    <String xml:space="preserve">test-compate-experiments</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">preprocess-atlas-experiments</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -39,7 +61,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -50,7 +72,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -72,7 +94,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -83,29 +105,18 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">preprocess-atlas-experiments</String>
+                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">test-compate-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -1567,6 +1578,8 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl"/>
             <file
