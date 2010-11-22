@@ -83,23 +83,23 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
         this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("experiments")
-                , new File(getPreferences().getString("ae.experiments.file.location"))
+                , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
 
         this.experimentsInAtlas = new TextFilePersistence<PersistableStringList>(
                 new PersistableStringList()
-                , new File(getPreferences().getString("ae.atlasexperiments.file.location"))
+                , new File(getPreferences().getString("ae.atlasexperiments.persistence-location"))
         );
 
         this.species = new TextFilePersistence<PersistableString>(
                 new PersistableString()
-                , new File(getPreferences().getString("ae.species.file.location"))
+                , new File(getPreferences().getString("ae.species.dropdown-html-location"))
 
         );
 
         this.arrays = new TextFilePersistence<PersistableString>(
                 new PersistableString()
-                , new File(getPreferences().getString("ae.arrays.file.location"))
+                , new File(getPreferences().getString("ae.arrays.dropdown-html-location"))
         );
 
         this.assaysByMolecule = new HashMap<String, String>();

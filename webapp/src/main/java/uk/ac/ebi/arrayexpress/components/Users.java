@@ -89,7 +89,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         if (null != doc) {
             this.users.setObject(new PersistableDocumentContainer("users", doc));
         } else {
-            this.logger.error("Experiments NOT updated, NULL document passed");
+            this.logger.error("User information NOT updated, NULL document passed");
         }
     }
 

@@ -54,7 +54,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
         files = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("files"),
-                new File(getPreferences().getString("ae.files.persistence.file.location"))
+                new File(getPreferences().getString("ae.files.persistence-location"))
         );
 
         updateAccelerators();

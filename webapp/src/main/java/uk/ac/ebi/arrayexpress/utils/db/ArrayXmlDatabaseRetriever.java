@@ -1,5 +1,12 @@
 package uk.ac.ebi.arrayexpress.utils.db;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
  *
@@ -17,14 +24,7 @@ package uk.ac.ebi.arrayexpress.utils.db;
  *
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class UserXmlDatabaseRetriever extends SqlStatementExecutor
+public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
 {
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -37,19 +37,19 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
             " order by" +
             "  id asc";
 
-    private String userXML;
+    private String xmlString;
 
-    public UserXmlDatabaseRetriever( IConnectionSource connSource )
+    public ArrayXmlDatabaseRetriever( IConnectionSource connSource )
     {
         super(connSource, getUserListSql);
     }
 
-    public String getUserXML()
+    public String getXml()
     {
         if (!execute(false)) {
-            logger.error("There was a problem retrieving user information, check log for errors or exceptions");
+            logger.error("There was a problem retrieving array design information, check log for errors or exceptions");
         }
-        return userXML;
+        return xmlString;
     }
 
     protected void setParameters( PreparedStatement stmt ) throws SQLException
@@ -61,11 +61,11 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
     {
         StringBuilder sb = new StringBuilder(4000000);
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .append("<users>")
+                .append("<array_designs>")
                 ;
 
         while ( resultSet.next() ) {
-            sb.append("<user><id>")
+            sb.append("<array_design><id>")
                     .append(resultSet.getLong(1))
                     .append("</id><name>")
                     .append(resultSet.getString(2))
@@ -77,8 +77,7 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
                     .append(resultSet.getBoolean(5))
                     .append("</is_privileged></user>");
         }
-        sb.append("</users>");
-        userXML = sb.toString();
+        sb.append("</array_designs>");
+        xmlString = sb.toString();
     }
 }
-

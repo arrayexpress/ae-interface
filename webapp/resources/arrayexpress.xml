@@ -81,27 +81,31 @@
                 </reload>
             </ae2>
 
-            <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</location></file>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</persistence-location>
         </experiments>
         <atlasexperiments>
             <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>
-            <file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</location></file>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</persistence-location>
             <reload>
                 <atstart>false</atstart>
                 <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
             </reload>
         </atlasexperiments>
-        <species><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-species.xml</location></file></species>
-        <arrays><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays.xml</location></file></arrays>
-        <exptypes><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiment-types.xml</location></file></exptypes>
+        <arrays>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.xml</persistence-location>
+            <dropdown-html-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays-dropdown-html.txt</dropdown-html-location>
+        </arrays>
         <users>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.xml</persistence-location>
         </users>
         <files>
             <root><location>${interface.application.pref.files.root.location}</location></root>
-            <persistence><file><location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</location></file></persistence>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</persistence-location>
             <rescan><interval>${interface.application.pref.files.rescan.interval}</interval></rescan>
         </files>
+        <species>
+            <dropdown-html-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-species-dropdown-html.txt</dropdown-html-location>
+        </species>
         <efo>
             <source>/WEB-INF/classes/efo.owl</source>
             <synonyms>/WEB-INF/classes/synonyms.txt</synonyms>
