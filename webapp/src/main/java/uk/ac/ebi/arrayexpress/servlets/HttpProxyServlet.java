@@ -38,7 +38,7 @@ public class HttpProxyServlet extends ApplicationServlet
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
-    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
+    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:/{2}([^/]+)/", "i");
     private final RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
 
     private final int PROXY_BUFFER_SIZE = 64000;
@@ -55,6 +55,7 @@ public class HttpProxyServlet extends ApplicationServlet
         logRequest(logger, request, requestType);
 
         String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
+        url = url.replaceFirst("http:/{1,2}", "http://");   // stupid hack as tomcat 6.0 removes second forward slash
         String queryString = request.getQueryString();
 
         if (0 < url.length()) {
