@@ -42,7 +42,11 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private String rootFolder;
     private TextFilePersistence<PersistableDocumentContainer> files;
+
     private SaxonEngine saxon;
+    private SearchEngine search;
+
+    public final String INDEX_ID = "files";
 
     public Files()
     {
@@ -51,12 +55,14 @@ public class Files extends ApplicationComponent implements IDocumentSource
     public void initialize() throws Exception
     {
         saxon = (SaxonEngine) getComponent("SaxonEngine");
+        search = (SearchEngine) getComponent("SearchEngine");
 
         files = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("files"),
                 new File(getPreferences().getString("ae.files.persistence-location"))
         );
 
+        updateIndex();
         updateAccelerators();
         saxon.registerDocumentSource(this);
     }
@@ -101,6 +107,15 @@ public class Files extends ApplicationComponent implements IDocumentSource
         return saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
     }
 
+    private void updateIndex()
+    {
+        try {
+            search.getController().index(INDEX_ID, this.getDocument());
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
+    }
+    
     private void updateAccelerators()
     {
         logger.debug("Updating accelerators for files");
