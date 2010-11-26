@@ -15,9 +15,8 @@
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
-    <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
+    <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
@@ -43,7 +42,8 @@
         <xsl:variable name="vAccession" select="accession"/>
         <experiment>
             <accession><xsl:value-of select="$vAccession"/></accession>
-            <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vAccession]/file">
+            <xsl:variable name="vExpFolder" select="search:queryIndex2('files', concat('accession:', $vAccession))"/>
+            <xsl:for-each select="$vExpFolder/file">
                 <xsl:call-template name="file-for-accession">
                     <xsl:with-param name="pAccession" select="$vAccession"/>
                     <xsl:with-param name="pFile" select="."/>
@@ -52,7 +52,9 @@
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
                 <xsl:variable name="vArrayAccession" select="string(accession)"/>
-                <xsl:for-each select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file[@kind = 'adf']">
+                <xsl:variable name="vArrFolder" select="search:queryIndex2('files', concat('accession:', $vArrayAccession))"/>
+
+                <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
                     <xsl:call-template name="file-for-accession">
                         <xsl:with-param name="pAccession" select="$vArrayAccession"/>
                         <xsl:with-param name="pFile" select="."/>
