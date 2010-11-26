@@ -31,7 +31,6 @@ import java.util.Map;
 public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
 {
     private QueryConstructor originalConstructor;
-    private IndexEnvironment env;
 
     private final RegexHelper ACCESSION_REGEX = new RegexHelper("^[aAeE]-\\w{4}-\\d+$", "i");
 
@@ -40,14 +39,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
         this.originalConstructor = new QueryConstructor();
     }
 
-    public IQueryConstructor setEnvironment( IndexEnvironment env )
-    {
-        this.originalConstructor.setEnvironment(env);
-        this.env = env;
-        return this;
-    }
-
-    public Query construct( Map<String, String[]> querySource ) throws ParseException
+    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
     {
         if ("1".equals(StringTools.arrayToString(querySource.get("queryversion"), ""))) {
             // preserving old stuff:
@@ -58,7 +50,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             boolean useWildcards = !("on".equals(wholeWords) || "true".equals(wholeWords));
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
                 String field = queryItem.getKey();
-                if (this.env.fields.containsKey(field) && queryItem.getValue().length > 0) {
+                if (env.fields.containsKey(field) && queryItem.getValue().length > 0) {
                     for ( String value : queryItem.getValue() ) {
                         if (null != value) {
                             value = value.trim().toLowerCase();
@@ -92,7 +84,12 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             }
             return result;
         } else {
-            return this.originalConstructor.construct(querySource);
+            return this.originalConstructor.construct(env, querySource);
         }
+    }
+
+    public Query construct( IndexEnvironment env, String queryString ) throws ParseException
+    {
+        return this.originalConstructor.construct(env, queryString);
     }
 }

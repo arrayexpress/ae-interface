@@ -22,34 +22,21 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class QueryConstructor implements IQueryConstructor
 {
-    // logging machinery
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private IndexEnvironment env;
-
-    public IQueryConstructor setEnvironment( IndexEnvironment env )
-    {
-        this.env = env;
-        return this;
-    }
-
-    public Query construct( Map<String, String[]> querySource ) throws ParseException
+    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
     {
         BooleanQuery result = new BooleanQuery();
         for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
-            if (this.env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
-                QueryParser parser = new EnhancedQueryParser(this.env, queryItem.getKey(), this.env.indexAnalyzer);
+            if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
+                QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), env.indexAnalyzer);
                 parser.setDefaultOperator(QueryParser.Operator.AND);
                 for ( String value : queryItem.getValue() ) {
                     if (!"".equals(value)) {
-                        if (this.env.fields.get(queryItem.getKey()).shouldEscape) {
+                        if (env.fields.get(queryItem.getKey()).shouldEscape) {
                             value = value.replaceAll("([+\"!()\\[\\]{}^~*?:\\\\-]|&&|\\|\\|)", "\\\\$1");
                         }
                         Query q = parser.parse(value);
@@ -59,5 +46,12 @@ public class QueryConstructor implements IQueryConstructor
             }
         }
         return result;
+    }
+
+    public Query construct( IndexEnvironment env, String queryString ) throws ParseException
+    {
+        QueryParser parser = new EnhancedQueryParser(env, env.defaultField, env.indexAnalyzer);
+        parser.setDefaultOperator(QueryParser.Operator.AND);
+        return parser.parse(queryString);
     }
 }

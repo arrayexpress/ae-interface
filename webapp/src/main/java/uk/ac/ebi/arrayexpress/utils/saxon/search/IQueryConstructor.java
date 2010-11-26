@@ -24,7 +24,6 @@ import java.util.Map;
 
 public interface IQueryConstructor
 {
-    public IQueryConstructor setEnvironment( IndexEnvironment env );
-
-    public Query construct( Map<String, String[]> querySource ) throws ParseException;
+    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException;
+    public Query construct( IndexEnvironment env, String querySourrce ) throws ParseException;
 }

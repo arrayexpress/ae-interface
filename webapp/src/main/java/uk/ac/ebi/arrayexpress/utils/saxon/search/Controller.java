@@ -105,9 +105,8 @@ public class Controller
     public Integer getDocCount( String indexId, Map<String, String[]> queryParams ) throws IOException, ParseException
     {
         IndexEnvironment env = getEnvironment(indexId);
-        this.queryConstructor.setEnvironment(env);
 
-        Query query = queryConstructor.construct(queryParams);
+        Query query = queryConstructor.construct(env, queryParams);
         return new Querier(env).getDocCount(query);
 
     }
@@ -145,8 +144,13 @@ public class Controller
             this.setQueryConstructor(new QueryConstructor());
         }
 
-        this.queryConstructor.setEnvironment(getEnvironment(indexId));
-        return this.queryPool.addQuery(this.queryConstructor, queryParams, queryString, this.queryExpander);
+        return this.queryPool.addQuery(
+                getEnvironment(indexId)
+                , this.queryConstructor
+                , queryParams
+                , queryString
+                , this.queryExpander
+        );
     }
 
     public String getQueryString( Integer queryId )
@@ -157,7 +161,16 @@ public class Controller
 
     public List<NodeInfo> queryIndex( String indexId, Integer queryId ) throws IOException
     {
-        return new Querier(getEnvironment(indexId)).query(this.queryPool.getQueryInfo(queryId).getQuery());
+        return queryIndex(indexId, this.queryPool.getQueryInfo(queryId).getQuery());
+    }
+
+    public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException
+    {
+        return queryIndex(indexId, this.queryConstructor.construct(getEnvironment(indexId), queryString));
+    }
+    public List<NodeInfo> queryIndex( String indexId, Query query ) throws IOException
+    {
+        return new Querier(getEnvironment(indexId)).query(query);
     }
 
     public String highlightQuery( String indexId, Integer queryId, String fieldName, String text )
@@ -166,6 +179,7 @@ public class Controller
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryHighlighter(new QueryHighlighter());
         }
-        return queryHighlighter.setEnvironment(getEnvironment(indexId)).highlightQuery(this.queryPool.getQueryInfo(queryId), fieldName, text);
+        return queryHighlighter.setEnvironment(getEnvironment(indexId))
+                .highlightQuery(this.queryPool.getQueryInfo(queryId), fieldName, text);
     }
 }

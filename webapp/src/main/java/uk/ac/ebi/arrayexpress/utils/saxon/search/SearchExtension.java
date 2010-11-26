@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.NodeListIterator;
 import net.sf.saxon.om.SequenceIterator;
+import org.apache.lucene.queryParser.ParseException;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +35,17 @@ public final class SearchExtension
     public static SequenceIterator queryIndex( String indexId, String queryId ) throws IOException
     {
         List<NodeInfo> nodes = getController().queryIndex(indexId, Integer.decode(queryId));
+        if (null != nodes) {
+            return new NodeListIterator(nodes);
+        }
+
+        return null;
+    }
+
+    public static SequenceIterator queryIndex2( String indexId, String queryString ) throws IOException, ParseException
+    {
+        // todo: this is a little hacky: needs refactoring
+        List<NodeInfo> nodes = getController().queryIndex(indexId, queryString);
         if (null != nodes) {
             return new NodeListIterator(nodes);
         }
