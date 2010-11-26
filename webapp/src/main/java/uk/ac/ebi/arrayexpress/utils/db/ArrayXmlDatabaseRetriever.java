@@ -3,6 +3,8 @@ package uk.ac.ebi.arrayexpress.utils.db;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,28 +30,79 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
 {
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    // sql to get a list of experiments from the database
-    // (the parameter is either 0 for all experiments and 1 for public only)
-    private final static String getUserListSql =
-            "select distinct id, name, password, email, priviledge" +
-            " from" +
-            "  pl_user" +
-            " order by" +
-            "  id asc";
 
-    private String xmlString;
+    private final static String getArrayDesignSql = "select" +
+            " XmlElement(\"array_design\"" +
+            "  , XmlElement(\"id\", t_phad.id)" +
+            "  , ( select XmlElement(\"accession\", t_ad_id.identifier) from tt_identifiable t_ad_id where t_ad_id.id = t_phad.id )" +
+            "  , ( select XmlElement(\"name\", t_ad_name.value) from tt_namevaluetype t_ad_name where t_ad_name.t_extendable_id = t_phad.id and t_ad_name.name = 'AEArrayDisplayName' )" +
+            "  , ( select XmlAgg(XmlElement(\"species\", t_species.value))" +
+            "        from" +
+            "        ( select distinct" +
+            "            t_o_species.value as value" +
+            "            , t_ad_species.t_arraydesign_id as t_arraydesign_id" +
+            "          from" +
+            "          ( select" +
+            "              t_groups.t_arraydesign_id," +
+            "              t_de_gr.species_id" +
+            "            from" +
+            "            ( select" +
+            "                t_comp_gr.compositegroups_id as group_id," +
+            "                t_comp_gr.t_arraydesign_id" +
+            "              from" +
+            "                tt_compositegr_t_arraydesi t_comp_gr" +
+            "              union select" +
+            "                t_rep_gr.reportergroups_id as group_id," +
+            "                t_rep_gr.t_arraydesign_id" +
+            "              from" +
+            "                tt_reportergro_t_arraydesi t_rep_gr" +
+            "              union select" +
+            "                t_feat_gr.id as group_id," +
+            "                t_feat_gr.t_arraydesign_id" +
+            "              from" +
+            "                tt_featuregroup t_feat_gr" +
+            "            ) t_groups" +
+            "              left outer join" +
+            "                tt_designelementgroup t_de_gr" +
+            "              on" +
+            "                t_de_gr.id = t_groups.group_id" +
+            "              where" +
+            "                t_de_gr.species_id is not null" +
+            "           ) t_ad_species" +
+            "            left outer join" +
+            "              tt_ontologyentry t_o_species" +
+            "              on t_o_species.id = t_ad_species.species_id" +
+            "        ) t_species" +
+            "        where" +
+            "          t_species.t_arraydesign_id = t_phad.id" +
+            "      )" +
+            "   ).getClobVal()" +
+            " from" +
+            "  tt_physicalarraydesign t_phad" +
+            "   inner join" +
+            "    tt_arraydesign t_ad" +
+            "   on" +
+            "    t_ad.id = t_phad.id" +
+            " group by" +
+            "  t_phad.id" +
+            " order by" +
+            "  t_phad.id asc";
+
+    private StringBuilder arrayDesignXml;
 
     public ArrayXmlDatabaseRetriever( IConnectionSource connSource )
     {
-        super(connSource, getUserListSql);
+        super(connSource, getArrayDesignSql);
+        arrayDesignXml = new StringBuilder(40000000);
     }
 
     public String getXml()
     {
         if (!execute(false)) {
             logger.error("There was a problem retrieving array design information, check log for errors or exceptions");
+            return null;
         }
-        return xmlString;
+        return arrayDesignXml.toString();
     }
 
     protected void setParameters( PreparedStatement stmt ) throws SQLException
@@ -57,27 +110,15 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
         // nothing to do here
     }
 
-    protected void processResultSet( ResultSet resultSet ) throws SQLException
+    protected void processResultSet( ResultSet resultSet ) throws IOException, SQLException
     {
-        StringBuilder sb = new StringBuilder(4000000);
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .append("<array_designs>")
-                ;
-
+        arrayDesignXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><array_designs");
         while ( resultSet.next() ) {
-            sb.append("<array_design><id>")
-                    .append(resultSet.getLong(1))
-                    .append("</id><name>")
-                    .append(resultSet.getString(2))
-                    .append("</name><password>")
-                    .append(resultSet.getString(3))
-                    .append("</password><email>")
-                    .append(resultSet.getString(4))
-                    .append("</email><is_privileged>")
-                    .append(resultSet.getBoolean(5))
-                    .append("</is_privileged></user>");
+            Clob xmlClob = resultSet.getClob(1);
+            if (null != xmlClob) {
+                arrayDesignXml.append(ClobToString(xmlClob));
+            }
         }
-        sb.append("</array_designs>");
-        xmlString = sb.toString();
+        arrayDesignXml.append("</array_designs>");
     }
 }

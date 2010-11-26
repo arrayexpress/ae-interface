@@ -28,8 +28,7 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
 {
     // logging facility
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    // sql to get a list of experiments from the database
-    // (the parameter is either 0 for all experiments and 1 for public only)
+
     private final static String getUserListSql =
             "select distinct id, name, password, email, priviledge" +
             " from" +
@@ -37,19 +36,19 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
             " order by" +
             "  id asc";
 
-    private String userXML;
+    private String userXml;
 
     public UserXmlDatabaseRetriever( IConnectionSource connSource )
     {
         super(connSource, getUserListSql);
     }
 
-    public String getUserXML()
+    public String getXml()
     {
         if (!execute(false)) {
             logger.error("There was a problem retrieving user information, check log for errors or exceptions");
         }
-        return userXML;
+        return userXml;
     }
 
     protected void setParameters( PreparedStatement stmt ) throws SQLException
@@ -78,7 +77,7 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
                     .append("</is_privileged></user>");
         }
         sb.append("</users>");
-        userXML = sb.toString();
+        userXml = sb.toString();
     }
 }
 

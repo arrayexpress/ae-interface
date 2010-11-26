@@ -24,11 +24,9 @@ import org.quartz.JobListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
-import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.components.JobsController;
-import uk.ac.ebi.arrayexpress.components.Users;
+import uk.ac.ebi.arrayexpress.components.*;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.db.ArrayXmlDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 import uk.ac.ebi.arrayexpress.utils.db.UserXmlDatabaseRetriever;
@@ -50,8 +48,9 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        String experimentsXml = null;
         String usersXml = null;
+        String arrayDesignsXml = null;
+        String experimentsXml = null;
 
         // kicks reload of atlas experiments just in case
         ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
@@ -62,7 +61,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
-
+                arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
                 experimentsXml = getXmlFromFile(new File(sourceLocation, "experiments.xml"));
 
             } else {
@@ -95,6 +94,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 if (null != this.connectionSource) {
                     try {
                         usersXml = getUsersXmlFromDb();
+                        arrayDesignsXml = getArrayDesignsXmlFromDb();
                         experimentsXml = getExperimentsXmlFromDb();
                     } finally {
                         this.connectionSource.close();
@@ -111,6 +111,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             if (!"".equals(exportLocation)) {
                 logger.info("Export of experiment data to [{}] requested", exportLocation);
                 StringTools.stringToFile(usersXml, new File(exportLocation, "users.xml"));
+                StringTools.stringToFile(arrayDesignsXml, new File(exportLocation, "arrays.xml"));
                 StringTools.stringToFile(experimentsXml, new File(exportLocation, "experiments.xml"));
             }
 
@@ -127,6 +128,10 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
             if (!"".equals(usersXml)) {
                 updateUsers(usersXml);
+            }
+
+            if (!"".equals(arrayDesignsXml)) {
+                updateArrayDesigns(arrayDesignsXml);
             }
 
             if (!"".equals(experimentsXml)) {
@@ -166,9 +171,25 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
+    private void updateArrayDesigns( String xmlString ) throws Exception
+    {
+        ((ArrayDesigns) getComponent("ArrayDesigns")).update(
+                xmlString
+                , ArrayDesigns.ArrayDesignSource.AE1
+        );
+
+        logger.info("Experiment information reload completed");
+
+    }
+
     private String getUsersXmlFromDb() throws Exception
     {
-        return new UserXmlDatabaseRetriever(this.connectionSource).getUserXML();
+        return new UserXmlDatabaseRetriever(this.connectionSource).getXml();
+    }
+
+    private String getArrayDesignsXmlFromDb() throws Exception
+    {
+        return new ArrayXmlDatabaseRetriever(this.connectionSource).getXml();
     }
 
     private String getExperimentsXmlFromDb() throws Exception
