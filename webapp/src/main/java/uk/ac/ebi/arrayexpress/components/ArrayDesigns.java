@@ -8,7 +8,6 @@ import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
 import java.io.File;
 
@@ -34,10 +33,12 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private AuthenticationHelper authHelper;
     private TextFilePersistence<PersistableDocumentContainer> arrayDesigns;
     private SaxonEngine saxon;
+    private SearchEngine search;
 
+    public final String INDEX_ID = "arrays";
+    
     public enum ArrayDesignSource
     {
         AE1, AE2;
@@ -59,12 +60,14 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     public void initialize() throws Exception
     {
         saxon = (SaxonEngine) getComponent("SaxonEngine");
+        search = (SearchEngine) getComponent("SearchEngine");
+        
         arrayDesigns = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("array_designs")
                 , new File(getPreferences().getString("ae.arrays.persistence-location"))
         );
 
-        authHelper = new AuthenticationHelper();
+        updateIndex();
     }
 
     public void terminate() throws Exception
@@ -88,6 +91,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     {
         if (null != doc) {
             this.arrayDesigns.setObject(new PersistableDocumentContainer("array_designs", doc));
+            updateIndex();
         } else {
             this.logger.error("Array designs NOT updated, NULL document passed");
         }
@@ -98,6 +102,15 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
         if (null != updateDoc) {
             new DocumentUpdater(this, updateDoc).update();
+        }
+    }
+
+    private void updateIndex()
+    {
+        try {
+            search.getController().index(INDEX_ID, this.getDocument());
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
         }
     }
 }

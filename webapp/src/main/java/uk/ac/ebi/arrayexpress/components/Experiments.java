@@ -43,7 +43,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
-    private String connName;
     private TextFilePersistence<PersistableDocumentContainer> experiments;
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
@@ -115,7 +114,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
         assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
-        indexExperiments();
+        updateIndex();
         updateAccelerators();
         saxon.registerDocumentSource(this);
     }
@@ -143,7 +142,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         if (null != doc) {
             this.experiments.setObject(new PersistableDocumentContainer("experiments", doc));
             buildSpeciesArraysExpTypes();
-            indexExperiments();
+            updateIndex();
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
@@ -209,7 +208,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void indexExperiments()
+    private void updateIndex()
     {
         try {
             search.getController().index(INDEX_ID, this.getDocument());

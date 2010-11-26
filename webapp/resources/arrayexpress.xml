@@ -92,7 +92,7 @@
             </reload>
         </atlasexperiments>
         <arrays>
-            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.xml</persistence-location>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays.xml</persistence-location>
             <dropdown-html-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays-dropdown-html.txt</dropdown-html-location>
         </arrays>
         <users>
@@ -142,6 +142,13 @@
                 <field name="sacount" title="Number of Sample Attributes" type="integer" path="count(distinct-values(sampleattribute/category, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
                 <field name="miamescore" title="MIAME Score" type="integer" path="(if (miamescores/overallscore castable as xs:integer) then miamescores/overallscore else 0) cast as xs:integer" />
                 <field name="minseqescore" title="MINSEQE Score" type="integer" path="(if (minseqescores/overallscore castable as xs:integer) then minseqescores/overallscore else 0) cast as xs:integer" />
+            </document>
+        </index>
+        <index id="arrays" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+            <document path="/array_designs/array_design" defaultField="keywords">
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
+                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
             </document>
         </index>
     </ae>
