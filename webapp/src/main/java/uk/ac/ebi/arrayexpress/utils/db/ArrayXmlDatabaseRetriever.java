@@ -112,7 +112,7 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
 
     protected void processResultSet( ResultSet resultSet ) throws IOException, SQLException
     {
-        arrayDesignXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><array_designs");
+        arrayDesignXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><array_designs>");
         while ( resultSet.next() ) {
             Clob xmlClob = resultSet.getClob(1);
             if (null != xmlClob) {

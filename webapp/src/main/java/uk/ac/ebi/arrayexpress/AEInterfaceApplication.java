@@ -46,6 +46,7 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new SearchEngine());
         addComponent(new Autocompletion());
         addComponent(new Experiments());
+        addComponent(new ArrayDesigns());
         addComponent(new Users());
         addComponent(new Files());
         addComponent(new JobsController());
