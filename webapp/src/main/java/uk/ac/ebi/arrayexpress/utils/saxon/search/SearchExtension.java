@@ -44,7 +44,6 @@ public final class SearchExtension
 
     public static SequenceIterator queryIndex2( String indexId, String queryString ) throws IOException, ParseException
     {
-        // todo: this is a little hacky: needs refactoring
         List<NodeInfo> nodes = getController().queryIndex(indexId, queryString);
         if (null != nodes) {
             return new NodeListIterator(nodes);

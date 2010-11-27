@@ -35,8 +35,11 @@ public class Users extends ApplicationComponent implements IDocumentSource
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private AuthenticationHelper authHelper;
-    private TextFilePersistence<PersistableDocumentContainer> users;
+    private TextFilePersistence<PersistableDocumentContainer> document;
     private SaxonEngine saxon;
+    private SearchEngine search;
+
+    public final String INDEX_ID = "users";
 
     public enum UserSource
     {
@@ -58,13 +61,15 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine) getComponent("SaxonEngine");
-        users = new TextFilePersistence<PersistableDocumentContainer>(
+        this.saxon = (SaxonEngine) getComponent("SaxonEngine");
+        this.search = (SearchEngine) getComponent("SearchEngine");
+        this.document = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("users")
                 , new File(getPreferences().getString("ae.users.persistence-location"))
         );
 
-        authHelper = new AuthenticationHelper();
+        updateIndex();
+        this.authHelper = new AuthenticationHelper();
     }
 
     public void terminate() throws Exception
@@ -80,14 +85,15 @@ public class Users extends ApplicationComponent implements IDocumentSource
     // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
-        return this.users.getObject().getDocument();
+        return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.users.setObject(new PersistableDocumentContainer("users", doc));
+            this.document.setObject(new PersistableDocumentContainer("users", doc));
+            updateIndex();
         } else {
             this.logger.error("User information NOT updated, NULL document passed");
         }
@@ -95,15 +101,24 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     public void update( String xmlString, UserSource source ) throws Exception
     {
-        DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
+        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
         if (null != updateDoc) {
             new DocumentUpdater(this, updateDoc).update();
         }
     }
 
+    private void updateIndex()
+    {
+        try {
+            this.search.getController().index(INDEX_ID, this.getDocument());
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
+    }
+
     public Long getUserID( String username ) throws Exception
     {
-        String id = saxon.evaluateXPathSingle(
+        String id = this.saxon.evaluateXPathSingle(
                         getDocument()
                         , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
                 );
@@ -116,7 +131,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     private String getUserPassword( String username ) throws Exception
     {
-        return saxon.evaluateXPathSingle(
+        return this.saxon.evaluateXPathSingle(
                 getDocument()
                 , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
         );
@@ -127,7 +142,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         if ( null != username && null != password && null != suffix
                 && null != getUserID(username) ) {
             if ( password.equals(getUserPassword(username)) ) {
-                return authHelper.generateHash(username, password, suffix);
+                return this.authHelper.generateHash(username, password, suffix);
             }
         }
         // otherwise
@@ -136,10 +151,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
-        if ( null != username && null != hash && null != suffix
-                && null != getUserID(username) ) {
-            return authHelper.verifyHash(hash, username, getUserPassword(username), suffix);
-        }
-        return false;
+        return null != username && null != hash && null != suffix && null != getUserID(username)
+                && this.authHelper.verifyHash(hash, username, getUserPassword(username), suffix);
     }
 }

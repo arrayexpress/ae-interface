@@ -41,7 +41,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String rootFolder;
-    private TextFilePersistence<PersistableDocumentContainer> files;
+    private TextFilePersistence<PersistableDocumentContainer> document;
 
     private SaxonEngine saxon;
     private SearchEngine search;
@@ -54,22 +54,21 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine) getComponent("SaxonEngine");
-        search = (SearchEngine) getComponent("SearchEngine");
+        this.saxon = (SaxonEngine) getComponent("SaxonEngine");
+        this.search = (SearchEngine) getComponent("SearchEngine");
 
-        files = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("files"),
                 new File(getPreferences().getString("ae.files.persistence-location"))
         );
 
         updateIndex();
         updateAccelerators();
-        saxon.registerDocumentSource(this);
+        this.saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
     {
-        saxon = null;
     }
 
     // implementation of IDocumentSource.getDocumentURI()
@@ -81,13 +80,13 @@ public class Files extends ApplicationComponent implements IDocumentSource
     // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
-        return this.files.getObject().getDocument();
+        return this.document.getObject().getDocument();
     }
 
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.files.setObject(new PersistableDocumentContainer("files", doc));
+            this.document.setObject(new PersistableDocumentContainer("files", doc));
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");
@@ -104,13 +103,13 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private DocumentInfo loadFilesFromString( String xmlString ) throws Exception
     {
-        return saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
+        return this.saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
     }
 
     private void updateIndex()
     {
         try {
-            search.getController().index(INDEX_ID, this.getDocument());
+            this.search.getController().index(INDEX_ID, this.getDocument());
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
@@ -118,7 +117,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     
     private void updateAccelerators()
     {
-        logger.debug("Updating accelerators for files");
+        this.logger.debug("Updating accelerators for files");
 
         ExtFunctions.clearAccelerator("raw-files");
         ExtFunctions.clearAccelerator("fgem-files");
@@ -135,16 +134,16 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
                 try {
                     // get all the expressions taken care of
-                    String accession = (String) accessionXpe.evaluate(node);
+                    String accession = accessionXpe.evaluate(node);
                     ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
                     ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
                 } catch (XPathExpressionException x) {
-                    logger.error("Caught an exception:", x);
+                    this.logger.error("Caught an exception:", x);
                 }
             }
-            logger.debug("Accelerators updated");
+            this.logger.debug("Accelerators updated");
         } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            this.logger.error("Caught an exception:", x);
         }
     }
 
@@ -152,21 +151,21 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         if (null != folder && 0 < folder.length()) {
             if (folder.endsWith(File.separator)) {
-                rootFolder = folder;
+                this.rootFolder = folder;
             } else {
-                rootFolder = folder + File.separator;
+                this.rootFolder = folder + File.separator;
             }
         } else {
-            logger.error("setRootFolder called with null or empty parameter, expect problems down the road");
+            this.logger.error("setRootFolder called with null or empty parameter, expect problems down the road");
         }
     }
 
     public String getRootFolder()
     {
-        if (null == rootFolder) {
-            rootFolder = getPreferences().getString("ae.files.root.location");
+        if (null == this.rootFolder) {
+            this.rootFolder = getPreferences().getString("ae.files.root.location");
         }
-        return rootFolder;
+        return this.rootFolder;
     }
 
     // returns true is file is registered in the registry
@@ -174,14 +173,14 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         if (null != accession && accession.length() > 0) {
             return Boolean.parseBoolean(
-                    saxon.evaluateXPathSingle(
+                    this.saxon.evaluateXPathSingle(
                             getDocument()
                             , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                     )
             );
         } else {
             return Boolean.parseBoolean(
-                    saxon.evaluateXPathSingle(
+                    this.saxon.evaluateXPathSingle(
                             getDocument()
                             , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                     )
@@ -195,12 +194,12 @@ public class Files extends ApplicationComponent implements IDocumentSource
         String folderLocation;
 
         if (null != accession && accession.length() > 0) {
-            folderLocation = saxon.evaluateXPathSingle(
+            folderLocation = this.saxon.evaluateXPathSingle(
                     getDocument()
                     , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
             );
         } else {
-            folderLocation = saxon.evaluateXPathSingle(
+            folderLocation = this.saxon.evaluateXPathSingle(
                     getDocument()
                     , "//folder[file/@name = '" + name + "']/@location"
             );
@@ -218,11 +217,11 @@ public class Files extends ApplicationComponent implements IDocumentSource
         String[] nameFolder = new RegexHelper("^(.+)/([^/]+)$", "i")
                 .match(fileLocation);
         if (null == nameFolder || 2 != nameFolder.length) {
-            logger.error("Unable to parse the location [{}]", fileLocation);
+            this.logger.error("Unable to parse the location [{}]", fileLocation);
             return null;
         }
 
-        return saxon.evaluateXPathSingle(
+        return this.saxon.evaluateXPathSingle(
                 getDocument()
                 , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
         );

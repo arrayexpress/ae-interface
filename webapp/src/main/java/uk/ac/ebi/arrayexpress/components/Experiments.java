@@ -41,9 +41,9 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final RegexHelper arrayAccessionRegex = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
+    private final RegexHelper ARRAY_ACCESSION_REGEX = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
-    private TextFilePersistence<PersistableDocumentContainer> experiments;
+    private TextFilePersistence<PersistableDocumentContainer> document;
     private TextFilePersistence<PersistableStringList> experimentsInAtlas;
     private TextFilePersistence<PersistableString> species;
     private TextFilePersistence<PersistableString> arrays;
@@ -76,11 +76,11 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine) getComponent("SaxonEngine");
-        search = (SearchEngine) getComponent("SearchEngine");
-        autocompletion = (Autocompletion) getComponent("Autocompletion");
+        this.saxon = (SaxonEngine) getComponent("SaxonEngine");
+        this.search = (SearchEngine) getComponent("SearchEngine");
+        this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        this.experiments = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("experiments")
                 , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
@@ -102,26 +102,25 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         );
 
         this.assaysByMolecule = new HashMap<String, String>();
-        assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"metabolomic profiling\">Metabolite assay</option><option value=\"protein assay\">Protein assay</option><option value=\"RNA assay\">RNA assay</option>");
-        assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
-        assaysByMolecule.put("high throughput sequencing assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
-        assaysByMolecule.put("proteomic profiling by mass spectrometer", "<option value=\"protein assay\">Protein assay</option>");
+        this.assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"metabolomic profiling\">Metabolite assay</option><option value=\"protein assay\">Protein assay</option><option value=\"RNA assay\">RNA assay</option>");
+        this.assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
+        this.assaysByMolecule.put("high throughput sequencing assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
+        this.assaysByMolecule.put("proteomic profiling by mass spectrometer", "<option value=\"protein assay\">Protein assay</option>");
 
         this.assaysByInstrument = new HashMap<String, String>();
-        assaysByInstrument.put("", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
-        assaysByInstrument.put("DNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
-        assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
-        assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
-        assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
+        this.assaysByInstrument.put("", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
+        this.assaysByInstrument.put("DNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
+        this.assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
+        this.assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
+        this.assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
 
         updateIndex();
         updateAccelerators();
-        saxon.registerDocumentSource(this);
+        this.saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
     {
-        saxon = null;
     }
 
     // implementation of IDocumentSource.getDocumentURI()
@@ -133,14 +132,14 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
-        return this.experiments.getObject().getDocument();
+        return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.experiments.setObject(new PersistableDocumentContainer("experiments", doc));
+            this.document.setObject(new PersistableDocumentContainer("experiments", doc));
             buildSpeciesArraysExpTypes();
             updateIndex();
         } else {
@@ -150,18 +149,15 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     public boolean isAccessible( String accession, String userId ) throws Exception
     {
-        if ("0".equals(userId)) {
-            return true;
-        } else if (arrayAccessionRegex.test(accession)) {
-            return true; // we allow array queries
-        } else {
-            return Boolean.parseBoolean(
-                    saxon.evaluateXPathSingle(
-                            getDocument()
+        return ( "0".equals(userId)                         // superuser
+                || ARRAY_ACCESSION_REGEX.test(accession)    // array accession: wtf is this here?!
+                || Boolean.parseBoolean(                    // tests document for access
+                    saxon.evaluateXPathSingle(              //
+                            getDocument()                   //
                             , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
                     )
-            );
-        }
+                )
+        );
     }
 
     public String getSpecies() throws Exception
@@ -186,7 +182,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     public void update( String xmlString, ExperimentSource source ) throws Exception
     {
-        DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
+        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
         if (null != updateDoc) {
             new DocumentUpdater(this, updateDoc).update();
         }
@@ -195,7 +191,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     public void reloadExperimentsInAtlas( String sourceLocation ) throws Exception
     {
         URL source = new URL(sourceLocation);
-        String result = saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
+        String result = this.saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
         if (null != result) {
             String[] exps = result.split("\n");
             if (exps.length > 0) {
@@ -211,8 +207,8 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     private void updateIndex()
     {
         try {
-            search.getController().index(INDEX_ID, this.getDocument());
-            autocompletion.rebuild();
+            this.search.getController().index(INDEX_ID, this.getDocument());
+            this.autocompletion.rebuild();
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
@@ -235,6 +231,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     private void buildSpeciesArraysExpTypes() throws Exception
     {
+        // todo: move this to a separate component (autocompletion?)
         String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);
         this.species.setObject(new PersistableString(speciesString));
 

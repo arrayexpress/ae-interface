@@ -33,7 +33,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private TextFilePersistence<PersistableDocumentContainer> arrayDesigns;
+    private TextFilePersistence<PersistableDocumentContainer> document;
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -59,10 +59,10 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
 
     public void initialize() throws Exception
     {
-        saxon = (SaxonEngine) getComponent("SaxonEngine");
-        search = (SearchEngine) getComponent("SearchEngine");
+        this.saxon = (SaxonEngine) getComponent("SaxonEngine");
+        this.search = (SearchEngine) getComponent("SearchEngine");
         
-        arrayDesigns = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("array_designs")
                 , new File(getPreferences().getString("ae.arrays.persistence-location"))
         );
@@ -83,14 +83,14 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     // implementation of IDocumentSource.getDocument()
     public synchronized DocumentInfo getDocument() throws Exception
     {
-        return this.arrayDesigns.getObject().getDocument();
+        return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.arrayDesigns.setObject(new PersistableDocumentContainer("array_designs", doc));
+            this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
             updateIndex();
         } else {
             this.logger.error("Array designs NOT updated, NULL document passed");
@@ -99,7 +99,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
 
     public void update( String xmlString, ArrayDesignSource source ) throws Exception
     {
-        DocumentInfo updateDoc = saxon.transform(xmlString, source.getStylesheetName(), null);
+        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
         if (null != updateDoc) {
             new DocumentUpdater(this, updateDoc).update();
         }
@@ -108,7 +108,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     private void updateIndex()
     {
         try {
-            search.getController().index(INDEX_ID, this.getDocument());
+            this.search.getController().index(INDEX_ID, this.getDocument());
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
