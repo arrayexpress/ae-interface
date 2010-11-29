@@ -1,6 +1,8 @@
 package uk.ac.ebi.arrayexpress.utils;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -78,6 +80,11 @@ public class StringTools
         BufferedWriter w = new BufferedWriter(new FileWriter(file));
         w.write(string);
         w.close();
+    }
+
+    public static String longDateTimeToString( long dateTime )
+    {
+        return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(new Date(dateTime));
     }
 
     public static String unescapeXMLDecimalEntities( String in )

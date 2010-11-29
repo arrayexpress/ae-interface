@@ -37,6 +37,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     {
         String experimentsXml = null;
         String usersXml = null;
+        String sourceDescription = null;
 
         // kicks reload of atlas experiments just in case
         ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
@@ -48,8 +49,10 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
 
-                experimentsXml = getXmlFromFile(new File(sourceLocation, "experiments.xml"));
-
+                File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
+                experimentsXml = getXmlFromFile(experimentsSourceFile);
+                sourceDescription = experimentsSourceFile.getAbsolutePath()
+                        + " (" + StringTools.longDateTimeToString(experimentsSourceFile.lastModified()) + ")";
             }
 
             // export to temp directory anyway (only if debug is enabled)
@@ -68,7 +71,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             }
 
             if (!"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml);
+                updateExperiments(experimentsXml, sourceDescription);
             }
 
         } catch (Exception x) {
@@ -98,11 +101,12 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     }
 
-    private void updateExperiments( String xmlString ) throws Exception
+    private void updateExperiments( String xmlString, String sourceDescription ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString
                 , Experiments.ExperimentSource.AE2
+                , sourceDescription
         );
 
         logger.info("Experiment information reload completed");

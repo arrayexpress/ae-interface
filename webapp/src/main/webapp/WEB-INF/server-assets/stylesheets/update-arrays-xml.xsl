@@ -19,11 +19,9 @@
         <array_designs>
             <xsl:for-each select="$vCombinedArrays">
                 <xsl:if test="@source = 'ae1'">
-                    <xsl:message>[INFO] Copying [<xsl:value-of select="accession"/>], source [<xsl:value-of select="@source"/>]</xsl:message>
                     <xsl:copy-of select="."/>
                 </xsl:if>
                 <xsl:if test="@source = 'ae2'">
-                    <xsl:message>[INFO] Skipping [<xsl:value-of select="accession"/>], source [<xsl:value-of select="@source"/>]</xsl:message>
                 </xsl:if>
             </xsl:for-each>
 

@@ -28,9 +28,11 @@
             <xsl:variable name="vGenDescription">
                 <xsl:variable name="vGenDescriptionRaw" select="description[contains(text(), '(Generated description)')]"/>
                 <xsl:choose>
+                    <!-- nobody is going to fix these so SUPPRESS
                     <xsl:when test="fn:count($vGenDescriptionRaw) > 1">
                         <xsl:message>[WARN] Multiple generated descriptions found for [<xsl:value-of select="$vAccession"/>]</xsl:message>
                     </xsl:when>
+                    -->
                     <xsl:when test="fn:count($vGenDescriptionRaw) = 0">
                         <xsl:message>[ERROR] No generated descriptions found for [<xsl:value-of select="$vAccession"/>]</xsl:message>
                         <hybs>0</hybs>

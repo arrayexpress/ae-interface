@@ -53,6 +53,9 @@
                     <xsl:variable name="vMigratedAe2Experiments" select="count(search:queryIndex2('experiments', 'source:ae2 migrated:true'))"/>
                     <xsl:variable name="vNewAe2Experiments" select="$vTotalAe2Experiments - $vMigratedAe2Experiments"/>
 
+                    <xsl:variable name="vVisibleAe1Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae1'))"/>
+                    <xsl:variable name="vVisibleAe2Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae2'))"/>
+
                     <div id="ae_admin_content">
                         <div class="ae_adm_app_name"><xsl:value-of select="/application/@name"/></div>
                         <div class="ae_adm_section_hdr">Statistics</div>

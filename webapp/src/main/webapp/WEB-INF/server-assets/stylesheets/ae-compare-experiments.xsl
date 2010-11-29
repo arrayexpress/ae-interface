@@ -24,7 +24,7 @@
             </xsl:for-each>
         </xsl:variable>
         <xsl:value-of
-                select="saxon:deep-equal($vSortedFilteredExp1, $vSortedFilteredExp2, 'http://saxon.sf.net/collation?ignore-case=yes', 'Sw?')"/>
+                select="saxon:deep-equal($vSortedFilteredExp1, $vSortedFilteredExp2, 'http://saxon.sf.net/collation?ignore-case=yes', 'Sw')"/>
     </xsl:function>
 
     <xsl:function name="ae:sort-elements-attributes">

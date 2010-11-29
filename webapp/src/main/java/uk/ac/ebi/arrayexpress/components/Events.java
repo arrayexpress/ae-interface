@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
 import java.io.File;
@@ -82,6 +83,22 @@ public class Events extends ApplicationComponent implements IDocumentSource
         }
     }
 
+    public void addEvent( String category, String description, boolean wasSuccessful ) throws Exception
+    {
+        String xml = "<?xml version=\"1.0\"?><event><category>"
+                + category
+                + "</category><description>"
+                + description
+                + "</description><successful>"
+                + ( wasSuccessful ? "true" : "false" )
+                + "</successful></event>";
+
+        DocumentInfo updateDoc = this.saxon.buildDocument(xml);
+        if (null != updateDoc) {
+            new DocumentUpdater(this, updateDoc).update();
+        }
+    }
+    
     private void updateIndex()
     {
         try {

@@ -52,6 +52,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     private SaxonEngine saxon;
     private SearchEngine search;
+    private Events events;
     private Autocompletion autocompletion;
 
     public final String INDEX_ID = "experiments";
@@ -68,6 +69,16 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             }
             return null;
         }
+
+        public String toString()
+        {
+            switch (this) {
+                case AE1:   return "AE1";
+                case AE2:   return "AE2";
+            }
+            return null;
+
+        }
     }
 
     public Experiments()
@@ -78,6 +89,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
+        this.events = (Events) getComponent("Events");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
         this.document = new TextFilePersistence<PersistableDocumentContainer>(
@@ -140,7 +152,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
-            buildSpeciesArraysExpTypes();
+            buildSpeciesArrays();
             updateIndex();
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
@@ -180,11 +192,22 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public void update( String xmlString, ExperimentSource source ) throws Exception
+    public void update( String xmlString, ExperimentSource source, String sourceDescription ) throws Exception
     {
-        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
+        boolean success = false;
+        try {
+            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            if (null != updateDoc) {
+                new DocumentUpdater(this, updateDoc).update();
+                success = true;
+            }
+        } finally {
+            events.addEvent(
+                    "experiments-update"
+                    , source.toString() + " experiments updated from "
+                            + ("".equals(sourceDescription) ? "(null)" : sourceDescription)
+                    , success
+            );
         }
     }
 
@@ -229,7 +252,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void buildSpeciesArraysExpTypes() throws Exception
+    private void buildSpeciesArrays() throws Exception
     {
         // todo: move this to a separate component (autocompletion?)
         String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);

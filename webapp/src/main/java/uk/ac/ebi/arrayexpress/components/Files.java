@@ -45,6 +45,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private SaxonEngine saxon;
     private SearchEngine search;
+    private Events events;
 
     public final String INDEX_ID = "files";
 
@@ -56,6 +57,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
+        this.events = (Events) getComponent("Events");
 
         this.document = new TextFilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("files"),

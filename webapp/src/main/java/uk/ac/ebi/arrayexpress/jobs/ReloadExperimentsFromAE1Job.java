@@ -39,6 +39,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private String sourceDescription;
     private List<Long> exps;
     private IConnectionSource connectionSource;
     private StringBuffer xmlBuffer;
@@ -62,7 +63,10 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
                 arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
-                experimentsXml = getXmlFromFile(new File(sourceLocation, "experiments.xml"));
+                File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
+                experimentsXml = getXmlFromFile(experimentsSourceFile);
+                sourceDescription = experimentsSourceFile.getAbsolutePath()
+                        + " (" + StringTools.longDateTimeToString(experimentsSourceFile.lastModified()) + ")";
 
             } else {
                 // check if we have available database connection
@@ -96,6 +100,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                         usersXml = getUsersXmlFromDb();
                         arrayDesignsXml = getArrayDesignsXmlFromDb();
                         experimentsXml = getExperimentsXmlFromDb();
+                        sourceDescription = this.connectionSource.getName();          
                     } finally {
                         this.connectionSource.close();
                         this.connectionSource = null;
@@ -135,7 +140,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             }
 
             if (!"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml);
+                updateExperiments(experimentsXml, sourceDescription);
             }
 
         } catch (Exception x) {
@@ -160,11 +165,12 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
-    private void updateExperiments( String xmlString ) throws Exception
+    private void updateExperiments( String xmlString, String sourceDescription ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString
                 , Experiments.ExperimentSource.AE1
+                , sourceDescription
         );
 
         logger.info("Experiment information reload completed");

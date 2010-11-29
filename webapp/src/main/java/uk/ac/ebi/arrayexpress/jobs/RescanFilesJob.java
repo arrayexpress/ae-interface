@@ -23,10 +23,9 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class RescanFilesJob extends ApplicationJob
 {
@@ -107,7 +106,7 @@ public class RescanFilesJob extends ApplicationJob
             .append("\" size=\"")
             .append(String.valueOf(f.length()))
             .append("\" lastmodified=\"")
-            .append(new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(new Date(f.lastModified())))
+            .append(StringTools.longDateTimeToString(f.lastModified()))
             .append("\"/>");
     }
 
