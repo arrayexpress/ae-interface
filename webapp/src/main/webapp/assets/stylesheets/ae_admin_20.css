@@ -1,0 +1,39 @@
+body {
+    overflow-y: hidden;
+}
+
+#ae_contents {
+    position: absolute;
+    top: 57px;
+    bottom: 22px;
+    left: 0;
+    width: 100%;
+}
+
+.ae_left_container_100pc {
+    width: 100%;
+    min-width: 950px;
+    text-align: left;
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.2em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    _height: expression(document.body.clientHeight-79);
+}
+
+#ae_admin_content {
+    width: 700px;
+    margin: 20px;
+}
+
+.ae_adm_app_name {
+    font-size: 18px;
+    line-height: normal;
+    padding: 10px 0 0;
+}
+
+.ae_adm_section_hdr {
+    border-bottom: 1px solid #bdd7d7;
+    padding: 0 0 5px 0;
+}

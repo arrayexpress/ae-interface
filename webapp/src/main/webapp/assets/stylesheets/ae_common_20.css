@@ -118,7 +118,6 @@ body.ae2_curator {
 .ae_warn_area,
 .ae_protected_area,
 .ae_error_area {
-    background-color: #ffffff;
     background-repeat: no-repeat;
     background-position: 10px 50%;
     text-align: left;
