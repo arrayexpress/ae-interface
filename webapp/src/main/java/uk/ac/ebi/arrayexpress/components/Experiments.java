@@ -203,7 +203,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             }
         } finally {
             events.addEvent(
-                    "experiments-update"
+                    "experiments-update-" + source.toString().toLowerCase()
                     , source.toString() + " experiments updated from "
                             + ("".equals(sourceDescription) ? "(null)" : sourceDescription)
                     , success

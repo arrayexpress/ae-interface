@@ -173,6 +173,7 @@
         <index id="events" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/events/event" defaultField="category">
                 <field name="category" title="" type="string" path="category" analyze="true" store="false" escape="false"/>
+                <field name="success" title="" type="boolean" path="success/text() = 'true'"/>
             </document>
         </index>
     </ae>

@@ -56,6 +56,9 @@
                     <xsl:variable name="vVisibleAe1Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae1'))"/>
                     <xsl:variable name="vVisibleAe2Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae2'))"/>
 
+                    <xsl:variable name="vLastUpdatedAe1" select="search:queryIndex2('events', 'category:update-experiments-ae1 success:true')"/>
+                    <xsl:variable name="vLastUpdatedAe2" select="search:queryIndex2('events', 'category:update-experiments-ae2 success:true')"/>
+
                     <div id="ae_admin_content">
                         <div class="ae_adm_app_name"><xsl:value-of select="/application/@name"/></div>
                         <div class="ae_adm_section_hdr">Statistics</div>
@@ -75,6 +78,10 @@
                                 <xsl:value-of select="$vOldAe1Experiments"/>
                                 <xsl:text>/</xsl:text>
                                 <xsl:value-of select="$vTotalAe1Experiments"/>
+                            </p>
+                            <p>
+                                <xsl:text>Most recent successful update on </xsl:text>
+                                <xsl:value-of select="datetime"/>
                             </p>
                             <p>
                                 <xsl:text>Experiments from ArrayExpress 2 (migrated/new/total):</xsl:text>
