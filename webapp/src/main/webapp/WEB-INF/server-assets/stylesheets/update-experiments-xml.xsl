@@ -20,13 +20,14 @@
             <xsl:for-each-group select="$vCombinedExperiments" group-by="accession">
                 <xsl:variable name="vMigrated" select="count(current-group()) = 2"/>
                 <xsl:variable name="vIdentical">
-                    <xsl:if test="$vMigrated"><xsl:value-of select="ae:are-experiments-identical(current-group()[1], current-group()[2])"/></xsl:if>
+                    <xsl:if test="$vMigrated">
+                        <xsl:value-of select="ae:are-experiments-identical(current-group()[1], current-group()[2])"/>
+                    </xsl:if>
                 </xsl:variable>
                 <xsl:for-each select="current-group()">
-                    <xsl:variable name="vVisible" select="source/@id = 'ae2' or not($vMigrated)"/>
-<!--
-                    <xsl:message>[INFO] Copying [<xsl:value-of select="accession"/>], source [<xsl:value-of select="source/@id"/>], migrated [<xsl:value-of select="$vMigrated"/>], visible [<xsl:value-of select="$vVisible"/>], identical [<xsl:value-of select="$vIdentical"/>]</xsl:message>
--->
+                    <!-- will copy all from ae1 and those from ae2 that are not migrated -->
+                    <xsl:variable name="vVisible" select="source/@id = 'ae1' or not($vMigrated)"/>
+
                     <experiment>
                         <xsl:copy-of select="*[name() != 'source']|@*"/>
                         <source id="{source/@id}" migrated="{$vMigrated}" visible="{$vVisible}">
