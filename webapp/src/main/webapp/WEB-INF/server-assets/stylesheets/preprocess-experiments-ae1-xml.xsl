@@ -147,7 +147,6 @@
             <xsl:when test="fn:contains(., ';G')">
             <xsl:variable name="vValues" select="fn:tokenize(., '\s*;\s*')"/>
                 <xsl:for-each select="$vValues">
-                    <xsl:message><xsl:value-of select="."/></xsl:message>
                     <xsl:element name="secondaryaccession">
                         <xsl:value-of select="."/>
                     </xsl:element>
