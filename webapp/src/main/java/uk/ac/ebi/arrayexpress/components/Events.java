@@ -75,21 +75,13 @@ public class Events extends ApplicationComponent implements IDocumentSource
     public synchronized void setDocument( DocumentInfo doc ) throws Exception
     {
         if (null != doc) {
-            this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
+            this.document.setObject(new PersistableDocumentContainer("events", doc));
             updateIndex();
         } else {
-            this.logger.error("Array designs NOT updated, NULL document passed");
+            this.logger.error("Events NOT updated, NULL document passed");
         }
     }
-/**
-    public void update( String xmlString, ArrayDesignSource source ) throws Exception
-    {
-        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
-        }
-    }
-**/
+
     private void updateIndex()
     {
         try {
