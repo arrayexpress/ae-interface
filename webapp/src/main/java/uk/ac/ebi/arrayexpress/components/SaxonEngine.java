@@ -57,6 +57,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
     private Map<String, IDocumentSource> documentSources = new HashMap<String, IDocumentSource>();
 
+    private DocumentInfo rootDocument;
+
     private final String XML_STRING_ENCODING = "UTF-8";
 
     public SaxonEngine()
@@ -70,7 +72,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
 
-        // ok so we attempt to register some extension function now :)
+        // create empty root document
+        rootDocument = buildDocument("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root/>");
+
+        // hack into Saxon to add "parse-html" function from 9.2
         Configuration c = trFactory.getConfiguration();
         FunctionLibraryList extLibraries = new FunctionLibraryList();
         extLibraries.addFunctionLibrary(c.getExtensionBinder("java"));
@@ -141,6 +146,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         //} else {
         logger.warn(x.getLocalizedMessage());
         //}
+    }
+
+    public DocumentInfo getRootDocument()
+    {
+        return rootDocument;    
     }
 
     public String serializeDocument( DocumentInfo document ) throws Exception

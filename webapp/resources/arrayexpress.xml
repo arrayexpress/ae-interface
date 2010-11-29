@@ -98,6 +98,10 @@
         <users>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-users.xml</persistence-location>
         </users>
+        <events>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-events.xml</persistence-location>
+        </events>
+
         <files>
             <root><location>${interface.application.pref.files.root.location}</location></root>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</persistence-location>
@@ -153,9 +157,17 @@
         </index>
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/files/folder" defaultField="accession">
-                <field name="accession" title="by Accession" type="string" path="@accession" analyze="true" store="false" escape="false"/>
-                <field name="kind" title="by Folder Kind" type="string" path="@kind" analyze="true" store="false" escape="false"/>
-                <field name="filename" title="by File Name" type="string" path="file/@name"  analyze="true" store="false" escape="false"/>
+                <field name="accession" title="" type="string" path="@accession" analyze="true" store="false" escape="false"/>
+                <field name="kind" title="" type="string" path="@kind" analyze="true" store="false" escape="false"/>
+                <field name="filename" title="" type="string" path="file/@name"  analyze="true" store="false" escape="false"/>
+            </document>
+        </index>
+        <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+            <document path="/users/user" defaultField="name">
+                <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false"/>
+                <field name="name" title="" type="string" path="name" analyze="true" store="false" escape="false"/>
+                <field name="email" title="" type="string" path="email"  analyze="true" store="false" escape="false"/>
+                <field name="admin" title="" type="boolean" path="is_privileged/text() = 'true'"/>
             </document>
         </index>
     </ae>

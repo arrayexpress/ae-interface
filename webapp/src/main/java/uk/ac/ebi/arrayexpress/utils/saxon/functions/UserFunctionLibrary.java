@@ -35,8 +35,6 @@ import java.util.HashMap;
 
 public class UserFunctionLibrary implements FunctionLibrary
 {
-    public static final String SCHEMA = "http://www.ebi.ac.uk/arrayexpress/saxon-ext";
-
     private HashMap<String, StandardFunction.Entry> functionTable;
 
     public UserFunctionLibrary()

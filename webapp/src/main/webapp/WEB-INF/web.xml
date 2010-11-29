@@ -8,6 +8,11 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.QueryServlet</servlet-class>
     </servlet>
     <servlet>
+        <description>ArrayExpress Experiments Better Query Servlet</description>
+        <servlet-name>BetterQueryServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.BetterQueryServlet</servlet-class>
+    </servlet>
+    <servlet>
         <description>ArrayExpress Data Download Servlet</description>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.DownloadServlet</servlet-class>
@@ -32,6 +37,10 @@
         <url-pattern>/servlets/query/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>BetterQueryServlet</servlet-name>
+        <url-pattern>/servlets/betterquery/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/servlets/download/*</url-pattern>
     </servlet-mapping>
@@ -47,16 +56,6 @@
         <servlet-name>LookupServlet</servlet-name>
         <url-pattern>/servlets/lookup/*</url-pattern>
     </servlet-mapping>
-    <!--
-    <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>uk.ac.ebi.arrayexpress.servlets.AuthServletFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    -->
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>

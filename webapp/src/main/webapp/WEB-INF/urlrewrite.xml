@@ -11,6 +11,12 @@
         <to type="forward">/servlets/query/browse-experiments-noajax/html</to>
     </rule>
 
+    <!-- todo: put it in appropriate place -->
+    <rule>
+        <from>^/admin</from>
+        <to type="forward">/servlets/betterquery/-/admin/html</to>
+    </rule>
+
     <!-- experiment by accession page -->
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)$</from>
@@ -185,11 +191,11 @@
     </rule>
     <rule>
         <from>^/species-list.html</from>
-        <to type="forward">/servlets/query/species-select/html</to>
+        <to type="forward">/servlets/lookup/species</to>
     </rule>
     <rule>
         <from>^/arrays-list.html</from>
-        <to type="forward">/servlets/query/arrays-select/html</to>
+        <to type="forward">/servlets/lookup/arrays</to>
     </rule>
     <rule>
         <from>^/expdesign-list.html</from>
