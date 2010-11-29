@@ -164,7 +164,7 @@ public class BetterQueryServlet extends ApplicationServlet
 
                 SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
                 if (!saxonEngine.transformToWriter(
-                        saxonEngine.getRootDocument()
+                        saxonEngine.getAppDocument()
                         , stylesheetName
                         , params
                         , out

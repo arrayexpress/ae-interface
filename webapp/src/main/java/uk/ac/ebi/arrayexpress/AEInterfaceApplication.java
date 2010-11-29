@@ -53,6 +53,11 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new Ontologies());
     }
 
+    public String getName()
+    {
+        return null != servletContext ? servletContext.getServletContextName() : null;
+    }
+
     public URL getResource( String path ) throws MalformedURLException
     {
         return null != servletContext ? servletContext.getResource(path) : null;

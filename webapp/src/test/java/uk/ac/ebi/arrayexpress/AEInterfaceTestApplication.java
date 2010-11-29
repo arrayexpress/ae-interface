@@ -26,6 +26,11 @@ public class AEInterfaceTestApplication extends Application
         initialize();
     }
 
+    public String getName()
+    {
+        return "Arrayexpress Test Application";    
+    }
+
     public URL getResource(String path) throws MalformedURLException
     {
         return getClass().getResource(path.replaceFirst("/WEB-INF/classes", ""));

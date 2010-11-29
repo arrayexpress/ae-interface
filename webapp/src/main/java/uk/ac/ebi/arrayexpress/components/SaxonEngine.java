@@ -57,7 +57,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
     private Map<String, IDocumentSource> documentSources = new HashMap<String, IDocumentSource>();
 
-    private DocumentInfo rootDocument;
+    private DocumentInfo appDocument;
 
     private final String XML_STRING_ENCODING = "UTF-8";
 
@@ -72,8 +72,12 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
 
-        // create empty root document
-        rootDocument = buildDocument("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root/>");
+        // create application document
+        appDocument = buildDocument(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><application name=\""
+                        + getApplication().getName()
+                        + "\"/>"
+        );
 
         // hack into Saxon to add "parse-html" function from 9.2
         Configuration c = trFactory.getConfiguration();
@@ -148,15 +152,13 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         //}
     }
 
-    public DocumentInfo getRootDocument()
+    public DocumentInfo getAppDocument()
     {
-        return rootDocument;    
+        return appDocument;
     }
 
     public String serializeDocument( DocumentInfo document ) throws Exception
     {
-        String string = null;
-
         Transformer transformer = trFactory.newTransformer();
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
@@ -219,7 +221,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params ) throws Exception
     {
-        String str = null;
+        String str;
         ByteArrayOutputStream outStream = null;
         try {
             outStream = new ByteArrayOutputStream();

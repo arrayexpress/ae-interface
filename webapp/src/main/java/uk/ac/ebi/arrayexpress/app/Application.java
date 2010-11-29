@@ -36,24 +36,19 @@ public abstract class Application
     // logging machinery
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    private String name;
     private ApplicationPreferences prefs;
     private Map<String, ApplicationComponent> components;
     private EmailSender emailer;
 
-    public Application( String appName )
+    public Application( String prefsName )
     {
-        name = appName;
-        prefs = new ApplicationPreferences(getName());
+        prefs = new ApplicationPreferences(prefsName);
         components = new LinkedHashMap<String, ApplicationComponent>();
         // setting application instance available to whoever wants it
         appInstance = this;
     }
 
-    public String getName()
-    {
-        return name;
-    }
+    public abstract String getName();
 
     public abstract URL getResource( String path ) throws MalformedURLException;
 
@@ -149,7 +144,7 @@ public abstract class Application
             logger.debug("Caught an exception:", xx);
         }
 
-        sendEmail("Application [" + getName() + "] Runtime Exception Report"
+        sendEmail("[" + getName() + "] Runtime Exception Report"
                 , message + ": " + x.getMessage() + StringTools.EOL
                         + "Host [" + hostName + "]\nThread [" + currentThread.getName() + "]" + StringTools.EOL
                         + getStackTrace(x)
