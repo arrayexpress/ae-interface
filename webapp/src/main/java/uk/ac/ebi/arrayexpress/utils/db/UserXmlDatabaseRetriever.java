@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,15 +66,15 @@ public class UserXmlDatabaseRetriever extends SqlStatementExecutor
 
         while ( resultSet.next() ) {
             sb.append("<user><id>")
-                    .append(resultSet.getLong(1))
+                    .append(StringTools.safeToString(resultSet.getLong(1), ""))
                     .append("</id><name>")
-                    .append(resultSet.getString(2))
+                    .append(StringTools.safeToString(resultSet.getString(2), ""))
                     .append("</name><password>")
-                    .append(resultSet.getString(3))
+                    .append(StringTools.safeToString(resultSet.getString(3), ""))
                     .append("</password><email>")
-                    .append(resultSet.getString(4))
+                    .append(StringTools.safeToString(resultSet.getString(4), ""))
                     .append("</email><is_privileged>")
-                    .append(resultSet.getBoolean(5))
+                    .append(StringTools.safeToString(resultSet.getBoolean(5), "false"))
                     .append("</is_privileged></user>");
         }
         sb.append("</users>");

@@ -87,6 +87,11 @@ public class StringTools
         return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(new Date(dateTime));
     }
 
+    public static String safeToString( Object obj, String nullObjString )
+    {
+        return (null == obj) ? nullObjString : obj.toString();
+    }
+
     public static String unescapeXMLDecimalEntities( String in )
     {
         if (null == in)
