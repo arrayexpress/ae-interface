@@ -127,7 +127,7 @@
                             </xsl:attribute>
                         <xsl:if test="not($userid)"> <!-- curator logged in -->
                             <xsl:choose>
-                                <xsl:when test="source/@id = 'ae1'">
+                                <xsl:when test="source/@id = 'ae1' and source/@migrated != 'true'">
                                     <span>&#183;</span>
                                     <span class="ae1">1</span>
                                 </xsl:when>
