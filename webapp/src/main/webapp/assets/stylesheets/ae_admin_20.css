@@ -37,3 +37,44 @@ body {
     border-bottom: 1px solid #bdd7d7;
     padding: 0 0 5px 0;
 }
+
+
+div.ae_twotone_bar
+, div.ae_tritone_bar {
+    border: 1px solid #ccc;
+    width: 400px;
+    margin: 2px 5px 2px 0;
+    padding: 1px;
+    float: left;
+    background-color: white;
+}
+
+div.ae_twotone_bar div
+, div.ae_tritone_bar div {
+    height: 12px;
+}
+
+div.ae_twotone_bar div.ae_total {
+    background-color: #e87b7b;
+    width: 100%;
+}
+
+div.ae_twotone_bar div.ae_value {
+    background-color: #ace97c;
+}
+
+div.ae_tritone_bar div.ae_left {
+    background-color: #e87b7b;
+    float: left;
+}
+
+div.ae_tritone_bar div.ae_total {
+    background-color: #e8e87b;
+}
+
+div.ae_tritone_bar div.ae_right {
+    background-color: #ace97c;
+    float: right;
+}
+
+

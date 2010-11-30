@@ -13,7 +13,7 @@
 
     <!-- todo: put it in appropriate place -->
     <rule>
-        <from>^/admin</from>
+        <from>^/migration.html</from>
         <to type="forward">/servlets/betterquery/-/admin/html</to>
     </rule>
 
