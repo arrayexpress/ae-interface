@@ -3,6 +3,7 @@ package uk.ac.ebi.arrayexpress.utils;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /*
  * Copyright 2009-2010 European Molecular Biology Laboratory
@@ -29,9 +30,18 @@ public class StringTools
 
     public final static String EOL = System.getProperty("line.separator");
 
+    public static String listToString( List<String> l, String separator )
+    {
+        if (null == l) {
+            return null;
+        }
+
+        return arrayToString(l.toArray(new String[l.size()]), separator);
+    }
+
     public static String arrayToString( String[] a, String separator )
     {
-        if (a == null || separator == null) {
+        if (null == a || null == separator) {
             return null;
         }
 
@@ -90,6 +100,15 @@ public class StringTools
     public static String safeToString( Object obj, String nullObjString )
     {
         return (null == obj) ? nullObjString : obj.toString();
+    }
+
+    public static Boolean stringToBoolean( String boolString )
+    {
+        if (null == boolString) {
+            return null;
+        } else {
+            return "true".equalsIgnoreCase(boolString) || "1".equals(boolString) || "on".equalsIgnoreCase(boolString);
+        }
     }
 
     public static String unescapeXMLDecimalEntities( String in )

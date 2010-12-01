@@ -124,11 +124,11 @@ public class BetterQueryServlet extends ApplicationServlet
                 String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
                 String passwordHash = cookies.get("AeLoginToken").getValue();
                 if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                    if (0 != users.getUserID(user)) { // 0 - curator (superuser) -> remove user restriction
-                        params.put("userid", String.valueOf(users.getUserID(user)));
-                    } else {
-                        params.remove("userid");
-                    }
+                    if ((users.isPrivileged(user))) { // superuser logged in -> remove user restriction
+                            params.remove("userid");
+                        } else {
+                            params.put("userid", StringTools.listToString(users.getUserIDs(user), " OR "));
+                        }
                 } else {
                     logger.warn("Removing invalid session cookie for user [{}]", user);
                     // resetting cookies

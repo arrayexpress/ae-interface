@@ -133,9 +133,10 @@
                 <!-- boolean fields -->
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
-                <!-- multiples-source filters for curators -->
+                <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="source/@id" analyze="false" store="false" escape="false"/>
                 <field name="migrated" type="boolean" path="source/@migrated = 'true'"/>
+                <field name="identical" type="boolean" path="source/@identical = 'true'"/>
                 <field name="visible" type="boolean" path="source/@visible = 'true'"/>
                 <!-- numeric fields -->
                 <field name="assaycount" title="Number of Assays" type="integer" path="(if (assays castable as xs:integer) then assays else 0) cast as xs:integer" />
@@ -153,6 +154,8 @@
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
+                <!-- multiple-source filters for curators -->
+                <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
             </document>
         </index>
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
@@ -168,6 +171,8 @@
                 <field name="name" title="" type="string" path="name" analyze="true" store="false" escape="false"/>
                 <field name="email" title="" type="string" path="email"  analyze="true" store="false" escape="false"/>
                 <field name="admin" title="" type="boolean" path="is_privileged/text() = 'true'"/>
+                <!-- multiple-source filters for curators -->
+                <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
             </document>
         </index>
         <index id="events" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">

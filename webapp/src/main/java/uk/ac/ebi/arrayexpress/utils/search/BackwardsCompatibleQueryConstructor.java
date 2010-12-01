@@ -47,7 +47,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             // 2. if "wholewords" is "on" or "true" -> don't add *_*, otherwise add *_*
             BooleanQuery result = new BooleanQuery();
             String wholeWords = StringTools.arrayToString(querySource.get("wholewords"), "");
-            boolean useWildcards = !("on".equals(wholeWords) || "true".equals(wholeWords));
+            boolean useWildcards = !(StringTools.stringToBoolean(wholeWords));
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
                 String field = queryItem.getKey();
                 if (env.fields.containsKey(field) && queryItem.getValue().length > 0) {

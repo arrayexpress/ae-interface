@@ -28,6 +28,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -141,9 +142,9 @@ public class Indexer
         if (value instanceof Boolean) {
             boolValue = (Boolean)value;
         } else if (null != value ) {
-            String stringValue = value.toString().toLowerCase();
-            boolValue = stringValue.equals("true") || stringValue.equals("1");
-            logger.warn("Not sure if I handle string value of [{}] for the field [{}] correctly, relying on Object.toString()", value.getClass().getName(), name);
+            String stringValue = value.toString();
+            boolValue = StringTools.stringToBoolean(stringValue);
+            logger.warn("Not sure if I handle string value [{}] for the field [{}] correctly, relying on Object.toString()", stringValue, name);
         }
 
         document.add(new Field(name, null == boolValue ? "" : boolValue.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED));

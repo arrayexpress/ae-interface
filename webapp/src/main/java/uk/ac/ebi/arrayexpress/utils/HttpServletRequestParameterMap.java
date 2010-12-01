@@ -52,6 +52,13 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
         this.put(key, arrValue);
     }
 
+    public void put( String key, List<String> values )
+    {
+        if (null != values) {
+            this.put(key, values.toArray(new String[values.size()]));
+        }
+    }
+
     private String filterArrayBrackets( String key )
     {
         String result = ALL_SANS_SQUARE_BRACKETS.matchFirst(key);

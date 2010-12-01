@@ -41,11 +41,13 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SaxonEngine extends ApplicationComponent implements URIResolver, ErrorListener
@@ -177,6 +179,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         StringReader reader = new StringReader(xml);
         Configuration config = trFactory.getConfiguration();
         return config.buildDocument(new StreamSource(reader));
+    }
+
+    public List evaluateXPath( DocumentInfo doc, String xpath ) throws XPathExpressionException
+    {
+        XPath xp = new XPathEvaluator(trFactory.getConfiguration());
+        XPathExpression xpe = xp.compile(xpath);
+        Object o = xpe.evaluate(doc, XPathConstants.NODESET);
+        return (o instanceof List) ? (List)o : null;
     }
 
     public String evaluateXPathSingle( DocumentInfo doc, String xpath ) throws XPathExpressionException

@@ -34,6 +34,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Experiments extends ApplicationComponent implements IDocumentSource
@@ -159,17 +160,22 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public boolean isAccessible( String accession, String userId ) throws Exception
+    public boolean isAccessible( String accession, List<String> userIds ) throws Exception
     {
-        return ( "0".equals(userId)                         // superuser
-                || ARRAY_ACCESSION_REGEX.test(accession)    // array accession: wtf is this here?!
+        for (String userId : userIds) {
+            if ( "0".equals(userId)                         // superuser
+                || ARRAY_ACCESSION_REGEX.test(accession)    // todo: check array accessions against arrays
                 || Boolean.parseBoolean(                    // tests document for access
                     saxon.evaluateXPathSingle(              //
                             getDocument()                   //
                             , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
                     )
                 )
-        );
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getSpecies() throws Exception

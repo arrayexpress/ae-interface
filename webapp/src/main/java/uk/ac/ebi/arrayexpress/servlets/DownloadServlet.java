@@ -25,6 +25,7 @@ import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -106,13 +107,14 @@ public class DownloadServlet extends ApplicationServlet
         Experiments experiments = (Experiments) getComponent("Experiments");
         Users users = (Users) getComponent("Users");
 
-        String userId = "1";
+        List<String> userIds = new ArrayList<String>();
+        userIds.add("1");   // add guest
         CookieMap cookies = new CookieMap(request.getCookies());
         if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
             String user = cookies.get("AeLoggedUser").getValue();
             String passwordHash = cookies.get("AeLoginToken").getValue();
             if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                userId = String.valueOf(users.getUserID(user));
+                userIds = users.getUserIDs(user);
             } else {
                 logger.warn("Removing invalid session cookie for user [{}]", user);
                 // resetting cookies
@@ -142,9 +144,9 @@ public class DownloadServlet extends ApplicationServlet
                 throw new DownloadServletException("Either accession [" + String.valueOf(accession) + "] or location [" + String.valueOf(fileLocation) + "] were not determined");
             }
 
-            if (!experiments.isAccessible(accession, userId)) {
+            if (!experiments.isAccessible(accession, userIds)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                throw new DownloadServletException("The experiment [" + accession + "] is not accessible for the user [" + userId + "]");
+                throw new DownloadServletException("The experiment [" + accession + "] is not accessible for user id(s) [" + StringTools.arrayToString((String[])userIds.toArray(), ", ") + "]");
             }
 
             logger.debug("Will be serving file [{}]", fileLocation);

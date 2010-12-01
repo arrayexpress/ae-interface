@@ -32,7 +32,7 @@
                 <xsl:with-param name="pTitle">Files for <xsl:value-of select="$vAccession"/> | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_files_100924.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_files_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_files_100924.js" type="text/javascript"/>
                 </xsl:with-param>
@@ -47,6 +47,7 @@
             <div id="ae_files_content">
                 <xsl:choose>
                     <xsl:when test="$vExperiment">
+                        <!-- todo: fix user access to private experiments -->
                         <xsl:variable name="vUserMatch" select="$vExperiment/user[@id = $userid]"/>
                         <xsl:choose>
                             <xsl:when test="not($userid) or $vUserMatch">

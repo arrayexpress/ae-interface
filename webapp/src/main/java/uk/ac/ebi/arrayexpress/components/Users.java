@@ -18,9 +18,11 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
@@ -28,6 +30,8 @@ import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Users extends ApplicationComponent implements IDocumentSource
 {
@@ -116,42 +120,73 @@ public class Users extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public Long getUserID( String username ) throws Exception
+    public boolean isPrivileged( String username ) throws Exception
     {
-        String id = this.saxon.evaluateXPathSingle(
+        List boolNodes = this.saxon.evaluateXPath(
+                        getDocument()
+                        , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/is_privileged"
+                );
+
+        for (Object node : boolNodes ) {
+            if (StringTools.stringToBoolean(((NodeInfo)node).getStringValue())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> getUserIDs( String username ) throws Exception
+    {
+        List idNodes = this.saxon.evaluateXPath(
                         getDocument()
                         , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
                 );
-        if ("".equals(id)) {
-            return null;
-        } else {
-            return Long.parseLong(id);
+
+        ArrayList<String> ids = new ArrayList<String>(idNodes.size());
+        for (Object node : idNodes ) {
+            ids.add(((NodeInfo)node).getStringValue());
         }
+
+        return ids;
     }
 
-    private String getUserPassword( String username ) throws Exception
+    private List<String> getUserPasswords( String username ) throws Exception
     {
-        return this.saxon.evaluateXPathSingle(
+        List passwordNodes = this.saxon.evaluateXPath(
                 getDocument()
                 , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
         );
+
+        ArrayList<String> passwords = new ArrayList<String>(passwordNodes.size());
+        for (Object node : passwordNodes ) {
+            passwords.add(((NodeInfo)node).getStringValue());
+        }
+
+        return passwords;
+
     }
 
     public String hashLogin( String username, String password, String suffix ) throws Exception
     {
-        if ( null != username && null != password && null != suffix
-                && null != getUserID(username) ) {
-            if ( password.equals(getUserPassword(username)) ) {
-                return this.authHelper.generateHash(username, password, suffix);
-            }
+        if ( null != username && null != password && null != suffix ) {
+            List<String> userPasswords = getUserPasswords(username);
+            for (String userPassword : userPasswords)
+                if ( password.equals(userPassword) ) {
+                    return this.authHelper.generateHash(username, password, suffix);
+                }
         }
-        // otherwise
         return "";
     }
 
     public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
     {
-        return null != username && null != hash && null != suffix && null != getUserID(username)
-                && this.authHelper.verifyHash(hash, username, getUserPassword(username), suffix);
+        if ( null != username && null != hash && null != suffix ) {
+            List<String> userPasswords = getUserPasswords(username);
+            for (String userPassword : userPasswords)
+                if ( this.authHelper.verifyHash(hash, username, userPassword, suffix) ) {
+                    return true;
+                }
+        }
+        return false;
     }
 }
