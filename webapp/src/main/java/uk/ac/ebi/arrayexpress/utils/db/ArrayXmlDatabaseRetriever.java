@@ -36,6 +36,7 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
             "  , XmlElement(\"id\", t_phad.id)" +
             "  , ( select XmlElement(\"accession\", t_ad_id.identifier) from tt_identifiable t_ad_id where t_ad_id.id = t_phad.id )" +
             "  , ( select XmlElement(\"name\", t_ad_name.value) from tt_namevaluetype t_ad_name where t_ad_name.t_extendable_id = t_phad.id and t_ad_name.name = 'AEArrayDisplayName' )" +
+            "  , ( select XmlAgg( XmlElement( \"user\", t_vis.user_id ) ) from tt_extendable t_ext left outer join pl_visibility t_vis on t_vis.label_id = t_ext.label_id where t_ext.id = t_phad.id )" +
             "  , ( select XmlAgg(XmlElement(\"species\", t_species.value))" +
             "        from" +
             "        ( select distinct" +
