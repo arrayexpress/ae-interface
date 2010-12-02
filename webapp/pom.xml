@@ -78,7 +78,7 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.ae1.connections>aepub2,aepub3</interface.application.pref.experiments.ae1.connections>
+                <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
                 <interface.application.pref.experiments.ae1.export.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.export.location>
 
