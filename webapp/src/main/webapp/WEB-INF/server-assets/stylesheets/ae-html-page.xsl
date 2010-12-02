@@ -77,4 +77,22 @@
             ${interface.application.google.analytics}
         </body>
     </xsl:template>
+
+    <xsl:template name="block-access-restricted">
+        <div class="ae_centered_container_fixed">
+            <div class="ae_protected_area">
+                <div>Sorry, the access to the resource you are requesting is restricted. You may wish to go <a href="javascript:history.back()" title="Click to go to the page you just left">back</a>, or to <a href="{$basepath}" title="ArrayExpress Home">ArrayExpress Home</a>.</div>
+                <div>We value your feedback. If you believe there was an error and wish to report it, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>
+            </div>
+        </div>
+    </xsl:template>
+
+    <xsl:template name="block-not-found">
+        <div class="ae_centered_container_fixed">
+            <div class="ae_warn_area">
+                <div>The resource you are requesting is not found. You may wish to go <a href="javascript:history.back()" title="Click to go to the page you just left">back</a>, or to <a href="{$basepath}" title="ArrayExpress Home">ArrayExpress Home</a>.</div>
+                <div>We value your feedback. If you believe there was an error and wish to report it, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>
+            </div>
+        </div>
+    </xsl:template>
 </xsl:stylesheet>

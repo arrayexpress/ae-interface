@@ -1539,6 +1539,8 @@
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
             <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl"/>
+            <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-html-page.xsl"/>
@@ -1552,8 +1554,6 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl"/>
-            <file
-                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-files-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-arrays-list-html.xsl"/>
             <file
@@ -1575,6 +1575,8 @@
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl"/>
             <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-html.xsl"/>
+            <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl"/>
@@ -1587,7 +1589,9 @@
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-compate-experiments.xsl"/>
             <file
-                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-users-xml.xsl"
             />
         </folder>
     </projectTree>
