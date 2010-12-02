@@ -4,6 +4,7 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
+import uk.ac.ebi.arrayexpress.components.ArrayDesigns;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
@@ -35,8 +36,9 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        String experimentsXml = null;
         String usersXml = null;
+        String arrayDesignsXml = null;
+        String experimentsXml = null;
         String sourceDescription = null;
 
         // kicks reload of atlas experiments just in case
@@ -48,7 +50,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
-
+                arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
                 File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
                 experimentsXml = getXmlFromFile(experimentsSourceFile);
                 sourceDescription = experimentsSourceFile.getAbsolutePath()
@@ -64,6 +66,10 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                                 , "ae2-src-experiments.xml"
                         )
                 );
+            }
+
+            if (!"".equals(arrayDesignsXml)) {
+                updateArrayDesigns(arrayDesignsXml);
             }
 
             if (!"".equals(usersXml)) {
@@ -101,6 +107,13 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     }
 
+    private void updateArrayDesigns( String xmlString ) throws Exception
+    {
+        ((ArrayDesigns) getComponent("ArrayDesigns")).update(xmlString, ArrayDesigns.ArrayDesignSource.AE2);
+
+        logger.info("User information reload completed");
+
+    }
     private void updateExperiments( String xmlString, String sourceDescription ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(

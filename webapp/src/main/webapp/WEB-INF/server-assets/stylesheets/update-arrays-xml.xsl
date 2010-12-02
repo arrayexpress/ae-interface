@@ -17,14 +17,15 @@
         <xsl:message>[INFO] Updating from [<xsl:value-of select="$vUpdateSource"/>]</xsl:message>
         <xsl:variable name="vCombinedArrays" select="array_design[@source != $vUpdateSource] | $vUpdate/array_designs/array_design"/>
         <array_designs>
-            <xsl:for-each select="$vCombinedArrays">
-                <xsl:if test="@source = 'ae1'">
+            <xsl:for-each-group select="$vCombinedArrays" group-by="accession">
+                <xsl:if test="count(current-group()) = 2">
+                    <xsl:message>[INFO] Array [<xsl:value-of select="current-grouping-key()"/>] exists in [<xsl:value-of select="string-join(current-group()/@source, ', ')"/>]</xsl:message>
+                </xsl:if>
+                <xsl:for-each select="current-group()">
+                    <xsl:sort select="@source" order="ascending"/>
                     <xsl:copy-of select="."/>
-                </xsl:if>
-                <xsl:if test="@source = 'ae2'">
-                </xsl:if>
-            </xsl:for-each>
-
+                </xsl:for-each>
+            </xsl:for-each-group>
         </array_designs>
     </xsl:template>
 
