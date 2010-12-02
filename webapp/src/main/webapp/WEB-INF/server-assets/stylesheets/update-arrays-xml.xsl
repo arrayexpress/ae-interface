@@ -6,8 +6,6 @@
                 exclude-result-prefixes="ae saxon"
                 version="2.0">
 
-    <xsl:include href="ae-compare-experiments.xsl"/>
-
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
 
     <xsl:variable name="vUpdate" select="doc('update-arrays.xml')"/>

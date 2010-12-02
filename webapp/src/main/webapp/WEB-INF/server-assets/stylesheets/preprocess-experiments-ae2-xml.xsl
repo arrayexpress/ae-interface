@@ -57,6 +57,8 @@
             </xsl:for-each-group>
             <xsl:variable name="vScoreName" select="if (miamescore[@name = 'AEMINSEQEScore']) then 'minseqe' else 'miame'"/>
             <xsl:choose>
+                <xsl:when test="false()"/>
+                <!--
                 <xsl:when test="count(miamescore[@name = 'AEMIAMEScore' or @name = 'AEMINSEQEScore']) > 1">
                     <xsl:message>[ERROR] Multiple overall scores defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
                 </xsl:when>
@@ -65,10 +67,11 @@
                 </xsl:when>
                 <xsl:when test="miamescore[@name = fn:concat('AE', fn:upper-case($vScoreName), 'Score')]/@value != fn:sum(miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']/@value)">
                     <xsl:message>[ERROR] Overall score [<xsl:value-of select="miamescore[@name = fn:concat('AE', fn:upper-case($vScoreName), 'Score')]/@value"/>] is not consitent with individual ones for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                </xsl:when>
+                </xsl:when> -->
                 <xsl:otherwise>
+                    <!--
                     <xsl:message>[INFO] Processing score for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-
+                    -->
                     <xsl:element name="{fn:concat($vScoreName, 'scores')}">
                         <xsl:for-each select="miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']">
                             <xsl:element name="{fn:lower-case(@name)}">

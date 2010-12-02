@@ -7,7 +7,7 @@
         <array_designs>
 
             <xsl:apply-templates select="array_design">
-                <xsl:sort select="id" order="descending" data-type="number"/>
+                <xsl:sort select="accession" order="ascending"/>
             </xsl:apply-templates>
         </array_designs>
     </xsl:template>
@@ -15,7 +15,7 @@
     <xsl:template match="array_design">
         <array_design>
             <xsl:attribute name="source">ae1</xsl:attribute>
-            <xsl:copy-of select="*"/>
+            <xsl:copy-of select="*[name() != 'id']"/>
         </array_design>
     </xsl:template>
 
