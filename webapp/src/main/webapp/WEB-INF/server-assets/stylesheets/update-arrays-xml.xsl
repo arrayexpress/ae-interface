@@ -16,8 +16,8 @@
         <xsl:variable name="vCombinedArrays" select="array_design[@source != $vUpdateSource] | $vUpdate/array_designs/array_design"/>
         <array_designs>
             <xsl:for-each-group select="$vCombinedArrays" group-by="accession">
-                <xsl:if test="count(current-group()) = 2">
-                    <xsl:message>[INFO] Array [<xsl:value-of select="current-grouping-key()"/>] exists in [<xsl:value-of select="string-join(current-group()/@source, ', ')"/>]</xsl:message>
+                <xsl:if test="count(current-group()) > 2">
+                    <xsl:message>[ERROR] Multiple entries within one source for array [<xsl:value-of select="current-grouping-key()"/>]</xsl:message>
                 </xsl:if>
                 <xsl:for-each select="current-group()">
                     <xsl:sort select="@source" order="ascending"/>
