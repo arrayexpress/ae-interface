@@ -13,8 +13,6 @@
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
-    <xsl:include href="ae-file-functions.xsl"/>
-
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
     <xsl:output omit-xml-declaration="yes" method="html"
@@ -25,12 +23,13 @@
     <xsl:template match="/">
         <html lang="en">
             <xsl:call-template name="page-header">
-                <xsl:with-param name="pTitle">Administration | ArrayExpress Archive | EBI</xsl:with-param>
+                <xsl:with-param name="pTitle">Migration Status | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_admin_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_files_100924.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/jquery.cookie-1.0.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_admin_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>
@@ -58,7 +57,7 @@
 
                     <xsl:variable name="vLastUpdatedAe1">
                         <xsl:for-each select="search:queryIndex2('events', 'category:experiments-update-ae1 success:true')">
-                            <xsl:sort select="id" order="descending"/>
+                            <xsl:sort select="id" order="descending" data-type="number"/>
                             <xsl:if test="position() = 1">
                                 <xsl:copy-of select="*"/>
                             </xsl:if>
@@ -66,7 +65,7 @@
                     </xsl:variable>
                     <xsl:variable name="vLastUpdatedAe2">
                         <xsl:for-each select="search:queryIndex2('events', 'category:experiments-update-ae2 success:true')">
-                            <xsl:sort select="id" order="descending"/>
+                            <xsl:sort select="id" order="descending" data-type="number"/>
                             <xsl:if test="position() = 1">
                                 <xsl:copy-of select="*"/>
                             </xsl:if>
@@ -74,8 +73,8 @@
                     </xsl:variable>
 
                     <div id="ae_admin_content">
-                        <div class="ae_adm_app_name"><xsl:value-of select="/application/@name"/></div>
-                        <div class="ae_adm_section_hdr">Statistics</div>
+                        <div class="ae_adm_app_name">Migration Status</div>
+                        <div class="ae_adm_section_hdr"><xsl:value-of select="/application/@name"/></div>
                         <div class="ae_adm_section_body">
                             <p>
                                 <xsl:text>Visible experiments (public/private/total):</xsl:text>
@@ -139,6 +138,29 @@
                                     <div class="ae_right" style="width:{ae:format-percent($vNewAe2Experiments, $vTotalVisibleExperiments)}"/> 
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </xsl:when>
+                <xsl:when test="$userid = '1'">
+                    <div id="ae_admin_content">
+                        <div id="ae_login_box">
+                            <div id="ae_login_title">Please login to access this page</div>
+                            <form id="ae_login_form" method="get" action="index.html" onsubmit="return false">
+                                <fieldset id="ae_login_user_fset">
+                                    <label for="ae_user_field">User name</label>
+                                    <input id="ae_user_field" name="u" maxlength="50" class="assign_font"/>
+                                </fieldset>
+                                <fieldset id="ae_login_pass_fset">
+                                    <label for="ae_pass_field">Password</label>
+                                    <input id="ae_pass_field" type="password" name="p" maxlength="50" class="assign_font"/>
+                                </fieldset>
+                                <input id="ae_login_submit" type="submit" name="s" value="Log in"/>
+                                <span>
+                                    <input id="ae_login_remember" name="r" type="checkbox"/>
+                                    <label for="ae_login_remember">Remember me</label>
+                                </span>
+                            </form>
+                            <div id="ae_login_status"/>
                         </div>
                     </div>
                 </xsl:when>
