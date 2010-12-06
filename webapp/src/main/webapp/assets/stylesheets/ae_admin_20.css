@@ -23,7 +23,6 @@ body {
 }
 
 #ae_admin_content {
-    width: 700px;
     margin: 20px;
 }
 
@@ -45,9 +44,6 @@ body {
     margin: 0 0 10px 0;
     font-weight: bold;
     color: #005555;
-}
-
-#ae_login_form {
 }
 
 #ae_login_form fieldset {
@@ -86,18 +82,58 @@ body {
     color: red;
 }
 
-.ae_adm_app_name {
-    font-size: 18px;
-    line-height: normal;
-    padding: 10px 0 0;
+#ae_adm_header {
+    text-align: center;
+    position: relative;
 }
 
-.ae_adm_section_hdr {
+#ae_top_secret_img {
+    position: absolute;
+    top: 0;
+    left: 30px;
+}
+
+#ae_adm_h1 {
+    font-size: 22px;
+    line-height: normal;
+    padding: 10px 0 5px;
+}
+
+#ae_adm_h2 {
     font-size: 12px;
-    border-bottom: 1px solid #bdd7d7;
     padding: 0 0 5px 0;
 }
 
+.ae_adm_table_box {
+    padding: 20px 0 0 0;
+}
+
+.ae_adm_table {
+    table-layout: fixed;
+    padding-bottom: 20px;
+    width: 100%
+}
+
+.ae_adm_table td
+, .ae_adm_table th {
+    font-size: 11px
+}
+
+.ae_adm_table .col_item {
+    text-align: right;
+    padding-right: 20px;
+    width: 50%
+}
+
+.ae_adm_table .col_ae1 {
+    text-align: left;
+    width: 5%
+}
+
+.ae_adm_table .col_ae2 {
+    text-align: left;
+    width: 45%
+}
 
 div.ae_twotone_bar
 , div.ae_tritone_bar {

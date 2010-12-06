@@ -26,7 +26,8 @@
                 <xsl:if test="count(current-group()) > 2">
                     <xsl:message>[ERROR] Multiple entries within one source for user [<xsl:value-of select="current-grouping-key()"/>]</xsl:message>
                 </xsl:if>
-                <xsl:if test="count(current-group()) = 2">
+                <xsl:variable name="vMigrated" select="exists(current-group()[@source='ae1']) and exists(current-group()[@source='ae2'])"/>
+                <xsl:if test="$vMigrated">
                     <xsl:if test="current-group()[1]/email != current-group()[2]/email">
                         <xsl:message>[WARN] Emails are different for user [<xsl:value-of select="current-grouping-key()"/>]</xsl:message>
                     </xsl:if>
@@ -36,7 +37,11 @@
                 </xsl:if>
                 <xsl:for-each select="current-group()">
                     <xsl:sort select="@source" order="ascending"/>
-                    <xsl:copy-of select="."/>
+                    <user>
+                        <xsl:attribute name="source" select="@source"/>
+                        <xsl:attribute name="migrated" select="$vMigrated"/>
+                        <xsl:copy-of select="*"/>
+                    </user>
                 </xsl:for-each>
             </xsl:for-each-group>
         </users>

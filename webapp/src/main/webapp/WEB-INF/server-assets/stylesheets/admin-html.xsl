@@ -41,19 +41,43 @@
             <xsl:choose>
                 <xsl:when test="not($userid)">
                     <xsl:variable name="vTotalVisibleExperiments" select="count(search:queryIndex2('experiments', 'visible:true'))"/>
-                    <xsl:variable name="vPublicVisibleExperiments" select="count(search:queryIndex2('experiments', 'visible:true userid:1'))"/>
+                    <xsl:variable name="vPublicVisibleExperiments" select="count(search:queryIndex2('experiments', 'visible:true public:true'))"/>
                     <xsl:variable name="vPrivateVisibleExperiments" select="$vTotalVisibleExperiments - $vPublicVisibleExperiments"/>
 
                     <xsl:variable name="vTotalAe1Experiments" select="count(search:queryIndex2('experiments', 'source:ae1'))"/>
+                    <xsl:variable name="vPublicAe1Experiments" select="count(search:queryIndex2('experiments', 'source:ae1 public:true'))"/>
+                    <xsl:variable name="vPrivateAe1Experiments" select="$vTotalAe1Experiments - $vPublicAe1Experiments"/>
                     <xsl:variable name="vMigratedAe1Experiments" select="count(search:queryIndex2('experiments', 'source:ae1 migrated:true'))"/>
                     <xsl:variable name="vOldAe1Experiments" select="$vTotalAe1Experiments - $vMigratedAe1Experiments"/>
 
                     <xsl:variable name="vTotalAe2Experiments" select="count(search:queryIndex2('experiments', 'source:ae2'))"/>
+                    <xsl:variable name="vPublicAe2Experiments" select="count(search:queryIndex2('experiments', 'source:ae2 public:true'))"/>
+                    <xsl:variable name="vPrivateAe2Experiments" select="$vTotalAe2Experiments - $vPublicAe2Experiments"/>
                     <xsl:variable name="vMigratedAe2Experiments" select="count(search:queryIndex2('experiments', 'source:ae2 migrated:true'))"/>
                     <xsl:variable name="vNewAe2Experiments" select="$vTotalAe2Experiments - $vMigratedAe2Experiments"/>
 
                     <xsl:variable name="vVisibleAe1Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae1'))"/>
                     <xsl:variable name="vVisibleAe2Experiments" select="count(search:queryIndex2('experiments', 'visible:true source:ae2'))"/>
+
+                    <xsl:variable name="vTotalAe1Arrays" select="count(search:queryIndex2('arrays', 'source:ae1'))"/>
+                    <xsl:variable name="vPublicAe1Arrays" select="count(search:queryIndex2('arrays', 'source:ae1 public:true'))"/>
+                    <xsl:variable name="vPrivateAe1Arrays" select="$vTotalAe1Arrays - $vPublicAe1Arrays"/>
+                    <xsl:variable name="vMigratedAe1Arrays" select="count(search:queryIndex2('arrays', 'source:ae1 migrated:true'))"/>
+                    <xsl:variable name="vOldAe1Arrays" select="$vTotalAe1Arrays - $vMigratedAe1Arrays"/>
+
+                    <xsl:variable name="vTotalAe2Arrays" select="count(search:queryIndex2('arrays', 'source:ae2'))"/>
+                    <xsl:variable name="vPublicAe2Arrays" select="count(search:queryIndex2('arrays', 'source:ae2 public:true'))"/>
+                    <xsl:variable name="vPrivateAe2Arrays" select="$vTotalAe2Arrays - $vPublicAe2Arrays"/>
+                    <xsl:variable name="vMigratedAe2Arrays" select="count(search:queryIndex2('arrays', 'source:ae2 migrated:true'))"/>
+                    <xsl:variable name="vNewAe2Arrays" select="$vTotalAe2Arrays - $vMigratedAe2Arrays"/>
+
+                    <xsl:variable name="vTotalAe1Users" select="count(search:queryIndex2('users', 'source:ae1'))"/>
+                    <xsl:variable name="vMigratedAe1Users" select="count(search:queryIndex2('users', 'source:ae1 migrated:true'))"/>
+                    <xsl:variable name="vOldAe1Users" select="$vTotalAe1Users - $vMigratedAe1Users"/>
+
+                    <xsl:variable name="vTotalAe2Users" select="count(search:queryIndex2('users', 'source:ae2'))"/>
+                    <xsl:variable name="vMigratedAe2Users" select="count(search:queryIndex2('users', 'source:ae2 migrated:true'))"/>
+                    <xsl:variable name="vNewAe2Users" select="$vTotalAe2Users - $vMigratedAe2Users"/>
 
                     <xsl:variable name="vLastUpdatedAe1">
                         <xsl:for-each select="search:queryIndex2('events', 'category:experiments-update-ae1 success:true')">
@@ -73,9 +97,127 @@
                     </xsl:variable>
 
                     <div id="ae_admin_content">
-                        <div class="ae_adm_app_name">Migration Status</div>
-                        <div class="ae_adm_section_hdr"><xsl:value-of select="/application/@name"/></div>
-                        <div class="ae_adm_section_body">
+                        <div id="ae_adm_header">
+                            <img id="ae_top_secret_img" src="assets/images/ae_top_secret.gif" width="200" height="75" alt="Top Secret!"/>
+                            <div id="ae_adm_h1">Migration Status Report</div>
+                            <div id="ae_adm_h2"><xsl:value-of select="/application/@name"/></div>
+                        </div>
+
+                        <div class="ae_adm_table_box">
+                            <table class="ae_adm_table" border="0" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="col_item">Experiments</th>
+                                        <th class="col_ae1">AE1</th>
+                                        <th class="col_ae2">AE2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="col_item">Public</td>
+                                        <td class="col_ae1"><a href="browse.html?keywords=source:ae1+public:true"><xsl:value-of select="$vPublicAe1Experiments"/></a></td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae1+public:true"><xsl:value-of select="$vPublicAe2Experiments"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Private</td>
+                                        <td class="col_ae1"><a href="browse.html?keywords=source:ae1+public:false"><xsl:value-of select="$vPrivateAe1Experiments"/></a></td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae2+public:false"><xsl:value-of select="$vPrivateAe2Experiments"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Old</td>
+                                        <td class="col_ae1"><a href="browse.html?keywords=source:ae1+migrated:false"><xsl:value-of select="$vOldAe1Experiments"/></a></td>
+                                        <td class="col_ae2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Migrated</td>
+                                        <td class="col_ae1"><a href="browse.html?keywords=source:ae1+migrated:true"><xsl:value-of select="$vMigratedAe1Experiments"/></a></td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae2+migrated:true"><xsl:value-of select="$vMigratedAe2Experiments"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">New</td>
+                                        <td class="col_ae1">-</td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae2+migrated:false"><xsl:value-of select="$vNewAe2Experiments"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Total</td>
+                                        <td class="col_ae1"><a href="browse.html?keywords=source:ae1"><xsl:value-of select="$vTotalAe1Experiments"/></a></td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae2"><xsl:value-of select="$vTotalAe2Experiments"/></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="ae_adm_table" border="0" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="col_item">Array Designs</th>
+                                        <th class="col_ae1">AE1</th>
+                                        <th class="col_ae2">AE2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="col_item">Public</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vPublicAe1Arrays"/></td>
+                                        <td class="col_ae1"><xsl:value-of select="$vPublicAe2Arrays"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Private</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vPrivateAe1Arrays"/></td>
+                                        <td class="col_ae1"><xsl:value-of select="$vPrivateAe2Arrays"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Old</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vOldAe1Arrays"/></td>
+                                        <td class="col_ae2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Migrated</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vMigratedAe1Arrays"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vMigratedAe2Arrays"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">New</td>
+                                        <td class="col_ae1">-</td>
+                                        <td class="col_ae2"><xsl:value-of select="$vNewAe2Arrays"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Total</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vTotalAe1Arrays"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vTotalAe2Arrays"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="ae_adm_table" border="0" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="col_item">Users</th>
+                                        <th class="col_ae1">AE1</th>
+                                        <th class="col_ae2">AE2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="col_item">Old</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vOldAe1Users"/></td>
+                                        <td class="col_ae2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Migrated</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vMigratedAe1Users"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vMigratedAe2Users"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">New</td>
+                                        <td class="col_ae1">-</td>
+                                        <td class="col_ae2"><xsl:value-of select="$vNewAe2Users"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col_item">Total</td>
+                                        <td class="col_ae1"><xsl:value-of select="$vTotalAe1Users"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vTotalAe2Users"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+<!--
                             <p>
                                 <xsl:text>Visible experiments (public/private/total):</xsl:text>
                                 <xsl:value-of select="$vPublicVisibleExperiments"/>
@@ -138,6 +280,8 @@
                                     <div class="ae_right" style="width:{ae:format-percent($vNewAe2Experiments, $vTotalVisibleExperiments)}"/> 
                                 </div>
                             </div>
+                        -->
+
                         </div>
                     </div>
                 </xsl:when>

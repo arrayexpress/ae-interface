@@ -16,12 +16,17 @@
         <xsl:variable name="vCombinedArrays" select="array_design[@source != $vUpdateSource] | $vUpdate/array_designs/array_design"/>
         <array_designs>
             <xsl:for-each-group select="$vCombinedArrays" group-by="accession">
+                <xsl:variable name="vMigrated" select="exists(current-group()[@source='ae1']) and exists(current-group()[@source='ae2'])"/>
                 <xsl:if test="count(current-group()) > 2">
                     <xsl:message>[ERROR] Multiple entries within one source for array [<xsl:value-of select="current-grouping-key()"/>]</xsl:message>
                 </xsl:if>
                 <xsl:for-each select="current-group()">
                     <xsl:sort select="@source" order="ascending"/>
-                    <xsl:copy-of select="."/>
+                    <array_design>
+                        <xsl:attribute name="source" select="@source"/>
+                        <xsl:attribute name="migrated" select="$vMigrated"/>
+                        <xsl:copy-of select="*"/>
+                    </array_design>
                 </xsl:for-each>
             </xsl:for-each-group>
         </array_designs>

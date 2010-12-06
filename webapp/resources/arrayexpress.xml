@@ -138,6 +138,7 @@
                 <field name="migrated" type="boolean" path="source/@migrated = 'true'"/>
                 <field name="identical" type="boolean" path="source/@identical = 'true'"/>
                 <field name="visible" type="boolean" path="source/@visible = 'true'"/>
+                <field name="public" type="boolean" path="user/@id = '1'"/>
                 <!-- numeric fields -->
                 <field name="assaycount" title="Number of Assays" type="integer" path="(if (assays castable as xs:integer) then assays else 0) cast as xs:integer" />
                 <field name="samplecount" title="Number of Samples" type="integer" path="(if (samples castable as xs:integer) then samples else 0) cast as xs:integer" />
@@ -154,8 +155,11 @@
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
+                <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
+                <field name="public" type="boolean" path="user/@id = '1'"/>
+                <field name="migrated" type="boolean" path="@migrated = 'true'"/>
             </document>
         </index>
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
@@ -173,6 +177,7 @@
                 <field name="admin" title="" type="boolean" path="is_privileged/text() = 'true'"/>
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
+                <field name="migrated" type="boolean" path="@migrated = 'true'"/>
             </document>
         </index>
         <index id="events" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
