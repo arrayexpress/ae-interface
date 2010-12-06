@@ -198,7 +198,7 @@
                 <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_curator/software/browse/</interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 10/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
                 <interface.application.pref.files.prefix>ae2-curator</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
@@ -225,7 +225,7 @@
                 <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_production/software/browse/</interface.application.pref.experiments.ae2.source.location>
-                <interface.application.pref.experiments.ae2.reload.schedule>0 20/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
                 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
