@@ -46,7 +46,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +56,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public TransformerFactoryImpl trFactory;
-    private Map<String, Templates> templatesCache = new HashMap<String, Templates>();
-    private Map<String, IDocumentSource> documentSources = new HashMap<String, IDocumentSource>();
+    private Map<String, Templates> templatesCache = new Hashtable<String, Templates>();
+    private Map<String, IDocumentSource> documentSources = new Hashtable<String, IDocumentSource>();
 
     private DocumentInfo appDocument;
 
@@ -95,11 +95,13 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public void registerDocumentSource( IDocumentSource documentSource )
     {
+        logger.debug("Registering source [{}]", documentSource.getDocumentURI());
         this.documentSources.put(documentSource.getDocumentURI(), documentSource);
     }
 
     public void unregisterDocumentSource( IDocumentSource documentSource )
     {
+        logger.debug("Removing source [{}]", documentSource.getDocumentURI());
         this.documentSources.remove(documentSource.getDocumentURI());
     }
 

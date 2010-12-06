@@ -121,7 +121,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             }
 
             // export to temp directory anyway (only if debug is enabled)
-            if (logger.isDebugEnabled()) {
+            if (logger.isDebugEnabled() && null != experimentsXml) {
                 StringTools.stringToFile(
                         experimentsXml
                         , new File(
@@ -131,15 +131,15 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 );
             }
 
-            if (!"".equals(usersXml)) {
+            if (null != usersXml && !"".equals(usersXml)) {
                 updateUsers(usersXml);
             }
 
-            if (!"".equals(arrayDesignsXml)) {
+            if (null != arrayDesignsXml && !"".equals(arrayDesignsXml)) {
                 updateArrayDesigns(arrayDesignsXml);
             }
 
-            if (!"".equals(experimentsXml)) {
+            if (null != experimentsXml && !"".equals(experimentsXml)) {
                 updateExperiments(experimentsXml, sourceDescription);
             }
 
