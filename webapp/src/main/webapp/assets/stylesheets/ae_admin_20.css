@@ -8,6 +8,7 @@ body {
     bottom: 22px;
     left: 0;
     width: 100%;
+    overflow: auto;
 }
 
 .ae_left_container_100pc {
@@ -111,28 +112,59 @@ body {
 .ae_adm_table {
     table-layout: fixed;
     padding-bottom: 20px;
-    width: 100%
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .ae_adm_table td
 , .ae_adm_table th {
+    line-height: 1.5em;
     font-size: 11px
 }
 
+.ae_adm_table th {
+    color: #005555;
+    font-weight: bold;
+}
+
+.ae_adm_table td {
+    border-top: 1px solid #e5f0f0;
+}
+
 .ae_adm_table .col_item {
+    color: #005555;
     text-align: right;
-    padding-right: 20px;
+    padding-right: 10px;
     width: 50%
 }
 
 .ae_adm_table .col_ae1 {
     text-align: left;
-    width: 5%
+    padding: 0 10px;
+    width: 25%
 }
 
 .ae_adm_table .col_ae2 {
     text-align: left;
-    width: 45%
+    padding: 0 10px;
+    width: 25%
+}
+
+.ae_adm_table td.col_ae1 {
+    background-color: #f2f8f8;
+}
+
+.ae_adm_table td.col_ae2 {
+    background-color: #f2f8f8;
+}
+
+.ae_adm_last_updated {
+    border: 1px solid #005555;
+    margin: 10px auto 0;
+    padding: 5px;
+    width: 800px;
 }
 
 div.ae_twotone_bar

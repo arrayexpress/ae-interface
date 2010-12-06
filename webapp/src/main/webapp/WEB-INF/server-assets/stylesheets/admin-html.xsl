@@ -217,71 +217,36 @@
                                     </tr>
                                 </tbody>
                             </table>
-<!--
-                            <p>
-                                <xsl:text>Visible experiments (public/private/total):</xsl:text>
-                                <xsl:value-of select="$vPublicVisibleExperiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vPrivateVisibleExperiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vTotalVisibleExperiments"/>
-                            </p>
-                            <div class="ae_twotone_bar">
-                                <div class="ae_total">
-                                    <div class="ae_value" style="width:{ae:format-percent($vPublicVisibleExperiments, $vTotalVisibleExperiments)}">
-                                    </div>
-                                </div>
-                            </div>
-                            <p>
-                                <xsl:text>Experiments from ArrayExpress 1 (migrated/old/total):</xsl:text>
-                                <xsl:value-of select="$vMigratedAe1Experiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vOldAe1Experiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vTotalAe1Experiments"/>
-                            </p>
-                            <p>
-                                <xsl:text>Last updated: </xsl:text>
+                        </div>
+                        <div class="ae_adm_last_updated">
+                            <div>
+                                <xsl:text>AE1 </xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="$vLastUpdatedAe1">
+                                        <xsl:text> last updated on </xsl:text>
                                         <xsl:value-of select="ae:format-datetime($vLastUpdatedAe1/datetime)"/>
-                                        <xsl:text> - </xsl:text>
-                                        <xsl:value-of select="$vLastUpdatedAe1/description"/>
+                                        <xsl:value-of select="replace($vLastUpdatedAe1/description, 'AE. experiments updated', '')"/>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <xsl:text>(never)</xsl:text>
+                                        <xsl:text>never updated</xsl:text>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </p>
-                            <p>
-                                <xsl:text>Experiments from ArrayExpress 2 (migrated/new/total):</xsl:text>
-                                <xsl:value-of select="$vMigratedAe2Experiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vNewAe2Experiments"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="$vTotalAe2Experiments"/>
-                            </p>
-                            <p>
-                                <xsl:text>Last updated: </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="$vLastUpdatedAe2">
-                                        <xsl:value-of select="ae:format-datetime($vLastUpdatedAe2/datetime)"/>
-                                        <xsl:text> - </xsl:text>
-                                        <xsl:value-of select="$vLastUpdatedAe2/description"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>(never)</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </p>
-                            <div class="ae_tritone_bar">
-                                <div class="ae_total">
-                                    <div class="ae_left" style="width:{ae:format-percent($vOldAe1Experiments, $vTotalVisibleExperiments)}"/>
-                                    <div class="ae_right" style="width:{ae:format-percent($vNewAe2Experiments, $vTotalVisibleExperiments)}"/> 
-                                </div>
                             </div>
-                        -->
-
+                        </div>
+                        <div class="ae_adm_last_updated">
+                            <div>
+                                <xsl:text>AE2 </xsl:text>
+                                <xsl:choose>
+                                    <xsl:when test="$vLastUpdatedAe1">
+                                        <xsl:text> last updated on </xsl:text>
+                                        <xsl:value-of select="ae:format-datetime($vLastUpdatedAe2/datetime)"/>
+                                        <xsl:value-of select="replace($vLastUpdatedAe2/description, 'AE. experiments updated', '')"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text>never updated</xsl:text>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </div>
                         </div>
                     </div>
                 </xsl:when>
@@ -317,7 +282,14 @@
 
     <xsl:function name="ae:format-datetime">
         <xsl:param name="pDateTime"/>
-        <xsl:value-of select="format-dateTime($pDateTime, '[D01] [MNn] [Y0001], [H01]:[m01]:[s01]', 'en', (), ())"/>
+        <xsl:choose>
+            <xsl:when test="current-date() eq xs:date(substring-before($pDateTime, 'T'))">
+                <xsl:value-of select="format-dateTime($pDateTime, 'Today, [H01]:[m01]:[s01]', 'en', (), ())"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="format-dateTime($pDateTime, '[D01] [MNn] [Y0001], [H01]:[m01]:[s01]', 'en', (), ())"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
 
     <xsl:function name="ae:format-percent">

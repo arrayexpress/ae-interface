@@ -8,6 +8,7 @@ body {
     bottom: 22px;
     left: 0;
     width: 100%;
+    overflow: auto;
 }
 
 .ae_left_container_100pc {
