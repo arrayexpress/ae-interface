@@ -222,7 +222,7 @@
 
                 <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
                 <interface.application.pref.experiments.ae1.connections/>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 40 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_production/software/browse/</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
