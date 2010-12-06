@@ -173,6 +173,7 @@ public class Controller
     {
         return queryIndex(indexId, this.queryConstructor.construct(getEnvironment(indexId), queryString));
     }
+
     public List<NodeInfo> queryIndex( String indexId, Query query ) throws IOException
     {
         return new Querier(getEnvironment(indexId)).query(query);

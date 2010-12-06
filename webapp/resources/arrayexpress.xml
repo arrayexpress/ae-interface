@@ -123,7 +123,7 @@
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
                 <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false"/>
-                <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false" forcePhraseQuery="true"/>
+                <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false"/>
                 <field name="expdesign" title="by Experiment Design" type="string" path="experimentdesign" analyze="true" store="false" escape="false"/>
                 <field name="ef" title="by Experimental Factor" type="string" path="experimentalfactor/name" analyze="true" store="false" escape="false"/>
                 <field name="efv" title="by Experimental Factor Value" type="string" path="experimentalfactor/value" analyze="true" store="false" escape="false"/>

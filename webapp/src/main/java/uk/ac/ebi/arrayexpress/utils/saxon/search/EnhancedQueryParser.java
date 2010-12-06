@@ -60,9 +60,6 @@ public class EnhancedQueryParser extends QueryParser
 
     public Query parse(String queryText) throws ParseException
     {
-        if (env.fields.containsKey(this.getField()) && env.fields.get(this.getField()).forcePhraseQuery) {
-            queryText = "\"" + queryText + "\"";
-        }
         return super.parse(queryText);
     }
 
