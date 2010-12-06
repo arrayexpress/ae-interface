@@ -96,7 +96,7 @@ public class StringTools
     {
         Date date = new Date(dateTime);
         if (DateTools.isToday(date)) {
-            return new SimpleDateFormat("Today, HH:mm").format(date);
+            return "Today, " + new SimpleDateFormat("HH:mm").format(date);
         } else {
             return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(date);
         }
