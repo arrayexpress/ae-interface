@@ -94,7 +94,12 @@ public class StringTools
 
     public static String longDateTimeToString( long dateTime )
     {
-        return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(new Date(dateTime));
+        Date date = new Date(dateTime);
+        if (DateTools.isToday(date)) {
+            return new SimpleDateFormat("Today, HH:mm").format(date);
+        } else {
+            return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(date);
+        }
     }
 
     public static String safeToString( Object obj, String nullObjString )
