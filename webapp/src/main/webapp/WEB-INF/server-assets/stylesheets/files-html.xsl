@@ -81,13 +81,15 @@
                             <xsl:for-each select="$vExperiment/arraydesign">
                                 <xsl:sort select="accession" order="ascending"/>
                                 <xsl:variable name="vArrayAccession" select="string(accession)"/>
-                                <xsl:variable name="vArrFolder" select="search:queryIndex2('files', concat('accession:', $vArrayAccession))"/>
-                                <div class="ae_accession">Array Design <xsl:value-of select="$vArrayAccession"/></div>
-                                <div class="ae_title"><xsl:value-of select="name"/></div>
-                                <xsl:call-template name="files-for-accession">
-                                    <xsl:with-param name="pAccession" select="$vArrayAccession"/>
-                                    <xsl:with-param name="pFiles" select="$vArrFolder/file"/>
-                                </xsl:call-template>
+                                <xsl:if test="matches($vArrayAccession, '^[aA]-\w{4}-\d+$')">
+                                    <xsl:variable name="vArrFolder" select="search:queryIndex2('files', concat('accession:', $vArrayAccession))"/>
+                                    <div class="ae_accession">Array Design <xsl:value-of select="$vArrayAccession"/></div>
+                                    <div class="ae_title"><xsl:value-of select="name"/></div>
+                                    <xsl:call-template name="files-for-accession">
+                                        <xsl:with-param name="pAccession" select="$vArrayAccession"/>
+                                        <xsl:with-param name="pFiles" select="$vArrFolder/file"/>
+                                    </xsl:call-template>
+                                </xsl:if>
                             </xsl:for-each>
                         </xsl:if>
                     </div>
