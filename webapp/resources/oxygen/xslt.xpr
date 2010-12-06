@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="11.0">
+<project version="11.2">
     <meta>
         <filters directoryPatterns="" filePatterns=""
             positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="11.0">
+            <serialized version="11.2">
                 <map>
                     <entry>
                         <String xml:space="preserve">scenario.associations</String>
@@ -141,7 +141,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -224,7 +224,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -544,7 +544,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -864,7 +864,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -947,7 +947,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -1032,7 +1032,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -1117,7 +1117,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -1202,7 +1202,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -1285,7 +1285,7 @@
                                     <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Built-in (Apache FOP)</String>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
@@ -1531,11 +1531,12 @@
         <folder name="documents">
             <file name="documents/sample-atlas-exps-not-processed.xml"/>
             <file name="documents/sample-experiments.xml"/>
-            <file name="documents/sample-experiments-multi.xml"/>
             <file name="documents/sample-experiments-not-processed.xml"/>
             <file name="documents/sample-files-not-processed.xml"/>
         </folder>
         <folder name="stylesheets">
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
             <file
@@ -1586,8 +1587,6 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
-            <file
-                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-compate-experiments.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"/>
             <file
