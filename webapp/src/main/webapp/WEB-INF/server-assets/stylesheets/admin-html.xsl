@@ -284,6 +284,7 @@
     <xsl:function name="ae:format-datetime">
         <xsl:param name="pDateTime"/>
         <xsl:choose>
+            <xsl:when test="not(string($pDateTime) castable as xs:dateTime)"/>
             <xsl:when test="current-date() eq xs:date(substring-before($pDateTime, 'T'))">
                 <xsl:value-of select="format-dateTime($pDateTime, 'today at [H01]:[m01]:[s01]', 'en', (), ())"/>
             </xsl:when>
