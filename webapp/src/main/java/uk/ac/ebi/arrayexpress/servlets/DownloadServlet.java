@@ -146,7 +146,7 @@ public class DownloadServlet extends ApplicationServlet
 
             if (!experiments.isAccessible(accession, userIds)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                throw new DownloadServletException("The experiment [" + accession + "] is not accessible for user id(s) [" + StringTools.arrayToString((String[])userIds.toArray(), ", ") + "]");
+                throw new DownloadServletException("The experiment [" + accession + "] is not accessible for user id(s) [" + StringTools.arrayToString(userIds.toArray(new String[userIds.size()]), ", ") + "]");
             }
 
             logger.debug("Will be serving file [{}]", fileLocation);
