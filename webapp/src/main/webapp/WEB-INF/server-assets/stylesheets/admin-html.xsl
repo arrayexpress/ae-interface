@@ -158,12 +158,12 @@
                                     <tr>
                                         <td class="col_item">Public</td>
                                         <td class="col_ae1"><xsl:value-of select="$vPublicAe1Arrays"/></td>
-                                        <td class="col_ae1"><xsl:value-of select="$vPublicAe2Arrays"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vPublicAe2Arrays"/></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Private</td>
                                         <td class="col_ae1"><xsl:value-of select="$vPrivateAe1Arrays"/></td>
-                                        <td class="col_ae1"><xsl:value-of select="$vPrivateAe2Arrays"/></td>
+                                        <td class="col_ae2"><xsl:value-of select="$vPrivateAe2Arrays"/></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Old</td>
@@ -219,12 +219,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="ae_adm_last_updated">
+                        <div class="ae_adm_last_updated_box">
                             <div>
                                 <xsl:text>AE1 </xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="$vLastUpdatedAe1">
-                                        <xsl:text> last updated on </xsl:text>
+                                        <xsl:text> last updated </xsl:text>
                                         <xsl:value-of select="ae:format-datetime($vLastUpdatedAe1/datetime)"/>
                                         <xsl:value-of select="replace($vLastUpdatedAe1/description, 'AE. experiments updated', '')"/>
                                     </xsl:when>
@@ -234,7 +234,7 @@
                                 </xsl:choose>
                             </div>
                         </div>
-                        <div class="ae_adm_last_updated">
+                        <div class="ae_adm_last_updated_box">
                             <div>
                                 <xsl:text>AE2 </xsl:text>
                                 <xsl:choose>
@@ -285,7 +285,7 @@
         <xsl:param name="pDateTime"/>
         <xsl:choose>
             <xsl:when test="current-date() eq xs:date(substring-before($pDateTime, 'T'))">
-                <xsl:value-of select="format-dateTime($pDateTime, 'Today, [H01]:[m01]:[s01]', 'en', (), ())"/>
+                <xsl:value-of select="format-dateTime($pDateTime, 'today at [H01]:[m01]:[s01]', 'en', (), ())"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="format-dateTime($pDateTime, '[D01] [MNn] [Y0001], [H01]:[m01]:[s01]', 'en', (), ())"/>
