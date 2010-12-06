@@ -238,7 +238,7 @@
                             <div>
                                 <xsl:text>AE2 </xsl:text>
                                 <xsl:choose>
-                                    <xsl:when test="$vLastUpdatedAe1">
+                                    <xsl:when test="$vLastUpdatedAe2">
                                         <xsl:text> last updated </xsl:text>
                                         <xsl:value-of select="ae:format-datetime($vLastUpdatedAe2/datetime)"/>
                                         <xsl:value-of select="replace($vLastUpdatedAe2/description, 'AE. experiments updated', '')"/>
