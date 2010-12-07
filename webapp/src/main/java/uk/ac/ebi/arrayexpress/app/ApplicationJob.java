@@ -27,34 +27,57 @@ abstract public class ApplicationJob implements InterruptableJob, StatefulJob
     private final Logger logger = LoggerFactory.getLogger(getClass());
     // worker thread object
     private Thread myThread;
+    private String myName;
+
+    private void setMyThread( Thread thread )
+    {
+        this.myThread = thread;
+    }
+
+    private Thread getMyThread()
+    {
+        return this.myThread;
+    }
+
+    private void setMyName( String name )
+    {
+        this.myName = name;
+    }
+
+    private String getMyName()
+    {
+        return this.myName;
+    }
 
     public void execute( JobExecutionContext jec ) throws JobExecutionException
     {
-        myThread = Thread.currentThread();
+        setMyThread(Thread.currentThread());
+        setMyName(jec.getJobDetail().getFullName());
         try {
             doExecute(jec);
         } catch ( InterruptedException x ) {
-            logger.debug("Job [{}] was interrupted", jec.getJobDetail().getFullName());
+            this.logger.debug("Job [{}] was interrupted", getMyName());
         } catch ( RuntimeException x ) {
-            logger.error("[SEVERE] Runtime exception while executing job [" + jec.getJobDetail().getFullName() + "]:", x);
-            Application.getInstance().sendExceptionReport("[SEVERE] Runtime exception while executing job [" + jec.getJobDetail().getFullName() + "]", x);
+            this.logger.error("[SEVERE] Runtime exception while executing job [" + getMyName() + "]:", x);
+            Application.getInstance().sendExceptionReport("[SEVERE] Runtime exception while executing job [" + getMyName() + "]", x);
         } catch ( Error x ) {
-            logger.error("[SEVERE] Runtime error while executing job [" + jec.getJobDetail().getFullName() + "]:", x);
-            Application.getInstance().sendExceptionReport("[SEVERE] Runtime error while executing job [" + jec.getJobDetail().getFullName() + "]", x);
+            this.logger.error("[SEVERE] Runtime error while executing job [" + getMyName() + "]:", x);
+            Application.getInstance().sendExceptionReport("[SEVERE] Runtime error while executing job [" + getMyName() + "]", x);
         } catch ( Exception x ) {
-            logger.error("Exception while executing job [" + jec.getJobDetail().getFullName() + "]:", x);
+            this.logger.error("Exception while executing job [" + getMyName() + "]:", x);
             throw new JobExecutionException(x);
         }
-        myThread = null;
+        setMyThread(null);
     }
 
     public abstract void doExecute( JobExecutionContext jec ) throws Exception;
 
     public void interrupt() throws UnableToInterruptJobException
     {
-        logger.debug("Attempting to interrupt job");
-        if (null != myThread)
-            myThread.interrupt();
+        if (null != getMyThread()) {
+            this.logger.debug("Attempting to interrupt job [{}]", getMyName());
+            getMyThread().interrupt();
+        }
     }
 
     protected Application getApplication()
