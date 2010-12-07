@@ -95,11 +95,11 @@ public class StringTools
     public static String longDateTimeToString( long dateTime )
     {
         Date date = new Date(dateTime);
-        if (DateTools.isToday(date)) {
-            return "Today, " + new SimpleDateFormat("HH:mm").format(date);
-        } else {
+        //if (DateTools.isToday(date)) {
+        //    return "Today, " + new SimpleDateFormat("HH:mm").format(date);
+        //} else {
             return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(date);
-        }
+        //}
     }
 
     public static String safeToString( Object obj, String nullObjString )
