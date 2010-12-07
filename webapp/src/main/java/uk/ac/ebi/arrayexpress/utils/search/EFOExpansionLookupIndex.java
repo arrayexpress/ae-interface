@@ -144,7 +144,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
 
         if (isStopTerm(term)) {
-            this.logger.debug("Term [{}] is a stop-word, skipping", term);
+            // this.logger.debug("Term [{}] is a stop-word, skipping", term);
         } else {
             if (synonyms.size() > 0 || childTerms.size() > 0) {
 
@@ -152,9 +152,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
                 for (String syn : synonyms) {
                     if (childTerms.contains(syn)) {
-                        this.logger.debug("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
+                        // this.logger.debug("Synonym [{}] for term [{}] is present as a child term itelf, skipping", syn, term);
                     } else if (isStopExpansionTerm(syn)) {
-                        this.logger.debug("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
+                        // this.logger.debug("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
                     } else {
                         addIndexField(d, "term", syn, true, true);
                     }
@@ -162,7 +162,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
                 for (String efoTerm : childTerms) {
                     if (isStopExpansionTerm(efoTerm)) {
-                        this.logger.debug("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
+                        // this.logger.debug("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
                     } else {
                         addIndexField(d, "efo", efoTerm, false, true);
                     }
@@ -184,10 +184,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             // to show _all_ available nodes
             IndexSearcher isearcher = new IndexSearcher(ir);
             Query q = overrideQueryField(origQuery, "term");
-            this.logger.debug("Looking up synonyms for query [{}]", q.toString());
 
             TopDocs hits = isearcher.search(q, MAX_INDEX_HITS);
-            this.logger.debug("Query returned [{}] hits", hits.totalHits);
+            this.logger.debug("Expansion lookup for query [{}] returned [{}] hits", q.toString(), hits.totalHits);
 
             for (ScoreDoc d : hits.scoreDocs) {
                 Document doc = isearcher.doc(d.doc);
@@ -307,6 +306,4 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     {
         return isStopTerm(str) || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
     }
-
-
 }
