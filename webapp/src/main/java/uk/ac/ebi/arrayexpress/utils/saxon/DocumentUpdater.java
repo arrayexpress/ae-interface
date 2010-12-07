@@ -26,6 +26,8 @@ public class DocumentUpdater implements IDocumentSource
     private IDocumentSource source;
     private SaxonEngine saxon;
     private DocumentInfo update;
+    // lock to create a class-wide critical section
+    private static Object lock = new Object();
 
     public DocumentUpdater( IDocumentSource source, DocumentInfo update )
     {
@@ -54,9 +56,11 @@ public class DocumentUpdater implements IDocumentSource
 
     public void update() throws Exception
     {
-        saxon.registerDocumentSource(this);
-        source.setDocument(saxon.transform(source.getDocument(), getDocumentURI().replace(".xml", "-xml.xsl"), null));
-        saxon.unregisterDocumentSource(this);
+        synchronized(lock) {
+            saxon.registerDocumentSource(this);
+            source.setDocument(saxon.transform(source.getDocument(), getDocumentURI().replace(".xml", "-xml.xsl"), null));
+            saxon.unregisterDocumentSource(this);
+        }
     }
 }
 
