@@ -4,8 +4,8 @@
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae search html"
-                exclude-result-prefixes="ae search html"
+                extension-element-prefixes="ae search html xs"
+                exclude-result-prefixes="ae search html xs"
                 version="2.0">
 
     <xsl:param name="userid"/>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae fn saxon"
-                exclude-result-prefixes="ae fn saxon html"
+                extension-element-prefixes="ae fn html saxon xs"
+                exclude-result-prefixes="ae fn html saxon xs"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -14,9 +15,7 @@
             version="{@version}" total="{fn:count(experiment)}">
 
             <xsl:apply-templates select="experiment">
-                <xsl:sort select="substring-before(loaddate[0], '-')" order="descending" data-type="number"/>
-                <xsl:sort select="substring-before(substring-after(loaddate[0], '-'), '-')" order="descending" data-type="number"/>
-                <xsl:sort select="substring-after(substring-after(loaddate[0], '-'), '-')" order="descending"  data-type="number"/>
+                <xsl:sort select="id" order="descending" data-type="number"/>
             </xsl:apply-templates>
         </experiments>
     </xsl:template>
@@ -58,7 +57,19 @@
             <source id="ae1"/>
             <xsl:copy-of select="user"/>
 
-            <releasedate><xsl:value-of select="loaddate"/></releasedate>
+            <releasedate>
+                <xsl:choose>
+                    <xsl:when test="(string(releasedate) castable as xs:date)">
+                        <xsl:value-of select="releasedate"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message>[WARN] Release date was missing for [<xsl:value-of select="$vAccession"/>]</xsl:message>
+                        <xsl:if test="(string(loaddate) castable as xs:date)">
+                            <xsl:value-of select="loaddate"/>
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </releasedate>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
