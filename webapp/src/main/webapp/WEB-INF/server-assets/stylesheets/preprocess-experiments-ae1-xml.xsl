@@ -64,9 +64,6 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message>[WARN] Release date was missing for [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                        <xsl:if test="(string(loaddate) castable as xs:date)">
-                            <xsl:value-of select="loaddate"/>
-                        </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
             </releasedate>
