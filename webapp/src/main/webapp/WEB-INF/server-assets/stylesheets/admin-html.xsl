@@ -117,7 +117,7 @@
                                     <tr>
                                         <td class="col_item">Public</td>
                                         <td class="col_ae1"><a href="browse.html?keywords=source:ae1+public:true"><xsl:value-of select="$vPublicAe1Experiments"/></a></td>
-                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae1+public:true"><xsl:value-of select="$vPublicAe2Experiments"/></a></td>
+                                        <td class="col_ae2"><a href="browse.html?keywords=source:ae2+public:true"><xsl:value-of select="$vPublicAe2Experiments"/></a></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Private</td>
