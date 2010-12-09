@@ -59,7 +59,7 @@
 
             <releasedate>
                 <xsl:choose>
-                    <xsl:when test="(string(releasedate) castable as xs:date)">
+                    <xsl:when test="(releasedate castable as xs:date)">
                         <xsl:value-of select="releasedate"/>
                     </xsl:when>
                     <xsl:otherwise>
