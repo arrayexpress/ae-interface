@@ -16,7 +16,7 @@
             <xsl:attribute name="source">ae2</xsl:attribute>
             <xsl:copy-of select="*[name() != 'user']"/>
             <xsl:for-each select="user[string-length(text()) != 0]">
-                <user id="text()"/>
+                <user id="{text()}"/>
             </xsl:for-each>
         </array_design>
     </xsl:template>

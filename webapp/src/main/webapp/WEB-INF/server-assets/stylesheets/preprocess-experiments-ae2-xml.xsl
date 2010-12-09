@@ -91,7 +91,7 @@
     <xsl:template match="sampleattribute | experimentalfactor | miamescor" mode="copy"/>
 
     <xsl:template match="user" mode="copy">
-        <user id="text()"/>
+        <user id="{text()}"/>
     </xsl:template>
 
     <xsl:template match="hybs" mode="copy">
