@@ -11,10 +11,21 @@
         <to type="forward">/servlets/query/browse-experiments-noajax/html</to>
     </rule>
 
-    <!-- todo: put it in appropriate place -->
+    <!-- migration infopage -->
     <rule>
         <from>^/migration.html</from>
         <to type="forward">/servlets/betterquery/-/admin/html</to>
+    </rule>
+
+    <!-- arrays section -->
+    <rule>
+        <from>^/arrays/?$</from>
+        <to type="forward">/servlets/betterquery/arrays/arrays/html</to>
+    </rule>
+
+    <rule>
+        <from>^/arrays/([aA]-\w{4}-\d+)/?$</from>
+        <to type="forward">/servlets/betterquery/arrays/arrays/html?accession=$1</to>
     </rule>
 
     <!-- experiment by accession page -->

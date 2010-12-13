@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.NodeListIterator;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.trans.XPathException;
 import org.apache.lucene.queryParser.ParseException;
 
 import java.io.IOException;
@@ -32,9 +33,15 @@ public final class SearchExtension
 
     private static Controller controller;
 
-    public static SequenceIterator queryIndex( String indexId, String queryId ) throws IOException
+    public static SequenceIterator queryIndex( String indexId, String queryId ) throws IOException, XPathException
     {
-        List<NodeInfo> nodes = getController().queryIndex(indexId, Integer.decode(queryId));
+        Integer intQueryId;
+        try {
+            intQueryId = Integer.decode(queryId);
+        } catch (NumberFormatException x) {
+            throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
+        }
+        List<NodeInfo> nodes = getController().queryIndex(indexId, intQueryId);
         if (null != nodes) {
             return new NodeListIterator(nodes);
         }
