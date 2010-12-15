@@ -25,6 +25,7 @@
                     <array_design>
                         <xsl:attribute name="source" select="@source"/>
                         <xsl:attribute name="migrated" select="$vMigrated"/>
+                        <xsl:attribute name="visible" select="@source = 'ae1' or not($vMigrated)"/>
                         <xsl:copy-of select="*"/>
                     </array_design>
                 </xsl:for-each>
