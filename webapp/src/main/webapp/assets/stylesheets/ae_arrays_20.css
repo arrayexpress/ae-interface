@@ -1,26 +1,26 @@
-@media print {
-    .noprint {
-        display: none;
-    }
+body {
+    overflow-y: hidden;
 }
 
-body {
-    background-color: white;
-    color: black;
-    margin: 0;
-    padding: 0;
+#ae_contents {
+    position: absolute;
+    top: 57px;
+    bottom: 22px;
+    left: 0;
     width: 100%;
+    overflow: auto;
 }
 
 .ae_left_container_100pc {
-    font-size: 9pt;
-    line-height: 1.2em;
-    margin: 0;
-    padding: 10px 20px;
-    min-width: 950px;
-    overflow: hidden;
-    text-align: left;
     width: 100%;
+    min-width: 950px;
+    text-align: left;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.2em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    _height: expression(document.body.clientHeight-79);
 }
 
 #ae_results_header {

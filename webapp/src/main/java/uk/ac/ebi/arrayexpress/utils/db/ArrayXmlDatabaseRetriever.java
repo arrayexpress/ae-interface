@@ -117,7 +117,7 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
         while ( resultSet.next() ) {
             Clob xmlClob = resultSet.getClob(1);
             if (null != xmlClob) {
-                arrayDesignXml.append(ClobToString(xmlClob));
+                arrayDesignXml.append(clobToString(xmlClob));
             }
         }
         arrayDesignXml.append("</array_designs>");

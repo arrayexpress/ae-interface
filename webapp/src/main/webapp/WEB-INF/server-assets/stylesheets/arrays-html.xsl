@@ -26,7 +26,7 @@
 
     <xsl:template match="/">
         <html lang="en">
-            <xsl:call-template name="page-header-plain">
+            <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
                     <xsl:text>Platform Designs | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
@@ -38,7 +38,7 @@
                     <script src="{$basepath}/assets/scripts/ae_arrays_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
-            <xsl:call-template name="page-body-plain"/>
+            <xsl:call-template name="page-body"/>
         </html>
     </xsl:template>
 
