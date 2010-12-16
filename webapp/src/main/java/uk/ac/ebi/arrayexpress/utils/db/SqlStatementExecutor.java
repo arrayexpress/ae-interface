@@ -105,7 +105,7 @@ public abstract class SqlStatementExecutor
         }
     }
 
-    protected String ClobToString( Clob cl ) throws IOException, SQLException
+    protected String clobToString( Clob cl ) throws IOException, SQLException
     {
         if (cl == null)
             return null;

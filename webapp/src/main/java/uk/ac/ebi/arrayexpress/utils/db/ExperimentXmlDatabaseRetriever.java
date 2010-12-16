@@ -110,7 +110,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
         if (resultSet.next()) {
             Clob xmlClob = resultSet.getClob(1);
             if (null != xmlClob) {
-                experimentXml.append(ClobToString(xmlClob));
+                experimentXml.append(clobToString(xmlClob));
             }
         }
     }
