@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
-import java.io.*;
+import java.io.File;
 
 public class TextFilePersistence<Object extends Persistable>
 {
@@ -67,35 +67,19 @@ public class TextFilePersistence<Object extends Persistable>
 
     private String load() throws Exception
     {
-        logger.debug("Retrieving persistable object [{}] from [{}]", object.getClass().toString(), persistenceFile.getName());
+        logger.debug("Retrieving persistable object [{}] from [{}]"
+                , object.getClass().toString()
+                , persistenceFile.getName());
 
-        StringBuilder result = new StringBuilder();
-        if (persistenceFile.exists()) {
-            BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(persistenceFile)));
-            while ( r.ready() ) {
-                String str = r.readLine();
-                // null means stream has reached the end
-                if (null != str) {
-                    result.append(str).append(StringTools.EOL);
-                } else {
-                    break;
-                }
-            }
-            logger.debug("Object successfully retrieved");
-        } else {
-            logger.warn("Persistence file [{}] not found", persistenceFile.getAbsolutePath());
-            return null;
-        }
-
-        return result.toString();
+        return StringTools.fileToString(persistenceFile, "UTF-8");
     }
 
     private void save( String objectString ) throws Exception
     {
-        logger.debug("Saving persistable object [{}] to [{}]", object.getClass().toString(), persistenceFile.getName());
-        BufferedWriter w = new BufferedWriter(new FileWriter(persistenceFile));
-        w.write(objectString);
-        w.close();
-        logger.debug("Object successfully saved");
+        logger.debug("Saving persistable object [{}] to [{}]"
+                , object.getClass().toString()
+                , persistenceFile.getName());
+
+        StringTools.stringToFile(objectString, persistenceFile);
     }
 }
