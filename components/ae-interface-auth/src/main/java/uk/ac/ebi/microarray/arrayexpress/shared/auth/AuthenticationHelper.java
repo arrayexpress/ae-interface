@@ -18,19 +18,20 @@ package uk.ac.ebi.microarray.arrayexpress.shared.auth;
  */
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class AuthenticationHelper
 {
     // embedded encoder class
     private final ModifiedBase64Encoder encoder = new ModifiedBase64Encoder();
 
-    public boolean verifyHash(String hash, String username, String password, String suffix)
+    public boolean verifyHash( String hash, String username, String password, String suffix )
     {
         String computedHash = generateHash(username, password, suffix);
         return (null != hash && hash.equals(computedHash));
     }
 
-    public String generateHash(String username, String password, String suffix)
+    public String generateHash( String username, String password, String suffix )
     {
         String hash = null;
         try {
@@ -44,8 +45,8 @@ public class AuthenticationHelper
                             .getBytes()
             );
             hash = new String(encoder.encode(hashBytes));
-        } catch ( Exception x ) {
-            // nothing we do here, unfortunately
+        } catch (NoSuchAlgorithmException x) {
+            //
         }
         return hash;
     }
@@ -58,9 +59,9 @@ public class AuthenticationHelper
         public ModifiedBase64Encoder()
         {
             int i = 0;
-            for ( char c = 'A'; c <= 'Z'; c++ ) map1[i++] = c;
-            for ( char c = 'a'; c <= 'z'; c++ ) map1[i++] = c;
-            for ( char c = '0'; c <= '9'; c++ ) map1[i++] = c;
+            for (char c = 'A'; c <= 'Z'; c++) map1[i++] = c;
+            for (char c = 'a'; c <= 'z'; c++) map1[i++] = c;
+            for (char c = '0'; c <= '9'; c++) map1[i++] = c;
             map1[i++] = '*';
             map1[i] = '-';
         }
@@ -92,7 +93,7 @@ public class AuthenticationHelper
             char[] out = new char[oLen];
             int ip = 0;
             int op = 0;
-            while ( ip < iLen ) {
+            while (ip < iLen) {
                 int i0 = in[ip++] & 0xff;
                 int i1 = ip < iLen ? in[ip++] & 0xff : 0;
                 int i2 = ip < iLen ? in[ip++] & 0xff : 0;
