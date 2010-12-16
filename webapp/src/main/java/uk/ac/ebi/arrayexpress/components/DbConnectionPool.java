@@ -1,14 +1,13 @@
 package uk.ac.ebi.arrayexpress.components;
 
-import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.db.ConnectionSource;
 import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -93,35 +92,5 @@ public class DbConnectionPool extends ApplicationComponent
         return null;
     }
 
-    public class ConnectionSource implements IConnectionSource
-    {
-        private BoneCP connectionPool;
-        private String name;
 
-        public ConnectionSource( String name, BoneCPConfig cpConfig ) throws SQLException
-        {
-            this.name = name;
-            this.connectionPool = new BoneCP(cpConfig);
-        }
-
-        public String getName()
-        {
-            return this.name;
-        }
-
-        public Connection getConnection() throws SQLException
-        {
-            if (null != this.connectionPool) {
-                return this.connectionPool.getConnection();
-            } else {
-                throw new SQLException("Unable to obtain a connection from pool [" + this.name + "], pool is not created or closed");
-            }
-        }
-
-        public void close()
-        {
-            this.connectionPool.shutdown();
-            this.connectionPool = null;
-        }
-    }
 }
