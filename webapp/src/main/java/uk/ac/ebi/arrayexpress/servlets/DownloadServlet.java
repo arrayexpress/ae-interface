@@ -43,12 +43,12 @@ public class DownloadServlet extends ApplicationServlet
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // buffer size (in bytes)
-    private final int TRANSFER_BUFFER_SIZE = 10 * 1024 * 1024;
+    private static final int TRANSFER_BUFFER_SIZE = 10 * 1024 * 1024;
 
     // multipart boundary constant
-    private final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
+    private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
 
-    public class DownloadServletException extends Exception
+    private final static class DownloadServletException extends Exception
     {
         public DownloadServletException( String message )
         {
@@ -475,7 +475,7 @@ public class DownloadServlet extends ApplicationServlet
     /**
      * This class represents a byte range.
      */
-    protected class Range {
+    protected static class Range {
         long start;
         long end;
         long length;
