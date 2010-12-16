@@ -49,11 +49,9 @@ public final class EFOQueryExpander implements IQueryExpander
     {
         EFOExpandableQueryInfo queryInfo = null;
 
-        try {
-            queryInfo = (EFOExpandableQueryInfo)info;
-        } catch (ClassCastException x) {
-            // ok, do nothing here
-        }
+        if (info instanceof EFOExpandableQueryInfo) {
+             queryInfo = (EFOExpandableQueryInfo)info;
+         }
 
         if (null != queryInfo) {
             String expandEfo = StringTools.arrayToString(info.getParams().get("expandefo"), "");
@@ -200,9 +198,8 @@ public final class EFOQueryExpander implements IQueryExpander
         } else {
             Set<Term> terms = new HashSet<Term>();
             query.extractTerms(terms);
-            for (Term t : terms ) {
-                return t;
-            }
+
+            return terms.iterator().next();
         }
         return new Term("", "");
     }

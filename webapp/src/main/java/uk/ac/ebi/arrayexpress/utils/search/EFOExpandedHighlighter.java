@@ -57,10 +57,8 @@ public class EFOExpandedHighlighter implements IQueryHighlighter
     {
         EFOExpandableQueryInfo queryInfo = null;
 
-        try {
+        if (info instanceof EFOExpandableQueryInfo) {
             queryInfo = (EFOExpandableQueryInfo)info;
-        } catch (ClassCastException x) {
-            // ok, do nothing here
         }
 
         if (null == queryInfo) {
