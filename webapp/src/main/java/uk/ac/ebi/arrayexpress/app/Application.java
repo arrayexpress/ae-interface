@@ -40,12 +40,16 @@ public abstract class Application
     private Map<String, ApplicationComponent> components;
     private EmailSender emailer;
 
+    private static Application appInstance = null;
+
     public Application( String prefsName )
     {
         prefs = new ApplicationPreferences(prefsName);
         components = new LinkedHashMap<String, ApplicationComponent>();
         // setting application instance available to whoever wants it
-        appInstance = this;
+        if (null == appInstance) {
+            appInstance = this;
+        }
     }
 
     public abstract String getName();
@@ -114,8 +118,10 @@ public abstract class Application
         components.clear();
         components = null;
 
-        // remove reference to self
-        appInstance = null;
+        if (null != appInstance) {
+            // remove reference to self
+            appInstance = null;
+        }
     }
 
     public void sendEmail( String subject, String message )
@@ -171,6 +177,4 @@ public abstract class Application
     {
         return getInstance().getComponent(name);
     }
-
-    private static Application appInstance = null;
 }
