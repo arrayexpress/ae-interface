@@ -91,13 +91,13 @@ public class AutocompleteStore
                 boolean shouldAdd = false;
                 if ("".equals(fieldName)) {
                     // in this case we put "keyword" data, EFO and fieldNames, EFO will override keywords
-                    if (AutocompleteData.DATA_TEXT == data.getDataType() && "keywords".equals(data.getData())
-                            || AutocompleteData.DATA_TEXT != data.getDataType()) {
+                    if (AutocompleteData.DATA_TEXT.equals(data.getDataType()) && "keywords".equals(data.getData())
+                            || !AutocompleteData.DATA_TEXT.equals(data.getDataType())) {
                         shouldAdd = true;
                     }
                 } else {
-                    if ((AutocompleteData.DATA_TEXT == data.getDataType() && fieldName.equals(data.getData()))
-                            || (-1 != "sa efv exptype".indexOf(fieldName) && AutocompleteData.DATA_EFO_NODE == data.getDataType())) {
+                    if ((AutocompleteData.DATA_TEXT.equals(data.getDataType()) && fieldName.equals(data.getData()))
+                            || (-1 != "sa efv exptype".indexOf(fieldName) && AutocompleteData.DATA_EFO_NODE.equals(data.getDataType()))) {
                         shouldAdd = true;
                     }
                 }
@@ -107,10 +107,12 @@ public class AutocompleteStore
                 if (shouldAdd) {
                     for (int compIndex = 0; compIndex < comps.size(); ++compIndex) {
                         if (comps.get(compIndex).getText().equals(data.getText())) {
-                            if (AutocompleteData.DATA_EFO_NODE == comps.get(compIndex).getDataType() && AutocompleteData.DATA_TEXT == data.getDataType()) {
+                            if (AutocompleteData.DATA_EFO_NODE.equals(comps.get(compIndex).getDataType())
+                                    && AutocompleteData.DATA_TEXT.equals(data.getDataType())) {
                                 shouldAdd = false;
                                 break;
-                            } else if (AutocompleteData.DATA_TEXT == comps.get(compIndex).getDataType() && AutocompleteData.DATA_EFO_NODE == data.getDataType()) {
+                            } else if (AutocompleteData.DATA_TEXT.equals(comps.get(compIndex).getDataType())
+                                    && AutocompleteData.DATA_EFO_NODE.equals(data.getDataType())) {
                                 comps.set(compIndex, data);
                                 shouldAdd = false;
                                 break;

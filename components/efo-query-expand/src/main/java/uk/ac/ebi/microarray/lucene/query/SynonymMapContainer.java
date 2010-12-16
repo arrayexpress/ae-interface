@@ -35,7 +35,7 @@ public class SynonymMapContainer {
     /**
      * Map with no strings and no synonyms.
      */
-    public static Map<String, Set<String>> EMPTY_WORD_2_SYNONYMS = new HashMap<String, Set<String>>();
+    public final static Map<String, Set<String>> EMPTY_WORD_2_SYNONYMS = new HashMap<String, Set<String>>();
 
     private Map<String, Set<String>> word2Synonyms = new HashMap<String, Set<String>>();
 
