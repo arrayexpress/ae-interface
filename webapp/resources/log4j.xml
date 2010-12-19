@@ -31,6 +31,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="sun.net.www.protocol.http" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <logger name="org.quartz.simpl" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>
