@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class TextFilePersistence<Object extends Persistable>
 {
@@ -71,7 +72,13 @@ public class TextFilePersistence<Object extends Persistable>
                 , object.getClass().toString()
                 , persistenceFile.getName());
 
-        return StringTools.fileToString(persistenceFile, "UTF-8");
+        String text = null;
+        try {
+            StringTools.fileToString(persistenceFile, "UTF-8");
+        } catch (FileNotFoundException x) {
+            logger.error(x.getMessage());
+        }
+        return text;
     }
 
     private void save( String objectString ) throws Exception

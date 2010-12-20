@@ -77,11 +77,11 @@ public class StringTools
 
     public static String fileToString( File f, String encoding ) throws IOException
     {
-        if (f.exists() && f.canRead()) {
+        if (f.exists()) {
             InputStream is = new FileInputStream(f);
             return streamToString(is, encoding);
         } else {
-            throw new IOException("File [" + f.getName() + "] not found or cannot be opened");
+            throw new FileNotFoundException("File [" + f.getName() + "] not found");
         }
     }
 
