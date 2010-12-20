@@ -31,7 +31,10 @@ import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Ontologies extends ApplicationComponent
@@ -41,11 +44,6 @@ public class Ontologies extends ApplicationComponent
 
     private EFOOntologyHelper ontology;
 
-    private Map<String, Integer> expCountByEfoId;
-
-    private final String EFO_NOT_LOADED_YET = "";
-
-    private Experiments experiments;
     private SearchEngine search;
     private Autocompletion autocompletion;
 
@@ -55,11 +53,9 @@ public class Ontologies extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        experiments = (Experiments) getComponent("Experiments");
         search = (SearchEngine) getComponent("SearchEngine");
         autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        this.expCountByEfoId = new HashMap<String, Integer>();
         ((JobsController)getComponent("JobsController")).executeJob("reload-ontology");
     }
 

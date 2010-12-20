@@ -33,6 +33,7 @@ import uk.ac.ebi.arrayexpress.utils.db.UserXmlDatabaseRetriever;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobListener
 {
@@ -44,7 +45,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     private IConnectionSource connectionSource;
     private StringBuffer xmlBuffer;
 
-    private int numThreadsCompleted;
+    private AtomicInteger numThreadsCompleted;
     private int expsPerThread;
 
     public void doExecute( JobExecutionContext jec ) throws Exception
@@ -204,7 +205,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
         Long threads = getPreferences().getLong("ae.experiments.ae1.reload.threads");
         if (null != threads) {
             int numThreadsForRetrieval = threads.intValue();
-            numThreadsCompleted = 0;
+            numThreadsCompleted = new AtomicInteger();
 
             exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
             Thread.sleep(1);
@@ -228,7 +229,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     Thread.sleep(1);
                 }
 
-                while (numThreadsCompleted < numThreadsForRetrieval) {
+                while (numThreadsCompleted.get() < numThreadsForRetrieval) {
                     Thread.sleep(1000);
                 }
 
@@ -295,12 +296,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             jdm.remove("connectionSource");
             jdm.remove("exps");
 
-            incrementCompletedThreadsCounter();
+            numThreadsCompleted.incrementAndGet();
         }
-    }
-
-    private synchronized void incrementCompletedThreadsCounter()
-    {
-        numThreadsCompleted++;
     }
 }

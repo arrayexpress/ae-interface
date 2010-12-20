@@ -61,7 +61,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     private DocumentInfo appDocument;
 
-    private final String XML_STRING_ENCODING = "UTF-8";
+    private static final String XML_STRING_ENCODING = "UTF-8";
 
     public SaxonEngine()
     {

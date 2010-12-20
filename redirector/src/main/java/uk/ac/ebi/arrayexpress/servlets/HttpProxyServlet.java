@@ -37,16 +37,14 @@ public class HttpProxyServlet extends HttpServlet
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
-    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
-    private final RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
-
-    private final int PROXY_BUFFER_SIZE = 64000;
-
     // Respond to HTTP GET requests
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {
+        RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
+        RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:\\/\\/([^/]+)\\/", "i");
+        RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
+
         String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
         String queryString = request.getQueryString();
 
@@ -106,7 +104,7 @@ public class HttpProxyServlet extends HttpServlet
 
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
 
-                    CharBuffer buffer = CharBuffer.allocate(PROXY_BUFFER_SIZE);
+                    CharBuffer buffer = CharBuffer.allocate(64000); // proxy buffer size
                     while ( in.read(buffer) >= 0 ) {
                         buffer.flip();
                         out.append(buffer);
@@ -119,12 +117,11 @@ public class HttpProxyServlet extends HttpServlet
 
                 this.logger.info("Processed {}, {}", requestToString("GET", url, queryString), statusToString(statusCode, contentLength));
 
-            } catch ( Exception x ) {
+            } catch ( IOException x ) {
                 if (x.getClass().getName().equals("org.apache.catalina.connector.ClientAbortException")) {
                     logger.debug("Client aborted connection");
                 } else {
-                    logger.error("Caught an exception:", x);
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, x.getMessage());
+                    throw x;
                 }
             } finally {
                 getMethod.releaseConnection();

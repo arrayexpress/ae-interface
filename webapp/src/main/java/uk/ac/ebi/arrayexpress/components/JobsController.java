@@ -33,7 +33,7 @@ public class JobsController extends ApplicationComponent
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // jobs group
-    private final String AE_JOBS_GROUP = "ae-jobs";
+    private static final String AE_JOBS_GROUP = "ae-jobs";
 
     // quartz scheduler
     private Scheduler scheduler;

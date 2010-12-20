@@ -31,8 +31,8 @@ public class QueryHighlighter implements IQueryHighlighter
 
     private IndexEnvironment env;
 
-    private final String HIT_OPEN_MARK = "\u00ab";
-    private final String HIT_CLOSE_MARK = "\u00bb";
+    private static final String HIT_OPEN_MARK = "\u00ab";
+    private static final String HIT_CLOSE_MARK = "\u00bb";
 
     public IQueryHighlighter setEnvironment( IndexEnvironment env )
     {

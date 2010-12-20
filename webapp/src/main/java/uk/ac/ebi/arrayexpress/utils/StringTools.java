@@ -110,7 +110,7 @@ public class StringTools
     public static Boolean stringToBoolean( String boolString )
     {
         if (null == boolString) {
-            return null;
+            throw new IllegalArgumentException("Cannot accept null agrument");
         } else {
             return "true".equalsIgnoreCase(boolString) || "1".equals(boolString) || "on".equalsIgnoreCase(boolString);
         }

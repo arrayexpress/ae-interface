@@ -48,7 +48,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     private Map<String, Set<String>> customSynonyms;
 
     // maximum number of index documents to be processed; in reality shouldn't be more than 2
-    private final int MAX_INDEX_HITS = 16;
+    private static final int MAX_INDEX_HITS = 16;
 
     public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords )
     {
