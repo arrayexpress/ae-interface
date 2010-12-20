@@ -41,8 +41,10 @@ import java.io.StringReader;
 public class ParseHtml extends SystemFunction
 {
 
+    private static final long serialVersionUID = -3160902172545280473L;
+
     private String baseURI;
-    private Parser parser;
+    private transient Parser parser;
 
     public void checkArguments( ExpressionVisitor visitor ) throws XPathException
     {
