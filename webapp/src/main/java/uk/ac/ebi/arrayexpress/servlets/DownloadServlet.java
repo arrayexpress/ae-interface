@@ -88,8 +88,8 @@ public class DownloadServlet extends ApplicationServlet
     private File validateRequest( HttpServletRequest request, HttpServletResponse response )
             throws Exception
     {
-        String accession = null;
-        String name = null;
+        String accession = "";
+        String name = "";
         File file;
 
         String[] requestArgs = new RegexHelper("servlets/download/([^/]+)/?([^/]*)", "i")

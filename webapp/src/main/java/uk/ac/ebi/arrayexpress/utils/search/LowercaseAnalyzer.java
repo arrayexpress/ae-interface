@@ -27,7 +27,7 @@ import java.io.Reader;
 
 public final class LowercaseAnalyzer extends Analyzer
 {
-   private class LowercaseTokenizer extends LetterTokenizer
+   private static class LowercaseTokenizer extends LetterTokenizer
     {
         public LowercaseTokenizer(Reader in)
         {

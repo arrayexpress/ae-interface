@@ -51,7 +51,7 @@ public class AuthenticationHelper
         return hash;
     }
 
-    private class ModifiedBase64Encoder
+    private static class ModifiedBase64Encoder
     {
         // Mapping table from 6-bit nibbles to Base64 characters.
         private char[] map1 = new char[64];

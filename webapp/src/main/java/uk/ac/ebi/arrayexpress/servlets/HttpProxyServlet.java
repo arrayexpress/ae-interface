@@ -37,11 +37,7 @@ public class HttpProxyServlet extends ApplicationServlet
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
-    private final RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:/{2}([^/]+)/", "i");
-    private final RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
-
-    private final int PROXY_BUFFER_SIZE = 64000;
+    private static final int PROXY_BUFFER_SIZE = 64000;
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
@@ -52,6 +48,10 @@ public class HttpProxyServlet extends ApplicationServlet
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {
+        RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
+        RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:/{2}([^/]+)/", "i");
+        RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
+
         logRequest(logger, request, requestType);
 
         String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());

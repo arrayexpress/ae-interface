@@ -309,7 +309,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return result;
     }
 
-    class LoggerWriter extends SequenceWriter
+    private static class LoggerWriter extends SequenceWriter
     {
         private Logger logger;
 

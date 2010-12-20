@@ -27,7 +27,7 @@ import java.io.Reader;
 
 public final class ExperimentTextAnalyzer extends Analyzer
 {
-    private class ExperimentTextTokenizer extends CharTokenizer
+    private static class ExperimentTextTokenizer extends CharTokenizer
     {
         public ExperimentTextTokenizer(Reader in)
         {

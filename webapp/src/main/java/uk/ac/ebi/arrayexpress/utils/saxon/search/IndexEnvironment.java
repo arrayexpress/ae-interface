@@ -49,7 +49,7 @@ public class IndexEnvironment
     public String indexDocumentPath;
 
     // field information, parsed
-    public class FieldInfo
+    public static class FieldInfo
     {
         public String name;
         public String title;

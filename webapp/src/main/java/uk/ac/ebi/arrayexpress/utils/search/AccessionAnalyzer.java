@@ -27,7 +27,7 @@ import java.io.Reader;
 
 public final class AccessionAnalyzer extends Analyzer
 {
-    private class AccessionTokenizer extends CharTokenizer
+    private static class AccessionTokenizer extends CharTokenizer
     {
         public AccessionTokenizer(Reader in)
         {

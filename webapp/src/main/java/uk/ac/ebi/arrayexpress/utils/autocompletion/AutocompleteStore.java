@@ -1,5 +1,6 @@
 package uk.ac.ebi.arrayexpress.utils.autocompletion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class AutocompleteStore
     private SetTrie trie;
     private HashMap<String, AutocompleteData> objects;
 
-    private class AutocompleteComparator implements Comparator<String>
+    private static class AutocompleteComparator implements Comparator<String>, Serializable
     {
         public int compare( String s1, String s2 )
         {

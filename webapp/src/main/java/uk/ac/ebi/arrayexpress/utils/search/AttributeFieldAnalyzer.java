@@ -27,7 +27,7 @@ import java.io.Reader;
 
 public class AttributeFieldAnalyzer extends Analyzer
 {
-       private class AttributeFieldTokenizer extends WhitespaceTokenizer
+       private static class AttributeFieldTokenizer extends WhitespaceTokenizer
     {
         public AttributeFieldTokenizer( Reader in)
         {
