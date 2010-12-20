@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae fn saxon"
-                exclude-result-prefixes="ae fn saxon html"
+                extension-element-prefixes="aejava fn saxon"
+                exclude-result-prefixes="aejava fn saxon html"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -25,7 +25,7 @@
         <experiment>
             <xsl:variable name="vAccession" select="accession"/>
 
-            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', $vAccession)">
+            <xsl:if test="aejava:getAcceleratorValue('is-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
             <source id="ae2"/>

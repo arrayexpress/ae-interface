@@ -2,11 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae fn html saxon xs"
-                exclude-result-prefixes="ae fn html saxon xs"
+                extension-element-prefixes="aejava fn html saxon xs"
+                exclude-result-prefixes="aejava fn html saxon xs"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -50,7 +50,7 @@
                 </xsl:analyze-string>
             </xsl:variable>
 
-            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', accession)">
+            <xsl:if test="aejava:getAcceleratorValue('is-in-atlas', accession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 

@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
+import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class ExtFunctions
 
     // todo: this is experimental feature, that should get moved somewhere
 
-    private static Map<String, Map<String, String>> acceleratorMapRegistry = null;
+    private static Map<String, Map<String, Object>> acceleratorMapRegistry = null;
 
     public synchronized static void clearAccelerator( String acceleratorName )
     {
@@ -63,17 +64,17 @@ public class ExtFunctions
         }
     }
 
-    public synchronized static void addAcceleratorValue( String acceleratorName, String key, String value )
+    public synchronized static void addAcceleratorValue( String acceleratorName, String key, Object value )
     {
         if (null == acceleratorMapRegistry) {
-            acceleratorMapRegistry = new HashMap<String, Map<String, String>>();
+            acceleratorMapRegistry = new HashMap<String, Map<String, Object>>();
         }
 
         if (!acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
-            acceleratorMapRegistry.put(acceleratorName.toLowerCase(), new HashMap<String, String>());
+            acceleratorMapRegistry.put(acceleratorName.toLowerCase(), new HashMap<String, Object>());
         }
 
-        Map<String, String> acceleratorMap = acceleratorMapRegistry.get(acceleratorName.toLowerCase());
+        Map<String, Object> acceleratorMap = acceleratorMapRegistry.get(acceleratorName.toLowerCase());
         if (acceleratorMap.containsKey(key.toLowerCase())) {
             logger.warn("Accelerator [{}] already contains value for key [{}], overriding", acceleratorName, key);
         }
@@ -83,10 +84,24 @@ public class ExtFunctions
 
     public synchronized static String getAcceleratorValue( String acceleratorName, String key )
     {
-        if (null != acceleratorMapRegistry && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
-            return acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
+        if (null != acceleratorMapRegistry
+                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
+            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
+            return value instanceof String ? (String)value : null;
         } else {
             return null;
         }
     }
+
+    public synchronized static NodeInfo getAcceleratorValueAsSequence( String acceleratorName, String key )
+    {
+        if (null != acceleratorMapRegistry
+                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
+            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
+            return value instanceof NodeInfo ? (NodeInfo)value : null;
+        } else {
+            return null;
+        }
+    }
+
 }

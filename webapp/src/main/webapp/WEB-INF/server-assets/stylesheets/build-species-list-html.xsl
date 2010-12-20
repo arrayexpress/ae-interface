@@ -2,7 +2,7 @@
 <xsl:stylesheet
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:html="http://www.w3.org/1999/xhtml"
-        xmlns:ae="http://www.ebi.ac.uk/arrayexpress/xslt"
+        xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
         extension-element-prefixes="ae html"
         exclude-result-prefixes="ae html"
         version="2.0">

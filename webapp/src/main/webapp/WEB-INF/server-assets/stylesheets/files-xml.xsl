@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="ae search"
-                exclude-result-prefixes="ae search"
+                extension-element-prefixes="search"
+                exclude-result-prefixes="search"
                 version="2.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>

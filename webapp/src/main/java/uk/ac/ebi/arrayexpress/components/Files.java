@@ -121,6 +121,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         this.logger.debug("Updating accelerators for files");
 
+        ExtFunctions.clearAccelerator("exp-files");
         ExtFunctions.clearAccelerator("raw-files");
         ExtFunctions.clearAccelerator("fgem-files");
 
@@ -137,6 +138,8 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 try {
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
+                    ExtFunctions.addAcceleratorValue("exp-files", accession, node);
+                    //todo: remove redundancy here
                     ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
                     ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
                 } catch (XPathExpressionException x) {

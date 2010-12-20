@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="ae fn search"
-                exclude-result-prefixes="ae fn search"
+                extension-element-prefixes="aejava fn search"
+                exclude-result-prefixes="aejava fn search"
                 version="1.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>
@@ -91,7 +91,7 @@
     <xsl:template name="list-data">
         <xsl:param name="pKind"/>
         <xsl:param name="pAccession"/>
-        <xsl:variable name="vFiles" select="ae:getAcceleratorValue(fn:concat($pKind, '-files'), $pAccession)"/>
+        <xsl:variable name="vFiles" select="aejava:getAcceleratorValue(fn:concat($pKind, '-files'), $pAccession)"/>
         <xsl:choose>
             <xsl:when test="$vFiles > 1">
                 <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>?kind=<xsl:value-of select="$pKind"/>

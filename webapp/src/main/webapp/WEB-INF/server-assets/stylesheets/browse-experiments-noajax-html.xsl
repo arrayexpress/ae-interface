@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 extension-element-prefixes="ae search html"
@@ -211,7 +211,7 @@
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
         <xsl:choose>
-            <xsl:when test="'0' != ae:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
+            <xsl:when test="'0' != aejava:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="ae search"
-                exclude-result-prefixes="ae search"
+                extension-element-prefixes="aejava search"
+                exclude-result-prefixes="aejava search"
                 version="1.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>
@@ -16,7 +16,6 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
     
@@ -54,29 +53,32 @@ For more information, please go to:
     http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
                 </xsl:comment>
                 <xsl:variable name="vAccession" select="accession"/>
-                <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]"/>
-                <xsl:if test="$vFiles/file[@kind = 'raw']">
-                    <raw name="{$vFiles/file[@kind = 'raw']/@name}"
+                <!--
+                <xsl:variable name="vExpFolder" select="search:queryIndex2('files', concat('accession:', $vAccession))"/>
+                -->
+                <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vAccession)"/>
+                <xsl:if test="$vExpFolder/file[@kind = 'raw']">
+                    <raw name="{$vExpFolder/file[@kind = 'raw']/@name}"
                          count="{rawdatafiles}"
                          celcount="{sum(bioassaydatagroup[isderived = '0'][contains(dataformat, 'CEL')]/bioassays)}"/>
                 </xsl:if>
-                <xsl:if test="$vFiles/file[@kind = 'fgem']">
-                    <fgem name="{$vFiles/file[@kind = 'fgem']/@name}"
+                <xsl:if test="$vExpFolder/file[@kind = 'fgem']">
+                    <fgem name="{$vExpFolder/file[@kind = 'fgem']/@name}"
                           count="{fgemdatafiles}"/>
                 </xsl:if>
-                <xsl:if test="$vFiles/file[@kind = 'idf' and @extension = 'txt']">
-                    <idf name="{$vFiles/file[@kind = 'idf' and @extension = 'txt']/@name}"/>
+                <xsl:if test="$vExpFolder/file[@kind = 'idf' and @extension = 'txt']">
+                    <idf name="{$vExpFolder/file[@kind = 'idf' and @extension = 'txt']/@name}"/>
                 </xsl:if>
-                <xsl:if test="$vFiles/file[@kind = 'sdrf' and @extension = 'txt']">
-                    <sdrf name="{$vFiles/file[@kind = 'sdrf' and @extension = 'txt']/@name}"/>
+                <xsl:if test="$vExpFolder/file[@kind = 'sdrf' and @extension = 'txt']">
+                    <sdrf name="{$vExpFolder/file[@kind = 'sdrf' and @extension = 'txt']/@name}"/>
                 </xsl:if>
-                <xsl:if test="$vFiles/file[@kind = 'biosamples']">
+                <xsl:if test="$vExpFolder/file[@kind = 'biosamples']">
                     <biosamples>
-                        <xsl:if test="$vFiles/file[@kind = 'biosamples' and @extension = 'png']">
-                            <png name="{$vFiles/file[@kind = 'biosamples' and @extension = 'png']/@name}"/>
+                        <xsl:if test="$vExpFolder/file[@kind = 'biosamples' and @extension = 'png']">
+                            <png name="{$vExpFolder/file[@kind = 'biosamples' and @extension = 'png']/@name}"/>
                         </xsl:if>
-                        <xsl:if test="$vFiles/file[@kind = 'biosamples' and @extension = 'svg']">
-                            <svg name="{$vFiles/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
+                        <xsl:if test="$vExpFolder/file[@kind = 'biosamples' and @extension = 'svg']">
+                            <svg name="{$vExpFolder/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
                         </xsl:if>
                     </biosamples>
                 </xsl:if>
