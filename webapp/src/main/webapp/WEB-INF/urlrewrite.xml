@@ -20,6 +20,11 @@
     <!-- arrays section -->
     <rule>
         <from>^/arrays/?$</from>
+        <to type="permanent-redirect">%{context-path}/arrays/browse.html</to>
+    </rule>
+
+    <rule>
+        <from>^/arrays/browse\.html$</from>
         <to type="forward">/servlets/betterquery/arrays/arrays/html</to>
     </rule>
 
@@ -28,7 +33,7 @@
         <to type="forward">/servlets/betterquery/arrays/arrays/html?accession=$1</to>
     </rule>
 
-    <!-- experiment by accession page -->
+    <!-- experiments section -->
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/browse-experiment/html?accession=$1</to>
