@@ -30,6 +30,11 @@ public final class SearchExtension
         return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
     }
 
+    public static SequenceIterator queryIndex2( XPathContext context, String indexId, String queryString )
+    {
+        return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
+    }
+
     public static String highlightQuery( String indexId, String queryId, String fieldName, String text )
     {
         return text;
