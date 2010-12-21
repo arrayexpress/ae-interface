@@ -5,9 +5,8 @@
 
     <xsl:template match="/users">
         <users>
-
             <xsl:apply-templates select="user">
-                <xsl:sort select="id" order="descending" data-type="number"/>
+                <xsl:sort select="id" order="ascending" data-type="number"/>
             </xsl:apply-templates>
         </users>
     </xsl:template>

@@ -10,6 +10,7 @@
     <xsl:param name="sortorder"/>
 
     <xsl:param name="queryid"/>
+    <xsl:param name="keywords"/>
 
     <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
@@ -48,7 +49,15 @@
 
         <div class="ae_left_container_100pc assign_font">
             <div id="ae_content">
-                <div id="ae_header"><img src="{$basepath}/assets/images/ae_header.gif" alt="ArrayExpress"/></div>
+                <div id="ae_query_box">
+                    <form id="ae_query_form" method="get" action="browse.html">
+                        <fieldset id="ae_keywords_fset">
+                            <label for="ae_keywords_field">Platform designs</label>
+                            <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
+                        </fieldset>
+                        <input id="ae_query_submit" type="submit" name="s" value="Query"/>
+                    </form>
+                </div>
                 <xsl:choose>
                     <xsl:when test="$vTotal&gt;0">
                         <div id="ae_results_header">

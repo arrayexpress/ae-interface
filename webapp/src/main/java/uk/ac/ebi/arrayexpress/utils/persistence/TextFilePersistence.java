@@ -74,7 +74,7 @@ public class TextFilePersistence<Object extends Persistable>
 
         String text = null;
         try {
-            StringTools.fileToString(persistenceFile, "UTF-8");
+            text = StringTools.fileToString(persistenceFile, "UTF-8");
         } catch (FileNotFoundException x) {
             logger.error(x.getMessage());
         }
