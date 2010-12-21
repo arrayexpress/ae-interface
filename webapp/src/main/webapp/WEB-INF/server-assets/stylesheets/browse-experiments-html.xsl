@@ -4,8 +4,8 @@
                 xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs ae search html"
-                exclude-result-prefixes="xs ae search html"
+                extension-element-prefixes="xs aejava search html"
+                exclude-result-prefixes="xs aejava search html"
                 version="2.0">
 
     <xsl:param name="queryid"/>

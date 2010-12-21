@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                extension-element-prefixes="ae aeext"
-                exclude-result-prefixes="ae aeext"
+                extension-element-prefixes="ae aejava"
+                exclude-result-prefixes="ae aejava"
                 version="2.0">
 
     <xsl:function name="ae:dataformats">

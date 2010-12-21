@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                xmlns:aeext="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae aeext search html"
-                exclude-result-prefixes="ae aeext search html"
+                extension-element-prefixes="ae aejava search html"
+                exclude-result-prefixes="ae aejava search html"
                 version="2.0">
 
     <xsl:param name="queryid"/>
@@ -332,8 +332,8 @@
     <xsl:template match="bibliography">
         <div>
             <xsl:variable name="publication_title">
-                <xsl:if test="string-length(title) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aeext:trimTrailingDot(title)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
-                <xsl:if test="string-length(authors) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aeext:trimTrailingDot(authors)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
+                <xsl:if test="string-length(title) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
+                <xsl:if test="string-length(authors) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
             </xsl:variable>
             <xsl:variable name="publication_link_title">
                 <xsl:if test="string-length(publication) > 0">

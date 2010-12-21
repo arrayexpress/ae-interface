@@ -47,64 +47,69 @@
         <xsl:variable name="vTotal" select="count($vFilteredArrays)"/>
 
         <div class="ae_left_container_100pc assign_font">
-            <div id="ae_header"><img src="{$basepath}/assets/images/ae_header.gif" alt="ArrayExpress"/></div>
-            <xsl:choose>
-                <xsl:when test="$vTotal&gt;0">
-                    <div id="ae_results_header">
-                        <xsl:text>There </xsl:text>
-                        <xsl:choose>
-                            <xsl:when test="$vTotal = 1">
-                                <xsl:text>is a platform design </xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>are </xsl:text>
-                                <xsl:value-of select="$vTotal"/>
-                                <xsl:text> platform designs </xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                        <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
-                    </div>
-                    <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="col_accession sortable">
-                                    <xsl:text>Accession</xsl:text>
-                                    <xsl:call-template name="add-sort">
-                                        <xsl:with-param name="pKind" select="'accession'"/>
-                                    </xsl:call-template>
-                                </th>
-                                <th class="col_name sortable">
-                                    <xsl:text>Name</xsl:text>
-                                    <xsl:call-template name="add-sort">
-                                        <xsl:with-param name="pKind" select="'name'"/>
-                                    </xsl:call-template>
-                                </th>
-                                <th class="col_species sortable">
-                                    <xsl:text>Species</xsl:text>
-                                    <xsl:call-template name="add-sort">
-                                        <xsl:with-param name="pKind" select="'species'"/>
-                                    </xsl:call-template>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <xsl:call-template name="ae-sort-arrays">
-                                <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
-                                <xsl:with-param name="pFrom"/>
-                                <xsl:with-param name="pTo"/>
-                                <xsl:with-param name="pSortBy" select="$sortby"/>
-                                <xsl:with-param name="pSortOrder" select="$sortorder"/>
-                            </xsl:call-template>
-                        </tbody>
-                    </table>
-                </xsl:when>
-                <xsl:otherwise>
-                    <div id="ae_infotext">
-                        <div>There are no platform designs matching your search criteria found in ArrayExpress Archive.</div>
-                    </div>
-                </xsl:otherwise>
-            </xsl:choose>
+            <div id="ae_content">
+                <div id="ae_header"><img src="{$basepath}/assets/images/ae_header.gif" alt="ArrayExpress"/></div>
+                <xsl:choose>
+                    <xsl:when test="$vTotal&gt;0">
+                        <div id="ae_results_header">
+                            <xsl:text>There </xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="$vTotal = 1">
+                                    <xsl:text>is a platform design </xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>are </xsl:text>
+                                    <xsl:value-of select="$vTotal"/>
+                                    <xsl:text> platform designs </xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                            <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
+                        </div>
+                        <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="col_accession sortable">
+                                        <xsl:text>Accession</xsl:text>
+                                        <xsl:call-template name="add-sort">
+                                            <xsl:with-param name="pKind" select="'accession'"/>
+                                        </xsl:call-template>
+                                    </th>
+                                    <th class="col_name sortable">
+                                        <xsl:text>Name</xsl:text>
+                                        <xsl:call-template name="add-sort">
+                                            <xsl:with-param name="pKind" select="'name'"/>
+                                        </xsl:call-template>
+                                    </th>
+                                    <th class="col_species sortable">
+                                        <xsl:text>Species</xsl:text>
+                                        <xsl:call-template name="add-sort">
+                                            <xsl:with-param name="pKind" select="'species'"/>
+                                        </xsl:call-template>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <xsl:call-template name="ae-sort-arrays">
+                                    <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
+                                    <xsl:with-param name="pFrom"/>
+                                    <xsl:with-param name="pTo"/>
+                                    <xsl:with-param name="pSortBy" select="$sortby"/>
+                                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                                </xsl:call-template>
+                            </tbody>
+                        </table>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="block-warning">
+                            <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
+                            <xsl:with-param name="pMessage">
+                                <xsl:text>There are no platform designs matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                            </xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </div>
         </div>
     </xsl:template>
 

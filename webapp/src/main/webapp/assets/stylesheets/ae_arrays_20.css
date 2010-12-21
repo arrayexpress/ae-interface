@@ -23,13 +23,13 @@ body {
     _height: expression(document.body.clientHeight-79);
 }
 
+#ae_content {
+    margin: 20px;
+}
+
 #ae_results_header {
     font-style: italic;
     padding: 15px 0 10px;
-}
-
-#ae_infotext {
-    padding: 10px 0;
 }
 
 #ae_print_controls {

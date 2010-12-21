@@ -3,8 +3,8 @@
                 xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae search html"
-                exclude-result-prefixes="ae search html"
+                extension-element-prefixes="aejava search html"
+                exclude-result-prefixes="aejava search html"
                 version="2.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>
