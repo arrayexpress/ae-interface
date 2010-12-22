@@ -48,6 +48,7 @@ public class QueryPool
             info = new QueryInfo();
         }
 
+        info.setIndexId(env.indexId);
         info.setQueryString(queryString);
         info.setParams(queryParams);
         info.setQuery(queryConstructor.construct(env, queryParams));

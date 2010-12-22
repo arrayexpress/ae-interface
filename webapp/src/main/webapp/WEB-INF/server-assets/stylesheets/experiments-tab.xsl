@@ -25,7 +25,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
 
         <xsl:text>Accession</xsl:text>
         <xsl:text>&#9;</xsl:text>

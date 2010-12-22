@@ -33,7 +33,7 @@ public final class SearchExtension
 
     private static Controller controller;
 
-    public static SequenceIterator queryIndex( String indexId, String queryId ) throws IOException, XPathException
+    public static SequenceIterator queryIndex( String queryId ) throws IOException, XPathException
     {
         Integer intQueryId;
         try {
@@ -41,7 +41,7 @@ public final class SearchExtension
         } catch (NumberFormatException x) {
             throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
         }
-        List<NodeInfo> nodes = getController().queryIndex(indexId, intQueryId);
+        List<NodeInfo> nodes = getController().queryIndex(intQueryId);
         if (null != nodes) {
             return new NodeListIterator(nodes);
         }
@@ -49,7 +49,7 @@ public final class SearchExtension
         return null;
     }
 
-    public static SequenceIterator queryIndex2( String indexId, String queryString ) throws IOException, ParseException
+    public static SequenceIterator queryIndex( String indexId, String queryString ) throws IOException, ParseException
     {
         List<NodeInfo> nodes = getController().queryIndex(indexId, queryString);
         if (null != nodes) {
@@ -59,9 +59,9 @@ public final class SearchExtension
         return null;
     }
 
-    public static String highlightQuery( String indexId, String queryId, String fieldName, String text )
+    public static String highlightQuery( String queryId, String fieldName, String text )
     {
-        return getController().highlightQuery(indexId, Integer.decode(queryId), fieldName, text);
+        return getController().highlightQuery(Integer.decode(queryId), fieldName, text);
     }
 
     public static String getQueryString( String queryId )

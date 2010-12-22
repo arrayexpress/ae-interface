@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="search html"
+                extension-element-prefixes="search"
                 exclude-result-prefixes="search html"
                 version="2.0">
 
@@ -26,7 +26,7 @@
         <xsl:variable name="vText" select="$pText"/>
         <xsl:choose>
             <xsl:when test="string-length($vText)!=0">
-                <xsl:variable name="markedtext" select="search:highlightQuery('experiments', $queryid, $pFieldName, $vText)"/>
+                <xsl:variable name="markedtext" select="search:highlightQuery($queryid, $pFieldName, $vText)"/>
                 <xsl:call-template name="add_highlight_element">
                     <xsl:with-param name="text" select="$markedtext"/>
                 </xsl:call-template>

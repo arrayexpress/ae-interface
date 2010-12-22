@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="search"
-                exclude-result-prefixes="search"
+                extension-element-prefixes="aejava search"
+                exclude-result-prefixes="aejava search"
                 version="2.0">
 
     <xsl:param name="sortby">releasedate</xsl:param>
@@ -22,7 +23,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <files version="1.1" revision="100915"
@@ -41,7 +42,7 @@
         <xsl:variable name="vAccession" select="accession"/>
         <experiment>
             <accession><xsl:value-of select="$vAccession"/></accession>
-            <xsl:variable name="vExpFolder" select="search:queryIndex2('files', concat('accession:', $vAccession))"/>
+            <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vAccession)"/>
             <xsl:for-each select="$vExpFolder/file">
                 <xsl:call-template name="file-for-accession">
                     <xsl:with-param name="pAccession" select="$vAccession"/>
@@ -51,7 +52,7 @@
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
                 <xsl:variable name="vArrayAccession" select="string(accession)"/>
-                <xsl:variable name="vArrFolder" select="search:queryIndex2('files', concat('accession:', $vArrayAccession))"/>
+                <xsl:variable name="vArrFolder" select="search:queryIndex('files', concat('accession:', $vArrayAccession))"/>
 
                 <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
                     <xsl:call-template name="file-for-accession">

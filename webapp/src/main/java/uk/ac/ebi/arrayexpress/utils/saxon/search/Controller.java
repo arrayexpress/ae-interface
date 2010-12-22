@@ -164,9 +164,10 @@ public class Controller
         return null != info ? info.getQueryString() : null;
     }
 
-    public List<NodeInfo> queryIndex( String indexId, Integer queryId ) throws IOException
+    public List<NodeInfo> queryIndex( Integer queryId ) throws IOException
     {
-        return queryIndex(indexId, this.queryPool.getQueryInfo(queryId).getQuery());
+        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
+        return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
     }
 
     public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException
@@ -179,13 +180,14 @@ public class Controller
         return new Querier(getEnvironment(indexId)).query(query);
     }
 
-    public String highlightQuery( String indexId, Integer queryId, String fieldName, String text )
+    public String highlightQuery( Integer queryId, String fieldName, String text )
     {
         if (null == this.queryHighlighter) {
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryHighlighter(new QueryHighlighter());
         }
-        return queryHighlighter.setEnvironment(getEnvironment(indexId))
-                .highlightQuery(this.queryPool.getQueryInfo(queryId), fieldName, text);
+        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
+        return queryHighlighter.setEnvironment(getEnvironment(queryInfo.getIndexId()))
+                .highlightQuery(queryInfo, fieldName, text);
     }
 }

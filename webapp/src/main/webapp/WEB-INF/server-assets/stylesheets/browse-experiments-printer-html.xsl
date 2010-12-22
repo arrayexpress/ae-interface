@@ -44,7 +44,7 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <div class="ae_left_container_100pc assign_font">

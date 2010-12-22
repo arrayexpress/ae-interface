@@ -23,7 +23,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <experiments version="1.2" revision="100915"
@@ -53,9 +53,6 @@ For more information, please go to:
     http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
                 </xsl:comment>
                 <xsl:variable name="vAccession" select="accession"/>
-                <!--
-                <xsl:variable name="vExpFolder" select="search:queryIndex2('files', concat('accession:', $vAccession))"/>
-                -->
                 <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vAccession)"/>
                 <xsl:if test="$vExpFolder/file[@kind = 'raw']">
                     <raw name="{$vExpFolder/file[@kind = 'raw']/@name}"

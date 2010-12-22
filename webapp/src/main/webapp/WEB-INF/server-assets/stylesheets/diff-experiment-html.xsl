@@ -50,7 +50,7 @@
     <xsl:template name="ae-contents">
 
         <xsl:variable name="vExperiment" select="experiment[accession = $vAccession]"/>
-        <xsl:variable name="vActiveExperiment" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vActiveExperiment" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vDiffTaggedExperiment">
             <xsl:choose>
                 <xsl:when test="count($vExperiment) > 1">

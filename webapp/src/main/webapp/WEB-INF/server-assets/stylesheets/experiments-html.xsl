@@ -49,7 +49,7 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex('experiments', $queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
 
         <div class="ae_centered_container_100pc assign_font">
             <div id="ae_keywords_filters_area">

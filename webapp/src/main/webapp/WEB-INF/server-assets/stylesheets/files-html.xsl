@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae search html"
-                exclude-result-prefixes="ae search html"
+                extension-element-prefixes="ae aejava search"
+                exclude-result-prefixes="ae aejava search html"
                 version="2.0">
 
     <xsl:param name="queryid"/>
@@ -42,7 +43,7 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <xsl:variable name="vExperiment" select="search:queryIndex('experiments', $queryid)[accession = $vAccession]"/>
+        <xsl:variable name="vExperiment" select="search:queryIndex($queryid)[accession = $vAccession]"/>
         <div class="ae_left_container_100pc assign_font">
             <xsl:choose>
                 <xsl:when test="$vExperiment">
@@ -54,7 +55,7 @@
                             </xsl:if>
                         </div>
                         <div class="ae_title"><xsl:value-of select="$vExperiment/name"/></div>
-                        <xsl:variable name="vExpFolder" select="search:queryIndex2('files', concat('accession:', $vAccession))"/>
+                        <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vAccession)"/>
                         <xsl:call-template name="files-for-accession">
                             <xsl:with-param name="pAccession" select="$vAccession"/>
                             <xsl:with-param name="pFiles" select="$vExpFolder/file"/>
@@ -82,7 +83,7 @@
                                 <xsl:sort select="accession" order="ascending"/>
                                 <xsl:variable name="vArrayAccession" select="string(accession)"/>
                                 <xsl:if test="matches($vArrayAccession, '^[aA]-\w{4}-\d+$')">
-                                    <xsl:variable name="vArrFolder" select="search:queryIndex2('files', concat('accession:', $vArrayAccession))"/>
+                                    <xsl:variable name="vArrFolder" select="search:queryIndex('files', concat('accession:', $vArrayAccession))"/>
                                     <div class="ae_accession">Array Design <xsl:value-of select="$vArrayAccession"/></div>
                                     <div class="ae_title"><xsl:value-of select="name"/></div>
                                     <xsl:call-template name="files-for-accession">
