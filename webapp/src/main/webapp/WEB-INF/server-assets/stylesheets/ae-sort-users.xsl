@@ -24,6 +24,14 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$pSortBy='source'">
+                <xsl:apply-templates select="$pSequence">
+                    <xsl:sort select="@source" order="{$pSortOrder}"/>
+
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:when test="$pSortBy='name'">
                 <xsl:apply-templates select="$pSequence">
                     <xsl:sort select="lower-case(name)" order="{$pSortOrder}"/>

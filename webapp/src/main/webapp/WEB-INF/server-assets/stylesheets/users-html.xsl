@@ -90,6 +90,12 @@
                                                     <xsl:with-param name="pKind" select="'id'"/>
                                                 </xsl:call-template>
                                             </th>
+                                            <th class="col_source sortable">
+                                                <xsl:text>Source</xsl:text>
+                                                <xsl:call-template name="add-sort">
+                                                    <xsl:with-param name="pKind" select="'source'"/>
+                                                </xsl:call-template>
+                                            </th>
                                             <th class="col_name sortable">
                                                 <xsl:text>Name</xsl:text>
                                                 <xsl:call-template name="add-sort">
@@ -163,6 +169,11 @@
                     <a href="{$basepath}/users/{id}">
                         <xsl:value-of select="id"/>
                     </a>
+                </div>
+            </td>
+            <td class="col_source">
+                <div>
+                    <xsl:value-of select="@source"/>
                 </div>
             </td>
             <td class="col_name">

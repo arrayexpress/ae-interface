@@ -177,9 +177,14 @@ td {
 }
 
 .col_id {
-    width: 20%;
+    width: 10%;
     text-align: left;
     white-space: nowrap;
+}
+
+.col_source {
+    width: 10%;
+    text-align: left;
 }
 
 .col_name {
