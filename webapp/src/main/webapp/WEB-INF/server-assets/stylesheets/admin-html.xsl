@@ -157,33 +157,33 @@
                                 <tbody>
                                     <tr>
                                         <td class="col_item">Public</td>
-                                        <td class="col_ae1"><xsl:value-of select="$vPublicAe1Arrays"/></td>
-                                        <td class="col_ae2"><xsl:value-of select="$vPublicAe2Arrays"/></td>
+                                        <td class="col_ae1"><a href="arrays/browse.html?keywords=source:ae1+public:true"><xsl:value-of select="$vPublicAe1Arrays"/></a></td>
+                                        <td class="col_ae2"><a href="arrays/browse.html?keywords=source:ae2+public:true"><xsl:value-of select="$vPublicAe2Arrays"/></a></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Private</td>
-                                        <td class="col_ae1"><xsl:value-of select="$vPrivateAe1Arrays"/></td>
-                                        <td class="col_ae2"><xsl:value-of select="$vPrivateAe2Arrays"/></td>
+                                        <td class="col_ae1"><a href="arrays/browse.html?keywords=source:ae1+public:false"><xsl:value-of select="$vPrivateAe1Arrays"/></a></td>
+                                        <td class="col_ae2"><a href="arrays/browse.html?keywords=source:ae2+public:false"><xsl:value-of select="$vPrivateAe2Arrays"/></a></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Old</td>
-                                        <td class="col_ae1"><xsl:value-of select="$vOldAe1Arrays"/></td>
+                                        <td class="col_ae1"><a href="arrays/browse.html?keywords=source:ae1+migrated:false"><xsl:value-of select="$vOldAe1Arrays"/></a></td>
                                         <td class="col_ae2">-</td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Migrated</td>
-                                        <td class="col_ae1"><xsl:value-of select="$vMigratedAe1Arrays"/></td>
-                                        <td class="col_ae2"><xsl:value-of select="$vMigratedAe2Arrays"/></td>
+                                        <td class="col_ae1"><a href="arrays/browse.html?keywords=source:ae1+migrated:true"><xsl:value-of select="$vMigratedAe1Arrays"/></a></td>
+                                        <td class="col_ae2"><a href="arrays/browse.html?keywords=source:ae2+migrated:true"><xsl:value-of select="$vMigratedAe2Arrays"/></a></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">New</td>
                                         <td class="col_ae1">-</td>
-                                        <td class="col_ae2"><xsl:value-of select="$vNewAe2Arrays"/></td>
+                                        <td class="col_ae2"><a href="arrays/browse.html?keywords=source:ae2+migrated:false"><xsl:value-of select="$vNewAe2Arrays"/></a></td>
                                     </tr>
                                     <tr>
                                         <td class="col_item">Total</td>
-                                        <td class="col_ae1"><xsl:value-of select="$vTotalAe1Arrays"/></td>
-                                        <td class="col_ae2"><xsl:value-of select="$vTotalAe2Arrays"/></td>
+                                        <td class="col_ae1"><a href="arrays/browse.html?keywords=source:ae1"><xsl:value-of select="$vTotalAe1Arrays"/></a></td>
+                                        <td class="col_ae2"><a href="arrays/browse.html?keywords=source:ae2"><xsl:value-of select="$vTotalAe2Arrays"/></a></td>
                                     </tr>
                                 </tbody>
                             </table>
