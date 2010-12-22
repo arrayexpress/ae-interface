@@ -8,11 +8,6 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.QueryServlet</servlet-class>
     </servlet>
     <servlet>
-        <description>ArrayExpress Experiments Better Query Servlet</description>
-        <servlet-name>BetterQueryServlet</servlet-name>
-        <servlet-class>uk.ac.ebi.arrayexpress.servlets.BetterQueryServlet</servlet-class>
-    </servlet>
-    <servlet>
         <description>ArrayExpress Data Download Servlet</description>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.DownloadServlet</servlet-class>
@@ -35,10 +30,6 @@
     <servlet-mapping>
         <servlet-name>QueryServlet</servlet-name>
         <url-pattern>/servlets/query/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BetterQueryServlet</servlet-name>
-        <url-pattern>/servlets/betterquery/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>

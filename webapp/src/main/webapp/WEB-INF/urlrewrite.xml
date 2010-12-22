@@ -8,66 +8,93 @@
     <rule>
         <from>^/browse\.html$</from>
         <condition name="user-agent">googlebot.*</condition>
-        <to type="forward">/servlets/query/browse-experiments-noajax/html</to>
+        <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html</to>
     </rule>
 
     <!-- migration infopage -->
     <rule>
-        <from>^/migration.html</from>
-        <to type="forward">/servlets/betterquery/-/admin/html</to>
+        <from>^/migration.html$</from>
+        <to type="forward">/servlets/query/-/admin/html</to>
+    </rule>
+
+    <!-- accession shortcuts -->
+    <rule>
+        <from>^/([eE]-\w{4}-\d+)$</from>
+        <to type="redirect">%{context-path}/experiments/$1</to>
+    </rule>
+    <rule>
+        <from>^/([aA]-\w{4}-\d+)$</from>
+        <to type="redirect">%{context-path}/arrays/$1</to>
+    </rule>
+    <rule>
+        <from>^/([pP]-\w{4}-\d+)$</from>
+        <to type="redirect">%{context-path}/protocols/$1</to>
+    </rule>
+
+    <!-- experiments -->
+    <rule>
+        <from>^/experiments/?$</from>
+        <to type="redirect">%{context-path}/experiments/browse.html</to>
+    </rule>
+    <rule>
+        <from>^/experiments/browse\.html$</from>
+        <to type="forward">/servlets/query/experiments/experiments/html</to>
+    </rule>
+    <rule>
+        <from>^/experiments/([eE]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/experiments/experiments/html?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
+        <to type="forward">/servlets/query/experiments/diff-experiment/html?accession=$1&amp;source=$2</to>
     </rule>
 
     <!-- arrays section -->
     <rule>
         <from>^/arrays/?$</from>
-        <to type="permanent-redirect">%{context-path}/arrays/browse.html</to>
+        <to type="redirect">%{context-path}/arrays/browse.html</to>
     </rule>
-
     <rule>
         <from>^/arrays/browse\.html$</from>
-        <to type="forward">/servlets/betterquery/arrays/arrays/html</to>
+        <to type="forward">/servlets/query/arrays/arrays/html</to>
     </rule>
-
     <rule>
         <from>^/arrays/([aA]-\w{4}-\d+)/?$</from>
-        <to type="forward">/servlets/betterquery/arrays/arrays/html?accession=$1</to>
+        <to type="forward">/servlets/query/arrays/arrays/html?accession=$1</to>
     </rule>
 
-    <!-- experiments section -->
+    <!-- files section -->
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/browse-experiment/html?accession=$1</to>
+        <from>^/files/?$</from>
+        <to type="redirect">%{context-path}/files/browse.html</to>
     </rule>
-
-    <!-- experiment by accession page -->
     <rule>
-        <from>^/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
-        <to type="forward">/servlets/query/diff-experiment/html?accession=$1&amp;source=$2</to>
+        <from>^/files/browse\.html$</from>
+        <to type="forward">/servlets/query/files/files/html</to>
     </rule>
-
-    <!-- available files by accession page -->
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/?$</from>
-        <to type="forward">/servlets/query/files/html?accession=$1</to>
+        <to type="forward">/servlets/query/files/files/html?accession=$1</to>
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/index.html$</from>
-        <to type="forward">/servlets/query/files/html?accession=$1</to>
+        <to type="forward">/servlets/query/files/files/html?accession=$1</to>
     </rule>
-    <!-- files download support -->
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>
         <to type="forward">/servlets/download/$1/$2</to>
     </rule>
+
     <!-- legacy download support -->
     <rule>
         <from>^/download/(.+)$</from>
         <to type="forward">/servlets/download/$1</to>
     </rule>
+
     <!-- rss feeds support, old scheme -->
     <rule>
         <from>^/rss/experiments$</from>
-        <to type="forward">/servlets/query/experiments-rss/xml?queryversion=1</to>
+        <to type="forward">/servlets/query/experiments/experiments-rss/xml?queryversion=1</to>
     </rule>
 
     <!-- rss feeds support, current scheme -->
@@ -79,71 +106,71 @@
     <!-- rest api support -->
     <rule>
         <from>^/xml/experiments$</from>
-        <to type="forward">/servlets/query/experiments/xml?queryversion=1</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml?queryversion=1</to>
     </rule>
     <rule>
         <from>^/xml/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
     </rule>
         <rule>
         <from>^/xml/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
-        <to type="forward">/servlets/query/diff-experiment/xml?accession=$1&amp;source=$2</to>
+        <to type="forward">/servlets/query/experiments/diff-experiment/xml?accession=$1&amp;source=$2</to>
     </rule>
     <rule>
         <from>^/xml/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/xml?queryversion=1&amp;keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml?queryversion=1&amp;keywords=$1</to>
     </rule>
     <rule>
         <from>^/xml/files$</from>
-        <to type="forward">/servlets/query/files/xml?queryversion=1</to>
+        <to type="forward">/servlets/query/experiments/files/xml?queryversion=1</to>
     </rule>
     <rule>
         <from>^/xml/files/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/files/xml?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
     </rule>
     <rule>
         <from>^/xml/files/(.*)$</from>
-        <to type="forward">/servlets/query/files/xml?queryversion=1&amp;keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/files/xml?queryversion=1&amp;keywords=$1</to>
     </rule>
 
     <!-- rest api v2 support -->
     <rule>
         <from>^/xml/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/xml?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/xml?keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml?keywords=$1</to>
     </rule>
     <rule>
         <from>^/xml/v2/files$</from>
-        <to type="forward">/servlets/query/files/xml</to>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/files/xml?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/(.*)$</from>
-        <to type="forward">/servlets/query/files/xml?keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/files/xml?keywords=$1</to>
     </rule>
 
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments/json</to>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
     </rule>
     <rule>
         <from>^/json/v2/experiments/([eE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/json?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/json?accession=$1</to>
     </rule>
     <rule>
         <from>^/json/v2/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/json?keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/json?keywords=$1</to>
     </rule>
 
     <!-- proxy calls to json efo api for nils -->
@@ -159,27 +186,27 @@
     <!-- ebeye export -->
     <rule>
         <from>^/export/AER2EBeye.xml$</from>
-        <to type="forward">/servlets/query/experiments-ebeye/xml?version=1</to>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml?version=1</to>
     </rule>
     <rule>
         <from>^/export/ebeye_export.xml$</from>
-        <to type="forward">/servlets/query/experiments-ebeye/xml?version=2</to>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml?version=2</to>
     </rule>
 
     <!-- search results export in tab format -->
     <rule>
         <from>^/ArrayExpress-Experiments\.xls$</from>
-        <to type="forward">/servlets/query/experiments/xls</to>
+        <to type="forward">/servlets/query/experiments/experiments/xls</to>
     </rule>
     <rule>
         <from>^/ArrayExpress-Experiments\.txt$</from>
-        <to type="forward">/servlets/query/experiments/tab</to>
+        <to type="forward">/servlets/query/experiments/experiments/tab</to>
     </rule>
 
     <!-- print-friendly layout for the experiments -->
     <rule>
         <from>^/browse\.printer\.html$</from>
-        <to type="forward">/servlets/query/browse-experiments-printer/html</to>
+        <to type="forward">/servlets/query/experiments/browse-experiments-printer/html</to>
     </rule>
 
     <!-- redirects to some pages at www.ebi.ac.uk (via proxy servlet) -->
@@ -203,7 +230,7 @@
     <!-- hiding browse helpers behind innocent names -->
     <rule>
         <from>^/browse-table.html</from>
-        <to type="forward">/servlets/query/browse-experiments/html</to>
+        <to type="forward">/servlets/query/experiments/browse-experiments/html</to>
     </rule>
     <rule>
         <from>^/species-list.html</from>
@@ -231,7 +258,7 @@
     </rule>
     <rule>
         <from>^/ae-stats.xml</from>
-        <to type="forward">/servlets/query/stats</to>
+        <to type="forward">/servlets/query/experiments/stats/xml</to>
     </rule>
     <rule>
         <from>^/verify-login.txt</from>
@@ -267,7 +294,7 @@
     <!-- experimental noajax browse interface -->
     <rule>
         <from>^/browse-noajax.html$</from>
-        <to type="forward">/servlets/query/browse-experiments-noajax/html?cache=true</to>
+        <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html?cache=true</to>
     </rule>
 
     <!-- legacy links -->
