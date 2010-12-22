@@ -9,6 +9,8 @@
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
 
+    <xsl:param name="userid"/>
+
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
     <xsl:param name="id"/>
@@ -45,94 +47,122 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredArrays" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredArrays)"/>
-
         <div class="ae_left_container_100pc assign_font">
-            <div id="ae_content">
-                <div id="ae_query_box">
-                    <form id="ae_query_form" method="get" action="browse.html">
-                        <fieldset id="ae_keywords_fset">
-                            <label for="ae_keywords_field">Platform designs</label>
-                            <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
-                        </fieldset>
-                        <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
-                    </form>
-                </div>
-                <xsl:choose>
-                    <xsl:when test="$vTotal&gt;0">
-                        <div id="ae_results_header">
-                            <xsl:text>There </xsl:text>
-                            <xsl:choose>
-                                <xsl:when test="$vTotal = 1">
-                                    <xsl:text>is a platform design </xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>are </xsl:text>
-                                    <xsl:value-of select="$vTotal"/>
-                                    <xsl:text> platform designs </xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                            <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
+            <xsl:choose>
+                <xsl:when test="not($userid)">
+                    <xsl:variable name="vFilteredData" select="search:queryIndex($queryid)"/>
+                    <xsl:variable name="vTotal" select="count($vFilteredData)"/>
+
+
+                    <div id="ae_content">
+                        <div id="ae_query_box">
+                            <form id="ae_query_form" method="get" action="browse.html">
+                                <fieldset id="ae_keywords_fset">
+                                    <label for="ae_keywords_field">Users</label>
+                                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
+                                </fieldset>
+                                <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
+                            </form>
                         </div>
-                        <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th class="col_accession sortable">
-                                        <xsl:text>Accession</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'accession'"/>
+                        <xsl:choose>
+                            <xsl:when test="$vTotal&gt;0">
+                                <div id="ae_results_header">
+                                    <xsl:text>There </xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="$vTotal = 1">
+                                            <xsl:text>is a user </xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>are </xsl:text>
+                                            <xsl:value-of select="$vTotal"/>
+                                            <xsl:text> users </xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                                    <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
+                                </div>
+                                <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="col_id sortable">
+                                                <xsl:text>ID</xsl:text>
+                                                <xsl:call-template name="add-sort">
+                                                    <xsl:with-param name="pKind" select="'id'"/>
+                                                </xsl:call-template>
+                                            </th>
+                                            <th class="col_name sortable">
+                                                <xsl:text>Name</xsl:text>
+                                                <xsl:call-template name="add-sort">
+                                                    <xsl:with-param name="pKind" select="'name'"/>
+                                                </xsl:call-template>
+                                            </th>
+                                            <th class="col_email sortable">
+                                                <xsl:text>E-mail</xsl:text>
+                                                <xsl:call-template name="add-sort">
+                                                    <xsl:with-param name="pKind" select="'email'"/>
+                                                </xsl:call-template>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <xsl:call-template name="ae-sort-users">
+                                            <xsl:with-param name="pSequence" select="$vFilteredData"/>
+                                            <xsl:with-param name="pFrom"/>
+                                            <xsl:with-param name="pTo"/>
+                                            <xsl:with-param name="pSortBy" select="$sortby"/>
+                                            <xsl:with-param name="pSortOrder" select="$sortorder"/>
                                         </xsl:call-template>
-                                    </th>
-                                    <th class="col_name sortable">
-                                        <xsl:text>Name</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'name'"/>
-                                        </xsl:call-template>
-                                    </th>
-                                    <th class="col_species sortable">
-                                        <xsl:text>Species</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'species'"/>
-                                        </xsl:call-template>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <xsl:call-template name="ae-sort-arrays">
-                                    <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
-                                    <xsl:with-param name="pFrom"/>
-                                    <xsl:with-param name="pTo"/>
-                                    <xsl:with-param name="pSortBy" select="$sortby"/>
-                                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                                    </tbody>
+                                </table>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="block-warning">
+                                    <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
+                                    <xsl:with-param name="pMessage">
+                                        <xsl:text>There are no users matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                                    </xsl:with-param>
                                 </xsl:call-template>
-                            </tbody>
-                        </table>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="block-warning">
-                            <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
-                            <xsl:with-param name="pMessage">
-                                <xsl:text>There are no platform designs matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </div>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </div>
+                </xsl:when>
+                <xsl:when test="$userid = '1'">
+                    <div id="ae_content">
+                        <div id="ae_login_box">
+                            <div id="ae_login_title">Please login to access this page</div>
+                            <form id="ae_login_form" method="get" action="index.html" onsubmit="return false">
+                                <fieldset id="ae_login_user_fset">
+                                    <label for="ae_user_field">User name</label>
+                                    <input id="ae_user_field" name="u" maxlength="50" class="assign_font"/>
+                                </fieldset>
+                                <fieldset id="ae_login_pass_fset">
+                                    <label for="ae_pass_field">Password</label>
+                                    <input id="ae_pass_field" type="password" name="p" maxlength="50" class="assign_font"/>
+                                </fieldset>
+                                <input id="ae_login_submit" type="submit" name="s" value="Log in"/>
+                                <span>
+                                    <input id="ae_login_remember" name="r" type="checkbox"/>
+                                    <label for="ae_login_remember">Remember me</label>
+                                </span>
+                            </form>
+                            <div id="ae_login_status"/>
+                        </div>
+                    </div>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="block-access-restricted"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </div>
     </xsl:template>
 
-    <xsl:template match="array_design">
+    <xsl:template match="user">
         <tr>
-            <td class="col_accession">
+            <td class="col_id">
                 <div>
-                    <a href="{$basepath}/arrays/{accession}">
-                        <xsl:value-of select="accession"/>
+                    <a href="{$basepath}/users/{id}">
+                        <xsl:value-of select="id"/>
                     </a>
-                    <xsl:if test="not(user/@id = '1')">
-                        <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
-                    </xsl:if>
                 </div>
             </td>
             <td class="col_name">
@@ -141,10 +171,10 @@
                     <xsl:if test="count(name) = 0">&#160;</xsl:if>
                 </div>
             </td>
-            <td class="col_species">
+            <td class="col_email">
                 <div>
-                    <xsl:value-of select="string-join(species, ', ')"/>
-                    <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
+                    <xsl:value-of select="email"/>
+                    <xsl:if test="count(email) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
                 </div>
             </td>
         </tr>
