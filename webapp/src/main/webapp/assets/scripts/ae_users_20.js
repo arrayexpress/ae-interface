@@ -2,14 +2,14 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
-    var sortDefault = { accession: "ascending"
+    var sortDefault = { id: "ascending"
                       , name: "ascending"
-                      , species: "ascending"
+                      , email: "ascending"
     };
 
-    var sortTitle =   { accession: "accession"
+    var sortTitle =   { id: "user ID"
                       , name: "name"
-                      , species: "species"
+                      , email: "E-mail address"
     };
 
     $(function() {
@@ -17,8 +17,8 @@
         if ($.query == undefined)
             throw "jQuery.query not loaded";
 
-        var sortby = $.query.get("sortby") || "accession";
-        var sortorder = $.query.get("sortorder") || "ascending";
+        var sortby = $.query.get("sortby") || "releasedate";
+        var sortorder = $.query.get("sortorder") || "descending";
 
         var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
 

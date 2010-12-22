@@ -49,7 +49,7 @@
         <to type="forward">/servlets/query/experiments/diff-experiment/html?accession=$1&amp;source=$2</to>
     </rule>
 
-    <!-- arrays section -->
+    <!-- arrays -->
     <rule>
         <from>^/arrays/?$</from>
         <to type="redirect">%{context-path}/arrays/browse.html</to>
@@ -63,7 +63,7 @@
         <to type="forward">/servlets/query/arrays/arrays/html?accession=$1</to>
     </rule>
 
-    <!-- files section -->
+    <!-- files -->
     <rule>
         <from>^/files/?$</from>
         <to type="redirect">%{context-path}/files/browse.html</to>
@@ -83,6 +83,20 @@
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>
         <to type="forward">/servlets/download/$1/$2</to>
+    </rule>
+
+    <!-- users -->
+    <rule>
+        <from>^/users/?$</from>
+        <to type="redirect">%{context-path}/users/browse.html</to>
+    </rule>
+    <rule>
+        <from>^/users/browse\.html$</from>
+        <to type="forward">/servlets/query/users/users/html</to>
+    </rule>
+    <rule>
+        <from>^/users/(.+)$</from>
+        <to type="forward">/servlets/query/users/users/html?id=$1</to>
     </rule>
 
     <!-- legacy download support -->
