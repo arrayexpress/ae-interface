@@ -34,7 +34,7 @@
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_files_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_files_100924.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_files_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>

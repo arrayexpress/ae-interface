@@ -34,13 +34,13 @@
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_browse_experiment_100924.css" type="text/css"/>
+                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_browse_experiment_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.caret-range-1.0.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_browse_experiment_100924.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_browse_experiment_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>
