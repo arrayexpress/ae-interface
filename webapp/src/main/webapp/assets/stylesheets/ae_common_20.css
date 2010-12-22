@@ -88,6 +88,16 @@ body.ae2_curator {
     border: 0 none;
 }
 
+.ae_centered_fixed {
+    position: relative;
+    width: 875px;
+    top: 0;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.2em;
+}
+
 .ae_centered_container_fixed {
     position: relative;
     width: 875px;

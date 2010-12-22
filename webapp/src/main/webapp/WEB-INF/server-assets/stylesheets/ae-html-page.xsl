@@ -81,7 +81,7 @@
     <xsl:template name="block-warning">
         <xsl:param name="pStyle"/>
         <xsl:param name="pMessage"/>
-        <div class="ae_centered_container_fixed">
+        <div class="ae_centered_fixed">
             <div class="{$pStyle}">
                 <div><xsl:copy-of select="$pMessage"/></div>
                 <div>We value your feedback. If you believe there was an error and wish to report it, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>
