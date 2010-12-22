@@ -74,6 +74,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
         updateIndex();
         this.authHelper = new AuthenticationHelper();
+        this.saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception

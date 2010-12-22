@@ -105,6 +105,15 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         this.documentSources.remove(documentSource.getDocumentURI());
     }
 
+    public DocumentInfo getRegisteredDocument( String documentURI ) throws Exception
+    {
+        if (this.documentSources.containsKey(documentURI)) {
+            return this.documentSources.get(documentURI).getDocument();
+        } else {
+            return null;
+        }
+    }
+
     // implements URIResolver.resolve
     public Source resolve( String href, String base ) throws TransformerException
     {

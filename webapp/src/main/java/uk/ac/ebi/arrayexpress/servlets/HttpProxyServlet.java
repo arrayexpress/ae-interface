@@ -34,7 +34,8 @@ import java.util.Enumeration;
 
 public class HttpProxyServlet extends ApplicationServlet
 {
-    // logging machinery
+    private static final long serialVersionUID = 4470393129326932507L;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final int PROXY_BUFFER_SIZE = 64000;

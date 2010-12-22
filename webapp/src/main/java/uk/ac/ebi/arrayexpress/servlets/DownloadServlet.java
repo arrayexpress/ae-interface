@@ -39,7 +39,8 @@ import java.util.List;
 
 public class DownloadServlet extends ApplicationServlet
 {
-    // logging machinery
+    private static final long serialVersionUID = 292987974909737157L;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // buffer size (in bytes)
@@ -50,6 +51,8 @@ public class DownloadServlet extends ApplicationServlet
 
     private final static class DownloadServletException extends Exception
     {
+        private static final long serialVersionUID = 8774998591374274629L;
+
         public DownloadServletException( String message )
         {
             super(message);

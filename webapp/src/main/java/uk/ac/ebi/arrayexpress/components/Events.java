@@ -54,6 +54,7 @@ public class Events extends ApplicationComponent implements IDocumentSource
         );
 
         updateIndex();
+        this.saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception

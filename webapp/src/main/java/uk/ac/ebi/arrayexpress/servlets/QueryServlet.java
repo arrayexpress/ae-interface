@@ -1,5 +1,6 @@
 package uk.ac.ebi.arrayexpress.servlets;
 
+import net.sf.saxon.om.DocumentInfo;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.lucene.queryParser.ParseException;
 import org.slf4j.Logger;
@@ -46,7 +47,8 @@ import java.util.Map;
 
 public class QueryServlet extends ApplicationServlet
 {
-    // logging machinery
+    private static final long serialVersionUID = 6806580383145704364L;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
@@ -157,14 +159,16 @@ public class QueryServlet extends ApplicationServlet
 
             try {
                 SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
+                SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
+                DocumentInfo source = saxonEngine.getAppDocument();
                 if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
+                    source = saxonEngine.getRegisteredDocument(index + ".xml");
                     Integer queryId = search.getController().addQuery(index, params, request.getQueryString());
                     params.put("queryid", String.valueOf(queryId));
                 }
 
-                SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
                 if (!saxonEngine.transformToWriter(
-                        saxonEngine.getAppDocument()
+                        source
                         , stylesheetName
                         , params
                         , out

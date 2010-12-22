@@ -68,6 +68,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         );
 
         updateIndex();
+        this.saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception

@@ -33,7 +33,8 @@ import java.io.PrintWriter;
 
 public class LookupServlet extends ApplicationServlet
 {
-    // logging machinery
+    private static final long serialVersionUID = -5043275356216186598L;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
@@ -56,8 +57,6 @@ public class LookupServlet extends ApplicationServlet
         String efoId = null != request.getParameter("efoid") ? request.getParameter("efoid") : "";
         // todo: remove this hack at all
         efoId = efoId.replaceFirst("^http\\://wwwdev\\.ebi\\.ac\\.uk/", "http://www.ebi.ac.uk/");
-
-        String jsonp = null != request.getParameter("jsonp") ? request.getParameter("jsonp") : "";
 
         if (null != requestArgs) {
             if (!requestArgs[0].equals("")) {
