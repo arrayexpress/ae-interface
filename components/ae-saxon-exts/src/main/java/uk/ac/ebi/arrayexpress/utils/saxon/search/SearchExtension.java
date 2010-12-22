@@ -25,17 +25,17 @@ import net.sf.saxon.om.SequenceIterator;
 public final class SearchExtension
 {
 
-    public static SequenceIterator queryIndex( XPathContext context, String indexId, String queryId )
+    public static SequenceIterator queryIndex( XPathContext context, String queryId )
     {
         return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
     }
 
-    public static SequenceIterator queryIndex2( XPathContext context, String indexId, String queryString )
+    public static SequenceIterator queryIndex( XPathContext context, String indexId, String queryString )
     {
         return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
     }
 
-    public static String highlightQuery( String indexId, String queryId, String fieldName, String text )
+    public static String highlightQuery( String queryId, String fieldName, String text )
     {
         return text;
     }
