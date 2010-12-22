@@ -38,6 +38,7 @@
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_users_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/jquery.cookie-1.0.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_users_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
@@ -46,13 +47,17 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
+        <script type="text/javascript">
+            <xsl:text>var basePath = "</xsl:text>
+            <xsl:value-of select="$basepath"/>
+            <xsl:text>";</xsl:text>
+        </script>
 
         <div class="ae_left_container_100pc assign_font">
             <xsl:choose>
                 <xsl:when test="not($userid)">
                     <xsl:variable name="vFilteredData" select="search:queryIndex($queryid)"/>
                     <xsl:variable name="vTotal" select="count($vFilteredData)"/>
-
 
                     <div id="ae_content">
                         <div id="ae_query_box">

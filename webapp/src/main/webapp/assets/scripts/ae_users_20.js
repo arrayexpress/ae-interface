@@ -5,21 +5,22 @@
 
     $.fn.extend({
 
-        aeLoginForm: function(status) {
+        aeLoginForm: function(options) {
             return this.each(function() {
-			new $.AELoginForm(this, status);
+			new $.AELoginForm(this, options);
             });
         }
     });
 
-    $.AELoginForm = function(form, status) {
+    $.AELoginForm = function(form, opts) {
 
         var $form = $(form);
         var $user = $form.find("input[name='u']").first();
         var $pass = $form.find("input[name='p']").first();
         var $remember = $form.find("input[name='r']").first();
         var $submit = $form.find("input[name='s']").first();
-        var $status = $(status);
+        var options = opts
+        var $status = $(options.status);
 
         function doLogin() {
             var pass = $pass.val();
@@ -27,7 +28,7 @@
             $pass.val("");
             $status.text("");
             $submit.attr("disabled", "true");
-            $.get("verify-login.txt", { u: $user.val(), p: pass }, doLoginNext);
+            $.get(options.verifyURL, { u: $user.val(), p: pass }, doLoginNext);
         }
 
         function doLoginNext(text) {
@@ -57,11 +58,13 @@
     };
 
     var sortDefault = { id: "ascending"
+                      , source: "ascending"
                       , name: "ascending"
                       , email: "ascending"
     };
 
     var sortTitle =   { id: "user ID"
+                      , source: "source"
                       , name: "name"
                       , email: "E-mail address"
     };
@@ -72,7 +75,7 @@
             throw "jQuery.query not loaded";
 
         // initialize login box
-        $("#ae_login_form").aeLoginForm("#ae_login_status");
+        $("#ae_login_form").aeLoginForm({ status: "#ae_login_status", verifyURL : basePath + "/verify-login.txt" });
 
         var sortby = $.query.get("sortby") || "releasedate";
         var sortorder = $.query.get("sortorder") || "descending";
