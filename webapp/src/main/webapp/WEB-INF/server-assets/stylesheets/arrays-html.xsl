@@ -55,7 +55,7 @@
                             <label for="ae_keywords_field">Platform designs</label>
                             <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
                         </fieldset>
-                        <input id="ae_query_submit" type="submit" name="s" value="Query"/>
+                        <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
                     </form>
                 </div>
                 <xsl:choose>
