@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="search html"
-                exclude-result-prefixes="search html"
+                extension-element-prefixes="xs search html"
+                exclude-result-prefixes="xs search html"
                 version="2.0">
 
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
+    <xsl:param name="page"/>
+    <xsl:param name="pagesize"/>
 
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
@@ -47,6 +50,34 @@
         <xsl:variable name="vFilteredArrays" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredArrays)"/>
 
+        <xsl:variable name="vPage" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$page"><xsl:value-of select="number($page)"/></xsl:when>
+                <xsl:otherwise>1</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="vPageSize" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$pagesize"><xsl:value-of select="number($pagesize)"/></xsl:when>
+                <xsl:otherwise>25</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="vFrom" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
+                <xsl:when test="$vTotal = 0">0</xsl:when>
+                <xsl:otherwise>1</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="vTo" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="( $vFrom + $vPageSize - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="$vFrom + $vPageSize - 1"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
         <div class="ae_left_container_100pc assign_font">
             <div id="ae_content">
                 <div id="ae_query_box">
@@ -56,25 +87,30 @@
                             <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
                         </fieldset>
                         <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
+                        <div id="ae_results_stats">
+                            <xsl:value-of select="$vTotal"/>
+                            <xsl:text> platform design</xsl:text>
+                            <xsl:if test="$vTotal > 1">
+                                <xsl:text>s</xsl:text>
+                            </xsl:if>
+                            <xsl:text> found</xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="$vTotal > $vTo">
+                                    <xsl:text>, displaying </xsl:text>
+                                    <xsl:value-of select="$vFrom"/>
+                                    <xsl:text> - </xsl:text>
+                                    <xsl:value-of select="$vTo"/>
+                                    <xsl:text>.</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>.</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </div>
                     </form>
                 </div>
                 <xsl:choose>
                     <xsl:when test="$vTotal&gt;0">
-                        <div id="ae_results_header">
-                            <xsl:text>There </xsl:text>
-                            <xsl:choose>
-                                <xsl:when test="$vTotal = 1">
-                                    <xsl:text>is a platform design </xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>are </xsl:text>
-                                    <xsl:value-of select="$vTotal"/>
-                                    <xsl:text> platform designs </xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:text> matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                            <span id="ae_print_controls" class="noprint"><a href="javascript:window.print()"><img src="{$basepath}/assets/images/silk_print.gif" width="16" height="16" alt="Print"/>Print this window</a>.</span>
-                        </div>
                         <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
                             <thead>
                                 <tr>
@@ -101,8 +137,8 @@
                             <tbody>
                                 <xsl:call-template name="ae-sort-arrays">
                                     <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
-                                    <xsl:with-param name="pFrom"/>
-                                    <xsl:with-param name="pTo"/>
+                                    <xsl:with-param name="pFrom" select="$vFrom"/>
+                                    <xsl:with-param name="pTo" select="$vTo"/>
                                     <xsl:with-param name="pSortBy" select="$sortby"/>
                                     <xsl:with-param name="pSortOrder" select="$sortorder"/>
                                 </xsl:call-template>
@@ -123,30 +159,34 @@
     </xsl:template>
 
     <xsl:template match="array_design">
-        <tr>
-            <td class="col_accession">
-                <div>
-                    <a href="{$basepath}/arrays/{accession}">
-                        <xsl:value-of select="accession"/>
-                    </a>
-                    <xsl:if test="not(user/@id = '1')">
-                        <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
-                    </xsl:if>
-                </div>
-            </td>
-            <td class="col_name">
-                <div>
-                    <xsl:value-of select="name"/>
-                    <xsl:if test="count(name) = 0">&#160;</xsl:if>
-                </div>
-            </td>
-            <td class="col_species">
-                <div>
-                    <xsl:value-of select="string-join(species, ', ')"/>
-                    <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
-                </div>
-            </td>
-        </tr>
+        <xsl:param name="pFrom"/>
+        <xsl:param name="pTo"/>
+        <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
+            <tr>
+                <td class="col_accession">
+                    <div>
+                        <a href="{$basepath}/arrays/{accession}">
+                            <xsl:value-of select="accession"/>
+                        </a>
+                        <xsl:if test="not(user/@id = '1')">
+                            <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
+                        </xsl:if>
+                    </div>
+                </td>
+                <td class="col_name">
+                    <div>
+                        <xsl:value-of select="name"/>
+                        <xsl:if test="count(name) = 0">&#160;</xsl:if>
+                    </div>
+                </td>
+                <td class="col_species">
+                    <div>
+                        <xsl:value-of select="string-join(species, ', ')"/>
+                        <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
+                    </div>
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="add-sort">
