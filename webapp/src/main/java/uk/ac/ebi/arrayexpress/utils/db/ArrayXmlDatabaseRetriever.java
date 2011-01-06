@@ -77,6 +77,7 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
             "        where" +
             "          t_species.t_arraydesign_id = t_phad.id" +
             "      )" +
+            "   , ( select XmlAgg(XmlElement(\"description\", XmlAttributes( t_desc.id as \"id\" ), t_desc.text)) from tt_description t_desc where t_desc.t_describable_id = t_phad.id )" +
             "   ).getClobVal()" +
             " from" +
             "  tt_physicalarraydesign t_phad" +
