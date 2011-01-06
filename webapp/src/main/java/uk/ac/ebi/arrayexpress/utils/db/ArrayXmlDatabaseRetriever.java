@@ -2,6 +2,7 @@ package uk.ac.ebi.arrayexpress.utils.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.IOException;
 import java.sql.Clob;
@@ -104,7 +105,13 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
             logger.error("There was a problem retrieving array design information, check log for errors or exceptions");
             return null;
         }
-        return arrayDesignXml.toString();
+        return StringTools.replaceIllegalHTMLCharacters(            // filter out all junk Unicode chars
+                StringTools.unescapeXMLDecimalEntities(             // convert &#dddd; entities to their Unicode values
+                        StringTools.detectDecodeUTF8Sequences(      // attempt to intelligently convert UTF-8 to Unicode
+                                arrayDesignXml.toString()
+                        ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
+                )
+        );
     }
 
     protected void setParameters( PreparedStatement stmt ) throws SQLException
