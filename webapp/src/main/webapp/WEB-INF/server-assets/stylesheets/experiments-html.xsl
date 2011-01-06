@@ -95,7 +95,7 @@
                                                             </form>
 
                                                             <div id="ae_help_link"><a href="${interface.application.link.browse_help}" target="ae_help"><img src="{$basepath}/assets/images/basic_help.gif" width="16" height="16" alt=""/>ArrayExpress Browser Help</a></div>
-                                                            <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="{$basepath}/assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"/></a></div>
+                                                            <div id="ae_logo_browse"><a href="{$basepath}" title="ArrayExpress Home"><img src="{$basepath}/assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"/></a></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -207,13 +207,12 @@
                                 <xsl:if test="arraydesign">
                                     <xsl:for-each select="arraydesign">
                                         <div>
-                                            <a href="${interface.application.link.aer_old.base.url}/result?queryFor=PhysicalArrayDesign&amp;aAccession={accession}">
+                                            <a href="{$basepath}/arrays/{accession}">
                                                 <xsl:text>Array design </xsl:text>
                                                 <xsl:call-template name="highlight">
                                                     <xsl:with-param name="pText" select="concat(accession, ' - ', name)"/>
                                                     <xsl:with-param name="pFieldName" select="'array'"/>
                                                 </xsl:call-template>
-                                                <xsl:text> (old interface)</xsl:text>
                                             </a>
                                         </div>
                                     </xsl:for-each>
