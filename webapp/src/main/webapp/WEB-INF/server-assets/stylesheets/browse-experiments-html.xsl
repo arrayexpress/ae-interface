@@ -311,13 +311,12 @@
                                     <xsl:if test="arraydesign">
                                         <xsl:for-each select="arraydesign">
                                             <div>
-                                                <a href="${interface.application.link.aer_old.base.url}/result?queryFor=PhysicalArrayDesign&amp;aAccession={accession}">
+                                                <a href="{$basepath}/arrays/{accession}">
                                                     <xsl:text>Array design </xsl:text>
                                                     <xsl:call-template name="highlight">
                                                         <xsl:with-param name="pText" select="concat(accession, ' - ', name)"/>
                                                         <xsl:with-param name="pFieldName" select="'array'"/>
                                                     </xsl:call-template>
-                                                    <xsl:text> (old interface)</xsl:text>
                                                 </a>
                                             </div>
                                         </xsl:for-each>
@@ -329,7 +328,6 @@
                                     </div>
                                     <div>
                                         <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">Experiment Page (old interface)</a>
-
                                     </div>
                                 </td>
                             </tr>
