@@ -83,29 +83,35 @@
                 <div id="ae_query_box">
                     <form id="ae_query_form" method="get" action="browse.html">
                         <fieldset id="ae_keywords_fset">
-                            <label for="ae_keywords_field">Platform designs</label>
+                            <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers</label>
                             <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
                         </fieldset>
                         <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
                         <div id="ae_results_stats">
-                            <xsl:value-of select="$vTotal"/>
-                            <xsl:text> platform design</xsl:text>
-                            <xsl:if test="$vTotal > 1">
-                                <xsl:text>s</xsl:text>
-                            </xsl:if>
-                            <xsl:text> found</xsl:text>
-                            <xsl:choose>
-                                <xsl:when test="$vTotal > $vTo">
+                            <xsl:text>&#160;</xsl:text>
+                            <div>
+                                <xsl:value-of select="$vTotal"/>
+                                <xsl:text> platform design</xsl:text>
+                                <xsl:if test="$vTotal > 1">
+                                    <xsl:text>s</xsl:text>
+                                </xsl:if>
+                                <xsl:text> found</xsl:text>
+                                <xsl:if test="$vTotal > $vPageSize">
                                     <xsl:text>, displaying </xsl:text>
                                     <xsl:value-of select="$vFrom"/>
                                     <xsl:text> - </xsl:text>
                                     <xsl:value-of select="$vTo"/>
-                                    <xsl:text>.</xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>.</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
+                                </xsl:if>
+                                <xsl:text>.</xsl:text>
+                            </div>
+                            <xsl:if test="$vTotal > $vPageSize">
+                                <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
+                                <div id="ae_results_pager">
+                                    <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
+                                    <div id="page"><xsl:value-of select="$vPage"/></div>
+                                    <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
+                                </div>
+                            </xsl:if>
                         </div>
                     </form>
                 </div>
