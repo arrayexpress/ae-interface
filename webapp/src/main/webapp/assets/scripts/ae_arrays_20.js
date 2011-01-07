@@ -51,6 +51,11 @@
         if ($.query == undefined)
             throw "jQuery.query not loaded";
 
+        if ($.browser.msie) {
+            $("#head").attr("allowTransparency", true);
+            $("#ae_contents").css("z-index", 1);
+        }
+
         var sortby = $.query.get("sortby") || "accession";
         var sortorder = $.query.get("sortorder") || "ascending";
 
