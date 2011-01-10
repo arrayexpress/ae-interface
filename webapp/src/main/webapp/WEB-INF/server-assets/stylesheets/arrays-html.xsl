@@ -89,11 +89,10 @@
                         </fieldset>
                         <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
                         <div id="ae_results_stats">
-                            <xsl:text>&#160;</xsl:text>
                             <div>
                                 <xsl:value-of select="$vTotal"/>
                                 <xsl:text> platform design</xsl:text>
-                                <xsl:if test="$vTotal > 1">
+                                <xsl:if test="$vTotal != 1">
                                     <xsl:text>s</xsl:text>
                                 </xsl:if>
                                 <xsl:text> found</xsl:text>
