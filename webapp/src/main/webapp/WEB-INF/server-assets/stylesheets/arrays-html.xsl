@@ -117,39 +117,41 @@
                 </div>
                 <xsl:choose>
                     <xsl:when test="$vTotal&gt;0">
-                        <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th class="col_accession sortable">
-                                        <xsl:text>Accession</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'accession'"/>
-                                        </xsl:call-template>
-                                    </th>
-                                    <th class="col_name sortable">
-                                        <xsl:text>Name</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'name'"/>
-                                        </xsl:call-template>
-                                    </th>
-                                    <th class="col_species sortable">
-                                        <xsl:text>Species</xsl:text>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" select="'species'"/>
-                                        </xsl:call-template>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <xsl:call-template name="ae-sort-arrays">
-                                    <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
-                                    <xsl:with-param name="pFrom" select="$vFrom"/>
-                                    <xsl:with-param name="pTo" select="$vTo"/>
-                                    <xsl:with-param name="pSortBy" select="$sortby"/>
-                                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
-                                </xsl:call-template>
-                            </tbody>
-                        </table>
+                        <div id="ae_results_box">
+                            <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="col_accession sortable">
+                                            <xsl:text>Accession</xsl:text>
+                                            <xsl:call-template name="add-sort">
+                                                <xsl:with-param name="pKind" select="'accession'"/>
+                                            </xsl:call-template>
+                                        </th>
+                                        <th class="col_name sortable">
+                                            <xsl:text>Name</xsl:text>
+                                            <xsl:call-template name="add-sort">
+                                                <xsl:with-param name="pKind" select="'name'"/>
+                                            </xsl:call-template>
+                                        </th>
+                                        <th class="col_species sortable">
+                                            <xsl:text>Species</xsl:text>
+                                            <xsl:call-template name="add-sort">
+                                                <xsl:with-param name="pKind" select="'species'"/>
+                                            </xsl:call-template>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <xsl:call-template name="ae-sort-arrays">
+                                        <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
+                                        <xsl:with-param name="pFrom" select="$vFrom"/>
+                                        <xsl:with-param name="pTo" select="$vTo"/>
+                                        <xsl:with-param name="pSortBy" select="$sortby"/>
+                                        <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                                    </xsl:call-template>
+                                </tbody>
+                            </table>
+                        </div>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="block-warning">

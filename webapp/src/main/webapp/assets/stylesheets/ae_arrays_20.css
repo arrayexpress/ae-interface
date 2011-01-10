@@ -20,7 +20,7 @@
 }
 
 #ae_content {
-    margin: 20px;
+    padding: 20px;
 }
 
 /* query box */
@@ -108,9 +108,13 @@
     margin: 0 2px 0 0;
 }
 
+#ae_results_box {
+    padding: 10px 0 0;
+}
+
 #ae_results_table {
     table-layout: fixed;
-    margin: 10px 0 0;
+    width: 100%;
     background-color: rgba(255,255,255,0.67);
 }
 
