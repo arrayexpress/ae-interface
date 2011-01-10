@@ -23,6 +23,7 @@ table td.contentsarea {
 body {
 	background: #ffffff url(../images/empty.gif) fixed top;
     overflow: auto;
+    overflow-y: hidden;
 }
 
 body.dev_preview {
