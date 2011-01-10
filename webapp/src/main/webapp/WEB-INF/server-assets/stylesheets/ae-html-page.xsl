@@ -18,10 +18,10 @@
 
             <link rel="SHORTCUT ICON" href="${interface.application.link.www_domain}/bookmark.ico"/>
 
-            <link rel="stylesheet" href="${interface.application.link.www_domain}/inc/css/contents.css" type="text/css"/>
-            <link rel="stylesheet" href="${interface.application.link.www_domain}/inc/css/userstyles.css" type="text/css"/>
+            <link rel="stylesheet" href="${interface.application.link.www_domain.inc}/css/contents.css" type="text/css"/>
+            <link rel="stylesheet" href="${interface.application.link.www_domain.inc}/css/userstyles.css" type="text/css"/>
 
-            <script src="${interface.application.link.www_domain}/inc/js/contents.js" type="text/javascript"/>
+            <script src="${interface.application.link.www_domain.inc}/js/contents.js" type="text/javascript"/>
 
             <xsl:copy-of select="$pExtraCode"/>
         </head>
@@ -30,7 +30,7 @@
     <xsl:template name="page-body">
         <body class="${interface.application.body.class}">
             <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
-                <iframe src="${interface.application.link.www_domain}/inc/head.html" name="head" id="head"
+                <iframe src="${interface.application.link.www_domain.inc}/head.html" name="head" id="head"
                         frameborder="0" marginwidth="0px" marginheight="0px" scrolling="no" width="100%"
                         style="position:absolute; z-index: 1; height: 57px;">
                     <xsl:text>Your browser does not support inline frames or is currently configured not to display inline frames. Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/head.html</xsl:text>
@@ -43,7 +43,7 @@
             </noscript>
             <div id="ae_contents"><xsl:call-template name="ae-contents"/></div>
             <div id="ebi_footer">
-                <iframe src="${interface.application.link.www_domain}/inc/foot.html"
+                <iframe src="${interface.application.link.www_domain.inc}/foot.html"
                         name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
                         scrolling="no" height="22px" width="800px" style="z-index:2">
                     <xsl:text>Your browser does not support inline frames or is currently configured not to display inline frames. Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/foot.html</xsl:text>

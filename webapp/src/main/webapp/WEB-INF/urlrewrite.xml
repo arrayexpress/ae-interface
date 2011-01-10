@@ -240,7 +240,10 @@
         <from>^/atlas_stats.txt</from>
         <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/stats.jsp</to>
     </rule>
-
+    <rule>
+        <from>^/www-inc/(.+)</from>
+        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/inc/$1</to>
+    </rule>
     <!-- hiding browse helpers behind innocent names -->
     <rule>
         <from>^/browse-table.html</from>
