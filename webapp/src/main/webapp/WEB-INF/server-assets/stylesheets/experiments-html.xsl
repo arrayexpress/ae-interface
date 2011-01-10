@@ -40,6 +40,7 @@
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.caret-range-1.0.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_experiments_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>

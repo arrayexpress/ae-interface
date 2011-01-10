@@ -18,12 +18,4 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
-   $(function() {
-        // this will be executed when DOM is ready
-        if ($.browser.msie) {
-            $("#head")[0].allowTransparency = true;
-            $("#ae_contents")[0].style.zIndex = 1;
-        }
-    });
-
 })(window.jQuery);

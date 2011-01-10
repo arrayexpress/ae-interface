@@ -30,6 +30,7 @@
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_admin_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.cookie-1.0.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_admin_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>

@@ -173,13 +173,7 @@ aeToggleExpand( id, shouldUpdateState )
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-$(document).ready( function() {
-
-    // step 0: hack for IE to work with this funny EBI header/footer (to be redeveloped with jQuery)
-    if (-1 != navigator.userAgent.indexOf('MSIE')) {
-        document.getElementById('head').allowTransparency = true;
-        document.getElementById('ae_contents').style.zIndex = 1;
-    }
+$(function() {
 
     // content is hidden by default to prevent its ugly appearance on IE if scripting is disabled
     $("#ae_contents").show();

@@ -39,6 +39,7 @@
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.cookie-1.0.js" type="text/javascript"/>
+                    <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_users_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>

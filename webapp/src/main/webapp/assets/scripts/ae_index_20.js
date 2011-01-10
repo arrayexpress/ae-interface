@@ -123,8 +123,7 @@ aeOnLoad()
 }
 
 // runs on page reload after rendering is done
-$(document).ready(function()
-{
+$(function() {
     // footer is hidden by default to prevent its ugly appearance on IE if scripting is disabled
     $("#ebi_footer").show();
 
