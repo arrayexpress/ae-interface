@@ -1,27 +1,6 @@
-#ae_contents {
-    position: absolute;
-    top: 57px;
-    bottom: 22px;
-    left: 0;
-    width: 100%;
-    overflow: auto;
-}
-
-.ae_left_container_100pc {
-    width: 100%;
-    min-width: 950px;
-    text-align: left;
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.2em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    _height: expression(document.body.clientHeight-79);
-}
-
-#ae_content {
-    padding: 20px;
-}
+/*
+    Platform designs browsing/detailed view
+*/
 
 /* query box */
 #ae_query_box {
@@ -166,4 +145,9 @@ td.col_atlas {
 .col_species {
     width: 160px;
     text-align: left;
+}
+
+.col_files {
+    width: 120px;
+    text-align: center;
 }

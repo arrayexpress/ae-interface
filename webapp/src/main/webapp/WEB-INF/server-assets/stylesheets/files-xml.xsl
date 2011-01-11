@@ -51,12 +51,12 @@
             </xsl:for-each>
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
-                <xsl:variable name="vArrayAccession" select="string(accession)"/>
-                <xsl:variable name="vArrFolder" select="search:queryIndex('files', concat('accession:', $vArrayAccession))"/>
+                <xsl:variable name="vArrAccession" select="string(accession)"/>
+                <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vArrAccession)"/>
 
                 <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
                     <xsl:call-template name="file-for-accession">
-                        <xsl:with-param name="pAccession" select="$vArrayAccession"/>
+                        <xsl:with-param name="pAccession" select="$vArrAccession"/>
                         <xsl:with-param name="pFile" select="."/>
                     </xsl:call-template>
                 </xsl:for-each>

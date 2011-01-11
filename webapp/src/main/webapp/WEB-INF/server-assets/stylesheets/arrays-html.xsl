@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs search html"
-                exclude-result-prefixes="xs search html"
+                extension-element-prefixes="xs aejava search html"
+                exclude-result-prefixes="xs aejava search html"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -14,12 +15,15 @@
 
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
+    <xsl:param name="accession"/>
 
     <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
+
+    <xsl:variable name="vBrowseMode" select="not($accession)"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -31,8 +35,10 @@
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
+                    <xsl:value-of select="if (not($vBrowseMode)) then concat(upper-case($accession), ' | ') else ''"/>
                     <xsl:text>Platform Designs | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
+
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_arrays_20.css" type="text/css"/>
@@ -81,40 +87,55 @@
 
         <div class="ae_left_container_100pc assign_font">
             <div id="ae_content">
-                <div id="ae_query_box">
-                    <form id="ae_query_form" method="get" action="browse.html">
-                        <fieldset id="ae_keywords_fset">
-                            <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers</label>
-                            <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
-                        </fieldset>
-                        <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
-                        <div id="ae_results_stats">
-                            <div>
-                                <xsl:value-of select="$vTotal"/>
-                                <xsl:text> platform design</xsl:text>
-                                <xsl:if test="$vTotal != 1">
-                                    <xsl:text>s</xsl:text>
-                                </xsl:if>
-                                <xsl:text> found</xsl:text>
-                                <xsl:if test="$vTotal > $vPageSize">
-                                    <xsl:text>, displaying </xsl:text>
-                                    <xsl:value-of select="$vFrom"/>
-                                    <xsl:text> - </xsl:text>
-                                    <xsl:value-of select="$vTo"/>
-                                </xsl:if>
-                                <xsl:text>.</xsl:text>
-                            </div>
-                            <xsl:if test="$vTotal > $vPageSize">
-                                <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
-                                <div id="ae_results_pager">
-                                    <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
-                                    <div id="page"><xsl:value-of select="$vPage"/></div>
-                                    <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
-                                </div>
-                            </xsl:if>
-                        </div>
-                    </form>
+                <div id="ae_navi">
+                    <a href="${interface.application.link.www_domain}">EBI</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}">ArrayExpress</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/arrays">Platform Designs</a>
+                    <xsl:if test="not($vBrowseMode)">
+                        <xsl:text> > </xsl:text>
+                        <a href="{$basepath}/arrays/{upper-case($accession)}">
+                            <xsl:value-of select="upper-case($accession)"/>
+                        </a>
+                    </xsl:if>
                 </div>
+                <xsl:if test="$vBrowseMode">
+                    <div id="ae_query_box">
+                        <form id="ae_query_form" method="get" action="browse.html">
+                            <fieldset id="ae_keywords_fset">
+                                <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers</label>
+                                <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
+                            </fieldset>
+                            <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
+                            <div id="ae_results_stats">
+                                <div>
+                                    <xsl:value-of select="$vTotal"/>
+                                    <xsl:text> platform design</xsl:text>
+                                    <xsl:if test="$vTotal != 1">
+                                        <xsl:text>s</xsl:text>
+                                    </xsl:if>
+                                    <xsl:text> found</xsl:text>
+                                    <xsl:if test="$vTotal > $vPageSize">
+                                        <xsl:text>, displaying </xsl:text>
+                                        <xsl:value-of select="$vFrom"/>
+                                        <xsl:text> - </xsl:text>
+                                        <xsl:value-of select="$vTo"/>
+                                    </xsl:if>
+                                    <xsl:text>.</xsl:text>
+                                </div>
+                                <xsl:if test="$vTotal > $vPageSize">
+                                    <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
+                                    <div id="ae_results_pager">
+                                        <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
+                                        <div id="page"><xsl:value-of select="$vPage"/></div>
+                                        <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
+                                    </div>
+                                </xsl:if>
+                            </div>
+                        </form>
+                    </div>
+                </xsl:if>
                 <xsl:choose>
                     <xsl:when test="$vTotal&gt;0">
                         <div id="ae_results_box">
@@ -138,6 +159,9 @@
                                             <xsl:call-template name="add-sort">
                                                 <xsl:with-param name="pKind" select="'species'"/>
                                             </xsl:call-template>
+                                        </th>
+                                        <th class="col_files">
+                                            <xsl:text>Files</xsl:text>
                                         </th>
                                     </tr>
                                 </thead>
@@ -170,6 +194,7 @@
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
+            <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', accession)"/>
             <tr>
                 <td class="col_accession">
                     <div>
@@ -191,6 +216,27 @@
                     <div>
                         <xsl:value-of select="string-join(species, ', ')"/>
                         <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
+                    </div>
+                </td>
+                <td class="col_files">
+                    <div>
+                        <xsl:variable name="vAdfFile" select="$vArrFolder/file[@kind = 'adf' and @extension = 'txt']"/>
+                        <xsl:choose>
+                            <xsl:when test="count($vAdfFile) > 1">
+                                <a href="{$basepath}/files/{accession}?kind=adf">
+                                    <img src="{$basepath}/assets/images/silk_save_txt.gif" width="16" height="16"
+                                         alt="Click to browse Array Design Files"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:when test="count($vAdfFile) = 1">
+                                <a href="{$basepath}/files/{accession}/{$vAdfFile/@name}">
+                                    <img src="{$basepath}/assets/images/silk_save_txt.gif" width="16" height="16"
+                                         alt="Click to download Array Design File"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16"
+                                 alt="-"/></xsl:otherwise>
+                        </xsl:choose>
                     </div>
                 </td>
             </tr>

@@ -1,27 +1,7 @@
-#ae_contents {
-    position: absolute;
-    top: 57px;
-    bottom: 22px;
-    left: 0;
-    width: 100%;
-    overflow: auto;
-}
+/*
+    Users browsing/detailed view
+*/
 
-.ae_left_container_100pc {
-    width: 100%;
-    min-width: 950px;
-    text-align: left;
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.2em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    _height: expression(document.body.clientHeight-79);
-}
-
-#ae_content {
-    margin: 20px;
-}
 /* login box */
 #ae_login_box {
     border-radius: 3px;

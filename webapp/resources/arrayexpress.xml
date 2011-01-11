@@ -166,7 +166,6 @@
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/files/folder" defaultField="accession">
                 <field name="accession" title="" type="string" path="@accession" analyze="true" store="false" escape="false"/>
-                <field name="kind" title="" type="string" path="@kind" analyze="true" store="false" escape="false"/>
                 <field name="filename" title="" type="string" path="file/@name"  analyze="true" store="false" escape="false"/>
             </document>
         </index>

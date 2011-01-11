@@ -98,7 +98,7 @@
                         </xsl:for-each>
                     </xsl:variable>
 
-                    <div id="ae_admin_content">
+                    <div id="ae_content">
                         <div id="ae_adm_header">
                             <img id="ae_top_secret_img" src="assets/images/ae_top_secret.gif" width="200" height="75" alt="Top Secret!"/>
                             <div id="ae_adm_h1">Migration Status Report</div>

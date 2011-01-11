@@ -1,28 +1,6 @@
-#ae_contents {
-    position: absolute;
-    top: 57px;
-    bottom: 22px;
-    left: 0;
-    width: 100%;
-    overflow: auto;
-}
-
-.ae_left_container_100pc {
-    width: 100%;
-    min-width: 950px;
-    text-align: left;
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.2em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    _height: expression(document.body.clientHeight-79);
-}
-
-#ae_files_content {
-    width: 700px;
-    margin: 20px;
-}
+/*
+    Files browsing/folder view
+*/
 
 .ae_accession {
     font-size: 18px;
@@ -43,6 +21,7 @@
     background: #f2f8f8 url(../images/silk_warn.gif) no-repeat scroll 10px 50%;
     border-top: 1px solid #bdd7d7;
     font-style: italic;
+    font-size: 11px;
     padding: 3px 0 3px 35px;
 }
 

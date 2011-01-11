@@ -127,10 +127,11 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
         try {
             XPath xp = new XPathEvaluator(getDocument().getConfiguration());
-            XPathExpression xpe = xp.compile("/files/folder[@kind = 'experiment']");
+            XPathExpression xpe = xp.compile("/files/folder");
             List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("@accession");
+            XPathExpression folderKindXpe = xp.compile("@kind");
             XPathExpression rawFilePresentXpe = xp.compile("count(file[@kind = 'raw'])");
             XPathExpression fgemFilePresentXpe = xp.compile("count(file[@kind = 'fgem'])");
             for (Object node : documentNodes) {
@@ -138,10 +139,13 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 try {
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
+                    String folderKind = folderKindXpe.evaluate(node);
                     ExtFunctions.addAcceleratorValue("exp-files", accession, node);
                     //todo: remove redundancy here
-                    ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
-                    ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
+                    if ("experiment".equals(folderKind)) {
+                        ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
+                        ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
+                    }
                 } catch (XPathExpressionException x) {
                     this.logger.error("Caught an exception:", x);
                 }

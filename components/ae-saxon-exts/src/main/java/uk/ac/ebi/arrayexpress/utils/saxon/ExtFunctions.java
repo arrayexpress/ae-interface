@@ -17,6 +17,8 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
+import net.sf.saxon.om.NodeInfo;
+
 public class ExtFunctions
 {
     public static String formatFileSize( long size )
@@ -53,5 +55,10 @@ public class ExtFunctions
     public synchronized static String getAcceleratorValue( String acceleratorName, String key )
     {
         return "1";
+    }
+
+    public synchronized static NodeInfo getAcceleratorValueAsSequence( String acceleratorName, String key )
+    {
+        return null;
     }
 }
