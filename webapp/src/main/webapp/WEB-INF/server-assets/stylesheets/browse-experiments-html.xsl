@@ -187,7 +187,7 @@
                         </xsl:call-template>
                     </div>
                 </td>
-                <td class="align_right {$vDetailedViewMainTdClass}">
+                <td class="ae_align_right {$vDetailedViewMainTdClass}">
                     <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pText" select="assays"/>
@@ -211,21 +211,21 @@
                         </xsl:call-template>
                     </div>
                 </td>
-                <td class="td_main_img align_center {$vDetailedViewMainTdClass}">
+                <td class="td_main_img ae_align_center {$vDetailedViewMainTdClass}">
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pKind" select="'fgem'"/>
                         </xsl:call-template>
                     </div>
                 </td>
-                <td class="td_main_img align_center {$vDetailedViewMainTdClass}">
+                <td class="td_main_img ae_align_center {$vDetailedViewMainTdClass}">
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pKind" select="'raw'"/>
                         </xsl:call-template>
                     </div>
                 </td>
-                <td class="td_main_img align_center {$vDetailedViewMainTdClass}">
+                <td class="td_main_img ae_align_center {$vDetailedViewMainTdClass}">
                     <div>
                         <xsl:choose>
                             <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}&amp;ref=aebrowse"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>

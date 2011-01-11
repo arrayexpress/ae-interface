@@ -37,11 +37,15 @@
                 </iframe>
             </div>
             <noscript>
-                <div id="ae_noscript" class="assign_font">
-                    <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+                <div id="ae_noscript" class="ae_assign_font">
+                    <div class="ae_center_box">
+                        <div id="ae_contents_box_915px">
+                            <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+                        </div>
+                    </div>
                 </div>
             </noscript>
-            <div id="ae_contents"><xsl:call-template name="ae-contents"/></div>
+            <div id="ae_contents" class="ae_assign_font"><xsl:call-template name="ae-contents"/></div>
             <div id="ebi_footer">
                 <iframe src="${interface.application.link.www_domain.inc}/foot.html"
                         name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
@@ -81,8 +85,8 @@
     <xsl:template name="block-warning">
         <xsl:param name="pStyle"/>
         <xsl:param name="pMessage"/>
-        <div class="align_center"><!-- bow to IE for this one -->
-            <div class="ae_centered_fixed">
+        <div class="ae_center_box">
+            <div class="ae_contents_box_915px">
                 <div class="{$pStyle}">
                     <div><xsl:copy-of select="$pMessage"/></div>
                     <div>We value your feedback. If you believe there was an error and wish to report it, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>

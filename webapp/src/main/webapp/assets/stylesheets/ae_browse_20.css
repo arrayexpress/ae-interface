@@ -1,21 +1,5 @@
-#ae_noscript {
-    position: absolute;
-    top: 57px;
-    left: 0;
-    width: 100%;
-    padding: 5px;
-}
-
-#ae_contents {
-    position: absolute;
-    top: 57px;
-    bottom: 22px;
-    left: 0;
-    width: 100%;
-}
-
-.ae_centered_container_100pc {
-    _height: expression(document.body.clientHeight-79);
+#ae_contents_container {
+    font-size: 11px;
 }
 
 /* ext-table style box */

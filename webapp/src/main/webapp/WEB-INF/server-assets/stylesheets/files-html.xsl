@@ -48,7 +48,7 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <div class="ae_left_container_700px assign_font">
+        <div id="ae_contents_box_740px">
             <xsl:choose>
                 <xsl:when test="not($vBrowseMode)">
                     <xsl:variable name="vFolder" select="search:queryIndex($queryid)"/>

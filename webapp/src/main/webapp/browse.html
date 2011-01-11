@@ -37,12 +37,16 @@
     </iframe>
 </div>
 <noscript>
-    <div id="ae_noscript" class="assign_font">
-        <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+    <div id="ae_noscript" class="ae_assign_font">
+        <div class="ae_center_box">
+            <div id="ae_contents_box_915px">
+                <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
+            </div>
+        </div>
     </div>
 </noscript>
-<div id="ae_contents" style="display:none">
-    <div class="ae_centered_container_100pc assign_font">
+<div id="ae_contents" class="ae_nodisplay ae_assign_font">
+    <div id="ae_contents_container">
         <div id="ae_keywords_filters_area">
             <div id="ae_keywords_filters_box">
                 <div class="form_outer">
@@ -84,7 +88,7 @@
                                                                 <div><input id="ae_detailedview" name="detailedview" type="checkbox"><label for="ae_detailedview">Detailed view</label></div>
                                                             </fieldset>
                                                         </form>
-                                                        <div id="ae_login_box" style="display:none">
+                                                        <div id="ae_login_box" class="ae_nodisplay">
                                                             <div class="login_outer">
                                                                 <div class="login_top">
                                                                     <div class="login_bottom">
@@ -122,7 +126,7 @@
                                                         </div>
                                                         <div id="ae_help_link"><a href="${interface.application.link.browse_help}" target="ae_help"><img src="assets/images/basic_help.gif" width="16" height="16" alt="">ArrayExpress Browser Help</a></div>
                                                         <div id="ae_login_link"><a href="javascript:aeShowLoginForm();"><img src="assets/images/basic_key.gif" width="16" height="16" alt="">Submitter/reviewer login</a></div>
-                                                        <div id="ae_login_info" style="display:none"><img src="assets/images/basic_suser.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
+                                                        <div id="ae_login_info" class="ae_nodisplay"><img src="assets/images/basic_suser.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
                                                         <div id="ae_logo_browse"><a href="${interface.application.base.path}" title="ArrayExpress Home"><img src="assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"></a></div>
                                                     </div>
                                                 </div>

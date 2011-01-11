@@ -85,7 +85,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <div class="ae_left_container_100pc assign_font">
+        <div id="ae_contents_box_100pc">
             <div id="ae_content">
                 <div id="ae_navi">
                     <a href="${interface.application.link.www_domain}">EBI</a>
