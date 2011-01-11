@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </noscript>
-            <div id="ae_contents" class="ae_assign_font"><xsl:call-template name="ae-contents"/></div>
+            <div id="ae_contents" class="ae_assign_font"><div id="ae_contents_container"><xsl:call-template name="ae-contents"/></div></div>
             <div id="ebi_footer">
                 <iframe src="${interface.application.link.www_domain.inc}/foot.html"
                         name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
