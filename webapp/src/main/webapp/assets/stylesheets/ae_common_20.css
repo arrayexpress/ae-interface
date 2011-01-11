@@ -22,8 +22,7 @@ table td.contentsarea {
 /* hack for position:fixed for stooped EBI footer */
 body {
 	background: #ffffff url(../images/empty.gif) fixed top;
-    overflow: auto;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 body.dev_preview {
@@ -56,19 +55,19 @@ body.ae2_curator {
 }
 
 /* specific property setters */
-.assign_font {
+.ae_assign_font {
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
-.align_center {
+.ae_align_center {
     text-align: center;
 }
 
-.align_right {
+.ae_align_right {
     text-align: right;
 }
 
-.nodisplay {
+.ae_nodisplay {
     display: none;
 }
 /* layout element styles */
@@ -108,6 +107,44 @@ body.ae2_curator {
 
 #ae_contents img {
     border: 0 none;
+}
+
+#ae_contents_container {
+    width: 100%;
+    min-width: 950px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.2em;
+    overflow: auto;
+    _height: expression(document.body.clientHeight-79);
+}
+
+#ae_contents_box_100pc {
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+}
+
+#ae_contents_box_740px {
+    width: 740px;
+    padding: 20px;
+    text-align: left;
+}
+
+#ae_contents_box_915px {
+    width: 915px;
+    padding: 20px;
+    text-align: left;
+}
+
+.ae_center_box {
+    text-align: center;
+}
+
+.ae_center_box > div {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ae_centered_fixed {
@@ -154,22 +191,6 @@ body.ae2_curator {
     overflow-x: hidden;
     overflow-y: auto;
     _height: expression(document.body.clientHeight-79);
-}
-
-.ae_left_container_100pc {
-    width: 100%;
-    min-width: 950px;
-    text-align: left;
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.2em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    _height: expression(document.body.clientHeight-79);
-}
-
-#ae_content {
-    padding: 20px;
 }
 
 /* ae warn/error area */

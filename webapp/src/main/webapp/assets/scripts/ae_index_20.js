@@ -126,6 +126,7 @@ aeOnLoad()
 $(function() {
     // footer is hidden by default to prevent its ugly appearance on IE if scripting is disabled
     $("#ebi_footer").show();
+    $("#ae_query_area").show();
 
     // check if there is a old-fasioned request which
     // we need to dispatch to the new browse interface
