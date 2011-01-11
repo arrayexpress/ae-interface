@@ -86,7 +86,7 @@
         <xsl:param name="pStyle"/>
         <xsl:param name="pMessage"/>
         <div class="ae_center_box">
-            <div class="ae_contents_box_915px">
+            <div id="ae_contents_box_915px">
                 <div class="{$pStyle}">
                     <div><xsl:copy-of select="$pMessage"/></div>
                     <div>We value your feedback. If you believe there was an error and wish to report it, please do not hesitate to drop us a line to <strong>arrayexpress(at)ebi.ac.uk</strong> or use <a href="${interface.application.link.www_domain}/support/" title="EBI Support">EBI Support Feedback</a> form.</div>

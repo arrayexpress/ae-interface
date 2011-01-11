@@ -39,7 +39,7 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <div class="ae_left_container_100pc assign_font">
+        <div id="ae_contents_box_100pc">
             <xsl:choose>
                 <xsl:when test="not($userid)">
                     <xsl:variable name="vTotalVisibleExperiments" select="count(search:queryIndex('experiments', 'visible:true'))"/>

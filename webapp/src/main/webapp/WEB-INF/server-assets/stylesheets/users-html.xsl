@@ -54,7 +54,7 @@
             <xsl:text>";</xsl:text>
         </script>
 
-        <div class="ae_left_container_100pc assign_font">
+        <div id="ae_contents_box_100pc">
             <xsl:choose>
                 <xsl:when test="not($userid)">
                     <xsl:variable name="vFilteredData" select="search:queryIndex($queryid)"/>
