@@ -48,14 +48,14 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <div id="ae_contents_box_740px">
-            <xsl:choose>
-                <xsl:when test="not($vBrowseMode)">
-                    <xsl:variable name="vFolder" select="search:queryIndex($queryid)"/>
-                    <xsl:variable name="vFolderKind" select="$vFolder/@kind"/>
-                    <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))" />
-                    <xsl:choose>
-                        <xsl:when test="exists($vFolder) and exists($vMetaData)">
+        <xsl:choose>
+            <xsl:when test="not($vBrowseMode)">
+                <xsl:variable name="vFolder" select="search:queryIndex($queryid)"/>
+                <xsl:variable name="vFolderKind" select="$vFolder/@kind"/>
+                <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))" />
+                <xsl:choose>
+                    <xsl:when test="exists($vFolder) and exists($vMetaData)">
+                        <div id="ae_contents_box_740px">
                             <div id="ae_content">
                                 <div id="ae_navi">
                                     <a href="${interface.application.link.www_domain}">EBI</a>
@@ -101,25 +101,25 @@
                                     </xsl:for-each>
                                 </xsl:if>
                             </div>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:choose>
-                                <xsl:when test="exists($vFolder) and not(exists($vMetaData))">
-                                    <xsl:call-template name="block-access-restricted"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:call-template name="block-not-found"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                        </div>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test="exists($vFolder) and not(exists($vMetaData))">
+                                <xsl:call-template name="block-access-restricted"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="block-not-found"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
 
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:call-template name="block-not-found"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </div>        
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="block-not-found"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="list-folder">
