@@ -9,13 +9,20 @@
                 exclude-result-prefixes="ae xs fn saxon search"
                 version="2.0">
 
-    <xsl:param name="pagesize">25000</xsl:param>
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
+    <xsl:param name="page"/>
+    <xsl:param name="pagesize"/>
+    
+    <xsl:variable name="vPage" select="if ($page) then $page cast as xs:integer else 1"/>
+    <xsl:variable name="vPageSize" select="if ($pagesize) then $pagesize cast as xs:integer else 25"/>
+    
+    <xsl:param name="sortby"/>
+    <xsl:param name="sortorder"/>
+
+    <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
     <xsl:param name="queryid"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
@@ -40,9 +47,9 @@
                 <xsl:variable name="vCurrentDate" select="ae:dateTimeToRfc822(fn:current-dateTime())"/>
                 <title>
                     <xsl:text>ArrayExpress Archive - Experiments</xsl:text>
-                    <xsl:if test="number($pagesize) &lt; $vTotal">
+                    <xsl:if test="$vPageSize &lt; $vTotal">
                         <xsl:text> (first </xsl:text>
-                        <xsl:value-of select="$pagesize"/>
+                        <xsl:value-of select="$vPageSize"/>
                         <xsl:text> of </xsl:text>
                         <xsl:value-of select="$vTotal"/>
                         <xsl:text>)</xsl:text>
@@ -65,9 +72,9 @@
                 <xsl:call-template name="ae-sort-experiments">
                     <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                     <xsl:with-param name="pFrom" select="1"/>
-                    <xsl:with-param name="pTo" select="$pagesize"/>
-                    <xsl:with-param name="pSortBy" select="$sortby"/>
-                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                    <xsl:with-param name="pTo" select="$vPageSize"/>
+                    <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                    <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                 </xsl:call-template>
 
             </channel>

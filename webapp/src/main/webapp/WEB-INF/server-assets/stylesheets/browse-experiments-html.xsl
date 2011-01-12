@@ -8,16 +8,23 @@
                 exclude-result-prefixes="xs aejava search html"
                 version="2.0">
 
-    <xsl:param name="queryid"/>
-    <xsl:param name="userid"/>
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
+    
+    <xsl:variable name="vPage" select="if ($page) then $page cast as xs:integer else 1"/>
+    <xsl:variable name="vPageSize" select="if ($pagesize) then $pagesize cast as xs:integer else 25"/>
+    
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
+    
+    <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
+    
+    <xsl:param name="queryid"/>
+    <xsl:param name="userid"/>
 
     <xsl:param name="detailedview"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
@@ -39,20 +46,6 @@
         <xsl:variable name="vTotalSamples" select="sum($vFilteredExperiments/samples)"/>
         <xsl:variable name="vTotalAssays" select="sum($vFilteredExperiments/assays)"/>
 
-        <xsl:variable name="vPage" as="xs:integer">
-            <xsl:choose>
-                <xsl:when test="$page"><xsl:value-of select="number($page)"/></xsl:when>
-                <xsl:otherwise>1</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="vPageSize" as="xs:integer">
-            <xsl:choose>
-                <xsl:when test="$pagesize"><xsl:value-of select="number($pagesize)"/></xsl:when>
-                <xsl:otherwise>25</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
         <xsl:variable name="vFrom" as="xs:integer">
             <xsl:choose>
                 <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
@@ -60,6 +53,7 @@
                 <xsl:otherwise>1</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        
         <xsl:variable name="vTo" as="xs:integer">
             <xsl:choose>
                 <xsl:when test="( $vFrom + $vPageSize - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
@@ -84,8 +78,8 @@
                     <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                     <xsl:with-param name="pFrom" select="$vFrom"/>
                     <xsl:with-param name="pTo" select="$vTo"/>
-                    <xsl:with-param name="pSortBy" select="$sortby"/>
-                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                    <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                    <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>

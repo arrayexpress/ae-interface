@@ -4,14 +4,16 @@
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 extension-element-prefixes="aejava search"
                 exclude-result-prefixes="aejava search"
-                version="1.0">
+                version="2.0">
 
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
+    <xsl:param name="sortby"/>
+    <xsl:param name="sortorder"/>
+    
+    <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
     <xsl:param name="queryid"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
@@ -34,8 +36,8 @@
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                 <xsl:with-param name="pFrom"/>
                 <xsl:with-param name="pTo"/>
-                <xsl:with-param name="pSortBy" select="$sortby"/>
-                <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
             </xsl:call-template>
         </experiments>
     </xsl:template>

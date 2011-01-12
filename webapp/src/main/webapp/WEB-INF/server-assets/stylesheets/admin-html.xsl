@@ -10,7 +10,6 @@
 
     <xsl:param name="userid"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 

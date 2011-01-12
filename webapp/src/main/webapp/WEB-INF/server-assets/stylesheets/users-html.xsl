@@ -8,6 +8,9 @@
 
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
+    
+    <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'id'"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
 
     <xsl:param name="userid"/>
 
@@ -15,7 +18,6 @@
     <xsl:param name="keywords"/>
     <xsl:param name="id"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
@@ -121,8 +123,8 @@
                                             <xsl:with-param name="pSequence" select="$vFilteredData"/>
                                             <xsl:with-param name="pFrom"/>
                                             <xsl:with-param name="pTo"/>
-                                            <xsl:with-param name="pSortBy" select="$sortby"/>
-                                            <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                         </xsl:call-template>
                                     </tbody>
                                 </table>
@@ -199,9 +201,9 @@
 
     <xsl:template name="add-sort">
         <xsl:param name="pKind"/>
-        <xsl:if test="$pKind = $sortby">
+        <xsl:if test="$pKind = $vSortBy">
             <xsl:choose>
-                <xsl:when test="'ascending' = $sortorder"><img src="{$basepath}/assets/images/mini_arrow_up.gif" width="12" height="16" alt="^"/></xsl:when>
+                <xsl:when test="'ascending' = $vSortOrder"><img src="{$basepath}/assets/images/mini_arrow_up.gif" width="12" height="16" alt="^"/></xsl:when>
                 <xsl:otherwise><img src="{$basepath}/assets/images/mini_arrow_down.gif" width="12" height="16" alt="v"/></xsl:otherwise>
             </xsl:choose>
         </xsl:if>

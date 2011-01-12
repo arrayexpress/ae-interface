@@ -114,7 +114,7 @@
     <!-- rss feeds support, current scheme -->
     <rule>
         <from>^/rss/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments-rss/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments-rss/xml</to>
     </rule>
 
     <!-- rest api support -->

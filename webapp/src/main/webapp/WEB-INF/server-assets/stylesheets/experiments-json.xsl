@@ -11,13 +11,15 @@
     <xsl:import href="xml-to-json.xsl"/>
     <xsl:param name="skip-root" as="xs:boolean" select="true()"/>
 
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
+    <xsl:param name="sortby"/>
+    <xsl:param name="sortorder"/>
+    
+    <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
     <xsl:param name="limit"/>
     <xsl:param name="queryid"/>
 
-    <!-- dynamically set by QueryServlet: host name (as seen from client) and base context path of webapp -->
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
@@ -44,8 +46,8 @@
                     <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                     <xsl:with-param name="pFrom" select="1"/>
                     <xsl:with-param name="pTo" select="if ($limit) then $limit else $vTotal"/>
-                    <xsl:with-param name="pSortBy" select="$sortby"/>
-                    <xsl:with-param name="pSortOrder" select="$sortorder"/>
+                    <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                    <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                 </xsl:call-template>
             </experiments>
         </xsl:variable>
