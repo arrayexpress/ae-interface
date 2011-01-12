@@ -115,17 +115,17 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         );
 
         this.assaysByMolecule = new HashMap<String, String>();
-        this.assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"metabolomic profiling\">Metabolite assay</option><option value=\"protein assay\">Protein assay</option><option value=\"RNA assay\">RNA assay</option>");
-        this.assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
-        this.assaysByMolecule.put("high throughput sequencing assay", "<option value=\"\">All assays by molecule</option><option value=\"DNA assay\">DNA assay</option><option value=\"RNA assay\">RNA assay</option>");
-        this.assaysByMolecule.put("proteomic profiling by mass spectrometer", "<option value=\"protein assay\">Protein assay</option>");
+        this.assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;metabolomic profiling&quot;\">Metabolite assay</option><option value=\"&quot;protein assay&quot;\">Protein assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
+        this.assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
+        this.assaysByMolecule.put("high throughput sequencing assay", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
+        this.assaysByMolecule.put("proteomic profiling by mass spectrometer", "<option value=\"&quot;protein assay&quot;\">Protein assay</option>");
 
         this.assaysByInstrument = new HashMap<String, String>();
-        this.assaysByInstrument.put("", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
-        this.assaysByInstrument.put("DNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
+        this.assaysByInstrument.put("", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option><option value=\"&quot;proteomic profiling by mass spectrometer&quot;\">Mass spectrometer</option>");
+        this.assaysByInstrument.put("DNA assay", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option>");
         this.assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
-        this.assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"proteomic profiling by mass spectrometer\">Mass spectrometer</option>");
-        this.assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"array assay\">Array</option><option value=\"high throughput sequencing assay\">High-throughput sequencing</option>");
+        this.assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"&quot;proteomic profiling by mass spectrometer&quot;\">Mass spectrometer</option>");
+        this.assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option>");
 
         updateIndex();
         updateAccelerators();
