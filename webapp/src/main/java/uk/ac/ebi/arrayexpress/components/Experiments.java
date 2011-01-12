@@ -168,7 +168,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 || Boolean.parseBoolean(                    // tests document for access
                     saxon.evaluateXPathSingle(              //
                             getDocument()                   //
-                            , "exists(//experiment[accession = '" + accession + "' and user = '" + userId + "'])"
+                            , "exists(/experiments/experiment[accession = '" + accession + "' and user/@id = '" + userId + "'])"
                     )
                 )
             ) {

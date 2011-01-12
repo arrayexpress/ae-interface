@@ -141,7 +141,7 @@ public class DownloadServlet extends ApplicationServlet
                 accession = files.getAccession(fileLocation);
             }
 
-            // finally if there is no accession or location determined at the stage - panie
+            // finally if there is no accession or location determined at the stage - panic
             if (null == fileLocation || null == accession) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 throw new DownloadServletException("Either accession [" + String.valueOf(accession) + "] or location [" + String.valueOf(fileLocation) + "] were not determined");
