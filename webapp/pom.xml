@@ -79,9 +79,13 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
+                <interface.application.pref.experiments.ae1.source.location/>
                 <interface.application.pref.experiments.ae1.connections>aepub1</interface.application.pref.experiments.ae1.connections>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 0 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
                 <interface.application.pref.experiments.ae1.export.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.export.location>
+
+                <interface.application.pref.experiments.ae2.source.location/>
+                <interface.application.pref.experiments.ae2.reload.schedule/>
 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>3600000</interface.application.pref.files.rescan.interval>
@@ -107,9 +111,13 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
+                <interface.application.pref.experiments.ae1.source.location/>
                 <interface.application.pref.experiments.ae1.connections>aepub2,aepub3</interface.application.pref.experiments.ae1.connections>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 30 5 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
                 <interface.application.pref.experiments.ae1.export.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.export.location>
+
+                <interface.application.pref.experiments.ae2.source.location/>
+                <interface.application.pref.experiments.ae2.reload.schedule/>
 
                 <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>3600000</interface.application.pref.files.rescan.interval>
