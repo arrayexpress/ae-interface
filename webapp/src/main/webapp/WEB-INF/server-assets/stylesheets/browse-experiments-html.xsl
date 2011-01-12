@@ -131,7 +131,7 @@
                                             <xsl:when test="source/@identical = 'false'">
                                                 <a href="{$basepath}/experiments/diff/{$vAccession}/ae2">2</a>
                                             </xsl:when>
-                                            <xsl:otherwise>1</xsl:otherwise>
+                                            <xsl:otherwise>2</xsl:otherwise>
                                         </xsl:choose>
                                     </span>
                                     <span class="ae1">
