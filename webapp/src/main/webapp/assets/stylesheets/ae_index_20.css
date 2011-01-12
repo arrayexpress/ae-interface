@@ -10,7 +10,8 @@ body.ae2_curator {
 	background: #ffe6f5 url(../images/ae2_curator.gif) no-repeat fixed 0 97%;
 }
 
-#ae_intro_area {
+#ae_contents_container {
+    font-size: 11px;
 }
 
 #ae_intro_area .lite_form_top_right {

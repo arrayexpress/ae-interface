@@ -385,7 +385,7 @@ initControls()
     });
 
     $.get("arrays-list.html").next( function(data) {
-        addHtmlToSelect("ae_array", data);
+        addHtmlToSelect("#ae_array", data);
         $("#ae_array").removeAttr("disabled").val(query.array);
     });
 
@@ -475,16 +475,16 @@ addExpansionHandlers()
 }
 
 function
-addHtmlToSelect( selectEltId, html )
+addHtmlToSelect( selectElt, html )
 {
     if ( $.browser.opera ) {
         var htmlParsed = $.clean( new Array(html) );
-        var select = $( "#" + selectEltId ).empty();
+        var select = $( selectElt ).empty();
         for ( var i = 0; i < htmlParsed.length; i++ ) {
             select[0].appendChild(htmlParsed[i].cloneNode(true));
         }
     } else {
-        $( "#" + selectEltId ).html(html);
+        $( selectElt ).html(html);
     }
 }
 
