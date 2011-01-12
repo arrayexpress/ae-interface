@@ -18,13 +18,13 @@
     <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
     <script src="assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"></script>
     <script src="assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
-        <script src="assets/scripts/ae_common_20.js" type="text/javascript"></script>
+    <script src="assets/scripts/ae_common_20.js" type="text/javascript"></script>
     <script src="assets/scripts/ae_index_20.js" type="text/javascript"></script>
     <link rel="alternate" href="rss/v2/experiments"
               type="application/rss+xml" title="ArrayExpress Experiments Feed"/>    
 </head>
 
-<body class="${interface.application.body.class}" onload="aeOnLoad();">
+<body class="${interface.application.body.class}" onload="aeOnLoad()">
 <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
     <iframe src="${interface.application.link.www_domain.inc}/head.html" name="head" id="head"
             frameborder="0" marginwidth="0px" marginheight="0px" scrolling="no" width="100%"
@@ -51,12 +51,12 @@
                 </div>
                 <div class="ie_clear"><img src="assets/images/empty.gif" width="1" height="1" alt=""/></div>
                 <noscript>
-                    <div class="ae_warn_area">ArrayExpress uses JavaScript for better data handling and enhanced
+                    <div class="ae_warn_area">ArrayExpress uses JavaScript for data handling and enhanced
                         representation. Please enable JavaScript if you want to continue using ArrayExpress.
                     </div>
                 </noscript>
-                <div id="ae_jquery_unsupported" class="ae_warn_area ae_nodisplay">ArrayExpress uses powerful jQuery library for better data handling and enhanced
-                    representation. Unfortunately this browser is not supported by jQuery. We recommend to use Firefox 3, Safari 3, Opera 9, or IE 6+.
+                <div id="ae_jquery_unsupported" class="ae_warn_area ae_nodisplay">ArrayExpress uses powerful jQuery library for data handling and enhanced
+                    representation. Unfortunately this browser is not fully supported by jQuery. We recommend to use Firefox 3+, Safari 3+, Opera 10+, or IE 6+.
                 </div>
                 <div id="ae_query_area" class="ae_nodisplay">
                     <div class="ae_left_box">
