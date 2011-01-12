@@ -51,7 +51,7 @@
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
 
-        <div class="ae_centered_container_100pc assign_font">
+        <div class="ae_centered_container_100pc">
             <div id="ae_keywords_filters_area">
                 <div id="ae_keywords_filters_box">
                     <div class="form_outer">

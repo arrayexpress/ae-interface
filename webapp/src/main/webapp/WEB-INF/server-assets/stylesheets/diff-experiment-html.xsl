@@ -65,7 +65,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <div class="ae_centered_container_100pc assign_font">
+        <div class="ae_centered_container_100pc">
             <div id="ae_results_area">
                 <xsl:if test="not($vDiffTaggedExperiment)">No experiment</xsl:if>
                 <xsl:apply-templates select="$vDiffTaggedExperiment"/>

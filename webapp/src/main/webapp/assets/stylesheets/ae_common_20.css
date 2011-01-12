@@ -72,8 +72,7 @@ body.ae2_curator {
 }
 /* layout element styles */
 
-#ae_noscript,
-#ae_contents {
+.ae_contents_frame {
     position: absolute;
     top: 57px;
     bottom: 22px;

@@ -50,7 +50,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
-        <div class="ae_left_container_100pc assign_font">
+        <div class="ae_left_container_100pc">
             <div id="ae_header"><img src="{$basepath}/assets/images/ae_header.gif" alt="ArrayExpress"/></div>
             <xsl:choose>
                 <xsl:when test="$vTotal&gt;0">

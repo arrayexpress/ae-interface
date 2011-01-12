@@ -67,7 +67,7 @@
                             <form id="ae_query_form" method="get" action="browse.html">
                                 <fieldset id="ae_keywords_fset">
                                     <label for="ae_keywords_field">Users</label>
-                                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="assign_font"/>
+                                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
                                 </fieldset>
                                 <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
                             </form>
@@ -147,11 +147,11 @@
                             <form id="ae_login_form" method="get" action="index.html" onsubmit="return false">
                                 <fieldset id="ae_login_user_fset">
                                     <label for="ae_user_field">User name</label>
-                                    <input id="ae_user_field" name="u" maxlength="50" class="assign_font"/>
+                                    <input id="ae_user_field" name="u" maxlength="50" class="ae_assign_font"/>
                                 </fieldset>
                                 <fieldset id="ae_login_pass_fset">
                                     <label for="ae_pass_field">Password</label>
-                                    <input id="ae_pass_field" type="password" name="p" maxlength="50" class="assign_font"/>
+                                    <input id="ae_pass_field" type="password" name="p" maxlength="50" class="ae_assign_font"/>
                                 </fieldset>
                                 <input id="ae_login_submit" type="submit" name="s" value="Log in"/>
                                 <span>
