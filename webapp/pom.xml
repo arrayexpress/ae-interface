@@ -147,6 +147,9 @@
                 <interface.application.pref.experiments.ae1.connections/>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
 
+                <interface.application.pref.experiments.ae2.source.location/>
+                <interface.application.pref.experiments.ae2.reload.schedule/>
+
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
                 <interface.application.body.class>aepub1</interface.application.body.class>
