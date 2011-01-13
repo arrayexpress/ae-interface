@@ -129,20 +129,19 @@ public class DownloadServlet extends ApplicationServlet
             }
         }
 
-
         if (!files.doesExist(accession, name)) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             throw new DownloadServletException("File with name [" + name + "], accession [" + accession + "] is not in files.xml");
         } else {
             String fileLocation = files.getLocation(accession, name);
 
-            if (null != fileLocation && null == accession) {
+            if (!"".equals(fileLocation) && "".equals(accession)) {
                 // attempt to resolve accession for file by its location
                 accession = files.getAccession(fileLocation);
             }
 
             // finally if there is no accession or location determined at the stage - panic
-            if (null == fileLocation || null == accession) {
+            if ("".equals(fileLocation) || "".equals(accession)) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 throw new DownloadServletException("Either accession [" + String.valueOf(accession) + "] or location [" + String.valueOf(fileLocation) + "] were not determined");
             }
