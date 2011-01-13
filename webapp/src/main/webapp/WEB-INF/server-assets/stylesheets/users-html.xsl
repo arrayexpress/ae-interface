@@ -69,7 +69,7 @@
         <div id="ae_contents_box_100pc">
             <div id="ae_content">
                 <div id="ae_navi">
-                    <a href="${interface.application.link.www_domain}">EBI</a>
+                    <a href="${interface.application.link.www_domain}/">EBI</a>
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}">ArrayExpress</a>
                     <xsl:text> > </xsl:text>
