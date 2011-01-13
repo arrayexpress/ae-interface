@@ -23,6 +23,9 @@
 
             <script src="${interface.application.link.www_domain.inc}/js/contents.js" type="text/javascript"/>
 
+            <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
+            <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_html_page_20.css" type="text/css"/>
+
             <xsl:copy-of select="$pExtraCode"/>
         </head>
     </xsl:template>
