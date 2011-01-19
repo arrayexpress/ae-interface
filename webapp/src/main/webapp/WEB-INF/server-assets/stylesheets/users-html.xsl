@@ -60,12 +60,6 @@
 
     <xsl:template name="ae-contents">
 
-        <script type="text/javascript">
-            <xsl:text>var basePath = "</xsl:text>
-            <xsl:value-of select="$basepath"/>
-            <xsl:text>";</xsl:text>
-        </script>
-
         <div id="ae_contents_box_100pc">
             <div id="ae_content">
                 <div id="ae_navi">
@@ -195,7 +189,7 @@
                     <xsl:when test="$userid = '1'">
                         <div id="ae_login_box">
                             <div id="ae_login_title">Please login to access this page</div>
-                            <form id="ae_login_form" method="get" action="index.html" onsubmit="return false">
+                            <form id="ae_login_form" method="get" action="." onsubmit="return false">
                                 <fieldset id="ae_login_user_fset">
                                     <label for="ae_user_field">User name</label>
                                     <input id="ae_user_field" name="u" maxlength="50" class="ae_assign_font"/>

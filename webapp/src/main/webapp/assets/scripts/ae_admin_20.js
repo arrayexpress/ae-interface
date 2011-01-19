@@ -14,67 +14,13 @@
  * limitations under the License.
  *
  */
+
 (function($, undefined) {
     if($ == undefined)
         throw "jQuery not loaded";
 
-    $.fn.extend({
-
-        aeLoginForm: function(status) {
-            return this.each(function() {
-			new $.AELoginForm(this, status);
-            });
-        }
-    });
-
-    $.AELoginForm = function(form, status) {
-
-        var $form = $(form);
-        var $user = $form.find("input[name='u']").first();
-        var $pass = $form.find("input[name='p']").first();
-        var $remember = $form.find("input[name='r']").first();
-        var $submit = $form.find("input[name='s']").first();
-        var $status = $(status);
-
-        function doLogin() {
-            var pass = $pass.val();
-
-            $pass.val("");
-            $status.text("");
-            $submit.attr("disabled", "true");
-            $.get("verify-login.txt", { u: $user.val(), p: pass }, doLoginNext);
-        }
-
-        function doLoginNext(text) {
-            $submit.removeAttr("disabled");
-            if ( "" != text ) {
-                var loginExpiration = null;
-                if ( $remember.attr("checked") ) {
-                    loginExpiration = 365;
-                }
-
-                $.cookie("AeLoggedUser", $user.val(), {expires: loginExpiration, path: '/'});
-                $.cookie("AeLoginToken", text, {expires: loginExpiration, path: '/'});
-
-                window.location.href = decodeURI(window.location.pathname);
-            } else {
-                $status.text("Incorrect user name or password. Please try again.");
-                $user.focus();
-            }
-        }
-
-        $(form).submit(function() {
-            doLogin();
-            return false;
-        });
-
-        $user.focus();
-    };
-
     $(function() {
-        // this will be executed when DOM is ready
-
-        $("#ae_login_form").aeLoginForm("#ae_login_status");
+        $("#ae_login_form").aeLoginForm({ status: "#ae_login_status", verifyURL : contextPath + "/verify-login.txt" });
     });
 
 })(window.jQuery);

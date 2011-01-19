@@ -140,7 +140,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
                     String folderKind = folderKindXpe.evaluate(node);
-                    ExtFunctions.addAcceleratorValue("exp-files", accession, node);
+                    ExtFunctions.addAcceleratorValue("ftp-folder", accession, node);
                     //todo: remove redundancy here
                     if ("experiment".equals(folderKind)) {
                         ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));

@@ -27,6 +27,12 @@
             <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_html_page_20.css" type="text/css"/>
 
             <xsl:copy-of select="$pExtraCode"/>
+
+            <script type="text/javascript">
+                <xsl:text>var contextPath = "</xsl:text>
+                <xsl:value-of select="$basepath"/>
+                <xsl:text>";</xsl:text>
+            </script>
         </head>
     </xsl:template>
 

@@ -74,11 +74,11 @@
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/?$</from>
-        <to type="forward">/servlets/query/files/files/html?accession=$1</to>
+        <to type="forward">/servlets/query/-/files/html?accession=$1</to>
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/index.html$</from>
-        <to type="forward">/servlets/query/files/files/html?accession=$1</to>
+        <to type="forward">/servlets/query/-/files/html?accession=$1</to>
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>

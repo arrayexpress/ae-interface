@@ -186,7 +186,7 @@
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
-            <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', accession)"/>
+            <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', accession)"/>
             <tr>
                 <td class="col_accession">
                     <div>

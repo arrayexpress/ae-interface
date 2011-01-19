@@ -62,3 +62,23 @@
     width: 200px;
     text-align: left;
 }
+
+.col_accession {
+    width: 150px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.col_name {
+    text-align: left;
+}
+
+.col_size {
+    width: 100px;
+    text-align: right;
+}
+
+.col_lastmodified {
+    width: 200px;
+    text-align: left;
+}

@@ -55,7 +55,7 @@ For more information, please go to:
     http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
                 </xsl:comment>
                 <xsl:variable name="vAccession" select="accession"/>
-                <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('exp-files', $vAccession)"/>
+                <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
                 <xsl:if test="$vExpFolder/file[@kind = 'raw']">
                     <raw name="{$vExpFolder/file[@kind = 'raw']/@name}"
                          count="{rawdatafiles}"
