@@ -124,12 +124,12 @@ public abstract class Application
         }
     }
 
-    public void sendEmail( String subject, String message )
+    public void sendEmail( String message )
     {
         try {
 
             emailer.send(getPreferences().getStringArray("app.reports.recipients")
-                    , subject
+                    , getPreferences().getString("app.reports.subject")
                     , message
                     , getPreferences().getString("app.reports.originator")
             );
@@ -150,10 +150,11 @@ public abstract class Application
             logger.debug("Caught an exception:", xx);
         }
 
-        sendEmail("[" + getName() + "] Runtime Exception Report"
-                , message + ": " + x.getMessage() + StringTools.EOL
-                        + "Host [" + hostName + "]\nThread [" + currentThread.getName() + "]" + StringTools.EOL
-                        + getStackTrace(x)
+        sendEmail( message + ": " + x.getMessage() + StringTools.EOL
+                + "Application [" + getName() + "]" + StringTools.EOL
+                + "Host [" + hostName + "]" + StringTools.EOL
+                + "Thread [" + currentThread.getName() + "]" + StringTools.EOL
+                + getStackTrace(x)
         );
     }
 
