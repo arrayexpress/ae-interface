@@ -11,3 +11,11 @@
     });
 
 })(window.jQuery);
+
+function
+aeClearField( sel )
+{
+    $(sel).val("").focus();
+    return false;
+}
+

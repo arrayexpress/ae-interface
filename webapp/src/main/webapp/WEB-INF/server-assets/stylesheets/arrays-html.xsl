@@ -96,7 +96,7 @@
                     <div id="ae_query_box">
                         <form id="ae_query_form" method="get" action="browse.html">
                             <fieldset id="ae_keywords_fset">
-                                <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers</label>
+                                <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
                                 <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
                             </fieldset>
                             <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
