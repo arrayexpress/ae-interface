@@ -293,10 +293,12 @@
                 </td>
                 <td class="col_name">
                     <div>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pText" select="@name"/>
-                            <xsl:with-param name="pFieldName"/>
-                        </xsl:call-template>
+                        <a href="{$basepath}/files/{../@accession}/{@name}">
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pText" select="@name"/>
+                                <xsl:with-param name="pFieldName"/>
+                            </xsl:call-template>
+                        </a>
                         <xsl:if test="not(@name)">&#160;</xsl:if>
                     </div>
                 </td>
@@ -331,9 +333,11 @@
         <xsl:param name="pMetaData"/>
 
         <div class="ae_accession">
-            <xsl:value-of select="concat(upper-case(substring($pFolder/@kind, 1, 1)),substring($pFolder/@kind, 2))"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="$pMetaData/accession"/>
+            <a href="{$basepath}/{$pFolder/@kind}s/{$pMetaData/accession}">
+                <xsl:value-of select="concat(upper-case(substring($pFolder/@kind, 1, 1)),substring($pFolder/@kind, 2))"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="$pMetaData/accession"/>
+            </a>
             <xsl:if test="not($pMetaData/user/@id = '1')">
                 <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
             </xsl:if>

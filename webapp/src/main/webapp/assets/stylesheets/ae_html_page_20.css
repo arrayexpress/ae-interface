@@ -143,8 +143,8 @@
 
 #ae_results_table th,
 #ae_results_table td {
-    font-size: 9pt;
-    padding: 3px;
+    font-size: 12px;
+    padding: 3px 5px;
 }
 
 #ae_results_table th {
