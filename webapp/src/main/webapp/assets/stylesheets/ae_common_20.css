@@ -321,6 +321,18 @@ body.ae2_curator {
     height: 1px;
 }
 
+.ae_text_hit {
+    background-color: yellow;
+}
+
+.ae_text_syn {
+    background-color: #aaff88;
+}
+
+.ae_text_efo {
+    background-color: #ffccaa;
+}
+
 /* autocomplete-related classes */
 .ac_results {
 	padding: 0px;

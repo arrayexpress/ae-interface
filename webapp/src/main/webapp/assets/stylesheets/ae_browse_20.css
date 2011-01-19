@@ -773,18 +773,6 @@ div.acc_status.migrated.identical span.ae1
     text-align: left;
 }
 
-.ae_text_hit {
-    background-color: yellow;
-}
-
-.ae_text_syn {
-    background-color: #aaff88;
-}
-
-.ae_text_efo {
-    background-color: #ffccaa;
-}
-
 #ae_results_status,
 #ae_results_pager {
     float: left;

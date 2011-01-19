@@ -36,6 +36,7 @@
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-sort-arrays.xsl"/>
+    <xsl:include href="ae-highlight.xsl"/>
 
     <xsl:template match="/">
         <html lang="en">
@@ -190,7 +191,10 @@
                 <td class="col_accession">
                     <div>
                         <a href="{$basepath}/arrays/{accession}">
-                            <xsl:value-of select="accession"/>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pText" select="accession" />
+                                <xsl:with-param name="pFieldName" select="'accession'" />
+                            </xsl:call-template>
                         </a>
                         <xsl:if test="not(user/@id = '1')">
                             <img src="{$basepath}/assets/images/silk_lock.gif" width="8" height="9"/>
@@ -199,13 +203,19 @@
                 </td>
                 <td class="col_name">
                     <div>
-                        <xsl:value-of select="name"/>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pText" select="name"/>
+                            <xsl:with-param name="pFieldName"/>
+                        </xsl:call-template>
                         <xsl:if test="count(name) = 0">&#160;</xsl:if>
                     </div>
                 </td>
                 <td class="col_species">
                     <div>
-                        <xsl:value-of select="string-join(species, ', ')"/>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pText" select="string-join(species, ', ')"/>
+                            <xsl:with-param name="pFieldName" select="'species'"/>
+                        </xsl:call-template>
                         <xsl:if test="count(species) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
                     </div>
                 </td>
