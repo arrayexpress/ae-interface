@@ -173,6 +173,7 @@ a:active .table_header_label {
 
 #ae_keywords_filters_box {
     position: relative;
+    z-index: 3;
 }
 
 #ae_keywords_filters_box label {
@@ -350,19 +351,32 @@ a:active .table_header_label {
 
 #ae_expdesign,
 #ae_exptech {
-    margin: 3px 0 0 0;
-    width: 47%;
+    position: relative;
+    width: 100%;
     font-size: 11px;
 }
 
-#ae_exptech {
-    top: 0;
-    right: 0;
+#ae_expdesign_box {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 47%;
 }
-#ae_pagesize {
-    margin: 0;
-    font-size: 11px;
+
+#ae_exptype_by {
+    position: absolute;
+    top: 0;
+    left: 47%;
+    width: 6%;
+    padding: 3px 3px 0 3px;
+    text-align: center;
+}
+
+#ae_exptech_box {
+    position: absolute;
+    top: 0;
+    left: 53%;
+    width: 47%;
 }
 
 .select_margin {
@@ -389,6 +403,7 @@ a:active .table_header_label {
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: 3;
     _height: auto;
 }
 

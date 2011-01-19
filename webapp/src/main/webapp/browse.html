@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="eng">
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <meta http-equiv="Content-Language" content="en-GB"/>
@@ -73,9 +73,13 @@
                                                                 <select id="ae_species" name="species" disabled><option value="">All species (loading options)</option></select>
                                                                 <select id="ae_array" name="array" disabled><option value="">All arrays (loading options)</option></select>
                                                                 <div id="ae_exptype_selector">
-                                                                    <select id="ae_expdesign" name="exptype[]" disabled><option value="">All assays by molecule (loading options)</option></select>
-                                                                    <span> by </span>
-                                                                    <select id="ae_exptech" name="exptype[]" disabled><option value="">All technologies (loading options)</option></select>
+                                                                    <div id="ae_expdesign_box">
+                                                                        <select id="ae_expdesign" name="exptype[]" disabled><option value="">All assays by molecule (loading options)</option></select>
+                                                                    </div>
+                                                                    <div id="ae_exptype_by">by</div>
+                                                                    <div id="ae_exptech_box">
+                                                                        <select id="ae_exptech" name="exptype[]" disabled><option value="">All technologies (loading options)</option></select>
+                                                                    </div>
                                                                 </div>
                                                             </fieldset>
                                                             <fieldset id="ae_options_box">
