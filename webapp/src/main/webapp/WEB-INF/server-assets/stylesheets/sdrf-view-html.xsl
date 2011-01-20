@@ -92,18 +92,19 @@
                                     </th>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <td>
-                                        <xsl:choose>
-                                            <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
+                                    <xsl:choose>
+                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
+                                            <td class="ae_align_center">
                                                 <a href="replace(text(), 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/[^\/]+/', concat($basepath, '/files'))"><img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download raw data"/></a>
-                                            </xsl:when>
-                                            <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
+                                            </td>
+                                        </xsl:when>
+                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
+                                            <td class="ae_align_center">
                                                 <a href="replace(text(), 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/[^\/]+/', concat($basepath, '/files'))"><img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download processed data"/></a>
-                                            </xsl:when>
-                                            <xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
-                                        </xsl:choose>
-
-                                    </td>
+                                            </td>
+                                        </xsl:when>
+                                        <xsl:otherwise><td><xsl:value-of select="text()"/></td></xsl:otherwise>
+                                    </xsl:choose>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>   
