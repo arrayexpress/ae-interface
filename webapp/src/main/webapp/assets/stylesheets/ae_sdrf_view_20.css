@@ -21,6 +21,7 @@
 
 #ae_results_table {
     width: auto;
+    padding-right: 20px;
 }
 
 #ae_results_table th,
@@ -28,6 +29,15 @@
     text-align: left;
     font-size: 11px;
     white-space: nowrap;
+}
+
+#ae_results_table td {
+    border-left: 1px solid #bdd7d7;
+}
+
+#ae_results_table td.col_source_name {
+    font-weight: bold;
+    border-left: 0 transparent;
 }
 
 #ae_results_table td.ae_align_center {

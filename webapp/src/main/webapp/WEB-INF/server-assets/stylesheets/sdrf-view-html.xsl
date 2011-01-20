@@ -86,8 +86,14 @@
                             <xsl:choose>
                                 <xsl:when test="$vIsHeader">
                                     <th>
+                                        <xsl:if test="$vColNum = 1">
+                                            <xsl:attribute name="class" select="'col_source_name'"/>
+                                        </xsl:if>
                                         <xsl:if test="not($vColType = 'Unit' or $vColName = 'TimeUnit')">
                                             <xsl:value-of select="$vColName"/>
+                                        </xsl:if>
+                                        <xsl:if test="$vColType = 'Unit' or $vColName = 'TimeUnit'">
+                                            <xsl:text>&#160;</xsl:text>
                                         </xsl:if>
                                     </th>
                                 </xsl:when>
@@ -107,7 +113,17 @@
                                                 </a>
                                             </td>
                                         </xsl:when>
-                                        <xsl:otherwise><td><xsl:value-of select="text()"/></td></xsl:otherwise>
+                                        <xsl:otherwise>
+                                            <td>
+                                                <xsl:if test="$vColNum = 1">
+                                                    <xsl:attribute name="class" select="'col_source_name'"/>
+                                                </xsl:if>
+                                                <xsl:value-of select="text()"/>
+                                                <xsl:if test="not(text())">
+                                                    <xsl:text>&#160;</xsl:text>
+                                                </xsl:if>
+                                            </td>
+                                        </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:otherwise>
                             </xsl:choose>
