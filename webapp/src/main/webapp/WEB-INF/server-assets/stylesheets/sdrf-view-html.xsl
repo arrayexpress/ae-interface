@@ -61,7 +61,7 @@
                                 <xsl:value-of select="upper-case($accession)"/>
                             </a>
                             <xsl:text> > </xsl:text>
-                            <a href="{$basepath}/experiments/{upper-case($accession)}/{$filename}?view">
+                            <a href="{$basepath}/experiments/{upper-case($accession)}/sdrf">
                                 <xsl:text>Sample and Data Relationship</xsl:text>
                             </a>
                         </div>
