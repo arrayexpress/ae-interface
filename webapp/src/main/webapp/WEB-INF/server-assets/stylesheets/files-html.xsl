@@ -108,7 +108,7 @@
                                                         <xsl:value-of select="concat(upper-case(substring($vArrFolder/@kind, 1, 1)), substring($vArrFolder/@kind, 2))"/>
                                                         <xsl:text> </xsl:text>
                                                         <xsl:value-of select="$vMetaData/accession"/>
-                                                        <xsl:text> - access prohibited.</xsl:text>
+                                                        <xsl:text> - access restricted.</xsl:text>
                                                     </div>
                                                 </xsl:otherwise>
                                             </xsl:choose>

@@ -19,6 +19,25 @@
     overflow: visible;
 }
 
+#ae_summary_box {
+    padding: 0 0 10px 0;
+}
+
+#ae_accession {
+    font-size: 18px;
+    line-height: normal;
+    padding: 10px 0 0;
+}
+
+#ae_accession img {
+    margin:0 3px;
+}
+
+#ae_title {
+    border-bottom: 1px solid #bdd7d7;
+    padding: 0 0 5px 0;
+}
+
 #ae_results_table {
     width: auto;
     padding-right: 20px;

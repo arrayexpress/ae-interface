@@ -2,10 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae search html xs"
-                exclude-result-prefixes="ae search html xs"
+                extension-element-prefixes="ae aejava search html xs"
+                exclude-result-prefixes="ae aejava search html xs"
                 version="2.0">
 
     <xsl:param name="accession"/>
@@ -13,13 +14,16 @@
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
+    <xsl:param name="userid"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:variable name="vPermittedColType" select="tokenize('Source Name,Characteristics,Unit,FactorValue,Factor Value', '\s*,\s*')"/>
-    <xsl:variable name="vPermittedComment" select="tokenize('ArrayExpress FTP file,Derived ArrayExpress FTP file', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="tokenize('source name,characteristics,unit,factorvalue,factor value', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedComment" select="tokenize('sample_description,sample_source_name,arrayexpress ftp file,derived arrayexpress ftp file', '\s*,\s*')"/>
     <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
-
+    <xsl:variable name="vAccession" select="upper-case($accession)"/>
+    <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+    
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
@@ -28,7 +32,7 @@
     <xsl:template match="/">
         <html lang="en">
             <xsl:call-template name="page-header">
-                <xsl:with-param name="pTitle">SDRF Viewer | ArrayExpress Archive | EBI</xsl:with-param>
+                <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_sdrf_view_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
@@ -42,28 +46,57 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <div id="ae_contents_box_100pc">
-            <div id="ae_content">
-                <div id="ae_navi">
-                    <a href="${interface.application.link.www_domain}/">EBI</a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}">ArrayExpress</a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/experiments">Experiments</a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/experiments/{upper-case($accession)}">
-                        <xsl:value-of select="upper-case($accession)"/>
-                    </a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/experiments/{upper-case($accession)}/{$filename}?view">
-                        <xsl:value-of select="$filename"/>
-                    </a>
+        <xsl:choose>
+            <xsl:when test="exists($vHeader) and exists($vMetaData)">
+                <div id="ae_contents_box_100pc">
+                    <div id="ae_content">
+                        <div id="ae_navi">
+                            <a href="${interface.application.link.www_domain}/">EBI</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}">ArrayExpress</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments">Experiments</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments/{upper-case($accession)}">
+                                <xsl:value-of select="upper-case($accession)"/>
+                            </a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments/{upper-case($accession)}/{$filename}?view">
+                                <xsl:text>Sample and Data Relationship</xsl:text>
+                            </a>
+                        </div>
+                        <div id="ae_summary_box">
+                            <div id="ae_accession">
+                                <a href="{$basepath}/experiments/{$vAccession}">
+                                    <xsl:text>Experiment </xsl:text>
+                                    <xsl:value-of select="$vAccession"/>
+                                </a>
+                                <xsl:if test="not($vMetaData/user/@id = '1')">
+                                    <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
+                                </xsl:if>
+                            </div>
+                            <span id="ae_title">
+                                <xsl:value-of select="$vMetaData/name"/>
+                                <xsl:if test="$vMetaData/samples">
+                                    <xsl:text> (</xsl:text>
+                                    <xsl:value-of select="$vMetaData/samples"/>
+                                    <xsl:text> samples)</xsl:text>
+                                </xsl:if>
+                            </span>
+                        </div>
+                        <div id="ae_results_box">
+                            <xsl:apply-templates select="/table"/>
+                        </div>
+                    </div>
                 </div>
-                <div id="ae_results_box">
-                    <xsl:apply-templates select="/table"/>
-                </div>
-            </div>
-        </div>
+            </xsl:when>
+            <xsl:when test="exists($vHeader) and not(exists($vMetaData))">
+                <xsl:call-template name="block-access-restricted"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="block-not-found"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="table">
@@ -82,7 +115,7 @@
                     <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+[^\s])\s*\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
                     <xsl:variable name="vColName" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
                     <xsl:choose>
-                        <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, $vColName)) or index-of($vPermittedColType, $vColType)">
+                        <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, lower-case($vColName))) or index-of($vPermittedColType, lower-case($vColType))">
                             <xsl:choose>
                                 <xsl:when test="$vIsHeader">
                                     <th>

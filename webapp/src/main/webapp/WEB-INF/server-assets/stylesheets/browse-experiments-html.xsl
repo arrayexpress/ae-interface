@@ -745,7 +745,7 @@
                             </a>
                             <xsl:if test="current-grouping-key() = 'sdrf'">
                                 <xsl:text> | </xsl:text>
-                                <a href="{$vBaseUrl}/experiments/{$vAccession}/{@name}?view">
+                                <a href="{$vBaseUrl}/experiments/{$vAccession}/sdrf">
                                     <xsl:text>view</xsl:text>
                                 </a><img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                             </xsl:if>
