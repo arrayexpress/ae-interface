@@ -49,13 +49,13 @@
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}">ArrayExpress</a>
                     <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/arrays">Files</a>
+                    <a href="{$basepath}/experiments">Experiments</a>
                     <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/arrays/{upper-case($accession)}">
+                    <a href="{$basepath}/experiments/{upper-case($accession)}">
                         <xsl:value-of select="upper-case($accession)"/>
                     </a>
                     <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/arrays/{upper-case($accession)}/{$filename}?view">
+                    <a href="{$basepath}/experiments/{upper-case($accession)}/{$filename}?view">
                         <xsl:value-of select="$filename"/>
                     </a>
                 </div>
