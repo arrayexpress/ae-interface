@@ -23,7 +23,9 @@
     width: auto;
 }
 
+#ae_results_table th,
 #ae_results_table td {
+    text-align: left;
     font-size: 11px;
     white-space: nowrap;
 }

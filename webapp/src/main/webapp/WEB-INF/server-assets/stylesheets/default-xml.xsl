@@ -3,16 +3,7 @@
                 version="2.0">
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
 
-    <xsl:template match="/experiments">
-        <experiments total="{count(experiment)}">
-            <xsl:apply-templates/>
-        </experiments>
-    </xsl:template>
-
-    <xsl:template match="experiment">
-
-        <experiment>
-            <xsl:copy-of select="*|@*"/>
-        </experiment>
+    <xsl:template match="/">
+        <xsl:copy-of select="/"/>
     </xsl:template>
 </xsl:stylesheet>

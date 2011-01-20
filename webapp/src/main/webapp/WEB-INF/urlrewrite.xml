@@ -79,12 +79,17 @@
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+.sdrf.txt)$</from>
         <condition type="parameter" name="view" operator="greater"/>
-        <to type="forward">/servlets/fftransform/$2/sdrf-view/html</to>
+        <to type="forward">/servlets/fftransform/$1/$2/sdrf-view/html</to>
+    </rule>
+    <rule>
+        <from>^/files/([aAeE]-\w{4}-\d+)/(.+.sdrf.txt)$</from>
+        <condition type="parameter" name="xml" operator="greater"/>
+        <to type="forward">/servlets/fftransform/$1/$2/default/xml</to>
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+.idf.txt)$</from>
         <condition type="parameter" name="view" operator="greater"/>
-        <to type="forward">/servlets/fftransform/$2/idf-view/html</to>
+        <to type="forward">/servlets/fftransform/$1/$2/idf-view/html</to>
     </rule>
     <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>

@@ -49,26 +49,31 @@ public class FlatFileTransformationServlet extends ApplicationServlet
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {
-        RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)$", "i");
+        RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)/([^/]+)$", "i");
 
         logRequest(logger, request, requestType);
 
         String[] requestArgs = PARSE_ARGUMENTS_REGEX.match(request.getRequestURL().toString());
 
-        if (null == requestArgs || requestArgs.length != 3
-                || "".equals(requestArgs[0]) || "".equals(requestArgs[1]) || "".equals(requestArgs[2])) {
+        if (null == requestArgs || requestArgs.length != 4
+                || "".equals(requestArgs[0]) || "".equals(requestArgs[1])
+                || "".equals(requestArgs[2]) || "".equals(requestArgs[3])) {
             throw new ServletException("Bad arguments passed via request URL [" + request.getRequestURL().toString() + "]");
         }
 
-        String flatFileName = requestArgs[0];
-        String stylesheet = requestArgs[1];
-        String outputType = requestArgs[2];
+        String accession = requestArgs[0];
+        String fileName = requestArgs[1];
+        String stylesheet = requestArgs[2];
+        String outputType = requestArgs[3];
 
         HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
 
         // adding "host" request header so we can dynamically create FQDN URLs
         params.put("host", request.getHeader("host"));
         params.put("basepath", request.getContextPath());
+
+        params.put("accession", accession);
+        params.put("filename", fileName);
 
         PrintWriter out = null;
         try {
@@ -78,7 +83,7 @@ public class FlatFileTransformationServlet extends ApplicationServlet
             String stylesheetName = new StringBuilder(stylesheet)
                     .append('-').append(outputType).append(".xsl").toString();
 
-            String flatFileLocation = files.getLocation(null, flatFileName);
+            String flatFileLocation = files.getLocation(accession, fileName);
             SAXSource source = new SAXSource();
             source.setInputSource(new InputSource(new FileReader(new File(files.getRootFolder(), flatFileLocation))));
             source.setXMLReader(new FlatFileXMLReader());

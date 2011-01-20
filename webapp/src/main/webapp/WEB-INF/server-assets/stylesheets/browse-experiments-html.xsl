@@ -743,6 +743,13 @@
                             <a href="{$vBaseUrl}/files/{$vAccession}/{@name}">
                                 <xsl:value-of select="@name"/>
                             </a>
+                            <xsl:if test="current-grouping-key() = 'sdrf'">
+                                <xsl:text> [</xsl:text>
+                                <a href="{$vBaseUrl}/files/{$vAccession}/{@name}?view">
+                                    <xsl:text>view</xsl:text><img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
+                                </a>
+                                <xsl:text>]</xsl:text>
+                            </xsl:if>
                             <xsl:if test="position() != last()">
                                 <xsl:text>, </xsl:text>
                             </xsl:if>

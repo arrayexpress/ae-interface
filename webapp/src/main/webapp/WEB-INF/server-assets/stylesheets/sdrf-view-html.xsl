@@ -8,10 +8,17 @@
                 exclude-result-prefixes="ae search html xs"
                 version="2.0">
 
+    <xsl:param name="accession"/>
+    <xsl:param name="filename"/>
+
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
+
+    <xsl:variable name="vPermittedColType" select="tokenize('Source Name,Characteristics,Factor Value', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedComment" select="tokenize('ArrayExpress FTP file,Derived ArrayExpress FTP file', '\s*,\s*')"/>
+    <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -37,6 +44,21 @@
     <xsl:template name="ae-contents">
         <div id="ae_contents_box_100pc">
             <div id="ae_content">
+                <div id="ae_navi">
+                    <a href="${interface.application.link.www_domain}/">EBI</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}">ArrayExpress</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/arrays">Files</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/arrays/{upper-case($accession)}">
+                        <xsl:value-of select="upper-case($accession)"/>
+                    </a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/arrays/{upper-case($accession)}/{$filename}?view">
+                        <xsl:value-of select="$filename"/>
+                    </a>
+                </div>
                 <div id="ae_results_box">
                     <xsl:apply-templates select="/table"/>
                 </div>
@@ -52,15 +74,43 @@
 
     <xsl:template match="row">
         <xsl:if test="col > ''">
+            <xsl:variable name="vIsHeader" select="(. = $vHeader)"/>
             <tr>
-                <xsl:apply-templates select="col"/>
+                <xsl:for-each select="col">
+                    <xsl:variable name="vColNum" select="position()"/>
+                    <xsl:variable name="vIsColComplex" select="matches($vHeader/col[$vColNum], '.+\[.+\].*')"/>
+                    <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+)\s\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
+                    <xsl:variable name="vColName" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
+                    <xsl:choose>
+                        <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, $vColName)) or index-of($vPermittedColType, $vColType)">
+                            <xsl:choose>
+                                <xsl:when test="$vIsHeader">
+                                    <th>
+                                        <xsl:if test="$vColName != 'TimeUnit'">
+                                            <xsl:value-of select="$vColName"/>
+                                        </xsl:if>
+                                    </th>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <td>
+                                        <xsl:choose>
+                                            <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
+                                                <a href="replace(text(), 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/[^\/]+/', concat($basepath, '/files'))"><img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download raw data"/></a>
+                                            </xsl:when>
+                                            <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
+                                                <a href="replace(text(), 'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/[^\/]+/', concat($basepath, '/files'))"><img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download processed data"/></a>
+                                            </xsl:when>
+                                            <xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
+                                        </xsl:choose>
+
+                                    </td>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>   
+                    </xsl:choose>
+                </xsl:for-each>
             </tr>
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="col">
-        <td>
-            <xsl:value-of select="text()"/>
-        </td>
-    </xsl:template>
 </xsl:stylesheet>
