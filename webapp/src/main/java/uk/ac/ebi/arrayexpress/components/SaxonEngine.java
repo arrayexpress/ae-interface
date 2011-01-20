@@ -207,7 +207,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return xpe.evaluate(doc);
     }
 
-    public boolean transformToWriter( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws Exception
+    public boolean transformToWriter( Source srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws Exception
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));
     }

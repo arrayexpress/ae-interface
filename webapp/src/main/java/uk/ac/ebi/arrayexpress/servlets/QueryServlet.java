@@ -57,7 +57,8 @@ public class QueryServlet extends ApplicationServlet
     }
 
     // Respond to HTTP requests from browsers.
-    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType ) throws ServletException, IOException
+    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+            throws ServletException, IOException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)$", "i");
 
@@ -108,9 +109,8 @@ public class QueryServlet extends ApplicationServlet
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
         try {
-            //Experiments experiments = (Experiments) getComponent("Experiments");
-
-            String stylesheetName = new StringBuilder(stylesheet).append('-').append(outputType).append(".xsl").toString();
+            String stylesheetName = new StringBuilder(stylesheet)
+                    .append('-').append(outputType).append(".xsl").toString();
 
             HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
             // to make sure nobody sneaks in the other value w/o proper authentication

@@ -8,6 +8,11 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.QueryServlet</servlet-class>
     </servlet>
     <servlet>
+        <description>ArrayExpress Flat File Transformation Servlet</description>
+        <servlet-name>FlatFileTransformationServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.FlatFileTransformationServlet</servlet-class>
+    </servlet>
+    <servlet>
         <description>ArrayExpress Data Download Servlet</description>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.DownloadServlet</servlet-class>
@@ -30,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>QueryServlet</servlet-name>
         <url-pattern>/servlets/query/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlatFileTransformationServlet</servlet-name>
+        <url-pattern>/servlets/fftransform/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>

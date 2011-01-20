@@ -17,13 +17,13 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
+import au.com.bytecode.opencsv.CSVReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -32,143 +32,49 @@ public class FlatFileXMLReader extends ACustomXMLReader
 {
     private static final Attributes EMPTY_ATTR = new AttributesImpl();
 
+    private static final String EMPTY_NAMESPACE = "";
+
+    private static final char COL_DELIMITER = 0x9;
+    private static final char COL_QUOTECHAR = '"';
+
     public void parse(InputSource input) throws IOException, SAXException
     {
-        // if no handler is registered to receive events, don't bother
-        // to parse the CSV file
         ContentHandler ch = getContentHandler();
         if (null == ch) {
             return;
         }
 
         // convert the InputSource into a BufferedReader
-        BufferedReader br;
+        CSVReader ffReader;
         if (input.getCharacterStream() != null) {
-            br = new BufferedReader(input.getCharacterStream());
+            ffReader = new CSVReader(input.getCharacterStream(), COL_DELIMITER, COL_QUOTECHAR);
         } else if (input.getByteStream() != null) {
-            br = new BufferedReader(new InputStreamReader(
-                    input.getByteStream()));
+            ffReader = new CSVReader(new InputStreamReader(input.getByteStream()), COL_DELIMITER, COL_QUOTECHAR);
         } else if (input.getSystemId() != null) {
-            java.net.URL url = new URL(input.getSystemId());
-            br = new BufferedReader(new InputStreamReader(url.openStream()));
+            URL url = new URL(input.getSystemId());
+            ffReader = new CSVReader(new InputStreamReader(url.openStream()), COL_DELIMITER, COL_QUOTECHAR);
         } else {
             throw new SAXException("Invalid InputSource object");
         }
 
         ch.startDocument();
 
-        // emit <csvFile>
-        ch.startElement("", "", "csvFile", EMPTY_ATTR);
+        ch.startElement(EMPTY_NAMESPACE, "table", "table", EMPTY_ATTR);
 
-        // read each line of the file until EOF is reached
-        String curLine = null;
-        while ((curLine = br.readLine()) != null) {
-            curLine = curLine.trim();
-            if (curLine.length() > 0) {
-                // create the <line> element
-                ch.startElement("", "", "line", EMPTY_ATTR);
-                // output data from this line
-                parseLine(curLine, ch);
-                // close the </line> element
-                ch.endElement("", "", "line");
-            }
-        }
-
-        // emit </csvFile>
-        ch.endElement("", "", "csvFile");
-        ch.endDocument();
-    }
-
-    // Break an individual line into tokens.
-    // This is a recursive function
-    // that extracts the first token, then
-    // recursively parses the
-    // remainder of the line.
-    private void parseLine(String curLine, ContentHandler ch)
-            throws IOException, SAXException {
-
-        String firstToken = null;
-        String remainderOfLine = null;
-        int commaIndex = locateFirstDelimiter(curLine);
-        if (commaIndex > -1) {
-            firstToken = curLine.substring(0, commaIndex).trim();
-            remainderOfLine = curLine.substring(commaIndex + 1).trim();
-        } else {
-            // no commas, so the entire line is the token
-            firstToken = curLine;
-        }
-
-        // remove redundant quotes
-        firstToken = cleanupQuotes(firstToken);
-
-        // emit the <value> element
-        ch.startElement("", "", "value", EMPTY_ATTR);
-        ch.characters(firstToken.toCharArray(), 0, firstToken.length());
-        ch.endElement("", "", "value");
-
-        // recursively process the remainder of the line
-        if (remainderOfLine != null) {
-            parseLine(remainderOfLine, ch);
-        }
-    }
-
-    // locate the position of the comma,
-    // taking into account that
-    // a quoted token may contain ignorable commas.
-    private int locateFirstDelimiter(String curLine) {
-        if (curLine.startsWith("\"")) {
-            boolean inQuote = true;
-            int numChars = curLine.length();
-            for (int i = 1; i < numChars; i++) {
-                char curChar = curLine.charAt(i);
-                if (curChar == '"') {
-                    inQuote = !inQuote;
-                } else if (curChar == ',' && !inQuote) {
-                    return i;
+        String[] row;
+        while ((row = ffReader.readNext()) != null) {
+            if (row.length > 0) {
+                ch.startElement(EMPTY_NAMESPACE, "row", "row", EMPTY_ATTR);
+                for (String col : row) {
+                    ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
+                    ch.characters(col.toCharArray(), 0, col.length());
+                    ch.endElement(EMPTY_NAMESPACE, "col", "col");
                 }
+                ch.endElement(EMPTY_NAMESPACE, "row", "row");
             }
-            return -1;
-        } else {
-            return curLine.indexOf(',');
-        }
-    }
-
-    // remove quotes around a token, as well as pairs of quotes
-    // within a token.
-    private String cleanupQuotes(String token) {
-        StringBuffer buf = new StringBuffer();
-        int length = token.length();
-        int curIndex = 0;
-
-        if (token.startsWith("\"") && token.endsWith("\"")) {
-            curIndex = 1;
-            length--;
         }
 
-        boolean oneQuoteFound = false;
-        boolean twoQuotesFound = false;
-
-        while (curIndex < length) {
-            char curChar = token.charAt(curIndex);
-            if (curChar == '"') {
-                twoQuotesFound = (oneQuoteFound) ? true : false;
-                oneQuoteFound = true;
-            } else {
-                oneQuoteFound = false;
-                twoQuotesFound = false;
-            }
-
-            if (twoQuotesFound) {
-                twoQuotesFound = false;
-                oneQuoteFound = false;
-                curIndex++;
-                continue;
-            }
-
-            buf.append(curChar);
-            curIndex++;
-        }
-
-        return buf.toString();
+        ch.endElement(EMPTY_NAMESPACE, "table", "table");
+        ch.endDocument();
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="11.0">
+<project version="11.2">
     <meta>
         <filters directoryPatterns="" filePatterns=""
             positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="11.0">
+            <serialized version="11.2">
                 <map>
                     <entry>
                         <String xml:space="preserve">scenario.associations</String>
@@ -1855,6 +1855,8 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae1-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae2-xml.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
             <file

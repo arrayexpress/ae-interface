@@ -43,11 +43,12 @@ public class LookupServlet extends ApplicationServlet
     }
 
     // Respond to HTTP requests from browsers.
-    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType ) throws ServletException, IOException
+    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+            throws ServletException, IOException
     {
         logRequest(logger, request, requestType);
 
-        String[] requestArgs = new RegexHelper("servlets/lookup/([^/]+)", "i")
+        String[] requestArgs = new RegexHelper("/([^/]+)", "i")
                 .match(request.getRequestURL().toString());
 
         String type = "";
