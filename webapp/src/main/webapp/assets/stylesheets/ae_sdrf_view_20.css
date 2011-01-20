@@ -29,3 +29,7 @@
     font-size: 11px;
     white-space: nowrap;
 }
+
+#ae_results_table td.ae_align_center {
+    text-align: center;
+}

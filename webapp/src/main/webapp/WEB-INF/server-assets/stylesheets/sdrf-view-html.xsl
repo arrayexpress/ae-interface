@@ -16,7 +16,7 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:variable name="vPermittedColType" select="tokenize('Source Name,Characteristics,Factor Value', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="tokenize('Source Name,Characteristics,Unit,FactorValue,Factor Value', '\s*,\s*')"/>
     <xsl:variable name="vPermittedComment" select="tokenize('ArrayExpress FTP file,Derived ArrayExpress FTP file', '\s*,\s*')"/>
     <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
 
@@ -79,14 +79,14 @@
                 <xsl:for-each select="col">
                     <xsl:variable name="vColNum" select="position()"/>
                     <xsl:variable name="vIsColComplex" select="matches($vHeader/col[$vColNum], '.+\[.+\].*')"/>
-                    <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+)\s\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
+                    <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+[^\s])\s*\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
                     <xsl:variable name="vColName" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
                     <xsl:choose>
                         <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, $vColName)) or index-of($vPermittedColType, $vColType)">
                             <xsl:choose>
                                 <xsl:when test="$vIsHeader">
                                     <th>
-                                        <xsl:if test="$vColName != 'TimeUnit'">
+                                        <xsl:if test="not($vColType = 'Unit' or $vColName = 'TimeUnit')">
                                             <xsl:value-of select="$vColName"/>
                                         </xsl:if>
                                     </th>
