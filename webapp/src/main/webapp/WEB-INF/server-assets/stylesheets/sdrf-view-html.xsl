@@ -51,7 +51,7 @@
     </xsl:template>
 
     <xsl:template match="row">
-        <xsl:if test="count(col) > 1 or (count(col) = 1 and string-length(col[0]) > 0)">
+        <xsl:if test="col > ''">
             <tr>
                 <xsl:apply-templates select="col"/>
             </tr>
