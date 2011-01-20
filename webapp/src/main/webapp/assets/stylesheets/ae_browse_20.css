@@ -352,6 +352,7 @@ a:active .table_header_label {
 #ae_expdesign,
 #ae_exptech {
     position: relative;
+    margin: 3px 0 0;
     width: 100%;
     font-size: 11px;
 }
@@ -368,19 +369,23 @@ a:active .table_header_label {
     top: 0;
     left: 47%;
     width: 6%;
-    padding: 3px 3px 0 3px;
+    padding: 5px 3px 0 3px;
     text-align: center;
 }
 
 #ae_exptech_box {
     position: absolute;
     top: 0;
-    left: 53%;
+    right: 0;
     width: 47%;
 }
 
 .select_margin {
     margin: 3px 0 5px 0;
+}
+
+.select_margin select {
+    margin: 0;
 }
 
 #ae_keyword_filters_submit {
