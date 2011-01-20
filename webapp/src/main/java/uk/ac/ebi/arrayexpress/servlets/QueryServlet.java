@@ -113,12 +113,13 @@ public class QueryServlet extends ApplicationServlet
                     .append('-').append(outputType).append(".xsl").toString();
 
             HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
-            // to make sure nobody sneaks in the other value w/o proper authentication
-            params.put("userid", "1");
 
             // adding "host" request header so we can dynamically create FQDN URLs
             params.put("host", request.getHeader("host"));
             params.put("basepath", request.getContextPath());
+
+            // to make sure nobody sneaks in the other value w/o proper authentication
+            params.put("userid", "1");
 
             CookieMap cookies = new CookieMap(request.getCookies());
             if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {

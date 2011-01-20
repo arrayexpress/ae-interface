@@ -23,11 +23,15 @@ import org.xml.sax.InputSource;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.components.Users;
+import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
@@ -35,6 +39,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 
 public class FlatFileTransformationServlet extends ApplicationServlet
 {
@@ -75,42 +80,73 @@ public class FlatFileTransformationServlet extends ApplicationServlet
         params.put("accession", accession);
         params.put("filename", fileName);
 
+        // to make sure nobody sneaks in the other value w/o proper authentication
+        params.put("userid", "1");
+
         PrintWriter out = null;
         try {
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
             Files files = (Files) getComponent("Files");
+
+            CookieMap cookies = new CookieMap(request.getCookies());
+            if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
+                Users users = (Users) getComponent("Users");
+                String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
+                String passwordHash = cookies.get("AeLoginToken").getValue();
+                if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
+                    if ((users.isPrivileged(user))) { // superuser logged in -> remove user restriction
+                            params.remove("userid");
+                        } else {
+                            params.put("userid", StringTools.listToString(users.getUserIDs(user), " OR "));
+                        }
+                } else {
+                    logger.warn("Removing invalid session cookie for user [{}]", user);
+                    // resetting cookies
+                    Cookie userCookie = new Cookie("AeLoggedUser", "");
+                    userCookie.setPath("/");
+                    userCookie.setMaxAge(0);
+
+                    response.addCookie(userCookie);
+                }
+            }
 
             String stylesheetName = new StringBuilder(stylesheet)
                     .append('-').append(outputType).append(".xsl").toString();
 
             String flatFileLocation = files.getLocation(accession, fileName);
             SAXSource source = new SAXSource();
-            source.setInputSource(new InputSource(new FileReader(new File(files.getRootFolder(), flatFileLocation))));
-            source.setXMLReader(new FlatFileXMLReader());
+            File flatFile = new File(files.getRootFolder(), flatFileLocation);
 
-            if (outputType.equals("html")) {
-                response.setContentType("text/html; charset=ISO-8859-1");
+            if (null == flatFile || !flatFile.exists()) {
+                logger.error("Requested transformation of [{}] which is not found", flatFile.getAbsolutePath());
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
-                response.setContentType("text/" + outputType + "; charset=UTF-8");
-            }
-            // Disable cache no matter what (or we're fucked on IE side)
-            response.addHeader("Pragma", "no-cache");
-            response.addHeader("Cache-Control", "no-cache");
-            response.addHeader("Cache-Control", "must-revalidate");
-            response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
+                source.setInputSource(new InputSource(new FileReader(flatFile)));
+                source.setXMLReader(new FlatFileXMLReader());
 
-            // Output goes to the response PrintWriter.
-            out = response.getWriter();
-
-            if (!saxonEngine.transformToWriter(
-                    source
-                    , stylesheetName
-                    , params
-                    , out
-            )) {                     // where to dump resulting text
-                    throw new Exception("Transformation returned an error");
+                if (outputType.equals("html")) {
+                    response.setContentType("text/html; charset=ISO-8859-1");
+                } else {
+                    response.setContentType("text/" + outputType + "; charset=UTF-8");
                 }
+                // Disable cache no matter what (or we're fucked on IE side)
+                response.addHeader("Pragma", "no-cache");
+                response.addHeader("Cache-Control", "no-cache");
+                response.addHeader("Cache-Control", "must-revalidate");
+                response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
 
+                // Output goes to the response PrintWriter.
+                out = response.getWriter();
+
+                if (!saxonEngine.transformToWriter(
+                        source
+                        , stylesheetName
+                        , params
+                        , out
+                )) {                     // where to dump resulting text
+                        throw new Exception("Transformation returned an error");
+                }
+            }
         } catch (Exception x) {
             throw new RuntimeException(x);
         } finally {
