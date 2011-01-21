@@ -25,8 +25,8 @@ import java.util.Map;
 
 public abstract class ACustomXMLReader implements XMLReader
 {
-    private Map featureMap = new HashMap();
-    private Map propertyMap = new HashMap();
+    private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
+    private Map<String, Object> propertyMap = new HashMap<String, Object>();
     private EntityResolver entityResolver;
     private DTDHandler dtdHandler;
     private ContentHandler contentHandler;
@@ -36,32 +36,31 @@ public abstract class ACustomXMLReader implements XMLReader
      * The only abstract method in this class. Derived classes can parse
      * any source of data and emit SAX2 events to the ContentHandler.
      */
-    public abstract void parse(InputSource input) throws IOException,
+    public abstract void parse( InputSource input ) throws IOException,
             SAXException;
 
-    public boolean getFeature(String name) throws SAXNotRecognizedException, SAXNotSupportedException
+    public boolean getFeature( String name ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
-        Boolean featureValue = (Boolean) this.featureMap.get(name);
-        return (featureValue == null) ? false
-                : featureValue.booleanValue();
+        Boolean featureValue = this.featureMap.get(name);
+        return (featureValue != null) && featureValue;
     }
 
-    public void setFeature(String name, boolean value) throws SAXNotRecognizedException, SAXNotSupportedException
+    public void setFeature( String name, boolean value ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
-        this.featureMap.put(name, new Boolean(value));
+        this.featureMap.put(name, value);
     }
 
-    public Object getProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException
+    public Object getProperty( String name ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         return this.propertyMap.get(name);
     }
 
-    public void setProperty(String name, Object value) throws SAXNotRecognizedException, SAXNotSupportedException
+    public void setProperty( String name, Object value ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         this.propertyMap.put(name, value);
     }
 
-    public void setEntityResolver(EntityResolver entityResolver)
+    public void setEntityResolver( EntityResolver entityResolver )
     {
         this.entityResolver = entityResolver;
     }
@@ -71,7 +70,7 @@ public abstract class ACustomXMLReader implements XMLReader
         return this.entityResolver;
     }
 
-    public void setDTDHandler(DTDHandler dtdHandler)
+    public void setDTDHandler( DTDHandler dtdHandler )
     {
         this.dtdHandler = dtdHandler;
     }
@@ -81,7 +80,7 @@ public abstract class ACustomXMLReader implements XMLReader
         return this.dtdHandler;
     }
 
-    public void setContentHandler(ContentHandler contentHandler)
+    public void setContentHandler( ContentHandler contentHandler )
     {
         this.contentHandler = contentHandler;
     }
@@ -91,7 +90,7 @@ public abstract class ACustomXMLReader implements XMLReader
         return this.contentHandler;
     }
 
-    public void setErrorHandler(ErrorHandler errorHandler)
+    public void setErrorHandler( ErrorHandler errorHandler )
     {
         this.errorHandler = errorHandler;
     }
@@ -101,7 +100,7 @@ public abstract class ACustomXMLReader implements XMLReader
         return this.errorHandler;
     }
 
-    public void parse(String systemId) throws IOException, SAXException
+    public void parse( String systemId ) throws IOException, SAXException
     {
         parse(new InputSource(systemId));
     }

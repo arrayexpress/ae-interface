@@ -41,7 +41,7 @@ public class DownloadServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = 292987974909737157L;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     // buffer size (in bytes)
     private static final int TRANSFER_BUFFER_SIZE = 10 * 1024 * 1024;

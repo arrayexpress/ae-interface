@@ -36,7 +36,7 @@ public class HttpProxyServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = 4470393129326932507L;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final int PROXY_BUFFER_SIZE = 64000;
 

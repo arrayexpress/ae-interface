@@ -49,7 +49,7 @@ public class QueryServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = 6806580383145704364L;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {

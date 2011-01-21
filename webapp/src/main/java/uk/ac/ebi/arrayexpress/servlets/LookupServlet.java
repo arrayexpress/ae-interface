@@ -35,7 +35,7 @@ public class LookupServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -5043275356216186598L;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {

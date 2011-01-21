@@ -35,7 +35,7 @@ public class ControlServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -4509580274404536983L;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
     
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
