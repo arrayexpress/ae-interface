@@ -45,16 +45,13 @@
         <to type="forward">/servlets/query/experiments/experiments/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/experiments/([aAeE]-\w{4}-\d+)/sdrf$</from>
-        <to type="forward">/servlets/fftransform/$1/$1.sdrf.txt/sdrf-view/html</to>
+        <from>^/experiments/([aAeE]-\w{4}-\d+)/(idf|sdrf)$</from>
+        <condition type="parameter" name="xml" operator="greater"/>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/default/xml</to>
     </rule>
     <rule>
-        <from>^/experiments/([aAeE]-\w{4}-\d+)/sdrf/xml$</from>
-        <to type="forward">/servlets/fftransform/$1/$1.sdrf.txt/default/xml</to>
-    </rule>
-    <rule>
-        <from>^/experiments/([aAeE]-\w{4}-\d+)/idf$</from>
-        <to type="forward">/servlets/fftransform/$1/$1.idf.txt/idf-view/html</to>
+        <from>^/experiments/([aAeE]-\w{4}-\d+)/(idf|sdrf)$</from>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/$2-view/html</to>
     </rule>
 
     <!-- arrays -->
