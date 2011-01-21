@@ -43,6 +43,8 @@ import java.net.URLDecoder;
 
 public class FlatFileTransformationServlet extends ApplicationServlet
 {
+    private static final long serialVersionUID = -2909054413280338250L;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
