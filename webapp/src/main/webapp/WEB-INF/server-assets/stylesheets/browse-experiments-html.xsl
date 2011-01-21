@@ -273,44 +273,6 @@
                                 </tr>
                             </xsl:if>
 
-                            <xsl:if test="submissiondate | lastupdatedate | releasedate">
-                                <tr>
-                                    <td class="name"><div>Dates</div></td>
-                                    <td class="attrs">
-                                        <div>
-                                            <table cellpadding="0" cellspacing="0" border="0">
-                                                <tbody>
-                                                    <xsl:if test="submissiondate">
-                                                        <tr>
-                                                            <td class="attr_name">Submitted</td>
-                                                            <td class="attr_value">
-                                                                <xsl:apply-templates select="submissiondate" mode="highlight"/>
-                                                            </td>
-                                                        </tr>
-                                                    </xsl:if>
-                                                    <xsl:if test="submissiondate">
-                                                        <tr>
-                                                            <td class="attr_name">Last updated</td>
-                                                            <td class="attr_value">
-                                                                <xsl:apply-templates select="lastupdatedate" mode="highlight"/>
-                                                            </td>
-                                                        </tr>
-                                                    </xsl:if>
-                                                    <xsl:if test="releasedate">
-                                                        <td class="attr_name">Released</td>
-                                                        <td class="attr_value">
-                                                            <xsl:apply-templates select="releasedate" mode="highlight">
-                                                                <xsl:with-param name="pFieldName" select="'date'"/>
-                                                            </xsl:apply-templates>
-                                                        </td>
-                                                    </xsl:if>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </xsl:if>
-
                             <xsl:if test="provider[role!='data_coder']">
                                 <tr>
                                     <td class="name"><div>Contact<xsl:if test="count(provider[role!='data_coder']) > 1">s</xsl:if></div></td>

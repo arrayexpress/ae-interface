@@ -215,13 +215,6 @@ a:active .table_header_label {
     right: 60.5%;
 }
 
-#ae_help_link img,
-#ae_login_link img,
-#ae_login_info img {
-    vertical-align: text-bottom;
-    margin: 0 2px 0 0;
-}
-
 #ae_login_box {
     position: absolute;
     left: 2px;
@@ -476,9 +469,6 @@ a:active .table_header_label {
     background: url( ../images/ae_loading_bw.gif ) 50% 50% no-repeat;
 
 }
-#ae_results_body img {
-    border: 0 none;
-}
 
 #ae_results_tbl table {
     table-layout: fixed;
@@ -718,14 +708,9 @@ div.acc_status.migrated.identical span.ae1
     vertical-align: top;
 }
 
-.td_ext td.value div,
-.td_ext td.attrs div {
+.td_ext td.value > div,
+.td_ext td.attrs > div {
     margin: 2px 0 2px 3px;
-}
-
-.td_ext td.value img,
-.td_ext td.value span {
-    vertical-align: bottom;
 }
 
 #ae_results_tbl table.min-score-tbl {
@@ -745,12 +730,6 @@ div.acc_status.migrated.identical span.ae1
     font-weight: normal;
     background-color: #f2f8f8;
     border-top: 1px solid #e5f0f0;
-}
-
-.td_ext td.value a img,
-.td_ext td.attrs a img {
-    margin: 0 2px 0 0;
-    vertical-align: text-bottom;
 }
 
 .td_ext td.attrs th {

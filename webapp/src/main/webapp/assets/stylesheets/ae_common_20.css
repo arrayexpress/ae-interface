@@ -111,6 +111,10 @@ body.ae2_curator {
     vertical-align: bottom;
 }
 
+#ae_contents a img {
+    margin: 0 2px 0 0;
+}
+
 #ae_contents_container {
     width: 100%;
     min-width: 950px;
