@@ -239,7 +239,7 @@
                                         <xsl:call-template name="block-warning">
                                             <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
                                             <xsl:with-param name="pMessage">
-                                                <xsl:text>There are no platform designs matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                                                <xsl:text>There are no files matching your search criteria found in ArrayExpress Archive.</xsl:text>
                                             </xsl:with-param>
                                         </xsl:call-template>
                                     </xsl:otherwise>
