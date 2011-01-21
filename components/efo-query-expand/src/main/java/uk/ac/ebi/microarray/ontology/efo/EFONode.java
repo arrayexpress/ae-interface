@@ -46,9 +46,14 @@ public class EFONode implements IOntologyNode
      */
     protected static final Comparator<EFONode> TERM_COMPARATOR = new Comparator<EFONode>()
     {
+        private String safeGetTerm( EFONode node )
+        {
+            return null != node && null != node.getTerm() ? node.getTerm() : "";
+        }
+
         public int compare( EFONode o1, EFONode o2 )
         {
-            return o1.getTerm().compareTo(o2.getTerm());
+            return safeGetTerm(o1).compareTo(safeGetTerm(o2));
         }
     };
 
