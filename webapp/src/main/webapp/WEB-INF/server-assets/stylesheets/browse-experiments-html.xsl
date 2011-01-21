@@ -784,7 +784,7 @@
                             <xsl:text> | </xsl:text>
                             <a href="{$vBaseUrl}/experiments/{$vAccession}/{current-grouping-key()}">
                                 <xsl:text>view</xsl:text>
-                            </a><img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
+                            </a> <img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                             <xsl:if test="position() != last()">
                                 <xsl:text>, </xsl:text>
                             </xsl:if>
