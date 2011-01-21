@@ -14,3 +14,52 @@
  * limitations under the License.
  *
  */
+
+#ae_contents_container {
+    overflow: visible;
+}
+
+#ae_summary_box {
+    padding: 0 0 10px 0;
+}
+
+#ae_accession {
+    font-size: 18px;
+    line-height: normal;
+    padding: 10px 0 0;
+}
+
+#ae_accession img {
+    margin:0 3px;
+}
+
+#ae_title {
+    border-bottom: 1px solid #bdd7d7;
+    padding: 0 0 5px 0;
+}
+
+#ae_results_table {
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+#ae_results_table th,
+#ae_results_table td {
+    text-align: left;
+    font-size: 11px;
+}
+
+#ae_results_table td {
+    border: 1px solid #bdd7d7;
+}
+
+#ae_results_table td.col_1 {
+    color: #555555;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 20%;
+}
+
+#ae_results_table td.col_2 {
+    width: 80%;
+}

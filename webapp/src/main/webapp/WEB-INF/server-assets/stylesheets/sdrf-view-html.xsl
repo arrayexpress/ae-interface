@@ -118,39 +118,33 @@
                         <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, lower-case($vColName))) or index-of($vPermittedColType, lower-case($vColType))">
                             <xsl:choose>
                                 <xsl:when test="$vIsHeader">
-                                    <th>
-                                        <xsl:if test="$vColNum = 1">
-                                            <xsl:attribute name="class" select="'col_source_name'"/>
-                                        </xsl:if>
+                                    <th class="col_{$vColNum}">
                                         <xsl:if test="not($vColType = 'Unit' or $vColName = 'TimeUnit')">
                                             <xsl:value-of select="$vColName"/>
                                         </xsl:if>
                                         <xsl:if test="$vColType = 'Unit' or $vColName = 'TimeUnit'">
-                                            <xsl:text>&#160;</xsl:text>
+                                            <xsl:text>(unit)</xsl:text>
                                         </xsl:if>
                                     </th>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:choose>
                                         <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
-                                            <td class="ae_align_center">
+                                            <td class="col_{$vColNum}">
                                                 <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files/'))}">
                                                     <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
                                                 </a>
                                             </td>
                                         </xsl:when>
                                         <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
-                                            <td class="ae_align_center">
+                                            <td class="col_{$vColNum}">
                                                 <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files'))}">
                                                     <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
                                                 </a>
                                             </td>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <td>
-                                                <xsl:if test="$vColNum = 1">
-                                                    <xsl:attribute name="class" select="'col_source_name'"/>
-                                                </xsl:if>
+                                            <td class="col_{$vColNum}">
                                                 <xsl:value-of select="text()"/>
                                                 <xsl:if test="not(text())">
                                                     <xsl:text>&#160;</xsl:text>

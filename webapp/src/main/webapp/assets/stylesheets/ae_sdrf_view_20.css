@@ -54,11 +54,7 @@
     border-left: 1px solid #bdd7d7;
 }
 
-#ae_results_table td.col_source_name {
+#ae_results_table td.col_1 {
     font-weight: bold;
     border-left: 0 transparent;
-}
-
-#ae_results_table td.ae_align_center {
-    text-align: center;
 }

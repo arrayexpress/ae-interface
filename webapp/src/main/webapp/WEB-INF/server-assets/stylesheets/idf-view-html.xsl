@@ -95,67 +95,13 @@
     </xsl:template>
 
     <xsl:template match="row">
-        <!--
         <xsl:if test="col > ''">
-            <xsl:variable name="vIsHeader" select="(. = $vHeader)"/>
+            <xsl:variable name="vRowName" select="col[1]"/>
             <tr>
-                <xsl:for-each select="col">
-                    <xsl:variable name="vColNum" select="position()"/>
-                    <xsl:variable name="vIsColComplex" select="matches($vHeader/col[$vColNum], '.+\[.+\].*')"/>
-                    <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+[^\s])\s*\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
-                    <xsl:variable name="vColName" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
-                    <xsl:choose>
-                        <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, lower-case($vColName))) or index-of($vPermittedColType, lower-case($vColType))">
-                            <xsl:choose>
-                                <xsl:when test="$vIsHeader">
-                                    <th>
-                                        <xsl:if test="$vColNum = 1">
-                                            <xsl:attribute name="class" select="'col_source_name'"/>
-                                        </xsl:if>
-                                        <xsl:if test="not($vColType = 'Unit' or $vColName = 'TimeUnit')">
-                                            <xsl:value-of select="$vColName"/>
-                                        </xsl:if>
-                                        <xsl:if test="$vColType = 'Unit' or $vColName = 'TimeUnit'">
-                                            <xsl:text>&#160;</xsl:text>
-                                        </xsl:if>
-                                    </th>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:choose>
-                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
-                                            <td class="ae_align_center">
-                                                <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files/'))}">
-                                                    <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
-                                                </a>
-                                            </td>
-                                        </xsl:when>
-                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
-                                            <td class="ae_align_center">
-                                                <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files'))}">
-                                                    <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
-                                                </a>
-                                            </td>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <td>
-                                                <xsl:if test="$vColNum = 1">
-                                                    <xsl:attribute name="class" select="'col_source_name'"/>
-                                                </xsl:if>
-                                                <xsl:value-of select="text()"/>
-                                                <xsl:if test="not(text())">
-                                                    <xsl:text>&#160;</xsl:text>
-                                                </xsl:if>
-                                            </td>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:for-each>
+                <td class="col_1"><xsl:value-of select="$vRowName"/></td>
+                <td class="col_2"><xsl:value-of select="string-join(col[position() > 1 and text() > ''], ', ')"/></td>
             </tr>
         </xsl:if>
-        -->
     </xsl:template>
 
 </xsl:stylesheet>
