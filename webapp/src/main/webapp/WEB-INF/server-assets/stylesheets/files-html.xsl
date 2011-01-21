@@ -118,15 +118,11 @@
                             </div>
                         </div>
                     </xsl:when>
+                    <xsl:when test="exists($vFolder) and not(exists($vMetaData))">
+                        <xsl:call-template name="block-access-restricted"/>
+                    </xsl:when>
                     <xsl:otherwise>
-                        <xsl:choose>
-                            <xsl:when test="exists($vFolder) and not(exists($vMetaData))">
-                                <xsl:call-template name="block-access-restricted"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:call-template name="block-not-found"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:call-template name="block-not-found"/>
                     </xsl:otherwise>
                 </xsl:choose>
 
