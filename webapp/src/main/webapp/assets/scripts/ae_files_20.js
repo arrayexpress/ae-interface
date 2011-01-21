@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 (function($, undefined) {
     if($ == undefined)
         throw "jQuery not loaded";

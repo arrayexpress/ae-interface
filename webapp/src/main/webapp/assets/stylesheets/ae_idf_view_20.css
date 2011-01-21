@@ -14,24 +14,3 @@
  * limitations under the License.
  *
  */
-
-.col_id {
-    width: 10%;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.col_source {
-    width: 10%;
-    text-align: left;
-}
-
-.col_name {
-    width: 40%;
-    text-align: left;
-}
-
-.col_email {
-    width: 40%;
-    text-align: left;
-}
