@@ -699,7 +699,7 @@ div.acc_status.migrated.identical span.ae1
     width: 138px;
 }
 
-.td_ext td.name div {
+.td_ext td.name > div {
     margin: 2px 10px 2px 0;
 }
 
@@ -711,6 +711,12 @@ div.acc_status.migrated.identical span.ae1
 .td_ext td.value > div,
 .td_ext td.attrs > div {
     margin: 2px 0 2px 3px;
+}
+
+.td_ext td.name > div > div,
+.td_ext td.value > div > div,
+.td_ext td.attrs > div > div{
+    margin: 0 0 4px 0;
 }
 
 #ae_results_tbl table.min-score-tbl {
