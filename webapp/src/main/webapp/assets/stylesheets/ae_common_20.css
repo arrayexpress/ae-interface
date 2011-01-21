@@ -108,6 +108,7 @@ body.ae2_curator {
 
 #ae_contents img {
     border: 0 none;
+    vertical-align: bottom;
 }
 
 #ae_contents_container {

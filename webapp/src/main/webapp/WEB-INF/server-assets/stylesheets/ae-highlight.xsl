@@ -7,16 +7,20 @@
                 version="2.0">
 
     <xsl:template match="*" mode="highlight">
+        <xsl:param name="pFieldName"/>
         <xsl:element name="{if (name() = 'text') then 'div' else name() }">
             <xsl:copy-of select="@*"/>
-            <xsl:apply-templates mode="highlight"/>
+            <xsl:apply-templates mode="highlight">
+                <xsl:with-param name="pFieldName" select="$pFieldName"/>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
 
     <xsl:template match="text()" mode="highlight">
+        <xsl:param name="pFieldName"/>
         <xsl:call-template name="highlight">
             <xsl:with-param name="pText" select="."/>
-            <xsl:with-param name="pFieldName"/>
+            <xsl:with-param name="pFieldName" select="$pFieldName"/>
         </xsl:call-template>
     </xsl:template>
 
