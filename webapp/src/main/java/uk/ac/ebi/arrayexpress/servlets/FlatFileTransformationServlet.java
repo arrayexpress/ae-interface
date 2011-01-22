@@ -35,10 +35,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URLDecoder;
 
 public class FlatFileTransformationServlet extends ApplicationServlet
@@ -123,7 +120,14 @@ public class FlatFileTransformationServlet extends ApplicationServlet
                 logger.error("Requested transformation of [{}] which is not found", flatFile.getAbsolutePath());
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
-                source.setInputSource(new InputSource(new FileReader(flatFile)));
+                source.setInputSource(
+                        new InputSource(
+                                new InputStreamReader(
+                                        new FileInputStream(flatFile)
+                                        , "UTF-8"
+                                )
+                        )
+                );
                 source.setXMLReader(new FlatFileXMLReader());
 
                 if (outputType.equals("html")) {

@@ -23,6 +23,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,6 +68,12 @@ public class FlatFileXMLReader extends ACustomXMLReader
                 ch.startElement(EMPTY_NAMESPACE, "row", "row", EMPTY_ATTR);
                 for (String col : row) {
                     ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
+                    // preprocess string in case of unexpected utf-8
+                    col = StringTools.unescapeXMLDecimalEntities(
+                                    StringTools.replaceIllegalHTMLCharacters(
+                                            col
+                                    )
+                            );
                     ch.characters(col.toCharArray(), 0, col.length());
                     ch.endElement(EMPTY_NAMESPACE, "col", "col");
                 }
