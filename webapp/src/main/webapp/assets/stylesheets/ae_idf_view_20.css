@@ -31,6 +31,7 @@
 
 #ae_accession img {
     margin:0 3px;
+    vertical-align: baseline;
 }
 
 #ae_title {

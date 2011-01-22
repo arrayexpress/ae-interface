@@ -82,7 +82,9 @@ public class FlatFileTransformationServlet extends ApplicationServlet
         // to make sure nobody sneaks in the other value w/o proper authentication
         params.put("userid", "1");
 
+        InputStream in = null;
         PrintWriter out = null;
+
         try {
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
             Files files = (Files) getComponent("Files");
@@ -120,14 +122,13 @@ public class FlatFileTransformationServlet extends ApplicationServlet
                 logger.error("Requested transformation of [{}] which is not found", flatFile.getAbsolutePath());
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
+                in = new FileInputStream(flatFile);
                 source.setInputSource(
                         new InputSource(
-                                new InputStreamReader(
-                                        new FileInputStream(flatFile)
-                                        , "UTF-8"
-                                )
+                                new InputStreamReader(in, "UTF-8")
                         )
                 );
+
                 source.setXMLReader(new FlatFileXMLReader());
 
                 if (outputType.equals("html")) {
@@ -156,6 +157,9 @@ public class FlatFileTransformationServlet extends ApplicationServlet
         } catch (Exception x) {
             throw new RuntimeException(x);
         } finally {
+            if (null != in) {
+                in.close();
+            }
             if (null != out) {
                 out.close();
             }
