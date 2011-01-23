@@ -25,6 +25,7 @@ import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.*;
+import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
 import javax.servlet.ServletException;
@@ -120,7 +121,16 @@ public class FlatFileTransformationServlet extends ApplicationServlet
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
                 in = new FileInputStream(flatFile);
-                source.setInputSource(new InputSource(new InputStreamReader(in, new SmartCharsetDecoder())));
+                source.setInputSource(
+                        new InputSource(
+                                new FilteringIllegalHTMLCharactersReader(
+                                        new InputStreamReader(
+                                                in
+                                                , new SmartUTF8CharsetDecoder()
+                                        )
+                                )
+                        )
+                );
 
                 source.setXMLReader(new FlatFileXMLReader());
 

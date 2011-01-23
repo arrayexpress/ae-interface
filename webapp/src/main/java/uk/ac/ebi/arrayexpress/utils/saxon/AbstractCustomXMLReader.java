@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ACustomXMLReader implements XMLReader
+public abstract class AbstractCustomXMLReader implements XMLReader
 {
     private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
     private Map<String, Object> propertyMap = new HashMap<String, Object>();

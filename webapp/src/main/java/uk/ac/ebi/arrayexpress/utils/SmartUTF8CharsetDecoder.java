@@ -23,12 +23,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-public class SmartCharsetDecoder extends CharsetDecoder
+public class SmartUTF8CharsetDecoder extends CharsetDecoder
 {
     int[] buffer;
     int decodeState;
 
-    public SmartCharsetDecoder()
+    public SmartUTF8CharsetDecoder()
     {
         super(Charset.forName("iso-8859-1"), 1f, 1f);
     }
@@ -152,10 +152,11 @@ public class SmartCharsetDecoder extends CharsetDecoder
     private boolean out(CharBuffer out, int b)
     {
         if(out.remaining() > 0) {
-            Character transcoded = StringTools.transcodeUnsafeHTMLChar((char) b);
-            if (null != transcoded) {
-                out.put(transcoded);
-            }
+            out.put((char)b);
+            //Character transcoded = StringTools.transcodeUnsafeHTMLChar((char) b);
+            //if (null != transcoded) {
+            //    out.put(transcoded);
+            //}
             return true;
         } else {
             buffer = new int[]{b};

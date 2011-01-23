@@ -24,11 +24,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 
-public class FlatFileXMLReader extends ACustomXMLReader
+public class FlatFileXMLReader extends AbstractCustomXMLReader
 {
     private static final Attributes EMPTY_ATTR = new AttributesImpl();
 
@@ -44,18 +46,24 @@ public class FlatFileXMLReader extends ACustomXMLReader
             return;
         }
 
-        // convert the InputSource into a BufferedReader
-        CSVReader ffReader;
+        Reader inStream;
         if (input.getCharacterStream() != null) {
-            ffReader = new CSVReader(input.getCharacterStream(), COL_DELIMITER, COL_QUOTECHAR);
+            inStream = input.getCharacterStream();
         } else if (input.getByteStream() != null) {
-            ffReader = new CSVReader(new InputStreamReader(input.getByteStream()), COL_DELIMITER, COL_QUOTECHAR);
+            inStream =  new InputStreamReader(input.getByteStream());
         } else if (input.getSystemId() != null) {
             URL url = new URL(input.getSystemId());
-            ffReader = new CSVReader(new InputStreamReader(url.openStream()), COL_DELIMITER, COL_QUOTECHAR);
+            inStream = new InputStreamReader(url.openStream());
         } else {
             throw new SAXException("Invalid InputSource object");
         }
+
+        CSVReader ffReader = new CSVReader(
+                new BufferedReader(inStream)
+                , COL_DELIMITER
+                , COL_QUOTECHAR
+        );
+
 
         ch.startDocument();
 
