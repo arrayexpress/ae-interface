@@ -153,10 +153,6 @@ public class SmartUTF8CharsetDecoder extends CharsetDecoder
     {
         if(out.remaining() > 0) {
             out.put((char)b);
-            //Character transcoded = StringTools.transcodeUnsafeHTMLChar((char) b);
-            //if (null != transcoded) {
-            //    out.put(transcoded);
-            //}
             return true;
         } else {
             buffer = new int[]{b};
