@@ -147,7 +147,7 @@ public class StringTools
         return out.toString();
     }
 
-    private static char ILLEGAL_CHAR_REPRESENATION = 0xfffd;
+    public static char ILLEGAL_CHAR_REPRESENATION = 0xfffd;
     private static char C1_CONTROL_TRANSCODE_MAP[] = {
             8364, ILLEGAL_CHAR_REPRESENATION, 8218, 402, 8222, 8230, 8224, 8225,
             710, 8240, 352, 8249, 338, ILLEGAL_CHAR_REPRESENATION, 381, ILLEGAL_CHAR_REPRESENATION,
@@ -160,27 +160,33 @@ public class StringTools
         return "&#" + String.valueOf((int) in) + ";";
     }
 
+    public static Character decodeIso88591Char( char in )
+    {
+        if (0x09 == in || 0x0a == in || 0x0d == in || (in >= 0x20 && in <= 0x7e)) {
+            return in;
+        } else if (in >= 0x80 && in <= 0x9f) {
+            return C1_CONTROL_TRANSCODE_MAP[in - 0x80];
+        } else if ((in >= 0xa0 && in <= 0xd7ff) || (in >= 0xe000 && in <= 0xfffd) || (in >= 0x10000 && in <= 0x10ffff)) {
+            return in;
+        } else if (in >= 0x80) {
+            return ILLEGAL_CHAR_REPRESENATION;
+        } else {
+            return null;
+        }
+    }
+
     public static String replaceIllegalHTMLCharacters( String in )
     {
         if (null == in)
             return null;
 
         StringBuilder out = new StringBuilder(in.length() * 2);
-        char current;
+        Character decoded;
 
         for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i);
-            if (0x09 == current || 0x0a == current || 0x0d == current || (current >= 0x20 && current <= 0x7e)) {
-                out.append(current);
-            } else if (current >= 0x80 && current <= 0x9f) {
-                out.append(escapeChar(C1_CONTROL_TRANSCODE_MAP[current - 0x80]));
-            } else if ((current >= 0xa0 && current <= 0xd7ff) || (current >= 0xe000 && current <= 0xfffd) || (current >= 0x10000 && current <= 0x10ffff)) {
-                out.append(escapeChar(current));
-            } else {
-                // errors: illegal ascii - skip, illegal unicode -> show illegal char
-                if (current >= 0x80) {
-                    out.append(escapeChar(ILLEGAL_CHAR_REPRESENATION));
-                }
+            decoded = decodeIso88591Char(in.charAt(i));
+            if (null != decoded) {
+                out.append(decoded >= 0x80 ? escapeChar(decoded) : decoded);
             }
         }
         return out.toString();
@@ -244,6 +250,16 @@ public class StringTools
             }
         }
         return sb.toString();
+    }
+
+    public static char decodeUTF8( int[] b )
+    {
+        if (2 == b.length) {
+            return decodeUTF8((byte)b[0], (byte)b[1]);
+        } else if (3 == b.length)
+            return decodeUTF8((byte)b[0], (byte)b[1], (byte)b[2]);
+        else
+            return ILLEGAL_CHAR_REPRESENATION;
     }
 
     public static char decodeUTF8( byte b0, byte b1 )
