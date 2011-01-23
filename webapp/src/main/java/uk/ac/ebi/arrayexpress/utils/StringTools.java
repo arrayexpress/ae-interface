@@ -160,7 +160,7 @@ public class StringTools
         return "&#" + String.valueOf((int) in) + ";";
     }
 
-    public static Character decodeIso88591Char( char in )
+    public static Character transcodeUnsafeHTMLChar(char in)
     {
         if (0x09 == in || 0x0a == in || 0x0d == in || (in >= 0x20 && in <= 0x7e)) {
             return in;
@@ -184,7 +184,7 @@ public class StringTools
         Character decoded;
 
         for (int i = 0; i < in.length(); i++) {
-            decoded = decodeIso88591Char(in.charAt(i));
+            decoded = transcodeUnsafeHTMLChar(in.charAt(i));
             if (null != decoded) {
                 out.append(decoded >= 0x80 ? escapeChar(decoded) : decoded);
             }

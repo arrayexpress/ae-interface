@@ -73,7 +73,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
                                     return CoderResult.OVERFLOW;
                                 }
                             } else {
-                                out.put(utf8Decoded);
+                                out(out, utf8Decoded);
                                 implReset();
                             }
                         } else if (3 == buffer.length) {
@@ -98,7 +98,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
                                     return CoderResult.OVERFLOW;
                                 }
                             } else {
-                                out.put(utf8Decoded);
+                                out(out, utf8Decoded);
                                 implReset();
                             }
                         }
@@ -108,7 +108,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
             }
 
             if (shouldJustDecodeThisChar) {
-                if (!decodeAndOut(out, b)) {
+                if (!out(out, b)) {
                     return CoderResult.OVERFLOW;
                 }
             }
@@ -138,7 +138,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
             return true;
         for (int i = 0; i < buffer.length; i++)
             if (out.remaining() > 0)
-                decodeAndOut(out, buffer[i]);
+                out(out, buffer[i]);
             else {
                 int[] nb = new int[buffer.length - i];
                 System.arraycopy(buffer, i, nb, 0, nb.length);
@@ -149,12 +149,12 @@ public class SmartCharsetDecoder extends CharsetDecoder
         return true;
     }
 
-    private boolean decodeAndOut( CharBuffer out, int b )
+    private boolean out(CharBuffer out, int b)
     {
         if(out.remaining() > 0) {
-            Character decoded = StringTools.decodeIso88591Char((char)b);
-            if (null != decoded) {
-                out.put(decoded);
+            Character transcoded = StringTools.transcodeUnsafeHTMLChar((char) b);
+            if (null != transcoded) {
+                out.put(transcoded);
             }
             return true;
         } else {
