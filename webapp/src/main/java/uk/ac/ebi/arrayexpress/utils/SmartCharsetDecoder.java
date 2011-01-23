@@ -46,7 +46,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
             }
 
             int b = in.get() & 0xff;
-            boolean shouldJustDecodeThisChar = false;
+            boolean shouldJustOutputThisChar = false;
 
             switch (decodeState) {
                 case 0:
@@ -59,7 +59,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
                         buffer = new int[]{b, 0x0, 0x0};
                         decodeState = 1;
                     } else {
-                        shouldJustDecodeThisChar = true;
+                        shouldJustOutputThisChar = true;
                     }
                     break;
                 case 1:
@@ -84,7 +84,7 @@ public class SmartCharsetDecoder extends CharsetDecoder
                         // in theory we should never reach this state
                         // but just in case... "keep calm and carry on" (c)
                         decodeState = 0;
-                        shouldJustDecodeThisChar = true;
+                        shouldJustOutputThisChar = true;
                     }
                     break;
                 case 2:
@@ -103,11 +103,11 @@ public class SmartCharsetDecoder extends CharsetDecoder
                             }
                         }
                     } else {
-                        shouldJustDecodeThisChar = true;
+                        shouldJustOutputThisChar = true;
                     }
             }
 
-            if (shouldJustDecodeThisChar) {
+            if (shouldJustOutputThisChar) {
                 if (!out(out, b)) {
                     return CoderResult.OVERFLOW;
                 }
