@@ -34,7 +34,7 @@
     <!-- experiments -->
     <rule>
         <from>^/experiments/?$</from>
-        <to type="redirect">%{context-path}/experiments/browse.html</to>
+        <to type="redirect">%{context-path}/browse.html</to>
     </rule>
     <rule>
         <from>^/experiments/browse\.html$</from>
