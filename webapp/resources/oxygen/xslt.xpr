@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="11.2">
+<project version="11.0">
     <meta>
         <filters directoryPatterns="" filePatterns=""
             positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="11.2">
+            <serialized version="11.0">
                 <map>
                     <entry>
                         <String xml:space="preserve">scenario.associations</String>
@@ -1984,9 +1984,9 @@
         <folder name="documents">
             <file name="documents/sample-atlas-exps-not-processed.xml"/>
             <file name="documents/sample-experiments.xml"/>
+            <file name="documents/sample-experiments-multi.xml"/>
             <file name="documents/sample-experiments-not-processed.xml"/>
             <file name="documents/sample-files-not-processed.xml"/>
-            <file name="documents/sample-idf.xml"/>
             <file name="documents/sample-sdrf.xml"/>
         </folder>
         <folder name="stylesheets">
@@ -2066,6 +2066,8 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-compate-experiments.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-arrays-xml.xsl"/>
             <file
