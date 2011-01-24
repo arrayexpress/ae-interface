@@ -307,9 +307,9 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             }
 
             // Perform the transformation, sending the output to the response.
-            logger.debug("about to start transformer.transform() with stylesheet [{}]", stylesheet);
+            logger.debug("Performing transformation, stylesheet [{}]", stylesheet);
             xslt.transform(src, dst);
-            logger.debug("transformer.transform() completed");
+            logger.debug("Transformation completed");
 
             result = true;
         } catch (TerminationException x) {
