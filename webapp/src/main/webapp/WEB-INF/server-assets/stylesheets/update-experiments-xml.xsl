@@ -26,8 +26,8 @@
                             </xsl:if>
                         </xsl:variable>
                         <xsl:for-each select="current-group()">
-                            <!-- will copy all from ae1 and those from ae2 that are not migrated -->
-                            <xsl:variable name="vVisible" select="source/@id = 'ae1' or not($vMigrated)"/>
+                            <!-- will copy all from ae2 and those from ae1 that are not migrated -->
+                            <xsl:variable name="vVisible" select="source/@id = 'ae2' or not($vMigrated)"/>
 
                             <experiment>
                                 <xsl:copy-of select="*[name() != 'source']|@*"/>
