@@ -128,7 +128,7 @@
                                 <xsl:when test="source/@id = 'ae1' and source/@migrated = 'true'">
                                     <span>
                                         <xsl:choose>
-                                            <xsl:when test="source/@identical = 'false'">
+                                            <xsl:when test="false() and source/@identical = 'false'">
                                                 <a href="{$basepath}/experiments/diff/{$vAccession}/ae2">2</a>
                                             </xsl:when>
                                             <xsl:otherwise>2</xsl:otherwise>
@@ -136,7 +136,7 @@
                                     </span>
                                     <span class="ae1">
                                         <xsl:choose>
-                                            <xsl:when test="source/@identical = 'false'">
+                                            <xsl:when test="false() and source/@identical = 'false'">
                                                 <a href="{$basepath}/experiments/diff/{$vAccession}/ae1">1</a>
                                             </xsl:when>
                                             <xsl:otherwise>1</xsl:otherwise>
@@ -146,7 +146,7 @@
                                 <xsl:when test="source/@id = 'ae2' and source/@migrated = 'true'">
                                     <span class="ae2">
                                         <xsl:choose>
-                                            <xsl:when test="source/@identical = 'false'">
+                                            <xsl:when test="false() and source/@identical = 'false'">
                                                 <a href="{$basepath}/experiments/diff/{$vAccession}/ae2">2</a>
                                             </xsl:when>
                                             <xsl:otherwise>2</xsl:otherwise>
@@ -154,7 +154,7 @@
                                     </span>
                                     <span>
                                         <xsl:choose>
-                                            <xsl:when test="source/@identical = 'false'">
+                                            <xsl:when test="false() and source/@identical = 'false'">
                                                 <a href="{$basepath}/experiments/diff/{$vAccession}/ae1">1</a>
                                             </xsl:when>
                                             <xsl:otherwise>1</xsl:otherwise>
@@ -675,7 +675,7 @@
                         <th>Array designs</th>
                     </xsl:if>
                     <xsl:if test="$pKind = 'minseqe'">
-                        <th>Experiment design</th>
+                        <th>Expt. design</th>
                     </xsl:if>
                     <th>Protocols</th>
                     <th>Factors</th>
@@ -698,7 +698,7 @@
                         </xsl:if>
                         <xsl:if test="$pKind = 'minseqe'">
                             <xsl:call-template name="min-score-tick">
-                                <xsl:with-param name="pValue" select="'1'"/>
+                                <xsl:with-param name="pValue" select="$pScores/experimentdesignscore"/>
                             </xsl:call-template>
                        </xsl:if>
                     </td>
