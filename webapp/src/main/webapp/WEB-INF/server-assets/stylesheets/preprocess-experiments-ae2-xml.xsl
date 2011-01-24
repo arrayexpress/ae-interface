@@ -57,35 +57,28 @@
 					</xsl:for-each>
                 </experimentalfactor>
             </xsl:for-each-group>
-            <xsl:variable name="vScoreName" select="if (miamescore[@name = 'AEMINSEQEScore']) then 'minseqe' else 'miame'"/>
-            <xsl:choose>
-                <xsl:when test="false()"/>
-                <!--
-                <xsl:when test="count(miamescore[@name = 'AEMIAMEScore' or @name = 'AEMINSEQEScore']) > 1">
-                    <xsl:message>[ERROR] Multiple overall scores defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                </xsl:when>
-                <xsl:when test="count(miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']) != 5">
-                    <xsl:message>[ERROR] Individual scores (count [<xsl:value-of select="count(miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore'])"/>]) poorly defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                </xsl:when>
-                <xsl:when test="miamescore[@name = fn:concat('AE', fn:upper-case($vScoreName), 'Score')]/@value != fn:sum(miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']/@value)">
-                    <xsl:message>[ERROR] Overall score [<xsl:value-of select="miamescore[@name = fn:concat('AE', fn:upper-case($vScoreName), 'Score')]/@value"/>] is not consitent with individual ones for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                </xsl:when> -->
-                <xsl:otherwise>
-                    <!--
-                    <xsl:message>[INFO] Processing score for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-                    -->
-                    <xsl:element name="{fn:concat($vScoreName, 'scores')}">
-                        <xsl:for-each select="miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']">
-                            <xsl:element name="{fn:lower-case(@name)}">
-                                <xsl:value-of select="@value"/>
-                            </xsl:element>
-                        </xsl:for-each>
-                        <overallscore>
-                            <xsl:value-of select="fn:sum(miamescore[@name != 'AEMIAMEScore' and @name != 'AEMINSEQEScore']/@value)"/>
-                        </overallscore>
-                    </xsl:element>
-                </xsl:otherwise>
-            </xsl:choose>
+            <!-- process miame scores -->
+            <xsl:if test="miamescore[@name = 'AEMIAMEScore']">
+                <miamescores>
+                    <reportersequencescore><xsl:value-of select="miamescore[@name = 'ReporterSequenceScore']/@value"/></reportersequencescore>
+                    <protocolscore><xsl:value-of select="miamescore[@name = 'ProtocolScore']/@value"/></protocolscore>
+                    <factorvaluescore><xsl:value-of select="miamescore[@name = 'FactorValueScore']/@value"/></factorvaluescore>
+                    <derivedbioassaydatascore><xsl:value-of select="miamescore[@name = 'DerivedBioAssayDataScore']/@value"/></derivedbioassaydatascore>
+                    <measuredbioassaydatascore><xsl:value-of select="miamescore[@name = 'MeasuredBioAssayDataScore']/@value"/></measuredbioassaydatascore>
+                    <overallscore><xsl:value-of select="sum(miamescore[@name = 'ReporterSequenceScore' or @name = 'ProtocolScore' or @name = 'FactorValueScore' or @name = 'DerivedBioAssayDataScore' or @name = 'MeasuredBioAssayDataScore']/@value)"/></overallscore>
+                </miamescores>
+            </xsl:if>
+            <!-- process minseqe scores -->
+            <xsl:if test="miamescore[@name = 'AEMINSEQEScore']">
+                <minseqescores>
+                    <experimentdesignscore>1</experimentdesignscore>
+                    <protocolscore><xsl:value-of select="miamescore[@name = 'ProtocolScore']/@value"/></protocolscore>
+                    <factorvaluescore><xsl:value-of select="miamescore[@name = 'FactorValueScore']/@value"/></factorvaluescore>
+                    <derivedbioassaydatascore><xsl:value-of select="miamescore[@name = 'DerivedBioAssayDataScore']/@value"/></derivedbioassaydatascore>
+                    <measuredbioassaydatascore><xsl:value-of select="miamescore[@name = 'MeasuredBioAssayDataScoreMINSEQE']/@value"/></measuredbioassaydatascore>
+                    <overallscore><xsl:value-of select="sum(miamescore[@name = 'ProtocolScore' or @name = 'FactorValueScore' or @name = 'DerivedBioAssayDataScore' or @name = 'MeasuredBioAssayDataScoreMINSEQE']/@value) + 1"/></overallscore>
+                </minseqescores>
+            </xsl:if>
             <xsl:apply-templates select="*" mode="copy" />
         </experiment>
     </xsl:template>
