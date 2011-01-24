@@ -30,6 +30,9 @@
             </xsl:if>
             <source id="ae2"/>
 
+            <xsl:if test="count(seqdatauri) > 1">
+                <xsl:message>[WARN] More than one sequence data URI defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
+            </xsl:if>
             <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
@@ -88,7 +91,20 @@
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescor" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
+
+    <xsl:template match="submissiondate | lastupdatedate | releasedate" mode="copy">
+        <xsl:choose>
+            <xsl:when test="matches(text(), '^\d{4}-\d{2}-\d{2}$')">
+                <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="string-length(text()) > 0">
+                    <xsl:message>[ERROR] Element [<xsl:value-of select="name()"/>] contains invalid date [<xsl:value-of select="text()"/>], experiment [<xsl:value-of select="../accession"/>]</xsl:message>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
     <xsl:template match="user" mode="copy">
         <user id="{text()}"/>

@@ -137,6 +137,8 @@
                 <!-- boolean fields -->
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
+                <!-- temporary internal fields for comparison -->
+                <field name="seqdatauri" type="boolean" path="exists(seqdatauri)"/>
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="source/@id" analyze="false" store="false" escape="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>

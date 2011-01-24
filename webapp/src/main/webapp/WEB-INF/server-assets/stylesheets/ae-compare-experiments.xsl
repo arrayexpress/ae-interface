@@ -6,19 +6,21 @@
                 exclude-result-prefixes="ae saxon"
                 version="2.0">
 
+    <xsl:variable name="vElementsToCheck" select="tokenize('accession,secondaryaccession,seqdatauri,experimenttype  ', '\s*,\s*')"/>
+
     <!-- checks if experiments contain equal set of elements/attributes (with a notable exception of source element) -->
     <xsl:function name="ae:are-experiments-identical">
         <xsl:param name="pExp1"/>
         <xsl:param name="pExp2"/>
 
         <xsl:variable name="vSortedFilteredExp1">
-            <xsl:for-each select="$pExp1/*[not(name() = 'source')]">
+            <xsl:for-each select="$pExp1/*[index-of($vElementsToCheck, name())]">
                 <xsl:sort select="name()" order="ascending"/>
                 <xsl:copy-of select="ae:sort-elements-attributes(.)"/>
             </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="vSortedFilteredExp2">
-            <xsl:for-each select="$pExp2/*[not(name() = 'source')]">
+            <xsl:for-each select="$pExp2/*[index-of($vElementsToCheck, name())]">
                 <xsl:sort select="name()" order="ascending"/>
                 <xsl:copy-of select="ae:sort-elements-attributes(.)"/>
             </xsl:for-each>
