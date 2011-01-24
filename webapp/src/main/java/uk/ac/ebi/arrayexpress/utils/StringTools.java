@@ -147,8 +147,8 @@ public class StringTools
         return out.toString();
     }
 
-    public static char ILLEGAL_CHAR_REPRESENATION = 0xfffd;
-    private static char C1_CONTROL_TRANSCODE_MAP[] = {
+    public final static char ILLEGAL_CHAR_REPRESENATION = 0xfffd;
+    private final static char C1_CONTROL_TRANSCODE_MAP[] = {
             8364, ILLEGAL_CHAR_REPRESENATION, 8218, 402, 8222, 8230, 8224, 8225,
             710, 8240, 352, 8249, 338, ILLEGAL_CHAR_REPRESENATION, 381, ILLEGAL_CHAR_REPRESENATION,
             ILLEGAL_CHAR_REPRESENATION, 8216, 8217, 8220, 8221, 8226, 8211, 8212,

@@ -11,160 +11,6 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">idf-view-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/idf-view-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">sdrf-view-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/users-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/arrays-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
                                     <String xml:space="preserve">test-compate-experiments</String>
                                 </field>
                                 <field name="type">
@@ -176,13 +22,13 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">test-compate-experiments</String>
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -193,95 +39,7 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">preprocess-atlas-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae1-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -303,7 +61,18 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae1-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">preprocess-atlas-experiments</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -314,7 +83,238 @@
                                     <String xml:space="preserve">XML</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl</String>
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">test-compate-experiments</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/arrays-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/users-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">sdrf-view-xml</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">idf-view-xml</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/idf-view-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -327,7 +327,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String xml:space="preserve">sample-files-not-processed</String>
+                                    <String xml:space="preserve">Execute SQL</String>
                                 </field>
                                 <field name="baseURL">
                                     <String xml:space="preserve"></String>
@@ -336,19 +336,19 @@
                                     <String xml:space="preserve"></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <String xml:space="preserve">pdf</String>
+                                    <null/>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String xml:space="preserve">Apache FOP</String>
+                                    <null/>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String xml:space="preserve">${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
+                                    <String xml:space="preserve">${currentFileURL}</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String xml:space="preserve">${currentFileURL}</String>
+                                    <String xml:space="preserve"></String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -357,7 +357,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String xml:space="preserve">XSL</String>
+                                    <String xml:space="preserve">SQL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean xml:space="preserve">true</Boolean>
@@ -372,7 +372,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <null/>
+                                    <String xml:space="preserve"></String>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -381,7 +381,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean xml:space="preserve">true</Boolean>
+                                    <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -399,7 +399,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String xml:space="preserve">Saxon-HE</String>
+                                    <String xml:space="preserve">JDBC</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
@@ -1892,7 +1892,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String xml:space="preserve">Execute SQL</String>
+                                    <String xml:space="preserve">sample-files-not-processed</String>
                                 </field>
                                 <field name="baseURL">
                                     <String xml:space="preserve"></String>
@@ -1901,19 +1901,19 @@
                                     <String xml:space="preserve"></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <null/>
+                                    <String xml:space="preserve">pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <null/>
+                                    <String xml:space="preserve">Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String xml:space="preserve"></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String xml:space="preserve">${currentFileURL}</String>
+                                    <String xml:space="preserve">${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String xml:space="preserve"></String>
+                                    <String xml:space="preserve">${currentFileURL}</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -1922,7 +1922,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String xml:space="preserve">SQL</String>
+                                    <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean xml:space="preserve">true</Boolean>
@@ -1937,7 +1937,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <String xml:space="preserve"></String>
+                                    <null/>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -1946,7 +1946,7 @@
                                     <Boolean xml:space="preserve">false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean xml:space="preserve">false</Boolean>
+                                    <Boolean xml:space="preserve">true</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean xml:space="preserve">false</Boolean>
@@ -1964,7 +1964,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String xml:space="preserve">JDBC</String>
+                                    <String xml:space="preserve">Saxon-HE</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
