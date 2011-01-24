@@ -35,7 +35,7 @@ public class FilteringIllegalHTMLCharactersReader extends Reader
     public int read(char[] cbuf, int off, int len) throws IOException
     {
         synchronized (lock) {
-             Character ch;
+            Character ch;
             if (null == cbuf)
                 throw new IOException("Null array passed for reading");
 
