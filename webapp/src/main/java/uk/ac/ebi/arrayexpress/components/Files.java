@@ -89,6 +89,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("files", doc));
+            updateIndex();
             updateAccelerators();
         } else {
             this.logger.error("Files NOT updated, NULL document passed");
