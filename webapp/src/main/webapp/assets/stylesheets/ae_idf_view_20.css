@@ -17,6 +17,7 @@
 
 #ae_contents_container {
     overflow: visible;
+    _overflow: auto;
 }
 
 #ae_summary_box {
@@ -35,8 +36,14 @@
 }
 
 #ae_title {
-    border-bottom: 1px solid #bdd7d7;
-    padding: 0 0 5px 0;
+   display: inline-block; /* ie hasLayout hack */
+}
+
+#ae_title div {
+    border-bottom: 1px solid #BDD7D7;
+    float: left;
+    padding: 0 0 5px;
+    white-space: nowrap;
 }
 
 #ae_results_table {

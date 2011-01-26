@@ -72,9 +72,10 @@
                                     <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
                                 </xsl:if>
                             </div>
-                            <span id="ae_title">
-                                <xsl:value-of select="$vMetaData/name"/>
-                            </span>
+
+                            <div id="ae_title">
+                                <div><xsl:value-of select="$vMetaData/name"/></div>
+                            </div>
                         </div>
                         <div id="ae_results_box">
                             <xsl:apply-templates select="/table"/>
