@@ -77,10 +77,11 @@ public class ControlServlet extends ApplicationServlet
             // Output goes to the response PrintWriter.
             PrintWriter out = response.getWriter();
             try {
+                String userAgent = request.getHeader("User-Agent");
                 out.print(((Users) getComponent("Users")).hashLogin(
                         request.getParameter("u")
                         , request.getParameter("p")
-                        , request.getRemoteAddr().concat(request.getHeader("User-Agent"))
+                        , request.getRemoteAddr().concat(null != userAgent ? userAgent : "unknown")
                 ));
             } catch (Exception x) {
                 throw new RuntimeException(x);
