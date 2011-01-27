@@ -28,6 +28,7 @@
             <xsl:if test="aejava:getAcceleratorValue('is-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
+
             <source id="ae2"/>
 
             <xsl:if test="count(seqdatauri) > 1">
@@ -84,7 +85,7 @@
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore | protocol" mode="copy"/>
 
     <xsl:template match="submissiondate | lastupdatedate | releasedate" mode="copy">
         <xsl:choose>
@@ -128,14 +129,13 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="experimentdesign | experimenttype" mode="copy">
-        <xsl:variable name="vName" select="fn:name()"/>
-        <xsl:variable name="vValues" select="fn:tokenize(., '\s*,\s*')"/>
-        <xsl:for-each select="$vValues">
-            <xsl:element name="{$vName}">
-                <xsl:value-of select="fn:replace(fn:replace(., '_design', ''), '_', ' ')"/>
-            </xsl:element>
-        </xsl:for-each>
+    <xsl:template match="experimentdesign" mode="copy">
+        <xsl:variable name="vValue" select="fn:replace(fn:replace(., '_design', ''), '_', ' ')"/>
+        <xsl:if test="not(fn:index-of((../experimenttype), $vValue))">
+            <experimentdesign>
+                <xsl:value-of select="$vValue"/>
+            </experimentdesign>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="bibliography" mode="copy">
