@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<experiments>
+	<experiment>
+		<id>50</id>
+		<accession>E-ATMX-1</accession>
+		<name>Transcription profiling of Arabidopsis wild type seeds grown under sulfur-deficient conditions</name>
+		<experimenttype>transcription profiling by array</experimenttype>
+		<releasedate>2007-06-01</releasedate>
+		<submissiondate/>
+		<lastupdatedate>2006-07-05</lastupdatedate>
+		<samples>4</samples>
+		<hybs>4</hybs>
+		<user>1</user>
+		<sampleattribute category="DevelopmentalStage" value="8 Boyes key"/>
+		<sampleattribute category="Ecotype" value="Columbia-0"/>
+		<sampleattribute category="Organism" value="Arabidopsis thaliana"/>
+		<sampleattribute category="OrganismPart" value="seed"/>
+		<sampleattribute category="provider" value="LEHLE SEEDS"/>
+		<experimentalfactor name="growth_condition" value="normal"/>
+		<experimentalfactor name="growth_condition" value="sulfur_deficient"/>
+		<miamescore name="ProtocolScore" value="0"/>
+		<miamescore name="DerivedBioAssayDataScore" value="1"/>
+		<miamescore name="MeasuredBioAssayDataScore" value="1"/>
+		<miamescore name="ReporterSequenceScore" value="1"/>
+		<miamescore name="AEMIAMEScore" value="4"/>
+		<miamescore name="FactorValueScore" value="1"/>
+		<arraydesign accession="A-AFFY-2" count="4" id="10922" name="Affymetrix GeneChip Arabidopsis Genome [ATH1-121501]"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4" dataformat="rawData" id="" isderived="0" name="rawData"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4" dataformat="scan" id="" isderived="0" name="scan"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="1" bioassays="1" dataformat="processedDataMatrix" id="" isderived="1" name="processedDataMatrix"/>
+		<provider contact="Yasuhiro Higashi" email="higashiy@graduate.chiba-u.jp" role="submitter"/>
+		<experimentdesign>growth_condition_design</experimentdesign>
+		<experimentdesign>transcription profiling by array</experimentdesign>
+		<description>Comparison of Arabidopsis wild-type developing seeds grown under sulfur-deficient condition vs Arabidopsis wild-type developing seeds grown under control condition.</description>
+		<protocol accession="P-CAGE-24529" id="52"/>
+		<protocol accession="P-CAGE-24520" id="54"/>
+		<protocol accession="P-CAGE-24527" id="56"/>
+		<protocol accession="P-CAGE-24558" id="50"/>
+		<protocol accession="P-CAGE-24526" id="55"/>
+		<protocol accession="Affymetrix:Protocol:Hybridization-EukGE-WS2v4_450" id="57"/>
+		<protocol accession="P-CAGE-24517" id="53"/>
+		<protocol accession="P-AFFY-6" id="51"/>
+	</experiment>
+</experiments>	
