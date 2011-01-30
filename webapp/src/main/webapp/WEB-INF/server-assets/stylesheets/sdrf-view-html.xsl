@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae aejava search html xs"
-                exclude-result-prefixes="ae aejava search html xs"
+                extension-element-prefixes="ae aejava search html fn xs"
+                exclude-result-prefixes="ae aejava search html fn xs"
                 version="2.0">
 
     <xsl:param name="accession"/>
@@ -18,11 +19,11 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:variable name="vPermittedColType" select="tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
-    <xsl:variable name="vPermittedComment" select="tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedComment" select="fn:tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
     <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
-    <xsl:variable name="vAccession" select="upper-case($accession)"/>
-    <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+    <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
+    <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -57,11 +58,11 @@
                             <xsl:text> > </xsl:text>
                             <a href="{$basepath}/experiments">Experiments</a>
                             <xsl:text> > </xsl:text>
-                            <a href="{$basepath}/experiments/{upper-case($accession)}">
-                                <xsl:value-of select="upper-case($accession)"/>
+                            <a href="{$basepath}/experiments/{fn:upper-case($accession)}">
+                                <xsl:value-of select="fn:upper-case($accession)"/>
                             </a>
                             <xsl:text> > </xsl:text>
-                            <a href="{$basepath}/experiments/{upper-case($accession)}/sdrf">
+                            <a href="{$basepath}/experiments/{fn:upper-case($accession)}/sdrf">
                                 <xsl:text>Sample and Data Relationship</xsl:text>
                             </a>
                         </div>
@@ -92,7 +93,7 @@
                     </div>
                 </div>
             </xsl:when>
-            <xsl:when test="exists($vHeader) and not(exists($vMetaData))">
+            <xsl:when test="fn:exists($vHeader) and not(fn:exists($vMetaData))">
                 <xsl:call-template name="block-access-restricted"/>
             </xsl:when>
             <xsl:otherwise>
@@ -112,12 +113,12 @@
             <xsl:variable name="vIsHeader" select="(. = $vHeader)"/>
             <tr>
                 <xsl:for-each select="col">
-                    <xsl:variable name="vColNum" select="position()"/>
-                    <xsl:variable name="vIsColComplex" select="matches($vHeader/col[$vColNum], '.+\[.+\].*')"/>
-                    <xsl:variable name="vColType" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '(.+[^\s])\s*\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
-                    <xsl:variable name="vColName" select="if ($vIsColComplex) then replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
+                    <xsl:variable name="vColNum" select="fn:position()"/>
+                    <xsl:variable name="vIsColComplex" select="fn:matches($vHeader/col[$vColNum], '.+\[.+\].*')"/>
+                    <xsl:variable name="vColType" select="if ($vIsColComplex) then fn:replace($vHeader/col[$vColNum], '(.+[^\s])\s*\[.+\].*', '$1') else $vHeader/col[$vColNum]"/>
+                    <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($vHeader/col[$vColNum], '.+\[(.+)\].*', '$1') else $vHeader/col[$vColNum]"/>
                     <xsl:choose>
-                        <xsl:when test="($vColType = 'Comment' and index-of($vPermittedComment, lower-case($vColName))) or index-of($vPermittedColType, lower-case($vColType))">
+                        <xsl:when test="($vColType = 'Comment' and (fn:index-of($vPermittedComment, lower-case($vColName)))) or (fn:index-of($vPermittedColType, lower-case($vColType)))">
                             <xsl:choose>
                                 <xsl:when test="$vIsHeader">
                                     <th class="col_{$vColNum}">
@@ -131,11 +132,11 @@
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:choose>
-                                        <xsl:when test="contains(lower-case($vColType),'file')">
+                                        <xsl:when test="fn:contains(fn:lower-case($vColType),'file')">
                                             <td class="col_{$vColNum}">
                                                 <xsl:choose>
-                                                    <xsl:when test="position() != last() and (text()) and (following-sibling::col[1]/text())">
-                                                        <a href="{replace(following-sibling::col[1]/text(), '^.+/experiment/[^/]+/', concat($basepath, '/files/'))}/{text()}">
+                                                    <xsl:when test="fn:position() != fn:last() and (text()) and fn:matches(following-sibling::col[1]/text(), '^ftp://.+')">
+                                                        <a href="{fn:replace(following-sibling::col[1]/text(), '^.+/experiment/[^/]+/', fn:concat($basepath, '/files/'))}/{fn:encode-for-uri(text())}">
                                                             <xsl:value-of select="text()"/>
                                                         </a>
                                                     </xsl:when>
