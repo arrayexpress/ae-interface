@@ -24,6 +24,7 @@
     <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+    <xsl:variable name="vDataFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -133,10 +134,18 @@
                                 <xsl:otherwise>
                                     <xsl:choose>
                                         <xsl:when test="fn:contains(fn:lower-case($vColType),'file')">
+                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColType),'derived')) then 'fgem' else 'raw'"/>
+                                            <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
+                                            <xsl:variable name="vArchive" select="fn:replace(following-sibling::col[1]/text(), '^.+([^/]+)$', '$1')"/>
                                             <td class="col_{$vColNum}">
                                                 <xsl:choose>
-                                                    <xsl:when test="fn:position() != fn:last() and (text()) and fn:matches(following-sibling::col[1]/text(), '^ftp://.+')">
-                                                        <a href="{fn:replace(following-sibling::col[1]/text(), '^.+/experiment/[^/]+/', fn:concat($basepath, '/files/'))}/{fn:encode-for-uri(text())}">
+                                                    <xsl:when test="(text()) and (fn:index-of($vAvailArchives, $vArchive))">
+                                                        <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri(text())}">
+                                                            <xsl:value-of select="text()"/>
+                                                        </a>
+                                                    </xsl:when>
+                                                    <xsl:when test="(text()) and count($vAvailArchives) = 1">
+                                                        <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri(text())}">
                                                             <xsl:value-of select="text()"/>
                                                         </a>
                                                     </xsl:when>
