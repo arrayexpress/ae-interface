@@ -27,8 +27,7 @@ import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
 import java.util.List;
 
 public class ArchivedFileDownloadServlet extends BaseDownloadServlet
@@ -47,6 +46,20 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
         public boolean accept(File file, String s)
         {
             return filename.equalsIgnoreCase(s);
+        }
+    }
+
+    protected boolean isRandomAccessSupported()
+    {
+        return false;
+    }
+
+    protected InputStream getInputStream( File f ) throws IOException
+    {
+        if (f instanceof de.schlichtherle.io.File ) {
+            return new de.schlichtherle.io.FileInputStream(f);
+        } else {
+            return new FileInputStream(f);
         }
     }
 

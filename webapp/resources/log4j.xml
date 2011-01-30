@@ -72,6 +72,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="de.schlichtherle.io" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <root>
         <priority value="${interface.application.log.default.priority}"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>

@@ -27,11 +27,24 @@ import uk.ac.ebi.arrayexpress.utils.StringTools;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class FileDownloadServlet extends BaseDownloadServlet
 {
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
+
+    protected boolean isRandomAccessSupported()
+    {
+        return true;
+    }
+
+    protected InputStream getInputStream( File f ) throws IOException
+    {
+        return new FileInputStream(f);
+    }
 
     protected File validateRequest( HttpServletRequest request, HttpServletResponse response, List<String> userIDs )
             throws DownloadServletException

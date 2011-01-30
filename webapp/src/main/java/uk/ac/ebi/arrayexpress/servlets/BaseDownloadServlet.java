@@ -73,8 +73,14 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         // 1. validate arguments: if file exists and available
         try {
             File requestedFile = validateRequest(request, response, authUserIDs);
-            if (null != requestedFile) { // so we can proceed
-                sendFile(requestedFile, request, response, requestType );
+            if (null != requestedFile) {
+                verifyFile(requestedFile, response);
+
+                if (isRandomAccessSupported()) {
+                    sendRandomAccessFile(requestedFile, request, response, requestType);
+                } else {
+                    sendSequentialFile(requestedFile, request, response, requestType);
+                }
             }
         } catch (DownloadServletException x) {
             logger.error(x.getMessage());
@@ -88,31 +94,121 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
     }
 
+    protected abstract boolean isRandomAccessSupported();
+    protected abstract InputStream getInputStream( File f ) throws IOException;
+
     protected abstract File validateRequest(
             HttpServletRequest request
             , HttpServletResponse response
             , List<String> authUserIDs
     ) throws DownloadServletException;
 
-    private void sendFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
-            throws IOException, DownloadServletException
+    private void verifyFile( File file, HttpServletResponse response )
+            throws DownloadServletException, IOException
     {
         // Check if file is actually supplied to the request URL.
-        if (null == requestedFile) {
+        if (null == file) {
             // Do your thing if the file is not supplied to the request URL.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it.
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            throw new DownloadServletException("Specified [null] file to sendFile");
+            throw new DownloadServletException("Null file requested to download");
         }
 
         // Check if file actually exists in filesystem
-        if (!requestedFile.exists() || !requestedFile.isFile()) {
+        if (!file.exists() || !file.isFile()) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            throw new DownloadServletException("Specified file [" + requestedFile.getPath() + "] does not exist in file system or is not a file");
+            throw new DownloadServletException("Specified file [" + file.getPath() + "] does not exist in file system or is not a file");
+        }
+   }
+
+    private void sendSequentialFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+            throws IOException
+    {
+        // Prepare some variables. The ETag is an unique identifier of the file
+        String fileName = requestedFile.getName();
+        long length = requestedFile.length();
+        long lastModified = requestedFile.lastModified();
+        String eTag = fileName + "_" + length + "_" + lastModified;
+
+
+        // Validate request headers for caching ---------------------------------------------------
+
+        // If-None-Match header should contain "*" or ETag. If so, then return 304
+        String ifNoneMatch = request.getHeader("If-None-Match");
+        if (ifNoneMatch != null && (ifNoneMatch.contains("*") || matches(ifNoneMatch, eTag))) {
+            response.setHeader("ETag", eTag); // Required in 304.
+            response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+            return;
         }
 
+        // If-Modified-Since header should be greater than LastModified. If so, then return 304
+        // This header is ignored if any If-None-Match header is specified
+        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+        if (ifNoneMatch == null && ifModifiedSince != -1 && ifModifiedSince + 1000 > lastModified) {
+            response.setHeader("ETag", eTag); // Required in 304.
+            response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+            return;
+        }
+
+        // Prepare and initialize response --------------------------------------------------------
+
+        // Get content type by file name.
+        String contentType = getServletContext().getMimeType(fileName);
+
+        // If content type is unknown, then set the default value.
+        // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
+        // To add new content types, add new mime-mapping entry in web.xml.
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        // Determine content disposition. If content type is supported by the browser or an image
+        // then it is set to inline, else attachment which will pop up a 'save as' dialogue.
+        String accept = request.getHeader("Accept");
+        boolean inline = (accept != null && accepts(accept, contentType));
+        String disposition = (inline || contentType.startsWith("image")) ? "inline" : "attachment";
+
+        // Initialize response.
+        response.reset();
+        response.setBufferSize(TRANSFER_BUFFER_SIZE);
+        response.setHeader("Content-Disposition", disposition + ";filename=\"" + fileName + "\"");
+        response.setHeader("ETag", eTag);
+        response.setDateHeader("Last-Modified", lastModified);
+        response.setHeader("Content-Length", String.valueOf(length));
+
+        if (RequestType.GET == requestType || RequestType.POST == requestType) {
+
+            // Prepare streams
+            DataInputStream input = null;
+            ServletOutputStream output = null;
+
+            try {
+                // Open stream
+                input = new DataInputStream(getInputStream(requestedFile));
+                output = response.getOutputStream();
+
+                int readCount;
+                byte[] buffer = new byte[TRANSFER_BUFFER_SIZE];
+
+                while ((readCount = input.read(buffer)) != -1) {
+                    output.write(buffer, 0, readCount);
+                }
+
+                // Finalize task
+                output.flush();
+            } finally {
+                // Gently close streams
+                close(output);
+                close(input);
+            }
+        }
+    }
+
+    private void sendRandomAccessFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+            throws IOException, DownloadServletException
+    {
         // Prepare some variables. The ETag is an unique identifier of the file
         String fileName = requestedFile.getName();
         long length = requestedFile.length();
@@ -286,34 +382,34 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
             } else {
 
-                // Return multiple parts of file.
+                // Return multiple parts of file
                 response.setContentType("multipart/byteranges; boundary=" + MULTIPART_BOUNDARY);
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT); // 206.
 
                 if (RequestType.GET == requestType || RequestType.POST == requestType) {
-                    // Copy multi part range.
+                    // Copy multi part range
                     for (Range r : ranges) {
-                        // Add multipart boundary and header fields for every range.
+                        // Add multipart boundary and header fields for every range
                         output.println();
                         output.println("--" + MULTIPART_BOUNDARY);
                         output.println("Content-Type: " + contentType);
                         output.println("Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
 
-                        // Copy single part range of multi part range.
+                        // Copy single part range of multi part range
                         copy(input, output, r.start, r.length);
                         logger.info("A range of multiple-part download of [{}] completed, sent [{}] bytes", fileName, r.length);
                     }
 
-                    // End with multipart boundary.
+                    // End with multipart boundary
                     output.println();
                     output.println("--" + MULTIPART_BOUNDARY + "--");
                 }
             }
 
-            // Finalize task.
+            // Finalize task
             output.flush();
         } finally {
-            // Gently close streams.
+            // Gently close streams
             close(output);
             close(input);
         }
@@ -374,12 +470,12 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         int read;
 
         if (input.length() == length) {
-            // Write full range.
+            // Write full range
             while ((read = input.read(buffer)) > 0) {
                 output.write(buffer, 0, read);
             }
         } else {
-            // Write partial range.
+            // Write partial range
             input.seek(start);
             long toRead = length;
 
