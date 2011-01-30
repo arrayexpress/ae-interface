@@ -18,12 +18,12 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:variable name="vPermittedColType" select="tokenize('source name,characteristics,unit,factorvalue,factor value', '\s*,\s*')"/>
-    <xsl:variable name="vPermittedComment" select="tokenize('sample_description,sample_source_name,arrayexpress ftp file,derived arrayexpress ftp file', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedComment" select="tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
     <xsl:variable name="vHeader" select="/table/row[col[1] = 'Source Name'][1]"/>
     <xsl:variable name="vAccession" select="upper-case($accession)"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
-    
+
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
@@ -131,18 +131,21 @@
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:choose>
-                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'ArrayExpress FTP file'">
+                                        <xsl:when test="contains(lower-case($vColType),'file')">
                                             <td class="col_{$vColNum}">
-                                                <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files/'))}">
-                                                    <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
-                                                </a>
-                                            </td>
-                                        </xsl:when>
-                                        <xsl:when test="$vColType = 'Comment' and $vColName = 'Derived ArrayExpress FTP file'">
-                                            <td class="col_{$vColNum}">
-                                                <a href="{replace(text(), '^.+/experiment/[^/]+/', concat($basepath, '/files'))}">
-                                                    <xsl:value-of select="replace(text(), '^.+/([^/]+)$', '$1')"/>
-                                                </a>
+                                                <xsl:choose>
+                                                    <xsl:when test="position() != last() and (text()) and (following-sibling::col[1]/text())">
+                                                        <a href="{replace(following-sibling::col[1]/text(), '^.+/experiment/[^/]+/', concat($basepath, '/files/'))}/{text()}">
+                                                            <xsl:value-of select="text()"/>
+                                                        </a>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:value-of select="text()"/>
+                                                        <xsl:if test="not(text())">
+                                                            <xsl:text>&#160;</xsl:text>
+                                                        </xsl:if>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
                                             </td>
                                         </xsl:when>
                                         <xsl:otherwise>
