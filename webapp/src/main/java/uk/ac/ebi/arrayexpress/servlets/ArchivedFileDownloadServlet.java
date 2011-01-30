@@ -113,8 +113,8 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
 
                 logger.debug("Will be serving archive [{}]", archLocation);
                 de.schlichtherle.io.File archFile = new de.schlichtherle.io.File(files.getRootFolder(), archLocation);
-
                 File[] entries = archFile.listFiles(new ExactCaseInsensitiveFilenameFilter(fileName));
+
                 if (null == entries || entries.length != 1) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     throw new DownloadServletException(
