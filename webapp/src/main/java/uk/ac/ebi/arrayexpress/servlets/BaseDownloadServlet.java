@@ -19,17 +19,9 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
-import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.components.Files;
-import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.CookieMap;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -37,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DownloadServlet extends ApplicationServlet
+public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 {
     private static final long serialVersionUID = 292987974909737157L;
 
@@ -49,13 +41,18 @@ public class DownloadServlet extends ApplicationServlet
     // multipart boundary constant
     private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
 
-    private final static class DownloadServletException extends Exception
+    protected final static class DownloadServletException extends Exception
     {
         private static final long serialVersionUID = 8774998591374274629L;
 
         public DownloadServletException( String message )
         {
             super(message);
+        }
+
+        public DownloadServletException( Throwable x )
+        {
+            super(x);
         }
     }
 
@@ -64,15 +61,18 @@ public class DownloadServlet extends ApplicationServlet
         return true; // all requests are supported
     }
 
-    // Respond to HTTP requests from browsers.
-    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
-            throws ServletException, IOException
+    protected void doAuthenticatedRequest(
+            HttpServletRequest request
+            , HttpServletResponse response
+            , RequestType requestType
+            , List<String> authUserIDs
+    ) throws ServletException, IOException
     {
         logRequest(logger, request, requestType);
 
         // 1. validate arguments: if file exists and available
         try {
-            File requestedFile = validateRequest(request, response);
+            File requestedFile = validateRequest(request, response, authUserIDs);
             if (null != requestedFile) { // so we can proceed
                 sendFile(requestedFile, request, response, requestType );
             }
@@ -88,74 +88,11 @@ public class DownloadServlet extends ApplicationServlet
         }
     }
 
-    private File validateRequest( HttpServletRequest request, HttpServletResponse response )
-            throws Exception
-    {
-        String accession = "";
-        String name = "";
-        File file;
-
-        String[] requestArgs = new RegexHelper("servlets/download/([^/]+)/?([^/]*)", "i")
-                .match(request.getRequestURL().toString());
-        if (null != requestArgs) {
-            if (requestArgs[1].equals("")) {
-                name = requestArgs[0]; // old-style
-            } else {
-                accession = requestArgs[0];
-                name = requestArgs[1];
-            }
-        }
-        logger.info("Requested download of [{}], accession [{}]", name, accession);
-        Files files = (Files) getComponent("Files");
-        Experiments experiments = (Experiments) getComponent("Experiments");
-        Users users = (Users) getComponent("Users");
-
-        List<String> userIds = new ArrayList<String>();
-        userIds.add("1");   // add guest
-        CookieMap cookies = new CookieMap(request.getCookies());
-        if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
-            String user = cookies.get("AeLoggedUser").getValue();
-            String passwordHash = cookies.get("AeLoginToken").getValue();
-            if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                userIds = users.getUserIDs(user);
-            } else {
-                logger.warn("Removing invalid session cookie for user [{}]", user);
-                // resetting cookies
-                Cookie userCookie = new Cookie("AeLoggedUser", "");
-                userCookie.setPath("/");
-                userCookie.setMaxAge(0);
-
-                response.addCookie(userCookie);
-            }
-        }
-
-        if (!files.doesExist(accession, name)) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            throw new DownloadServletException("File with name [" + name + "], accession [" + accession + "] is not in files.xml");
-        } else {
-            String fileLocation = files.getLocation(accession, name);
-
-            if (!"".equals(fileLocation) && "".equals(accession)) {
-                // attempt to resolve accession for file by its location
-                accession = files.getAccession(fileLocation);
-            }
-
-            // finally if there is no accession or location determined at the stage - panic
-            if ("".equals(fileLocation) || "".equals(accession)) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                throw new DownloadServletException("Either accession [" + String.valueOf(accession) + "] or location [" + String.valueOf(fileLocation) + "] were not determined");
-            }
-
-            if (!experiments.isAccessible(accession, userIds)) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                throw new DownloadServletException("The experiment [" + accession + "] is not accessible for user id(s) [" + StringTools.arrayToString(userIds.toArray(new String[userIds.size()]), ", ") + "]");
-            }
-
-            logger.debug("Will be serving file [{}]", fileLocation);
-            file = new File(files.getRootFolder(), fileLocation);
-        }
-        return file;
-    }
+    protected abstract File validateRequest(
+            HttpServletRequest request
+            , HttpServletResponse response
+            , List<String> authUserIDs
+    ) throws DownloadServletException;
 
     private void sendFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws IOException, DownloadServletException
@@ -168,15 +105,15 @@ public class DownloadServlet extends ApplicationServlet
             throw new DownloadServletException("Specified [null] file to sendFile");
         }
 
-        // Check if file actually exists in filesystem.
+        // Check if file actually exists in filesystem
         if (!requestedFile.exists() || !requestedFile.isFile()) {
             // Do your thing if the file appears to be non-existing.
-            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
+            // Throw an exception, or send 404, or show default/warning page, or just ignore it
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             throw new DownloadServletException("Specified file [" + requestedFile.getPath() + "] does not exist in file system or is not a file");
         }
 
-        // Prepare some variables. The ETag is an unique identifier of the file.
+        // Prepare some variables. The ETag is an unique identifier of the file
         String fileName = requestedFile.getName();
         long length = requestedFile.length();
         long lastModified = requestedFile.lastModified();
@@ -185,7 +122,7 @@ public class DownloadServlet extends ApplicationServlet
 
         // Validate request headers for caching ---------------------------------------------------
 
-        // If-None-Match header should contain "*" or ETag. If so, then return 304.
+        // If-None-Match header should contain "*" or ETag. If so, then return 304
         String ifNoneMatch = request.getHeader("If-None-Match");
         if (ifNoneMatch != null && (ifNoneMatch.contains("*") || matches(ifNoneMatch, eTag))) {
             response.setHeader("ETag", eTag); // Required in 304.
@@ -193,8 +130,8 @@ public class DownloadServlet extends ApplicationServlet
             return;
         }
 
-        // If-Modified-Since header should be greater than LastModified. If so, then return 304.
-        // This header is ignored if any If-None-Match header is specified.
+        // If-Modified-Since header should be greater than LastModified. If so, then return 304
+        // This header is ignored if any If-None-Match header is specified
         long ifModifiedSince = request.getDateHeader("If-Modified-Since");
         if (ifNoneMatch == null && ifModifiedSince != -1 && ifModifiedSince + 1000 > lastModified) {
             response.setHeader("ETag", eTag); // Required in 304.
@@ -205,14 +142,14 @@ public class DownloadServlet extends ApplicationServlet
 
         // Validate request headers for resume ----------------------------------------------------
 
-        // If-Match header should contain "*" or ETag. If not, then return 412.
+        // If-Match header should contain "*" or ETag. If not, then return 412
         String ifMatch = request.getHeader("If-Match");
         if (ifMatch != null && !ifMatch.contains("*") && !matches(ifMatch, eTag)) {
             response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
             return;
         }
 
-        // If-Unmodified-Since header should be greater than LastModified. If not, then return 412.
+        // If-Unmodified-Since header should be greater than LastModified. If not, then return 412
         long ifUnmodifiedSince = request.getDateHeader("If-Unmodified-Since");
         if (ifUnmodifiedSince != -1 && ifUnmodifiedSince + 1000 <= lastModified) {
             response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
@@ -222,27 +159,27 @@ public class DownloadServlet extends ApplicationServlet
 
         // Validate and process range -------------------------------------------------------------
 
-        // Prepare some variables. The full Range represents the complete file.
+        // Prepare some variables. The full Range represents the complete file
         Range full = new Range(0, length - 1, length);
         List<Range> ranges = new ArrayList<Range>();
 
-        // Validate and process Range and If-Range headers.
+        // Validate and process Range and If-Range headers
         String range = request.getHeader("Range");
         if (range != null) {
 
-            // Range header should match format "bytes=n-n,n-n,n-n...". If not, then return 416.
+            // Range header should match format "bytes=n-n,n-n,n-n...". If not, then return 416
             if (!range.matches("^bytes=\\d*-\\d*(,\\d*-\\d*)*$")) {
                 response.setHeader("Content-Range", "bytes */" + length); // Required in 416.
                 response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
                 return;
             }
 
-            // If-Range header should either match ETag or be greater then LastModified. If not,
-            // then return full file.
+            // If-Range header should either match ETag or be greater then LastModified.
+            // If not, then return full file
             String ifRange = request.getHeader("If-Range");
             if (ifRange != null && !ifRange.equals(eTag)) {
                 try {
-                    long ifRangeTime = request.getDateHeader("If-Range"); // Throws IAE if invalid.
+                    long ifRangeTime = request.getDateHeader("If-Range"); // Throws IAE if invalid
                     if (ifRangeTime != -1 && ifRangeTime + 1000 < lastModified) {
                         ranges.add(full);
                     }
@@ -251,7 +188,7 @@ public class DownloadServlet extends ApplicationServlet
                 }
             }
 
-            // If any valid If-Range header, then process each part of byte range.
+            // If any valid If-Range header, then process each part of byte range
             if (ranges.isEmpty()) {
                 for (String part : range.substring(6).split(",")) {
                     // Assuming a file with length of 100, the following examples returns bytes at:
@@ -266,14 +203,14 @@ public class DownloadServlet extends ApplicationServlet
                         end = length - 1;
                     }
 
-                    // Check if Range is syntactically valid. If not, then return 416.
+                    // Check if Range is syntactically valid. If not, then return 416
                     if (start > end) {
                         response.setHeader("Content-Range", "bytes */" + length); // Required in 416.
                         response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
                         return;
                     }
 
-                    // Add range.
+                    // Add range
                     ranges.add(new Range(start, end, length));
                 }
             }

@@ -6,26 +6,22 @@ import org.apache.lucene.queryParser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
-import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.components.SearchEngine;
-import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -45,7 +41,7 @@ import java.util.Map;
  *
  */
 
-public class QueryServlet extends ApplicationServlet
+public class QueryServlet extends AuthAwareApplicationServlet
 {
     private static final long serialVersionUID = 6806580383145704364L;
 
@@ -56,9 +52,12 @@ public class QueryServlet extends ApplicationServlet
         return (requestType == RequestType.GET || requestType == RequestType.POST);
     }
 
-    // Respond to HTTP requests from browsers.
-    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
-            throws ServletException, IOException
+    protected void doAuthenticatedRequest(
+            HttpServletRequest request
+            , HttpServletResponse response
+            , RequestType requestType
+            , List<String> authUserIDs
+    ) throws ServletException, IOException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)$", "i");
 
@@ -119,29 +118,7 @@ public class QueryServlet extends ApplicationServlet
             params.put("basepath", request.getContextPath());
 
             // to make sure nobody sneaks in the other value w/o proper authentication
-            params.put("userid", "1");
-
-            CookieMap cookies = new CookieMap(request.getCookies());
-            if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
-                Users users = (Users) getComponent("Users");
-                String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
-                String passwordHash = cookies.get("AeLoginToken").getValue();
-                if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                    if ((users.isPrivileged(user))) { // superuser logged in -> remove user restriction
-                            params.remove("userid");
-                        } else {
-                            params.put("userid", StringTools.listToString(users.getUserIDs(user), " OR "));
-                        }
-                } else {
-                    logger.warn("Removing invalid session cookie for user [{}]", user);
-                    // resetting cookies
-                    Cookie userCookie = new Cookie("AeLoggedUser", "");
-                    userCookie.setPath("/");
-                    userCookie.setMaxAge(0);
-
-                    response.addCookie(userCookie);
-                }
-            }
+            params.put("userid", StringTools.listToString(authUserIDs, " OR "));
 
             // setting "preferred" parameter to true allows only preferred experiments to be displayed, but if
             // any of source control parameters are present in the query, it will not be added

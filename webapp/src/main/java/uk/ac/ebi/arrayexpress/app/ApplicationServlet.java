@@ -28,7 +28,6 @@ import java.io.IOException;
 
 public abstract class ApplicationServlet extends HttpServlet
 {
-    // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public Application getApplication()

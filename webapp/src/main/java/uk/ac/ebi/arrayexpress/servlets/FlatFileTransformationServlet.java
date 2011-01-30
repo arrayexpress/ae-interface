@@ -20,37 +20,42 @@ package uk.ac.ebi.arrayexpress.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
-import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
-import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.*;
+import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.SmartUTF8CharsetDecoder;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
 import uk.ac.ebi.arrayexpress.utils.io.UnescapingXMLNumericReferencesReader;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
-import java.net.URLDecoder;
+import java.util.List;
 
-public class FlatFileTransformationServlet extends ApplicationServlet
+public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
 {
     private static final long serialVersionUID = -2909054413280338250L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return (requestType == RequestType.GET || requestType == RequestType.POST);
     }
 
-    // Respond to HTTP requests from browsers.
-    protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
-            throws ServletException, IOException
+    @Override
+    protected void doAuthenticatedRequest(
+            HttpServletRequest request
+            , HttpServletResponse response
+            , RequestType requestType
+            , List<String> authUserIDs
+    ) throws ServletException, IOException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)/([^/]+)$", "i");
 
@@ -79,7 +84,7 @@ public class FlatFileTransformationServlet extends ApplicationServlet
         params.put("filename", fileName);
 
         // to make sure nobody sneaks in the other value w/o proper authentication
-        params.put("userid", "1");
+        params.put("userid", StringTools.listToString(authUserIDs, " OR "));
 
         InputStream in = null;
         PrintWriter out = null;
@@ -87,28 +92,6 @@ public class FlatFileTransformationServlet extends ApplicationServlet
         try {
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
             Files files = (Files) getComponent("Files");
-
-            CookieMap cookies = new CookieMap(request.getCookies());
-            if (cookies.containsKey("AeLoggedUser") && cookies.containsKey("AeLoginToken")) {
-                Users users = (Users) getComponent("Users");
-                String user = URLDecoder.decode(cookies.get("AeLoggedUser").getValue(), "UTF-8");
-                String passwordHash = cookies.get("AeLoginToken").getValue();
-                if (users.verifyLogin(user, passwordHash, request.getRemoteAddr().concat(request.getHeader("User-Agent")))) {
-                    if ((users.isPrivileged(user))) { // superuser logged in -> remove user restriction
-                            params.remove("userid");
-                        } else {
-                            params.put("userid", StringTools.listToString(users.getUserIDs(user), " OR "));
-                        }
-                } else {
-                    logger.warn("Removing invalid session cookie for user [{}]", user);
-                    // resetting cookies
-                    Cookie userCookie = new Cookie("AeLoggedUser", "");
-                    userCookie.setPath("/");
-                    userCookie.setMaxAge(0);
-
-                    response.addCookie(userCookie);
-                }
-            }
 
             String stylesheetName = new StringBuilder(stylesheet)
                     .append('-').append(outputType).append(".xsl").toString();

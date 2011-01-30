@@ -95,6 +95,10 @@
         <to type="forward">/servlets/query/-/files/html?accession=$1</to>
     </rule>
     <rule>
+        <from>^/files/([aAeE]-\w{4}-\d+)/([^/]+\.zip)/([^/]+)$</from>
+        <to type="forward">/servlets/archdownload/$1/$2/$3</to>
+    </rule>
+    <rule>
         <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>
         <to type="forward">/servlets/download/$1/$2</to>
     </rule>

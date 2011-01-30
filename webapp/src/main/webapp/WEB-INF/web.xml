@@ -13,9 +13,14 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.FlatFileTransformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <description>ArrayExpress Data Download Servlet</description>
-        <servlet-name>DownloadServlet</servlet-name>
-        <servlet-class>uk.ac.ebi.arrayexpress.servlets.DownloadServlet</servlet-class>
+        <description>ArrayExpress File Download Servlet</description>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.FileDownloadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress Archived File Download Servlet</description>
+        <servlet-name>ArchivedFileDownloadServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.ArchivedFileDownloadServlet</servlet-class>
     </servlet>
     <servlet>
         <description>ArrayExpress Data Control Servlet</description>
@@ -41,8 +46,12 @@
         <url-pattern>/servlets/fftransform/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-name>FileDownloadServlet</servlet-name>
         <url-pattern>/servlets/download/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArchivedFileDownloadServlet</servlet-name>
+        <url-pattern>/servlets/archdownload/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControlServlet</servlet-name>
