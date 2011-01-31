@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <row>
+        <col/>
+    </row>        
+    <row>
         <col>Source Name</col>
         <col>Characteristics [Age]</col>
         <col>Term Source REF</col>

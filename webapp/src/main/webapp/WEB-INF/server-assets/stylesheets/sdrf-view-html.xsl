@@ -12,6 +12,9 @@
     
     <xsl:param name="accession"/>
     <xsl:param name="filename"/>
+    <xsl:param name="group"/>
+
+    <xsl:variable name="vGroup" as="xs:boolean" select="not(not($group))"/>
     
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
@@ -26,6 +29,9 @@
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     
     <xsl:variable name="vTableInfo">
+        <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
+        <xsl:variable name="vPermittedComment" select="fn:tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
+        
         <xsl:variable name="vHeaderRow" select="/table/row[col[1] = 'Source Name'][1]"/>
         <xsl:variable name="vHeaderPos" select="fn:count(/table/row[col[1] = 'Source Name'][1]/preceding-sibling::*) + 1"/>
         <xsl:variable name="vDataLastPos" select="fn:count(/table/row[(col[1] = '') and (fn:position() > $vHeaderPos)][1]/preceding-sibling::*)"/>
@@ -36,14 +42,13 @@
                 <xsl:variable name="vIsColComplex" select="fn:matches(text(), '.+\[.+\].*')"/>
                 <xsl:variable name="vColType" select="if ($vIsColComplex) then fn:replace(text(), '(.+[^\s])\s*\[.+\].*', '$1') else text()"/>
                 <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace(text(), '.+\[(.+)\].*', '$1') else text()"/>
-                <col pos="{$vColPos}" type="{$vColType}" name="{$vColName}"/>
+                <xsl:variable name="vColVisible" select="($vColType = 'Comment' and (fn:index-of($vPermittedComment, lower-case($vColName)))) or (fn:index-of($vPermittedColType, lower-case($vColType)))"/>
+                <col pos="{$vColPos}" type="{$vColType}" name="{$vColName}" visible="{$vColVisible}"/>
             </xsl:for-each>
         </header>
         <data firstpos="{$vHeaderPos + 1}" lastpos="{if ($vDataLastPos = 0) then count(/table/row) else $vDataLastPos}"/>        
-    </xsl:variable> 
+    </xsl:variable>  
     
-    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
-    <xsl:variable name="vPermittedComment" select="fn:tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
     <xsl:variable name="vDataFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
@@ -127,86 +132,106 @@
     
     <xsl:template match="table">
         <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-            <xsl:apply-templates select="row[number($vTableInfo/header/@pos)]">
-                <xsl:with-param name="pIsHeader" select="true()"/>
-            </xsl:apply-templates>
-            <xsl:apply-templates select="row[(position() >= $vTableInfo/data/@firstpos) and (position() &lt;= $vTableInfo/data/@lastpos)]">
-                <xsl:with-param name="pIsHeader" select="false()"/>
-                <xsl:sort select="col[$vSortBy]" data-type="number" order="{$vSortOrder}"/>
-                <xsl:sort select="col[$vSortBy]" order="{$vSortOrder}"/>
-            </xsl:apply-templates>
+            <xsl:call-template name="out-header">
+                <xsl:with-param name="pHeaderRow" select="row[number($vTableInfo/header/@pos)]"/>
+            </xsl:call-template>
+            <xsl:variable name="vSortedData">
+                <xsl:for-each select="row[(position() >= $vTableInfo/data/@firstpos) and (position() &lt;= $vTableInfo/data/@lastpos)]">
+                    <xsl:sort select="col[$vSortBy]" data-type="number" order="{$vSortOrder}"/>
+                    <xsl:sort select="col[$vSortBy]" order="{$vSortOrder}"/>
+                    <xsl:copy-of select="."/>                    
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:call-template name="out-data">
+                <xsl:with-param name="pRows" select="$vSortedData/row"/>
+            </xsl:call-template>
         </table>
     </xsl:template>
     
-    <xsl:template match="row">
-        <xsl:param name="pIsHeader"/>
-        
-        <xsl:if test="col > ''">
+    <xsl:template name="out-header">
+        <xsl:param name="pHeaderRow"/>
+        <tr>
+            <xsl:for-each select="$pHeaderRow/col">
+                <xsl:variable name="vColPos" select="fn:position()"/>
+                <xsl:variable name="vColInfo" select="$vTableInfo/header/col[$vColPos]"/>
+                
+                <xsl:if test="$vColInfo/@visible = 'true'">
+                    <th class="col_{$vColInfo/@pos}">
+                        <xsl:if test="not($vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit')">
+                            <xsl:value-of select="$vColInfo/@name"/>
+                        </xsl:if>
+                        <xsl:if test="$vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit'">
+                            <xsl:text>(unit)</xsl:text>
+                        </xsl:if>
+                        <xsl:call-template name="add-sort">
+                            <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
+                        </xsl:call-template>
+                    </th>
+                </xsl:if>
+            </xsl:for-each>
+        </tr>
+    </xsl:template>
+    
+    <xsl:template name="out-data">
+        <xsl:param name="pRows"/>
+        <xsl:for-each select="$pRows">
+            <xsl:variable name="vRowPos" select="1 + position() - 1"/>
             <tr>
                 <xsl:for-each select="col">
-                    <xsl:variable name="vColPos" select="fn:position()"/>
+                    
+                    <xsl:variable name="vColPos" select="position()"/>
                     <xsl:variable name="vColInfo" select="$vTableInfo/header/col[$vColPos]"/>
-                    <xsl:choose>
-                        <xsl:when test="($vColInfo/@type = 'Comment' and (fn:index-of($vPermittedComment, lower-case($vColInfo/@name)))) or (fn:index-of($vPermittedColType, lower-case($vColInfo/@type)))">
-                            <xsl:choose>
-                                <xsl:when test="$pIsHeader">
-                                    <th class="col_{$vColInfo/@pos}">
-                                        <xsl:if test="not($vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit')">
-                                            <xsl:value-of select="$vColInfo/@name"/>
-                                        </xsl:if>
-                                        <xsl:if test="$vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit'">
-                                            <xsl:text>(unit)</xsl:text>
-                                        </xsl:if>
-                                        <xsl:call-template name="add-sort">
-                                            <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
-                                        </xsl:call-template>
-                                    </th>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:choose>
-                                        <xsl:when test="fn:contains(fn:lower-case($vColInfo/@type),'file')">
-                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
-                                            <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
-                                            <xsl:variable name="vArchive" select="fn:replace(following-sibling::col[1]/text(), '^.+([^/]+)$', '$1')"/>
-                                            <td class="col_{$vColInfo/@pos}">
-                                                <xsl:choose>
-                                                    <xsl:when test="(text()) and (fn:index-of($vAvailArchives, $vArchive))">
-                                                        <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri(text())}">
-                                                            <xsl:value-of select="text()"/>
-                                                        </a>
-                                                    </xsl:when>
-                                                    <xsl:when test="(text()) and count($vAvailArchives) = 1">
-                                                        <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri(text())}">
-                                                            <xsl:value-of select="text()"/>
-                                                        </a>
-                                                    </xsl:when>
-                                                    <xsl:otherwise>
-                                                        <xsl:value-of select="text()"/>
-                                                        <xsl:if test="not(text())">
-                                                            <xsl:text>&#160;</xsl:text>
-                                                        </xsl:if>
-                                                    </xsl:otherwise>
-                                                </xsl:choose>
-                                            </td>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <td class="col_{$vColInfo/@pos}">
+                    <xsl:variable name="vColText" select="text()"/>
+                    <xsl:variable name="vPrevColText" select="../preceding-sibling::*[1]/col[$vColPos]/text()"/>
+                    <xsl:variable name="vNextRows" select="../following-sibling::*"/>
+                    <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
+                    <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
+                    <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($vTableInfo/data/@lastpos - $vTableInfo/data/@firstpos + 2)"/>
+                    <xsl:if test="$vColInfo/@visible = 'true'">
+                        <xsl:if test="not($vPrevColText = $vColText) or not($vGroup)">
+                            <td class="col_{$vColInfo/@pos}">
+                                <xsl:if test="($vColText = $vNextColText) and $vGroup">
+                                    <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="fn:contains(fn:lower-case($vColInfo/@type),'file')">
+                                        <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
+                                        <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
+                                        <xsl:variable name="vArchive" select="fn:replace(following-sibling::*[1]/text(), '^.+([^/]+)$', '$1')"/>
+                                        
+                                        <xsl:choose>
+                                            <xsl:when test="(text()) and (fn:index-of($vAvailArchives, $vArchive))">
+                                                <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri(text())}">
+                                                    <xsl:value-of select="text()"/>
+                                                </a>
+                                            </xsl:when>
+                                            <xsl:when test="(text()) and count($vAvailArchives) = 1">
+                                                <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri(text())}">
+                                                    <xsl:value-of select="text()"/>
+                                                </a>
+                                            </xsl:when>
+                                            <xsl:otherwise>
                                                 <xsl:value-of select="text()"/>
                                                 <xsl:if test="not(text())">
                                                     <xsl:text>&#160;</xsl:text>
                                                 </xsl:if>
-                                            </td>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>   
-                    </xsl:choose>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="text()"/>
+                                        <xsl:if test="not(text())">
+                                            <xsl:text>&#160;</xsl:text>
+                                        </xsl:if>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </td>
+                        </xsl:if>
+                    </xsl:if>   
                 </xsl:for-each>
             </tr>
-        </xsl:if>
-    </xsl:template>
-    
+        </xsl:for-each>
+    </xsl:template>    
     <xsl:template name="add-sort">
         <xsl:param name="pKind"/>
         <xsl:if test="$pKind = $vSortBy">
