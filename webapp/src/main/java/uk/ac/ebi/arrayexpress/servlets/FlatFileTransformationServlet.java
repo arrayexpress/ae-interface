@@ -98,10 +98,10 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
 
             String flatFileLocation = files.getLocation(accession, fileName);
             SAXSource source = new SAXSource();
-            File flatFile = new File(files.getRootFolder(), flatFileLocation);
+            File flatFile = null != flatFileLocation ? new File(files.getRootFolder(), flatFileLocation) : null;
 
             if (null == flatFile || !flatFile.exists()) {
-                logger.error("Requested transformation of [{}] which is not found", flatFile.getAbsolutePath());
+                logger.error("Requested transformation of [{}] which is not found", flatFileLocation);
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
                 in = new FileInputStream(flatFile);

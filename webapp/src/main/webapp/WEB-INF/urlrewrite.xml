@@ -19,15 +19,15 @@
 
     <!-- accession shortcuts -->
     <rule>
-        <from>^/([eE]-\w{4}-\d+)$</from>
+        <from>^/(E-\w{4}-\d+)$</from>
         <to type="redirect">%{context-path}/experiments/$1</to>
     </rule>
     <rule>
-        <from>^/([aA]-\w{4}-\d+)$</from>
+        <from>^/(A-\w{4}-\d+)$</from>
         <to type="redirect">%{context-path}/arrays/$1</to>
     </rule>
     <rule>
-        <from>^/([pP]-\w{4}-\d+)$</from>
+        <from>^/(P-\w{4}-\d+)$</from>
         <to type="redirect">%{context-path}/protocols/$1</to>
     </rule>
 
@@ -41,35 +41,35 @@
         <to type="forward">/servlets/query/experiments/experiments/html</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)$</from>
+        <from>^/experiments/(E-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/experiments/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/(idf|sdrf)$</from>
+        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)$</from>
         <condition type="parameter" name="xml" operator="greater"/>
-        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/default/xml</to>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.txt/default/xml</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/(idf|sdrf)$</from>
-        <to type="redirect">%{context-path}/experiments/$1/$2.html</to>
+        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)$</from>
+        <to type="redirect">%{context-path}/experiments/${upper:$1}/$2.html</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/$2-view/html</to>
+        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)\.html$</from>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.txt/$2-view/html</to>
     </rule>
 
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
+        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
         <condition type="parameter" name="xml" operator="greater"/>
-        <to type="forward">/servlets/fftransform/$1/$1.$2.$3.txt/default/xml</to>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/default/xml</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
-        <to type="redirect">%{context-path}/experiments/$1/$2.$3.html</to>
+        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
+        <to type="redirect">%{context-path}/experiments/${upper:$1}/$2.$3.html</to>
     </rule>
     <rule>
-        <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/$1/$1.$2.$3.txt/$3-view/html</to>
+        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)\.html$</from>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/$3-view/html</to>
     </rule>
 
     <!-- arrays -->
@@ -82,7 +82,7 @@
         <to type="forward">/servlets/query/arrays/arrays/html</to>
     </rule>
     <rule>
-        <from>^/arrays/([aA]-\w{4}-\d+)/?$</from>
+        <from>^/arrays/(A-\w{4}-\d+)/?$</from>
         <to type="forward">/servlets/query/arrays/arrays/html?accession=$1</to>
     </rule>
 
@@ -96,20 +96,20 @@
         <to type="forward">/servlets/query/files/files/html</to>
     </rule>
     <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/?$</from>
+        <from>^/files/([AE]-\w{4}-\d+)/?$</from>
         <to type="forward">/servlets/query/-/files/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/index.html$</from>
+        <from>^/files/([AE]-\w{4}-\d+)/index.html$</from>
         <to type="forward">/servlets/query/-/files/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/([^/]+\.zip)/([^/]+)$</from>
-        <to type="forward">/servlets/archdownload/$1/$2/$3</to>
+        <from>^/files/([AE]-\w{4}-\d+)/([^/]+\.zip)/([^/]+)$</from>
+        <to type="forward">/servlets/archdownload/${upper:$1}/$2/$3</to>
     </rule>
     <rule>
-        <from>^/files/([aAeE]-\w{4}-\d+)/(.+)$</from>
-        <to type="forward">/servlets/download/$1/$2</to>
+        <from>^/files/([AE]-\w{4}-\d+)/(.+)$</from>
+        <to type="forward">/servlets/download/${upper:$1}/$2</to>
     </rule>
 
     <!-- users -->
