@@ -80,8 +80,8 @@
         </dependency>
         <dependency>
             <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon9</artifactId>
-            <version>9.1.0.8</version>
+            <artifactId>saxon9he</artifactId>
+            <version>9.2.0.6</version>
         </dependency>
     </dependencies>
 </project>

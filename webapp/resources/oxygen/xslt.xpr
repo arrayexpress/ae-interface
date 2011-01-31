@@ -11,6 +11,17 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String xml:space="preserve">sdrf-view-xml</String>
                                 </field>
                                 <field name="type">
@@ -40,17 +51,6 @@
                                 </field>
                                 <field name="url">
                                     <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">browse-experiments-html (real data)</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XML</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -315,6 +315,17 @@
                                 </field>
                                 <field name="url">
                                     <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">preprocess-experiments-xml</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XML</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">../../src/main/webapp/WEB-INF/server-assets/stylesheets/default-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -1122,7 +1133,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String xml:space="preserve">Saxon-PE</String>
+                                    <String xml:space="preserve">Saxon-EE</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array>
