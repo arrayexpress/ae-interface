@@ -12,9 +12,9 @@
     
     <xsl:param name="accession"/>
     <xsl:param name="filename"/>
-    <xsl:param name="group"/>
+    <xsl:param name="grouping"/>
 
-    <xsl:variable name="vGroup" as="xs:boolean" select="not(not($group))"/>
+    <xsl:variable name="vGrouping" as="xs:boolean" select="not(not($grouping))"/>
     
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
@@ -188,9 +188,9 @@
                     <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
                     <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($vTableInfo/data/@lastpos - $vTableInfo/data/@firstpos + 2)"/>
                     <xsl:if test="$vColInfo/@visible = 'true'">
-                        <xsl:if test="not($vPrevColText = $vColText) or not($vGroup)">
+                        <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
                             <td class="col_{$vColInfo/@pos}">
-                                <xsl:if test="($vColText = $vNextColText) and $vGroup">
+                                <xsl:if test="($vColText = $vNextColText) and $vGrouping">
                                     <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
                                 </xsl:if>
                                 <xsl:choose>
