@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils;
+package uk.ac.ebi.arrayexpress.utils.io;
 
 /*
  * Copyright 2009-2011 European Molecular Biology Laboratory
@@ -16,6 +16,8 @@ package uk.ac.ebi.arrayexpress.utils;
  * limitations under the License.
  *
  */
+
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

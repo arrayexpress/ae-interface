@@ -24,9 +24,9 @@ import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.SmartUTF8CharsetDecoder;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
+import uk.ac.ebi.arrayexpress.utils.io.SmartUTF8CharsetDecoder;
 import uk.ac.ebi.arrayexpress.utils.io.UnescapingXMLNumericReferencesReader;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
