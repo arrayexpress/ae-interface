@@ -759,7 +759,7 @@
                                 <xsl:value-of select="@name"/>
                             </a>
                             <xsl:text> | </xsl:text>
-                            <a href="{$vBaseUrl}/experiments/{$vAccession}/{replace(@name, '[^\.]+\.(.*)(idf|sdrf).+', '$1')}{current-grouping-key()}">
+                            <a href="{$vBaseUrl}/experiments/{$vAccession}/{replace(@name, '[^\.]+\.(.*)(idf|sdrf).+', '$1')}{current-grouping-key()}.html">
                                 <xsl:text>view</xsl:text>
                             </a><img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                             <xsl:if test="position() != last()">

@@ -51,8 +51,13 @@
     </rule>
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)/(idf|sdrf)$</from>
+        <to type="redirect">%{context-path}/experiments/$1/$2.html</to>
+    </rule>
+    <rule>
+        <from>^/experiments/([eE]-\w{4}-\d+)/(idf|sdrf)\.html$</from>
         <to type="forward">/servlets/fftransform/$1/$1.$2.txt/$2-view/html</to>
     </rule>
+
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
         <condition type="parameter" name="xml" operator="greater"/>
@@ -60,6 +65,10 @@
     </rule>
     <rule>
         <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
+        <to type="redirect">%{context-path}/experiments/$1/$2.$3.html</to>
+    </rule>
+    <rule>
+        <from>^/experiments/([eE]-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)\.html$</from>
         <to type="forward">/servlets/fftransform/$1/$1.$2.$3.txt/$3-view/html</to>
     </rule>
 
