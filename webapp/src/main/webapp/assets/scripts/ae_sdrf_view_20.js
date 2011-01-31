@@ -50,7 +50,7 @@
             var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
             var queryString = $.query.set("sortby", colname).set("sortorder", newOrder).toString();
 
-            thisObj.wrapInner("<a href=\"" + localPath + queryString + "\"/>");
+            thisObj.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
         });
     });
 
