@@ -28,22 +28,40 @@
     
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     
+    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
+
+    <xsl:template name="add-header-col-info">
+        <xsl:param name="pPos"/>
+        <xsl:param name="pText"/>
+
+        <xsl:variable name="vIsColComplex" select="fn:matches($pText, '.+\[.+\].*')"/>
+        <xsl:variable name="vIsColComment" select="fn:matches(fn:lower-case($pText), 'comment.\s*\[.+\].*')"/>
+        <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
+        <xsl:variable name="vColType" select="if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText"/>
+        <xsl:variable name="vColPosition" select="fn:index-of($vPermittedColType, lower-case($vColType))"/>
+
+        <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}"/>
+    </xsl:template>  
+ 
     <xsl:variable name="vTableInfo">
-        <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,characteristics,unit,factorvalue,factor value,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
-        <xsl:variable name="vPermittedComment" select="fn:tokenize('sample_description,sample_source_name', '\s*,\s*')"/>
         
         <xsl:variable name="vHeaderRow" select="/table/row[col[1] = 'Source Name'][1]"/>
         <xsl:variable name="vHeaderPos" select="fn:count(/table/row[col[1] = 'Source Name'][1]/preceding-sibling::*) + 1"/>
         <xsl:variable name="vDataLastPos" select="fn:count(/table/row[(col[1] = '') and (fn:position() > $vHeaderPos)][1]/preceding-sibling::*)"/>
-        
-        <header pos="{$vHeaderPos}">
+        <xsl:variable name="vHeaderInfo">
             <xsl:for-each select="$vHeaderRow/col">
-                <xsl:variable name="vColPos" select="fn:position()"/>
-                <xsl:variable name="vIsColComplex" select="fn:matches(text(), '.+\[.+\].*')"/>
-                <xsl:variable name="vColType" select="if ($vIsColComplex) then fn:replace(text(), '(.+[^\s])\s*\[.+\].*', '$1') else text()"/>
-                <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace(text(), '.+\[(.+)\].*', '$1') else text()"/>
-                <xsl:variable name="vColVisible" select="($vColType = 'Comment' and (fn:index-of($vPermittedComment, lower-case($vColName)))) or (fn:index-of($vPermittedColType, lower-case($vColType)))"/>
-                <col pos="{$vColPos}" type="{$vColType}" name="{$vColName}" visible="{$vColVisible}"/>
+                <xsl:call-template name="add-header-col-info">
+                    <xsl:with-param name="pPos" select="position()"/>
+                    <xsl:with-param name="pText" select="text()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:variable>            
+ 
+        <header pos="{$vHeaderPos}">
+            <xsl:for-each select="$vHeaderInfo/col[@group != '']">
+                <xsl:sort select="@group" order="ascending" data-type="number"/>
+                <xsl:sort select="@pos" order="ascending" data-type="number"/>
+                <xsl:copy-of select="."/>
             </xsl:for-each>
         </header>
         <data firstpos="{$vHeaderPos + 1}" lastpos="{if ($vDataLastPos = 0) then count(/table/row) else $vDataLastPos}"/>        
@@ -59,6 +77,7 @@
     <xsl:include href="ae-html-page.xsl"/>
     
     <xsl:template match="/">
+        <!-- <xsl:apply-templates select="/table"/> -->
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
@@ -155,7 +174,7 @@
                 <xsl:variable name="vColPos" select="fn:position()"/>
                 <xsl:variable name="vColInfo" select="$vTableInfo/header/col[$vColPos]"/>
                 
-                <xsl:if test="$vColInfo/@visible = 'true'">
+                <xsl:if test="$vColInfo">
                     <th class="col_{$vColInfo/@pos}">
                         <xsl:if test="not($vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit')">
                             <xsl:value-of select="$vColInfo/@name"/>
@@ -180,14 +199,14 @@
                 <xsl:for-each select="col">
                     
                     <xsl:variable name="vColPos" select="position()"/>
-                    <xsl:variable name="vColInfo" select="$vTableInfo/header/col[$vColPos]"/>
+                    <xsl:variable name="vColInfo" select="$vTableInfo/header/col[@pos = $vColPos]"/>
                     <xsl:variable name="vColText" select="text()"/>
                     <xsl:variable name="vPrevColText" select="../preceding-sibling::*[1]/col[$vColPos]/text()"/>
                     <xsl:variable name="vNextRows" select="../following-sibling::*"/>
                     <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
                     <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
                     <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($vTableInfo/data/@lastpos - $vTableInfo/data/@firstpos + 2)"/>
-                    <xsl:if test="$vColInfo/@visible = 'true'">
+                    <xsl:if test="$vColInfo">
                         <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
                             <td class="col_{$vColInfo/@pos}">
                                 <xsl:if test="($vColText = $vNextColText) and $vGrouping">
