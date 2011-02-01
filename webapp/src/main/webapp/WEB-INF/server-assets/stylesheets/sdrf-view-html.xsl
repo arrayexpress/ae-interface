@@ -255,8 +255,8 @@
         <xsl:param name="pKind"/>
         <xsl:if test="$pKind = $vSortBy">
             <xsl:choose>
-                <xsl:when test="'ascending' = $vSortOrder"><img src="{$basepath}/assets/images/mini_arrow_up.gif" width="12" height="16" alt="^"/></xsl:when>
-                <xsl:otherwise><img src="{$basepath}/assets/images/mini_arrow_down.gif" width="12" height="16" alt="v"/></xsl:otherwise>
+                <xsl:when test="'ascending' = $vSortOrder"><img src="{$basepath}/assets/images/tsorta.gif" width="12" height="6" alt="^"/></xsl:when>
+                <xsl:otherwise><img src="{$basepath}/assets/images/tsortd.gif" width="12" height="6" alt="v"/></xsl:otherwise>
             </xsl:choose>
         </xsl:if>
     </xsl:template>

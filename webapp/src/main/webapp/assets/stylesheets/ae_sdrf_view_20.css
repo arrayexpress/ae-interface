@@ -64,6 +64,10 @@
     padding-top: 0;
 }
 
+#ae_results_table th img {
+    vertical-align: middle;
+}
+
 #ae_results_table th.col_1 {
     border-left: 0 transparent;
 }
