@@ -1,1583 +1,2204 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <row>
-        <col/>
-    </row>        
-    <row>
         <col>Source Name</col>
-        <col>Characteristics [Age]</col>
-        <col>Term Source REF</col>
-        <col>Characteristics [TimeUnit]</col>
-        <col>Term Source REF</col>
-        <col>Characteristics [TargetedCellType]</col>
-        <col>Characteristics [OrganismPart]</col>
-        <col>Term Source REF</col>
-        <col>Characteristics [Sex]</col>
-        <col>Characteristics [DevelopmentalStage]</col>
-        <col>Characteristics [StrainOrLine]</col>
-        <col>Characteristics [Organism]</col>
-        <col>Characteristics [BioSourceType]</col>
-        <col>Sample Name</col>
+        <col>Material Type</col>
+        <col>Characteristics[Organism]</col>
+        <col>Characteristics[Phenotype]</col>
+        <col>Characteristics[Age]</col>
+        <col>Unit[TimeUnit]</col>
+        <col>Characteristics[DevelopmentalStage]</col>
+        <col>Characteristics[Genotype]</col>
+        <col>Characteristics[GeographicLocation]</col>
+        <col>Characteristics[Sex]</col>
+        <col>Characteristics[StrainOrLine]</col>
+        <col>Characteristics[BioSourceType]</col>
         <col>Protocol REF</col>
-        <col>Parameter Value [Extracted product]</col>
-        <col>Parameter Value [Amplification]</col>
+        <col>Protocol REF</col>
         <col>Protocol REF</col>
         <col>Extract Name</col>
-        <col>Material Type</col>
         <col>Protocol REF</col>
-        <col>Parameter Value [Amplification]</col>
-        <col>Parameter Value [Label used]</col>
-        <col>Parameter Value [Amount of nucleic acid labeled]</col>
         <col>Labeled Extract Name</col>
         <col>Label</col>
-        <col>Material Type</col>
-        <col>Protocol REF</col>
         <col>Hybridization Name</col>
         <col>Array Design REF</col>
-        <col>Term Source REF</col>
-        <col>Comment [Array Design URI]</col>
-        <col>Protocol REF</col>
-        <col>Scan Name</col>
+        <col>Comment[Array Description]</col>
         <col>Array Data File</col>
-        <col>Comment [ArrayExpress FTP file]</col>
-        <col>Comment [ArrayExpress Data Retrieval URI]</col>
+        <col>Protocol REF</col>
         <col>Protocol REF</col>
         <col>Derived Array Data Matrix File</col>
-        <col>Comment [Derived ArrayExpress FTP file]</col>
-        <col>Comment [Derived ArrayExpress Data Retrieval URI]</col>
-        <col/>
+        <col>Factor Value[PHENOTYPE]</col>
+        <col>Factor Value[HAE]</col>
+        <col>Unit[TimeUnit]</col>
     </row>
     <row>
-        <col>Rattus norvegicus</col>
-        <col>9</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatogonia</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>pre-puberty</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SG2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SG2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>5d_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SG2B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SG2_u34a</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SG2_u34a</col>
-        <col>SG2_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A03_5Sd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A03_5Sd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166482</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatocytes</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SC1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SC1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>5d_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SC1A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SC1_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SC1_u34a</col>
-        <col>SC1_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A04_5Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A04_5Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166485</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatides</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>ST2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>ST2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5c_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>ST2B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>ST2_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>ST2_u34b</col>
-        <col>ST2_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A13_1.5Sc_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A13_1.5Sc_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166478</col>
-        <col>20</col>
-        <col>mo</col>
-        <col>days</col>
-        <col>mo</col>
-        <col>Sertoli cells</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SE1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SE1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5c_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SE1B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SE1_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SE1_u34b</col>
-        <col>SE1_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A17_1.5Cc_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A17_1.5Cc_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166485</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatides</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>ST2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>ST2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>5b_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>ST2A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>ST2_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>ST2_u34a</col>
-        <col>ST2_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A19_5Sb_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A19_5Sb_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166479</col>
-        <col>20</col>
-        <col>mo</col>
-        <col>days</col>
-        <col>mo</col>
-        <col>Sertoli cells</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SE2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SE2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>5b_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SE2A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SE2_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SE2_u34a</col>
-        <col>SE2_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A24_5Cb_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A24_5Cb_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166478</col>
-        <col>20</col>
-        <col>mo</col>
-        <col>days</col>
-        <col>mo</col>
-        <col>Sertoli cells</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SE1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SE1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5d_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SE1A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SE1_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SE1_u34a</col>
-        <col>SE1_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A26_1.5Sd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A26_1.5Sd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166487</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>total testis</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>TT2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>TT2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5d_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>TT2B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>TT2_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>TT2_u34b</col>
-        <col>TT2_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A29_1.5Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A29_1.5Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166487</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>total testis</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>TT2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>TT2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>5a_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>TT2A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>TT2_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>TT2_u34a</col>
-        <col>TT2_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A31_5Sa.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A31_5Sa.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166479</col>
-        <col>20</col>
-        <col>mo</col>
-        <col>days</col>
-        <col>mo</col>
-        <col>Sertoli cells</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SE2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SE2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>5a_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SE2B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SE2_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SE2_u34b</col>
-        <col>SE2_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A34_5Ca.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A34_5Ca.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166480</col>
-        <col>9</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatogonia</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>pre-puberty</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SG1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SG1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5a_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SG1B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SG2_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SG2_u34b</col>
-        <col>SG2_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A37_1.5Ca.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A37_1.5Ca.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus</col>
-        <col>9</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatogonia</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>pre-puberty</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SG2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SG2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5a_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SG2A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SG1_u34b</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SG1_u34b</col>
-        <col>SG1_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A42_1.5Sa.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A42_1.5Sa.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166480</col>
-        <col>9</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatogonia</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>pre-puberty</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SG1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col>P-MEXP-1358</col>
-        <col>SG1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5e_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SG1A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SG1_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SG1_u34a</col>
-        <col>SG1_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A44_1.5Ce.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A44_1.5Ce.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166486</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>total testis</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>TT1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>TT1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5e_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>TT1B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>TT1_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>TT1_u34b</col>
-        <col>TT1_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A45_1.5Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A45_1.5Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166483</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatocytes</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SC2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SC2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>5e_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SC2B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SC2_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SC2_u34b</col>
-        <col>SC2_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A46_5Ce.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A46_5Ce.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166484</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatides</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>ST1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>ST1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>5e_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>ST1A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>ST1_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>ST1_u34a</col>
-        <col>ST1_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A48_5Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A48_5Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166486</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>total testis</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>TT1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>TT1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>5c_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>TT1A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>TT1_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>TT1_u34a</col>
-        <col>TT1_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A55_5Cc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A55_5Cc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166484</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatides</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>ST1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>ST1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>5c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>5c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>5c_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>ST1B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>ST1_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>ST1_u34b</col>
-        <col>ST1_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A56_5Sc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A56_5Sc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166482</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatocytes</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SC1</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SC1</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5b_S_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SC1B</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SC1_u34b</col>
-        <col>A-AFFY-19</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
-        <col>P-AFFY-6</col>
-        <col>SC1_u34b</col>
-        <col>SC1_u34b.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A69_1.5Sb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A69_1.5Sb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col>Rattus norvegicus__S:BioSource:166483</col>
-        <col>90</col>
-        <col/>
-        <col>days</col>
-        <col>mo</col>
-        <col>spermatocytes</col>
-        <col>testis</col>
-        <col>mo</col>
-        <col>male</col>
-        <col>adult</col>
-        <col>Sprague Dawley</col>
-        <col>Rattus norvegicus</col>
-        <col>cells</col>
-        <col>SC2</col>
-        <col>P-MEXP-1359</col>
-        <col>total RNA</col>
-        <col>none</col>
-        <col/>
-        <col>SC2</col>
-        <col>total_RNA</col>
-        <col>P-MEXP-1360</col>
-        <col>RNA polymerases</col>
+        <col>1.5b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>1.5b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>1.5b_C_biotin</col>
         <col>biotin</col>
-        <col>10</col>
-        <col>SC2A</col>
-        <col>Biotin</col>
-        <col>total_RNA</col>
-        <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
-        <col>SC2_u34a</col>
-        <col>A-AFFY-18</col>
-        <col>ArrayExpress</col>
-        <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
-        <col>P-AFFY-6</col>
-        <col>SC2_u34a</col>
-        <col>SC2_u34a.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col>Affymetrix:Protocol:ExpressionStat</col>
-        <col>E-MEXP-31-processed-data-2481281219.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
-        <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
-        <col/>
+        <col>A70_1.5Cb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A70_1.5Cb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>E_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>1.5</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>42e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>42e_S_biotin</col>
+        <col>biotin</col>
+        <col>A01_42Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A01_42Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>66d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>66d_C_biotin</col>
+        <col>biotin</col>
+        <col>A02_66Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A02_66Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>42e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>42e_C_biotin</col>
+        <col>biotin</col>
+        <col>A05_42Ce_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A05_42Ce_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>66d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>66d_S_biotin</col>
+        <col>biotin</col>
+        <col>A06_66Sd_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A06_66Sd_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>23b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>23b_S_biotin</col>
+        <col>biotin</col>
+        <col>A07_23Sb_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A07_23Sb_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>50a_S_biotin</col>
+        <col>biotin</col>
+        <col>A08_50Sa_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A08_50Sa_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>23b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>23b_C_biotin</col>
+        <col>biotin</col>
+        <col>A09_23Cb_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A09_23Cb_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>18a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>18a_C_biotin</col>
+        <col>biotin</col>
+        <col>A10_18Ca_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A10_18Ca_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>18a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>18a_S_biotin</col>
+        <col>biotin</col>
+        <col>A11_18Sa_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A11_18Sa_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>50a_C_biotin</col>
+        <col>biotin</col>
+        <col>A12_50Ca_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A12_50Ca_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>66a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>66a_S_biotin</col>
+        <col>biotin</col>
+        <col>A14_66Sa_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A14_66Sa_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>66a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>66a_C_biotin</col>
+        <col>biotin</col>
+        <col>A15_66Ca_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A15_66Ca_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>50d_S_biotin</col>
+        <col>biotin</col>
+        <col>A16_50Sd_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A16_50Sd_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>50d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>50d_C_biotin</col>
+        <col>biotin</col>
+        <col>A18_50Cd_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A18_50Cd_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>18c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>18c_S_biotin</col>
+        <col>biotin</col>
+        <col>A20_18Sc_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A20_18Sc_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>23e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>23e_C_biotin</col>
+        <col>biotin</col>
+        <col>A21_23Ce_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A21_23Ce_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>23e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>23e_S_biotin</col>
+        <col>biotin</col>
+        <col>A22_23Se_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A22_23Se_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>18c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>18c_C_biotin</col>
+        <col>biotin</col>
+        <col>A23_18Cc_2.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A23_18Cc_2.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>50c_S_biotin</col>
+        <col>biotin</col>
+        <col>A25_50Sc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A25_50Sc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>42d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>42d_S_biotin</col>
+        <col>biotin</col>
+        <col>A27_42Sd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A27_42Sd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>42d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>42d_C_biotin</col>
+        <col>biotin</col>
+        <col>A28_42Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A28_42Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>50c_C_biotin</col>
+        <col>biotin</col>
+        <col>A30_50Cc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A30_50Cc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>23d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>23d_C_biotin</col>
+        <col>biotin</col>
+        <col>A32_23Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A32_23Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>42b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>42b_C_biotin</col>
+        <col>biotin</col>
+        <col>A33_42Cb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A33_42Cb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>23d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>23d_S_biotin</col>
+        <col>biotin</col>
+        <col>A35_23Sd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A35_23Sd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>42b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>42b_S_biotin</col>
+        <col>biotin</col>
+        <col>A36_42Sb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A36_42Sb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>66e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>66e_C_biotin</col>
+        <col>biotin</col>
+        <col>A38_66Ce.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A38_66Ce.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>18b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>18b_C_biotin</col>
+        <col>biotin</col>
+        <col>A39_18Cb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A39_18Cb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>18b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>18b_S_biotin</col>
+        <col>biotin</col>
+        <col>A40_18Sb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A40_18Sb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>66e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>66e_S_biotin</col>
+        <col>biotin</col>
+        <col>A41_66Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A41_66Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>23a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>23a_C_biotin</col>
+        <col>biotin</col>
+        <col>A43_23Ca.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A43_23Ca.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>23a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>23a_S_biotin</col>
+        <col>biotin</col>
+        <col>A47_23Sa.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A47_23Sa.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>42a_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42a_C_TRNA</col>
+        <col>LABELING</col>
+        <col>42a_C_biotin</col>
+        <col>biotin</col>
+        <col>A49_42Ca.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A49_42Ca.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>18e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>18e_C_biotin</col>
+        <col>biotin</col>
+        <col>A50_18Ce.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A50_18Ce.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>42a_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42a_S_TRNA</col>
+        <col>LABELING</col>
+        <col>42a_S_biotin</col>
+        <col>biotin</col>
+        <col>A51_42Sa.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A51_42Sa.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>50b_C_biotin</col>
+        <col>biotin</col>
+        <col>A52_50Cb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A52_50Cb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>50b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>50b_S_biotin</col>
+        <col>biotin</col>
+        <col>A53_50Sb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A53_50Sb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
+        <col>18e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>18e_S_biotin</col>
+        <col>biotin</col>
+        <col>A54_18Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A54_18Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>23c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>23c_C_biotin</col>
+        <col>biotin</col>
+        <col>A57_23Cc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A57_23Cc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>23</col>
+        <col>hours</col>
     </row>
     <row>
-        <col/>
+        <col>66b_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66b_C_TRNA</col>
+        <col>LABELING</col>
+        <col>66b_C_biotin</col>
+        <col>biotin</col>
+        <col>A58_66Cb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A58_66Cb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>23c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>23c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>23c_S_biotin</col>
+        <col>biotin</col>
+        <col>A59_23Sc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A59_23Sc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>23</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>66b_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66b_S_TRNA</col>
+        <col>LABELING</col>
+        <col>66b_S_biotin</col>
+        <col>biotin</col>
+        <col>A60_66Sb.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A60_66Sb.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>50e_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50e_S_TRNA</col>
+        <col>LABELING</col>
+        <col>50e_S_biotin</col>
+        <col>biotin</col>
+        <col>A61_50Se.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A61_50Se.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>50</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>66c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>66c_C_biotin</col>
+        <col>biotin</col>
+        <col>A62_66Cc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A62_66Cc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>66</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>18d_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18d_C_TRNA</col>
+        <col>LABELING</col>
+        <col>18d_C_biotin</col>
+        <col>biotin</col>
+        <col>A63_18Cd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A63_18Cd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>18</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>50e_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>50e_C_TRNA</col>
+        <col>LABELING</col>
+        <col>50e_C_biotin</col>
+        <col>biotin</col>
+        <col>A64_50Ce.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A64_50Ce.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>50</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>18d_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+        <col>egg</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>18d_S_TRNA</col>
+        <col>LABELING</col>
+        <col>18d_S_biotin</col>
+        <col>biotin</col>
+        <col>A65_18Sd.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A65_18Sd.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>18</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>66c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+        <col>2nd_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>66c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>66c_S_biotin</col>
+        <col>biotin</col>
+        <col>A66_66Sc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A66_66Sc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>66</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>42c_C</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>C</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42c_C_TRNA</col>
+        <col>LABELING</col>
+        <col>42c_C_biotin</col>
+        <col>biotin</col>
+        <col>A67_42Cc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A67_42Cc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>control</col>
+        <col>42</col>
+        <col>hours</col>
+    </row>
+    <row>
+        <col>42c_S</col>
+        <col>whole_organism</col>
+        <col>Drosophila melanogaster</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
+        <col>1st_instar_larva</col>
+        <col>wild_type</col>
+        <col>Leiden_NL</col>
+        <col>mixed</col>
+        <col>S</col>
+        <col>fresh_sample</col>
+        <col>GROWTH</col>
+        <col>TREATMENT</col>
+        <col>EXTRACTION</col>
+        <col>42c_S_TRNA</col>
+        <col>LABELING</col>
+        <col>42c_S_biotin</col>
+        <col>biotin</col>
+        <col>A68_42Sc.CEL</col>
+        <col>A-AFFY-35</col>
+        <col>Affymetrix GeneChip Drosophila Genome 2.0 Array</col>
+        <col>A68_42Sc.CEL</col>
+        <col>NORMALIZATION</col>
+        <col>TRANSFORMATION</col>
+        <col>L_eset.gcrma.txt</col>
+        <col>increased parasitoid resistance</col>
+        <col>42</col>
+        <col>hours</col>
     </row>
 </table>
