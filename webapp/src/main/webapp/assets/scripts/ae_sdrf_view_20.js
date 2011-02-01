@@ -36,7 +36,7 @@
         if ($.query == undefined)
             throw "jQuery.query not loaded";
 
-        var sortby = $.query.get("sortby") || "accession";
+        var sortby = $.query.get("sortby") || "col_1";
         var sortorder = $.query.get("sortorder") || "ascending";
 
         var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
@@ -47,7 +47,7 @@
 
             // so the idea is to set default sorting for all columns except the "current" one
             // (which will be inverted) against its current state
-            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "descending";
+            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
             var queryString = $.query.set("sortby", colname).set("sortorder", newOrder).toString();
 
             thisObj.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
