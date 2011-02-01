@@ -75,7 +75,7 @@ body.ae2_curator {
 
 #aer_query_form,
 #atlas_query_form {
-    margin: 25px 0 10px 0;
+    margin: 25px 0 5px 0;
 }
 
 #aer_query_form input,
@@ -106,7 +106,7 @@ body.ae2_curator {
 
 #aer_browse_link,
 #aer_adv_query_link {
-    margin: 2px 10px 0 0;
+    margin: 0 10px 0 0;
 }
 
 #aer_login_link,
@@ -130,7 +130,8 @@ body.ae2_curator {
 #aer_browse_link img,
 #aer_login_link img,
 #aer_login_info img,
-#aer_help_link img {
+#aer_help_link img,
+#atlas_browse_link img {
     vertical-align: text-bottom;
     margin: 0 2px 0 0;
 }
