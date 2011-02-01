@@ -47,7 +47,7 @@
 
             // so the idea is to set default sorting for all columns except the "current" one
             // (which will be inverted) against its current state
-            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
+            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "descending";
             var queryString = $.query.set("sortby", colname).set("sortorder", newOrder).toString();
 
             thisObj.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
