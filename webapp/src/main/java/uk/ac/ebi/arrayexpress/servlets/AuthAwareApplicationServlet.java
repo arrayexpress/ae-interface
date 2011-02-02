@@ -87,8 +87,15 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         try {
             String userName = getAuthUserName(request);
             String token = getAuthToken(request);
+            String userAgent = request.getHeader("User-Agent");
             Users users = (Users) getComponent("Users");
-            return users.verifyLogin(userName, token, request.getRemoteAddr().concat(request.getHeader("User-Agent")));
+            return users.verifyLogin(
+                    userName
+                    , token
+                    , request.getRemoteAddr().concat(
+                        userAgent != null ? userAgent : "unknown"
+                    )
+            );
         } catch (Exception x) {
             throw new AuthApplicationServletException(x);
         }
