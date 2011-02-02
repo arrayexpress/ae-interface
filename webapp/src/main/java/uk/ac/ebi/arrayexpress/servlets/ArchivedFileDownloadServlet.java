@@ -113,7 +113,7 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
                                     + "] were not determined");
                 }
 
-                if (!experiments.isAccessible(accession, userIDs)) {
+                if (!(null != userIDs && (0 == userIDs.size() || experiments.isAccessible(accession, userIDs)))) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     throw new DownloadServletException(
                             "The experiment ["
