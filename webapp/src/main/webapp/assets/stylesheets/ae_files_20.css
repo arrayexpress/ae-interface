@@ -15,6 +15,10 @@
  *
  */
 
+ #ae_contents img {
+     vertical-align: baseline;
+ }
+
 .ae_accession {
     font-size: 18px;
     line-height: normal;
