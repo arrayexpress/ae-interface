@@ -77,7 +77,7 @@
     <xsl:include href="ae-html-page.xsl"/>
     
     <xsl:template match="/">
-        <xsl:apply-templates select="/table"/>
+        <!-- <xsl:apply-templates select="/table"/> -->
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
@@ -273,7 +273,7 @@
                                     <xsl:choose>
                                         <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
                                             <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}">
-                                                <xsl:value-of select="text()"/>
+                                                <xsl:value-of select="$vColText"/>
                                             </a>
                                         </xsl:when>
                                         <xsl:when test="($vColText) and count($vAvailArchives) = 1">
