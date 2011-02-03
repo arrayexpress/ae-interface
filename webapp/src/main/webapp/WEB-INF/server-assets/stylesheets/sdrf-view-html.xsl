@@ -77,7 +77,7 @@
     <xsl:include href="ae-html-page.xsl"/>
     
     <xsl:template match="/">
-        <!-- <xsl:apply-templates select="/table"/> -->
+        <xsl:apply-templates select="/table"/>
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
@@ -268,7 +268,7 @@
                                 <xsl:when test="fn:contains(fn:lower-case($vColInfo/@type),'file')">
                                     <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
                                     <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
-                                    <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+([^/]+)$', '$1')"/>
+                                    <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
                                     
                                     <xsl:choose>
                                         <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
