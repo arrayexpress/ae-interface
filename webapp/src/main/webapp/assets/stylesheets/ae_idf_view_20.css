@@ -43,7 +43,7 @@
     border-bottom: 1px solid #BDD7D7;
     float: left;
     padding: 0 0 5px;
-    white-space: nowrap;
+    text-align: justify;
 }
 
 #ae_results_table {
@@ -62,7 +62,7 @@
 }
 
 #ae_results_table td.col_1 {
-    color: #555555;
+    color: #5e5e5e;
     font-weight: bold;
     white-space: nowrap;
     width: 20%;
