@@ -166,22 +166,80 @@
     </xsl:template>
     
     <xsl:template name="out-header">
-        <tr>
-            <xsl:for-each select="$vTableInfo/header/col">
-                <xsl:variable name="vColInfo" select="."/>
-                <th class="col_{$vColInfo/@pos}">
-                    <xsl:if test="not($vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit')">
-                        <xsl:value-of select="$vColInfo/@name"/>
+        <thead>
+            <tr>
+                <xsl:for-each select="$vTableInfo/header/col">
+                    <xsl:variable name="vColInfo" select="."/>
+                    <xsl:variable name="vColPos" select="position()"/>
+                    <xsl:variable name="vColType" select="$vColInfo/@type"/>
+                    <xsl:variable name="vPrevColType" select="preceding-sibling::*[1]/@type"/>
+                    <xsl:variable name="vNextCols" select="following-sibling::*"/>
+                    <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
+                    <xsl:variable name="vNextGroupCol" select="$vNextCols[@type != $vColType][1]"/>
+                    <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($vTableInfo/header/col))"/>
+                    <xsl:if test="not($vPrevColType = $vColType)">
+                        <th>
+                            <xsl:attribute name="class">
+                                <xsl:text>col_group</xsl:text>
+                                <xsl:if test="$vColPos = 1">
+                                    <xsl:text> col_1</xsl:text>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="$vColType = 'Characteristics'">
+                                        <xsl:text> col_sc</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
+                                        <xsl:text> col_fv</xsl:text>
+                                    </xsl:when>
+                                </xsl:choose>
+                            </xsl:attribute>
+                            <xsl:if test="($vColType = $vNextColType)">
+                                <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
+                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="$vColType = 'Characteristics'">
+                                    <xsl:text>Sample Characteristics</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
+                                    <xsl:text>Factor Values</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>&#160;</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </th>
                     </xsl:if>
-                    <xsl:if test="$vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit'">
-                        <xsl:text>(unit)</xsl:text>
-                    </xsl:if>
-                    <xsl:call-template name="add-sort">
-                        <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
-                    </xsl:call-template>
-                </th>
-            </xsl:for-each>
-        </tr>
+                </xsl:for-each>
+            </tr>
+            <tr>
+                <xsl:for-each select="$vTableInfo/header/col">
+                    <xsl:variable name="vColInfo" select="."/>
+                    <th>
+                        <xsl:attribute name="class">
+                            <xsl:text>col_sort col_</xsl:text>
+                            <xsl:value-of select="$vColInfo/@pos"/>
+                            <xsl:choose>
+                                <xsl:when test="$vColInfo/@type = 'Characteristics'">
+                                    <xsl:text> col_sc</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="matches(lower-case($vColInfo/@type), 'factor\s*value')">
+                                    <xsl:text> col_fv</xsl:text>
+                                </xsl:when>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <xsl:if test="not($vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit')">
+                            <xsl:value-of select="$vColInfo/@name"/>
+                        </xsl:if>
+                        <xsl:if test="$vColInfo/@type = 'Unit' or $vColInfo/@name = 'TimeUnit'">
+                            <xsl:text>(unit)</xsl:text>
+                        </xsl:if>
+                        <xsl:call-template name="add-sort">
+                            <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
+                        </xsl:call-template>
+                    </th>
+                </xsl:for-each>
+            </tr>
+        </thead>
     </xsl:template>
     
     <xsl:template name="out-data">

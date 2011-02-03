@@ -61,6 +61,7 @@
 
 #ae_results_table th {
     border-left: 1px solid #408c8c;
+    background-color: #eef5f5;
     padding-top: 0;
 }
 
@@ -70,6 +71,21 @@
 
 #ae_results_table th.col_1 {
     border-left: 0 transparent;
+    background-color: #f5f5f5;
+}
+
+#ae_results_table th.col_group {
+    color: #5e5e5e;
+    border-bottom: 0 transparent;
+    text-align: center;
+    font-style: italic;
+}
+#ae_results_table th.col_sc {
+    background-color: #edf5ea;
+}
+
+#ae_results_table th.col_fv {
+    background-color: #fef5e0;
 }
 
 #ae_results_table td {

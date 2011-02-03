@@ -41,7 +41,7 @@
 
         var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
 
-        $("#ae_results_table").find("th").each( function() {
+        $("#ae_results_table").find("th.col_sort").each( function() {
             var thisObj = $(this);
             var colname = /(col_\d+)/.exec(thisObj.attr("class"))[1];
 
