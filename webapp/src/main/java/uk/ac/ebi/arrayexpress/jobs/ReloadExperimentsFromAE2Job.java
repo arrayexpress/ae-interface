@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.ArrayDesigns;
 import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
 import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
@@ -39,7 +40,6 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         String usersXml = null;
         String arrayDesignsXml = null;
         String experimentsXml = null;
-        String sourceDescription = null;
 
         // kicks reload of atlas experiments just in case
         ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
@@ -47,14 +47,17 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         try {
             // check preferences and if source location is defined, use that
             String sourceLocation = getPreferences().getString("ae.experiments.ae2.source-location");
+            Experiments.UpdateSourceInformation sourceInformation = null;
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
                 arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
                 File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
                 experimentsXml = getXmlFromFile(experimentsSourceFile);
-                sourceDescription = experimentsSourceFile.getAbsolutePath()
-                        + " (" + StringTools.longDateTimeToString(experimentsSourceFile.lastModified()) + ")";
+                sourceInformation = new UpdateSourceInformation(
+                        Experiments.ExperimentSource.AE2
+                        , experimentsSourceFile)
+                ;
             }
 
             // export to temp directory anyway (only if debug is enabled)
@@ -77,7 +80,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             }
 
             if (!"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml, sourceDescription);
+                updateExperiments(experimentsXml, sourceInformation);
             }
 
         } catch (Exception x) {
@@ -114,12 +117,11 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         logger.info("User information reload completed");
 
     }
-    private void updateExperiments( String xmlString, String sourceDescription ) throws Exception
+    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString
-                , Experiments.ExperimentSource.AE2
-                , sourceDescription
+                , sourceInformation
         );
 
         logger.info("Experiment information reload completed");

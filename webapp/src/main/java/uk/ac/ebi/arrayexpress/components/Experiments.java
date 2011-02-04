@@ -20,8 +20,11 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
@@ -79,6 +82,54 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             }
             return null;
 
+        }
+    }
+
+    public static class UpdateSourceInformation implements IEventInformation
+    {
+        private ExperimentSource source;
+        private String location = null;
+        private Long lastModified = null;
+        private boolean outcome;
+
+        public UpdateSourceInformation( ExperimentSource source, File sourceFile )
+        {
+            this.source = source;
+            if (null != sourceFile && sourceFile.exists()) {
+                this.location = sourceFile.getAbsolutePath();
+                this.lastModified = sourceFile.lastModified();
+            }
+        }
+
+        public UpdateSourceInformation( ExperimentSource source, String location, Long lastModified )
+        {
+            this.source = source;
+            this.location = location;
+            this.lastModified = lastModified;
+        }
+
+        public void setOutcome( boolean outcome )
+        {
+            this.outcome = outcome;
+        }
+
+        public ExperimentSource getSource()
+        {
+            return this.source;
+        }
+
+        public DocumentInfo getEventXML() throws Exception
+        {
+            String xml = "<?xml version=\"1.0\"?><event><category>experiments-update-"
+                            + this.source.toString().toLowerCase()
+                            + "</category><location>"
+                            + this.location + "</location><lastmodified>"
+                            + StringTools.longDateTimeToXSDDateTime(lastModified)
+                            + "</lastmodified><successful>"
+                            + (this.outcome ? "true" : "false")
+                            + "</successful></event>";
+
+            return ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(xml);
         }
     }
 
@@ -198,22 +249,22 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         return this.assaysByInstrument.get(key);
     }
 
-    public void update( String xmlString, ExperimentSource source, String sourceDescription ) throws Exception
+    public void update( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
     {
         boolean success = false;
         try {
-            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            DocumentInfo updateDoc = this.saxon.transform(
+                    xmlString
+                    , sourceInformation.getSource().getStylesheetName()
+                    , null
+            );
             if (null != updateDoc) {
                 new DocumentUpdater(this, updateDoc).update();
                 success = true;
             }
         } finally {
-            events.addEvent(
-                    "experiments-update-" + source.toString().toLowerCase()
-                    , source.toString() + " experiments updated from "
-                            + ("".equals(sourceDescription) ? "(null)" : sourceDescription)
-                    , success
-            );
+            sourceInformation.setOutcome(success);
+            events.addEvent(sourceInformation);
         }
     }
 

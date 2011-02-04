@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.*;
+import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.db.ArrayXmlDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
@@ -32,6 +33,7 @@ import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 import uk.ac.ebi.arrayexpress.utils.db.UserXmlDatabaseRetriever;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,7 +42,6 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private String sourceDescription;
     private List<Long> exps;
     private IConnectionSource connectionSource;
     private StringBuffer xmlBuffer;
@@ -60,14 +61,14 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
         try {
             // check preferences and if source location is defined, use that
             String sourceLocation = getPreferences().getString("ae.experiments.ae1.source-location");
+            UpdateSourceInformation sourceInformation = null;
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
                 arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
                 File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
                 experimentsXml = getXmlFromFile(experimentsSourceFile);
-                sourceDescription = experimentsSourceFile.getAbsolutePath()
-                        + " (" + StringTools.longDateTimeToString(experimentsSourceFile.lastModified()) + ")";
+                sourceInformation = new UpdateSourceInformation(Experiments.ExperimentSource.AE1, experimentsSourceFile);
 
             } else {
                 // check if we have available database connection
@@ -101,7 +102,11 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                         usersXml = getUsersXmlFromDb();
                         arrayDesignsXml = getArrayDesignsXmlFromDb();
                         experimentsXml = getExperimentsXmlFromDb();
-                        sourceDescription = this.connectionSource.getName();          
+                        sourceInformation = new UpdateSourceInformation(
+                                Experiments.ExperimentSource.AE1
+                                , this.connectionSource.getName()
+                                , new Date().getTime()
+                        );
                     } finally {
                         this.connectionSource.close();
                         this.connectionSource = null;
@@ -141,7 +146,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             }
 
             if (null != experimentsXml && !"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml, sourceDescription);
+                updateExperiments(experimentsXml, sourceInformation);
             }
 
         } catch (Exception x) {
@@ -166,12 +171,11 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
-    private void updateExperiments( String xmlString, String sourceDescription ) throws Exception
+    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString
-                , Experiments.ExperimentSource.AE1
-                , sourceDescription
+                , sourceInformation
         );
 
         logger.info("Experiment information reload completed");

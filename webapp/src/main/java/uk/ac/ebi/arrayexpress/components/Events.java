@@ -39,6 +39,11 @@ public class Events extends ApplicationComponent implements IDocumentSource
 
     public final String INDEX_ID = "events";
 
+    public static interface IEventInformation
+    {
+        public abstract DocumentInfo getEventXML() throws Exception;
+    }
+
     public Events()
     {
     }
@@ -84,19 +89,11 @@ public class Events extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void addEvent( String category, String description, boolean wasSuccessful ) throws Exception
+    public void addEvent( IEventInformation event ) throws Exception
     {
-        String xml = "<?xml version=\"1.0\"?><event><category>"
-                + category
-                + "</category><description>"
-                + description
-                + "</description><successful>"
-                + ( wasSuccessful ? "true" : "false" )
-                + "</successful></event>";
-
-        DocumentInfo updateDoc = this.saxon.buildDocument(xml);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
+        DocumentInfo eventDoc = event.getEventXML();
+        if (null != eventDoc) {
+            new DocumentUpdater(this, eventDoc).update();
         }
     }
     

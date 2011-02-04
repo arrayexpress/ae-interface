@@ -45,6 +45,14 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$pSortBy='lastmodified'">
+                <xsl:apply-templates select="$pFiles">
+                    <xsl:sort select="@lastmodified" order="{$pSortOrder}"/>
+
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="$pFiles">
                     <xsl:sort select="@*[name()=$pSortBy]" order="{$pSortOrder}"/>

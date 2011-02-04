@@ -213,8 +213,11 @@
                                                                 <xsl:with-param name="pKind" select="'size'"/>
                                                             </xsl:call-template>
                                                         </th>
-                                                        <th class="col_lastmodified">
+                                                        <th class="col_lastmodified sortable">
                                                             <xsl:text>Last modified</xsl:text>
+                                                            <xsl:call-template name="add-sort">
+                                                                <xsl:with-param name="pKind" select="'lastmodified'"/>
+                                                            </xsl:call-template>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -299,13 +302,13 @@
                 </td>
                 <td class="col_size">
                     <div>
-                        <xsl:value-of select="ae:formatfilesize(@size)"/>
+                        <xsl:value-of select="ae:formatFileSize(@size)"/>
                         <xsl:if test="not(@size)"><xsl:text>&#160;</xsl:text></xsl:if>
                     </div>
                 </td>
                 <td class="col_lastmodified">
                     <div>
-                        <xsl:value-of select="@lastmodified"/>
+                        <xsl:value-of select="ae:formatDateTime(@lastmodified)"/>
                         <xsl:if test="not(@lastmodified)"><xsl:text>&#160;</xsl:text></xsl:if>
                     </div>
                 </td>
@@ -377,8 +380,8 @@
                     <xsl:sort select="lower-case(@name)" order="ascending"/>
                     <tr>
                         <td class="td_name"><a href="{$vBaseUrl}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a></td>
-                        <td class="td_size"><xsl:value-of select="ae:formatfilesize(@size)"/></td>
-                        <td class="td_date"><xsl:value-of select="@lastmodified"/></td>
+                        <td class="td_size"><xsl:value-of select="ae:formatFileSize(@size)"/></td>
+                        <td class="td_date"><xsl:value-of select="ae:formatDateTime(@lastmodified)"/></td>
                     </tr>
                 </xsl:for-each>
             </tbody>

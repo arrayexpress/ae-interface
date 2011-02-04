@@ -106,7 +106,7 @@ public class RescanFilesJob extends ApplicationJob
             .append("\" size=\"")
             .append(String.valueOf(f.length()))
             .append("\" lastmodified=\"")
-            .append(StringTools.longDateTimeToString(f.lastModified()))
+            .append(StringTools.longDateTimeToXSDDateTime(f.lastModified()))
             .append("\"/>");
     }
 

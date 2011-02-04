@@ -22,11 +22,13 @@
     var sortDefault = { accession: "ascending"
                       , name: "ascending"
                       , size: "descending"
+                      , lastmodified: "descending"
     };
 
     var sortTitle =   { accession: "accession"
                       , name: "name"
                       , size: "size"
+                      , lastmodified: "last modified date"
     };
 
     $(function() {

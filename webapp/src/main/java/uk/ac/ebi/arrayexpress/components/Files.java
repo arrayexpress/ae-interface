@@ -122,7 +122,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         this.logger.debug("Updating accelerators for files");
 
-        ExtFunctions.clearAccelerator("exp-files");
+        ExtFunctions.clearAccelerator("ftp-folder");
         ExtFunctions.clearAccelerator("raw-files");
         ExtFunctions.clearAccelerator("fgem-files");
 

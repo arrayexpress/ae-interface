@@ -92,14 +92,9 @@ public class StringTools
         w.close();
     }
 
-    public static String longDateTimeToString( long dateTime )
+    public static String longDateTimeToXSDDateTime( long dateTime )
     {
-        Date date = new Date(dateTime);
-        //if (DateTools.isToday(date)) {
-        //    return "Today, " + new SimpleDateFormat("HH:mm").format(date);
-        //} else {
-            return new SimpleDateFormat("d MMMMM yyyy, HH:mm").format(date);
-        //}
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date(dateTime));
     }
 
     public static String safeToString( Object obj, String nullObjString )
@@ -110,7 +105,7 @@ public class StringTools
     public static Boolean stringToBoolean( String boolString )
     {
         if (null == boolString) {
-            throw new IllegalArgumentException("Cannot accept null agrument");
+            throw new IllegalArgumentException("Cannot accept null argument");
         } else {
             return "true".equalsIgnoreCase(boolString) || "1".equals(boolString) || "on".equalsIgnoreCase(boolString);
         }

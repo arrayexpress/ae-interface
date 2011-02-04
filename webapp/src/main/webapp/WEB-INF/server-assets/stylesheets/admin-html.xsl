@@ -19,6 +19,7 @@
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
     <xsl:include href="ae-html-page.xsl"/>
+    <xsl:include href="ae-file-functions.xsl"/>
 
     <xsl:template match="/">
         <html lang="en">
@@ -223,10 +224,14 @@
                             <div>
                                 <xsl:text>AE1 </xsl:text>
                                 <xsl:choose>
-                                    <xsl:when test="$vLastUpdatedAe1">
+                                    <xsl:when test="exists($vLastUpdatedAe1/*)">
                                         <xsl:text> last updated </xsl:text>
-                                        <xsl:value-of select="ae:format-datetime($vLastUpdatedAe1/datetime)"/>
-                                        <xsl:value-of select="replace($vLastUpdatedAe1/description, 'AE. experiments updated', '')"/>
+                                        <xsl:value-of select="ae:formatDateTime($vLastUpdatedAe1/datetime)"/>
+                                        <xsl:text> from </xsl:text>
+                                        <xsl:value-of select="$vLastUpdatedAe1/location"/>
+                                        <xsl:text> (</xsl:text>
+                                        <xsl:value-of select="ae:formatDateTime($vLastUpdatedAe1/lastmodified)"/>
+                                        <xsl:text>)</xsl:text>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text>never updated</xsl:text>
@@ -238,10 +243,14 @@
                             <div>
                                 <xsl:text>AE2 </xsl:text>
                                 <xsl:choose>
-                                    <xsl:when test="$vLastUpdatedAe2">
+                                    <xsl:when test="exists($vLastUpdatedAe2/*)">
                                         <xsl:text> last updated </xsl:text>
-                                        <xsl:value-of select="ae:format-datetime($vLastUpdatedAe2/datetime)"/>
-                                        <xsl:value-of select="replace($vLastUpdatedAe2/description, 'AE. experiments updated', '')"/>
+                                        <xsl:value-of select="ae:formatDateTime($vLastUpdatedAe2/datetime)"/>
+                                        <xsl:text> from </xsl:text>
+                                        <xsl:value-of select="$vLastUpdatedAe2/location"/>
+                                        <xsl:text> (</xsl:text>
+                                        <xsl:value-of select="ae:formatDateTime($vLastUpdatedAe2/lastmodified)"/>
+                                        <xsl:text>)</xsl:text>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text>never updated</xsl:text>
@@ -281,30 +290,4 @@
         </div>
     </xsl:template>
 
-    <xsl:function name="ae:format-datetime">
-        <xsl:param name="pDateTime"/>
-        <xsl:choose>
-            <xsl:when test="not($pDateTime castable as xs:dateTime)"/>
-            <xsl:when test="current-date() eq xs:date(substring-before($pDateTime, 'T'))">
-                <xsl:value-of select="format-dateTime($pDateTime, 'today at [H01]:[m01]:[s01]', 'en', (), ())"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="format-dateTime($pDateTime, '[D01] [MNn] [Y0001], [H01]:[m01]:[s01]', 'en', (), ())"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
-
-    <xsl:function name="ae:format-percent">
-        <xsl:param name="pValue"/>
-        <xsl:param name="pTotal"/>
-        <xsl:choose>
-            <xsl:when test="$pTotal = 0">
-                <xsl:text>0%</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="round(($pValue div $pTotal)*1000) div 10"/>
-                <xsl:text>%</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
 </xsl:stylesheet>
