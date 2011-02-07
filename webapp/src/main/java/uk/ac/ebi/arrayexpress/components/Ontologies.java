@@ -84,6 +84,7 @@ public class Ontologies extends ApplicationComponent
         this.lookupIndex.buildIndex();
 
         this.autocompletion.setOntology(efoOntology);
+        this.autocompletion.rebuild();
     }
 
     private void initLookupIndex() throws IOException
