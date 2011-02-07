@@ -29,8 +29,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class EFOOntologyHelper
+public class EFOOntologyHelper implements IEFOOntology
 {
+
+    private final static String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
+
     private Map<String, EFONode> efoMap = new HashMap<String, EFONode>();
     private Map<String, Set<String>> partOfIdMap = new HashMap<String, Set<String>>();
 
@@ -97,21 +100,9 @@ public class EFOOntologyHelper
         return terms;
     }
 
-    public final static String EFO_ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
+    public String getRootID()
+    {
+        return EFO_ROOT_ID;
+    }
 
-    public final static int INCLUDE_SELF = 1;
-    public final static int INCLUDE_ALT_TERMS = 2;
-    public final static int INCLUDE_CHILD_TERMS = 4;
-    public final static int INCLUDE_PART_OF_TERMS = 8;
-
-    public final static int INCLUDE_ALL =
-            INCLUDE_SELF
-            + INCLUDE_ALT_TERMS
-            + INCLUDE_CHILD_TERMS
-            + INCLUDE_PART_OF_TERMS;
-
-    public final static int INCLUDE_CHILDREN =
-            INCLUDE_ALT_TERMS
-            + INCLUDE_CHILD_TERMS
-            + INCLUDE_PART_OF_TERMS;
 }

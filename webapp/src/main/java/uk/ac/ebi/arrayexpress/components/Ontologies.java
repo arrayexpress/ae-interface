@@ -25,8 +25,7 @@ import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
-import uk.ac.ebi.microarray.ontology.efo.EFONode;
-import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
+import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +41,8 @@ public class Ontologies extends ApplicationComponent
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private EFOOntologyHelper ontology;
+    //private EFOOntologyHelper ontology;
+    private EFOExpansionLookupIndex lookupIndex;
 
     private SearchEngine search;
     private Autocompletion autocompletion;
@@ -53,8 +53,9 @@ public class Ontologies extends ApplicationComponent
 
     public void initialize() throws Exception
     {
-        search = (SearchEngine) getComponent("SearchEngine");
-        autocompletion = (Autocompletion) getComponent("Autocompletion");
+        this.search = (SearchEngine) getComponent("SearchEngine");
+        this.autocompletion = (Autocompletion) getComponent("Autocompletion");
+        initLookupIndex();
 
         ((JobsController)getComponent("JobsController")).executeJob("reload-ontology");
     }
@@ -63,29 +64,15 @@ public class Ontologies extends ApplicationComponent
     {
     }
 
-    public void setOntology( EFOOntologyHelper efoOntology ) throws IOException
+    public void update( IEFOOntology efoOntology ) throws IOException
     {
-        this.ontology = efoOntology;
-
-        autocompletion.rebuild();
-
-        Set<String> stopWords = new HashSet<String>();
-        String[] words = getPreferences().getString("ae.efo.stopWords").split("\\s*,\\s*");
-        if (null != words && words.length > 0) {
-            stopWords.addAll(Arrays.asList(words));
-        }
-        EFOExpansionLookupIndex ix = new EFOExpansionLookupIndex(
-                getPreferences().getString("ae.efo.index.location")
-                , stopWords
-        );
-
         String synFileLocation = getPreferences().getString("ae.efo.synonyms");
         if (null != synFileLocation) {
             InputStream is = null;
             try {
                 is = getApplication().getResource(synFileLocation).openStream();
                 Map<String, Set<String>> synonyms = new SynonymsFileReader(new InputStreamReader(is)).readSynonyms();
-                ix.setCustomSynonyms(synonyms);
+                this.lookupIndex.setCustomSynonyms(synonyms);
                 logger.debug("Loaded custom synonyms from [{}]", synFileLocation);
             } finally {
                 if (null != is) {
@@ -93,38 +80,26 @@ public class Ontologies extends ApplicationComponent
                 }
             }
         }
-        ix.setOntology(getOntology());
-        ix.buildIndex();
+        this.lookupIndex.setOntology(efoOntology);
+        this.lookupIndex.buildIndex();
+
+        this.autocompletion.setOntology(efoOntology);
+    }
+
+    private void initLookupIndex() throws IOException
+    {
+        Set<String> stopWords = new HashSet<String>();
+        String[] words = getPreferences().getString("ae.efo.stopWords").split("\\s*,\\s*");
+        if (null != words && words.length > 0) {
+            stopWords.addAll(Arrays.asList(words));
+        }
+        this.lookupIndex = new EFOExpansionLookupIndex(
+                getPreferences().getString("ae.efo.index.location")
+                , stopWords
+        );
 
         Controller c = search.getController();
-        c.setQueryExpander(new EFOQueryExpander(ix));
+        c.setQueryExpander(new EFOQueryExpander(this.lookupIndex));
         c.setQueryHighlighter(new EFOExpandedHighlighter());
-    }
-
-    public EFOOntologyHelper getOntology()
-    {
-        return this.ontology;
-    }
-
-    public String getEfoChildren( String efoId )
-    {
-        StringBuilder sb = new StringBuilder();
-
-        if (null != getOntology()) {
-            EFONode node = getOntology().getEfoMap().get(efoId);
-            if (null != node) {
-                Set<EFONode> children = node.getChildren();
-                if (null != children) {
-                    for (EFONode child : children) {
-                        sb.append(child.getTerm()).append("|o|");
-                        if (child.hasChildren()) {
-                            sb.append(child.getId());
-                        }
-                        sb.append("\n");
-                    }
-                }
-            }
-        }
-        return sb.toString();
     }
 }

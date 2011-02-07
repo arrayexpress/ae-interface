@@ -31,8 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
 import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
+import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class EFOExpansionLookupIndex implements IEFOExpansionLookup
@@ -43,20 +45,21 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     private String indexLocation;
     private Directory indexDirectory;
 
-    private EFOOntologyHelper ontology;
+    private IEFOOntology ontology;
     private Set<String> stopWords;
     private Map<String, Set<String>> customSynonyms;
 
     // maximum number of index documents to be processed; in reality shouldn't be more than 2
     private static final int MAX_INDEX_HITS = 16;
 
-    public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords )
+    public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords ) throws IOException
     {
         this.indexLocation = indexLocation;
         this.stopWords = stopWords;
+        this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
     }
 
-    public void setOntology( EFOOntologyHelper ontology )
+    public void setOntology( IEFOOntology ontology )
     {
         this.ontology = ontology;
     }
@@ -69,11 +72,10 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     public void buildIndex()
     {
         try {
-            this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
             IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
 
             this.logger.debug("Building expansion lookup index");
-            addNodeAndChildren(this.ontology.getEfoMap().get(EFOOntologyHelper.EFO_ROOT_ID), this.ontology, w);
+            addNodeAndChildren(this.ontology.getEfoMap().get(this.ontology.getRootID()), this.ontology, w);
             addCustomSynonyms(w);
             commitIndex(w);
             this.logger.debug("Building completed");
@@ -105,7 +107,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeAndChildren( EFONode node, EFOOntologyHelper ontology, IndexWriter w )
+    private void addNodeAndChildren( EFONode node, IEFOOntology ontology, IndexWriter w )
     {
         if (null != node) {
             addNodeToIndex(node, ontology, w);
@@ -115,7 +117,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeToIndex( EFONode node, EFOOntologyHelper ontology, IndexWriter w )
+    private void addNodeToIndex( EFONode node, IEFOOntology ontology, IndexWriter w )
     {
         String term = node.getTerm();
         Set<String> synonyms = node.getAlternativeTerms();
@@ -210,8 +212,6 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
         return expansion;
     }
-
-
 
     private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer )
     {

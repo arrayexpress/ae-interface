@@ -38,7 +38,7 @@ public class ReloadOntologyJob extends ApplicationJob
         InputStream is = null;
         try {
             is = getApplication().getResource(efoLocation).openStream();
-            ((Ontologies)getComponent("Ontologies")).setOntology(new EFOOntologyHelper(is));
+            ((Ontologies)getComponent("Ontologies")).update(new EFOOntologyHelper(is));
             logger.info("EFO loading completed");
         } finally {
             if (null != is) {

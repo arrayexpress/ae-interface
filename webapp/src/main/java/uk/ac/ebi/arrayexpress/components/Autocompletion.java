@@ -4,6 +4,7 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
 import uk.ac.ebi.microarray.ontology.efo.EFONode;
+import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Autocompletion extends ApplicationComponent
 
     private Experiments experiments;
     private SearchEngine search;
-    private Ontologies ontologies;
+    private IEFOOntology ontology;
 
     public Autocompletion()
     {
@@ -44,11 +45,15 @@ public class Autocompletion extends ApplicationComponent
 
         this.experiments = (Experiments) getComponent("Experiments");
         this.search = (SearchEngine) getComponent("SearchEngine");
-        this.ontologies = (Ontologies) getComponent("Ontologies");
     }
 
     public void terminate() throws Exception
     {
+    }
+
+    public void setOntology( IEFOOntology ontology )
+    {
+        this.ontology = ontology;
     }
 
     public String getKeywords( String prefix, String field, Integer limit )
@@ -57,6 +62,28 @@ public class Autocompletion extends ApplicationComponent
         List<AutocompleteData> matches = getStore().findCompletions(prefix, field, limit);
         for (AutocompleteData match : matches) {
             sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
+        }
+        return sb.toString();
+    }
+
+    public String getEfoChildren( String efoId )
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (null != this.ontology) {
+            EFONode node = this.ontology.getEfoMap().get(efoId);
+            if (null != node) {
+                Set<EFONode> children = node.getChildren();
+                if (null != children) {
+                    for (EFONode child : children) {
+                        sb.append(child.getTerm()).append("|o|");
+                        if (child.hasChildren()) {
+                            sb.append(child.getId());
+                        }
+                        sb.append("\n");
+                    }
+                }
+            }
         }
         return sb.toString();
     }
@@ -92,14 +119,14 @@ public class Autocompletion extends ApplicationComponent
             }
         }
 
-        if (null != ontologies && null != ontologies.getOntology()) {
-            addEfoNodeWithDescendants(ontologies.getOntology().EFO_ROOT_ID);
+        if (null != ontology) {
+            addEfoNodeWithDescendants(ontology.getRootID());
         }
     }
 
     private void addEfoNodeWithDescendants( String nodeId )
     {
-        EFONode node = ontologies.getOntology().getEfoMap().get(nodeId);
+        EFONode node = ontology.getEfoMap().get(nodeId);
         if (null != node) {
             getStore().addData(
                     new AutocompleteData(

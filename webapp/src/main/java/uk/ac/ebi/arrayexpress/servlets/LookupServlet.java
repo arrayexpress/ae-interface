@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Autocompletion;
 import uk.ac.ebi.arrayexpress.components.Experiments;
-import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
@@ -80,7 +79,6 @@ public class LookupServlet extends ApplicationServlet
         PrintWriter out = response.getWriter();
         try {
             Experiments experiments = (Experiments)getComponent("Experiments");
-            Ontologies ontologies = (Ontologies)getComponent("Ontologies");
             Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
             if (type.equals("arrays")) {
                 out.print(experiments.getArrays());
@@ -94,7 +92,7 @@ public class LookupServlet extends ApplicationServlet
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(autocompletion.getKeywords(query, field, limit));
             } else if (type.equals("efotree")) {
-                out.print(ontologies.getEfoChildren(efoId));
+                out.print(autocompletion.getEfoChildren(efoId));
             }
         } catch (Exception x) {
             throw new RuntimeException(x);
