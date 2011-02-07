@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import org.apache.lucene.queryParser.ParseException;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,7 +39,13 @@ public class QueryPool
         this.queryId = new AtomicInteger(0);
     }
 
-    public Integer addQuery( IndexEnvironment env, IQueryConstructor queryConstructor, Map<String, String[]> queryParams, String queryString, IQueryExpander queryExpander ) throws ParseException
+    public Integer addQuery(
+            IndexEnvironment env
+            , IQueryConstructor queryConstructor
+            , Map<String, String[]> queryParams
+            , String queryString
+            , IQueryExpander queryExpander )
+            throws ParseException, IOException
     {
         QueryInfo info;
 

@@ -19,10 +19,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import org.apache.lucene.search.Query;
 
+import java.io.IOException;
+
 public interface IQueryExpander
 {
     // returns special kind of query info that holds expansions etc
     public QueryInfo newQueryInfo();
     // does query expansion 
-    public Query expandQuery( QueryInfo info );
+    public Query expandQuery( QueryInfo info ) throws IOException;
 }

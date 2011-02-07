@@ -25,6 +25,7 @@ import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryExpander;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryInfo;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public final class EFOQueryExpander implements IQueryExpander
         return new EFOExpandableQueryInfo();
     }
 
-    public Query expandQuery( QueryInfo info )
+    public Query expandQuery( QueryInfo info ) throws IOException
     {
         EFOExpandableQueryInfo queryInfo = null;
 
@@ -64,7 +65,7 @@ public final class EFOQueryExpander implements IQueryExpander
         }
     }
 
-    private Query expand( EFOExpandableQueryInfo queryInfo, Query query )
+    private Query expand( EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
     {
         Query result;
 
@@ -89,7 +90,7 @@ public final class EFOQueryExpander implements IQueryExpander
         return result;
     }
 
-    private Query doExpand( EFOExpandableQueryInfo queryInfo, Query query )
+    private Query doExpand( EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
     {
         String field = getQueryField(query);
         if (null != field && -1 != " keywords sa efv exptype species ".indexOf(" " + field + " ")) {

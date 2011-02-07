@@ -42,8 +42,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private String indexLocation;
-    private Directory indexDirectory;
+    private FSDirectory indexDirectory;
 
     private IEFOOntology ontology;
     private Set<String> stopWords;
@@ -54,9 +53,8 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords ) throws IOException
     {
-        this.indexLocation = indexLocation;
         this.stopWords = stopWords;
-        this.indexDirectory = FSDirectory.open(new File(this.indexLocation));
+        this.indexDirectory = FSDirectory.open(new File(indexLocation));
     }
 
     public void setOntology( IEFOOntology ontology )
@@ -176,38 +174,45 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    public EFOExpansionTerms getExpansionTerms( Query origQuery )
+    public EFOExpansionTerms getExpansionTerms( Query origQuery ) throws IOException
     {
         EFOExpansionTerms expansion = new EFOExpansionTerms();
 
-        try {
-            IndexReader ir = IndexReader.open(this.indexDirectory, true);
+        if (this.indexDirectory.getFile().exists()) {
+            IndexReader reader = null;
+            IndexSearcher searcher = null;
+            try {
+                reader = IndexReader.open(this.indexDirectory, true);
 
-            // to show _all_ available nodes
-            IndexSearcher isearcher = new IndexSearcher(ir);
-            Query q = overrideQueryField(origQuery, "term");
+                // to show _all_ available nodes
+                searcher = new IndexSearcher(reader);
+                Query q = overrideQueryField(origQuery, "term");
 
-            TopDocs hits = isearcher.search(q, MAX_INDEX_HITS);
-            this.logger.debug("Expansion lookup for query [{}] returned [{}] hits", q.toString(), hits.totalHits);
+                TopDocs hits = searcher.search(q, MAX_INDEX_HITS);
+                this.logger.debug("Expansion lookup for query [{}] returned [{}] hits", q.toString(), hits.totalHits);
 
-            for (ScoreDoc d : hits.scoreDocs) {
-                Document doc = isearcher.doc(d.doc);
-                String[] terms = doc.getValues("term");
-                String[] efo = doc.getValues("efo");
-                this.logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
-                if (0 != terms.length) {
-                    expansion.synonyms.addAll(Arrays.asList(terms));
+                for (ScoreDoc d : hits.scoreDocs) {
+                    Document doc = searcher.doc(d.doc);
+                    String[] terms = doc.getValues("term");
+                    String[] efo = doc.getValues("efo");
+                    this.logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
+                    if (0 != terms.length) {
+                        expansion.synonyms.addAll(Arrays.asList(terms));
+                    }
+
+                    if (0 != efo.length) {
+                        expansion.efo.addAll(Arrays.asList(efo));
+                    }
+                }
+            } finally {
+                if (null != searcher) {
+                    searcher.close();
                 }
 
-                if (0 != efo.length) {
-                    expansion.efo.addAll(Arrays.asList(efo));
+                if (null != reader) {
+                    reader.close();
                 }
             }
-
-            isearcher.close();
-            ir.close();
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
         }
 
         return expansion;

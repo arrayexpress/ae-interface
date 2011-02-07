@@ -142,7 +142,8 @@ public class Controller
         return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
     }
 
-    public Integer addQuery( String indexId, Map<String, String[]> queryParams, String queryString ) throws ParseException
+    public Integer addQuery( String indexId, Map<String, String[]> queryParams, String queryString )
+            throws ParseException, IOException
     {
         if (null == this.queryConstructor) {
             // sort of lazy init if we forgot to specify more advanced highlighter

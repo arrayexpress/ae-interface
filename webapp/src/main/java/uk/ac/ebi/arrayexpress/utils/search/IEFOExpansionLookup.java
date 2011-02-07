@@ -19,7 +19,9 @@ package uk.ac.ebi.arrayexpress.utils.search;
 
 import org.apache.lucene.search.Query;
 
+import java.io.IOException;
+
 public interface IEFOExpansionLookup
 {
-    public EFOExpansionTerms getExpansionTerms( Query query );
+    public EFOExpansionTerms getExpansionTerms( Query query ) throws IOException;
 }
