@@ -38,6 +38,13 @@
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
 
+            <rawdatafiles>
+                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
+            </rawdatafiles>
+            <fgemdatafiles>
+                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
+            </fgemdatafiles>
+            
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
                 <sampleattribute>
