@@ -304,14 +304,14 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.logger.debug("Updating accelerators for experiments");
 
         ExtFunctions.clearAccelerator("is-in-atlas");
-        ExtFunctions.clearAccelerator("experiment");
+        ExtFunctions.clearAccelerator("visible-experiments");
         try {
             for (String accession : this.experimentsInAtlas.getObject()) {
                 ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
             }
 
             XPath xp = new XPathEvaluator(getDocument().getConfiguration());
-            XPathExpression xpe = xp.compile("/experiments/experiment");
+            XPathExpression xpe = xp.compile("/experiments/experiment[source/@visible = 'true']");
             List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("accession");
@@ -320,7 +320,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 try {
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
-                    ExtFunctions.addAcceleratorValue("experiment", accession, node);
+                    ExtFunctions.addAcceleratorValue("visible-experiments", accession, node);
                 } catch (XPathExpressionException x) {
                     this.logger.error("Caught an exception:", x);
                 }

@@ -61,7 +61,7 @@
         <xsl:param name="pName"/>
         <xsl:param name="pKind"/>
     
-        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('experiment', $pAccession)"/>
+        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', $pAccession)"/>
         <xsl:attribute name="dataformat" select="ae:dataformats($vExperiment/bioassaydatagroup, $pKind)"/>
     </xsl:template>
 
