@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                extension-element-prefixes="ae"
-                exclude-result-prefixes="ae"                
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                extension-element-prefixes="ae aejava"
+                exclude-result-prefixes="ae aejava"                
                 version="2.0">
     <xsl:output method="xml" version="1.0" encoding="UTF8" indent="yes"/>
 
     <xsl:include href="ae-file-functions.xsl"/>
 
     <xsl:variable name="vRoot" select="/files/@root"/>
-    <xsl:variable name="vExperiments" select="doc('experiments.xml')"/>
 
     <xsl:template match="/files">
         <files root="{$vRoot}">
@@ -61,7 +61,8 @@
         <xsl:param name="pName"/>
         <xsl:param name="pKind"/>
     
-        <xsl:attribute name="dataformat" select="ae:dataformats($vExperiments/experiments/experiment[accession = $pAccession]/bioassaydatagroup, $pKind)"/>
+        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('experiment', $pAccession)"/>
+        <xsl:attribute name="dataformat" select="ae:dataformats($vExperiment/bioassaydatagroup, $pKind)"/>
     </xsl:template>
 
 </xsl:stylesheet>

@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
@@ -33,6 +34,10 @@ import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
@@ -299,10 +304,28 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.logger.debug("Updating accelerators for experiments");
 
         ExtFunctions.clearAccelerator("is-in-atlas");
+        ExtFunctions.clearAccelerator("experiment");
         try {
             for (String accession : this.experimentsInAtlas.getObject()) {
                 ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
             }
+
+            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
+            XPathExpression xpe = xp.compile("/experiments/experiment");
+            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
+
+            XPathExpression accessionXpe = xp.compile("accession");
+            for (Object node : documentNodes) {
+
+                try {
+                    // get all the expressions taken care of
+                    String accession = accessionXpe.evaluate(node);
+                    ExtFunctions.addAcceleratorValue("experiment", accession, node);
+                } catch (XPathExpressionException x) {
+                    this.logger.error("Caught an exception:", x);
+                }
+            }
+
             this.logger.debug("Accelerators updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
