@@ -11,7 +11,7 @@
 
     <xsl:template match="/experiments">
         <option value="">All species</option>
-        <xsl:for-each-group select="experiment/species" group-by="ae:normalize-species(text())" collation="http://saxon.sf.net/collation?ignore-case=yes">
+        <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(text())" collation="http://saxon.sf.net/collation?ignore-case=yes">
             <xsl:sort select="ae:normalize-species(text())"/>
             <option>
                 <xsl:attribute name="value" select="ae:normalize-species(text())"/>

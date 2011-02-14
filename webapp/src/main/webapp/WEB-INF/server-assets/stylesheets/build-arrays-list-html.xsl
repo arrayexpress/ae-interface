@@ -86,7 +86,7 @@
         </xsl:call-template>
 
         <optgroup label="Other arrays">
-            <xsl:for-each-group select="experiment/arraydesign[name and not(matches(name, 'affymetrix|agilent|amersham|bug@s|catma|embl|illumina|ilsi|mit|nimblegen|sanger|smd|tigr|umc|yale','i'))]" group-by="accession">
+            <xsl:for-each-group select="experiment[source/@visible = 'true']/arraydesign[name and not(matches(name, 'affymetrix|agilent|amersham|bug@s|catma|embl|illumina|ilsi|mit|nimblegen|sanger|smd|tigr|umc|yale','i'))]" group-by="accession">
                 <xsl:sort select="lower-case(name)"/>
                 <option>
                     <xsl:attribute name="value" select="accession"/>
@@ -101,7 +101,7 @@
         <xsl:param name="pGroupTitle"/>
         <xsl:param name="pGroupSignature"/>
         <optgroup label="{$pGroupTitle} arrays">
-            <xsl:for-each-group select="experiment/arraydesign[contains(lower-case(name), $pGroupSignature)]" group-by="accession">
+            <xsl:for-each-group select="experiment[source/@visible = 'true']/arraydesign[contains(lower-case(name), $pGroupSignature)]" group-by="accession">
                 <xsl:sort select="lower-case(name)"/>
                 <option>
                     <xsl:attribute name="value" select="accession"/>
