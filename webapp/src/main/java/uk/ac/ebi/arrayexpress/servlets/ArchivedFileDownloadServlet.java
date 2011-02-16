@@ -1,6 +1,5 @@
 package uk.ac.ebi.arrayexpress.servlets;
 
-
 /*
  * Copyright 2009-2011 European Molecular Biology Laboratory
  *
