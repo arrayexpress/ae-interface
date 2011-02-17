@@ -23,26 +23,30 @@
     
     <xsl:function name="ae:normalize-species">
         <xsl:param name="pSpecies"/>
-        <xsl:variable name="vTransformedSpecies" select="
-            fn:concat(
-                fn:normalize-space(
-                    fn:replace(
-                        fn:replace(
-                            $pSpecies
-                            , '\W\(\w+\)\W'
-                            , ' '
+        <xsl:choose>
+            <xsl:when test="fn:matches($pSpecies, '\s[xX]\s')">
+                <xsl:value-of select="$pSpecies"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="vTransformedSpecies" select="
+                    fn:concat(
+                        fn:normalize-space(
+                            fn:replace(
+                                fn:replace($pSpecies, '\W\(\w+\)\W', ' ')
+                                , '(\w|^)[\s.,=_'']+(\w|$)'
+                                , '$1 $2'
+                            )
                         )
-                        , '(\w|^)[\s.,=_'']+(\w|$)'
-                        , '$1 $2'
-                    )
-                )
-                , ' '
-            )"/>
-        <xsl:value-of select="fn:concat(
-            fn:upper-case(fn:substring($vTransformedSpecies, 1, 1))
-            , fn:lower-case(fn:substring(fn:substring-before($vTransformedSpecies, ' '), 2))
-            , ' '
-            , fn:lower-case(fn:substring-before(fn:substring-after($vTransformedSpecies, ' '), ' '))
-            )"/>
+                        , ' '
+                    )"/>
+                <xsl:value-of select="
+                    fn:concat(
+                        fn:upper-case(fn:substring($vTransformedSpecies, 1, 1))
+                        , fn:lower-case(fn:substring(fn:substring-before($vTransformedSpecies, ' '), 2))
+                        , ' '
+                        , fn:lower-case(fn:substring-before(fn:substring-after($vTransformedSpecies, ' '), ' '))
+                    )"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
 </xsl:stylesheet>
