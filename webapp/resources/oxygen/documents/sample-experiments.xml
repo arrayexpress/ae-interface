@@ -304,7 +304,7 @@
         </description>
     </experiment>
     <experiment loadedinatlas="true">
-        <source id="ae1" migrated="true"/>
+        <source id="ae1" migrated="true" visible="true"/>
         <id>366346722</id>
         <accession>E-AFMX-5</accession>
         <name>Transcription profiling of human cell lines and tissues (GNF/Novartis)</name>
