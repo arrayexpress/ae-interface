@@ -23,7 +23,21 @@
     
     <xsl:function name="ae:normalize-species">
         <xsl:param name="pSpecies"/>
-        <xsl:variable name="vTransformedSpecies" select="fn:concat(fn:normalize-space(fn:replace($pSpecies, '(\w|^)[\s.,=_'']+(\w|$)', '$1 $2')), ' ')"/>
+        <xsl:variable name="vTransformedSpecies" select="
+            fn:concat(
+                fn:normalize-space(
+                    fn:replace(
+                        fn:replace(
+                            $pSpecies
+                            , '\W\(\w+\)\W'
+                            , ' '
+                        )
+                        , '(\w|^)[\s.,=_'']+(\w|$)'
+                        , '$1 $2'
+                    )
+                )
+                , ' '
+            )"/>
         <xsl:value-of select="fn:concat(
             fn:upper-case(fn:substring($vTransformedSpecies, 1, 1))
             , fn:lower-case(fn:substring(fn:substring-before($vTransformedSpecies, ' '), 2))
