@@ -269,12 +269,12 @@
             <id>london</id>
             <properties>
                 <interface.application.log.appender.ref>ROLLINGFILE-LONDON</interface.application.log.appender.ref>
-                <interface.application.pref.experiments.ae1.source.location>/nfs/public/ro/fg/arrayexpress/xml/ae1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.source.location>/nfs/public/rw/fg/arrayexpress/xml/ae1/</interface.application.pref.experiments.ae1.source.location>
                 <interface.application.pref.experiments.ae1.connections/>
                 <interface.application.pref.experiments.ae1.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
                 <interface.application.pref.experiments.ae1.export.location/>
 
-                <interface.application.pref.experiments.ae2.source.location>/nfs/public/ro/fg/arrayexpress/xml/ae2/</interface.application.pref.experiments.ae2.source.location>
+                <interface.application.pref.experiments.ae2.source.location>/nfs/public/rw/fg/arrayexpress/xml/ae2/</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 35 6 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
                 <interface.application.pref.experiments.ae2.export.location/>
 
