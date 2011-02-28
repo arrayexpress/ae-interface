@@ -316,14 +316,16 @@
                                                 </div>
                                             </xsl:for-each>
                                         </xsl:if>
-                                        <div>
-                                            <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpId}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
-                                                <xsl:text>Experimental protocols (old interface)</xsl:text>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">Experiment Page (old interface)</a>
-                                        </div>
+                                        <xsl:if test="source/@migrated = 'true'">
+                                            <div>
+                                                <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpId}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
+                                                    <xsl:text>Experimental protocols (old interface)</xsl:text>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">Experiment Page (old interface)</a>
+                                            </div>
+                                        </xsl:if>
                                     </div>
                                 </td>
                             </tr>
