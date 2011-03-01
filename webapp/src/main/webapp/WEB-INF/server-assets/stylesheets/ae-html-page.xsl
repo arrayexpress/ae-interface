@@ -33,6 +33,7 @@
                 <xsl:value-of select="$basepath"/>
                 <xsl:text>";</xsl:text>
             </script>
+            ${interface.application.google.analytics}
         </head>
     </xsl:template>
 
@@ -62,7 +63,6 @@
                     <xsl:text>Your browser does not support inline frames or is currently configured not to display inline frames. Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/foot.html</xsl:text>
                 </iframe>
             </div>
-            ${interface.application.google.analytics}
         </body>
     </xsl:template>
 
@@ -81,13 +81,13 @@
             <link rel="SHORTCUT ICON" href="${interface.application.link.www_domain}/bookmark.ico"/>
 
             <xsl:copy-of select="$pExtraCode"/>
+            ${interface.application.google.analytics}
         </head>
     </xsl:template>
 
     <xsl:template name="page-body-plain">
         <body>
             <div id="ae_contents" class="ae_assign_font"><xsl:call-template name="ae-contents"/></div>
-            ${interface.application.google.analytics}
         </body>
     </xsl:template>
 
