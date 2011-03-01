@@ -29,8 +29,10 @@
         <xsl:choose>
             <xsl:when test="$vFolder/accession">
                 <folder accession="{$vFolder/accession}" kind="{$vFolder/kind}" location="{replace(@location, $vRoot, '')}">
+                    <xsl:variable name="vMetaData" select="aejava:getAcceleratorValueAsSequence(concat('visible-', $vFolder/kind, 's'), $vFolder/accession)"/>
+                    <xsl:copy-of select="$vMetaData/user"/>
                     <xsl:apply-templates>
-                        <xsl:with-param name="pAccession" select="$vFolder/accession"/>
+                        <xsl:with-param name="pMetaData" select="$vMetaData"/>
                     </xsl:apply-templates>
                 </folder>
             </xsl:when>
@@ -41,28 +43,14 @@
     </xsl:template>
 
     <xsl:template match="file">
-        <xsl:param name="pAccession"/>
-        <xsl:if test="$pAccession">
-            <file>
-                <xsl:copy-of select="*|@*"/>
-                <xsl:if test="@kind = 'raw' or @kind = 'fgem'">
-                    <xsl:call-template name="add-dataformat-attribute">
-                        <xsl:with-param name="pAccession" select="$pAccession"/>
-                        <xsl:with-param name="pName" select="@name"/>
-                        <xsl:with-param name="pKind" select="@kind"/>
-                    </xsl:call-template>
-                </xsl:if>
-            </file>
-        </xsl:if>
-    </xsl:template>
+        <xsl:param name="pMetaData"/>
 
-    <xsl:template name="add-dataformat-attribute">
-        <xsl:param name="pAccession"/>
-        <xsl:param name="pName"/>
-        <xsl:param name="pKind"/>
-    
-        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', $pAccession)"/>
-        <xsl:attribute name="dataformat" select="ae:dataformats($vExperiment/bioassaydatagroup, $pKind)"/>
+        <file>
+            <xsl:if test="exists($pMetaData) and (@kind = 'raw' or @kind = 'fgem')">
+                <xsl:attribute name="dataformat" select="ae:dataformats($pMetaData/bioassaydatagroup, string(@kind))"/>
+            </xsl:if>
+            <xsl:copy-of select="@*"/>
+        </file>
     </xsl:template>
 
 </xsl:stylesheet>
