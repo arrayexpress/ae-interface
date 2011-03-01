@@ -211,6 +211,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
             buildSpeciesArrays();
             updateIndex();
+            updateAccelerators();
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
