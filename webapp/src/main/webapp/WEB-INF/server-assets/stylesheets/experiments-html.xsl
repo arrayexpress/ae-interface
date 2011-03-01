@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="aejava search html"
-                exclude-result-prefixes="aejava search html"
-                version="2.0">
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+    xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    extension-element-prefixes="ae aejava search"
+    exclude-result-prefixes="ae aejava search html fn xs"
+    version="2.0">
 
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
-
-    <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
+    <xsl:param name="queryid"/>
+    <xsl:param name="userid"/>
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vAccession" select="upper-case($accession)"/>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
+
+    <xsl:variable name="vBrowseMode" select="not($accession)"/>
+
+    <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
+    <xsl:variable name="vMetaData" select="search:queryIndex($queryid)"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
     <xsl:include href="ae-html-page.xsl"/>
 
-    <xsl:template match="/experiments">
+    <xsl:template match="/">
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
-                    <xsl:value-of select="$vAccession"/><xsl:text> | ArrayExpress Archive | EBI</xsl:text>
+                    <xsl:value-of select="$vAccession"/><xsl:text> | Experiments | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_experiments_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/jquery.caret-range-1.0.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/jquery.autocomplete-1.1.0m-ebi.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/ae_experiments_20.js" type="text/javascript"/>
                 </xsl:with-param>
@@ -48,7 +48,50 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-
+        <xsl:choose>
+            <xsl:when test="exists($vMetaData)">
+                <div id="ae_contents_box_100pc">
+                    <div id="ae_content">
+                        <div id="ae_navi">
+                            <a href="${interface.application.link.www_domain}/">EBI</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}">ArrayExpress</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments">Experiments</a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments/{$vAccession}">
+                                <xsl:value-of select="$vAccession"/>
+                            </a>
+                        </div>
+                        <div id="ae_summary_box">
+                            <div id="ae_accession">
+                                <a href="{$basepath}/experiments/{$vAccession}">
+                                    <xsl:text>Experiment </xsl:text>
+                                    <xsl:value-of select="$vAccession"/>
+                                </a>
+                                <xsl:if test="not($vMetaData/user/@id = '1')">
+                                    <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
+                                </xsl:if>
+                            </div>
+                            <div id="ae_title">
+                                <div><xsl:value-of select="$vMetaData/name"/></div>
+                            </div>
+                        </div>
+                        <div id="ae_results_box">
+                            
+                        </div>
+                    </div>
+                </div>
+            </xsl:when>
+            <xsl:when test="not(fn:exists($vMetaData)) and fn:exists(/experiments/experiment[accession=$vAccession])">
+                <xsl:call-template name="block-access-restricted"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="block-not-found"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+        <!--
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
 
         <div class="ae_centered_container_100pc">
@@ -698,5 +741,5 @@
             <xsl:otherwise>&#160;</xsl:otherwise>
         </xsl:choose>
     </xsl:template>    
-
+    -->
 </xsl:stylesheet>

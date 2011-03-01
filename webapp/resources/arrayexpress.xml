@@ -197,6 +197,7 @@
                 <field name="name" title="" type="string" path="@name" analyze="true" store="false" escape="false"/>
                 <field name="kind" title="" type="string" path="@kind" analyze="true" store="false" escape="false"/>
                 <field name="extension" title="" type="string" path="@extension" analyze="true" store="false" escape="false"/>
+                <field name="userid" type="string" path="../user/@id" analyze="false" store="false" escape="false"/>
             </document>
         </index>
         <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">

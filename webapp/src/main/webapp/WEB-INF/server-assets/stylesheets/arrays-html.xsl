@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs aejava search html"
-                exclude-result-prefixes="xs aejava search html"
-                version="2.0">
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+    xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    extension-element-prefixes="ae aejava search"
+    exclude-result-prefixes="ae aejava search html fn xs"
+    version="2.0">
 
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
@@ -30,7 +32,9 @@
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
     <xsl:variable name="vBrowseMode" select="not($accession)"/>
-
+    <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
+    <xsl:variable name="vMetaData" select="search:queryIndex($queryid)"/>
+    
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
@@ -42,7 +46,7 @@
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
-                    <xsl:value-of select="if (not($vBrowseMode)) then concat(upper-case($accession), ' | ') else ''"/>
+                    <xsl:value-of select="if (not($vBrowseMode)) then concat($vAccession, ' | ') else ''"/>
                     <xsl:text>Platform Designs | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
 
@@ -60,9 +64,62 @@
 
     <xsl:template name="ae-contents">
 
+        <div id="ae_contents_box_100pc">
+            <div id="ae_content">
+
+                <xsl:call-template name="page-navigation"/>
+                <xsl:choose>
+                    <xsl:when test="$vBrowseMode">
+                        <xsl:call-template name="page-browser"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="page-details"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </div>
+        </div>
+    </xsl:template>
+
+    <xsl:template name="page-navigation">
+        <div id="ae_navi">
+            <a href="${interface.application.link.www_domain}/">EBI</a>
+            <xsl:text> > </xsl:text>
+            <a href="{$basepath}">ArrayExpress</a>
+            <xsl:text> > </xsl:text>
+            <a href="{$basepath}/arrays">Platform Designs</a>
+            <xsl:if test="not($vBrowseMode)">
+                <xsl:text> > </xsl:text>
+                <a href="{$basepath}/arrays/{$vAccession}">
+                    <xsl:value-of select="$vAccession"/>
+                </a>
+            </xsl:if>
+        </div>
+    </xsl:template>
+ 
+    <xsl:template name="page-details">
+        <div id="ae_summary_box">
+            <div id="ae_accession">
+                <a href="{$basepath}/arrays/{$vAccession}">
+                    <xsl:text>Platform Design </xsl:text>
+                    <xsl:value-of select="$vAccession"/>
+                </a>
+                <xsl:if test="not($vMetaData/user/@id = '1')">
+                    <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
+                </xsl:if>
+            </div>
+            <div id="ae_title">
+                <div><xsl:value-of select="$vMetaData/name"/></div>
+            </div>
+        </div>
+        <div id="ae_results_box">
+            
+        </div>        
+    </xsl:template>
+    
+    <xsl:template name="page-browser">
         <xsl:variable name="vFilteredArrays" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredArrays)"/>
-
+        
         <xsl:variable name="vFrom" as="xs:integer">
             <xsl:choose>
                 <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
@@ -76,110 +133,93 @@
                 <xsl:otherwise><xsl:value-of select="$vFrom + $vPageSize - 1"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-
-        <div id="ae_contents_box_100pc">
-            <div id="ae_content">
-                <div id="ae_navi">
-                    <a href="${interface.application.link.www_domain}/">EBI</a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}">ArrayExpress</a>
-                    <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/arrays">Platform Designs</a>
-                    <xsl:if test="not($vBrowseMode)">
-                        <xsl:text> > </xsl:text>
-                        <a href="{$basepath}/arrays/{upper-case($accession)}">
-                            <xsl:value-of select="upper-case($accession)"/>
-                        </a>
+        <!-- query box -->        
+        <div id="ae_query_box">
+            <form id="ae_query_form" method="get" action="browse.html">
+                <fieldset id="ae_keywords_fset">
+                    <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
+                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
+                </fieldset>
+                <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
+                <div id="ae_results_stats">
+                    <div>
+                        <xsl:value-of select="$vTotal"/>
+                        <xsl:text> platform design</xsl:text>
+                        <xsl:if test="$vTotal != 1">
+                            <xsl:text>s</xsl:text>
+                        </xsl:if>
+                        <xsl:text> found</xsl:text>
+                        <xsl:if test="$vTotal > $vPageSize">
+                            <xsl:text>, displaying </xsl:text>
+                            <xsl:value-of select="$vFrom"/>
+                            <xsl:text> - </xsl:text>
+                            <xsl:value-of select="$vTo"/>
+                        </xsl:if>
+                        <xsl:text>.</xsl:text>
+                    </div>
+                    <xsl:if test="$vTotal > $vPageSize">
+                        <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
+                        <div id="ae_results_pager">
+                            <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
+                            <div id="page"><xsl:value-of select="$vPage"/></div>
+                            <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
+                        </div>
                     </xsl:if>
                 </div>
-                <xsl:if test="$vBrowseMode">
-                    <div id="ae_query_box">
-                        <form id="ae_query_form" method="get" action="browse.html">
-                            <fieldset id="ae_keywords_fset">
-                                <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
-                                <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
-                            </fieldset>
-                            <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
-                            <div id="ae_results_stats">
-                                <div>
-                                    <xsl:value-of select="$vTotal"/>
-                                    <xsl:text> platform design</xsl:text>
-                                    <xsl:if test="$vTotal != 1">
-                                        <xsl:text>s</xsl:text>
-                                    </xsl:if>
-                                    <xsl:text> found</xsl:text>
-                                    <xsl:if test="$vTotal > $vPageSize">
-                                        <xsl:text>, displaying </xsl:text>
-                                        <xsl:value-of select="$vFrom"/>
-                                        <xsl:text> - </xsl:text>
-                                        <xsl:value-of select="$vTo"/>
-                                    </xsl:if>
-                                    <xsl:text>.</xsl:text>
-                                </div>
-                                <xsl:if test="$vTotal > $vPageSize">
-                                    <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
-                                    <div id="ae_results_pager">
-                                        <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
-                                        <div id="page"><xsl:value-of select="$vPage"/></div>
-                                        <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
-                                    </div>
-                                </xsl:if>
-                            </div>
-                        </form>
-                    </div>
-                </xsl:if>
-                <xsl:choose>
-                    <xsl:when test="$vTotal&gt;0">
-                        <div id="ae_results_box">
-                            <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th class="col_accession sortable">
-                                            <xsl:text>Accession</xsl:text>
-                                            <xsl:call-template name="add-sort">
-                                                <xsl:with-param name="pKind" select="'accession'"/>
-                                            </xsl:call-template>
-                                        </th>
-                                        <th class="col_name sortable">
-                                            <xsl:text>Name</xsl:text>
-                                            <xsl:call-template name="add-sort">
-                                                <xsl:with-param name="pKind" select="'name'"/>
-                                            </xsl:call-template>
-                                        </th>
-                                        <th class="col_species sortable">
-                                            <xsl:text>Species</xsl:text>
-                                            <xsl:call-template name="add-sort">
-                                                <xsl:with-param name="pKind" select="'species'"/>
-                                            </xsl:call-template>
-                                        </th>
-                                        <th class="col_files">
-                                            <xsl:text>Files</xsl:text>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <xsl:call-template name="ae-sort-arrays">
-                                        <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
-                                        <xsl:with-param name="pFrom" select="$vFrom"/>
-                                        <xsl:with-param name="pTo" select="$vTo"/>
-                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                                    </xsl:call-template>
-                                </tbody>
-                            </table>
-                        </div>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="block-warning">
-                            <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
-                            <xsl:with-param name="pMessage">
-                                <xsl:text>There are no platform designs matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </div>
+            </form>
         </div>
+        
+        <!-- results -->
+        <xsl:choose>
+            <xsl:when test="$vTotal&gt;0">
+                <div id="ae_results_box">
+                    <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="col_accession sortable">
+                                    <xsl:text>Accession</xsl:text>
+                                    <xsl:call-template name="add-sort">
+                                        <xsl:with-param name="pKind" select="'accession'"/>
+                                    </xsl:call-template>
+                                </th>
+                                <th class="col_name sortable">
+                                    <xsl:text>Name</xsl:text>
+                                    <xsl:call-template name="add-sort">
+                                        <xsl:with-param name="pKind" select="'name'"/>
+                                    </xsl:call-template>
+                                </th>
+                                <th class="col_species sortable">
+                                    <xsl:text>Species</xsl:text>
+                                    <xsl:call-template name="add-sort">
+                                        <xsl:with-param name="pKind" select="'species'"/>
+                                    </xsl:call-template>
+                                </th>
+                                <th class="col_files">
+                                    <xsl:text>Files</xsl:text>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <xsl:call-template name="ae-sort-arrays">
+                                <xsl:with-param name="pArrays" select="$vFilteredArrays"/>
+                                <xsl:with-param name="pFrom" select="$vFrom"/>
+                                <xsl:with-param name="pTo" select="$vTo"/>
+                                <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                            </xsl:call-template>
+                        </tbody>
+                    </table>
+                </div>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="block-warning">
+                    <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
+                    <xsl:with-param name="pMessage">
+                        <xsl:text>There are no platform designs matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="array_design">
@@ -226,24 +266,24 @@
                             <xsl:when test="count($vAdfFile) > 1">
                                 <a href="{$basepath}/files/{accession}?kind=adf">
                                     <img src="{$basepath}/assets/images/silk_save_txt.gif" width="16" height="16"
-                                         alt="Click to browse Array Design Files"/>
+                                        alt="Click to browse Array Design Files"/>
                                 </a>
                             </xsl:when>
                             <xsl:when test="count($vAdfFile) = 1">
                                 <a href="{$basepath}/files/{accession}/{$vAdfFile/@name}">
                                     <img src="{$basepath}/assets/images/silk_save_txt.gif" width="16" height="16"
-                                         alt="Click to download Array Design File"/>
+                                        alt="Click to download Array Design File"/>
                                 </a>
                             </xsl:when>
                             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16"
-                                 alt="-"/></xsl:otherwise>
+                                alt="-"/></xsl:otherwise>
                         </xsl:choose>
                     </div>
                 </td>
             </tr>
         </xsl:if>
     </xsl:template>
-
+    
     <xsl:template name="add-sort">
         <xsl:param name="pKind"/>
         <xsl:if test="$pKind = $vSortBy">

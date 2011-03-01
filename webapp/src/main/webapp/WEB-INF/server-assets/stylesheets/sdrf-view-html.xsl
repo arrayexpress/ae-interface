@@ -77,7 +77,6 @@
     <xsl:include href="ae-html-page.xsl"/>
     
     <xsl:template match="/">
-        <!-- <xsl:apply-templates select="/table"/> -->
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>

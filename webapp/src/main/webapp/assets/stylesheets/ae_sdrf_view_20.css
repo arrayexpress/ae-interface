@@ -14,36 +14,6 @@
  * limitations under the License.
  *
  */
-#ae_contents_container {
-    overflow: visible;
-    _overflow: auto;
-}
-
-#ae_summary_box {
-    padding: 0 0 10px 0;
-}
-
-#ae_accession {
-    font-size: 18px;
-    line-height: normal;
-    padding: 10px 0 0;
-}
-
-#ae_accession img {
-    margin:0 3px;
-    vertical-align: baseline;
-}
-
-#ae_title {
-   display: inline-block; /* ie hasLayout hack */
-}
-
-#ae_title div {
-    border-bottom: 1px solid #Bdd7d7;
-    float: left;
-    padding: 0 0 5px;
-    text-align: justify;
-}
 
 #ae_results_table {
     table-layout: auto;
