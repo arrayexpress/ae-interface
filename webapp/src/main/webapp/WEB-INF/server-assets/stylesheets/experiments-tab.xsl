@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="aejava fn search"
-                exclude-result-prefixes="aejava fn search"
-                version="1.0">
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+    xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+    extension-element-prefixes="aejava fn search"
+    exclude-result-prefixes="aejava fn search"
+    version="2.0">
 
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
@@ -19,7 +19,6 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output method="text" indent="no" encoding="UTF-8"/>
 
@@ -93,14 +92,14 @@
     <xsl:template name="list-data">
         <xsl:param name="pKind"/>
         <xsl:param name="pAccession"/>
-        <xsl:variable name="vFiles" select="aejava:getAcceleratorValue(fn:concat($pKind, '-files'), $pAccession)"/>
+        <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $pAccession)"/>
         <xsl:choose>
-            <xsl:when test="$vFiles > 1">
+            <xsl:when test="count($vFiles) > 1">
                 <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>?kind=<xsl:value-of select="$pKind"/>
             </xsl:when>
-            <xsl:when test="$vFiles = 1">
+            <xsl:when test="count($vFiles) = 1">
                 <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>/<xsl:value-of
-                    select="$vFilesDoc/files/folder[@accession = $pAccession]/file[@kind = $pKind]/@name"/>
+                    select="$vFiles/file[@kind = $pKind]/@name"/>
             </xsl:when>
             <xsl:otherwise><xsl:text>Data is not available</xsl:text></xsl:otherwise>
         </xsl:choose>
