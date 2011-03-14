@@ -150,11 +150,11 @@
         <to type="forward">/servlets/query/experiments/experiments/xml?queryversion=1</to>
     </rule>
     <rule>
-        <from>^/xml/experiments/([eE]-\w{4}-\d+)$</from>
+        <from>^/xml/experiments/([E]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
     </rule>
         <rule>
-        <from>^/xml/experiments/diff/([eE]-\w{4}-\d+)/(.+)$</from>
+        <from>^/xml/experiments/diff/([E]-\w{4}-\d+)/(.+)$</from>
         <to type="forward">/servlets/query/experiments/diff-experiment/xml?accession=$1&amp;source=$2</to>
     </rule>
     <rule>
@@ -166,7 +166,7 @@
         <to type="forward">/servlets/query/experiments/files/xml?queryversion=1</to>
     </rule>
     <rule>
-        <from>^/xml/files/([eE]-\w{4}-\d+)$</from>
+        <from>^/xml/files/([AE]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
     </rule>
     <rule>
@@ -180,7 +180,7 @@
         <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v2/experiments/([eE]-\w{4}-\d+)$</from>
+        <from>^/xml/v2/experiments/([E]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
     </rule>
     <rule>
@@ -192,21 +192,28 @@
         <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v2/files/([eE]-\w{4}-\d+)$</from>
+        <from>^/xml/v2/files/([E]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/(.*)$</from>
         <to type="forward">/servlets/query/experiments/files/xml?keywords=$1</to>
     </rule>
-
+    <rule>
+        <from>^/xml/v2/privacy/([E]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/experiments/privacy/xml?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/privacy$</from>
+        <to type="forward">/servlets/query/experiments/privacy/xml</to>
+    </rule>
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
         <to type="forward">/servlets/query/experiments/experiments/json</to>
     </rule>
     <rule>
-        <from>^/json/v2/experiments/([eE]-\w{4}-\d+)$</from>
+        <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
         <to type="forward">/servlets/query/experiments/experiments/json?accession=$1</to>
     </rule>
     <rule>
