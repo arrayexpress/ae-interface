@@ -26,7 +26,7 @@
                             <protocol>
                                 <xsl:attribute name="source" select="@source"/>
                                 <xsl:attribute name="migrated" select="$vMigrated"/>
-                                <xsl:attribute name="visible" select="@source = 'ae1' or not($vMigrated)"/>
+                                <xsl:attribute name="visible" select="@source = 'ae2' or not($vMigrated)"/>
                                 <xsl:copy-of select="*"/>
                             </protocol>
                         </xsl:for-each>
