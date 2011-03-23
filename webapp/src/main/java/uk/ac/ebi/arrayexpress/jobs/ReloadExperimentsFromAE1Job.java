@@ -189,7 +189,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 , ArrayDesigns.ArrayDesignSource.AE1
         );
 
-        logger.info("Experiment information reload completed");
+        logger.info("Platform design information reload completed");
 
     }
 

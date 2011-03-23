@@ -114,7 +114,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     {
         ((ArrayDesigns) getComponent("ArrayDesigns")).update(xmlString, ArrayDesigns.ArrayDesignSource.AE2);
 
-        logger.info("User information reload completed");
+        logger.info("Platform design information reload completed");
 
     }
     private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
