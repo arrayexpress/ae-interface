@@ -296,7 +296,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     {
         if (jec.getJobDetail().getName().equals("retrieve-xml")) {
             JobDataMap jdm = jec.getMergedJobDataMap();
-            jdm.remove("xmlObject");
+            jdm.remove("xmlBuffer");
             jdm.remove("connectionSource");
             jdm.remove("exps");
 
