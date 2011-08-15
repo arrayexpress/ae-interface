@@ -151,7 +151,7 @@
                 <xsl:variable name="vAttrName" select="fn:lower-case(fn:name())"/>
                 <xsl:variable name="vAttrValue" select="."/>
                 <xsl:choose>
-                    <xsl:when test="$vAttrName = 'pages' and ($vAttrValue = '' or $vAttrValue = '-')"/>
+                    <xsl:when test="$vAttrValue = '' or $vAttrValue = '-'"/>
                     <xsl:otherwise>
                         <xsl:element name="{$vAttrName}">
                             <xsl:value-of select="$vAttrValue" />

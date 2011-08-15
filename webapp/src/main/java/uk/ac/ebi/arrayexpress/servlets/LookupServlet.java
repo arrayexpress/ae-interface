@@ -67,7 +67,7 @@ public class LookupServlet extends ApplicationServlet
         if (type.contains("json")) {
             response.setContentType("application/json; charset=UTF-8");
         } else {
-            response.setContentType("text/plain; charset=ISO-8859-1");
+            response.setContentType("text/plain; charset=UTF-8");
         }
         // Disable cache no matter what (or we're fucked on IE side)
         response.addHeader("Pragma", "no-cache");

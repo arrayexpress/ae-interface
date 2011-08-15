@@ -26,6 +26,7 @@ aeClearKeywords()
 {
     $("#ae_keywords").val("");
     $("#ae_directsub").removeAttr("checked");
+    $("#ae_private").removeAttr("checked");
 }
 
 function
@@ -116,18 +117,20 @@ aeShowLoginInfo()
 {
     $("#ae_login_info strong").text(user);
     $("#ae_login_info").show();
+    $("#ae_private_option").show();
 }
 
 function
 aeDoLogout(shouldReQuery)
 {
     $("#ae_login_info").hide();
+    $("#ae_private_option").hide();
     $("#ae_login_link").show();
     $.cookie("AeLoggedUser", null, {path: '/' });
     $.cookie("AeLoginToken", null, {path: '/' });
     user = "";
     if (undefined == shouldReQuery || shouldReQuery) {
-        window.location.href = decodeURI(window.location.pathname) + $.query.toString();
+        window.location.href = decodeURI(window.location.pathname) + $.query.toString().replace(/&?private=\w+/i,"").replace(/^\?&/i, "?");
     }
 }
 
@@ -228,6 +231,7 @@ $(function() {
     } else {
         query.keywords = getQueryStringParam("keywords");
         query.directsub = getQueryBooleanParam("directsub");
+        query.private = ("" != user) ? getQueryBooleanParam("private") : undefined;
         query.expandefo = getQueryBooleanParam("expandefo");
         query.species = getQueryStringParam("species");
         query.array = getQueryStringParam("array");
@@ -372,6 +376,8 @@ initControls()
     $("#ae_keywords").val(query.keywords);
     if (query.directsub)
         $("#ae_directsub").attr("checked", "true");
+    if (query.private)
+        $("#ae_private").attr("checked", "true");
     
     $("#ae_sortby").val(query.sortby);
     $("#ae_sortorder").val(query.sortorder);

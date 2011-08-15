@@ -6,7 +6,7 @@
     exclude-result-prefixes="html"
     version="2.0">
 
-    <xsl:output omit-xml-declaration="yes" method="html" encoding="ISO-8859-1"/>
+    <xsl:output omit-xml-declaration="yes" method="html" encoding="UTF-8"/>
 
     <xsl:template match="/experiments">
         <option value="">All arrays</option>

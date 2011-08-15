@@ -18,20 +18,22 @@ package uk.ac.ebi.arrayexpress.utils;
  */
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class HttpServletRequestParameterMap extends HashMap<String,String[]>
 {
     private final static RegexHelper ALL_SANS_SQUARE_BRACKETS = new RegexHelper("^(.*)\\[\\d*\\]$", "ig");
 
-    public HttpServletRequestParameterMap( HttpServletRequest request )
+    public HttpServletRequestParameterMap( HttpServletRequest request ) throws UnsupportedEncodingException
     {
         if (null != request) {
             Map params = request.getParameterMap();
             for ( Object param : params.entrySet() ) {
                 Map.Entry p = (Map.Entry) param;
                 String key = filterArrayBrackets((String)p.getKey());
-                List<String> newValues = Arrays.asList((String[])p.getValue());
+                String[] values = fixUTF8Values((String[])p.getValue());
+                List<String> newValues = Arrays.asList(values);
                 if (this.containsKey(key) && null != newValues) {
                     List<String> oldValues = Arrays.asList(this.get(key));
                     List<String> combined = new ArrayList<String>();
@@ -39,7 +41,7 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
                     combined.addAll(newValues);
                     this.put(key, combined.toArray(new String[combined.size()]));
                 } else {
-                    this.put(key, (String[])p.getValue());
+                    this.put(key, values);
                 }
             }
         }
@@ -65,4 +67,20 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
         return !"".equals(result) ? result : key;
     }
 
+    private String[] fixUTF8Values( String[] values ) throws UnsupportedEncodingException
+    {
+        if (null != values && 0 != values.length) {
+            String[] fixedValues = new String[values.length];
+            for (int pos = 0; pos < values.length; ++pos) {
+                if (null != values[pos] && 0 != values[pos].length()) {
+                    fixedValues[pos] = new String(values[pos].getBytes("ISO-8859-1"), "UTF-8");
+                } else {
+                    fixedValues[pos] = values[pos];
+                }
+            }
+            return fixedValues;
+        } else {
+            return values;
+        }
+    }
 }

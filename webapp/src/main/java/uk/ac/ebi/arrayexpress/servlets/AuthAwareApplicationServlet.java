@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
     private final static String AE_LOGIN_TOKEN_COOKIE = "AeLoginToken";
 
     private final static List<String> AE_PUBLIC_ACCESS = Arrays.asList("1");
-    private final static List<String> AE_UNRESTRICTED_ACCESS = Arrays.asList();
+    private final static List<String> AE_UNRESTRICTED_ACCESS = new ArrayList<String>();
 
     private static class AuthApplicationServletException extends ServletException
     {
@@ -122,7 +123,10 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
                 if (users.isPrivileged(userName)) {
                     return AE_UNRESTRICTED_ACCESS;
                 } else {
-                    return users.getUserIDs(userName);
+                    List<String> userIds = users.getUserIDs(userName);
+                    // so we allow public access as well
+                    userIds.addAll(AE_PUBLIC_ACCESS);
+                    return userIds;
                 }
             } catch (Exception x) {
                throw new AuthApplicationServletException(x);

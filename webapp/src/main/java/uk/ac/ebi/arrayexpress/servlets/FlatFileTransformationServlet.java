@@ -121,7 +121,7 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
                 source.setXMLReader(new FlatFileXMLReader());
 
                 if (outputType.equals("html")) {
-                    response.setContentType("text/html; charset=ISO-8859-1");
+                    response.setContentType("text/html; charset=UTF-8");
                 } else {
                     response.setContentType("text/" + outputType + "; charset=UTF-8");
                 }

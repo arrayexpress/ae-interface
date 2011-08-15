@@ -29,8 +29,9 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
+    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
-    <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="ISO-8859-1"/>
+    <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
@@ -315,9 +316,10 @@
                                                 </div>
                                             </xsl:for-each>
                                         </xsl:if>
-                                        <xsl:if test="source/@migrated = 'true'">
+                                        <xsl:if test="source/@migrated = 'true' or source/@id = 'ae1'">
                                             <div>
-                                                <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpId}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
+                                                <xsl:variable name="vExpIdAe1" select="if (source/@id = 'ae1') then $vExpId else ../experiment[accession = $vAccession and source/@id = 'ae1']/id"/>
+                                                <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpIdAe1}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
                                                     <xsl:text>Experimental protocols (old interface)</xsl:text>
                                                 </a>
                                             </div>
@@ -501,11 +503,22 @@
 
     <xsl:template match="bibliography">
         <div>
-            <xsl:variable name="publication_title">
-                <xsl:if test="string-length(title) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
-                <xsl:if test="string-length(authors) > 0"><xsl:call-template name="highlight"><xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/><xsl:with-param name="pFieldName"/></xsl:call-template>. </xsl:if>
+            <xsl:variable name="vTitle">
+                <xsl:if test="string-length(title) > 0">
+                    <xsl:call-template name="highlight">
+                        <xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/>
+                        <xsl:with-param name="pFieldName"/>
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:variable>
-            <xsl:variable name="publication_link_title">
+            <xsl:variable name="vPubInfo">
+                <xsl:if test="string-length(authors) > 0">
+                    <xsl:call-template name="highlight">
+                        <xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/>
+                        <xsl:with-param name="pFieldName"/>
+                    </xsl:call-template>
+                    <xsl:text>. </xsl:text>
+                </xsl:if>
                 <xsl:if test="string-length(publication) > 0">
                     <em>
                         <xsl:call-template name="highlight">
@@ -537,20 +550,27 @@
                 <xsl:if test="string-length(year) > 0">
                     <xsl:text>&#160;(</xsl:text>
                     <xsl:call-template name="highlight">
-                        <xsl:with-param name="pText" select="publication"/>
+                        <xsl:with-param name="pText" select="year"/>
                         <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                     <xsl:text>)</xsl:text>
                 </xsl:if>
             </xsl:variable>
             <xsl:choose>
+                <xsl:when test="doi">
+                    <a href="http://dx.doi.org/{doi}"><xsl:copy-of select="$vTitle"/></a>
+                    <xsl:text>. </xsl:text>
+                    <xsl:copy-of select="$vPubInfo"/>
+                </xsl:when>
                 <xsl:when test="uri[starts-with(., 'http')]">
-                    <xsl:copy-of select="$publication_title"/>
-                    <a href="{uri}"><xsl:copy-of select="$publication_link_title"/></a>
+                    <a href="{uri}"><xsl:copy-of select="$vTitle"/></a>
+                    <xsl:text>. </xsl:text>
+                    <xsl:copy-of select="$vPubInfo"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:copy-of select="$publication_title"/>
-                    <xsl:copy-of select="$publication_link_title"/>
+                    <xsl:copy-of select="$vTitle"/>
+                    <xsl:text>. </xsl:text>
+                    <xsl:copy-of select="$vPubInfo"/>
                     <xsl:if test="string-length(uri) > 0">
                         <xsl:text> (</xsl:text>
                         <xsl:call-template name="highlight">
@@ -762,7 +782,7 @@
                             <xsl:text> | </xsl:text>
                             <a href="{$vBaseUrl}/experiments/{$vAccession}/{replace(@name, '[^\.]+\.(.*)(idf|sdrf).+', '$1')}{current-grouping-key()}.html">
                                 <xsl:text>view</xsl:text>
-                            </a><img src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
+                            </a><img class="new" src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                             <xsl:if test="position() != last()">
                                 <xsl:text>, </xsl:text>
                             </xsl:if>

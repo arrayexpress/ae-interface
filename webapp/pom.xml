@@ -38,6 +38,7 @@
         <interface.application.link.news_xml.url>/microarray-srv/ae/ae-main-news.xml</interface.application.link.news_xml.url>
         <interface.application.link.links_xml.url>/microarray-srv/ae/ae-main-links.xml</interface.application.link.links_xml.url>
 
+        <interface.application.pref.reports.recipients>ae-mgmt@ebi.ac.uk</interface.application.pref.reports.recipients>
         <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
         <interface.application.pref.experiments.ae1.connections>aepub3,aepub2</interface.application.pref.experiments.ae1.connections>
         <interface.application.pref.experiments.ae1.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
@@ -57,11 +58,12 @@
         <profile>
             <id>debug</id>
             <properties>
+                <interface.application.pref.reports.recipients>kolais@ebi.ac.uk</interface.application.pref.reports.recipients>
                 <interface.application.log.default.priority>ALL</interface.application.log.default.priority>
             </properties>
         </profile>
         <profile>
-            <id>baz.aepub1</id>
+            <id>export.aepub1</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
@@ -93,7 +95,7 @@
             </properties>
         </profile>
         <profile>
-            <id>baz.aepub2_aepub3</id>
+            <id>export.aepub2_aepub3</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
@@ -156,7 +158,7 @@
             </properties>
         </profile>
         <profile>
-            <id>foo.ae2_perftest</id>
+            <id>test.ae2_perftest</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
@@ -174,20 +176,21 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.source.location/>
                 <interface.application.pref.experiments.ae1.connections/>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae1.reload.schedule/>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_perftest/software/browse/</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
+                <interface.application.pref.files.root.location>/ebi/microarray/home/arrayexpress/ae2_perftest/data</interface.application.pref.files.root.location>
                 <interface.application.pref.files.prefix>ae2-perftest</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.pref.files.rescan.interval>2700000</interface.application.pref.files.rescan.interval>
                 <interface.application.body.class>ae2_perftest</interface.application.body.class>
             </properties>
         </profile>
         <profile>
-            <id>foo.ae2_curator</id>
+            <id>test.ae2_curator</id>
             <properties>
                 <interface.application.link.aer_old.base.url>/aer</interface.application.link.aer_old.base.url>
 
@@ -205,15 +208,16 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.source.location/>
                 <interface.application.pref.experiments.ae1.connections/>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 30 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae1.reload.schedule/>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_curator/software/browse/</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
 
+                <interface.application.pref.files.root.location>/ebi/microarray/home/arrayexpress/ae2_curator/data</interface.application.pref.files.root.location>
                 <interface.application.pref.files.prefix>ae2-curator</interface.application.pref.files.prefix>
-                <interface.application.pref.files.rescan.interval>1800000</interface.application.pref.files.rescan.interval>
+                <interface.application.pref.files.rescan.interval>2700000</interface.application.pref.files.rescan.interval>
                 <interface.application.body.class>ae2_curator</interface.application.body.class>
             </properties>
         </profile>
@@ -365,16 +369,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <encoding>ISO-8859-1</encoding>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.4.3</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>ISO-8859-1</encoding>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>

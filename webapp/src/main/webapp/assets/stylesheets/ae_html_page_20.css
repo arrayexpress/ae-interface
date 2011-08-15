@@ -15,8 +15,6 @@
  *
  */
 
-/* login box */
-
 #ae_login_box {
     border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -72,39 +70,6 @@
     color: red;
 }
 
-/* navigation and common parts */
-#ae_contents_container {
-    overflow: visible;
-    _overflow: auto;
-}
-
-#ae_summary_box {
-    padding: 0 0 10px 0;
-}
-
-#ae_accession {
-    font-size: 18px;
-    line-height: normal;
-    padding: 10px 0 0;
-}
-
-#ae_accession img {
-    margin:0 3px;
-    vertical-align: baseline;
-}
-
-#ae_title {
-   display: inline-block; /* ie hasLayout hack */
-}
-
-#ae_title div {
-    border-bottom: 1px solid #BDD7D7;
-    float: left;
-    padding: 0 0 5px;
-    text-align: justify;
-}
-
-/* query area */
 #ae_query_box {
     border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -215,4 +180,71 @@
 #ae_results_table td img {
     margin: 0 2px;
     vertical-align: baseline;
+}
+
+#ae_results_table tr.expanded td,
+#ae_results_table td.detail_name,
+#ae_results_table td.detail_value {
+    border-bottom: 0 none;
+}
+
+div.detail_table table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#ae_results_table td.detail_name {
+    border-top: 1px solid #E5F0F0;
+    color: #005555;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 0 0 2px;
+    text-align: right;
+    vertical-align: top;
+}
+
+#ae_results_table td.detail_name div.outer {
+    margin: 2px 10px 2px 0;
+}
+
+#ae_results_table td.detail_name div.outer div {
+    margin: 0;
+}
+
+#ae_results_table td.detail_value {
+    background-color: #F2F8F8;
+    border-top: 1px solid #E5F0F0;
+    font-weight: normal;
+    font-size: 11px;
+    padding: 0 0 2px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#ae_results_table td.detail_value img {
+    margin: 0 2px 0 0;
+    vertical-align: bottom;
+}
+
+#ae_results_table td.detail_value div.outer {
+    margin: 2px 0 2px 3px;
+}
+
+#ae_results_table td.detail_value td {
+    border: 0 none;
+    font-size: 11px;
+    margin: 0;
+    padding: 0 0 2px;
+}
+
+#ae_results_table td.detail_value td.attr_name {
+    overflow: hidden;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 25%;
+}
+
+#ae_results_table td.detail_value td.attr_value {
+    vertical-align: top;
+    width: 75%;
 }

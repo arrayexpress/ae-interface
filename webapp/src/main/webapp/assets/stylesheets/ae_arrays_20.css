@@ -25,6 +25,10 @@ td.col_atlas {
     white-space: nowrap;
 }
 
+.detail_name {
+    width: 148px; /* col_accession - 2px */
+}
+
 .col_name {
     text-align: left;
 }

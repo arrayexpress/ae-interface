@@ -22,7 +22,7 @@
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
 
     <xsl:output omit-xml-declaration="yes" method="html"
-                indent="no" encoding="ISO-8859-1" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+                indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
     <xsl:include href="ae-html-page.xsl"/>
 
@@ -58,8 +58,8 @@
                                 <xsl:value-of select="upper-case($accession)"/>
                             </a>
                             <xsl:text> > </xsl:text>
-                            <a href="{$basepath}/experiments/{upper-case($accession)}/idf">
-                                <xsl:text>Investigation Description</xsl:text>
+                            <a href="{$basepath}/experiments/{upper-case($accession)}/idf.html">
+                                <xsl:text>Investigation Description View</xsl:text>
                             </a>
                         </div>
                         <div id="ae_summary_box">

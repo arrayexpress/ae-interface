@@ -1,433 +1,1693 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <table>
     <row>
         <col>Source Name</col>
         <col>Material Type</col>
-        <col>Characteristics [Age]</col>
-        <col>Characteristics [BioSourceProvider]</col>
-        <col>Characteristics [DevelopmentalStage]</col>
-        <col>Characteristics [DiseaseState]</col>
-        <col>Characteristics [OrganismPart]</col>
-        <col>Characteristics [Organism]</col>
-        <col>Characteristics [Phenotype]</col>
+        <col>Characteristics[Organism]</col>
+        <col>Characteristics[GrowthCondition]</col>
         <col>Protocol REF</col>
-        <col>Sample Name</col>
-        <col>Material Type</col>
+        <col>Protocol REF</col>
         <col>Protocol REF</col>
         <col>Extract Name</col>
-        <col>Material Type</col>
         <col>Protocol REF</col>
         <col>Labeled Extract Name</col>
-        <col>Material Type</col>
         <col>Label</col>
         <col>Protocol REF</col>
         <col>Hybridization Name</col>
         <col>Array Design REF</col>
+        <col>Comment[Array serial number]</col>
+        <col>Protocol REF</col>
         <col>Scan Name</col>
         <col>Array Data File</col>
         <col>Comment [ArrayExpress FTP file]</col>
-        <col>Protocol REF</col>
-        <col>Normalization Name</col>
-        <col>Comment[Normalization Type]</col>
-        <col>Derived Array Data Matrix File</col>
-        <col>Comment [Derived ArrayExpress FTP file]</col>
-        <col>Factor Value [PHENOTYPE]</col>
+        <col>Factor Value[GROWTH_PHASE]</col>
+        <col>Factor Value[GROWTH_CONDITION]</col>
+        <col>Factor Value[COMPOUND]</col>
+        <col>Factor Value[DOSE]</col>
+        <col>Unit[ConcentrationUnit]</col>
         <col/>
     </row>
     <row>
-        <col>primordium.1</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>primordium</col>
-        <col>P-TABM-5629</col>
-        <col>primordium.1</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>primordium.1</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>primordium.1 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>primordium.1</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH1_nuM_OW337</col>
-        <col>0809_BH1_nuM_OW337.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>primordium</col>
+        <col>Sample 1</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 1</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.1</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 1</col>
+        <col>A-MEXP-1972</col>
+        <col>22610902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 1</col>
+        <col>22610902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>primordium.2</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>primordium</col>
-        <col>P-TABM-5629</col>
-        <col>primordium.2</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>primordium.2</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>primordium.2 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>primordium.2</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH2_nuM_OW338</col>
-        <col>0809_BH2_nuM_OW338.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>primordium</col>
+        <col>Sample 2</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 2</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.2</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 2</col>
+        <col>A-MEXP-1972</col>
+        <col>22628702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 2</col>
+        <col>22628702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>primordium.3</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>primordium</col>
-        <col>P-TABM-5629</col>
-        <col>primordium.3</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>primordium.3</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>primordium.3 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>primordium.3</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH3_nuM_OW339</col>
-        <col>0809_BH3_nuM_OW339.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 3</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 3</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.3</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 3</col>
+        <col>A-MEXP-1972</col>
+        <col>22613402</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 3</col>
+        <col>22613402_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>primordium</col>
     </row>
     <row>
-        <col>epithelium.1</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>epithelium</col>
-        <col>P-TABM-5629</col>
-        <col>epithelium.1</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>epithelium.1</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>epithelium.1 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>epithelium.1</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH4_nuM_OW340</col>
-        <col>0809_BH4_nuM_OW340.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>epithelium</col>
+        <col>Sample 4</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 4</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.4</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 4</col>
+        <col>A-MEXP-1972</col>
+        <col>22610702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 4</col>
+        <col>22610702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>epithelium.2</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>epithelium</col>
-        <col>P-TABM-5629</col>
-        <col>epithelium.2</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>epithelium.2</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>epithelium.2 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>epithelium.2</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH5_nuM_OW341</col>
-        <col>0809_BH5_nuM_OW341.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 5</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 5</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.5</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 5</col>
+        <col>A-MEXP-1972</col>
+        <col>22615002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 5</col>
+        <col>22615002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>epithelium</col>
     </row>
     <row>
-        <col>epithelium.3</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>epithelium</col>
-        <col>P-TABM-5629</col>
-        <col>epithelium.3</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>epithelium.3</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>epithelium.3 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>epithelium.3</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH6_nuM_OW342</col>
-        <col>0809_BH6_nuM_OW342.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 6</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 6</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.6</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 6</col>
+        <col>A-MEXP-1972</col>
+        <col>22613102</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 6</col>
+        <col>22613102_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>H2O2</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>epithelium</col>
+        <col/>
     </row>
     <row>
-        <col>mesenchyme.1</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>mesenchyme</col>
-        <col>P-TABM-5629</col>
-        <col>mesenchyme.1</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>mesenchyme.1</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>mesenchyme.1 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>mesenchyme.1</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH7_nuM_OW343</col>
-        <col>0809_BH7_nuM_OW343.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>mesenchyme</col>
+        <col>Sample 7</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 7</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.7</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 7</col>
+        <col>A-MEXP-1972</col>
+        <col>22614802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 7</col>
+        <col>22614802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>mesenchyme.2</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>mesenchyme</col>
-        <col>P-TABM-5629</col>
-        <col>mesenchyme.2</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>mesenchyme.2</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>mesenchyme.2 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>mesenchyme.2</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH8_nuM_OW344</col>
-        <col>0809_BH8_nuM_OW344.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>mesenchyme</col>
+        <col>Sample 8</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 8</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.8</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 8</col>
+        <col>A-MEXP-1972</col>
+        <col>22610802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 8</col>
+        <col>22610802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>mesenchyme.3</col>
-        <col>organism_part</col>
-        <col>E12.5</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>embryonic</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>mesenchyme</col>
-        <col>P-TABM-5629</col>
-        <col>mesenchyme.3</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>mesenchyme.3</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>mesenchyme.3 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>mesenchyme.3</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH9_nuM_OW345</col>
-        <col>0809_BH9_nuM_OW345.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 9</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 9</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.9</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 9</col>
+        <col>A-MEXP-1972</col>
+        <col>22614702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 9</col>
+        <col>22614702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>mesenchyme</col>
     </row>
     <row>
-        <col>fibroblast.1</col>
-        <col>organism_part</col>
-        <col>eight weeks postnatal</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>postnatal</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>fibroblast</col>
-        <col>P-TABM-5629</col>
-        <col>fibroblast.1</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>fibroblast.1</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>fibroblast.1 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>fibroblast.1</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH10_nuM_OW335</col>
-        <col>0809_BH10_nuM_OW335.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 10</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 10</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.10</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 10</col>
+        <col>A-MEXP-1972</col>
+        <col>22628902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 10</col>
+        <col>22628902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>H2O2</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>fibroblast</col>
+        <col/>
     </row>
     <row>
-        <col>fibroblast.2</col>
-        <col>organism_part</col>
-        <col>eight weeks postnatal</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>postnatal</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>fibroblast</col>
-        <col>P-TABM-5629</col>
-        <col>fibroblast.2</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>fibroblast.2</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>fibroblast.2 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>fibroblast.2</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH11_nuM_OW348</col>
-        <col>0809_BH11_nuM_OW348.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>fibroblast</col>
+        <col>Sample 11</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 11</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.11</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 11</col>
+        <col>A-MEXP-1972</col>
+        <col>22618602</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 11</col>
+        <col>22618602_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
     </row>
     <row>
-        <col>fibroblast.3</col>
-        <col>organism_part</col>
-        <col>eight weeks postnatal</col>
-        <col>Breakthrough Breast Cancer Research Centre</col>
-        <col>postnatal</col>
-        <col>normal</col>
-        <col>mammary gland</col>
-        <col>Mus musculus</col>
-        <col>fibroblast</col>
-        <col>P-TABM-5629</col>
-        <col>fibroblast.3</col>
-        <col>organism_part</col>
-        <col>P-TABM-5642</col>
-        <col>fibroblast.3</col>
-        <col>total_RNA</col>
-        <col>P-TABM-5630</col>
-        <col>fibroblast.3 biotin</col>
-        <col>synthetic_DNA</col>
-        <col>biotin</col>
-        <col>Affymetrix:Protocol:Hybridization-Unknown</col>
-        <col>fibroblast.3</col>
-        <col>A-AFFY-45</col>
-        <col>0809_BH12_nuM_OW349</col>
-        <col>0809_BH12_nuM_OW349.CEL</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.raw.3.zip</col>
-        <col>P-TABM-5631</col>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
+        <col>Sample 12</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 12</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.12</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 12</col>
+        <col>A-MEXP-1972</col>
+        <col>22618002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 12</col>
+        <col>22618002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>NaCl</col>
         <col/>
-        <col>alanmackay_Tab2MAGE_Transcriptomic_Analysis_of_Embryonic_Mammary_Cells_normalised_data.txt</col>
-        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/TABM/E-TABM-1099/E-TABM-1099.processed.3.zip</col>
-        <col>fibroblast</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 13</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 13</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.13</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 13</col>
+        <col>A-MEXP-1972</col>
+        <col>22613202</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 13</col>
+        <col>22613202_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 14</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 14</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.14</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 14</col>
+        <col>A-MEXP-1972</col>
+        <col>22617802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 14</col>
+        <col>22617802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 15</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 15</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.15</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 15</col>
+        <col>A-MEXP-1972</col>
+        <col>22618702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 15</col>
+        <col>22618702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 16</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 16</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.16</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 16</col>
+        <col>A-MEXP-1972</col>
+        <col>22611002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 16</col>
+        <col>22611002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 17</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 17</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.17</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 17</col>
+        <col>A-MEXP-1972</col>
+        <col>22632802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 17</col>
+        <col>22632802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 18</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 18</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.18</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 18</col>
+        <col>A-MEXP-1972</col>
+        <col>22613302</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 18</col>
+        <col>22613302_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 19</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 19</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.19</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 19</col>
+        <col>A-MEXP-1972</col>
+        <col>22628802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 19</col>
+        <col>22628802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 20</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 20</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.20</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 20</col>
+        <col>A-MEXP-1972</col>
+        <col>22614902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 20</col>
+        <col>22614902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>NaCl</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 21</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 21</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.21</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 21</col>
+        <col>A-MEXP-1972</col>
+        <col>22632702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 21</col>
+        <col>22632702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 22</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 22</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.22</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 22</col>
+        <col>A-MEXP-1972</col>
+        <col>22618102</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 22</col>
+        <col>22618102_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 23</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 23</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.23</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 23</col>
+        <col>A-MEXP-1972</col>
+        <col>22617902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 23</col>
+        <col>22617902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 24</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 24</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.24</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 24</col>
+        <col>A-MEXP-1972</col>
+        <col>22629002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 24</col>
+        <col>22629002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 25</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 25</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.25</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 25</col>
+        <col>A-MEXP-1972</col>
+        <col>22618802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 25</col>
+        <col>22618802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 26</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 26</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.26</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 26</col>
+        <col>A-MEXP-1972</col>
+        <col>22618302</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 26</col>
+        <col>22618302_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 27</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 27</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.27</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 27</col>
+        <col>A-MEXP-1972</col>
+        <col>22618202</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 27</col>
+        <col>22618202_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 28</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 28</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.28</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 28</col>
+        <col>A-MEXP-1972</col>
+        <col>22618402</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 28</col>
+        <col>22618402_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 29</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 29</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.29</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 29</col>
+        <col>A-MEXP-1972</col>
+        <col>22633002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 29</col>
+        <col>22633002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 30</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 30</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.30</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 30</col>
+        <col>A-MEXP-1972</col>
+        <col>22617702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 30</col>
+        <col>22617702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 31</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 31</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.31</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 31</col>
+        <col>A-MEXP-1972</col>
+        <col>22618502</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 31</col>
+        <col>22618502_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 32</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 32</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.32</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 32</col>
+        <col>A-MEXP-1972</col>
+        <col>22632902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 32</col>
+        <col>22632902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>NaCl</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 33</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 33</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.33</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 33</col>
+        <col>A-MEXP-1972</col>
+        <col>22602702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 33</col>
+        <col>22602702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 34</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 34</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.34</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 34</col>
+        <col>A-MEXP-1972</col>
+        <col>22604102</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 34</col>
+        <col>22604102_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 35</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 35</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.35</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 35</col>
+        <col>A-MEXP-1972</col>
+        <col>22605302</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 35</col>
+        <col>22605302_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 36</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 36</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.36</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 36</col>
+        <col>A-MEXP-1972</col>
+        <col>22604402</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 36</col>
+        <col>22604402_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 37</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 37</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.37</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 37</col>
+        <col>A-MEXP-1972</col>
+        <col>22604302</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 37</col>
+        <col>22604302_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 38</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 38</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.38</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 38</col>
+        <col>A-MEXP-1972</col>
+        <col>22603002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 38</col>
+        <col>22603002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 39</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 39</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.39</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 39</col>
+        <col>A-MEXP-1972</col>
+        <col>22599602</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 39</col>
+        <col>22599602_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 40</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 40</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.40</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 40</col>
+        <col>A-MEXP-1972</col>
+        <col>22602902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 40</col>
+        <col>22602902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 41</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 41</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.41</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 41</col>
+        <col>A-MEXP-1972</col>
+        <col>22606302</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 41</col>
+        <col>22606302_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 42</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 42</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.42</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 42</col>
+        <col>A-MEXP-1972</col>
+        <col>22606502</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 42</col>
+        <col>22606502_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 43</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 43</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.43</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 43</col>
+        <col>A-MEXP-1972</col>
+        <col>22599902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 43</col>
+        <col>22599902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 44</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 44</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.44</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 44</col>
+        <col>A-MEXP-1972</col>
+        <col>22604602</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 44</col>
+        <col>22604602_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>NaCl</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 45</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 45</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.45</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 45</col>
+        <col>A-MEXP-1972</col>
+        <col>22605602</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 45</col>
+        <col>22605602_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 46</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 46</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.46</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 46</col>
+        <col>A-MEXP-1972</col>
+        <col>22600602</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 46</col>
+        <col>22600602_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 47</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 47</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.47</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 47</col>
+        <col>A-MEXP-1972</col>
+        <col>22599702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 47</col>
+        <col>22599702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 48</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 48</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.48</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 48</col>
+        <col>A-MEXP-1972</col>
+        <col>22600502</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 48</col>
+        <col>22600502_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 49</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 49</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.49</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 49</col>
+        <col>A-MEXP-1972</col>
+        <col>22606002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 49</col>
+        <col>22606002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 50</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 50</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.50</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 50</col>
+        <col>A-MEXP-1972</col>
+        <col>22605402</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 50</col>
+        <col>22605402_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium without PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 51</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 51</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.51</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 51</col>
+        <col>A-MEXP-1972</col>
+        <col>22606102</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 51</col>
+        <col>22606102_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 52</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 52</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.52</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 52</col>
+        <col>A-MEXP-1972</col>
+        <col>22604702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 52</col>
+        <col>22604702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium without PGA</col>
+        <col>NaCl</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 53</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 53</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.53</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 53</col>
+        <col>A-MEXP-1972</col>
+        <col>22605502</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 53</col>
+        <col>22605502_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 54</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 54</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.54</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 54</col>
+        <col>A-MEXP-1972</col>
+        <col>22605902</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 54</col>
+        <col>22605902_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium with PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 55</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 55</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.55</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 55</col>
+        <col>A-MEXP-1972</col>
+        <col>22605802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 55</col>
+        <col>22605802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 56</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 56</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.56</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 56</col>
+        <col>A-MEXP-1972</col>
+        <col>22600802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 56</col>
+        <col>22600802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium with PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 57</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 57</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.57</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 57</col>
+        <col>A-MEXP-1972</col>
+        <col>34535102</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 57</col>
+        <col>34535102_532.pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 58</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 58</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.58</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 58</col>
+        <col>A-MEXP-1972</col>
+        <col>22600702</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 58</col>
+        <col>22600702_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>NaCl</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 59</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 59</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.59</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 59</col>
+        <col>A-MEXP-1972</col>
+        <col>22604202</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 59</col>
+        <col>22604202_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 60</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 60</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.60</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 60</col>
+        <col>A-MEXP-1972</col>
+        <col>22602802</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 60</col>
+        <col>22602802_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract without PGA</col>
+        <col>H2O2</col>
+        <col>30</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 61</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 61</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.61</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 61</col>
+        <col>A-MEXP-1972</col>
+        <col>24602002</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 61</col>
+        <col>24602002_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>malic acid</col>
+        <col>100</col>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 62</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 62</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.62</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 62</col>
+        <col>A-MEXP-1972</col>
+        <col>22604502</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 62</col>
+        <col>22604502_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>stationary phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>H2O2</col>
+        <col/>
+        <col/>
+    </row>
+    <row>
+        <col>Sample 63</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 63</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.63</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 63</col>
+        <col>A-MEXP-1972</col>
+        <col>22606402</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 63</col>
+        <col>22606402_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>no stress</col>
+        <col>300</col>
+        <col>mM</col>
+    </row>
+    <row>
+        <col>Sample 64</col>
+        <col>cell</col>
+        <col>Dickeya dadantii 3937</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>P-MTAB-19176</col>
+        <col>P-MTAB-19177</col>
+        <col>P-MTAB-19178</col>
+        <col>RNA Extract 64</col>
+        <col>P-MTAB-19179</col>
+        <col>Labeled Extract Cy3.64</col>
+        <col>Cy3</col>
+        <col>P-MTAB-19180</col>
+        <col>Hybridization 64</col>
+        <col>A-MEXP-1972</col>
+        <col>22606202</col>
+        <col>P-MTAB-19181</col>
+        <col>Scan 64</col>
+        <col>22606202_532_pair.txt</col>
+        <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-541/E-MTAB-541.raw.2.zip</col>
+        <col>exponential phase</col>
+        <col>minimum medium+plant extract with PGA</col>
+        <col>NaCl</col>
+        <col/>
+        <col/>
     </row>
 </table>

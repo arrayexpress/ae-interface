@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
 
-    <xsl:output method="text" indent="no" encoding="ISO-8859-1"/>
+    <xsl:output method="text" indent="no" encoding="UTF-8"/>
 
     <xsl:template match="atlasResponse">
         <xsl:apply-templates select="results/result/experimentInfo/accession"/>

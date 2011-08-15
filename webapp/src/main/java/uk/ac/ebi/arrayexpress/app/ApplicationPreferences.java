@@ -59,7 +59,9 @@ public class ApplicationPreferences
 
     public String[] getStringArray( String key )
     {
-        return prefs.getStringArray(key);
+        String value = prefs.getString(key);
+
+        return value.contains(",") ? value.split("\\s*,\\s*") : new String[]{value};
     }
 
     public Long getLong( String key )
@@ -101,9 +103,7 @@ public class ApplicationPreferences
         // todo: what to do if file is not there? must be a clear error message + shutdown
         InputStream prefsStream = null;
         try {
-            // set list delimiter to bogus value to disable list parsing in configuration values
             XMLConfiguration.setDefaultListDelimiter('\uffff');
-
             XMLConfiguration xmlConfig = new XMLConfiguration();
 
             prefsStream = Application.getInstance().getResource(

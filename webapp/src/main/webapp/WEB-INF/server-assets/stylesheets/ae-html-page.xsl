@@ -9,7 +9,7 @@
         <xsl:param name="pTitle"/>
         <xsl:param name="pExtraCode"/>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta http-equiv="Content-Language" content="en-GB"/>
             <meta http-equiv="Window-target" content="_top"/>
             <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>
@@ -71,7 +71,7 @@
         <xsl:param name="pTitle"/>
         <xsl:param name="pExtraCode"/>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta http-equiv="Content-Language" content="en-GB"/>
             <meta http-equiv="Window-target" content="_top"/>
             <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>

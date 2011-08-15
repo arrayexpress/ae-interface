@@ -305,8 +305,17 @@ a:active .table_header_label {
     padding: 5px 5px 5px 10px;
 }
 
+#ae_private_option,
 #ae_directsub_option {
     float: left;
+}
+
+#ae_private_option {
+    margin-right: 10px;
+}
+
+#ae_private_option img {
+    vertical-align: baseline;
 }
 
 #ae_filters_box {

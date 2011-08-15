@@ -17,10 +17,7 @@ package uk.ac.ebi.arrayexpress.utils.search;
  *
  */
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.WhitespaceTokenizer;
+import org.apache.lucene.analysis.*;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -47,7 +44,7 @@ public class AttributeFieldAnalyzer extends Analyzer
 
     public TokenStream tokenStream(String fieldName, Reader reader)
     {
-        return new AttributeFieldTokenizer(reader);
+        return new ASCIIFoldingFilter(new AttributeFieldTokenizer(reader));
     }
 
     public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException
@@ -58,6 +55,6 @@ public class AttributeFieldAnalyzer extends Analyzer
             setPreviousTokenStream(tokenizer);
         } else
             tokenizer.reset(reader);
-        return tokenizer;
+        return new ASCIIFoldingFilter(tokenizer);
     }
 }

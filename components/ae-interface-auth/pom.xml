@@ -51,18 +51,20 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <encoding>ISO-8859-1</encoding>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.4.3</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>ISO-8859-1</encoding>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                 </configuration>
-            </plugin>            
+            </plugin>
         </plugins>
     </build>
     <dependencies>

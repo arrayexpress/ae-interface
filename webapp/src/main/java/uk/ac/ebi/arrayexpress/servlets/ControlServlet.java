@@ -67,7 +67,7 @@ public class ControlServlet extends ApplicationServlet
             }
             ((JobsController) getComponent("JobsController")).executeJob(command);
         } else if (command.equals("verify-login")) {
-            response.setContentType("text/plain; charset=ISO-8859-1");
+            response.setContentType("text/plain; charset=UTF-8");
             // Disable cache no matter what (or we're fucked on IE side)
             response.addHeader("Pragma", "no-cache");
             response.addHeader("Cache-Control", "no-cache");
