@@ -63,7 +63,7 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredProtocols" select="/protocols/protocol"/> <!-- search:queryIndex($queryid)"/> -->
+        <xsl:variable name="vFilteredProtocols" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredProtocols)"/>
 
         <xsl:variable name="vFrom" as="xs:integer">
