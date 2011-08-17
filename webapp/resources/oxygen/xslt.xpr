@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="12.1">
+<project version="11.2">
     <meta>
         <filters directoryPatterns="" filePatterns=""
             positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="12.1">
+            <serialized version="11.2">
                 <map>
                     <entry>
                         <String xml:space="preserve">scenario.associations</String>
@@ -2174,6 +2174,8 @@
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl"/>
             <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-protocols-ae2-xml.xsl"/>
+            <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae1-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae2-xml.xsl"/>
@@ -2190,6 +2192,8 @@
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-events-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"/>
+            <file
+                name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-protocols-xml.xsl"/>
             <file
                 name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-users-xml.xsl"/>
             <file

@@ -15,8 +15,11 @@
  *
  */
 
-td.col_atlas {
-    border-right: 0 none;
+#ae_results_table tr.main td div {
+	overflow: hidden;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
 }
 
 .col_accession {
@@ -34,6 +37,6 @@ td.col_atlas {
 }
 
 .col_type {
-    width: 160px;
+    width: 250px;
     text-align: left;
 }

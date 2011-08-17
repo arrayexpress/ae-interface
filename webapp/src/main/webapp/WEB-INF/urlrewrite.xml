@@ -26,10 +26,6 @@
         <from>^/(A-\w{4}-\d+)$</from>
         <to type="redirect">%{context-path}/arrays/$1</to>
     </rule>
-    <rule>
-        <from>^/(P-\w+-\d+)$</from>
-        <to type="redirect">%{context-path}/protocols/$1</to>
-    </rule>
 
     <!-- experiments -->
     <rule>
@@ -96,7 +92,11 @@
         <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
     <rule>
-        <from>^/protocols/(P-\w+-\d+)/?$</from>
+        <from>^/protocols/(\d+)/?$</from>
+        <to type="forward">/servlets/query/protocols/protocols/html?id=$1</to>
+    </rule>
+    <rule>
+        <from>^/protocols/(.+)/?$</from>
         <to type="forward">/servlets/query/protocols/protocols/html?accession=$1</to>
     </rule>
 

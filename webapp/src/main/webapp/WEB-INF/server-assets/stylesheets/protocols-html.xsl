@@ -22,6 +22,7 @@
 
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
+    <xsl:param name="id"/>
     <xsl:param name="accession"/>
 
     <xsl:param name="userid"/>
@@ -31,7 +32,7 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:variable name="vBrowseMode" select="not($accession)"/>
+    <xsl:variable name="vBrowseMode" select="not($accession) and not($id)"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -44,7 +45,7 @@
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
-                    <xsl:value-of select="if (not($vBrowseMode)) then concat(upper-case($accession), ' | ') else ''"/>
+                    <xsl:value-of select="if (not($vBrowseMode)) then (if (not($accession)) then concat('Protocol #', $id, ' | ') else concat(upper-case($accession), ' | ')) else ''"/>
                     <xsl:text>Protocols | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
 
@@ -87,12 +88,20 @@
                     <a href="{$basepath}">ArrayExpress</a>
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}/protocols">Protocols</a>
-                    <xsl:if test="not($vBrowseMode)">
-                        <xsl:text> > </xsl:text>
-                        <a href="{$basepath}/arrays/{upper-case($accession)}">
-                            <xsl:value-of select="upper-case($accession)"/>
-                        </a>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="not(not($accession))">
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/protocols/{upper-case($accession)}">
+                                <xsl:value-of select="upper-case($accession)"/>
+                            </a>
+                        </xsl:when>
+                        <xsl:when test="not(not($id))">
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/protocols/{$id}">
+                                <xsl:value-of select="concat('Protocol #', $id)"/>
+                            </a>
+                        </xsl:when>
+                    </xsl:choose>
                 </div>
                 <xsl:if test="$vBrowseMode">
                     <div id="ae_query_box">
@@ -186,12 +195,15 @@
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr>
-                <xsl:if test="not($vBrowseMode)">
-                    <xsl:attribute name="class">expanded</xsl:attribute>
-                </xsl:if>
+                <xsl:attribute name="class">
+                    <xsl:text>main</xsl:text>
+                    <xsl:if test="not($vBrowseMode)">
+                        <xsl:text> expanded</xsl:text>
+                    </xsl:if>
+                </xsl:attribute>
                 <td class="col_accession">
                     <div>
-                        <a href="{$basepath}/arrays/{accession}">
+                        <a href="{$basepath}/protocols/{id}">
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pText" select="accession" />
                                 <xsl:with-param name="pFieldName" select="'accession'" />
@@ -223,11 +235,9 @@
             </tr>
             <xsl:if test="not($vBrowseMode)">
             <tr>
-                <td class="col_detail" colspan="4">
+                <td class="col_detail" colspan="3">
                     <div class="detail_table">
-                        <xsl:call-template name="detail-table">
-                            <xsl:with-param name="pAccession" select="accession"/>
-                        </xsl:call-template>
+                        <xsl:call-template name="detail-table"/>
 
                     </div>
                 </td>
@@ -237,8 +247,7 @@
     </xsl:template>
 
     <xsl:template name="detail-table">
-        <xsl:param name="pAccession"/>
-        <xsl:variable name="vExpsWithProtocol" select="search:queryIndex('experiments', concat('visible:true protocol:', $pAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
+        <xsl:variable name="vExpsWithProtocol" select="search:queryIndex('experiments', concat('visible:true protocol:', id, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
 
         <table border="0" cellpadding="0" cellspacing="0">
             <tbody>
@@ -250,7 +259,7 @@
                     </xsl:call-template>
                 </xsl:if>
                 <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="'Text'"/>
+                    <xsl:with-param name="pName" select="'Description'"/>
                     <xsl:with-param name="pFieldName"/>
                     <xsl:with-param name="pValue" select="text"/>
                 </xsl:call-template>
@@ -264,18 +273,17 @@
                     <xsl:with-param name="pFieldName"/>
                     <xsl:with-param name="pValue" select="software"/>
                 </xsl:call-template>
-                <!--
                 <xsl:call-template name="detail-section">
                     <xsl:with-param name="pName" select="'Links'"/>
                     <xsl:with-param name="pContent">
                         <xsl:choose>
-                            <xsl:when test="count($vExpsWithArray) > 10">
-                               <a href="{$basepath}/browse.html?array={$pAccession}">All <xsl:value-of select="count($vExpsWithArray)"/> experiments done using <xsl:value-of select="$pAccession"/></a>
+                            <xsl:when test="count($vExpsWithProtocol) > 10">
+                               <a href="{$basepath}/browse.html?keywords=protocol:{id}">All <xsl:value-of select="count($vExpsWithProtocol)"/> experiments using protocol <xsl:value-of select="accession"/></a>
                             </xsl:when>
-                            <xsl:when test="count($vExpsWithArray) > 1">
-                                <a href="{$basepath}/browse.html?array={$pAccession}">All experiments done using <xsl:value-of select="$pAccession"/></a>
+                            <xsl:when test="count($vExpsWithProtocol) > 1">
+                                <a href="{$basepath}/browse.html?keywords=protocol:{id}">All experiments using protocol <xsl:value-of select="accession"/></a>
                                 <xsl:text>: (</xsl:text>
-                                    <xsl:for-each select="$vExpsWithArray">
+                                    <xsl:for-each select="$vExpsWithProtocol">
                                         <xsl:sort select="accession"/>
                                         <a href="{$vBaseUrl}/experiments/{accession}">
                                             <xsl:value-of select="accession"/>
@@ -284,16 +292,15 @@
                                     </xsl:for-each>
                                 <xsl:text>)</xsl:text>
                             </xsl:when>
-                            <xsl:when test="count($vExpsWithArray) = 1">
-                                <a href="{$vBaseUrl}/experiments/{$vExpsWithArray/accession}">
-                                    <xsl:text>Experiment </xsl:text><xsl:value-of select="$vExpsWithArray/accession"/>
+                            <xsl:when test="count($vExpsWithProtocol) = 1">
+                                <a href="{$vBaseUrl}/experiments/{$vExpsWithProtocol/accession}">
+                                    <xsl:text>Experiment </xsl:text><xsl:value-of select="$vExpsWithProtocol/accession"/>
                                 </a>
                             </xsl:when>
                             <xsl:otherwise/>
                         </xsl:choose>
                     </xsl:with-param>
                 </xsl:call-template>
-                -->
             </tbody>
         </table>
 
