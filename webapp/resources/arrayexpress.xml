@@ -195,11 +195,7 @@
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="type" title="by Type" type="string" path="type" analyze="true" store="false" escape="false"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
-                <!-- multiple-source filters for curators -->
-                <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>
-                <field name="migrated" type="boolean" path="@migrated = 'true'"/>
-                <field name="visible" type="boolean" path="@visible = 'true'"/>
             </document>
         </index>
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">

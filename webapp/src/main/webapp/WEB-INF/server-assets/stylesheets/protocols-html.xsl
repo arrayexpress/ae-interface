@@ -63,7 +63,7 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredProtocols" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vFilteredProtocols" select="/protocols/protocol"/> <!-- search:queryIndex($queryid)"/> -->
         <xsl:variable name="vTotal" select="count($vFilteredProtocols)"/>
 
         <xsl:variable name="vFrom" as="xs:integer">
@@ -252,10 +252,9 @@
         <table border="0" cellpadding="0" cellspacing="0">
             <tbody>
                 <xsl:if test="not($userid)">
-                    <xsl:call-template name="detail-row">
+                    <xsl:call-template name="detail-section">
                         <xsl:with-param name="pName" select="'Source'"/>
-                        <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="@source"/>
+                        <xsl:with-param name="pContent"><div>AE2</div></xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
                 <xsl:call-template name="detail-row">
