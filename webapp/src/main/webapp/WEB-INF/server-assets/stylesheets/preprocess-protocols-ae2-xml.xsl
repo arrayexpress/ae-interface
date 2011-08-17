@@ -4,21 +4,24 @@
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
     <xsl:template match="/protocols">
-        <array_designs>
-            <xsl:apply-templates select="protocol">
+        <xsl:element name="{name()}">
+            <xsl:apply-templates select="*">
                 <xsl:sort select="accession" order="ascending"/>
             </xsl:apply-templates>
-        </array_designs>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="protocol">
-        <array_design>
+        <xsl:element name="{name()}">
             <xsl:attribute name="source">ae2</xsl:attribute>
             <xsl:copy-of select="*[name() != 'user']"/>
+            <!--
             <xsl:for-each select="user[string-length(text()) != 0]">
                 <user id="{text()}"/>
             </xsl:for-each>
-        </array_design>
+            -->
+            <user id="1"/>
+        </xsl:element>
     </xsl:template>
 
 </xsl:stylesheet>

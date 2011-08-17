@@ -4,11 +4,8 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.ArrayDesigns;
-import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.*;
 import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
-import uk.ac.ebi.arrayexpress.components.JobsController;
-import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
@@ -39,6 +36,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     {
         String usersXml = null;
         String arrayDesignsXml = null;
+        String protocolsXml = null;
         String experimentsXml = null;
 
         // kicks reload of atlas experiments just in case
@@ -52,6 +50,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
                 arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
+                protocolsXml = getXmlFromFile(new File(sourceLocation, "protocols.xml"));
                 File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
                 experimentsXml = getXmlFromFile(experimentsSourceFile);
                 sourceInformation = new UpdateSourceInformation(
@@ -73,6 +72,10 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
             if (!"".equals(arrayDesignsXml)) {
                 updateArrayDesigns(arrayDesignsXml);
+            }
+
+            if (!"".equals(protocolsXml)) {
+                updateProtocols(protocolsXml);
             }
 
             if (!"".equals(usersXml)) {
@@ -117,6 +120,15 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         logger.info("Platform design information reload completed");
 
     }
+
+    private void updateProtocols( String xmlString ) throws Exception
+    {
+        ((Protocols) getComponent("Protocols")).update(xmlString, Protocols.ProtocolsSource.AE2);
+
+        logger.info("Protocols information reload completed");
+
+    }
+
     private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
     {
         ((Experiments) getComponent("Experiments")).update(

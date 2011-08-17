@@ -3,7 +3,8 @@
 	<experiment>
 		<id>50</id>
 		<accession>E-ATMX-1</accession>
-		<name>Transcription profiling of Arabidopsis wild type seeds grown under sulfur-deficient conditions</name>
+		<name>Transcription profiling of Arabidopsis wild type seeds grown under sulfur-deficient
+			conditions</name>
 		<experimenttype>transcription profiling by array</experimenttype>
 		<releasedate>2007-06-01</releasedate>
 		<submissiondate/>
@@ -24,14 +25,20 @@
 		<miamescore name="ReporterSequenceScore" value="1"/>
 		<miamescore name="AEMIAMEScore" value="4"/>
 		<miamescore name="FactorValueScore" value="1"/>
-		<arraydesign accession="A-AFFY-2" count="4" id="10922" name="Affymetrix GeneChip Arabidopsis Genome [ATH1-121501]"/>
-		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4" dataformat="rawData" id="" isderived="0" name="rawData"/>
-		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4" dataformat="scan" id="" isderived="0" name="scan"/>
-		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="1" bioassays="1" dataformat="processedDataMatrix" id="" isderived="1" name="processedDataMatrix"/>
+		<arraydesign accession="A-AFFY-2" count="4" id="10922"
+			name="Affymetrix GeneChip Arabidopsis Genome [ATH1-121501]"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4"
+			dataformat="rawData" id="" isderived="0" name="rawData"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="4" bioassays="4"
+			dataformat="scan" id="" isderived="0" name="scan"/>
+		<bioassaydatagroup arraydesignprovider="" bioassaydatacubes="1" bioassays="1"
+			dataformat="processedDataMatrix" id="" isderived="1" name="processedDataMatrix"/>
 		<provider contact="Yasuhiro Higashi" email="higashiy@graduate.chiba-u.jp" role="submitter"/>
 		<experimentdesign>growth_condition_design</experimentdesign>
 		<experimentdesign>transcription profiling by array</experimentdesign>
-		<description>Comparison of Arabidopsis wild-type developing seeds grown under sulfur-deficient condition vs Arabidopsis wild-type developing seeds grown under control condition.</description>
+		<description>Comparison of Arabidopsis wild-type developing seeds grown under
+			sulfur-deficient condition vs Arabidopsis wild-type developing seeds grown under control
+			condition.</description>
 		<protocol accession="P-CAGE-24529" id="52"/>
 		<protocol accession="P-CAGE-24520" id="54"/>
 		<protocol accession="P-CAGE-24527" id="56"/>
@@ -41,4 +48,76 @@
 		<protocol accession="P-CAGE-24517" id="53"/>
 		<protocol accession="P-AFFY-6" id="51"/>
 	</experiment>
-</experiments>	
+	<experiment>
+		<id>10000</id>
+		<accession>E-MEXP-986</accession>
+		<name>Transcription profiling of wild type and DREB2C over-expression Arabidopsis
+			plants</name>
+		<releasedate>2007-02-07</releasedate>
+		<submissiondate>2007-01-10</submissiondate>
+		<lastupdatedate/>
+		<samples>0</samples>
+		<hybs>0</hybs>
+		<experimentdesign>co-expression</experimentdesign>
+		<experimentdesign>genetic_modification</experimentdesign>
+		<experimentdesign>transcription_profiling</experimentdesign>
+		<description>We analysed DREB2C overexpressing Arabidopsis plants (35S:DREB2C-a line: S15,
+			35S:DREB2C-c line: S22)with cDNA microarray (A-MEXP-187).</description>
+	</experiment>
+	<experiment>
+		<id>10001</id>
+		<accession>E-MEXP-1000</accession>
+		<name>Transcription profiling of wild type and C-hordein knock-out barley line</name>
+		<releasedate>2007-02-23</releasedate>
+		<submissiondate>2007-02-22</submissiondate>
+		<lastupdatedate/>
+		<samples>0</samples>
+		<hybs>0</hybs>
+		<bibliography authors="" title="" edition="" issue="" pages="" publication="" publisher=""
+			volume="" year="" status="" uri=""/>
+		<description>Identify the transcriptional effects of the antisense C-hordein construct in a
+			barley line</description>
+		<protocol id="10000" accession="PROTOCOL-1"/>
+	</experiment>
+	<experiment>
+		<id>1</id>
+		<accession>E-MEXP-2153</accession>
+		<secondaryaccession>SSCC1122</secondaryaccession>
+		<name>Transcription profiling of mouse naive T cells differentiated under TH1 and TH2
+			conditions</name>
+		<experimenttype>transcription profiling by high throughput sequencing</experimenttype>
+		<releasedate>2009-06-01</releasedate>
+		<submissiondate>2009-04-29</submissiondate>
+		<lastupdatedate>2010-10-10</lastupdatedate>
+		<samples>2</samples>
+		<hybs>2</hybs>
+		<user>12</user>
+		<sampleattribute category="Genotype" value="wild_type"/>
+		<sampleattribute category="Organism" value="Mus musculus"/>
+		<sampleattribute category="OrganismPart" value="spleen"/>
+		<sampleattribute category="StrainOrLine" value="C57BL/6"/>
+		<sampleattribute category="TargetedCellType" value="T cell"/>
+		<experimentalfactor name="GROWTH_CONDITION" value="Unspecified"/>
+		<experimentalfactor name="GROWTH_CONDITION" value="anti-IFN-gamma, anti-IL-12 and IL-4"/>
+		<miamescore name="AEMIAMEScore" value="5"/>
+		<arraydesign id="1" accession="A-AFFY-45" name="A-AFFY-45" count="2"/>
+		<bioassaydatagroup id="" name="rawDataMatrix" bioassaydatacubes="2" arraydesignprovider=""
+			dataformat="rawDataMatrix" bioassays="2" isderived="0"/>
+		<bioassaydatagroup id="" name="processedDataMatrix" bioassaydatacubes="2"
+			arraydesignprovider="" dataformat="processedDataMatrix" bioassays="2" isderived="1"/>
+		<bibliography accession="test pubid" authors=""
+			title="The AP-1 transcription factor Batf controls TH17 differentiation"
+			doi="10.1038/nature08114" edition="" issue="" pages="" publication="" publisher=""
+			volume="" year="" status="" uri=""/>
+		<provider contact="Test Barbara Test Schraml" role="submitter" email="test@test.com"/>
+		<experimentdesign>co-expression_design</experimentdesign>
+		<experimentdesign>in_vitro_design</experimentdesign>
+		<experimentdesign>transcript_identification_design</experimentdesign>
+		<description>Naive CD4+ CD62L+ CD25- T cells were differentiated under TH1 and TH2
+			conditions for 7 days, restimulated with anti-CD3 and anti-CD28 for 24h and sorted for
+			IFN-gamma (TH1) and IL-4 (TH2) production using cytokine secretion assays.</description>
+		<protocol id="2" accession="P-MTAB-4010"/>
+		<protocol id="1" accession="P-MTAB-4009"/>
+		<seqdatauri>http://www.ebi.ac.uk/ena/data/view/SRR015443-SRR015445</seqdatauri>
+	</experiment>
+</experiments>
