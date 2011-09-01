@@ -70,6 +70,15 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                 );
             }
 
+            if (!"".equals(usersXml)) {
+                updateUsers(usersXml);
+            }
+
+            // update experiments first so protocols and arrays can access experiment information when updating
+            if (!"".equals(experimentsXml)) {
+                updateExperiments(experimentsXml, sourceInformation);
+            }
+
             if (!"".equals(arrayDesignsXml)) {
                 updateArrayDesigns(arrayDesignsXml);
             }
@@ -77,15 +86,6 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             if (!"".equals(protocolsXml)) {
                 updateProtocols(protocolsXml);
             }
-
-            if (!"".equals(usersXml)) {
-                updateUsers(usersXml);
-            }
-
-            if (!"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml, sourceInformation);
-            }
-
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
