@@ -13,14 +13,24 @@
 
     <xsl:template match="protocol">
         <xsl:element name="{name()}">
-            <xsl:copy-of select="*[name() != 'user']"/>
+            <user id="1"/>
+            <xsl:apply-templates select="*"/>
             <!--
             <xsl:for-each select="user[string-length(text()) != 0]">
                 <user id="{text()}"/>
             </xsl:for-each>
             -->
-            <user id="1"/>
+            <xsl:for-each-group select="parameter" group-by="name">
+                <xsl:sort select="name" order="ascending"/>
+                <parameter>
+                    <xsl:value-of select="current-grouping-key()"/>
+                </parameter>
+            </xsl:for-each-group>
         </xsl:element>
     </xsl:template>
 
+    <xsl:template match="user | parameter"/>
+    <xsl:template match="*">
+        <xsl:copy-of select="."/>
+    </xsl:template>
 </xsl:stylesheet>

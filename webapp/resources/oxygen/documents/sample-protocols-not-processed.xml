@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocols>
+  <protocol>
+    <id>268</id>
+    <accession>P-MEXP-1984</accession>
+    <name>P-MEXP-1984</name>
+    <text>Hybridisation Materials</text>
+    <type>hybridization</type>
+    <hardware/>
+    <software/>
+    <standardpublicprotocol>0</standardpublicprotocol>
+    <parameter>
+      <name>Chamber type</name>
+      <order>10</order>
+    </parameter>
+    <parameter>
+      <name>Temperature</name>
+      <order>10</order>
+    </parameter>
+    <parameter>
+      <name>Quantity of label target used</name>
+      <order>10</order>
+    </parameter>
+    <parameter>
+      <name>Time</name>
+      <order>10</order>
+    </parameter>
+    <parameter>
+      <name>Volume</name>
+      <order>10</order>
+    </parameter>
+    <parameter>
+      <name>Chamber type</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Temperature</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Volume</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Time</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Quantity of label target used</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Quantity of label target used</name>
+      <order>6</order>
+    </parameter>
+    <parameter>
+      <name>Temperature</name>
+      <order>6</order>
+    </parameter>
+  </protocol>
+</protocols>
