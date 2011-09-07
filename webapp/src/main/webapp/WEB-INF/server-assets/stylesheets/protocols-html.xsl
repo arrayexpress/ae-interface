@@ -263,6 +263,13 @@
                     <xsl:with-param name="pValue" select="text"/>
                 </xsl:call-template>
                 <xsl:call-template name="detail-row">
+                    <xsl:with-param name="pName" select="if (count(parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
+                    <xsl:with-param name="pFieldName"/>
+                    <xsl:with-param name="pValue">
+                        <xsl:value-of select="string-join(parameter, ', ')"/>
+                    </xsl:with-param>
+                </xsl:call-template>
+                <xsl:call-template name="detail-row">
                     <xsl:with-param name="pName" select="'Hardware'"/>
                     <xsl:with-param name="pFieldName"/>
                     <xsl:with-param name="pValue" select="hardware"/>
