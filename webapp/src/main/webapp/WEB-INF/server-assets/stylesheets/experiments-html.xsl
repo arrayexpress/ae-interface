@@ -197,7 +197,7 @@
                             <td class="name"><div>Links</div></td>
                             <td class="value">
                                 <xsl:if test="@loadedinatlas">
-                                    <div><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}&amp;ref=aebrowse">Query Gene Expression Atlas</a></div>
+                                    <div><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}?ref=aebrowse">Query Gene Expression Atlas</a></div>
                                 </xsl:if>
                                 <div>
                                     <xsl:if test="secondaryaccession">

@@ -78,7 +78,7 @@
                 <td class="value">
                     <div class="value">
                         <xsl:if test="@loadedinatlas">
-                            <div><a href="${interface.application.link.atlas.exp_query.url}{accession}&amp;ref=aebrowse">Query Gene Expression Atlas</a></div>
+                            <div><a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Query Gene Expression Atlas</a></div>
                         </xsl:if>
                         <xsl:if test="secondaryaccession">
                             <div><xsl:call-template name="secondaryaccession"/></div>

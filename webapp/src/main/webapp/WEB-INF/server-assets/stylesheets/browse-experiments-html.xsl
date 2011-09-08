@@ -222,7 +222,7 @@
                 <td class="td_main_img ae_align_center {$vDetailedViewMainTdClass}">
                     <div>
                         <xsl:choose>
-                            <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}&amp;ref=aebrowse"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>
+                            <xsl:when test="@loadedinatlas"><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}?ref=aebrowse"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></a></xsl:when>
                             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
                         </xsl:choose>
                     </div>
@@ -298,7 +298,7 @@
                                 <td class="value">
                                     <div class="value">
                                         <xsl:if test="@loadedinatlas">
-                                            <div><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}&amp;ref=aebrowse">Query Gene Expression Atlas</a></div>
+                                            <div><a href="${interface.application.link.atlas.exp_query.url}{$vAccession}?ref=aebrowse">Query Gene Expression Atlas</a></div>
                                         </xsl:if>
                                         <xsl:if test="secondaryaccession">
                                             <div><xsl:call-template name="secondaryaccession"/></div>
