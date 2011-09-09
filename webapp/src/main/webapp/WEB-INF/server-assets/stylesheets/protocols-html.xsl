@@ -89,7 +89,7 @@
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}/protocols">Protocols</a>
                     <xsl:choose>
-                        <xsl:when test="not($vBrowseMode)">
+                        <xsl:when test="not(not($accession))">
                             <xsl:text> > </xsl:text>
                             <a href="{$basepath}/protocols/{upper-case($accession)}">
                                 <xsl:value-of select="upper-case($accession)"/>
