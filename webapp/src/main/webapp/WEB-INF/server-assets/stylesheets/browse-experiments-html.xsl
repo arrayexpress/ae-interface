@@ -316,15 +316,11 @@
                                                 </div>
                                             </xsl:for-each>
                                         </xsl:if>
-                                        <xsl:if test="source/@migrated = 'true' or source/@id = 'ae1'">
+                                        <xsl:if test="source/@id = 'ae2'">
                                             <div>
-                                                <xsl:variable name="vExpIdAe1" select="if (source/@id = 'ae1') then $vExpId else ../experiment[accession = $vAccession and source/@id = 'ae1']/id"/>
-                                                <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{$vExpIdAe1}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
-                                                    <xsl:text>Experimental protocols (old interface)</xsl:text>
+                                                <a href="{$basepath}/protocols/browse.html?keywords=experiment%3A{$vAccession}">
+                                                    <xsl:text>Experimental protocols</xsl:text>
                                                 </a>
-                                            </div>
-                                            <div>
-                                                <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={$vAccession}">Experiment Page (old interface)</a>
                                             </div>
                                         </xsl:if>
                                     </div>

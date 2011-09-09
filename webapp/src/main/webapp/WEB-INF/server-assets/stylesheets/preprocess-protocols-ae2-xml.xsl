@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                extension-element-prefixes="aejava"
+                exclude-result-prefixes="aejava"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -20,6 +23,10 @@
                 <user id="{text()}"/>
             </xsl:for-each>
             -->
+            <xsl:variable name="vExperimentsForProtocol" select="aejava:getAcceleratorValueAsCollection('experiments-for-protocol', id)"/>
+            <xsl:for-each select="$vExperimentsForProtocol">
+                <experiment><xsl:value-of select="."/></experiment>
+            </xsl:for-each>
             <xsl:for-each-group select="parameter" group-by="name">
                 <xsl:sort select="name" order="ascending"/>
                 <parameter>

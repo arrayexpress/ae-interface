@@ -193,6 +193,7 @@
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
                 <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
+                <field name="experiment" title="by Experiment Association" type="string" path="experiment" analyze="true" store="false" escape="false"/>
                 <field name="type" title="by Type" type="string" path="type" analyze="true" store="false" escape="false"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>

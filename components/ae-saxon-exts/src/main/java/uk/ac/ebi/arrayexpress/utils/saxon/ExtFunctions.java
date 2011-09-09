@@ -53,7 +53,12 @@ public class ExtFunctions
     {
     }
 
-    public synchronized static String getAcceleratorValue( String acceleratorName, String key )
+    public synchronized static Object getAcceleratorValue( String acceleratorName, String key )
+    {
+        return "1";
+    }
+
+    public synchronized static String getAcceleratorValueAsString( String acceleratorName, String key )
     {
         return "1";
     }

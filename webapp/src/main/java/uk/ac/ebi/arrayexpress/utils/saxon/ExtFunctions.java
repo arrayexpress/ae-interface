@@ -21,6 +21,7 @@ import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,12 +83,33 @@ public class ExtFunctions
         acceleratorMap.put(key.toLowerCase(), value);
     }
 
-    public synchronized static String getAcceleratorValue( String acceleratorName, String key )
+    public synchronized static Object getAcceleratorValue( String acceleratorName, String key )
+    {
+        if (null != acceleratorMapRegistry
+                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
+            return acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
+        } else {
+            return null;
+        }
+    }
+
+    public synchronized static String getAcceleratorValueAsString( String acceleratorName, String key )
     {
         if (null != acceleratorMapRegistry
                 && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
             Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
             return value instanceof String ? (String)value : null;
+        } else {
+            return null;
+        }
+    }
+
+    public synchronized static Collection getAcceleratorValueAsCollection( String acceleratorName, String key )
+    {
+        if (null != acceleratorMapRegistry
+                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
+            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
+            return value instanceof Collection ? (Collection)value : null;
         } else {
             return null;
         }

@@ -50,7 +50,7 @@
                 </xsl:analyze-string>
             </xsl:variable>
 
-            <xsl:if test="aejava:getAcceleratorValue('is-in-atlas', accession)">
+            <xsl:if test="aejava:getAcceleratorValueAsString('is-in-atlas', accession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
@@ -112,11 +112,11 @@
                 </xsl:choose>
             </samples>
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('raw-files', $vAccession)) then 'true' else 'false'"/>
                 <xsl:value-of select="$vGenDescription/rawdatafiles"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('fgem-files', $vAccession)) then 'true' else 'false'"/>
                 <xsl:value-of select="$vGenDescription/fgemdatafiles"/>
             </fgemdatafiles>
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">

@@ -85,6 +85,11 @@
     <!-- protocols -->
     <rule>
         <from>^/protocols/?$</from>
+        <condition type="query-string" operator="greater"/>
+        <to type="redirect">%{context-path}/protocols/browse.html?%{query-string}</to>
+    </rule>
+    <rule>
+        <from>^/protocols/?$</from>
         <to type="redirect">%{context-path}/protocols/browse.html</to>
     </rule>
     <rule>

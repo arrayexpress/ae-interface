@@ -214,7 +214,7 @@
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
         <xsl:choose>
-            <xsl:when test="'0' != aejava:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
+            <xsl:when test="'0' != aejava:getAcceleratorValueAsString($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>

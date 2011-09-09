@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.ValueRepresentation;
 import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +41,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Experiments extends ApplicationComponent implements IDocumentSource
 {
@@ -306,6 +304,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
         ExtFunctions.clearAccelerator("is-in-atlas");
         ExtFunctions.clearAccelerator("visible-experiments");
+        ExtFunctions.clearAccelerator("experiments-for-protocol");
         try {
             for (String accession : this.experimentsInAtlas.getObject()) {
                 ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
@@ -316,12 +315,26 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("accession");
+            XPathExpression protocolIdsXpe = xp.compile("protocol/id");
             for (Object node : documentNodes) {
 
                 try {
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
                     ExtFunctions.addAcceleratorValue("visible-experiments", accession, node);
+                    List protocolIds = (List)protocolIdsXpe.evaluate(node, XPathConstants.NODESET);
+                    if (null != protocolIds) {
+                        for (Object protocolId : protocolIds) {
+                            String id = ((ValueRepresentation)protocolId).getStringValue();
+                            Set<String> experimentsForProtocol = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-protocol", id);
+                            if (null == experimentsForProtocol) {
+                                experimentsForProtocol = new HashSet<String>();
+                                ExtFunctions.addAcceleratorValue("experiments-for-protocol", id, experimentsForProtocol);
+                            }
+                            experimentsForProtocol.add(accession);
+
+                        }
+                    }
                 } catch (XPathExpressionException x) {
                     this.logger.error("Caught an exception:", x);
                 }
