@@ -305,6 +305,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         ExtFunctions.clearAccelerator("is-in-atlas");
         ExtFunctions.clearAccelerator("visible-experiments");
         ExtFunctions.clearAccelerator("experiments-for-protocol");
+        ExtFunctions.clearAccelerator("experiments-for-array");
         try {
             for (String accession : this.experimentsInAtlas.getObject()) {
                 ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
@@ -316,6 +317,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
             XPathExpression accessionXpe = xp.compile("accession");
             XPathExpression protocolIdsXpe = xp.compile("protocol/id");
+            XPathExpression arrayAccXpe = xp.compile("arraydesign/accession");
             for (Object node : documentNodes) {
 
                 try {
@@ -332,7 +334,18 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                                 ExtFunctions.addAcceleratorValue("experiments-for-protocol", id, experimentsForProtocol);
                             }
                             experimentsForProtocol.add(accession);
-
+                        }
+                    }
+                    List arrayAccessions = (List)arrayAccXpe.evaluate(node, XPathConstants.NODESET);
+                    if (null != arrayAccessions) {
+                        for (Object arrayAccession : arrayAccessions) {
+                            String arrayAcc = ((ValueRepresentation)arrayAccession).getStringValue();
+                            Set<String> experimentsForArray = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-array", arrayAcc);
+                            if (null == experimentsForArray) {
+                                experimentsForArray = new HashSet<String>();
+                                ExtFunctions.addAcceleratorValue("experiments-for-array", arrayAcc, experimentsForArray);
+                            }
+                            experimentsForArray.add(accession);
                         }
                     }
                 } catch (XPathExpressionException x) {
