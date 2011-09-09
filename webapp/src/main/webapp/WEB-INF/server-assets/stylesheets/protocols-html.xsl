@@ -89,7 +89,7 @@
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}/protocols">Protocols</a>
                     <xsl:choose>
-                        <xsl:when test="not(not($accession))">
+                        <xsl:when test="not($vBrowseMode)">
                             <xsl:text> > </xsl:text>
                             <a href="{$basepath}/protocols/{upper-case($accession)}">
                                 <xsl:value-of select="upper-case($accession)"/>
@@ -265,9 +265,7 @@
                 <xsl:call-template name="detail-row">
                     <xsl:with-param name="pName" select="if (count(parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
                     <xsl:with-param name="pFieldName"/>
-                    <xsl:with-param name="pValue">
-                        <xsl:value-of select="string-join(parameter, ', ')"/>
-                    </xsl:with-param>
+                    <xsl:with-param name="pValue"><xsl:value-of select="string-join(parameter, ', ')"/></xsl:with-param>
                 </xsl:call-template>
                 <xsl:call-template name="detail-row">
                     <xsl:with-param name="pName" select="'Hardware'"/>
@@ -316,7 +314,7 @@
         <xsl:param name="pName"/>
         <xsl:param name="pFieldName"/>
         <xsl:param name="pValue"/>
-        <xsl:if test="$pValue/node()">
+        <xsl:if test="$pValue/node() and ($pValue/text() != '')">
             <xsl:call-template name="detail-section">
                 <xsl:with-param name="pName" select="$pName"/>
                 <xsl:with-param name="pContent">
