@@ -176,6 +176,7 @@ body.ae2_curator {
 
 /* ae warn/error area */
 
+.ae_info_area,
 .ae_warn_area,
 .ae_protected_area,
 .ae_error_area {
@@ -190,9 +191,14 @@ body.ae2_curator {
     border-bottom: 1px solid #cccccc;
 }
 
+.ae_info_area {
+    background-image: url(../images/basic_info_64.gif);
+}
+
 .ae_warn_area {
     background-image: url(../images/basic_warning_64.gif);
 }
+
 .ae_protected_area {
     background-image: url(../images/basic_lock_64.gif);
 }
