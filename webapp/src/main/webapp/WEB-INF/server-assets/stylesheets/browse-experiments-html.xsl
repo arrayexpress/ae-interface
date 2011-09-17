@@ -29,7 +29,6 @@
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
@@ -98,6 +97,8 @@
         <xsl:param name="pTo"/>
         <xsl:variable name="vExpId" select="string(id)"/>
         <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
@@ -209,6 +210,7 @@
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pKind" select="'fgem'"/>
+                            <xsl:with-param name="pFiles" select="$vFiles"/>
                         </xsl:call-template>
                     </div>
                 </td>
@@ -216,6 +218,7 @@
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pKind" select="'raw'"/>
+                            <xsl:with-param name="pFiles" select="$vFiles"/>
                         </xsl:call-template>
                     </div>
                 </td>
@@ -330,16 +333,24 @@
                             <tr>
                                 <td class="name"><div class="name">Files</div></td>
                                 <xsl:choose>
-                                    <xsl:when test="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples']">
+                                    <xsl:when test="$vFiles/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples']">
 
                                         <td class="attrs">
                                             <div class="attrs">
                                                 <table cellpadding="0" cellspacing="0" border="0">
                                                     <tbody>
-                                                        <xsl:call-template name="data-files"/>
-                                                        <xsl:call-template name="magetab-files"/>
-                                                        <xsl:call-template name="image-files"/>
-                                                        <xsl:call-template name="magetab-files-array"/>
+                                                        <xsl:call-template name="data-files">
+                                                            <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                        </xsl:call-template>
+                                                        <xsl:call-template name="magetab-files">
+                                                            <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                        </xsl:call-template>
+                                                        <xsl:call-template name="image-files">
+                                                            <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                        </xsl:call-template>
+                                                        <xsl:call-template name="magetab-files-array">
+                                                            <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                        </xsl:call-template>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -735,8 +746,9 @@
     </xsl:template>
 
     <xsl:template name="data-files">
+        <xsl:param name="pFiles"/>
         <xsl:variable name="vAccession" select="string(accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = 'raw' or @kind = 'fgem']"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'raw' or @kind = 'fgem']"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Data Archives</td>
@@ -757,8 +769,10 @@
     </xsl:template>
 
     <xsl:template name="magetab-files">
+        <xsl:param name="pFiles"/>
+
         <xsl:variable name="vAccession" select="string(accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind"/>
@@ -792,8 +806,10 @@
     </xsl:template>
 
     <xsl:template name="magetab-files-array">
+        <xsl:param name="pFiles"/>
+
         <xsl:variable name="vArrayAccession" select="distinct-values(arraydesign/accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file[@extension = 'txt' and @kind = 'adf']"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and @kind = 'adf']"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Array Design</td>
@@ -811,8 +827,10 @@
     </xsl:template>
 
     <xsl:template name="image-files">
+        <xsl:param name="pFiles"/>
+
         <xsl:variable name="vAccession" select="string(accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Experiment Design Images</td>
@@ -830,9 +848,11 @@
     </xsl:template>
 
     <xsl:template name="data-files-main">
+        <xsl:param name="pFiles"/>
+
         <xsl:param name="pKind"/>
         <xsl:variable name="vAccession" select="string(accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = $pKind]"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = $pKind]"/>
         <xsl:variable name="vImg">
             <xsl:choose>
                 <xsl:when test="$pKind = 'raw' and seqdatauri">

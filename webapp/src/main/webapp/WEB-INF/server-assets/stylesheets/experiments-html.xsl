@@ -7,18 +7,16 @@
                 exclude-result-prefixes="aejava search html"
                 version="2.0">
 
-    <xsl:param name="sortby">releasedate</xsl:param>
-    <xsl:param name="sortorder">descending</xsl:param>
-
     <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
+
+    <xsl:param name="userid"/>
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     <xsl:variable name="vAccession" select="upper-case($accession)"/>
-    <xsl:variable name="vFilesDoc" select="doc('files.xml')"/>
 
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
@@ -32,7 +30,6 @@
                     <xsl:value-of select="$vAccession"/><xsl:text> | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_experiments_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$basepath}/assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"/>
@@ -49,81 +46,77 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', $vAccession)"/>
 
-        <div class="ae_centered_container_100pc">
-            <div id="ae_keywords_filters_area">
-                <div id="ae_keywords_filters_box">
-                    <div class="form_outer">
-                        <div class="form_top">
-                            <div class="form_bottom">
-                                <div class="form_left">
-                                    <div class="form_right">
-                                        <div class="form_bottom_left">
-                                            <div class="form_bottom_right">
-                                                <div class="form_top_left">
-                                                    <div class="form_top_right">
-                                                        <div id="ae_keywords_filters_inner_box">
-                                                            <form method="get" action="{$basepath}/browse.html">
-                                                                <fieldset id="ae_keywords_box">
-                                                                    <label for="ae_keywords">Experiment, citation, sample and factor annotations [<a href="javascript:aeClearKeywords()">clear</a>]</label>
-                                                                    <input id="ae_keywords" name="keywords" maxlength="200"/>
-                                                                    <div id="ae_directsub_option">
-                                                                        <input id="ae_directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations."/><label for="ae_directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD8 will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
-                                                                    </div>
-                                                                    <div id="ae_adv_query_link"><a href="${interface.application.link.adv_query_help}" target="ae_help"><img class="new!" src="{$basepath}/assets/images/basic_wand.gif" width="16" height="16" alt=""/>Advanced query syntax<img src="{$basepath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/></a></div>
-                                                                </fieldset>
-                                                                <fieldset id="ae_filters_box">
-                                                                    <label for="ae_species">Filter on [<a href="javascript:aeResetFilters()">reset</a>]</label>
-                                                                    <select id="ae_species" name="species" disabled="true"><option value="">All species (loading options)</option></select>
-                                                                    <select id="ae_array" name="array" disabled="true"><option value="">All arrays (loading options)</option></select>
-                                                                    <div id="ae_exptype_selector">
-                                                                        <select id="ae_expdesign" name="exptype[]" disabled="true"><option value="">All assays by molecule (loading options)</option></select>
-                                                                        <span> by </span>
-                                                                        <select id="ae_exptech" name="exptype[]" disabled="true"><option value="">All technologies (loading options)</option></select>
-                                                                    </div>
-                                                                </fieldset>
-                                                                <fieldset id="ae_options_box">
-                                                                    <label>Display options [<a href="javascript:aeResetOptions()">reset</a>]</label>
-                                                                    <div class="select_margin"><select id="ae_pagesize" name="pagesize"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option></select><label for="ae_pagesize"> experiments per page</label></div>
-                                                                    <input id="ae_keyword_filters_submit" type="submit" value="Query"/>
-                                                                    <input type="hidden" id="ae_sortby" name="sortby" value="releasedate"/>
-                                                                    <input type="hidden" id="ae_sortorder" name="sortorder" value="descending"/>
-                                                                    <input type="hidden" id="ae_expandefo" name="expandefo" value="on"/>
-                                                                    <div><input id="ae_detailedview" name="detailedview" type="checkbox"/><label for="ae_detailedview">Detailed view</label></div>
-                                                                </fieldset>
-                                                            </form>
+        <xsl:choose>
+            <xsl:when test="exists($vExperiment)">
+                <xsl:choose>
+                    <xsl:when test="$vExperiment/user/@id = '1'">
+                        <xsl:call-template name="block-experiment">
+                            <xsl:with-param name="pExperiment" select="$vExperiment"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="block-access-restricted"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="block-not-found"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
-                                                            <div id="ae_help_link"><a href="${interface.application.link.browse_help}" target="ae_help"><img src="{$basepath}/assets/images/basic_help.gif" width="16" height="16" alt=""/>ArrayExpress Browser Help</a></div>
-                                                            <div id="ae_logo_browse"><a href="{$basepath}" title="ArrayExpress Home"><img src="{$basepath}/assets/images/ae_logo_browse.gif" alt="ArrayExpress Home"/></a></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <xsl:template name="block-experiment">
+        <xsl:param name="pExperiment"/>
+        <div id="ae_contents_box_100pc">
+            <div id="ae_content">
+                <div id="ae_navi">
+                    <a href="${interface.application.link.www_domain}/">EBI</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}">ArrayExpress</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/experiments">Experiments</a>
+                    <xsl:text> > </xsl:text>
+                    <a href="{$basepath}/experiments/{$vAccession}">
+                        <xsl:value-of select="$vAccession"/>
+                    </a>
+                </div>
+                <div id="ae_summary_box">
+                    <div id="ae_accession">
+                        <a href="{$basepath}/experiments/{$vAccession}">
+                            <xsl:text>Experiment </xsl:text>
+                            <xsl:value-of select="$vAccession"/>
+                        </a>
+                        <xsl:if test="not($pExperiment/user/@id = '1')">
+                            <img src="{$basepath}/assets/images/silk_lock.gif" alt="Access to the data is restricted" width="8" height="9"/>
+                        </xsl:if>
+                    </div>
+                    <div id="ae_title">
+                        <div>
+                            <xsl:value-of select="$pExperiment/name"/>
+                            <xsl:if test="$pExperiment/assays">
+                                <xsl:text> (</xsl:text>
+                                <xsl:value-of select="$pExperiment/assays"/>
+                                <xsl:text> assays)</xsl:text>
+                            </xsl:if>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="ae_results_area">
-                <xsl:if test="not($vFilteredExperiments)">Oops, no experiments found</xsl:if>
-                <xsl:apply-templates select="$vFilteredExperiments"/>
+                <div id="ae_results_box">
+                    <xsl:apply-templates select="$pExperiment"/>
+                </div>
             </div>
         </div>
     </xsl:template>
 
     <xsl:template match="experiment">
+        <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+
         <div id="ae_experiment_content">
             <div class="ae_detail">
                 <div class="tbl">
                     <table cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                            <td class="hdr_name"><div><xsl:value-of select="accession"/></div></td>
-                            <td class="hdr_value"><div><xsl:value-of select="name"/></div></td>
-                        </tr>
                         <xsl:if test="species">
                             <tr>
                                 <td class="name"><div>Species</div></td>
@@ -218,13 +211,9 @@
                                     </xsl:for-each>
                                 </xsl:if>
                                 <div>
-                                    <a href="${interface.application.link.aer_old.base.url}/details?class=MAGE.Experiment_protocols&amp;criteria=Experiment%3D{id}&amp;contextClass=MAGE.Protocol&amp;templateName=Protocol.vm">
-                                        <xsl:text>Experimental protocols (old interface)</xsl:text>
+                                    <a href="{$basepath}/protocols/browse.html?keywords=experiment%3A{$vAccession}">
+                                        <xsl:text>Experimental protocols</xsl:text>
                                     </a>
-                                </div>
-                                <div>
-                                    <a href="${interface.application.link.aer_old.base.url}/result?queryFor=Experiment&amp;eAccession={accession}">Experiment Page (old interface)</a>
-
                                 </div>
                             </td>
                         </tr>
@@ -232,16 +221,24 @@
                         <tr>
                             <td class="name"><div>Files</div></td>
                             <xsl:choose>
-                                <xsl:when test="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples']">
+                                <xsl:when test="$vFiles/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples']">
 
                                     <td class="attrs">
                                         <div>
                                             <table cellpadding="0" cellspacing="0" border="0">
                                                 <tbody>
-                                                    <xsl:call-template name="data-files"/>
-                                                    <xsl:call-template name="magetab-files"/>
-                                                    <xsl:call-template name="image-files"/>
-                                                    <xsl:call-template name="magetab-files-array"/>
+                                                    <xsl:call-template name="data-files">
+                                                        <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                    </xsl:call-template>
+                                                    <xsl:call-template name="magetab-files">
+                                                        <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                    </xsl:call-template>
+                                                    <xsl:call-template name="image-files">
+                                                        <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                    </xsl:call-template>
+                                                    <xsl:call-template name="magetab-files-array">
+                                                        <xsl:with-param name="pFiles" select="$vFiles"/>
+                                                    </xsl:call-template>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -498,7 +495,7 @@
 
     <xsl:template name="providers">
         <xsl:for-each select="provider[not(contact=following-sibling::provider/contact) and role!='data_coder']">
-            <xsl:sort select="role='submitter'" order="descending"/>
+            <xsl:sort select="if (role='submitter') then '1' else '0'" order="descending"/>
             <xsl:sort select="lower-case(contact)"/>
             <xsl:choose>
                 <xsl:when test="role='submitter' and string-length(email) > 0">
@@ -604,7 +601,8 @@
     </xsl:template>
 
     <xsl:template name="data-files">
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = 'raw' or @kind = 'fgem']"/>
+        <xsl:param name="pFiles"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'raw' or @kind = 'fgem']"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Data Archives</td>
@@ -625,7 +623,10 @@
     </xsl:template>
 
     <xsl:template name="magetab-files">
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
+        <xsl:param name="pFiles"/>
+
+        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind"/>
@@ -642,6 +643,10 @@
                             <a href="{$vBaseUrl}/files/{$vAccession}/{@name}">
                                 <xsl:value-of select="@name"/>
                             </a>
+                            <xsl:text> | </xsl:text>
+                            <a href="{$vBaseUrl}/experiments/{$vAccession}/{replace(@name, '[^\.]+\.(.*)(idf|sdrf).+', '$1')}{current-grouping-key()}.html">
+                                <xsl:text>view</xsl:text>
+                            </a><img class="new" src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                             <xsl:if test="position() != last()">
                                 <xsl:text>, </xsl:text>
                             </xsl:if>
@@ -654,9 +659,11 @@
         </xsl:if>
     </xsl:template>
 
+
     <xsl:template name="magetab-files-array">
+        <xsl:param name="pFiles"/>
         <xsl:variable name="vArrayAccession" select="distinct-values(arraydesign/accession)"/>
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vArrayAccession]/file[@extension = 'txt' and @kind = 'adf']"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and @kind = 'adf']"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Array Design</td>
@@ -674,7 +681,8 @@
     </xsl:template>
 
     <xsl:template name="image-files">
-        <xsl:variable name="vFiles" select="$vFilesDoc/files/folder[@accession = $vAccession]/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
+        <xsl:param name="pFiles"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
         <xsl:if test="$vFiles">
             <tr>
                 <td class="attr_name">Experiment Design Images</td>
@@ -715,6 +723,6 @@
             </xsl:when>
             <xsl:otherwise>&#160;</xsl:otherwise>
         </xsl:choose>
-    </xsl:template>    
+    </xsl:template>
 
 </xsl:stylesheet>
