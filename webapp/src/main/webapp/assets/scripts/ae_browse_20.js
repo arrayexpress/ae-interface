@@ -264,6 +264,8 @@ onWindowResize()
         $("#ae_results_hdr").css( "right", padding + "px" );
     } else if ( padding <= 0 && $.browser.opera && $.browser.version < 9.5 ) {
         $("#ae_results_hdr").css( "right", "-1px" );
+    } else if ( -1 == padding && $.browser.safari && String($.browser.version).replace(/(\d+).*/i, "$1") >= 534 ) {
+        $("#ae_results_hdr").css( "right", "-1px" );
     }
 }
 
