@@ -4,10 +4,18 @@
         "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
 
 <urlrewrite>
-    <!-- show a list of experiments for googlebots -->
+    <!-- special treatment for googlebots -->
     <rule>
         <from>^/browse\.html$</from>
-        <condition name="user-agent">googlebot.*</condition>
+        <condition type="parameter" name="keywords" operator="equal">E-\w{4}-\d+</condition>
+        <condition type="parameter" name="detailedview" operator="equal">on</condition>
+        <condition name="user-agent">.*Googlebot.*</condition>
+        <to type="permanent-redirect">%{context-path}/experiments/%{parameter:keywords}</to>
+    </rule>
+
+    <rule>
+        <from>^/browse\.html$</from>
+        <condition name="user-agent">.*Googlebot.*</condition>
         <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html</to>
     </rule>
 
@@ -405,13 +413,8 @@
     </rule>
 
     <rule>
-        <from>^/query/result$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray-as/aer/result?%{query-string}</to>
-    </rule>
-
-    <rule>
         <from>^/query/(.+)$</from>
-        <to type="permanent-redirect">http://www.ebi.ac.uk/microarray-as/aer/$1?%{query-string}</to>
+        <to type="permanent-redirect">%{context-path}/upgraded.html</to>
     </rule>
 
     <rule>

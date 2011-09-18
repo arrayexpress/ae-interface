@@ -46,8 +46,9 @@
                     <xsl:text>Your browser does not support inline frames or is currently configured not to display inline frames. Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/head.html</xsl:text>
                 </iframe>
             </div>
+            <div id="ae_contents" class="ae_contents_frame ae_assign_font"><div id="ae_contents_container"><xsl:call-template name="ae-contents"/></div></div>
             <noscript>
-                <div id="ae_noscript" class="ae_assign_font">
+                <div id="ae_noscript" class="ae_contents_frame ae_assign_font ae_white_bg">
                     <div class="ae_center_box">
                         <div id="ae_contents_box_915px">
                             <div class="ae_error_area">ArrayExpress uses JavaScript for better data handling and enhanced representation. Please enable JavaScript if you want to continue browsing ArrayExpress.</div>
@@ -55,7 +56,6 @@
                     </div>
                 </div>
             </noscript>
-            <div id="ae_contents" class="ae_contents_frame ae_assign_font"><div id="ae_contents_container"><xsl:call-template name="ae-contents"/></div></div>
             <div id="ebi_footer">
                 <iframe src="${interface.application.link.www_domain.inc}/foot.html"
                         name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
