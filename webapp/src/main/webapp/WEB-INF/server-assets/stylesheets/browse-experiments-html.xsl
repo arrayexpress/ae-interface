@@ -105,10 +105,12 @@
                 <td class="{$vDetailedViewMainTdClass}">
                     <div class="acc">
                         <div>
-                            <xsl:call-template name="highlight">
-                                <xsl:with-param name="pText" select="accession" />
-                                <xsl:with-param name="pFieldName" select="'accession'" />
-                            </xsl:call-template>
+                            <a href="{$basepath}/experiments/{accession}">
+                                <xsl:call-template name="highlight">
+                                    <xsl:with-param name="pText" select="accession" />
+                                    <xsl:with-param name="pFieldName" select="'accession'" />
+                                </xsl:call-template>
+                            </a>
                         </div>
                         <div>
                             <xsl:attribute name="class">

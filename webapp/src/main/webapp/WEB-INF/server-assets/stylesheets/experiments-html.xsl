@@ -27,7 +27,7 @@
         <html lang="en">
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
-                    <xsl:value-of select="$vAccession"/><xsl:text> | ArrayExpress Archive | EBI</xsl:text>
+                    <xsl:value-of select="$vAccession"/><xsl:text> | Experiments | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_experiments_20.css" type="text/css"/>
