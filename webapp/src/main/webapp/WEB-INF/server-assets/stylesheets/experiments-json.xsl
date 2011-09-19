@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:ae="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:json="http://json.org/"
-                extension-element-prefixes="ae search json"
-                exclude-result-prefixes="ae search json"
+                extension-element-prefixes="search json"
+                exclude-result-prefixes="search json"
                 version="2.0">
 
     <xsl:import href="xml-to-json.xsl"/>

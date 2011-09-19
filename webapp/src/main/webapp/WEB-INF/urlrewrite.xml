@@ -247,6 +247,18 @@
         <from>^/json/v2/experiments/(.*)$</from>
         <to type="forward">/servlets/query/experiments/experiments/json?keywords=$1</to>
     </rule>
+    <rule>
+        <from>^/json/v2/files$</from>
+        <to type="forward">/servlets/query/experiments/files/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/experiments/files/json?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/files/(.*)$</from>
+        <to type="forward">/servlets/query/experiments/files/json?keywords=$1</to>
+    </rule>
 
     <!-- proxy calls to json efo api for nils -->
     <rule>
