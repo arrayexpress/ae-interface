@@ -20,6 +20,7 @@ var query = new Object();
 var user = "";
 var headerPrintElt = null;
 var pageName = /\/?([^\/]+)$/.exec(decodeURI(window.location.pathname))[1];
+var anchor = decodeURI(window.location.hash);
 
 function
 aeClearKeywords()
@@ -103,7 +104,8 @@ aeDoLoginNext(text)
         $.cookie("AeLoginToken", text, {expires: loginExpiration, path: '/'});
 
         aeShowLoginInfo();
-        window.location.href = decodeURI(window.location.pathname) + $.query.toString();
+
+        window.location.href = decodeURI(window.location.pathname) + $.query.remove("login").toString();
     } else {
         user = "";
         $("#ae_login_status").text("Incorrect user name or password. Please try again.");
@@ -206,6 +208,12 @@ $(function() {
                 , requestTreeUrl: basePath + "efotree.txt"
             }
         );
+
+    // silent force-logout if login was requested
+    if ("#login" == anchor) {
+        aeDoLogout(false);
+        aeShowLoginForm();
+    }
 
     var _user = $.cookie("AeLoggedUser");
     var _token = $.cookie("AeLoginToken");
