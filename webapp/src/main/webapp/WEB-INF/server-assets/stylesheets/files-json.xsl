@@ -37,6 +37,9 @@
         <xsl:variable name="vOutput">
             <files version="1.1" revision="100915"
                          total-experiments="{$vTotal}">
+                <xsl:if test="$limit">
+                    <xsl:attribute name="limit" select="$limit"/>
+                </xsl:if>
                 <xsl:call-template name="ae-sort-experiments">
                     <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                     <xsl:with-param name="pFrom" select="1"/>
@@ -50,29 +53,33 @@
     </xsl:template>
 
     <xsl:template match="experiment">
-        <xsl:variable name="vAccession" select="accession"/>
-        <experiment>
-            <accession><xsl:value-of select="$vAccession"/></accession>
-            <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
-            <xsl:for-each select="$vExpFolder/file">
-                <xsl:call-template name="file-for-accession">
-                    <xsl:with-param name="pAccession" select="$vAccession"/>
-                    <xsl:with-param name="pFile" select="."/>
-                </xsl:call-template>
-            </xsl:for-each>
-            <xsl:for-each select="arraydesign">
-                <xsl:sort select="accession" order="ascending"/>
-                <xsl:variable name="vArrAccession" select="string(accession)"/>
-                <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vArrAccession)"/>
-
-                <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
+        <xsl:param name="pFrom"/>
+        <xsl:param name="pTo"/>
+        <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
+            <xsl:variable name="vAccession" select="accession"/>
+            <experiment>
+                <accession><xsl:value-of select="$vAccession"/></accession>
+                <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+                <xsl:for-each select="$vExpFolder/file">
                     <xsl:call-template name="file-for-accession">
-                        <xsl:with-param name="pAccession" select="$vArrAccession"/>
+                        <xsl:with-param name="pAccession" select="$vAccession"/>
                         <xsl:with-param name="pFile" select="."/>
                     </xsl:call-template>
                 </xsl:for-each>
-            </xsl:for-each>
-        </experiment>
+                <xsl:for-each select="arraydesign">
+                    <xsl:sort select="accession" order="ascending"/>
+                    <xsl:variable name="vArrAccession" select="string(accession)"/>
+                    <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vArrAccession)"/>
+    
+                    <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
+                        <xsl:call-template name="file-for-accession">
+                            <xsl:with-param name="pAccession" select="$vArrAccession"/>
+                            <xsl:with-param name="pFile" select="."/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:for-each>
+            </experiment>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="file-for-accession">

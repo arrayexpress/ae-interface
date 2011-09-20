@@ -54,9 +54,13 @@
     </xsl:template>
 
     <xsl:template match="experiment">
-        <experiment>
-            <xsl:copy-of select="*[not(name() = 'user' or name() = 'source')]"/>
-        </experiment>
+        <xsl:param name="pFrom"/>
+        <xsl:param name="pTo"/>
+        <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
+            <experiment>
+                <xsl:copy-of select="*[not(name() = 'user' or name() = 'source')]"/>
+            </experiment>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
