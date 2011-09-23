@@ -1,15 +1,22 @@
 package uk.ac.ebi.arrayexpress.components;
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
+import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.util.List;
 
 /*
  * Copyright 2009-2011 European Molecular Biology Laboratory
@@ -68,6 +75,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         );
 
         updateIndex();
+        updateAccelerators();
         this.saxon.registerDocumentSource(this);
     }
 
@@ -93,6 +101,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
             updateIndex();
+            updateAccelerators();
         } else {
             this.logger.error("Array designs NOT updated, NULL document passed");
         }
@@ -110,6 +119,38 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     {
         try {
             this.search.getController().index(INDEX_ID, this.getDocument());
+        } catch (Exception x) {
+            this.logger.error("Caught an exception:", x);
+        }
+    }
+
+    private void updateAccelerators()
+    {
+        this.logger.debug("Updating accelerators for arrays");
+
+        ExtFunctions.clearAccelerator("legacy-array-ids");
+        try {
+            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
+            XPathExpression xpe = xp.compile("/array_designs/array_design[@visible = 'true']");
+            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
+
+            XPathExpression accessionXpe = xp.compile("accession");
+            XPathExpression legacyIdsXpe = xp.compile("legacy_id");
+            for (Object node : documentNodes) {
+
+                try {
+                    // get all the expressions taken care of
+                    String accession = accessionXpe.evaluate(node);
+                    List legacyIds = (List)legacyIdsXpe.evaluate(node, XPathConstants.NODESET);
+                    if (null != legacyIds) {
+                        ExtFunctions.addAcceleratorValue("legacy-array-ids", accession, legacyIds);
+                    }
+                } catch (XPathExpressionException x) {
+                    this.logger.error("Caught an exception:", x);
+                }
+            }
+
+            this.logger.debug("Accelerators updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

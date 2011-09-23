@@ -132,7 +132,7 @@
                 <field name="accession" title="by Accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" escape="false"/>
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
-                <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false"/>
+                <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/legacy_id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false"/>
                 <field name="protocol" title="by Protocol" type="string" path="protocol/id | protocol/accession" analyze="true" store="false" escape="false"/>
                 <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false"/>
                 <field name="expdesign" title="by Experiment Design" type="string" path="experimentdesign" analyze="true" store="false" escape="false"/>

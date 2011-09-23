@@ -94,6 +94,18 @@
     <!-- this template prohibits default copying of these elements -->
     <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
 
+    <xsl:template match="arraydesign" mode="copy">
+        <arraydesign>
+            <xsl:for-each select="@*">
+                    <xsl:element name="{fn:lower-case(fn:name())}">
+                        <xsl:value-of select="." />
+                    </xsl:element>
+            </xsl:for-each>
+            <xsl:copy-of select="aejava:getAcceleratorValueAsCollection('legacy-array-ids', @accession)"/>
+        </arraydesign>
+    </xsl:template>
+
+
     <xsl:template match="submissiondate | lastupdatedate | releasedate" mode="copy">
         <xsl:choose>
             <xsl:when test="matches(text(), '^\d{4}-\d{2}-\d{2}$')">
