@@ -14,22 +14,37 @@
         <xsl:choose>
             <xsl:when test="string($vUpdateSource)">
                 <xsl:message>[INFO] Updating from [<xsl:value-of select="$vUpdateSource"/>]</xsl:message>
-                <xsl:variable name="vCombinedArrays" select="array_design[@source != $vUpdateSource] | $vUpdate/array_designs/array_design"/>
+                <xsl:variable name="vCombinedArrays" select="array_design | $vUpdate/array_designs/array_design"/>
                 <array_designs>
                     <xsl:for-each-group select="$vCombinedArrays" group-by="accession">
-                        <xsl:variable name="vMigrated" select="exists(current-group()[@source='ae1']) and exists(current-group()[@source='ae2'])"/>
-                        <xsl:if test="count(current-group()) > 2">
-                            <xsl:message>[ERROR] Multiple entries within one source for array [<xsl:value-of select="current-grouping-key()"/>]</xsl:message>
-                        </xsl:if>
-                        <xsl:for-each select="current-group()">
-                            <xsl:sort select="@source" order="ascending"/>
+                        <xsl:variable name="vAe2Array" select="current-group()[@source='ae2']"/>
+                        <xsl:if test="exists($vAe2Array)">
+                            <xsl:variable name="vAe1Array" select="current-group()[@source='ae1']"/>
+                            <xsl:variable name="vUpdateArray" select="current-group()[@update]"/>
                             <array_design>
-                                <xsl:attribute name="source" select="@source"/>
-                                <xsl:attribute name="migrated" select="$vMigrated"/>
-                                <xsl:attribute name="visible" select="@source = 'ae2' or not($vMigrated)"/>
-                                <xsl:copy-of select="*"/>
+                                <xsl:attribute name="source" select="'ae2'"/>
+                                <xsl:attribute name="visible" select="'true'"/>
+                                <xsl:choose>
+                                    <xsl:when test="$vUpdateSource='ae1'">
+                                        <xsl:attribute name="migrated" select="exists($vAe1Array)"/>
+                                        <xsl:copy-of select="$vAe2Array/*[name() != 'user' and name() != 'legacy_id']"/>
+                                        <xsl:copy-of select="$vAe2Array/user[not(@legacy)]"/>
+                                        <xsl:if test="exists($vAe1Array)">
+                                            <legacy_id><xsl:value-of select="$vAe1Array/id"/></legacy_id>
+                                            <xsl:for-each select="$vAe1Array/user[@id!='1']">
+                                                <user legacy="true" id="{@id}"/>
+                                            </xsl:for-each>
+                                        </xsl:if>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:copy-of select="$vAe2Array/@migrated"/>
+                                        <xsl:copy-of select="$vUpdateArray/*"/>
+                                        <xsl:copy-of select="$vAe2Array[not(@update)]/legacy_id"/>
+                                        <xsl:copy-of select="$vAe2Array[not(@update)]/user[@legacy]"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                             </array_design>
-                        </xsl:for-each>
+                        </xsl:if>
                     </xsl:for-each-group>
                 </array_designs>
             </xsl:when>

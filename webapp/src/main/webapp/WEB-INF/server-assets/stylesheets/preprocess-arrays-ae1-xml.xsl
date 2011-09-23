@@ -14,8 +14,9 @@
 
     <xsl:template match="array_design">
         <array_design>
-            <xsl:attribute name="source">ae1</xsl:attribute>
-            <xsl:copy-of select="*[name() != 'id' and name() != 'user']"/>
+            <xsl:attribute name="source" select="'ae1'"/>
+            <xsl:attribute name="update" select="'true'"/>
+            <xsl:copy-of select="*[name() != 'user']"/>
             <xsl:for-each select="user[string-length(text()) != 0]">
                 <user id="{text()}"/>
             </xsl:for-each>

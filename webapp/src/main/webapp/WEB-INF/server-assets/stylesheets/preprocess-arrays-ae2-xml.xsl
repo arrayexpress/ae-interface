@@ -18,7 +18,8 @@
 
     <xsl:template match="array_design">
         <array_design>
-            <xsl:attribute name="source">ae2</xsl:attribute>
+            <xsl:attribute name="source" select="'ae2'"/>
+            <xsl:attribute name="update" select="'true'"/>
             <xsl:copy-of select="*[name() != 'user' and name() != 'description']"/>
             <xsl:for-each select="description[string-length(text()) > 0]">
                 <description>
