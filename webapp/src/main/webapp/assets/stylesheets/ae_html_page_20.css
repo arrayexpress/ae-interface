@@ -15,6 +15,17 @@
  *
  */
 
+.ae_fullpage {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	visibility: visible;
+	z-index: 1;
+	_height: expression(document.body.clientHeight-79);
+}
+
 .ae_stripe_bg {
     background-color: #c0c0c0;
     background-size: 15px 15px;

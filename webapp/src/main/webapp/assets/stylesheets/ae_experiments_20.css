@@ -20,6 +20,44 @@ noscript {
     display: none;
 }
 
+/*** dev content ***/
+
+#ae_login {
+	_height: expression(document.body.clientHeight-79);
+}
+
+#ae_login, #ae_login_box {
+	z-index: 2;
+}
+
+.ae_centreline {
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 0px;
+	width: 100%;
+	height: 1px;
+	overflow: visible;
+	visibility: visible;
+	display: block;
+	z-index: 3;
+}
+
+#ae_login_box {
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	background-color: white;
+	opacity: 1;
+	margin-left: -125px;
+	position: absolute;
+	top: -35px;
+	left: 50%;
+	width: 250px;
+	height: 70px;
+	visibility: visible
+}
+
+/*** end dev ***/
+
 #ae_accession {
     font-size: 18px;
     line-height: normal;
