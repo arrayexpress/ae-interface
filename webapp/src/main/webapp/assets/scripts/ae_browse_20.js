@@ -249,7 +249,7 @@ $(function() {
         query.pmid = getQueryStringParam("pmid");
         query.gxa = getQueryStringParam("gxa");
         query.page = getQueryStringParam("page");
-        query.pagesize = getQueryStringParam("pagesize", "25");
+        query.pagesize = getQueryStringParam("pagesize", "50");
         query.sortby = getQueryStringParam("sortby", "releasedate");
         query.sortorder = getQueryStringParam("sortorder", "descending");
         query.detailedview = getQueryBooleanParam("detailedview");
