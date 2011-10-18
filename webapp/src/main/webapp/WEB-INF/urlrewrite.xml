@@ -226,14 +226,6 @@
         <from>^/xml/v2/files/(.*)$</from>
         <to type="forward">/servlets/query/experiments/files/xml?keywords=$1</to>
     </rule>
-    <rule>
-        <from>^/xml/v2/privacy/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/privacy/xml?accession=$1</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/privacy$</from>
-        <to type="forward">/servlets/query/experiments/privacy/xml</to>
-    </rule>
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
@@ -268,6 +260,16 @@
     <rule>
         <from>^/json/v2/efodict$</from>
         <to type="forward">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
+    </rule>
+
+    <!-- admin rest-api for atlas -->
+    <rule>
+        <from>^/admin/privacy/([E]-\w{4}-\d+)$</from>
+        <to type="forward">/servlets/query/experiments/privacy/plain?accession=$1</to>
+    </rule>
+    <rule>
+        <from>^/admin/privacy$</from>
+        <to type="forward">/servlets/query/experiments/privacy/plain</to>
     </rule>
 
     <!-- ebeye export -->
