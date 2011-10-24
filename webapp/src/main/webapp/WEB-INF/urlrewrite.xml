@@ -282,16 +282,6 @@
         <to type="forward">/servlets/query/experiments/experiments-ebeye/xml?version=2</to>
     </rule>
 
-    <!-- prod team apps support -->
-    <rule>
-        <from>^/export/all-arrays.txt</from>
-        <to type="forward">/servlets/query/-/list-arrays/plain</to>
-    </rule>
-    <rule>
-        <from>^/export/public-arrays.txt</from>
-        <to type="forward">/servlets/query/-/list-public-arrays/plain</to>
-    </rule>
-
     <!-- search results export in tab format -->
     <rule>
         <from>^/ArrayExpress-Experiments\.xls$</from>
