@@ -4,15 +4,197 @@
         "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
 
 <urlrewrite>
-    <!-- everything gets redirected (with or without query string) -->
+
+    <!-- /microarray-as/ae redirection -->
     <rule>
-        <from>^/(.*)$</from>
+        <from>^/microarray-as/ae/(.*)$</from>
         <condition type="query-string">.+</condition>
         <to type="permanent-redirect">${redirector.interface.base.path}/$1?%{query-string}</to>
     </rule>
 
     <rule>
-        <from>^/(.*)$</from>
+        <from>^/microarray-as/ae/(.*)$</from>
         <to type="permanent-redirect">${redirector.interface.base.path}/$1</to>
+    </rule>
+
+    <!-- /microarray-as/aer redirection -->
+    <rule>
+        <from>^/microarray-as/aer/?$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/index.html$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/entry$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/login</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html#login</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/download/([^/]+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/download/mageml/([^/]+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/rss/experiments/?$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/jsp/ae-rss\.jsp</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/jsp/ae-view-experiment\.jsp</from>
+        <condition type="parameter" name="accnum">E-[^-]{4}-.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
+    </rule>
+
+    <!-- /microarray-as/aer specific queries redirection -->
+    <rule>
+        <from>^/microarray-as/aer/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <condition type="parameter" name="eAccession">.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html?keywords=%{parameter:eAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <condition type="parameter" name="aAccession">.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/microarray-as/aer/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/browse.html</to>
+    </rule>
+
+    <!-- /microarray-as/aer misc resources redirection -->
+    <rule>
+        <from>^/microarray-as/aer/include/aelogo.png</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/assets/images/ae_logo_20.png</to>
+    </rule>
+
+    <!-- /microarray-as/aer fallback rule -->
+    <rule>
+        <from>/microarray-as/aer/(.+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/upgraded.html</to>
+    </rule>
+
+    <!-- /aerep redirection -->
+    <rule>
+        <from>^/aerep/?$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/index.html$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/login</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html#login</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/download/([^/]+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/download/mageml/([^/]+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/rss/experiments/?$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/jsp/ae-rss\.jsp</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/jsp/ae-view-experiment\.jsp</from>
+        <condition type="parameter" name="accnum">E-[^-]{4}-.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
+    </rule>
+
+    <!-- /aerep specific queries redirection -->
+    <rule>
+        <from>^/aerep/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <condition type="parameter" name="eAccession">.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html?keywords=%{parameter:eAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <condition type="parameter" name="aAccession">.+</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
+    </rule>
+
+    <rule>
+        <from>^/aerep/result$</from>
+        <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/browse.html</to>
+    </rule>
+
+    <!-- /aerep fallback rule -->
+    <rule>
+        <from>^/aerep/(.+)$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/upgraded.html</to>
+    </rule>
+
+    <!-- default fallback rule -->
+    <rule>
+        <from>^/.*$</from>
+        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
     </rule>
 </urlrewrite>
