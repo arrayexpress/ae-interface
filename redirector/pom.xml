@@ -35,6 +35,12 @@
                 <redirector.application.log.appender.ref>CONSOLE</redirector.application.log.appender.ref>
             </properties>
         </profile>
+        <profile>
+            <id>london</id>
+            <properties>
+                <redirector.application.log.appender.ref>ROLLINGFILE-LONDON</redirector.application.log.appender.ref>
+            </properties>
+        </profile>
     </profiles>
 
     <developers>
