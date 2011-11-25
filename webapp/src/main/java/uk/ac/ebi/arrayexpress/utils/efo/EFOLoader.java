@@ -64,7 +64,15 @@ public class EFOLoader
                 }
             }
 
-
+            // and finally work out part_of relationships
+            for (String partOfId : reversePartOfMap.keySet()) {
+                for (String id : reversePartOfMap.get(partOfId)) {
+                    if (!efo.getPartOfIdMap().containsKey(id)) {
+                        efo.getPartOfIdMap().put(id, new HashSet<String>());
+                    }
+                    efo.getPartOfIdMap().get(id).add(partOfId);
+                }
+            }
 
         } catch (OWLOntologyCreationException e) {
             throw new RuntimeException("Unable to read ontology from a stream", e);
@@ -109,7 +117,7 @@ public class EFOLoader
             } else if (superClass instanceof OWLQuantifiedObjectRestriction) {
                 // may be part-of
                 OWLQuantifiedObjectRestriction restriction = (OWLQuantifiedObjectRestriction)superClass;
-                if (IRI_PART_OF == restriction.getProperty().getNamedProperty().getIRI()
+                if (IRI_PART_OF.equals(restriction.getProperty().getNamedProperty().getIRI())
                         && restriction.getFiller() instanceof OWLClass) {
                     if (!reversePartOfMap.containsKey(node.getId())) {
                         reversePartOfMap.put(node.getId(), new HashSet<String>());
