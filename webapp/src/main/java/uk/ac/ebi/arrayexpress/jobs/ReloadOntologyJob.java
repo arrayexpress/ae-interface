@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Ontologies;
-import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
 
 import java.io.InputStream;
 
@@ -38,7 +37,7 @@ public class ReloadOntologyJob extends ApplicationJob
         InputStream is = null;
         try {
             is = getApplication().getResource(efoLocation).openStream();
-            ((Ontologies)getComponent("Ontologies")).update(new EFOOntologyHelper(is));
+            ((Ontologies)getComponent("Ontologies")).update(is);
             logger.info("EFO loading completed");
         } finally {
             if (null != is) {

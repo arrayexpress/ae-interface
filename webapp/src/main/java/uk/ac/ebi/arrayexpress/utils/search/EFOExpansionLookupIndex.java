@@ -29,9 +29,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.microarray.ontology.efo.EFONode;
-import uk.ac.ebi.microarray.ontology.efo.EFOOntologyHelper;
-import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
+import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
+import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     private FSDirectory indexDirectory;
 
-    private IEFOOntology ontology;
+    private IEFO efo;
     private Set<String> stopWords;
     private Map<String, Set<String>> customSynonyms;
 
@@ -57,9 +56,14 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         this.indexDirectory = FSDirectory.open(new File(indexLocation));
     }
 
-    public void setOntology( IEFOOntology ontology )
+    private IEFO getEfo()
     {
-        this.ontology = ontology;
+        return this.efo;
+    }
+
+    public void setEfo( IEFO efo )
+    {
+        this.efo = efo;
     }
 
     public void setCustomSynonyms( Map<String, Set<String>> synonyms )
@@ -73,7 +77,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
 
             this.logger.debug("Building expansion lookup index");
-            addNodeAndChildren(this.ontology.getEfoMap().get(this.ontology.getRootID()), this.ontology, w);
+            addNodeAndChildren(this.efo.getMap().get(IEFO.ROOT_ID), w);
             addCustomSynonyms(w);
             commitIndex(w);
             this.logger.debug("Building completed");
@@ -105,21 +109,21 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeAndChildren( EFONode node, IEFOOntology ontology, IndexWriter w )
+    private void addNodeAndChildren( EFONode node, IndexWriter w )
     {
         if (null != node) {
-            addNodeToIndex(node, ontology, w);
+            addNodeToIndex(node, w);
             for (EFONode child : node.getChildren()) {
-                addNodeAndChildren(child, ontology, w);
+                addNodeAndChildren(child, w);
             }
         }
     }
 
-    private void addNodeToIndex( EFONode node, IEFOOntology ontology, IndexWriter w )
+    private void addNodeToIndex( EFONode node, IndexWriter w )
     {
         String term = node.getTerm();
         Set<String> synonyms = node.getAlternativeTerms();
-        Set<String> childTerms = ontology.getTerms(node.getId(), EFOOntologyHelper.INCLUDE_CHILDREN);
+        Set<String> childTerms = getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
 
         // here we add custom synonyms to EFO synonyms/child terms and their synonyms
         if (null != this.customSynonyms) {

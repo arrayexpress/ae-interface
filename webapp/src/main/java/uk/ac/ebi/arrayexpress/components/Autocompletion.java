@@ -3,8 +3,8 @@ package uk.ac.ebi.arrayexpress.components;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteData;
 import uk.ac.ebi.arrayexpress.utils.autocompletion.AutocompleteStore;
-import uk.ac.ebi.microarray.ontology.efo.EFONode;
-import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
+import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
+import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +33,7 @@ public class Autocompletion extends ApplicationComponent
 
     private Experiments experiments;
     private SearchEngine search;
-    private IEFOOntology ontology;
+    private IEFO efo;
 
     public Autocompletion()
     {
@@ -51,9 +51,14 @@ public class Autocompletion extends ApplicationComponent
     {
     }
 
-    public void setOntology( IEFOOntology ontology )
+    private IEFO getEfo()
     {
-        this.ontology = ontology;
+        return this.efo;
+    }
+
+    public void setEfo( IEFO efo )
+    {
+        this.efo = efo;
     }
 
     public String getKeywords( String prefix, String field, Integer limit )
@@ -70,8 +75,8 @@ public class Autocompletion extends ApplicationComponent
     {
         StringBuilder sb = new StringBuilder();
 
-        if (null != this.ontology) {
-            EFONode node = this.ontology.getEfoMap().get(efoId);
+        if (null != getEfo()) {
+            EFONode node = getEfo().getMap().get(efoId);
             if (null != node) {
                 Set<EFONode> children = node.getChildren();
                 if (null != children) {
@@ -119,14 +124,14 @@ public class Autocompletion extends ApplicationComponent
             }
         }
 
-        if (null != ontology) {
-            addEfoNodeWithDescendants(ontology.getRootID());
+        if (null != getEfo()) {
+            addEfoNodeWithDescendants(IEFO.ROOT_ID);
         }
     }
 
     private void addEfoNodeWithDescendants( String nodeId )
     {
-        EFONode node = ontology.getEfoMap().get(nodeId);
+        EFONode node = getEfo().getMap().get(nodeId);
         if (null != node) {
             getStore().addData(
                     new AutocompleteData(

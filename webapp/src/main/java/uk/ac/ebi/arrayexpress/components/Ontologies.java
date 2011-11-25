@@ -21,11 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.SynonymsFileReader;
+import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
+import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpansionLookupIndex;
 import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
-import uk.ac.ebi.microarray.ontology.efo.IEFOOntology;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +42,6 @@ public class Ontologies extends ApplicationComponent
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    //private EFOOntologyHelper ontology;
     private EFOExpansionLookupIndex lookupIndex;
 
     private SearchEngine search;
@@ -64,7 +64,7 @@ public class Ontologies extends ApplicationComponent
     {
     }
 
-    public void update( IEFOOntology efoOntology ) throws IOException
+    public void update( InputStream ontologyStream ) throws IOException
     {
         String synFileLocation = getPreferences().getString("ae.efo.synonyms");
         if (null != synFileLocation) {
@@ -80,11 +80,14 @@ public class Ontologies extends ApplicationComponent
                 }
             }
         }
-        this.lookupIndex.setOntology(efoOntology);
+        IEFO efo = new EFOLoader().load(ontologyStream);
+        this.lookupIndex.setEfo(efo);
         this.lookupIndex.buildIndex();
 
-        this.autocompletion.setOntology(efoOntology);
-        this.autocompletion.rebuild();
+        if (null != this.autocompletion) {
+            this.autocompletion.setEfo(efo);
+            this.autocompletion.rebuild();
+        }
     }
 
     private void initLookupIndex() throws IOException
