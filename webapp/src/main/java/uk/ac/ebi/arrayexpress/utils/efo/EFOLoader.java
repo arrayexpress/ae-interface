@@ -47,6 +47,9 @@ public class EFOLoader
         OWLOntology ontology;
         EFOImpl efo = new EFOImpl();
         try {
+            // to prevernt RDFXMLParser to fail on some machines
+            // with SAXParseException: The parser has encountered more than "64,000" entity expansions
+            System.setProperty("entityExpansionLimit", "100000000");
             ontology = manager.loadOntologyFromOntologyDocument(ontologyStream);
 
             Set<OWLClass> classes = ontology.getClassesInSignature();
