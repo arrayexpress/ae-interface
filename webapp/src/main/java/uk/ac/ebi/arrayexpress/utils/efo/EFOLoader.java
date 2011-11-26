@@ -7,6 +7,8 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -33,11 +35,13 @@ import java.util.Set;
 
 public class EFOLoader
 {
+    // logging machinery
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private final static IRI IRI_AE_LABEL = IRI.create("http://www.ebi.ac.uk/efo/ArrayExpress_label");
     private final static IRI IRI_EFO_URI = IRI.create("http://www.ebi.ac.uk/efo/ArrayExpress_label");
     private final static IRI IRI_ALT_TERM = IRI.create("http://www.ebi.ac.uk/efo/alternative_term");
     private final static IRI IRI_PART_OF = IRI.create("http://www.obofoundry.org/ro/ro.owl#part_of");
-
 
     private Map<String, Set<String>> reverseSubClassOfMap = new HashMap<String, Set<String>>();
     private Map<String, Set<String>> reversePartOfMap = new HashMap<String, Set<String>>();
@@ -74,12 +78,18 @@ public class EFOLoader
                 // now, complete missing bits in parent-children relationships
                 for (String id : reverseSubClassOfMap.keySet()) {
                     EFONode node = efo.getMap().get(id);
-                    for (String parentId : reverseSubClassOfMap.get(id)) {
-                        EFONode parentNode = efo.getMap().get(parentId);
-                        if (null != parentNode) { // most likely parent is owl thing
-                            node.getParents().add(parentNode);
-                            parentNode.getChildren().add(node);
+                    if (null != node) {
+                        for (String parentId : reverseSubClassOfMap.get(id)) {
+                            EFONode parentNode = efo.getMap().get(parentId);
+                            if (null != parentNode) { // most likely parent is owl thing
+                                node.getParents().add(parentNode);
+                                parentNode.getChildren().add(node);
+                            } else {
+                                logger.warn("Parent [{}] of [{}] is not loaded from the ontology", parentId, id);
+                            }
                         }
+                    } else {
+                        logger.error("Node [{}] is not loaded from the ontology", id);
                     }
                 }
 
