@@ -1,7 +1,12 @@
 package uk.ac.ebi.arrayexpress.utils.efo;
 
+import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -45,46 +50,63 @@ public class EFOLoader
     {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology;
+        OWLReasoner reasoner = null;
+
         EFOImpl efo = new EFOImpl();
+
         try {
             // to prevernt RDFXMLParser to fail on some machines
             // with SAXParseException: The parser has encountered more than "64,000" entity expansions
             System.setProperty("entityExpansionLimit", "100000000");
             ontology = manager.loadOntologyFromOntologyDocument(ontologyStream);
 
-            Set<OWLClass> classes = ontology.getClassesInSignature();
-            for (OWLClass cls : classes) {
-                loadClass(ontology, cls, efo);
-            }
+            OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
+            reasoner = reasonerFactory.createReasoner(ontology);
 
-            // now, complete missing bits in parent-children relationships
-            for (String id : reverseSubClassOfMap.keySet()) {
-                EFONode node = efo.getMap().get(id);
-                for (String parentId : reverseSubClassOfMap.get(id)) {
-                    EFONode parentNode = efo.getMap().get(parentId);
-                    node.getParents().add(parentNode);
-                    parentNode.getChildren().add(node);
+            reasoner.precomputeInferences();
+            if (reasoner.isConsistent()) {
+
+                Set<OWLClass> classes = ontology.getClassesInSignature();
+                for (OWLClass cls : classes) {
+                    loadClass(ontology, reasoner, cls, efo);
                 }
-            }
 
-            // and finally work out part_of relationships
-            for (String partOfId : reversePartOfMap.keySet()) {
-                for (String id : reversePartOfMap.get(partOfId)) {
-                    if (!efo.getPartOfIdMap().containsKey(id)) {
-                        efo.getPartOfIdMap().put(id, new HashSet<String>());
+                // now, complete missing bits in parent-children relationships
+                for (String id : reverseSubClassOfMap.keySet()) {
+                    EFONode node = efo.getMap().get(id);
+                    for (String parentId : reverseSubClassOfMap.get(id)) {
+                        EFONode parentNode = efo.getMap().get(parentId);
+                        if (null != parentNode) { // most likely parent is owl thing
+                            node.getParents().add(parentNode);
+                            parentNode.getChildren().add(node);
+                        }
                     }
-                    efo.getPartOfIdMap().get(id).add(partOfId);
+                }
+
+                // and finally work out part_of relationships
+                for (String partOfId : reversePartOfMap.keySet()) {
+                    for (String id : reversePartOfMap.get(partOfId)) {
+                        if (!efo.getPartOfIdMap().containsKey(id)) {
+                            efo.getPartOfIdMap().put(id, new HashSet<String>());
+                        }
+                        efo.getPartOfIdMap().get(id).add(partOfId);
+                    }
                 }
             }
-
         } catch (OWLOntologyCreationException e) {
             throw new RuntimeException("Unable to read ontology from a stream", e);
+        } catch (UnsupportedOperationException e) {
+            throw new RuntimeException("Unable to reason the ontology", e);
+        } finally {
+            if (null != reasoner) {
+                reasoner.dispose();
+            }
         }
 
         return efo;
     }
 
-    private void loadClass( OWLOntology ontology, OWLClass cls, EFOImpl efo )
+    private void loadClass( OWLOntology ontology, OWLReasoner reasoner, OWLClass cls, EFOImpl efo )
     {
         // initialise the node
         EFONode node = new EFONode(cls.toStringID());
@@ -110,6 +132,14 @@ public class EFOLoader
 
         // getting some info on relationships
         Set<OWLSubClassOfAxiom> subClassOfAxioms = ontology.getSubClassAxiomsForSubClass(cls);
+        NodeSet<OWLClass> superClasses = reasoner.getSuperClasses(cls, true);
+        for (Node<OWLClass> superClass : superClasses) {
+            if (!reverseSubClassOfMap.containsKey(node.getId())) {
+                reverseSubClassOfMap.put(node.getId(), new HashSet<String>());
+            }
+            reverseSubClassOfMap.get(node.getId()).add(superClass.getRepresentativeElement().toStringID());
+        }
+
         for (OWLSubClassOfAxiom subClassOf : subClassOfAxioms ) {
             OWLClassExpression superClass = subClassOf.getSuperClass();
             if (superClass instanceof OWLClass ) {
