@@ -43,4 +43,5 @@ public interface IEFO
     public Map<String, EFONode> getMap();
     public Map<String, Set<String>> getPartOfIdMap();
     public Set<String> getTerms( String efoId, int includeFlags );
+    public String getVersionInfo();
 }

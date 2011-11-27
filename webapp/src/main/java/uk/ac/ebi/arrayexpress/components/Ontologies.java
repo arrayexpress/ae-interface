@@ -58,8 +58,6 @@ public class Ontologies extends ApplicationComponent
         this.search = (SearchEngine) getComponent("SearchEngine");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
         initLookupIndex();
-
-        ((JobsController)getComponent("JobsController")).executeJob("reload-ontology");
     }
 
     public void terminate() throws Exception

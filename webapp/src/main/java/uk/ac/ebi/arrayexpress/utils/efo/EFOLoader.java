@@ -42,6 +42,7 @@ public class EFOLoader
     private final static IRI IRI_EFO_URI = IRI.create("http://www.ebi.ac.uk/efo/ArrayExpress_label");
     private final static IRI IRI_ALT_TERM = IRI.create("http://www.ebi.ac.uk/efo/alternative_term");
     private final static IRI IRI_PART_OF = IRI.create("http://www.obofoundry.org/ro/ro.owl#part_of");
+    private final static IRI IRI_VERSION_INFO = IRI.create("http://www.w3.org/2002/07/owl#versionInfo");
 
     private Map<String, Set<String>> reverseSubClassOfMap = new HashMap<String, Set<String>>();
     private Map<String, Set<String>> reversePartOfMap = new HashMap<String, Set<String>>();
@@ -56,13 +57,23 @@ public class EFOLoader
         OWLOntology ontology;
         OWLReasoner reasoner = null;
 
-        EFOImpl efo = new EFOImpl();
+        EFOImpl efo = null;
 
         try {
             // to prevernt RDFXMLParser to fail on some machines
             // with SAXParseException: The parser has encountered more than "64,000" entity expansions
             System.setProperty("entityExpansionLimit", "100000000");
             ontology = manager.loadOntologyFromOntologyDocument(ontologyStream);
+
+            String version = "unknown";
+            for (OWLAnnotation annotation : ontology.getAnnotations()) {
+                if (IRI_VERSION_INFO.equals(annotation.getProperty().getIRI())) {
+                    version = ((OWLLiteral)annotation.getValue()).getLiteral();
+                    break;
+                }
+            }
+            logger.debug("Loading EFO version [{}]", version);
+            efo = new EFOImpl(version);
 
             OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
             reasoner = reasonerFactory.createReasoner(ontology);

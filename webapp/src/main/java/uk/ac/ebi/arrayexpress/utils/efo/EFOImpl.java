@@ -26,6 +26,12 @@ public class EFOImpl implements IEFO
 {
     private Map<String, EFONode> efoMap = new HashMap<String, EFONode>();
     private Map<String, Set<String>> partOfIdMap = new HashMap<String, Set<String>>();
+    private String versionInfo;
+
+    public EFOImpl( String versionInfo )
+    {
+        this.versionInfo = versionInfo;
+    }
 
     public Map<String, EFONode> getMap()
     {
@@ -74,5 +80,10 @@ public class EFOImpl implements IEFO
         }
 
         return terms;
+    }
+
+    public String getVersionInfo()
+    {
+        return this.versionInfo;
     }
 }

@@ -57,7 +57,7 @@ public class ControlServlet extends ApplicationServlet
             params = requestArgs[1];
         }
 
-        if (command.equals("reload-atlas-info") || command.equals("reload-ae2-xml")) {
+        if (command.equals("reload-atlas-info") || command.equals("reload-ae2-xml") || command.equals("reload-efo")) {
             ((JobsController) getComponent("JobsController")).executeJob(command);
         } else if (command.equals("reload-ae1-xml")) {
             ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "connections", params);
