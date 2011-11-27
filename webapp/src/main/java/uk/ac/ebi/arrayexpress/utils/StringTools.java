@@ -2,8 +2,7 @@ package uk.ac.ebi.arrayexpress.utils;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /*
  * Copyright 2009-2011 European Molecular Biology Laboratory
@@ -73,6 +72,12 @@ public class StringTools
         } else {
             return "";
         }
+    }
+
+    public static Set<String> streamToStringSet( InputStream is, String encoding ) throws IOException
+    {
+        String[] lines = streamToString(is, encoding).split(EOL);
+        return new HashSet<String>(Arrays.asList(lines));
     }
 
     public static String fileToString( File f, String encoding ) throws IOException

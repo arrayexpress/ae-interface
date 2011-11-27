@@ -20,8 +20,10 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.SynonymsFileReader;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
+import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 import uk.ac.ebi.arrayexpress.utils.search.EFOExpandedHighlighter;
@@ -66,6 +68,20 @@ public class Ontologies extends ApplicationComponent
 
     public void update( InputStream ontologyStream ) throws IOException
     {
+        loadCustomSynonyms();
+
+        IEFO efo = removeIgnoredClasses(new EFOLoader().load(ontologyStream));
+        this.lookupIndex.setEfo(efo);
+        this.lookupIndex.buildIndex();
+
+        if (null != this.autocompletion) {
+            this.autocompletion.setEfo(efo);
+            this.autocompletion.rebuild();
+        }
+    }
+
+    private void loadCustomSynonyms() throws IOException
+    {
         String synFileLocation = getPreferences().getString("ae.efo.synonyms");
         if (null != synFileLocation) {
             InputStream is = null;
@@ -80,14 +96,50 @@ public class Ontologies extends ApplicationComponent
                 }
             }
         }
-        IEFO efo = new EFOLoader().load(ontologyStream);
-        this.lookupIndex.setEfo(efo);
-        this.lookupIndex.buildIndex();
+    }
 
-        if (null != this.autocompletion) {
-            this.autocompletion.setEfo(efo);
-            this.autocompletion.rebuild();
+    private IEFO removeIgnoredClasses( IEFO efo ) throws IOException
+    {
+        String ignoreListFileLocation = getPreferences().getString("ae.efo.ignoreList");
+        if (null != ignoreListFileLocation) {
+            InputStream is = null;
+            try {
+                is = getApplication().getResource(ignoreListFileLocation).openStream();
+                Set<String> ignoreList = StringTools.streamToStringSet(is, "UTF-8");
+
+                logger.debug("Loaded EFO ignored classes from [{}]", ignoreListFileLocation);
+                for (String id : ignoreList) {
+                    if (null != id && !"".equals(id) && !id.startsWith("#") && efo.getMap().containsKey(id)) {
+                        removeEFONode(efo, id);
+                    }
+                }
+            } finally {
+                if (null != is) {
+                    is.close();
+                }
+            }
         }
+        return efo;
+    }
+
+    private void removeEFONode( IEFO efo, String nodeId )
+    {
+        EFONode node = efo.getMap().get(nodeId);
+        // step 1: for all parents remove node as a child
+        for (EFONode parent : node.getParents()) {
+            parent.getChildren().remove(node);
+        }
+        // step 2: for all children remove node as a parent; is child node has no other parents, remove it completely
+        for (EFONode child : node.getChildren()) {
+            child.getParents().remove(node);
+            if (0 == child.getParents().size()) {
+                removeEFONode(efo, child.getId());
+            }
+        }
+
+        // step 3: remove node from efo map
+        efo.getMap().remove(nodeId);
+        logger.debug("Removed [{}] -> [{}]", node.getId(), node.getTerm());
     }
 
     private void initLookupIndex() throws IOException

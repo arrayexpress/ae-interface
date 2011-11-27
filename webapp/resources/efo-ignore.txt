@@ -1,0 +1,9 @@
+#
+# Set of EFO classes to ignore when building the tree for autocompletion and expansion
+#
+# factor_type
+http://www.ebi.ac.uk/efo/EFO_0004109
+# Atlas experiment type
+http://www.ebi.ac.uk/efo/EFO_0004108
+# ae_experiment_type
+http://www.ebi.ac.uk/efo/EFO_0004120
