@@ -132,25 +132,16 @@ public class Autocompletion extends ApplicationComponent
     private void addEfoNodeWithDescendants( String nodeId )
     {
         EFONode node = getEfo().getMap().get(nodeId);
+        // make node expandable only if it has children and not organizational class
         if (null != node) {
             getStore().addData(
                     new AutocompleteData(
                             node.getTerm()
                             , AutocompleteData.DATA_EFO_NODE
-                            , node.hasChildren() ? node.getId() : ""
+                            , node.hasChildren() && !node.isOrganizationalClass() ? node.getId() : ""
                     )
             );
-            /* no synonyms for now
-            for (String syn : node.getAlternativeTerms()) {
-                this.autocompleteStore.addData(
-                        new AutocompleteData(
-                                syn
-                                , AutocompleteData.DATA_EFO_NODE
-                                , ""
-                        )
-                );
-            }
-            */
+
             if (node.hasChildren()) {
                 for (EFONode child : node.getChildren()) {
                     addEfoNodeWithDescendants(child.getId());

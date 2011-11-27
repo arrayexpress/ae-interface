@@ -123,7 +123,12 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     {
         String term = node.getTerm();
         Set<String> synonyms = node.getAlternativeTerms();
-        Set<String> childTerms = getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
+
+        // if the node represents organizational class, just include its synonyms, but not children
+        Set<String> childTerms =
+                node.isOrganizationalClass()
+                ? new HashSet<String>()
+                : getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
 
         // here we add custom synonyms to EFO synonyms/child terms and their synonyms
         if (null != this.customSynonyms) {

@@ -33,6 +33,7 @@ public class EFONode
     private String efoUri;
     private String term;
     private Set<String> alternativeTerms;
+    private Boolean isOrganizationalClass;
 
 
     /**
@@ -123,6 +124,16 @@ public class EFONode
     public void setAlternativeTerms( Set<String> terms )
     {
         this.alternativeTerms = terms;
+    }
+
+    public boolean isOrganizationalClass()
+    {
+        return null != this.isOrganizationalClass && this.isOrganizationalClass;
+    }
+
+    public void setOrganizationalClass( Boolean isOrganizationalClass )
+    {
+        this.isOrganizationalClass = isOrganizationalClass;
     }
 
     public boolean hasChildren()

@@ -44,6 +44,7 @@ public class Ontologies extends ApplicationComponent
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private IEFO efo;
     private EFOExpansionLookupIndex lookupIndex;
 
     private SearchEngine search;
@@ -66,16 +67,23 @@ public class Ontologies extends ApplicationComponent
 
     public void update( InputStream ontologyStream ) throws IOException
     {
+        // load custom synonyms to lookup index
         loadCustomSynonyms();
 
-        IEFO efo = removeIgnoredClasses(new EFOLoader().load(ontologyStream));
-        this.lookupIndex.setEfo(efo);
+        this.efo = removeIgnoredClasses(new EFOLoader().load(ontologyStream));
+
+        this.lookupIndex.setEfo(getEfo());
         this.lookupIndex.buildIndex();
 
         if (null != this.autocompletion) {
-            this.autocompletion.setEfo(efo);
+            this.autocompletion.setEfo(getEfo());
             this.autocompletion.rebuild();
         }
+    }
+
+    public IEFO getEfo()
+    {
+        return this.efo;
     }
 
     private void loadCustomSynonyms() throws IOException
