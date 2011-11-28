@@ -24,21 +24,21 @@ import java.io.Reader;
 
 public class AttributeFieldAnalyzer extends Analyzer
 {
-       private static class AttributeFieldTokenizer extends WhitespaceTokenizer
+       private static class AttributeFieldTokenizer extends CharTokenizer
     {
         public AttributeFieldTokenizer( Reader in)
         {
             super(in);
         }
 
-        protected boolean isTokenChar(char c)
+        protected boolean isTokenChar(int c)
         {
-            return super.isTokenChar(c) && !(',' == c ||  ';' == c || '(' == c || ')' == c);
+            return !Character.isWhitespace(c) && !(',' == c ||  ';' == c || '(' == c || ')' == c);
         }
 
-        protected char normalize(char c)
+        protected int normalize(int c)
         {
-            return Character.toLowerCase(c);
+            return Character.toLowerCase((char)c);
         }
     }
 
