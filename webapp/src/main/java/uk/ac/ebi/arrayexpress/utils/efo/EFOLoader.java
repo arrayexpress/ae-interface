@@ -167,10 +167,11 @@ public class EFOLoader
         for (OWLSubClassOfAxiom subClassOf : subClassOfAxioms ) {
             OWLClassExpression superClass = subClassOf.getSuperClass();
             if (superClass instanceof OWLClass ) {
-                if (!reverseSubClassOfMap.containsKey(node.getId())) {
-                    reverseSubClassOfMap.put(node.getId(), new HashSet<String>());
-                }
-                reverseSubClassOfMap.get(node.getId()).add(((OWLClass) superClass).toStringID());
+                // inferred relationships shall supersede ontology direct axioms
+                //if (!reverseSubClassOfMap.containsKey(node.getId())) {
+                //    reverseSubClassOfMap.put(node.getId(), new HashSet<String>());
+                //}
+                //reverseSubClassOfMap.get(node.getId()).add(((OWLClass) superClass).toStringID());
             } else if (superClass instanceof OWLQuantifiedObjectRestriction) {
                 // may be part-of
                 OWLQuantifiedObjectRestriction restriction = (OWLQuantifiedObjectRestriction)superClass;
