@@ -91,14 +91,18 @@ public class EFOLoader
                 for (String id : reverseSubClassOfMap.keySet()) {
                     EFONode node = efo.getMap().get(id);
                     if (null != node) {
-                        for (String parentId : reverseSubClassOfMap.get(id)) {
-                            EFONode parentNode = efo.getMap().get(parentId);
-                            if (null != parentNode) { // most likely parent is owl thing
-                                node.getParents().add(parentNode);
-                                parentNode.getChildren().add(node);
-                            } else {
-                                logger.warn("Parent [{}] of [{}] is not loaded from the ontology", parentId, id);
+                        if (reverseSubClassOfMap.containsKey(id)) {
+                            for (String parentId : reverseSubClassOfMap.get(id)) {
+                                EFONode parentNode = efo.getMap().get(parentId);
+                                if (null != parentNode) { // most likely parent is owl thing
+                                    node.getParents().add(parentNode);
+                                    parentNode.getChildren().add(node);
+                                } else {
+                                    logger.warn("Parent [{}] of [{}] is not loaded from the ontology", parentId, id);
+                                }
                             }
+                        } else {
+                            logger.warn("Node [{}] has no parents, part of ontology has no common root");
                         }
                     } else {
                         logger.error("Node [{}] is not loaded from the ontology", id);
