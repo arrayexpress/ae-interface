@@ -17,25 +17,23 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
-import uk.ac.ebi.arrayexpress.components.Files;
-import uk.ac.ebi.arrayexpress.components.JobsController;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.components.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class ControlServlet extends ApplicationServlet
+public class VerifyLoginServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -4509580274404536983L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return (requestType == RequestType.GET || requestType == RequestType.POST);
@@ -46,29 +44,25 @@ public class ControlServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        String command = "";
-        String params = "";
+        response.setContentType("text/plain; charset=UTF-8");
+        // Disable cache no matter what (or we're fucked on IE side)
+        response.addHeader("Pragma", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        response.addHeader("Cache-Control", "must-revalidate");
+        response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
 
-        String[] requestArgs = new RegexHelper("/control/([^/]+)/?(.*)", "i")
-                .match(request.getRequestURL().toString());
-        if (null != requestArgs) {
-            command = requestArgs[0];
-            params = requestArgs[1];
-        }
-
+        // Output goes to the response PrintWriter.
+        PrintWriter out = response.getWriter();
         try {
-            if (command.equals("reload-atlas-info") || command.equals("reload-ae2-xml") || command.equals("reload-efo")) {
-                ((JobsController) getComponent("JobsController")).executeJob(command);
-            } else if (command.equals("reload-ae1-xml")) {
-                ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "connections", params);
-            } else if (command.equals("rescan-files")) {
-                if (0 < params.length()) {
-                    ((Files) getComponent("Files")).setRootFolder(params);
-                }
-                ((JobsController) getComponent("JobsController")).executeJob(command);
-            }
-        } catch (SchedulerException x) {
-            logger.error("Jobs controller threw an exception", x);
+            String userAgent = request.getHeader("User-Agent");
+            out.print(((Users) getComponent("Users")).hashLogin(
+                    request.getParameter("u")
+                    , request.getParameter("p")
+                    , request.getRemoteAddr().concat(null != userAgent ? userAgent : "unknown")
+            ));
+        } catch (Exception x) {
+            throw new RuntimeException(x);
         }
+        out.close();
     }
 }

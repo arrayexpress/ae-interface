@@ -21,7 +21,8 @@ import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract public class ApplicationJob implements InterruptableJob, StatefulJob
+@DisallowConcurrentExecution
+abstract public class ApplicationJob implements InterruptableJob
 {
     // logging facitlity
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -52,7 +53,7 @@ abstract public class ApplicationJob implements InterruptableJob, StatefulJob
     public void execute( JobExecutionContext jec ) throws JobExecutionException
     {
         setMyThread(Thread.currentThread());
-        setMyName(jec.getJobDetail().getFullName());
+        setMyName(jec.getJobDetail().getKey().getGroup() + "." + jec.getJobDetail().getKey().getName());
         try {
             doExecute(jec);
         } catch ( InterruptedException x ) {

@@ -33,6 +33,11 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.ControlServlet</servlet-class>
     </servlet>
     <servlet>
+        <description>ArrayExpress Login Verification Servlet</description>
+        <servlet-name>VerifyLoginServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.VerifyLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
         <description>ArrayExpress HTTP Proxy Servlet</description>
         <servlet-name>HttpProxyServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.HttpProxyServlet</servlet-class>
@@ -65,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>ControlServlet</servlet-name>
         <url-pattern>/servlets/control/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyLoginServlet</servlet-name>
+        <url-pattern>/servlets/verify-login/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HttpProxyServlet</servlet-name>

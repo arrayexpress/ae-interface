@@ -80,6 +80,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="org.quartz.core.QuartzSchedulerThread" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <logger name="de.schlichtherle.io" additivity="false">
         <level value="WARN"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>

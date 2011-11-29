@@ -64,6 +64,21 @@ public class ApplicationPreferences
         return value.contains(",") ? value.split("\\s*,\\s*") : new String[]{value};
     }
 
+    public Integer getInteger( String key )
+    {
+        Integer value = null;
+        try {
+            value = prefs.getInt(key);
+        } catch (ConversionException x) {
+            logger.error(x.getMessage());
+        } catch (NoSuchElementException x) {
+            logger.error(x.getMessage());
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        }
+        return value;
+    }
+
     public Long getLong( String key )
     {
         Long value = null;
@@ -72,7 +87,7 @@ public class ApplicationPreferences
         } catch (ConversionException x) {
             logger.error(x.getMessage());
         } catch (NoSuchElementException x) {
-            logger.error(x.getMessage());            
+            logger.error(x.getMessage());
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
         }

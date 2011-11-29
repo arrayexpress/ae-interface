@@ -354,7 +354,7 @@
     </rule>
     <rule>
         <from>^/verify-login.txt</from>
-        <to type="forward">/servlets/control/verify-login</to>
+        <to type="forward">/servlets/verify-login</to>
     </rule>
 
     <!-- control links -->

@@ -19,32 +19,32 @@ package uk.ac.ebi.arrayexpress.components;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.jobs.*;
 
+import java.text.ParseException;
 import java.util.List;
+
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+import static org.quartz.impl.matchers.EverythingMatcher.allJobs;
 
 
 public class JobsController extends ApplicationComponent
 {
-    // logging machinery
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     // jobs group
     private static final String AE_JOBS_GROUP = "ae-jobs";
 
     // quartz scheduler
     private Scheduler scheduler;
 
-    public JobsController()
-    {
-    }
-
     public void initialize() throws Exception
     {
-        // here we add jobs
+        // create scheduler
+        this.scheduler = new StdSchedulerFactory().getScheduler();
+
+        // add jobs
         addJob("rescan-files", RescanFilesJob.class);
         addJob("reload-ae1-xml", ReloadExperimentsFromAE1Job.class);
         addJob("reload-ae2-xml", ReloadExperimentsFromAE2Job.class);
@@ -52,6 +52,7 @@ public class JobsController extends ApplicationComponent
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
 
+        // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");
         scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
         scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
@@ -65,99 +66,68 @@ public class JobsController extends ApplicationComponent
         terminateJobs();
     }
 
-    public void executeJob( String name )
+    public void executeJob( String name ) throws SchedulerException
     {
-        try {
-            getScheduler().triggerJob(name, AE_JOBS_GROUP);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+        getScheduler().triggerJob(new JobKey(name, AE_JOBS_GROUP));
+    }
+
+    public void executeJobWithParam( String name, String paramName, String paramValue ) throws SchedulerException
+    {
+        JobDataMap map = new JobDataMap();
+        map.put(paramName, paramValue);
+        getScheduler().triggerJob(new JobKey(name, AE_JOBS_GROUP), map);
+    }
+
+    public void addJobListener( JobListener jl ) throws SchedulerException
+    {
+        if (null != jl) {
+            getScheduler().getListenerManager().addJobListener(jl, allJobs());
         }
     }
 
-    public void executeJobWithParam( String name, String paramName, String paramValue )
+    public void removeJobListener( JobListener jl ) throws SchedulerException
     {
-        try {
-            JobDataMap map = new JobDataMap();
-            map.put(paramName, paramValue);
-            getScheduler().triggerJob(name, AE_JOBS_GROUP, map);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+        if (null != jl) {
+            getScheduler().getListenerManager().removeJobListener(jl.getName());
         }
     }
 
-    public void setJobListener( JobListener jl )
+    private void startScheduler() throws SchedulerException
     {
-        try {
-            if (null != jl) {
-                getScheduler().addGlobalJobListener(jl);
-            } else {
-                getScheduler().removeGlobalJobListener("job-listener");
-            }
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-    }
-
-    private void startScheduler()
-    {
-        try {
-            getScheduler().start();
-        } catch (SchedulerException x) {
-            logger.error("Caught an exception:", x);
-        }
+        getScheduler().start();
     }
 
     private Scheduler getScheduler()
     {
-        if (null == scheduler) {
-            try {
-                // Retrieve a scheduler from schedule factory
-                scheduler = new StdSchedulerFactory().getScheduler();
-            } catch (Exception x) {
-                logger.error("Caught an exception:", x);
-            }
-        }
         return scheduler;
     }
 
-    private void addJob( String name, Class c )
+    private void addJob( String name, Class<? extends Job> c ) throws SchedulerException
     {
-        JobDetail j = new JobDetail(
-                name
-                , AE_JOBS_GROUP
-                , c
-                , true      // volatilily
-                , true      // durability
-                , false     // recover
-        );
-
-        try {
-            getScheduler().addJob(j, false);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
+        JobDetail j = newJob(c)
+                .withIdentity(name, AE_JOBS_GROUP)
+                .storeDurably(true)
+                .requestRecovery(false)
+                .build();
+        getScheduler().addJob(j, false);
     }
 
-    private void scheduleJob( String name, String preferencePrefix )
+    private void scheduleJob( String name, String preferencePrefix ) throws ParseException, SchedulerException
     {
         String schedule = getPreferences().getString(preferencePrefix + ".schedule");
-        Long interval = getPreferences().getLong(preferencePrefix + ".interval");
+        Integer interval = getPreferences().getInteger(preferencePrefix + ".interval");
         Boolean atStart = getPreferences().getBoolean(preferencePrefix + ".atstart");
 
         if (null != schedule && 0 < schedule.length()) {
-            CronTrigger cronTrigger = new CronTrigger(name + "_schedule_trigger", null);
-            try {
-                // setup CronExpression
-                CronExpression cexp = new CronExpression(schedule);
-                // Assign the CronExpression to CronTrigger
-                cronTrigger.setCronExpression(cexp);
-                cronTrigger.setJobName(name);
-                cronTrigger.setJobGroup(AE_JOBS_GROUP);
-                // schedule a job with JobDetail and Trigger
-                getScheduler().scheduleJob(cronTrigger);
-            } catch (Exception x) {
-                logger.error("Caught an exception:", x);
-            }
+            CronExpression cexp = new CronExpression(schedule);
+            Trigger cronTrigger = newTrigger()
+                    .withIdentity(name + "_schedule_trigger", AE_JOBS_GROUP)
+                    .withSchedule(CronScheduleBuilder.cronSchedule(cexp))
+                    .forJob(name, AE_JOBS_GROUP)
+                    .build();
+
+            // schedule a job with JobDetail and Trigger
+            getScheduler().scheduleJob(cronTrigger);
         }
 
         boolean hasScheduledInterval = false;
@@ -168,53 +138,39 @@ public class JobsController extends ApplicationComponent
         }
 
         if ((null != atStart && atStart) && !hasScheduledInterval) {
-            SimpleTrigger intervalTrigger = new SimpleTrigger(name + "_at_start_trigger", AE_JOBS_GROUP);
 
-            intervalTrigger.setJobName(name);
-            intervalTrigger.setJobGroup(AE_JOBS_GROUP);
-
-            try {
-                getScheduler().scheduleJob(intervalTrigger);
-            } catch (Exception x) {
-                logger.error("Caught an exception:", x);
-            }
+            Trigger atStartTrigger = newTrigger()
+                    .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
+                    .forJob(name, AE_JOBS_GROUP)
+                    .startNow()
+                    .build();
+            getScheduler().scheduleJob(atStartTrigger);
         }
     }
 
-    private void scheduleIntervalJob( String name, Long interval )
+    private void scheduleIntervalJob( String name, Integer interval ) throws SchedulerException
     {
-        SimpleTrigger intervalTrigger = new SimpleTrigger(
-                name + "_interval_trigger"
-                , AE_JOBS_GROUP
-                , SimpleTrigger.REPEAT_INDEFINITELY, interval
-        );
-
-        intervalTrigger.setJobName(name);
-        intervalTrigger.setJobGroup(AE_JOBS_GROUP);
-
-        try {
-            getScheduler().scheduleJob(intervalTrigger);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
+        Trigger intervalTrigger = newTrigger()
+                .withIdentity(name + "_interval_trigger", AE_JOBS_GROUP)
+                .forJob(name, AE_JOBS_GROUP)
+                .withSchedule(simpleSchedule()
+                        .withIntervalInMinutes(interval)
+                        .repeatForever())
+                .startNow()
+                .build();
+        getScheduler().scheduleJob(intervalTrigger);
     }
 
-    private void terminateJobs()
+    private void terminateJobs() throws SchedulerException
     {
-        try {
-            // stop all jobs from being triggered
-            getScheduler().pauseAll();
+        getScheduler().pauseAll();
 
-            List runningJobs = getScheduler().getCurrentlyExecutingJobs();
-            for (Object jec : runningJobs) {
-                JobDetail j = ((JobExecutionContext) jec).getJobDetail();
-                getScheduler().interrupt(j.getName(), j.getGroup());
-            }
-
-            getScheduler().shutdown(true);
-
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+        List runningJobs = getScheduler().getCurrentlyExecutingJobs();
+        for (Object jec : runningJobs) {
+            JobDetail j = ((JobExecutionContext) jec).getJobDetail();
+            getScheduler().interrupt(j.getKey());
         }
+
+        getScheduler().shutdown(true);
     }
 }

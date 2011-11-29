@@ -220,7 +220,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     .append("<experiments total=\"").append(exps.size()).append("\">")
                     ;
 
-            ((JobsController) getComponent("JobsController")).setJobListener(this);
+            ((JobsController) getComponent("JobsController")).addJobListener(this);
 
             if (exps.size() > 0) {
                 if (exps.size() <= numThreadsForRetrieval) {
@@ -237,7 +237,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     Thread.sleep(1000);
                 }
 
-                ((JobsController) getComponent("JobsController")).setJobListener(null);
+                ((JobsController) getComponent("JobsController")).removeJobListener(this);
                 xmlBuffer.append("</experiments>");
 
                 experimentsXml = xmlBuffer.toString();
@@ -272,7 +272,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     public void jobToBeExecuted( JobExecutionContext jec )
     {
-        if (jec.getJobDetail().getName().equals("retrieve-xml")) {
+        if (jec.getJobDetail().getKey().getName().equals("retrieve-xml")) {
             JobDataMap jdm = jec.getMergedJobDataMap();
             int index = Integer.parseInt(jdm.getString("index"));
             jdm.put("xmlBuffer", xmlBuffer);
@@ -283,7 +283,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     public void jobExecutionVetoed( JobExecutionContext jec )
     {
-        if (jec.getJobDetail().getName().equals("retrieve-xml")) {
+        if (jec.getJobDetail().getKey().getName().equals("retrieve-xml")) {
             try {
                 interrupt();
             } catch (Exception x) {
@@ -294,7 +294,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     public void jobWasExecuted( JobExecutionContext jec, JobExecutionException jobException )
     {
-        if (jec.getJobDetail().getName().equals("retrieve-xml")) {
+        if (jec.getJobDetail().getKey().getName().equals("retrieve-xml")) {
             JobDataMap jdm = jec.getMergedJobDataMap();
             jdm.remove("xmlBuffer");
             jdm.remove("connectionSource");
