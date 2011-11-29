@@ -30,7 +30,7 @@ import java.io.PrintWriter;
 
 public class VerifyLoginServlet extends ApplicationServlet
 {
-    private static final long serialVersionUID = -4509580274404536983L;
+    private static final long serialVersionUID = -4509580274404536345L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
