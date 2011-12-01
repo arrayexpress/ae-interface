@@ -90,9 +90,15 @@ public class StringTools
         }
     }
 
-    public static void stringToFile( String string, File file ) throws IOException
+    public static void stringToFile( String string, File file, String encoding ) throws IOException
     {
-        BufferedWriter w = new BufferedWriter(new FileWriter(file));
+        BufferedWriter w = new BufferedWriter(
+                new OutputStreamWriter(
+                        new FileOutputStream(file)
+                        , encoding
+                )
+        );
+
         w.write(string);
         w.close();
     }

@@ -23,8 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
@@ -39,7 +39,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private AuthenticationHelper authHelper;
-    private TextFilePersistence<PersistableDocumentContainer> document;
+    private FilePersistence<PersistableDocumentContainer> document;
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -67,7 +67,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
-        this.document = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("users")
                 , new File(getPreferences().getString("ae.users.persistence-location"))
         );

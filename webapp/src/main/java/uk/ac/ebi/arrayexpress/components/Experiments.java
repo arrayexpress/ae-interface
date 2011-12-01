@@ -27,10 +27,10 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
@@ -50,10 +50,10 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     private final RegexHelper ARRAY_ACCESSION_REGEX = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
 
-    private TextFilePersistence<PersistableDocumentContainer> document;
-    private TextFilePersistence<PersistableStringList> experimentsInAtlas;
-    private TextFilePersistence<PersistableString> species;
-    private TextFilePersistence<PersistableString> arrays;
+    private FilePersistence<PersistableDocumentContainer> document;
+    private FilePersistence<PersistableStringList> experimentsInAtlas;
+    private FilePersistence<PersistableString> species;
+    private FilePersistence<PersistableString> arrays;
     private Map<String, String> assaysByMolecule;
     private Map<String, String> assaysByInstrument;
 
@@ -147,23 +147,23 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.events = (Events) getComponent("Events");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        this.document = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("experiments")
                 , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
 
-        this.experimentsInAtlas = new TextFilePersistence<PersistableStringList>(
+        this.experimentsInAtlas = new FilePersistence<PersistableStringList>(
                 new PersistableStringList()
                 , new File(getPreferences().getString("ae.atlasexperiments.persistence-location"))
         );
 
-        this.species = new TextFilePersistence<PersistableString>(
+        this.species = new FilePersistence<PersistableString>(
                 new PersistableString()
                 , new File(getPreferences().getString("ae.species.dropdown-html-location"))
 
         );
 
-        this.arrays = new TextFilePersistence<PersistableString>(
+        this.arrays = new FilePersistence<PersistableString>(
                 new PersistableString()
                 , new File(getPreferences().getString("ae.arrays.dropdown-html-location"))
         );

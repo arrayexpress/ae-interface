@@ -121,9 +121,9 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             String exportLocation = getPreferences().getString("ae.experiments.ae1.export-location");
             if (!"".equals(exportLocation)) {
                 logger.info("Export of experiment data to [{}] requested", exportLocation);
-                StringTools.stringToFile(usersXml, new File(exportLocation, "users.xml"));
-                StringTools.stringToFile(arrayDesignsXml, new File(exportLocation, "arrays.xml"));
-                StringTools.stringToFile(experimentsXml, new File(exportLocation, "experiments.xml"));
+                StringTools.stringToFile(usersXml, new File(exportLocation, "users.xml"), "UTF-8");
+                StringTools.stringToFile(arrayDesignsXml, new File(exportLocation, "arrays.xml"), "UTF-8");
+                StringTools.stringToFile(experimentsXml, new File(exportLocation, "experiments.xml"), "UTF-8");
             }
 
             // export to temp directory anyway (only if debug is enabled)
@@ -134,6 +134,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                                 System.getProperty("java.io.tmpdir")
                                 , "ae1-raw-experiments.xml"
                         )
+                        , "UTF-8"
                 );
             }
 
@@ -249,6 +250,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                                     System.getProperty("java.io.tmpdir")
                                     , "ae1-raw-experiments.txt"
                             )
+                            , "UTF-8"
                     );
                 }
 

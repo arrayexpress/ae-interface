@@ -24,6 +24,8 @@ import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentContainer;
 
+import javax.xml.xpath.XPathExpressionException;
+
 // TODO - check XML version on persistence events
 
 public class PersistableDocumentContainer extends DocumentContainer implements Persistable
@@ -49,26 +51,41 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         }
     }
 
-    public String toPersistence() throws Exception
+    public String toPersistence()
     {
-        return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(getDocument());
+        try {
+            return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(getDocument());
+        } catch (Exception x)
+        {
+        }
+        return null;
     }
 
-    public void fromPersistence( String str ) throws Exception
+    public void fromPersistence( String str )
     {
-        setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str));
-        
+        try {
+            setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str));
+        } catch (Exception x)
+        {
+        }
+
         if (null == getDocument()) {
             createDocument();
         }
     }
 
-    public boolean isEmpty() throws Exception
+    public boolean isEmpty()
     {
         if (null == getDocument())
             return true;
 
-        String total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+        String total = null;
+        try {
+             total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+        } catch (XPathExpressionException x)
+        {
+
+        }
 
         return (null == total || total.equals("0"));
     }

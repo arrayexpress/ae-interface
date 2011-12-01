@@ -21,8 +21,8 @@ import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.persistence.TextFilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 
@@ -33,7 +33,7 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private TextFilePersistence<PersistableDocumentContainer> document;
+    private FilePersistence<PersistableDocumentContainer> document;
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -62,7 +62,7 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
 
-        this.document = new TextFilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<PersistableDocumentContainer>(
                 new PersistableDocumentContainer("protocols")
                 , new File(getPreferences().getString("ae.protocols.persistence-location"))
         );

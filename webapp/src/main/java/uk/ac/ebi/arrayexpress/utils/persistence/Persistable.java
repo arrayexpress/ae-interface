@@ -18,17 +18,17 @@ package uk.ac.ebi.arrayexpress.utils.persistence;
  */
 
 /**
- * Persistable class implements two basic functions
- * <p/>
+ * Persistable class implements three basic functions
+ *
  * - toPersisence() that creates a String based upon object contents
  * - fromPersistence( String ) that initializes an Object based upon a String parameter
  * - isEmpty() that returns true if object should be loaded from persistence
  */
 public interface Persistable
 {
-    public String toPersistence() throws Exception;
+    public String toPersistence();
 
-    public void fromPersistence( String str ) throws Exception;
+    public void fromPersistence( String str );
 
-    public boolean isEmpty() throws Exception;
+    public boolean isEmpty();
 }

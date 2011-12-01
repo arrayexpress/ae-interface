@@ -67,6 +67,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                                 System.getProperty("java.io.tmpdir")
                                 , "ae2-src-experiments.xml"
                         )
+                        , "UTF-8"
                 );
             }
 
