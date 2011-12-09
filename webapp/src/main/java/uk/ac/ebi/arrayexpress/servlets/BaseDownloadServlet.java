@@ -115,7 +115,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
 
         // Check if file actually exists in filesystem
-        if (!file.exists() || !file.isFile()) {
+        if (!file.exists() || !file.canRead() || !file.isFile()) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
