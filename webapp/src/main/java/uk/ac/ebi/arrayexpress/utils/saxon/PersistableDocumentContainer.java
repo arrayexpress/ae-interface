@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.persistence;
+package uk.ac.ebi.arrayexpress.utils.saxon;
 
 /*
  * Copyright 2009-2011 European Molecular Biology Laboratory
@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.persistence.Persistable;
 
 import javax.xml.xpath.XPathExpressionException;
 

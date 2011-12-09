@@ -17,6 +17,8 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import de.schlichtherle.truezip.file.TFile;
+import de.schlichtherle.truezip.file.TFileInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.Experiments;
@@ -31,6 +33,8 @@ import java.util.List;
 
 public class ArchivedFileDownloadServlet extends BaseDownloadServlet
 {
+    private static final long serialVersionUID = 292987974909731234L;
+
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static class ExactCaseInsensitiveFilenameFilter implements FilenameFilter
@@ -55,8 +59,8 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
 
     protected InputStream getInputStream( File f ) throws IOException
     {
-        if (f instanceof de.schlichtherle.io.File ) {
-            return new de.schlichtherle.io.FileInputStream(f);
+        if (f instanceof TFile) {
+            return new TFileInputStream(f);
         } else {
             return new FileInputStream(f);
         }
@@ -124,7 +128,7 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
                 }
 
                 logger.debug("Will be serving archive [{}]", archLocation);
-                de.schlichtherle.io.File archFile = new de.schlichtherle.io.File(files.getRootFolder(), archLocation);
+                TFile archFile = new TFile(files.getRootFolder(), archLocation);
                 File[] entries = archFile.listFiles(new ExactCaseInsensitiveFilenameFilter(fileName));
 
                 if (null == entries || entries.length != 1) {

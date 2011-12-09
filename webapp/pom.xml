@@ -565,9 +565,9 @@
 			<version>2.1</version>
 		</dependency>
         <dependency>
-            <groupId>de.schlichtherle</groupId>
-            <artifactId>truezip</artifactId>
-            <version>6.8.1</version>
+            <groupId>de.schlichtherle.truezip</groupId>
+            <artifactId>truezip-file</artifactId>
+            <version>7.4.1</version>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
