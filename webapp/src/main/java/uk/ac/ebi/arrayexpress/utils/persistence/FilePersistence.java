@@ -56,6 +56,11 @@ public class FilePersistence<T extends Persistable> extends Persistence<T>
                 , object.getClass().toString()
                 , persistenceFile.getName());
 
-        object.fromPersistence(StringTools.fileToString(persistenceFile, PERSISTENCE_FILE_ENCODING));
+        if (persistenceFile.exists()) {
+            String objectString = StringTools.fileToString(persistenceFile, PERSISTENCE_FILE_ENCODING);
+            object.fromPersistence(objectString);
+        } else {
+            logger.warn("Persistance file [{}] not found", persistenceFile.getName());
+        }
     }
 }
