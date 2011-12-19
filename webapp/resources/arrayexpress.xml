@@ -127,7 +127,7 @@
             <location>${sys:java.io.tmpdir}/efo.owl</location>
             <source>/WEB-INF/classes/efo.owl</source>
             <update>
-                <source>http://www.ebi.ac.uk/efo/efo.owl</source>
+                <source>http://efo.svn.sourceforge.net/svnroot/efo/trunk/src/efoinowl/efo.owl</source>
                 <schedule>${interface.application.pref.efo.update.schedule}</schedule>
             </update>
             <ignoreList>/WEB-INF/classes/efo-ignore.txt</ignoreList>
