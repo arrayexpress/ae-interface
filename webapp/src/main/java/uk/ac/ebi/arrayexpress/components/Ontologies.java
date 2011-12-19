@@ -59,13 +59,14 @@ public class Ontologies extends ApplicationComponent
         this.search = (SearchEngine) getComponent("SearchEngine");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
         initLookupIndex();
+        ((JobsController) getComponent("JobsController")).scheduleJobAtStart("reload-efo");
     }
 
     public void terminate() throws Exception
     {
     }
 
-    public void update( InputStream ontologyStream ) throws IOException
+    public void update( InputStream ontologyStream ) throws IOException, InterruptedException
     {
         // load custom synonyms to lookup index
         loadCustomSynonyms();

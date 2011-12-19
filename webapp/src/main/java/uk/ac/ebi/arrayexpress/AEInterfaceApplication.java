@@ -51,8 +51,9 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new Protocols());
         addComponent(new Users());
         addComponent(new Files());
-        addComponent(new Ontologies());
         addComponent(new JobsController());
+        addComponent(new Ontologies());
+
     }
 
     public String getName()

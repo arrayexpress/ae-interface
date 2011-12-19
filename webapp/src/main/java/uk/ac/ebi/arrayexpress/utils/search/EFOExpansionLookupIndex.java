@@ -71,7 +71,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         this.customSynonyms = synonyms;
     }
 
-    public void buildIndex()
+    public void buildIndex() throws InterruptedException
     {
         try {
             IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
@@ -81,13 +81,15 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             addCustomSynonyms(w);
             commitIndex(w);
             this.logger.debug("Building completed");
+        } catch (InterruptedException x) {
+            throw x;
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
 
     }
 
-    private void addCustomSynonyms( IndexWriter w )
+    private void addCustomSynonyms( IndexWriter w ) throws InterruptedException
     {
         // here we add all custom synonyms so those that weren't added during EFO processing
         //  get a chance to be included, too. don't worry about duplication, dupes will be removed during retrieval
@@ -109,8 +111,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeAndChildren( EFONode node, IndexWriter w )
+    private void addNodeAndChildren( EFONode node, IndexWriter w ) throws InterruptedException
     {
+        Thread.sleep(1);
         if (null != node) {
             addNodeToIndex(node, w);
             for (EFONode child : node.getChildren()) {
@@ -119,7 +122,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeToIndex( EFONode node, IndexWriter w )
+    private void addNodeToIndex( EFONode node, IndexWriter w ) throws InterruptedException
     {
         String term = node.getTerm();
         Set<String> synonyms = node.getAlternativeTerms();
@@ -227,11 +230,14 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         return expansion;
     }
 
-    private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer )
+    private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer ) throws InterruptedException
     {
         IndexWriter iwriter = null;
         try {
+            Thread.sleep(1);
             iwriter = new IndexWriter(indexDirectory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+        } catch (InterruptedException x) {
+            throw x;
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
@@ -253,10 +259,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         );
     }
 
-    private void addIndexDocument( IndexWriter iwriter, Document document )
+    private void addIndexDocument( IndexWriter iwriter, Document document ) throws InterruptedException
     {
         try {
+            Thread.sleep(1);
             iwriter.addDocument(document);
+        } catch (InterruptedException x) {
+            throw x;
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

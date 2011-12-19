@@ -5,7 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Ontologies;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 /*
@@ -30,13 +33,30 @@ public class ReloadOntologyJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final static String EFO_FILE_ENCODING = "UTF-8";
+
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        String efoLocation = getPreferences().getString("ae.efo.source");
-        logger.info("Loading EFO ontology from [{}]", efoLocation);
+        // check if efo.owl is in temp folder; if it's not there, copy from source
+        String efoLocation = getPreferences().getString("ae.efo.location");
+        File efoFile = new File(efoLocation);
+        if (!efoFile.exists()) {
+            String efoBuiltinSource = getPreferences().getString("ae.efo.source");
+            InputStream is = null;
+            try {
+                is = getApplication().getResource(efoBuiltinSource).openStream();
+                StringTools.stringToFile(StringTools.streamToString(is, "UTF-8"), efoFile, "UTF-8");
+            } finally {
+                if (null != is) {
+                    is.close();
+                }
+            }
+        }
+        
+        logger.info("Loading EFO ontology from [{}]", efoFile.getPath());
         InputStream is = null;
         try {
-            is = getApplication().getResource(efoLocation).openStream();
+            is = new FileInputStream(efoFile);
             ((Ontologies)getComponent("Ontologies")).update(is);
             logger.info("EFO loading completed");
         } finally {
@@ -44,6 +64,5 @@ public class ReloadOntologyJob extends ApplicationJob
                 is.close();
             }
         }
-
     }
 }

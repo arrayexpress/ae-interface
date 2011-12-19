@@ -51,12 +51,13 @@ public class JobsController extends ApplicationComponent
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
+        addJob("update-efo", UpdateOntologyJob.class);
 
         // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");
         scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
         scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
-        scheduleJob("reload-efo", "ae.efo.reload");
+        scheduleJob("update-efo", "ae.efo.update");
 
         startScheduler();
     }
@@ -90,6 +91,16 @@ public class JobsController extends ApplicationComponent
         if (null != jl) {
             getScheduler().getListenerManager().removeJobListener(jl.getName());
         }
+    }
+
+    public void scheduleJobAtStart( String name ) throws SchedulerException
+    {
+        Trigger atStartTrigger = newTrigger()
+                .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
+                .forJob(name, AE_JOBS_GROUP)
+                .startNow()
+                .build();
+        getScheduler().scheduleJob(atStartTrigger);
     }
 
     private void startScheduler() throws SchedulerException
@@ -138,13 +149,7 @@ public class JobsController extends ApplicationComponent
         }
 
         if ((null != atStart && atStart) && !hasScheduledInterval) {
-
-            Trigger atStartTrigger = newTrigger()
-                    .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
-                    .forJob(name, AE_JOBS_GROUP)
-                    .startNow()
-                    .build();
-            getScheduler().scheduleJob(atStartTrigger);
+            scheduleJobAtStart(name);
         }
     }
 

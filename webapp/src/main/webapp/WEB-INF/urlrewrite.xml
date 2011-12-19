@@ -367,6 +367,10 @@
         <to type="forward">/servlets/control/reload-efo</to>
     </rule>
     <rule>
+        <from>^/update-efo</from>
+        <to type="forward">/servlets/control/update-efo</to>
+    </rule>
+    <rule>
         <from>^/reload-ae1-xml</from>
         <to type="forward">/servlets/control/reload-ae1-xml</to>
     </rule>

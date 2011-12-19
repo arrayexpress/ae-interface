@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class EFOLoader
         EFOImpl efo = null;
 
         try {
-            // to prevernt RDFXMLParser to fail on some machines
+            // to prevent RDFXMLParser to fail on some machines
             // with SAXParseException: The parser has encountered more than "64,000" entity expansions
             System.setProperty("entityExpansionLimit", "100000000");
             ontology = manager.loadOntologyFromOntologyDocument(ontologyStream);
@@ -73,7 +74,7 @@ public class EFOLoader
                     break;
                 }
             }
-            logger.debug("Loading EFO version [{}]", version);
+            logger.debug("Using EFO version [{}]", version);
             efo = new EFOImpl(version);
 
             OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
@@ -132,6 +133,31 @@ public class EFOLoader
         return efo;
     }
 
+    public static String getOWLVersion( URI location )
+    {
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        OWLOntology ontology;
+
+        String version = null;
+
+        try {
+            // to prevent RDFXMLParser to fail on some machines
+            // with SAXParseException: The parser has encountered more than "64,000" entity expansions
+            System.setProperty("entityExpansionLimit", "100000000");
+            ontology = manager.loadOntologyFromOntologyDocument(IRI.create(location));
+
+            for (OWLAnnotation annotation : ontology.getAnnotations()) {
+                if (IRI_VERSION_INFO.equals(annotation.getProperty().getIRI())) {
+                    version = ((OWLLiteral)annotation.getValue()).getLiteral();
+                    break;
+                }
+            }
+        } catch (OWLOntologyCreationException e) {
+            throw new RuntimeException("Unable to read ontology from URI", e);
+        }
+        return version;
+    }
+
     private void loadClass( OWLOntology ontology, OWLReasoner reasoner, OWLClass cls, EFOImpl efo )
     {
         // initialise the node
@@ -170,13 +196,7 @@ public class EFOLoader
 
         for (OWLSubClassOfAxiom subClassOf : subClassOfAxioms ) {
             OWLClassExpression superClass = subClassOf.getSuperClass();
-            if (superClass instanceof OWLClass ) {
-                // inferred relationships shall supersede ontology direct axioms
-                //if (!reverseSubClassOfMap.containsKey(node.getId())) {
-                //    reverseSubClassOfMap.put(node.getId(), new HashSet<String>());
-                //}
-                //reverseSubClassOfMap.get(node.getId()).add(((OWLClass) superClass).toStringID());
-            } else if (superClass instanceof OWLQuantifiedObjectRestriction) {
+            if (superClass instanceof OWLQuantifiedObjectRestriction) {
                 // may be part-of
                 OWLQuantifiedObjectRestriction restriction = (OWLQuantifiedObjectRestriction)superClass;
                 if (IRI_PART_OF.equals(restriction.getProperty().getNamedProperty().getIRI())
