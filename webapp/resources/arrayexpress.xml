@@ -5,7 +5,10 @@
             <originator>"ArrayExpress Archive" &lt;ae-mgmt@ebi.ac.uk&gt;</originator>
             <recipients>${interface.application.pref.reports.recipients}</recipients>
             <subject>Runtime exception report</subject>
-            <smtp><server>smtp.ebi.ac.uk</server></smtp>
+            <smtp>
+                <host>smtp.ebi.ac.uk</host>
+                <port>25</port>
+            </smtp>
         </reports>
     </app>
     <ae>

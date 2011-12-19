@@ -390,6 +390,10 @@
         <from>^/rescan-ftp/(.+)</from>
         <to type="forward">/servlets/control/rescan-files/$1</to>
     </rule>
+    <rule>
+        <from>^/test-email</from>
+        <to type="forward">/servlets/control/test-email</to>
+    </rule>
 
     <!-- experimental noajax browse interface -->
     <rule>

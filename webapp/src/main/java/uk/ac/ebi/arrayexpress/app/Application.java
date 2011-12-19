@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.app;
  *
  */
 
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.EmailSender;
@@ -28,6 +29,7 @@ import java.io.Writer;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -82,7 +84,10 @@ public abstract class Application
     {
         logger.debug("Initializing the application...");
         prefs.initialize();
-        emailer = new EmailSender(getPreferences().getString("app.reports.smtp.server"));
+        emailer = new EmailSender(
+                getPreferences().getString("app.reports.smtp.host")
+                , getPreferences().getInteger("app.reports.smtp.port")
+        );
 
         for (ApplicationComponent c : components.values()) {
             logger.info("Initializing component [{}]", c.getName());
@@ -124,13 +129,27 @@ public abstract class Application
         }
     }
 
-    public void sendEmail( String message )
+    public void sendEmail( String subject, String message )
     {
         try {
+            Thread currentThread = Thread.currentThread();
+            String hostName = "unknown";
+            try {
+                InetAddress localMachine = InetAddress.getLocalHost();
+                hostName = localMachine.getHostName();
+            } catch (Exception xx) {
+                logger.debug("Caught an exception:", xx);
+            }
 
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("variable.appname", getName());
+            params.put("variable.thread", String.valueOf(currentThread));
+            params.put("variable.hostname", hostName);
+            StrSubstitutor sub = new StrSubstitutor(params);
+            
             emailer.send(getPreferences().getStringArray("app.reports.recipients")
-                    , getPreferences().getString("app.reports.subject")
-                    , message
+                    , subject
+                    , sub.replace(message)
                     , getPreferences().getString("app.reports.originator")
             );
 
@@ -141,20 +160,12 @@ public abstract class Application
 
     public void sendExceptionReport( String message, Throwable x )
     {
-        Thread currentThread = Thread.currentThread();
-        String hostName = "unknown";
-        try {
-            InetAddress localMachine = InetAddress.getLocalHost();
-            hostName = localMachine.getHostName();
-        } catch (Exception xx) {
-            logger.debug("Caught an exception:", xx);
-        }
-
-        sendEmail( message + ": " + x.getMessage() + StringTools.EOL
-                + "Application [" + getName() + "]" + StringTools.EOL
-                + "Host [" + hostName + "]" + StringTools.EOL
-                + "Thread [" + currentThread.getName() + "]" + StringTools.EOL
-                + getStackTrace(x)
+        sendEmail( getPreferences().getString("app.reports.subject")
+                , message + ": " + x.getMessage() + StringTools.EOL
+                    + "Application [${variable.appname}]" + StringTools.EOL
+                    + "Host [${variable.hostname}]" + StringTools.EOL
+                    + "Thread [${variable.thread}]" + StringTools.EOL
+                    + getStackTrace(x)
         );
     }
 

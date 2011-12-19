@@ -27,20 +27,23 @@ import java.util.Properties;
 
 public class EmailSender
 {
-    private String smtpServer;
+    private final String smtpHost;
+    private final int smtpPort;
 
-    public EmailSender( String smtpServer )
+    public EmailSender( String smtpHost, int smtpPort )
     {
-        this.smtpServer = smtpServer;
+        this.smtpHost = smtpHost;
+        this.smtpPort = smtpPort;
     }
 
     public void send( String recipients[], String subject, String message, String from ) throws MessagingException
     {
         boolean debug = false;
 
-        //Set the host smtp address
+        //Set the host smtp address and port
         Properties props = new Properties();
-        props.put("mail.smtp.host", smtpServer);
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", smtpPort);
 
         // create some properties and get the default Session
         Session session = Session.getDefaultInstance(props, null);
