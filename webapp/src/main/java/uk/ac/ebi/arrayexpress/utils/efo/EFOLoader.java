@@ -74,7 +74,7 @@ public class EFOLoader
                     break;
                 }
             }
-            logger.debug("Using EFO version [{}]", version);
+            logger.info("Using EFO version [{}]", version);
             efo = new EFOImpl(version);
 
             OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
