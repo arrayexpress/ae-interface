@@ -62,6 +62,8 @@ public class UpdateOntologyJob extends ApplicationJob
                 }
             }
             
+        } else {
+            logger.info("Current ontology version [{}] is up-to-date", loadedVersion);
         }
     }
 }
