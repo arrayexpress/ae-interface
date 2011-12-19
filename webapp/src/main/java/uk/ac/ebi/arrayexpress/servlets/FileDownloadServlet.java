@@ -26,32 +26,86 @@ import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 public class FileDownloadServlet extends BaseDownloadServlet
 {
+    private static final long serialVersionUID = 292987974909737571L;
+
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected boolean isRandomAccessSupported()
+    protected final class RegularDownloadFile implements IDownloadFile
     {
-        return true;
+        private final File file;
+        
+        public RegularDownloadFile( File file )
+        {
+            if (null == file) {
+                throw new IllegalArgumentException("File cannot be null");
+            }
+            this.file = file;
+        }
+
+        private File getFile()
+        {
+            return this.file;
+        }
+        
+        public String getName()
+        {
+            return getFile().getName();
+        }
+        
+        public String getPath()
+        {
+            return getFile().getPath();
+        }
+
+        public long getLength()
+        {
+            return getFile().length();
+        }
+        
+        public long getLastModified()
+        {
+            return getFile().lastModified();
+        }
+
+        public boolean canDownload()
+        {
+            return getFile().exists() && getFile().isFile() && getFile().canRead();
+        }
+
+        public boolean isRandomAccessSupported()
+        {
+            return true;
+        }
+        
+        public RandomAccessFile getRandomAccessFile() throws IOException
+        {
+            return new RandomAccessFile(getFile(), "r");
+        }
+
+        public InputStream getInputStream() throws IOException
+        {
+            return new FileInputStream(getFile());
+        }
+
+        public void close() throws IOException
+        {
+        }
     }
 
-    protected InputStream getInputStream( File f ) throws IOException
-    {
-        return new FileInputStream(f);
-    }
-
-    protected File validateRequest( HttpServletRequest request, HttpServletResponse response, List<String> userIDs )
-            throws DownloadServletException
+    protected IDownloadFile getDownloadFileFromRequest(
+            HttpServletRequest request
+            , HttpServletResponse response
+            , List<String> userIDs
+    ) throws DownloadServletException
     {
         String accession = "";
         String name = "";
-        File file;
+        IDownloadFile file;
 
         try {
             String[] requestArgs = new RegexHelper("/download/([^/]+)/?([^/]*)", "i")
@@ -109,7 +163,7 @@ public class FileDownloadServlet extends BaseDownloadServlet
                 }
 
                 logger.debug("Will be serving file [{}]", fileLocation);
-                file = new File(files.getRootFolder(), fileLocation);
+                file = new RegularDownloadFile(new File(files.getRootFolder(), fileLocation));
             }
         } catch (DownloadServletException x) {
             throw x;

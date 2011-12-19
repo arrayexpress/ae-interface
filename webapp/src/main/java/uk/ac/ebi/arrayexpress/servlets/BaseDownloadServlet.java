@@ -56,6 +56,24 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
     }
 
+    protected interface IDownloadFile
+    {
+        public String getName();
+        public String getPath();
+
+        public long getLength();
+        public long getLastModified();
+
+        public boolean canDownload();
+
+        public boolean isRandomAccessSupported();
+        public RandomAccessFile getRandomAccessFile() throws IOException;
+
+        public InputStream getInputStream() throws IOException;
+
+        public void close() throws IOException;
+    }
+    
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return true; // all requests are supported
@@ -70,17 +88,18 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        // 1. validate arguments: if file exists and available
+        IDownloadFile downloadFile = null;
         try {
-            File requestedFile = validateRequest(request, response, authUserIDs);
-            if (null != requestedFile) {
-                verifyFile(requestedFile, response);
+            downloadFile = getDownloadFileFromRequest(request, response, authUserIDs);
+            if (null != downloadFile) {
+                verifyFile(downloadFile, response);
 
-                if (isRandomAccessSupported()) {
-                    sendRandomAccessFile(requestedFile, request, response, requestType);
+                if (downloadFile.isRandomAccessSupported()) {
+                    sendRandomAccessFile(downloadFile, request, response, requestType);
                 } else {
-                    sendSequentialFile(requestedFile, request, response, requestType);
+                    sendSequentialFile(downloadFile, request, response, requestType);
                 }
+                logger.debug("Download of [{}] completed", downloadFile.getName());
             }
         } catch (DownloadServletException x) {
             logger.error(x.getMessage());
@@ -91,19 +110,19 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
             } else {
                 throw new ServletException(x);
             }
+        } finally {
+            if (null != downloadFile) {
+                downloadFile.close();
+            }
         }
     }
-
-    protected abstract boolean isRandomAccessSupported();
-    protected abstract InputStream getInputStream( File f ) throws IOException;
-
-    protected abstract File validateRequest(
+    protected abstract IDownloadFile getDownloadFileFromRequest(
             HttpServletRequest request
             , HttpServletResponse response
             , List<String> authUserIDs
     ) throws DownloadServletException;
 
-    private void verifyFile( File file, HttpServletResponse response )
+    private void verifyFile( IDownloadFile file, HttpServletResponse response )
             throws DownloadServletException, IOException
     {
         // Check if file is actually supplied to the request URL.
@@ -115,7 +134,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
 
         // Check if file actually exists in filesystem
-        if (!file.exists() || !file.canRead() || !file.isFile()) {
+        if (!file.canDownload()) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning page, or just ignore it
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -123,13 +142,13 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
    }
 
-    private void sendSequentialFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+    private void sendSequentialFile( IDownloadFile downloadFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws IOException
     {
         // Prepare some variables. The ETag is an unique identifier of the file
-        String fileName = requestedFile.getName();
-        long length = requestedFile.length();
-        long lastModified = requestedFile.lastModified();
+        String fileName = downloadFile.getName();
+        long length = downloadFile.getLength();
+        long lastModified = downloadFile.getLastModified();
         String eTag = fileName + "_" + length + "_" + lastModified;
 
 
@@ -188,7 +207,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
             try {
                 // Open stream
-                input = new DataInputStream(getInputStream(requestedFile));
+                input = new DataInputStream(downloadFile.getInputStream());
                 output = response.getOutputStream();
 
                 int readCount;
@@ -208,13 +227,13 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
     }
 
-    private void sendRandomAccessFile( File requestedFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
+    private void sendRandomAccessFile( IDownloadFile downloadFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws IOException, DownloadServletException
     {
         // Prepare some variables. The ETag is an unique identifier of the file
-        String fileName = requestedFile.getName();
-        long length = requestedFile.length();
-        long lastModified = requestedFile.lastModified();
+        String fileName = downloadFile.getName();
+        long length = downloadFile.getLength();
+        long lastModified = downloadFile.getLastModified();
         String eTag = fileName + "_" + length + "_" + lastModified;
 
 
@@ -350,7 +369,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         try {
             // Open streams.
-            input = new RandomAccessFile(requestedFile, "r");
+            input = downloadFile.getRandomAccessFile();
             output = response.getOutputStream();
 
             if (ranges.isEmpty() || ranges.get(0) == full) {
