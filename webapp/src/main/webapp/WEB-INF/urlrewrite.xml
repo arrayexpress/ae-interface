@@ -229,7 +229,7 @@
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments/experiments/json?flusheaders</to>
+        <to type="forward">/servlets/query/experiments/experiments/json?flusheaders=</to>
     </rule>
     <rule>
         <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
@@ -237,11 +237,11 @@
     </rule>
     <rule>
         <from>^/json/v2/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/json?flushheaders&amp;keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/experiments/json?flusheaders=&amp;keywords=$1</to>
     </rule>
     <rule>
         <from>^/json/v2/files$</from>
-        <to type="forward">/servlets/query/experiments/files/json?flusheaders</to>
+        <to type="forward">/servlets/query/experiments/files/json?flusheaders=</to>
     </rule>
     <rule>
         <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
@@ -249,7 +249,7 @@
     </rule>
     <rule>
         <from>^/json/v2/files/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/files/json?flusheaders&amp;keywords=$1</to>
+        <to type="forward">/servlets/query/experiments/files/json?flusheaders=&amp;keywords=$1</to>
     </rule>
 
     <!-- proxy calls to json efo api for nils -->
