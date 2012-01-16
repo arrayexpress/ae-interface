@@ -105,6 +105,11 @@ public class QueryServlet extends AuthAwareApplicationServlet
             response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
         }
 
+        // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
+        if (null != request.getParameter("flusheaders")) {
+            response.flushBuffer();
+        }
+
         // Output goes to the response PrintWriter.
         PrintWriter out = response.getWriter();
         try {
