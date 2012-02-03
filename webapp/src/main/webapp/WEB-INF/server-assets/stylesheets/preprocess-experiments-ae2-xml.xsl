@@ -201,9 +201,9 @@
     </xsl:template>
 
     <xsl:template match="html:*" mode="html">
-        <xsl:element name="{fn:name()}">
+        <xsl:element name="{fn:local-name()}">
             <xsl:for-each select="@*">
-                <xsl:attribute name="{fn:name()}">
+                <xsl:attribute name="{fn:local-name()}">
                     <xsl:value-of select="."/>
                 </xsl:attribute>
             </xsl:for-each>
