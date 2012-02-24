@@ -40,7 +40,7 @@ public class StringToolsTest
     @Test
     public void testDetectDecodeUTF8Sequences()
     {
-        String in = "BiomŽrieux \"Antonio Rodr’guez-Garc’a\"";
+        String in = "Biomï¿½rieux \"Antonio Rodrï¿½guez-Garcï¿½a\"";
         String out = StringTools.detectDecodeUTF8Sequences(in);
         assertEquals(in, out);
 

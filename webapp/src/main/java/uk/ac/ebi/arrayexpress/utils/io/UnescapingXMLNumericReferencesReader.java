@@ -161,6 +161,7 @@ public class UnescapingXMLNumericReferencesReader extends Reader
                 if (UnescapeState.AnyCharExpected != state) {
                     // we were in a middle of something, but didn't finish
                     // so we save this part until next time
+                    // TODO: BUG! we need to save state as well
                     if (null == lastReadExcess) {
                         lastReadExcess = new char[inSize - ampPos];
                         System.arraycopy(inBuffer, ampPos, lastReadExcess, 0, lastReadExcess.length);

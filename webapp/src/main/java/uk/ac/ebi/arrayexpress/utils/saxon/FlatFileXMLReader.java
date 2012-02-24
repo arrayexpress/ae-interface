@@ -1,7 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.saxon;
 
 /*
- * Copyright 2009-2011 European Molecular Biology Laboratory
+ * Copyright 2009-2012 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,10 +36,25 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
     private static final String EMPTY_NAMESPACE = "";
 
-    private static final char COL_DELIMITER = 0x9;
-    private static final char COL_QUOTECHAR = '"';
+    private static final char DEFAULT_COL_DELIMITER = 0x9;
+    private static final char DEFAULT_COL_QUOTECHAR = '"';
 
-    public void parse(InputSource input) throws IOException, SAXException
+    private char columnDelimiter;
+    private char columnQuoteChar;
+    
+    public FlatFileXMLReader()
+    {
+        this.columnDelimiter = DEFAULT_COL_DELIMITER;
+        this.columnQuoteChar = DEFAULT_COL_QUOTECHAR;
+    }
+
+    public FlatFileXMLReader( final char columnDelimiter, final char columnQuoteChar )
+    {
+        this.columnDelimiter = columnDelimiter;
+        this.columnQuoteChar = columnQuoteChar;
+    }
+    
+    public void parse( InputSource input ) throws IOException, SAXException
     {
         ContentHandler ch = getContentHandler();
         if (null == ch) {
@@ -60,8 +75,8 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         CSVReader ffReader = new CSVReader(
                 new BufferedReader(inStream)
-                , COL_DELIMITER
-                , COL_QUOTECHAR
+                , this.columnDelimiter
+                , this.columnQuoteChar
         );
 
 

@@ -240,14 +240,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public String transformToString( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params ) throws Exception
+    public String transformToString( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
     {
         String str;
         ByteArrayOutputStream outStream = null;
         try {
             outStream = new ByteArrayOutputStream();
 
-            if (transform(srcDocument, stylesheet, params, new StreamResult(outStream))) {
+            if (transform(source, stylesheet, params, new StreamResult(outStream))) {
                 str = outStream.toString(XML_STRING_ENCODING);
                 return str;
             } else {
@@ -269,10 +269,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    public DocumentInfo transform( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params ) throws Exception
+    public DocumentInfo transform( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
     {
         TinyBuilder dstDocument = new TinyBuilder();
-        if (transform(srcDocument, stylesheet, params, dstDocument)) {
+        if (transform(source, stylesheet, params, dstDocument)) {
             return (DocumentInfo) dstDocument.getCurrentRoot();
         }
         return null;

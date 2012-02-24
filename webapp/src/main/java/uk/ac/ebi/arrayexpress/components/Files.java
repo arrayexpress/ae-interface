@@ -96,17 +96,9 @@ public class Files extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void reload( String xmlString ) throws Exception
+    public void reload( DocumentInfo doc ) throws Exception
     {
-        DocumentInfo doc = loadFilesFromString(xmlString);
-        if (null != doc) {
-            setDocument(doc);
-        }
-    }
-
-    private DocumentInfo loadFilesFromString( String xmlString ) throws Exception
-    {
-        return this.saxon.transform(xmlString, "preprocess-files-xml.xsl", null);
+        setDocument(doc);
     }
 
     private void updateIndex()

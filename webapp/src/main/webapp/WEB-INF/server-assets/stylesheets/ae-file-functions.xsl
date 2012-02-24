@@ -7,22 +7,6 @@
                 exclude-result-prefixes="ae aejava xs"
                 version="2.0">
 
-    <xsl:function name="ae:dataformats">
-        <xsl:param name="pBDG"/>
-        <xsl:param name="pKind"/>
-        <xsl:variable name="vIsDerived">
-            <xsl:choose>
-                <xsl:when test="$pKind = 'fgem'">
-                    <xsl:text>1</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>0</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:value-of select="string-join(distinct-values($pBDG[isderived = $vIsDerived]/dataformat), ', ')"/>
-    </xsl:function>
-
     <xsl:function name="ae:formatFileSize">
         <xsl:param name="pSize"/>
         <xsl:value-of select="aejava:formatFileSize($pSize)"/>

@@ -17,175 +17,84 @@ package uk.ac.ebi.arrayexpress.jobs;
  *
  */
 
+import net.sf.saxon.om.DocumentInfo;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Files;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
+import uk.ac.ebi.arrayexpress.utils.io.RemovingMultipleSpacesReader;
+import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
-import java.io.File;
+import javax.xml.transform.sax.SAXSource;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RescanFilesJob extends ApplicationJob
 {
-    // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        StringBuilder xmlString = new StringBuilder(20000000);
+        Files files = (Files) getComponent("Files");
+        SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
 
-        String rootFolder = ((Files)getComponent("Files")).getRootFolder();
-        this.logger.info("Rescan of downloadable files from [{}] requested", rootFolder);
+        String rootFolder = files.getRootFolder();
         if (null != rootFolder) {
-            File root = new File(rootFolder);
-            if (!root.exists()) {
-                this.logger.error("Rescan problem: root folder [{}] is inaccessible", rootFolder);
-            } else if (!root.isDirectory()) {
-                this.logger.error("Rescan problem: root folder [{}] is not a directory", rootFolder);
+            String listAllFilesCommand = getPreferences().getString("ae.files.list-all-command");
+            this.logger.info("Rescan of downloadable files from [{}] requested", rootFolder);
+
+            List<String> commandParams = new ArrayList<String>();
+            commandParams.add("/bin/sh");
+            commandParams.add("-c");
+            commandParams.add(listAllFilesCommand);
+            this.logger.debug("Executing [{}]", listAllFilesCommand);
+            ProcessBuilder pb = new ProcessBuilder(commandParams);
+            Process process = pb.start();
+
+            InputStream stdOut = process.getInputStream();
+            SAXSource source = new SAXSource();
+            source.setInputSource(
+                    new InputSource(
+                            new FilteringIllegalHTMLCharactersReader(
+                                    new RemovingMultipleSpacesReader(
+                                            new InputStreamReader(
+                                                    stdOut
+                                            )
+                                    )
+                            )
+                    )
+            );
+
+            source.setXMLReader(new FlatFileXMLReader(' ', '\00'));
+            
+            Map<String, String[]> transformParams = new HashMap<String, String[]>();
+            transformParams.put("rootFolder", new String[] { rootFolder });
+
+            DocumentInfo result = saxonEngine.transform(
+                    source
+                    , "preprocess-files-xml.xsl"
+                    , transformParams
+                    );
+
+            int returnCode = process.waitFor();
+            // TODO: if there is non-zero RC or stderr has something, we need to report that
+            if (0 == returnCode) {
+                ((Files)getComponent("Files")).reload(result);
+                this.logger.info("Rescan of downloadable files completed");
             } else {
-                try {
-                    xmlString.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>")
-                            .append("<files root=\"").append(root.getAbsolutePath()).append("\">");
-                    rescanFolder(root, xmlString);
-                    xmlString.append("</files>");
-                    ((Files)getComponent("Files")).reload(xmlString.toString());
-                    this.logger.info("Rescan of downloadable files completed");
-                } catch ( InterruptedException x ) {
-                    throw x;
-                } catch ( Exception x ) {
-                    this.logger.error("Caught an exception:", x);
-                }
+                this.logger.error("Rescan returned exit code [{}], update not performed", returnCode);
             }
+
         } else {
             this.logger.error("Rescan problem: root folder has not been set");
         }
     }
-
-    private void rescanFolder( File folder, StringBuilder xmlString ) throws InterruptedException
-    {
-        if (folder.canRead()) {
-            File[] files = folder.listFiles();
-            Thread.sleep(1);
-            // process files first, then go over sub-folders
-            for ( File f : files ) {
-                Thread.sleep(1);
-                if (f.isFile()) {
-                    if (!f.canRead()) {
-                        logger.warn("Rescan found non-readable file [{}]", f.getAbsolutePath());
-                    } else if (!f.getName().startsWith(".")) {
-                        buildFileXmlString(f, xmlString);
-                    }
-                }
-            }
-
-            // go over sub-folders
-            for ( File f : files ) {
-                Thread.sleep(1);
-                if (f.isDirectory() && !f.getName().startsWith(".")) {
-                    xmlString.append("<folder location=\"").append(f.getAbsolutePath()).append("\">");
-                    rescanFolder(f, xmlString);
-                    xmlString.append("</folder>");
-                }
-            }
-        } else {
-            logger.warn("Rescan found non-readable folder [{}{}]", folder.getAbsolutePath(), File.separator);
-        }
-    }
-
-    private void buildFileXmlString( File f, StringBuilder builder )
-    {
-        String name = f.getName();
-        builder.append("<file kind=\"")
-            .append(getFileKind(name))
-            .append("\" extension=\"")
-            .append(getFileExtension(name))
-            .append("\" name=\"")
-            .append(name)
-            .append("\" size=\"")
-            .append(String.valueOf(f.length()))
-            .append("\" lastmodified=\"")
-            .append(StringTools.longDateTimeToXSDDateTime(f.lastModified()))
-            .append("\"/>");
-    }
-
-   private String getFileKind( String name )
-    {
-        if (null != name && !name.equals("")) {
-            if (FGEM_ARCHIVE_REGEX.test(name)) {
-                return "fgem";
-            }
-            if (RAW_ARCHIVE_REGEX.test(name)) {
-                return "raw";
-            }
-            if (CEL_ARCHIVE_REGEX.test(name)) {
-                return "cel";
-            }
-            if (MAGEML_ARCHIVE_REGEX.test(name)) {
-                return "mageml";
-            }
-            if (ADF_FILE_REGEX.test(name)) {
-                return "adf";
-            }
-            if (IDF_FILE_REGEX.test(name)) {
-                return "idf";
-            }
-            if (SDRF_FILE_REGEX.test(name)) {
-                return "sdrf";
-            }
-            if (TWO_COLS_FILE_REGEX.test(name)) {
-                return "twocolumns";
-            }
-            if (BIOSAMPLES_FILE_REGEX.test(name)) {
-                return "biosamples";
-            }
-
-        }
-        return "";
-    }
-
-    private String getFileExtension( String name )
-    {
-        if (null != name && !name.equals("")) {
-            return EXTENSION_REGEX.matchFirst(name);
-        }
-        return "";
-    }
-
-//    private static final RegexHelper accessionRegExp
-//            = new RegexHelper("/([AE]-\\w{4}-\\d+)/", "i");
-//
-//    private static final RegexHelper nameRegExp
-//            = new RegexHelper("/([^/]+)$");
-
-    private static final RegexHelper EXTENSION_REGEX
-            = new RegexHelper("\\.([^.]+|tar\\.gz)$", "i");
-
-    private static final RegexHelper FGEM_ARCHIVE_REGEX
-            = new RegexHelper("\\.processed\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
-
-    private static final RegexHelper RAW_ARCHIVE_REGEX
-            = new RegexHelper("\\.raw\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
-
-    private static final RegexHelper CEL_ARCHIVE_REGEX
-            = new RegexHelper("\\.cel\\.(\\d+\\.)?(zip|tgz|tar\\.gz)$", "i");
-
-    private static final RegexHelper ADF_FILE_REGEX
-            = new RegexHelper("\\.adf\\.txt|\\.adf\\.xls", "i");
-
-    private static final RegexHelper IDF_FILE_REGEX
-            = new RegexHelper("\\.idf\\.txt|\\.idf\\.xls", "i");
-
-    private static final RegexHelper SDRF_FILE_REGEX
-            = new RegexHelper("\\.sdrf\\.txt|\\.sdrf\\.xls", "i");
-
-    private static final RegexHelper TWO_COLS_FILE_REGEX
-            = new RegexHelper("\\.2columns\\.txt|\\.2columns\\.xls", "i");
-
-    private static final RegexHelper BIOSAMPLES_FILE_REGEX
-            = new RegexHelper("\\.biosamples\\.map|\\.biosamples\\.png|\\.biosamples\\.svg", "i");
-
-    private static final RegexHelper MAGEML_ARCHIVE_REGEX
-            = new RegexHelper("\\.mageml\\.zip|\\.mageml\\.tgz|\\.mageml\\.tar\\.gz", "i");
 }
