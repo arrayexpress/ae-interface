@@ -42,6 +42,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private String rootFolder;
     private FilePersistence<PersistableDocumentContainer> document;
+    private String lastReloadMessage;
 
     private SaxonEngine saxon;
     private SearchEngine search;
@@ -96,9 +97,10 @@ public class Files extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void reload( DocumentInfo doc ) throws Exception
+    public void reload( DocumentInfo doc, String message ) throws Exception
     {
         setDocument(doc);
+        this.lastReloadMessage = message;
     }
 
     private void updateIndex()
@@ -168,6 +170,11 @@ public class Files extends ApplicationComponent implements IDocumentSource
             this.rootFolder = getPreferences().getString("ae.files.root.location");
         }
         return this.rootFolder;
+    }
+
+    public String getLastReloadMessage()
+    {
+        return this.lastReloadMessage;
     }
 
     // returns true is file is registered in the registry

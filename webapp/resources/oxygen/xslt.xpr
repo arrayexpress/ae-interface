@@ -2899,7 +2899,6 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-protocols-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae2-xml.xsl"/>

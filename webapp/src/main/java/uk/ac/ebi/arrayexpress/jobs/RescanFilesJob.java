@@ -25,6 +25,7 @@ import org.xml.sax.InputSource;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
 import uk.ac.ebi.arrayexpress.utils.io.RemovingMultipleSpacesReader;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
@@ -60,6 +61,8 @@ public class RescanFilesJob extends ApplicationJob
             Process process = pb.start();
 
             InputStream stdOut = process.getInputStream();
+            InputStream stdErr = process.getErrorStream();
+            
             SAXSource source = new SAXSource();
             source.setInputSource(
                     new InputSource(
@@ -84,13 +87,17 @@ public class RescanFilesJob extends ApplicationJob
                     , transformParams
                     );
 
+            String errorString = StringTools.streamToString(stdErr, "US-ASCII");
             int returnCode = process.waitFor();
-            // TODO: if there is non-zero RC or stderr has something, we need to report that
+
             if (0 == returnCode) {
-                ((Files)getComponent("Files")).reload(result);
+                ((Files)getComponent("Files")).reload(result, errorString);
                 this.logger.info("Rescan of downloadable files completed");
             } else {
                 this.logger.error("Rescan returned exit code [{}], update not performed", returnCode);
+                if (errorString.length() > 0) {
+                    throw new RuntimeException(errorString);
+                }
             }
 
         } else {
