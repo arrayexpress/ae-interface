@@ -88,7 +88,7 @@
 
         <xsl:element name="file">
             <xsl:if test="$pFile/@*">
-                <xsl:for-each select="$pFile/@*">
+                <xsl:for-each select="$pFile/@*[name() != 'owner' and name() != 'group' and name() != 'access']">
                     <xsl:element name="{lower-case(name())}">
                         <xsl:value-of select="." />
                     </xsl:element>
