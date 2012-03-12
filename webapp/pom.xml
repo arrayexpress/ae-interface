@@ -51,7 +51,7 @@
         <interface.application.pref.efo.update.schedule>0 0 1 ? * SUN</interface.application.pref.efo.update.schedule>
 
         <interface.application.pref.files.root.location>/ebi/ArrayExpress-ftp</interface.application.pref.files.root.location>
-        <interface.application.pref.files.list-all.command>find ${interface.application.pref.files.root.location} -mindepth 3 -maxdepth 4 -not -iname ".*" | xargs ls -dl --time-style=long-iso</interface.application.pref.files.list-all.command>
+        <interface.application.pref.files.list-all.command>find ${interface.application.pref.files.root.location}/ -mindepth 3 -maxdepth 4 -not -iname ".*" | xargs ls -dl --time-style=long-iso</interface.application.pref.files.list-all.command>
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>60</interface.application.pref.files.rescan.interval>
         <interface.application.google.analytics/>
