@@ -73,8 +73,9 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     public void buildIndex() throws InterruptedException
     {
+        IndexWriter w = null;
         try {
-            IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
+            w = createIndex(this.indexDirectory, new LowercaseAnalyzer());
 
             this.logger.debug("Building expansion lookup index");
             addNodeAndChildren(this.efo.getMap().get(IEFO.ROOT_ID), w);
@@ -83,10 +84,15 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             this.logger.debug("Building completed");
         } catch (InterruptedException x) {
             throw x;
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+        } finally {
+            if (null != w) {
+                try {
+                    w.close();
+                } catch (Exception x) {
+                    this.logger.error("Unable to close EFO expansion index, caught an exception:", x);
+                }
+            }
         }
-
     }
 
     private void addCustomSynonyms( IndexWriter w ) throws InterruptedException
@@ -238,7 +244,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         } catch (InterruptedException x) {
             throw x;
         } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+            throw new RuntimeException(x);
         }
 
         return iwriter;
@@ -277,7 +283,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             iwriter.commit();
             iwriter.close();
         } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+            throw new RuntimeException(x);
         }
     }
 
