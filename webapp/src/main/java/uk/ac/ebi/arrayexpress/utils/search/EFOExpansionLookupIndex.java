@@ -125,39 +125,38 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     private void addNodeToIndex( EFONode node, IndexWriter w ) throws InterruptedException
     {
         String term = node.getTerm();
-        Set<String> synonyms = node.getAlternativeTerms();
 
-        // if the node represents organizational class, just include its synonyms, but not children
-        Set<String> childTerms =
-                node.isOrganizationalClass()
-                ? new HashSet<String>()
-                : getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
+        if (null != term && !isStopTerm(term)) {
+            Set<String> synonyms = node.getAlternativeTerms();
 
-        // here we add custom synonyms to EFO synonyms/child terms and their synonyms
-        if (null != this.customSynonyms) {
-            for (String syn : new HashSet<String>(synonyms)) {
-                if (null != syn && this.customSynonyms.containsKey(syn)) {
-                    synonyms.addAll(this.customSynonyms.get(syn));
+            // if the node represents organizational class, just include its synonyms, but not children
+            Set<String> childTerms =
+                    node.isOrganizationalClass()
+                    ? new HashSet<String>()
+                    : getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
+
+            // here we add custom synonyms to EFO synonyms/child terms and their synonyms
+            if (null != this.customSynonyms) {
+                for (String syn : new HashSet<String>(synonyms)) {
+                    if (null != syn && this.customSynonyms.containsKey(syn)) {
+                        synonyms.addAll(this.customSynonyms.get(syn));
+                    }
+                }
+
+                if (this.customSynonyms.containsKey(term)) {
+                    synonyms.addAll(this.customSynonyms.get(term));
+                }
+
+                for (String child : new HashSet<String>(childTerms)) {
+                    if (null != child && this.customSynonyms.containsKey(child)) {
+                        childTerms.addAll(this.customSynonyms.get(child));
+                    }
                 }
             }
-
-            if (this.customSynonyms.containsKey(term)) {
-                synonyms.addAll(this.customSynonyms.get(term));
+            if (synonyms.contains(term)) {
+                synonyms.remove(term);
             }
 
-            for (String child : new HashSet<String>(childTerms)) {
-                if (null != child && this.customSynonyms.containsKey(child)) {
-                    childTerms.addAll(this.customSynonyms.get(child));
-                }
-            }
-        }
-        if (synonyms.contains(term)) {
-            synonyms.remove(term);
-        }
-
-        if (isStopTerm(term)) {
-            // this.logger.debug("Term [{}] is a stop-word, skipping", term);
-        } else {
             if (synonyms.size() > 0 || childTerms.size() > 0) {
 
                 Document d = new Document();
