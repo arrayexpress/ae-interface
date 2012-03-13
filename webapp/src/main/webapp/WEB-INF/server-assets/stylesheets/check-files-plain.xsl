@@ -74,17 +74,17 @@
                         <xsl:value-of select="$vExpFolder/@group"/>
                         <xsl:text>", should be "microarray"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="current()/user/@id = '1' and $vExpFolder/@access != 'rwxr-xr-x'">
+                    <xsl:if test="current()/user/@id = '1' and not(matches($vExpFolder/@access,'r.xr.xr.x'))">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - directory permissions "</xsl:text>
                         <xsl:value-of select="$vExpFolder/@access"/>
-                        <xsl:text>", should be "rwxr-xr-x"&#10;</xsl:text>
+                        <xsl:text>", should be "r?xr?xr?x"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="not(current()/user/@id = '1') and $vExpFolder/@access != 'rwxr-x---'">
+                    <xsl:if test="not(current()/user/@id = '1') and not(matches($vExpFolder/@access,'r.xr.x---'))">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - private experiment directory permissions "</xsl:text>
                         <xsl:value-of select="$vExpFolder/@access"/>
-                        <xsl:text>", should be "rwxr-x---"&#10;</xsl:text>
+                        <xsl:text>", should be "r?xr?x---"&#10;</xsl:text>
                     </xsl:if>            
                     <xsl:if test="not($vExpFolder/file[@kind = 'idf'])">
                         <xsl:value-of select="current()/accession"/>
@@ -140,17 +140,17 @@
                         <xsl:value-of select="$vArrayFolder/@group"/>
                         <xsl:text>", should be "microarray"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="current()/user/@id = '1' and $vArrayFolder/@access != 'rwxr-xr-x'">
+                    <xsl:if test="current()/user/@id = '1' and not(matches($vArrayFolder/@access,'r.xr.xr.x'))">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - directory permissions "</xsl:text>
                         <xsl:value-of select="$vArrayFolder/@access"/>
-                        <xsl:text>", should be "rwxr-xr-x"&#10;</xsl:text>
+                        <xsl:text>", should be "r?xr?xr?x"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="not(current()/user/@id = '1') and $vArrayFolder/@access != 'rwxr-x---'">
+                    <xsl:if test="current()/user/@id = '1' and not(matches($vArrayFolder/@access,'r.xr.x---'))">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - private array directory permissions "</xsl:text>
                         <xsl:value-of select="$vArrayFolder/@access"/>
-                        <xsl:text>", should be "rwxr-x---"&#10;</xsl:text>
+                        <xsl:text>", should be "r?xr?x---"&#10;</xsl:text>
                     </xsl:if>            
                     <xsl:if test="not($vArrayFolder/file[@kind = 'adf'])">
                         <xsl:value-of select="current()/accession"/>
