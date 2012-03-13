@@ -121,6 +121,11 @@
             <list-all-command>${interface.application.pref.files.list-all.command}</list-all-command>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</persistence-location>
             <rescan><interval>${interface.application.pref.files.rescan.interval}</interval></rescan>
+            <check>
+                <atstart>false</atstart>
+                <schedule>${interface.application.pref.files.check.schedule}</schedule>
+            </check>
+
         </files>
 
         <species>

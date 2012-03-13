@@ -21,6 +21,9 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
+import uk.ac.ebi.arrayexpress.components.Files;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 public class CheckFilesJob extends ApplicationJob
 {
@@ -29,6 +32,17 @@ public class CheckFilesJob extends ApplicationJob
 
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        //
+        Files files = (Files)getComponent("Files");
+        SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
+
+        String report = saxon.transformToString(files.getDocument(), "check-files-plain.xsl", null);
+
+        getApplication().sendEmail("File Checker Report",
+                "ArrayExpress File Checker has generated the report" + StringTools.EOL
+                        + StringTools.EOL
+                        + "Application [${variable.appname}]" + StringTools.EOL
+                        + "Host [${variable.hostname}]" + StringTools.EOL
+                        + report
+        );
     }
 }

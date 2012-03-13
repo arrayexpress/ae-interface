@@ -46,6 +46,7 @@ public class JobsController extends ApplicationComponent
 
         // add jobs
         addJob("rescan-files", RescanFilesJob.class);
+        addJob("check-files", CheckFilesJob.class);
         addJob("reload-ae1-xml", ReloadExperimentsFromAE1Job.class);
         addJob("reload-ae2-xml", ReloadExperimentsFromAE2Job.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
@@ -55,6 +56,7 @@ public class JobsController extends ApplicationComponent
 
         // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");
+        scheduleJob("check-files", "ae.files.check");
         scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
         scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
         scheduleJob("update-efo", "ae.efo.update");

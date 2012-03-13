@@ -54,6 +54,7 @@
         <interface.application.pref.files.list-all.command>find ${interface.application.pref.files.root.location}/ -mindepth 3 -maxdepth 4 -not -iname ".*" | xargs ls -dl --time-style=long-iso</interface.application.pref.files.list-all.command>
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>60</interface.application.pref.files.rescan.interval>
+        <interface.application.pref.files.check.schedule/>
         <interface.application.google.analytics/>
         <interface.application.body.class/>
     </properties>
@@ -248,6 +249,8 @@
                 
                 <interface.application.pref.files.prefix>ae-aepub1</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>30</interface.application.pref.files.rescan.interval>
+                <interface.application.pref.files.check.schedule>0 0 2 ? * SUN</interface.application.pref.files.check.schedule>
+
                 <interface.application.body.class>dev_preview</interface.application.body.class>
             </properties>
         </profile>
