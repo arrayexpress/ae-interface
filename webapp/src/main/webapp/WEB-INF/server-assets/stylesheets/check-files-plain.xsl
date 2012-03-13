@@ -74,13 +74,13 @@
                         <xsl:value-of select="$vExpFolder/@group"/>
                         <xsl:text>", should be "microarray"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="current()/user = '1' and $vExpFolder/@access != 'rwxr-xr-x'">
+                    <xsl:if test="current()/user/@id = '1' and $vExpFolder/@access != 'rwxr-xr-x'">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - directory permissions "</xsl:text>
                         <xsl:value-of select="$vExpFolder/@access"/>
                         <xsl:text>", should be "rwxr-xr-x"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="not(current()/user = '1') and $vExpFolder/@access != 'rwxr-x---'">
+                    <xsl:if test="not(current()/user/@id = '1') and $vExpFolder/@access != 'rwxr-x---'">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - private experiment directory permissions "</xsl:text>
                         <xsl:value-of select="$vExpFolder/@access"/>
@@ -106,7 +106,7 @@
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanExperimentFolders)"/>
             <xsl:text> experiment FTP directories without matching experiments in the database&#10;</xsl:text>
-            <xsl:value-of select="string-join($vOrphanExperimentFolders/accession, '&#10;')"/>
+            <xsl:value-of select="string-join($vOrphanExperimentFolders/@accession, '&#10;')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
 
@@ -167,7 +167,7 @@
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanArrayFolders)"/>
             <xsl:text> array FTP directories without matching arrays in the database&#10;</xsl:text>
-            <xsl:value-of select="string-join($vOrphanArrayFolders/accession, '&#10;')"/>
+            <xsl:value-of select="string-join($vOrphanArrayFolders/@accession, '&#10;')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
         
