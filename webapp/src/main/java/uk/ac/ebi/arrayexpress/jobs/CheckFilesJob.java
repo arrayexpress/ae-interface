@@ -25,6 +25,9 @@ import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CheckFilesJob extends ApplicationJob
 {
     // logging machinery
@@ -35,13 +38,17 @@ public class CheckFilesJob extends ApplicationJob
         Files files = (Files)getComponent("Files");
         SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
 
-        String report = saxon.transformToString(files.getDocument(), "check-files-plain.xsl", null);
+        Map<String, String[]> transformParams = new HashMap<String, String[]>();
+        transformParams.put("rescanMessage", new String[] { files.getLastReloadMessage() });
+
+        String report = saxon.transformToString(files.getDocument(), "check-files-plain.xsl", transformParams);
 
         getApplication().sendEmail("File Checker Report",
-                "ArrayExpress File Checker has generated the report" + StringTools.EOL
+                "ArrayExpress File Checker Report" + StringTools.EOL
                         + StringTools.EOL
                         + "Application [${variable.appname}]" + StringTools.EOL
                         + "Host [${variable.hostname}]" + StringTools.EOL
+                        + StringTools.EOL
                         + report
         );
     }

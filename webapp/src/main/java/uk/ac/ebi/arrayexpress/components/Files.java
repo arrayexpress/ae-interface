@@ -42,7 +42,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private String rootFolder;
     private FilePersistence<PersistableDocumentContainer> document;
-    private String lastReloadMessage;
+    private String lastReloadMessage = "";
 
     private SaxonEngine saxon;
     private SearchEngine search;
