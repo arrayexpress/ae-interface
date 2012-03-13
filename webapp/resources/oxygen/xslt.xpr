@@ -10,6 +10,17 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String>check-files-plain</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String>preprocess-files2-xml</String>
                                 </field>
                                 <field name="type">
@@ -470,6 +481,111 @@
                                 </field>
                                 <field name="xsltParams">
                                     <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Saxon-HE</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </scenario>
+                            <scenario>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
+                                    <String>check-files-plain</String>
+                                </field>
+                                <field name="baseURL">
+                                    <String></String>
+                                </field>
+                                <field name="footerURL">
+                                    <String></String>
+                                </field>
+                                <field name="fOPMethod">
+                                    <String>pdf</String>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <String>Apache FOP</String>
+                                </field>
+                                <field name="headerURL">
+                                    <String></String>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>${currentFileURL}</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String>${pdu}/documents/sample-files.xml</String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputFile">
+                                    <null/>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list>
+                                        <transformationParameter>
+                                            <field name="paramDescription">
+                                                <paramDescriptor>
+                                                    <field name="localName">
+                                                        <String>rescanMessage</String>
+                                                    </field>
+                                                    <field name="prefix">
+                                                        <null/>
+                                                    </field>
+                                                    <field name="namespace">
+                                                        <null/>
+                                                    </field>
+                                                </paramDescriptor>
+                                            </field>
+                                            <field name="value">
+                                                <String>test</String>
+                                            </field>
+                                            <field name="hasXPathValue">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                        </transformationParameter>
+                                    </list>
                                 </field>
                                 <field name="cascadingStylesheets">
                                     <String-array/>
@@ -2861,6 +2977,7 @@
             <file name="documents/sample-experiments-not-processed.xml"/>
             <file name="documents/sample-experiments-not-processed-ae2.xml"/>
             <file name="documents/sample-files-not-processed.xml"/>
+            <file name="documents/sample-files.xml"/>
             <file name="documents/sample-protocols.xml"/>
             <file name="documents/sample-protocols-not-processed.xml"/>
             <file name="documents/sample-sdrf.xml"/>
@@ -2881,6 +2998,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-arrays-list-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-species-list-html.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/default.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/default-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl"/>

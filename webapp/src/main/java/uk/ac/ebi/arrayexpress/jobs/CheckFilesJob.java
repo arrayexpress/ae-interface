@@ -43,8 +43,8 @@ public class CheckFilesJob extends ApplicationJob
 
         String report = saxon.transformToString(files.getDocument(), "check-files-plain.xsl", transformParams);
 
-        getApplication().sendEmail("File Checker Report",
-                "ArrayExpress File Checker Report" + StringTools.EOL
+        getApplication().sendEmail("FTP Checker Report",
+                "ArrayExpress FTP Files Checker Report" + StringTools.EOL
                         + StringTools.EOL
                         + "Application [${variable.appname}]" + StringTools.EOL
                         + "Host [${variable.hostname}]" + StringTools.EOL

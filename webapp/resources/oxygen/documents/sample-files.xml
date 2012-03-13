@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<files root="/ebi/ArrayExpress-ftp">
+    <folder location="/array/AFFY/A-AFFY-1" kind="array" accession="A-AFFY-1" owner="tomcat" group="microarray" access="rwxr-xr-x" lastmodified="2010-03-14T02:34:00">
+        <file name="A-AFFY-1.README.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="1115" lastmodified="2010-03-14T02:34:00"/>
+        <file name="A-AFFY-1.adf.txt" extension="txt" kind="adf" owner="tomcat" group="microarray" access="rwxr--r--" size="1547751" lastmodified="2011-01-10T22:36:00"/>
+        <file name="A-AFFY-1.adf.xls" extension="xls" kind="adf" owner="tomcat" group="microarray" access="rwxr--r--" size="2040084" lastmodified="2010-03-14T02:31:00"/>
+        <file name="A-AFFY-1.cdf.zip" extension="zip" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="5639117" lastmodified="2009-01-23T17:02:00"/>
+        <file name="A-AFFY-1.compositesequences.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="725355" lastmodified="2010-03-14T02:34:00"/>
+        <file name="A-AFFY-1.features.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="17624880" lastmodified="2010-03-14T02:33:00"/>
+        <file name="A-AFFY-1.reporters.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="11222703" lastmodified="2010-03-14T02:34:00"/>
+    </folder>
+    <folder location="/array/AFFY/A-AFFY-10" kind="array" accession="A-AFFY-10" owner="tomcat" group="microarray" access="rwxr-xr-x" lastmodified="2010-03-14T18:57:00">
+        <file name="A-AFFY-10.README.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="1115" lastmodified="2010-03-14T18:57:00"/>
+        <file name="A-AFFY-10.adf.txt" extension="txt" kind="adf" owner="tomcat" group="microarray" access="rwxr--r--" size="1103523" lastmodified="2011-01-10T21:11:00"/>
+        <file name="A-AFFY-10.adf.xls" extension="xls" kind="adf" owner="tomcat" group="microarray" access="rwxr--r--" size="1570423" lastmodified="2010-03-14T18:55:00"/>
+        <file name="A-AFFY-10.cdf.zip" extension="zip" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="5655132" lastmodified="2009-01-23T17:02:00"/>
+        <file name="A-AFFY-10.compositesequences.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="702288" lastmodified="2010-03-14T18:57:00"/>
+        <file name="A-AFFY-10.features.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="16822850" lastmodified="2010-03-14T18:57:00"/>
+        <file name="A-AFFY-10.mageml.tar.gz" extension="tar.gz" kind="mageml" owner="tomcat" group="microarray" access="rwxr--r--" size="18344301" lastmodified="2008-08-14T12:49:00"/>
+        <file name="A-AFFY-10.reporters.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="10842101" lastmodified="2010-03-14T18:57:00"/>
+    </folder>
+    <folder location="/experiment/AFMX/E-AFMX-1" kind="experiment" accession="E-AFMX-1" owner="tomcat" group="microarray" access="rwxr-xr-x" lastmodified="2011-06-21T16:41:00">
+        <file name="E-AFMX-1.2columns.txt" extension="txt" kind="twocolumns" owner="tomcat" group="microarray" access="rwxr--r--" size="3198" lastmodified="2008-05-29T17:06:00"/>
+        <file name="E-AFMX-1.2columns.xls" extension="xls" kind="twocolumns" owner="tomcat" group="microarray" access="rwxr--r--" size="7680" lastmodified="2008-05-29T17:06:00"/>
+        <file name="E-AFMX-1.README.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="3841" lastmodified="2011-06-07T12:49:00"/>
+        <file name="E-AFMX-1.biosamples.map" extension="map" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="23748" lastmodified="2006-02-03T17:01:00"/>
+        <file name="E-AFMX-1.biosamples.png" extension="png" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="34304" lastmodified="2007-03-07T11:14:00"/>
+        <file name="E-AFMX-1.biosamples.svg" extension="svg" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="92520" lastmodified="2007-03-07T11:14:00"/>
+        <file name="E-AFMX-1.cel.tar.gz" extension="tar.gz" kind="cel" owner="tomcat" group="microarray" access="rwxr--r--" size="61210243" lastmodified="2006-04-19T12:02:00"/>
+        <file name="E-AFMX-1.cel.zip" extension="zip" kind="cel" owner="tomcat" group="microarray" access="rwxr--r--" size="59077897" lastmodified="2005-11-10T17:06:00"/>
+        <file name="E-AFMX-1.idf.txt" extension="txt" kind="idf" owner="tomcat" group="microarray" access="rwxr--r--" size="3841" lastmodified="2011-06-21T16:41:00"/>
+        <file name="E-AFMX-1.idf.xls" extension="xls" kind="idf" owner="tomcat" group="microarray" access="rwxr--r--" size="10240" lastmodified="2010-09-17T15:34:00"/>
+        <file name="E-AFMX-1.mageml.tgz" extension="tgz" kind="mageml" owner="tomcat" group="microarray" access="rwxr--r--" size="66725016" lastmodified="2005-04-15T11:18:00"/>
+        <file name="E-AFMX-1.processed.1.zip" extension="zip" kind="fgem" owner="tomcat" group="microarray" access="rwxr--r--" size="1320156" lastmodified="2011-06-21T16:41:00" dataformat="rawData, scan"/>
+        <file name="E-AFMX-1.raw.1.zip" extension="zip" kind="raw" owner="tomcat" group="microarray" access="rwxr--r--" size="56122175" lastmodified="2011-06-21T16:41:00" dataformat="rawData, scan"/>
+        <file name="E-AFMX-1.sdrf.txt" extension="txt" kind="sdrf" owner="tomcat" group="microarray" access="rwxr--r--" size="13612" lastmodified="2011-06-21T16:41:00"/>
+        <file name="E-AFMX-1.sdrf.xls" extension="xls" kind="sdrf" owner="tomcat" group="microarray" access="rwxr--r--" size="25088" lastmodified="2010-09-17T15:34:00"/>
+    </folder>
+    <folder location="/experiment/AFMX/E-AFMX-10" kind="experiment" accession="E-AFMX-10" owner="tomcat" group="microarray" access="rwxr-xr-x" lastmodified="2011-06-21T16:42:00">
+        <file name="E-AFMX-10.2columns.txt" extension="txt" kind="twocolumns" owner="tomcat" group="microarray" access="rwxr--r--" size="2295" lastmodified="2008-05-29T17:06:00"/>
+        <file name="E-AFMX-10.2columns.xls" extension="xls" kind="twocolumns" owner="tomcat" group="microarray" access="rwxr--r--" size="6144" lastmodified="2008-05-29T17:06:00"/>
+        <file name="E-AFMX-10.README.txt" extension="txt" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="3841" lastmodified="2011-06-07T12:49:00"/>
+        <file name="E-AFMX-10.biosamples.map" extension="map" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="6898" lastmodified="2010-08-18T12:31:00"/>
+        <file name="E-AFMX-10.biosamples.png" extension="png" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="22715" lastmodified="2010-08-18T12:31:00"/>
+        <file name="E-AFMX-10.biosamples.svg" extension="svg" kind="biosamples" owner="tomcat" group="microarray" access="rwxr--r--" size="33914" lastmodified="2010-08-18T12:31:00"/>
+        <file name="E-AFMX-10.idf.txt" extension="txt" kind="idf" owner="tomcat" group="microarray" access="rwxr--r--" size="3385" lastmodified="2011-06-21T16:41:00"/>
+        <file name="E-AFMX-10.idf.xls" extension="xls" kind="idf" owner="tomcat" group="microarray" access="rwxr--r--" size="9216" lastmodified="2010-08-18T12:30:00"/>
+        <file name="E-AFMX-10.mageml.tgz" extension="tgz" kind="mageml" owner="tomcat" group="microarray" access="rwxr--r--" size="17939170" lastmodified="2005-04-15T11:18:00"/>
+        <file name="E-AFMX-10.mageml.xml" extension="xml" kind="" owner="tomcat" group="microarray" access="rwxr--r--" size="28761342" lastmodified="2010-09-23T16:29:00"/>
+        <file name="E-AFMX-10.processed.1.zip" extension="zip" kind="fgem" owner="tomcat" group="microarray" access="rwxr--r--" size="573718" lastmodified="2011-06-21T16:42:00" dataformat="rawData, scan"/>
+        <file name="E-AFMX-10.raw.1.zip" extension="zip" kind="raw" owner="tomcat" group="microarray" access="rwxr--r--" size="27086446" lastmodified="2011-06-21T16:42:00" dataformat="rawData, scan"/>
+        <file name="E-AFMX-10.sdrf.txt" extension="txt" kind="sdrf" owner="tomcat" group="microarray" access="rwxr--r--" size="6684" lastmodified="2011-06-21T16:41:00"/>
+        <file name="E-AFMX-10.sdrf.xls" extension="xls" kind="sdrf" owner="tomcat" group="microarray" access="rwxr--r--" size="14848" lastmodified="2010-08-18T12:30:00"/>
+    </folder>    
+</files>
