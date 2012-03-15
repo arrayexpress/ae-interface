@@ -110,7 +110,7 @@
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
 
-        <xsl:text>--- ARRAYS ---------------------------------------------------------------------&#10;</xsl:text>
+        <xsl:text>&#10;--- ARRAYS ---------------------------------------------------------------------&#10;</xsl:text>
         <!-- 
             1. check directory exists
             2. check directory ownership; tomcat/microarray
