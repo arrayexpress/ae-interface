@@ -146,7 +146,7 @@
                         <xsl:value-of select="$vArrayFolder/@access"/>
                         <xsl:text>", should be "r?xr?xr?x"&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:if test="current()/user/@id = '1' and not(matches($vArrayFolder/@access,'r.xr.x---'))">
+                    <xsl:if test="not(current()/user/@id = '1') and not(matches($vArrayFolder/@access,'r.xr.x---'))">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - private array directory permissions "</xsl:text>
                         <xsl:value-of select="$vArrayFolder/@access"/>
