@@ -105,7 +105,7 @@
         <xsl:if test="count($vOrphanExperimentFolders) > 0">
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanExperimentFolders)"/>
-            <xsl:text> experiment FTP directories without matching experiments in the database&#10;</xsl:text>
+            <xsl:text> experiment FTP directories without matching experiments in the database:&#10;&#10;</xsl:text>
             <xsl:value-of select="string-join($vOrphanExperimentFolders/@accession, ', ')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
@@ -167,7 +167,7 @@
         <xsl:if test="count($vOrphanArrayFolders) > 0">
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanArrayFolders)"/>
-            <xsl:text> array FTP directories without matching arrays in the database&#10;</xsl:text>
+            <xsl:text> array FTP directories without matching arrays in the database:&#10;&#10;</xsl:text>
             <xsl:value-of select="string-join($vOrphanArrayFolders/@accession, ', ')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
