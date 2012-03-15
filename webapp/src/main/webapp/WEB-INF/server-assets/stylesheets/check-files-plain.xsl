@@ -106,7 +106,7 @@
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanExperimentFolders)"/>
             <xsl:text> experiment FTP directories without matching experiments in the database&#10;</xsl:text>
-            <xsl:value-of select="string-join($vOrphanExperimentFolders/@accession, '&#10;')"/>
+            <xsl:value-of select="string-join($vOrphanExperimentFolders/@accession, ', ')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
 
@@ -159,6 +159,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
+        <xsl:text>&#10;</xsl:text>
 
         <xsl:variable name="vArrayAccessions" as="xs:string" select="concat('|', string-join($vArrays/accession, '|'), '|')"/>
         <xsl:variable name="vOrphanArrayFolders" select="$vArrayFolders[not(contains($vArrayAccessions, concat('|', @accession, '|')))]"/>
@@ -167,7 +168,7 @@
             <xsl:text>Found </xsl:text>
             <xsl:value-of select="count($vOrphanArrayFolders)"/>
             <xsl:text> array FTP directories without matching arrays in the database&#10;</xsl:text>
-            <xsl:value-of select="string-join($vOrphanArrayFolders/@accession, '&#10;')"/>
+            <xsl:value-of select="string-join($vOrphanArrayFolders/@accession, ', ')"/>
             <xsl:text>&#10;</xsl:text>
         </xsl:if>        
         
