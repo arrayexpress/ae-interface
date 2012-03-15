@@ -40,7 +40,7 @@
 
         <interface.application.pref.reports.recipients>ae-mgmt@ebi.ac.uk</interface.application.pref.reports.recipients>
         <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
-        <interface.application.pref.experiments.ae1.connections>aepub3,aepub2</interface.application.pref.experiments.ae1.connections>
+        <interface.application.pref.experiments.ae1.connections/>
         <interface.application.pref.experiments.ae1.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
         <interface.application.pref.experiments.ae1.export.location/>
 
@@ -240,9 +240,9 @@
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
-                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub1/</interface.application.pref.experiments.ae1.source.location>
+                <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
                 <interface.application.pref.experiments.ae1.connections/>
-                <interface.application.pref.experiments.ae1.reload.schedule>0 40 0/1 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae1.reload.atstart>true</interface.application.pref.experiments.ae1.reload.atstart>
 
                 <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_production/software/browse/</interface.application.pref.experiments.ae2.source.location>
                 <interface.application.pref.experiments.ae2.reload.schedule>0 4/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
