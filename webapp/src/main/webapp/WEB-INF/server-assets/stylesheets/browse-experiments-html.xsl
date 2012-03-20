@@ -95,8 +95,8 @@
     <xsl:template match="experiment">
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
-        <xsl:variable name="vExpId" select="string(id)"/>
-        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vExpId" select="id" as="xs:string"/>
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
@@ -749,7 +749,7 @@
 
     <xsl:template name="data-files">
         <xsl:param name="pFiles"/>
-        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'raw' or @kind = 'fgem']"/>
         <xsl:if test="$vFiles">
             <tr>
@@ -773,7 +773,7 @@
     <xsl:template name="magetab-files">
         <xsl:param name="pFiles"/>
 
-        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and (@kind = 'idf' or @kind = 'sdrf')]"/>
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
@@ -831,7 +831,7 @@
     <xsl:template name="image-files">
         <xsl:param name="pFiles"/>
 
-        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
         <xsl:if test="$vFiles">
             <tr>
@@ -853,7 +853,7 @@
         <xsl:param name="pFiles"/>
 
         <xsl:param name="pKind"/>
-        <xsl:variable name="vAccession" select="string(accession)"/>
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = $pKind]"/>
         <xsl:variable name="vImg">
             <xsl:choose>

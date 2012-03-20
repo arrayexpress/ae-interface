@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="search"
-                exclude-result-prefixes="search html"
+                extension-element-prefixes="xs search"
+                exclude-result-prefixes="xs search html"
                 version="2.0">
 
     <xsl:template match="*" mode="highlight">
@@ -25,7 +26,7 @@
     </xsl:template>
 
     <xsl:template name="highlight">
-        <xsl:param name="pText"/>
+        <xsl:param name="pText" as="xs:string"/>
         <xsl:param name="pFieldName"/>
         <xsl:variable name="vText" select="$pText"/>
         <xsl:choose>
