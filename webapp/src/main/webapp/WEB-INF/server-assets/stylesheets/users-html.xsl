@@ -265,18 +265,38 @@
     <xsl:template name="detail-table">
         <xsl:param name="pUserId"/>
         <xsl:variable name="vExpsForUser" select="search:queryIndex('experiments', concat('visible:true userid:', $pUserId))"/>
+        <xsl:variable name="vArraysForUser" select="search:queryIndex('arrays', concat('visible:true userid:', $pUserId))"/>
 
         <table border="0" cellpadding="0" cellspacing="0">
             <tbody>
                 <xsl:call-template name="detail-row">
                     <xsl:with-param name="pName" select="'Experiments'"/>
                     <xsl:with-param name="pValue">
-                        <xsl:value-of select="string-join($vExpsForUser/accession, ', ')"/>
+                        <xsl:for-each select="$vExpsForUser[position() &lt; 25]/accession">
+                            <a href="{$basepath}/experiments/{current()}"><xsl:value-of select="current()"/></a>
+                            <xsl:if test="position() != last()">
+                                <xsl:text>, </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:if test="count($vExpsForUser) >= 25">
+                            <xsl:text>, ...</xsl:text>
+                            <div><br/><a href="{$basepath}/browse.html?keywords=userid:{$id}">Browse all associated experiments</a></div>
+                        </xsl:if>
                     </xsl:with-param>
                 </xsl:call-template>
                 <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="'Platforms'"/>
+                    <xsl:with-param name="pName" select="'Platform designs'"/>
                     <xsl:with-param name="pValue">
+                        <xsl:for-each select="$vArraysForUser[position() &lt; 25]/accession">
+                            <a href="{$basepath}/arrays/{current()}"><xsl:value-of select="current()"/></a>
+                            <xsl:if test="position() != last()">
+                                <xsl:text>, </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:if test="count($vArraysForUser) >= 25">
+                            <xsl:text>, ...</xsl:text>
+                            <div><br/><a href="{$basepath}/arrays/browse.html?keywords=userid:{$id}">Browse all associated platform designs</a></div>
+                        </xsl:if>
                     </xsl:with-param>
                 </xsl:call-template>
             </tbody>
@@ -286,7 +306,7 @@
     <xsl:template name="detail-row">
         <xsl:param name="pName"/>
         <xsl:param name="pValue"/>
-        <xsl:if test="$pValue/node()">
+        <xsl:if test="$pValue">
             <xsl:call-template name="detail-section">
                 <xsl:with-param name="pName" select="$pName"/>
                 <xsl:with-param name="pContent" select="$pValue"/>
