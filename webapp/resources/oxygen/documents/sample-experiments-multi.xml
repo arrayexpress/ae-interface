@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<experiments version="1.2" revision="100915" total="2" total-samples="60" total-assays="60">
+    <experiment>
+        <releasedate>2010-09-12</releasedate>
+        <species>Homo sapiens</species>
+        <miamescores>
+            <reportersequencescore>0</reportersequencescore>
+            <factorvaluescore>1</factorvaluescore>
+            <measuredbioassaydatascore>0</measuredbioassaydatascore>
+            <protocolscore>0</protocolscore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <overallscore>2</overallscore>
+        </miamescores>
+        <assays>11</assays>
+        <samples>11</samples>
+        <rawdatafiles>0</rawdatafiles>
+        <fgemdatafiles>27</fgemdatafiles>
+        <sampleattribute>
+            <category>antibody</category>
+            <value>E2F1</value>
+            <value>H3K4me2</value>
+            <value>H4K20me1</value>
+            <value>PHF8</value>
+            <value>SMC4</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>antibody catalog</category>
+            <value>ab17958, A300-064A</value>
+            <value>ab35471</value>
+            <value>ab7766</value>
+            <value>ab9051</value>
+            <value>SC-193 &amp; SC-22820</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>antibody manufacturer</category>
+            <value>Abcam</value>
+            <value>Abcam; Bethyl Laboratories, Inc.</value>
+            <value>Santa Cruz Biotechnology, Inc.</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>cell line</category>
+            <value>HeLa cells</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Homo sapiens</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>transfection</category>
+            <value>Control siRNA</value>
+            <value>PHF8siRNA</value>
+        </sampleattribute>
+        <id>2519216111</id>
+        <accession>E-GEOD-22400</accession>
+        <name>PHF8 mediates histone demethylation events in cell cycle progression</name>
+        <loaddate>2010-09-11</loaddate>
+        <secondaryaccession>GSE22400</secondaryaccession>
+        <arraydesign>
+            <id>1549852481</id>
+            <accession>A-MEXP-930</accession>
+            <name>Illumina Human-6 v2 Expression BeadChip</name>
+            <count>4</count>
+        </arraydesign>
+        <arraydesign>
+            <id>2518188241</id>
+            <accession>ebi.ac.uk:MAGETabulator:E-GEOD-22400.VirtualArrayDesign</accession>
+            <name>Virtual Array Design for E-GEOD-22400</name>
+            <count>7</count>
+        </arraydesign>
+        <bibliography/>
+        <provider>
+            <contact>BOGDAN TANASA</contact>
+            <email>tanasa@scripps.edu</email>
+            <role>submitter</role>
+        </provider>
+        <experimenttype>ChIP-seq by high throughput sequencing</experimenttype>
+        <experimenttype>transcription profiling by array</experimenttype>
+        <description>
+            <id>2519216127</id>
+            <text>This SuperSeries is composed of the following subset Series: GSE22477: PHF8
+                mediates histone demethylation events in cell cycle progression [expression]
+                GSE22478: PHF8 mediates histone demethylation events in cell cycle progression
+                [ChIP-Seq] Refer to individual Series</text>
+        </description>
+        <description>
+            <id>2519232829</id>
+            <text>(Generated description) Experiment with 11 hybridizations, using 11 samples of
+                species [Homo sapiens], using 5 arrays of array design [Virtual Array Design for
+                E-GEOD-22400, Illumina Human-6 v2 Expression BeadChip], producing 0 raw data files
+                and 27 transformed and/or normalized data files.</text>
+        </description>
+        <files>
+            <!--
+        This section is deprecated and unsupported.
+        Please use webservice located at:
+        http://localhost:8080/arrayexpress/xml/files
+        to obtain detailed information on files available for the experiment.
+        For more information, please go to:
+        http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
+    -->
+            <fgem name="E-GEOD-22400.processed.2.zip E-GEOD-22400.processed.1.zip" count="27"/>
+            <idf name="E-GEOD-22400.idf.txt"/>
+            <sdrf name="E-GEOD-22400.hyb.sdrf.txt E-GEOD-22400.seq.sdrf.txt"/>
+            <biosamples>
+                <png name="E-GEOD-22400.biosamples.png"/>
+                <svg name="E-GEOD-22400.biosamples.svg"/>
+            </biosamples>
+        </files>
+    </experiment>
+    <experiment>
+        <species>Homo sapiens</species>
+        <sampleattribute>
+            <category>antibody</category>
+            <value>E2F1</value>
+            <value>H3K4me2</value>
+            <value>H4K20me1</value>
+            <value>PHF8</value>
+            <value>SMC4</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>antibody catalog</category>
+            <value>ab17958, A300-064A</value>
+            <value>ab35471</value>
+            <value>ab7766</value>
+            <value>ab9051</value>
+            <value>SC-193 &amp; SC-22820</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>antibody manufacturer</category>
+            <value>Abcam</value>
+            <value>Abcam; Bethyl Laboratories, Inc.</value>
+            <value>Santa Cruz Biotechnology, Inc.</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>cell line</category>
+            <value>HeLa cells</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Organism</category>
+            <value>Homo sapiens</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>transfection</category>
+            <value>Control siRNA</value>
+            <value>PHF8siRNA</value>
+        </sampleattribute>
+        <experimentalfactor>
+            <name>ANTIBODY</name>
+            <value>E2F1</value>
+            <value>H3K4me2</value>
+            <value>H4K20me1</value>
+            <value>not specified</value>
+            <value>PHF8</value>
+            <value>SMC4</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>ANTIBODY CATALOG</name>
+            <value>ab17958, A300-064A</value>
+            <value>ab35471</value>
+            <value>ab7766</value>
+            <value>ab9051</value>
+            <value>not specified</value>
+            <value>SC-193 &amp; SC-22820</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>ANTIBODY MANUFACTURER</name>
+            <value>Abcam</value>
+            <value>Abcam; Bethyl Laboratories, Inc.</value>
+            <value>not specified</value>
+            <value>Santa Cruz Biotechnology, Inc.</value>
+        </experimentalfactor>
+        <experimentalfactor>
+            <name>TRANSFECTION</name>
+            <value>Control siRNA</value>
+            <value>not specified</value>
+            <value>PHF8siRNA</value>
+        </experimentalfactor>
+        <miamescores>
+            <reportersequencescore>1</reportersequencescore>
+            <protocolscore>0</protocolscore>
+            <factorvaluescore>1</factorvaluescore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <measuredbioassaydatascore>0</measuredbioassaydatascore>
+            <overallscore>3</overallscore>
+        </miamescores>
+        <minseqescores>
+            <experimentdesignscore>1</experimentdesignscore>
+            <protocolscore>0</protocolscore>
+            <factorvaluescore>1</factorvaluescore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <measuredbioassaydatascore>0</measuredbioassaydatascore>
+            <overallscore>3</overallscore>
+        </minseqescores>
+        <id>17147</id>
+        <accession>E-GEOD-22400</accession>
+        <secondaryaccession>GSE22400</secondaryaccession>
+        <name>PHF8 mediates histone demethylation events in cell cycle progression</name>
+        <experimenttype>transcription profiling by array</experimenttype>
+        <experimenttype>ChIP-seq by high throughput sequencing</experimenttype>
+        <releasedate>2010-09-01</releasedate>
+        <submissiondate>2010-06-15</submissiondate>
+        <lastupdatedate>2010-09-11</lastupdatedate>
+        <samples>11</samples>
+        <assays>11</assays>
+        <arraydesign>
+            <accession>A-MEXP-930</accession>
+            <count>4</count>
+            <id>13056</id>
+            <name>Illumina Human-6 v2 Expression BeadChip</name>
+        </arraydesign>
+        <bioassaydatagroup>
+            <arraydesignprovider/>
+            <bioassaydatacubes>4</bioassaydatacubes>
+            <bioassays>4</bioassays>
+            <dataformat>normalization</dataformat>
+            <id/>
+            <isderived>0</isderived>
+            <name>normalization</name>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <arraydesignprovider/>
+            <bioassaydatacubes>27</bioassaydatacubes>
+            <bioassays>27</bioassays>
+            <dataformat>processedData</dataformat>
+            <id/>
+            <isderived>0</isderived>
+            <name>processedData</name>
+        </bioassaydatagroup>
+        <provider>
+            <contact>BOGDAN TANASA</contact>
+            <email>tanasa@scripps.edu</email>
+            <role>submitter</role>
+        </provider>
+        <experimentdesign>ChIP-seq by high throughput sequencing</experimentdesign>
+        <experimentdesign>transcription profiling by array</experimentdesign>
+        <description>
+            <id/>
+            <text>This SuperSeries is composed of the following subset Series: GSE22477: PHF8
+                mediates histone demethylation events in cell cycle progression [expression]
+                GSE22478: PHF8 mediates histone demethylation events in cell cycle progression
+                [ChIP-Seq] Refer to individual Series</text>
+        </description>
+        <protocol>
+            <accession>P-GSE22400-1</accession>
+            <id>53350</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-10</accession>
+            <id>53349</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-2</accession>
+            <id>53353</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-3</accession>
+            <id>53352</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-7</accession>
+            <id>53358</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-6</accession>
+            <id>53351</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-5</accession>
+            <id>53355</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-4</accession>
+            <id>53354</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-9</accession>
+            <id>53356</id>
+        </protocol>
+        <protocol>
+            <accession>P-GSE22400-8</accession>
+            <id>53357</id>
+        </protocol>
+        <files>
+            <!--
+        This section is deprecated and unsupported.
+        Please use webservice located at:
+        http://localhost:8080/arrayexpress/xml/files
+        to obtain detailed information on files available for the experiment.
+        For more information, please go to:
+        http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
+    -->
+            <fgem name="E-GEOD-22400.processed.2.zip E-GEOD-22400.processed.1.zip" count=""/>
+            <idf name="E-GEOD-22400.idf.txt"/>
+            <sdrf name="E-GEOD-22400.hyb.sdrf.txt E-GEOD-22400.seq.sdrf.txt"/>
+            <biosamples>
+                <png name="E-GEOD-22400.biosamples.png"/>
+                <svg name="E-GEOD-22400.biosamples.svg"/>
+            </biosamples>
+        </files>
+    </experiment>
+</experiments>

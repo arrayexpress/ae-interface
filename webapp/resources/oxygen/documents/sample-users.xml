@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user source="ae1" migrated="true">
+        <id>0</id>
+        <name>curator</name>
+        <password>troajsp</password>
+        <email>microarray@ebi.ac.uk</email>
+        <is_privileged>true</is_privileged>
+    </user>
+    <user source="ae2" migrated="true">
+        <id>3</id>
+        <name>curator</name>
+        <password>troajsp</password>
+        <email>microarraycurator@ebi.ac.uk</email>
+        <is_privileged>false</is_privileged>
+    </user>
+    <user source="ae1" migrated="true">
+        <id>1</id>
+        <name>guest</name>
+        <password>no-password</password>
+        <email>microarray@ebi.ac.uk</email>
+        <is_privileged>false</is_privileged>
+    </user>
+    <user source="ae2" migrated="true">
+        <id>1</id>
+        <name>guest</name>
+        <password>1</password>
+        <email>arguest@ebi.ac.uk</email>
+        <is_privileged>false</is_privileged>
+    </user>
+</users>
