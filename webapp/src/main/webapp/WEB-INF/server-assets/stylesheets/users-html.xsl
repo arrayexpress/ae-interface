@@ -220,6 +220,9 @@
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr>
+                <xsl:if test="not($vBrowseMode)">
+                    <xsl:attribute name="class">expanded</xsl:attribute>
+                </xsl:if>
                 <td class="col_id">
                     <div>
                         <a href="{$basepath}/users/{id}">
@@ -245,7 +248,63 @@
                     </div>
                 </td>
             </tr>
+            <xsl:if test="not($vBrowseMode)">
+                <tr>
+                    <td class="col_detail" colspan="4">
+                        <div class="detail_table">
+                            <xsl:call-template name="detail-table">
+                                <xsl:with-param name="pUserId" select="id"/>
+                            </xsl:call-template>
+                        </div>
+                    </td>
+                </tr>
+            </xsl:if>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="detail-table">
+        <xsl:param name="pUserId"/>
+        <xsl:variable name="vExpsForUser" select="search:queryIndex('experiments', concat('visible:true userid:', $pUserId))"/>
+
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <xsl:call-template name="detail-row">
+                    <xsl:with-param name="pName" select="'Experiments'"/>
+                    <xsl:with-param name="pValue">
+                        <xsl:value-of select="string-join($vExpsForUser/accession, ', ')"/>
+                    </xsl:with-param>
+                </xsl:call-template>
+                <xsl:call-template name="detail-row">
+                    <xsl:with-param name="pName" select="'Platforms'"/>
+                    <xsl:with-param name="pValue">
+                    </xsl:with-param>
+                </xsl:call-template>
+            </tbody>
+        </table>
+
+    </xsl:template>
+    <xsl:template name="detail-row">
+        <xsl:param name="pName"/>
+        <xsl:param name="pValue"/>
+        <xsl:if test="$pValue/node()">
+            <xsl:call-template name="detail-section">
+                <xsl:with-param name="pName" select="$pName"/>
+                <xsl:with-param name="pContent" select="$pValue"/>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="detail-section">
+        <xsl:param name="pName"/>
+        <xsl:param name="pContent"/>
+        <tr>
+            <td class="detail_name">
+                <div class="outer"><xsl:value-of select="$pName"/></div>
+            </td>
+            <td class="detail_value">
+                <div class="outer"><xsl:copy-of select="$pContent"/></div>
+            </td>
+        </tr>
     </xsl:template>
 
     <xsl:template name="add-sort">

@@ -16,9 +16,13 @@
  */
 
 .col_id {
-    width: 10%;
+    width: 150px;
     text-align: left;
     white-space: nowrap;
+}
+
+.detail_name {
+    width: 148px; /* col_accession - 2px */
 }
 
 .col_source {
