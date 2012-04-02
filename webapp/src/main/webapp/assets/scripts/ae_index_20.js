@@ -151,7 +151,7 @@ $(function() {
     // populate stats from atlas
     $.get("${interface.application.link.atlas.stats.url}")
             .next( function(data) {
-                data = String(data).replace(/\nAtlas Data Release \d+\.\d+: /, "");
+                data = String(data).replace(/\nAtlas Data Release [0-9.]+: /, "");
                 $("#atlas_avail_info").text(data);
             })
             .error( function() {
