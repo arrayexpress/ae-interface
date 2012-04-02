@@ -199,6 +199,14 @@ $(function() {
     // added autocompletion
     var basePath = decodeURI(window.location.pathname).replace(/\/\w+\.\w+$/,"/");
 
+
+    var autoCompleteFixSet = function() {
+        $(this).attr('autocomplete', 'off');
+    };
+    var autoCompleteFixUnset = function() {
+        $(this).removeAttr('autocomplete');
+    };
+
     $("#ae_keywords").autocomplete(
             basePath + "keywords.txt"
             , { matchContains: false
@@ -207,7 +215,7 @@ $(function() {
                 , max: 50
                 , requestTreeUrl: basePath + "efotree.txt"
             }
-        );
+        ).focus(autoCompleteFixSet).blur(autoCompleteFixUnset).removeAttr('autocomplete');
 
     // silent force-logout if login was requested
     if ("#login" == anchor) {
