@@ -26,7 +26,7 @@
     </xsl:template>
 
     <xsl:template name="highlight">
-        <xsl:param name="pText" as="xs:string"/>
+        <xsl:param name="pText"/>
         <xsl:param name="pFieldName"/>
         <xsl:variable name="vText" select="$pText"/>
         <xsl:choose>
