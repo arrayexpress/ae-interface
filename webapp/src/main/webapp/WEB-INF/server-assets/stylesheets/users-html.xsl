@@ -284,7 +284,7 @@
                         </xsl:for-each>
                         <xsl:if test="count($vExpsForUser) >= 50">
                             <xsl:text>, ...</xsl:text>
-                            <div><br/><a href="{$basepath}/browse.html?keywords=userid:{$id}">Browse all associated experiments</a><br/></div>
+                            <div><br/><a href="{$basepath}/browse.html?keywords=userid:{$id}"><img src="{$basepath}/assets/images/silk_browse.gif" width="16" height="16"/>Browse all associated experiments</a></div>
                         </xsl:if>
                     </xsl:with-param>
                 </xsl:call-template>
@@ -302,7 +302,7 @@
                         </xsl:for-each>
                         <xsl:if test="count($vArraysForUser) >= 50">
                             <xsl:text>, ...</xsl:text>
-                            <div><br/><a href="{$basepath}/arrays/browse.html?keywords=userid:{$id}">Browse all associated platform designs</a><br/></div>
+                            <div><br/><a href="{$basepath}/arrays/browse.html?keywords=userid:{$id}"><img src="{$basepath}/assets/images/silk_browse.gif" width="16" height="16"/>Browse all associated platform designs</a><br/></div>
                         </xsl:if>
                     </xsl:with-param>
                 </xsl:call-template>
