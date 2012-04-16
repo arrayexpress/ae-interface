@@ -275,34 +275,6 @@
                                 </tr>
                             </xsl:if>
 
-                            <xsl:if test="minseqescores">
-                                <tr>
-                                    <td class="name"><div class="name">MINSEQE<br/>compliance</div></td>
-                                    <td class="value">
-                                        <div class="value">
-                                            <xsl:call-template name="min-score">
-                                                <xsl:with-param name="pScores" select="minseqescores"/>
-                                                <xsl:with-param name="pKind" select="'minseqe'"/>
-                                            </xsl:call-template>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </xsl:if>
-
-                            <xsl:if test="miamescores">
-                                <tr>
-                                    <td class="name"><div class="name">MIAME<br/>compliance</div></td>
-                                    <td class="value">
-                                        <div class="value">
-                                            <xsl:call-template name="min-score">
-                                                <xsl:with-param name="pScores" select="miamescores"/>
-                                                <xsl:with-param name="pKind" select="'miame'"/>
-                                            </xsl:call-template>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </xsl:if>
-
                             <xsl:if test="provider[role!='data_coder']">
                                 <tr>
                                     <td class="name"><div class="name">Contact<xsl:if test="count(provider[role!='data_coder']) > 1">s</xsl:if></div></td>
@@ -318,6 +290,34 @@
                                 <tr>
                                     <td class="name"><div class="name">Citation<xsl:if test="count(bibliography/*) > 1">s</xsl:if></div></td>
                                     <td class="value"><div class="value"><xsl:apply-templates select="bibliography"/></div></td>
+                                </tr>
+                            </xsl:if>
+
+                            <xsl:if test="minseqescores">
+                                <tr>
+                                    <td class="name"><div class="name">MINSEQE</div></td>
+                                    <td class="value">
+                                        <div class="value">
+                                            <xsl:call-template name="min-score">
+                                                <xsl:with-param name="pScores" select="minseqescores"/>
+                                                <xsl:with-param name="pKind" select="'minseqe'"/>
+                                            </xsl:call-template>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </xsl:if>
+
+                            <xsl:if test="miamescores">
+                                <tr>
+                                    <td class="name"><div class="name">MIAME</div></td>
+                                    <td class="value">
+                                        <div class="value">
+                                            <xsl:call-template name="min-score">
+                                                <xsl:with-param name="pScores" select="miamescores"/>
+                                                <xsl:with-param name="pKind" select="'miame'"/>
+                                            </xsl:call-template>
+                                        </div>
+                                    </td>
                                 </tr>
                             </xsl:if>
 
@@ -398,75 +398,7 @@
                                     </td>
                                 </tr>
                             </xsl:if>
-                            <!--
-                            <xsl:if test="experimentalfactor/name">
-                                <tr>
-                                    <td class="name"><div class="name">Experimental factors</div></td>
-                                    <td class="attrs"><div class="attrs">
-                                        <table cellpadding="0" cellspacing="0" border="0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="attr_name">Factor name</th>
-                                                    <th class="attr_value">Factor values</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <xsl:for-each select="experimentalfactor">
-                                                    <tr>
-                                                        <td class="attr_name">
-                                                            <xsl:call-template name="highlight">
-                                                                <xsl:with-param name="pText" select="name"/>
-                                                                <xsl:with-param name="pFieldName" select="'ef'"/>
-                                                            </xsl:call-template>
-                                                        </td>
-                                                        <td class="attr_value">
-                                                            <xsl:call-template name="highlight">
-                                                                <xsl:with-param name="pText" select="string-join(value, ', ')"/>
-                                                                <xsl:with-param name="pFieldName" select="'efv'"/>
-                                                            </xsl:call-template>
-                                                        </td>
-                                                    </tr>
-                                                </xsl:for-each>
-                                            </tbody>
-                                        </table></div>
-                                   </td>
-                                </tr>
-                            </xsl:if>
 
-                            <xsl:if test="sampleattribute/category">
-                                <tr>
-                                    <td class="name"><div class="name">Sample attributes</div></td>
-                                    <td class="attrs"><div class="attrs">
-                                        <table cellpadding="0" cellspacing="0" border="0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="attr_name">Attribute name</th>
-                                                    <th class="attr_value">Attribute values</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <xsl:for-each select="sampleattribute">
-                                                    <tr>
-                                                        <td class="attr_name">
-                                                            <xsl:call-template name="highlight">
-                                                                <xsl:with-param name="pText" select="category"/>
-                                                                <xsl:with-param name="pFieldName"/>
-                                                            </xsl:call-template>
-                                                        </td>
-                                                        <td class="attr_value">
-                                                            <xsl:call-template name="highlight">
-                                                                <xsl:with-param name="pText" select="string-join(value, ', ')"/>
-                                                                <xsl:with-param name="pFieldName" select="'sa'"/>
-                                                            </xsl:call-template>
-                                                        </td>
-                                                    </tr>
-                                                </xsl:for-each>
-                                            </tbody>
-                                        </table></div>
-                                    </td>
-                                </tr>
-                            </xsl:if>
-                            -->
                             <tr>
                                 <td class="name"><div class="name">Files</div></td>
                                 <xsl:choose>
@@ -528,45 +460,39 @@
                                     </td>
                                 </tr>
                             </xsl:if>
-                            <xsl:if test="submissiondate | lastupdatedate | releasedate">
+                            <xsl:variable name="vDates" select="submissiondate | lastupdatedate | releasedate"/>
+                            <xsl:if test="$vDates">
                                 <tr>
                                     <td class="name">
                                         <div class="name">Status</div>
                                     </td>
                                     <td class="value">
                                         <div class="value">
-                                            <xsl:if test="submissiondate">
-                                                <xsl:text>Submitted </xsl:text>
-                                                <xsl:variable name="vDate" select="ae:formatDate(submissiondate)"/>
+                                            <xsl:for-each select="$vDates">
+                                                <xsl:sort select="translate(text(),'-','')" data-type="number"/>
+                                                <xsl:variable name="vLabel">
+                                                    <xsl:choose>
+                                                        <xsl:when test="name() = 'submissiondate'">Submitted</xsl:when>
+                                                        <xsl:when test="name() = 'lastupdatedate'">Last updated</xsl:when>
+                                                        <xsl:otherwise>Released</xsl:otherwise>
+                                                    </xsl:choose>
+                                                </xsl:variable>
+                                                <xsl:choose>
+                                                    <xsl:when test="position() = 1">
+                                                        <xsl:value-of select="$vLabel"/>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:text>, </xsl:text>
+                                                        <xsl:value-of select="lower-case($vLabel)"/>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                <xsl:text> </xsl:text>
+                                                <xsl:variable name="vDate" select="ae:formatDate(text())"/>
                                                 <xsl:choose>
                                                     <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
                                                     <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
                                                 </xsl:choose>
-                                            </xsl:if>
-                                            <xsl:if test="releasedate">
-                                                <xsl:choose>
-                                                    <xsl:when test="submissiondate">, r</xsl:when>
-                                                    <xsl:otherwise>R</xsl:otherwise>
-                                                </xsl:choose>
-                                                <xsl:text>eleased </xsl:text>
-                                                <xsl:variable name="vDate" select="ae:formatDate(releasedate)"/>
-                                                <xsl:choose>
-                                                    <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
-                                                    <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
-                                                </xsl:choose>
-                                            </xsl:if>
-                                            <xsl:if test="lastupdatedate">
-                                                <xsl:choose>
-                                                    <xsl:when test="submissiondate | releasedate">, l</xsl:when>
-                                                    <xsl:otherwise>L</xsl:otherwise>
-                                                </xsl:choose>
-                                                <xsl:text>ast updated </xsl:text>
-                                                <xsl:variable name="vDate" select="ae:formatDate(lastupdatedate)"/>
-                                                <xsl:choose>
-                                                    <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
-                                                    <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
-                                                </xsl:choose>
-                                            </xsl:if>
+                                            </xsl:for-each>
                                         </div>
                                     </td>
                                 </tr>
@@ -781,19 +707,19 @@
                 </tr>
                 <tr>
                     <xsl:if test="$pKind = 'miame'">
-                        <th>Platforms</th>
+                        <td>Platforms</td>
                     </xsl:if>
                     <xsl:if test="$pKind = 'minseqe'">
-                        <th>Experiment design</th>
+                        <td>Exp.&#160;design</td>
                     </xsl:if>
-                    <th>Protocols</th>
-                    <th>Factors</th>
-                    <th>Processed data</th>
+                    <td>Protocols</td>
+                    <td>Factors</td>
+                    <td>Processed</td>
                     <xsl:if test="$pKind = 'miame'">
-                        <th>Raw data</th>
+                        <td>Raw</td>
                     </xsl:if>
                     <xsl:if test="$pKind = 'minseqe'">
-                        <th>Sequence Reads</th>
+                        <td>Seq.&#160;reads</td>
                     </xsl:if>
                 </tr>
             </tbody>

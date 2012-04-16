@@ -748,11 +748,10 @@ div.acc_status.migrated.identical span.ae1
     table-layout: auto;
 }
 
-.min-score-tbl td,
-.min-score-tbl th {
+.min-score-tbl td {
     text-align: center;
     vertical-align: top;
-    padding: 0 15px 2px 0;
+    width: 70px;
 }
 
 .td_ext td.value,
