@@ -76,6 +76,12 @@
         <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/$3-view/html</to>
     </rule>
 
+    <!-- new view for samples -->
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.sdrf.txt/srdf-view/html</to>
+    </rule>
+
     <!-- arrays -->
     <rule>
         <from>^/arrays/?$</from>

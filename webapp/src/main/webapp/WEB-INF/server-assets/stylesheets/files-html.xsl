@@ -31,6 +31,7 @@
     <xsl:param name="basepath"/>
 
     <xsl:include href="ae-file-functions.xsl"/>
+    <xsl:include href="ae-date-functions.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
     <xsl:include href="ae-sort-files.xsl"/>
 
