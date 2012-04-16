@@ -348,7 +348,39 @@
                                             <a href="{$basepath}/experiments/{$vAccession}/samples.html">
                                                 <xsl:text>Experiment design, sample properties, experimental variables (factors), links to data</xsl:text>
                                                 <img class="new" src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
-                                            </a>
+                                            </a><br/>
+                                            <xsl:variable name="vFoundMatches">
+                                                <xsl:for-each select="experimentalfactor">
+                                                    <xsl:call-template name="highlight-ex">
+                                                        <xsl:with-param name="pText" select="name"/>
+                                                        <xsl:with-param name="pFieldName" select="'ef'"/>
+                                                    </xsl:call-template>
+                                                </xsl:for-each>
+                                                <xsl:for-each select="experimentalfactor/value">
+                                                    <xsl:call-template name="highlight-ex">
+                                                        <xsl:with-param name="pText" select="."/>
+                                                        <xsl:with-param name="pFieldName" select="'efv'"/>
+                                                    </xsl:call-template>
+                                                </xsl:for-each>
+                                                <xsl:for-each select="sampleattribute/catagory | sampleattribute/value">
+                                                    <xsl:call-template name="highlight-ex">
+                                                        <xsl:with-param name="pText" select="."/>
+                                                        <xsl:with-param name="pFieldName" select="'sa'"/>
+                                                    </xsl:call-template>
+                                                </xsl:for-each>
+                                            </xsl:variable>
+                                            <xsl:if test="$vFoundMatches/span">
+                                                Found inside:
+                                                <i>
+                                                    <xsl:for-each-group select="$vFoundMatches/span" group-by="text()">
+                                                        <xsl:sort select="text()" order="ascending"/>
+                                                        <xsl:copy-of select="current-group()[1]"/>
+                                                        <xsl:if test="position() != last()">
+                                                            <xsl:text>, </xsl:text>
+                                                        </xsl:if>
+                                                    </xsl:for-each-group>
+                                                </i>
+                                            </xsl:if>
                                         </div>
                                     </td>
                                 </tr>
@@ -505,9 +537,11 @@
                                         <div class="value">
                                             <xsl:if test="submissiondate">
                                                 <xsl:text>Submitted </xsl:text>
-                                                <xsl:variable name="vSubmissionDate" select="ae:formatDate(submissiondate)"/>
-                                                <xsl:if test="matches($vSubmissionDate, '\d')">on </xsl:if>
-                                                <xsl:value-of select="$vSubmissionDate"/>
+                                                <xsl:variable name="vDate" select="ae:formatDate(submissiondate)"/>
+                                                <xsl:choose>
+                                                    <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
+                                                    <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
+                                                </xsl:choose>
                                             </xsl:if>
                                             <xsl:if test="releasedate">
                                                 <xsl:choose>
@@ -515,9 +549,11 @@
                                                     <xsl:otherwise>R</xsl:otherwise>
                                                 </xsl:choose>
                                                 <xsl:text>eleased </xsl:text>
-                                                <xsl:variable name="vReleaseDate" select="ae:formatDate(releasedate)"/>
-                                                <xsl:if test="matches($vReleaseDate, '\d')">on </xsl:if>
-                                                <xsl:value-of select="$vReleaseDate"/>
+                                                <xsl:variable name="vDate" select="ae:formatDate(releasedate)"/>
+                                                <xsl:choose>
+                                                    <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
+                                                    <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
+                                                </xsl:choose>
                                             </xsl:if>
                                             <xsl:if test="lastupdatedate">
                                                 <xsl:choose>
@@ -525,9 +561,11 @@
                                                     <xsl:otherwise>L</xsl:otherwise>
                                                 </xsl:choose>
                                                 <xsl:text>ast updated </xsl:text>
-                                                <xsl:variable name="vLastUpdateDate" select="ae:formatDate(lastupdatedate)"/>
-                                                <xsl:if test="matches($vLastUpdateDate, '\d')">on </xsl:if>
-                                                <xsl:value-of select="$vLastUpdateDate"/>
+                                                <xsl:variable name="vDate" select="ae:formatDate(lastupdatedate)"/>
+                                                <xsl:choose>
+                                                    <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
+                                                    <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
+                                                </xsl:choose>
                                             </xsl:if>
                                         </div>
                                     </td>
@@ -743,7 +781,7 @@
                 </tr>
                 <tr>
                     <xsl:if test="$pKind = 'miame'">
-                        <th>Platform designs</th>
+                        <th>Platforms</th>
                     </xsl:if>
                     <xsl:if test="$pKind = 'minseqe'">
                         <th>Experiment design</th>
