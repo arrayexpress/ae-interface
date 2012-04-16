@@ -79,7 +79,7 @@
     <!-- new view for samples -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.sdrf.txt/srdf-view/html</to>
+        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.sdrf.txt/sdrf-view/html</to>
     </rule>
 
     <!-- arrays -->
