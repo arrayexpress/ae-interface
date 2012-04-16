@@ -351,7 +351,7 @@
                                                 <br/>
                                                 <xsl:variable name="vFoundMatches">
                                                     <xsl:for-each select="experimentalfactor/name">
-                                                        <match text="{.}">
+                                                        <match text="{lower-case(.)}">
                                                             <xsl:call-template name="highlight-ex">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'ef'"/>
@@ -359,7 +359,7 @@
                                                         </match>
                                                     </xsl:for-each>
                                                     <xsl:for-each select="experimentalfactor/value">
-                                                        <match text="{.}">
+                                                        <match text="{lower-case(.)}">
                                                             <xsl:call-template name="highlight-ex">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'efv'"/>
@@ -367,7 +367,7 @@
                                                         </match>
                                                     </xsl:for-each>
                                                     <xsl:for-each select="sampleattribute/catagory | sampleattribute/value">
-                                                        <match text="{.}">
+                                                        <match text="{lower-case(.)}">
                                                             <xsl:call-template name="highlight-ex">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'sa'"/>
