@@ -33,23 +33,6 @@
                 <xsl:variable name="vHighlightedText" select="search:highlightQuery($queryid, $pFieldName, $vText)"/>
                 <xsl:call-template name="format-highlighted-text">
                     <xsl:with-param name="pText" select="$vHighlightedText"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="false()"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>&#160;</xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template name="highlight-ex">
-        <xsl:param name="pText"/>
-        <xsl:param name="pFieldName"/>
-        <xsl:variable name="vText" select="$pText"/>
-        <xsl:choose>
-            <xsl:when test="string-length($vText)!=0">
-                <xsl:variable name="vHighlightedText" select="search:highlightQuery($queryid, $pFieldName, $vText)"/>
-                <xsl:call-template name="format-highlighted-text">
-                    <xsl:with-param name="pText" select="$vHighlightedText"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="true()"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>&#160;</xsl:otherwise>
@@ -58,23 +41,19 @@
 
     <xsl:template name="format-highlighted-text">
         <xsl:param name="pText"/>
-        <xsl:param name="pFormatOnlyInsideHighlight"/>
         <xsl:choose>
             <xsl:when test="contains($pText,'&#x00ab;') and contains($pText,'&#x00bb;')">
                 <xsl:call-template name="format-highlighted-text">
                     <xsl:with-param name="pText" select="substring-before($pText,'&#x00ab;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
                 <span class="ae_text_hit"><xsl:value-of select="substring-after(substring-before($pText,'&#x00bb;'),'&#x00ab;')"/></span>
                 <xsl:call-template name="format-highlighted-text">
                     <xsl:with-param name="pText" select="substring-after($pText,'&#x00bb;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="format-highlighted-synonyms">
                     <xsl:with-param name="pText" select="$pText"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -82,23 +61,19 @@
 
     <xsl:template name="format-highlighted-synonyms">
         <xsl:param name="pText"/>
-        <xsl:param name="pFormatOnlyInsideHighlight"/>
         <xsl:choose>
             <xsl:when test="contains($pText,'&#x2039;') and contains($pText,'&#x203a;')">
                 <xsl:call-template name="format-highlighted-synonyms">
                     <xsl:with-param name="pText" select="substring-before($pText,'&#x2039;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
                 <span class="ae_text_syn"><xsl:value-of select="substring-after(substring-before($pText,'&#x203a;'),'&#x2039;')"/></span>
                 <xsl:call-template name="format-highlighted-synonyms">
                     <xsl:with-param name="pText" select="substring-after($pText,'&#x203a;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="format-highlighted-efo">
                     <xsl:with-param name="pText" select="$pText"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -106,28 +81,18 @@
 
     <xsl:template name="format-highlighted-efo">
         <xsl:param name="pText"/>
-        <xsl:param name="pFormatOnlyInsideHighlight"/>
         <xsl:choose>
             <xsl:when test="contains($pText,'&#x2035;') and contains($pText,'&#x2032;')">
                 <xsl:call-template name="format-highlighted-efo">
                     <xsl:with-param name="pText" select="substring-before($pText,'&#x2035;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
                 <span class="ae_text_efo"><xsl:value-of select="substring-after(substring-before($pText,'&#x2032;'),'&#x2035;')"/></span>
                 <xsl:call-template name="format-highlighted-efo">
                     <xsl:with-param name="pText" select="substring-after($pText,'&#x2032;')"/>
-                    <xsl:with-param name="pFormatOnlyInsideHighlight" select="$pFormatOnlyInsideHighlight"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="$pFormatOnlyInsideHighlight and string-length($pText)">
-                        <xsl:text> </xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$pText"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$pText"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

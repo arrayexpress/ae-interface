@@ -705,6 +705,10 @@ div.acc_status.migrated.identical span.ae1
     white-space: nowrap;    
 }
 
+.td_ext a.samples {
+    white-space: normal;
+}
+
 .td_ext td.name {
     padding: 0;
     font-weight: bold;

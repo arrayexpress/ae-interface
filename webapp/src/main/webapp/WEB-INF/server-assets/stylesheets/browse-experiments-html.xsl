@@ -345,14 +345,14 @@
                                     <td class="name"><div class="name">Samples (<xsl:value-of select="samples"/>)</div></td>
                                     <td class="value">
                                         <div class="value">
-                                            <a href="{$basepath}/experiments/{$vAccession}/samples.html">
+                                            <a class="samples" href="{$basepath}/experiments/{$vAccession}/samples.html">
                                                 <xsl:text>Experiment design, sample properties, experimental variables (factors), links to data</xsl:text>
                                                 <img class="new" src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
                                                 <br/>
-                                                <xsl:variable name="vFoundMatches">
+                                                <xsl:variable name="vPossibleMatches">
                                                     <xsl:for-each select="experimentalfactor/name">
                                                         <match text="{lower-case(.)}">
-                                                            <xsl:call-template name="highlight-ex">
+                                                            <xsl:call-template name="highlight">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'ef'"/>
                                                             </xsl:call-template>
@@ -360,33 +360,35 @@
                                                     </xsl:for-each>
                                                     <xsl:for-each select="experimentalfactor/value">
                                                         <match text="{lower-case(.)}">
-                                                            <xsl:call-template name="highlight-ex">
+                                                            <xsl:call-template name="highlight">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'efv'"/>
                                                             </xsl:call-template>
                                                         </match>
                                                     </xsl:for-each>
-                                                    <xsl:for-each select="sampleattribute/catagory | sampleattribute/value">
+                                                    <xsl:for-each select="sampleattribute/category | sampleattribute/value">
                                                         <match text="{lower-case(.)}">
-                                                            <xsl:call-template name="highlight-ex">
+                                                            <xsl:call-template name="highlight">
                                                                 <xsl:with-param name="pText" select="."/>
                                                                 <xsl:with-param name="pFieldName" select="'sa'"/>
                                                             </xsl:call-template>
                                                         </match>
                                                     </xsl:for-each>
                                                 </xsl:variable>
-                                                <xsl:if test="$vFoundMatches/match/span">
-                                                    <i>
-                                                        <xsl:text>&#160;&#x2514;&#x2500;&#160;found inside: </xsl:text>
-                                                        <xsl:for-each-group select="$vFoundMatches/match[span]" group-by="@text">
-                                                            <xsl:sort select="@text" order="ascending"/>
+                                                <xsl:variable name="vMatches" select="$vPossibleMatches/match[span]"/>
+                                                <xsl:if test="$vMatches">
+                                                    <em><xsl:text>&#160;&#x2514;&#x2500;&#160;found inside: </xsl:text></em>
+                                                    <xsl:for-each-group select="$vMatches[position() &lt;= 20]" group-by="@text">
+                                                        <xsl:sort select="@text" order="ascending"/>
 
-                                                            <xsl:copy-of select="current-group()[1]/node()"/>
-                                                            <xsl:if test="position() != last()">
-                                                                <xsl:text>, </xsl:text>
-                                                            </xsl:if>
-                                                        </xsl:for-each-group>
-                                                    </i>
+                                                        <xsl:copy-of select="current-group()[1]/node()"/>
+                                                        <xsl:if test="position() != last()">
+                                                            <xsl:text>, </xsl:text>
+                                                        </xsl:if>
+                                                    </xsl:for-each-group>
+                                                    <xsl:if test="count($vMatches) > 20">
+                                                        <xsl:text>, ...</xsl:text>
+                                                    </xsl:if>
                                                 </xsl:if>
                                             </a>
                                         </div>
