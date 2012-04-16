@@ -348,39 +348,40 @@
                                             <a href="{$basepath}/experiments/{$vAccession}/samples.html">
                                                 <xsl:text>Experiment design, sample properties, experimental variables (factors), links to data</xsl:text>
                                                 <img class="new" src="assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
-                                            </a><br/>
-                                            <xsl:variable name="vFoundMatches">
-                                                <xsl:for-each select="experimentalfactor">
-                                                    <xsl:call-template name="highlight-ex">
-                                                        <xsl:with-param name="pText" select="name"/>
-                                                        <xsl:with-param name="pFieldName" select="'ef'"/>
-                                                    </xsl:call-template>
-                                                </xsl:for-each>
-                                                <xsl:for-each select="experimentalfactor/value">
-                                                    <xsl:call-template name="highlight-ex">
-                                                        <xsl:with-param name="pText" select="."/>
-                                                        <xsl:with-param name="pFieldName" select="'efv'"/>
-                                                    </xsl:call-template>
-                                                </xsl:for-each>
-                                                <xsl:for-each select="sampleattribute/catagory | sampleattribute/value">
-                                                    <xsl:call-template name="highlight-ex">
-                                                        <xsl:with-param name="pText" select="."/>
-                                                        <xsl:with-param name="pFieldName" select="'sa'"/>
-                                                    </xsl:call-template>
-                                                </xsl:for-each>
-                                            </xsl:variable>
-                                            <xsl:if test="$vFoundMatches/span">
-                                                Found inside:
-                                                <i>
-                                                    <xsl:for-each-group select="$vFoundMatches/span" group-by="text()">
-                                                        <xsl:sort select="text()" order="ascending"/>
-                                                        <xsl:copy-of select="current-group()[1]"/>
-                                                        <xsl:if test="position() != last()">
-                                                            <xsl:text>, </xsl:text>
-                                                        </xsl:if>
-                                                    </xsl:for-each-group>
-                                                </i>
-                                            </xsl:if>
+                                                <br/>
+                                                <xsl:variable name="vFoundMatches">
+                                                    <xsl:for-each select="experimentalfactor">
+                                                        <xsl:call-template name="highlight-ex">
+                                                            <xsl:with-param name="pText" select="name"/>
+                                                            <xsl:with-param name="pFieldName" select="'ef'"/>
+                                                        </xsl:call-template>
+                                                    </xsl:for-each>
+                                                    <xsl:for-each select="experimentalfactor/value">
+                                                        <xsl:call-template name="highlight-ex">
+                                                            <xsl:with-param name="pText" select="."/>
+                                                            <xsl:with-param name="pFieldName" select="'efv'"/>
+                                                        </xsl:call-template>
+                                                    </xsl:for-each>
+                                                    <xsl:for-each select="sampleattribute/catagory | sampleattribute/value">
+                                                        <xsl:call-template name="highlight-ex">
+                                                            <xsl:with-param name="pText" select="."/>
+                                                            <xsl:with-param name="pFieldName" select="'sa'"/>
+                                                        </xsl:call-template>
+                                                    </xsl:for-each>
+                                                </xsl:variable>
+                                                <xsl:if test="$vFoundMatches/span">
+                                                    <i>
+                                                        <xsl:text>&#160;&#x2514;&#x2500;&#160;found inside: </xsl:text>
+                                                        <xsl:for-each-group select="$vFoundMatches/span" group-by="text()">
+                                                            <xsl:sort select="text()" order="ascending"/>
+                                                            <xsl:copy-of select="current-group()[1]"/>
+                                                            <xsl:if test="position() != last()">
+                                                                <xsl:text>, </xsl:text>
+                                                            </xsl:if>
+                                                        </xsl:for-each-group>
+                                                    </i>
+                                                </xsl:if>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
