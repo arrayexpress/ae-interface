@@ -121,7 +121,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:choose>
-                    <xsl:when test="$pFormatOnlyInsideHighlight">
+                    <xsl:when test="$pFormatOnlyInsideHighlight and string-length($pText)">
                         <xsl:text> </xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
