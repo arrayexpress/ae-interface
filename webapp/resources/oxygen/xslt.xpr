@@ -16,7 +16,40 @@
                                     <String>XML</String>
                                 </field>
                                 <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String>ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String>browse-experiments-html</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String>ae-saxon-extensions</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -248,17 +281,6 @@
                                 </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -3104,6 +3126,7 @@
         <folder name="stylesheets">
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-html-page.xsl"/>
@@ -3122,6 +3145,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/default-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl"/>

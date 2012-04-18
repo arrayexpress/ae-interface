@@ -5,32 +5,39 @@
                 extension-element-prefixes="search"
                 exclude-result-prefixes="search html"
                 version="2.0">
-
+    
     <xsl:template match="*" mode="highlight">
+        <xsl:param name="pQueryId"/>
         <xsl:param name="pFieldName"/>
         <xsl:element name="{if (name() = 'text') then 'div' else name() }">
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates mode="highlight">
+                <xsl:with-param name="pQueryId" select="$pQueryId"/>
                 <xsl:with-param name="pFieldName" select="$pFieldName"/>
             </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
 
     <xsl:template match="text()" mode="highlight">
+        <xsl:param name="pQueryId"/>
         <xsl:param name="pFieldName"/>
         <xsl:call-template name="highlight">
+            <xsl:with-param name="pQueryId" select="$pQueryId"/>
             <xsl:with-param name="pText" select="."/>
             <xsl:with-param name="pFieldName" select="$pFieldName"/>
         </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="highlight">
+        <xsl:param name="pQueryId"/>
         <xsl:param name="pText"/>
         <xsl:param name="pFieldName"/>
-        <xsl:variable name="vText" select="$pText"/>
         <xsl:choose>
-            <xsl:when test="string-length($vText)!=0">
-                <xsl:variable name="vHighlightedText" select="search:highlightQuery($queryid, $pFieldName, $vText)"/>
+            <xsl:when test="string-length($pQueryId) = 0 and string-length($pText)!=0">
+                <xsl:value-of select="$pText"/>
+            </xsl:when>
+            <xsl:when test="string-length($pText)!=0">
+                <xsl:variable name="vHighlightedText" select="search:highlightQuery($pQueryId, $pFieldName, $pText)"/>
                 <xsl:call-template name="format-highlighted-text">
                     <xsl:with-param name="pText" select="$vHighlightedText"/>
                 </xsl:call-template>
