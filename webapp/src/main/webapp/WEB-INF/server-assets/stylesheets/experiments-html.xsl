@@ -45,7 +45,7 @@
 
     <xsl:template name="ae-contents">
 
-        <xsl:variable name="vExperiment" select="/experiments/experiment[accession = $vAccession]"/>
+        <xsl:variable name="vExperiment" select="search:queryIndex($queryid)[accession = $vAccession]"/>
 
         <xsl:choose>
             <xsl:when test="exists($vExperiment)">
