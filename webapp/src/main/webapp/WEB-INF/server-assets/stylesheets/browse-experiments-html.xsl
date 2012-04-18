@@ -640,6 +640,15 @@
                         </xsl:call-template>
                     </a>
                 </xsl:when>
+                <xsl:when test="substring(., 1, 4)='EGAS'">
+                    <a href="https://www.ebi.ac.uk/ega/studies/{.}">
+                        <xsl:text>EGA - </xsl:text>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pText" select="."/>
+                            <xsl:with-param name="pFieldName" select="'accession'"/>
+                        </xsl:call-template>
+                    </a>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pText" select="."/>
