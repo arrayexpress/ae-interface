@@ -199,9 +199,9 @@
                 <field name="seq-score" type="boolean" path="(minseqescores/measuredbioassaydatascore = '1')"/>
             </document>
         </index>
-        <index id="arrays" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <index id="arrays" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/array_designs/array_design" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
@@ -214,9 +214,9 @@
                 <field name="visible" type="boolean" path="@visible = 'true'"/>
             </document>
         </index>
-        <index id="protocols" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <index id="protocols" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/protocols/protocol" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
                 <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="experiment" title="by Experiment Association" type="string" path="experiment" analyze="true" store="false" escape="false"/>
@@ -225,17 +225,17 @@
                 <field name="public" type="boolean" path="user/@id = '1'"/>
             </document>
         </index>
-        <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/files/folder/file" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//@*, ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//@*, ' ')" analyze="true" store="false" escape="false"/>
                 <field name="name" title="" type="string" path="@name" analyze="true" store="false" escape="false"/>
                 <field name="kind" title="" type="string" path="@kind" analyze="true" store="false" escape="false"/>
                 <field name="extension" title="" type="string" path="@extension" analyze="true" store="false" escape="false"/>
             </document>
         </index>
-        <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
+        <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/users/user" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
                 <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false"/>
                 <field name="name" title="" type="string" path="name" analyze="true" store="false" escape="false"/>
                 <field name="email" title="" type="string" path="email"  analyze="true" store="false" escape="false"/>
