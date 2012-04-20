@@ -55,3 +55,10 @@
     });
 
 })(window.jQuery);
+
+function
+aeClearKeywords()
+{
+    $("#ae_directsub_field").removeAttr("checked");
+    $("#ae_keywords_field").val("").focus();
+}

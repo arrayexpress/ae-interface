@@ -99,7 +99,7 @@
                     <div id="ae_query_box">
                         <form id="ae_query_form" method="get" action="browse.html">
                             <fieldset id="ae_keywords_fset">
-                                <label for="ae_keywords_field">Platform accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
+                                <label for="ae_keywords_field">Platform accessions, names, descriptions and providers [<a href="javascript:aeClearKeywords()">clear</a>]</label>
                                 <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
                                 <div id="ae_directsub_option">
                                     <input id="ae_directsub_field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
