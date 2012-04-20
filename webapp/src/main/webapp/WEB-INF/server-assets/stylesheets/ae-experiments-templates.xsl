@@ -60,15 +60,17 @@
     
     <xsl:template name="exp-contact-section">
         <xsl:param name="pQueryId"/>
-        
-        <xsl:if test="provider[role!='data_coder']">
+
+        <xsl:variable name="vContacts" select="provider[ role != 'data_coder' ]"/>
+        <xsl:if test="$vContacts">
             <tr>
                 <td class="name">
-                    <div class="name">Contact<xsl:if test="count(provider[role!='data_coder']) > 1">s</xsl:if></div></td>
+                    <div class="name">Contact<xsl:if test="count($vContacts) > 1">s</xsl:if></div></td>
                 <td class="value">
                     <div class="value">
                         <xsl:call-template name="exp-provider">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                            <xsl:with-param name="pContacts" select="$vContacts"/>
                         </xsl:call-template>
                     </div>
                 </td>
@@ -79,10 +81,10 @@
     <xsl:template name="exp-citation-section">
         <xsl:param name="pQueryId"/>
 
-        <xsl:if test="bibliography/*">
+        <xsl:if test="bibliography/accession | bibliography/title">
             <tr>
                 <td class="name">
-                    <div class="name">Citation<xsl:if test="count(bibliography/*) > 1">s</xsl:if></div>
+                    <div class="name">Citation<xsl:if test="count(bibliography) > 1">s</xsl:if></div>
                 </td>
                 <td class="value">
                     <div class="value">
@@ -493,9 +495,10 @@
     
     <xsl:template name="exp-provider">
         <xsl:param name="pQueryId"/>
+        <xsl:param name="pContacts"/>
         
-        <xsl:for-each select="provider[not(contact=following-sibling::provider/contact) and role!='data_coder']">
-            <xsl:sort select="role='submitter'" order="descending"/>
+        <xsl:for-each select="$pContacts[not(contact=following-sibling::node()/contact)]">
+            <xsl:sort select="if (role = 'submitter') then 0 else 1" order="ascending"/>
             <xsl:sort select="fn:lower-case(contact)"/>
             <xsl:choose>
                 <xsl:when test="fn:string-length(email) > 0">
@@ -522,75 +525,93 @@
     <xsl:template match="bibliography">
         <xsl:param name="pQueryId"/>
         
-        <div>
-            <xsl:variable name="vTitle">
-                <xsl:if test="string-length(title) > 0">
+        <xsl:variable name="vTitle">
+            <xsl:if test="string-length(title) > 0">
+                <xsl:call-template name="highlight">
+                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    <xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/>
+                    <xsl:with-param name="pFieldName"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="vPubInfo">
+            <xsl:if test="string-length(authors) > 0">
+                <xsl:call-template name="highlight">
+                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    <xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/>
+                    <xsl:with-param name="pFieldName"/>
+                </xsl:call-template>
+                <xsl:text>. </xsl:text>
+            </xsl:if>
+            <xsl:if test="string-length(publication) > 0">
+                <em>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/>
+                        <xsl:with-param name="pText" select="publication"/>
                         <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
-                </xsl:if>
-            </xsl:variable>
-            <xsl:variable name="vPubInfo">
-                <xsl:if test="string-length(authors) > 0">
+                </em><xsl:text>&#160;</xsl:text></xsl:if>
+            <xsl:if test="string-length(volume) > 0">
+                <xsl:call-template name="highlight">
+                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    <xsl:with-param name="pText" select="volume"/>
+                    <xsl:with-param name="pFieldName"/>
+                </xsl:call-template>
+                <xsl:if test="string-length(issue) > 0">
+                    <xsl:text>(</xsl:text>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/>
-                        <xsl:with-param name="pFieldName"/>
-                    </xsl:call-template>
-                    <xsl:text>. </xsl:text>
-                </xsl:if>
-                <xsl:if test="string-length(publication) > 0">
-                    <em>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="publication"/>
-                            <xsl:with-param name="pFieldName"/>
-                        </xsl:call-template>
-                    </em><xsl:text>&#160;</xsl:text></xsl:if>
-                <xsl:if test="string-length(volume) > 0">
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="volume"/>
-                        <xsl:with-param name="pFieldName"/>
-                    </xsl:call-template>
-                    <xsl:if test="string-length(issue) > 0">
-                        <xsl:text>(</xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="issue"/>
-                            <xsl:with-param name="pFieldName"/>
-                        </xsl:call-template>
-                        <xsl:text>)</xsl:text>
-                    </xsl:if>
-                </xsl:if>
-                <xsl:if test="string-length(pages) > 0">
-                    <xsl:text>:</xsl:text>
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="pages"/>
-                        <xsl:with-param name="pFieldName"/>
-                    </xsl:call-template>
-                </xsl:if>
-                <xsl:if test="string-length(year) > 0">
-                    <xsl:text>&#160;(</xsl:text>
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="year"/>
+                        <xsl:with-param name="pText" select="issue"/>
                         <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                     <xsl:text>)</xsl:text>
                 </xsl:if>
-            </xsl:variable>
+            </xsl:if>
+            <xsl:if test="string-length(pages) > 0">
+                <xsl:text>:</xsl:text>
+                <xsl:call-template name="highlight">
+                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    <xsl:with-param name="pText" select="pages"/>
+                    <xsl:with-param name="pFieldName"/>
+                </xsl:call-template>
+            </xsl:if>
+            <xsl:if test="string-length(year) > 0">
+                <xsl:text>&#160;(</xsl:text>
+                <xsl:call-template name="highlight">
+                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    <xsl:with-param name="pText" select="year"/>
+                    <xsl:with-param name="pFieldName"/>
+                </xsl:call-template>
+                <xsl:text>)</xsl:text>
+            </xsl:if>
+        </xsl:variable>
+
+        <xsl:if test="string-length(title)">
             <xsl:choose>
                 <xsl:when test="doi">
                     <a href="http://dx.doi.org/{doi}"><xsl:copy-of select="$vTitle"/></a>
                     <xsl:text>. </xsl:text>
                     <xsl:copy-of select="$vPubInfo"/>
                 </xsl:when>
-                <xsl:when test="uri[starts-with(., 'http')]">
+                <xsl:when test="starts-with(uri, 'http')">
                     <a href="{uri}"><xsl:copy-of select="$vTitle"/></a>
+                    <xsl:text>. </xsl:text>
+                    <xsl:copy-of select="$vPubInfo"/>
+                </xsl:when>
+                <xsl:when test="uri">
+                    <xsl:copy-of select="$vTitle"/>
+                    <xsl:text>. </xsl:text>
+                    <xsl:copy-of select="$vPubInfo"/>
+                    <xsl:text> (</xsl:text>
+                    <xsl:call-template name="highlight">
+                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                        <xsl:with-param name="pText" select="uri"/>
+                        <xsl:with-param name="pFieldName"/>
+                    </xsl:call-template>
+                    <xsl:text>)</xsl:text>
+                </xsl:when>
+                <xsl:when test="accession">
+                    <a href="http://ukpmc.ac.uk/abstract/MED/{accession}"><xsl:copy-of select="$vTitle"/></a>
                     <xsl:text>. </xsl:text>
                     <xsl:copy-of select="$vPubInfo"/>
                 </xsl:when>
@@ -598,31 +619,24 @@
                     <xsl:copy-of select="$vTitle"/>
                     <xsl:text>. </xsl:text>
                     <xsl:copy-of select="$vPubInfo"/>
-                    <xsl:if test="string-length(uri) > 0">
-                        <xsl:text> (</xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="uri"/>
-                            <xsl:with-param name="pFieldName"/>
-                        </xsl:call-template>
-                        <xsl:text>)</xsl:text>
-                    </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:if test="accession">
-                <xsl:if test="number(accession) > 0">
+        </xsl:if>
+        <xsl:if test="not(doi) and not(uri) and accession">
+            <xsl:if test="number(accession) > 0">
+                <xsl:if test="string-length(title)">
                     <xsl:text>, </xsl:text>
-                    <a href="http://www.ncbi.nlm.nih.gov/pubmed/{accession}">
-                        <xsl:text>PubMed </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="accession"/>
-                            <xsl:with-param name="pFieldName" select="'pmid'"/>
-                        </xsl:call-template>
-                    </a>
                 </xsl:if>
+                <a href="http://ukpmc.ac.uk/abstract/MED/{accession}">
+                    <xsl:text>UKPMC </xsl:text>
+                    <xsl:call-template name="highlight">
+                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                        <xsl:with-param name="pText" select="accession"/>
+                        <xsl:with-param name="pFieldName" select="'pmid'"/>
+                    </xsl:call-template>
+                </a>
             </xsl:if>
-        </div>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template name="exp-score">
