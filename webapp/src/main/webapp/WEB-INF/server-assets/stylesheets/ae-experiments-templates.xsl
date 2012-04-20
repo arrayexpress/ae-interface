@@ -622,7 +622,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
-        <xsl:if test="not(doi) and not(uri) and accession">
+        <xsl:if test="(doi or uri) and accession">
             <xsl:if test="number(accession) > 0">
                 <xsl:if test="string-length(title)">
                     <xsl:text>, </xsl:text>
