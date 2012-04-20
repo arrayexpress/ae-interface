@@ -38,7 +38,7 @@
         <xsl:if test="$vExpTypeAndDesign">
             <tr>
                 
-                <td class="name"><div class="name">Keywords</div></td>
+                <td class="name"><div class="name">Experiment type<xsl:if test="count($vExpTypeAndDesign) > 1">s</xsl:if></div></td>
                 <td class="value">
                     <div class="value">
                         <xsl:call-template name="highlight">
@@ -167,8 +167,7 @@
                 <td class="value">
                     <div class="value">
                         <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html">
-                            <xsl:text>Experiment design, sample properties, experimental variables (factors), links to data</xsl:text>
-                            <img class="new" src="{$pBasePath}/assets/images/silk_new.gif" width="16" height="13" alt="new!"/>
+                            <b><xsl:text>Show all samples and data files</xsl:text></b>
                             <br/>
                             <xsl:variable name="vPossibleMatches">
                                 <xsl:for-each select="experimentalfactor/name">
@@ -220,7 +219,87 @@
             </tr>
         </xsl:if>
     </xsl:template>
-    
+
+    <xsl:template name="exp-experimental-factors-section">
+        <xsl:param name="pQueryId"/>
+
+        <xsl:if test="experimentalfactor/name">
+            <tr>
+                <td class="name"><div class="name">Experimental factors</div></td>
+                <td class="attrs"><div class="attrs">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th class="attr_name">Factor name</th>
+                                <th class="attr_value">Factor values</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <xsl:for-each select="experimentalfactor">
+                                <tr>
+                                    <td class="attr_name">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="name"/>
+                                            <xsl:with-param name="pFieldName" select="'ef'"/>
+                                        </xsl:call-template>
+                                    </td>
+                                    <td class="attr_value">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="string-join(value, ', ')"/>
+                                            <xsl:with-param name="pFieldName" select="'efv'"/>
+                                        </xsl:call-template>
+                                    </td>
+                                </tr>
+                            </xsl:for-each>
+                        </tbody>
+                    </table></div>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="exp-sample-attributes-section">
+        <xsl:param name="pQueryId"/>
+
+        <xsl:if test="sampleattribute/category">
+            <tr>
+                <td class="name"><div class="name">Sample attributes</div></td>
+                <td class="attrs"><div class="attrs">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th class="attr_name">Attribute name</th>
+                                <th class="attr_value">Attribute values</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <xsl:for-each select="sampleattribute">
+                                <tr>
+                                    <td class="attr_name">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="category"/>
+                                            <xsl:with-param name="pFieldName"/>
+                                        </xsl:call-template>
+                                    </td>
+                                    <td class="attr_value">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="string-join(value, ', ')"/>
+                                            <xsl:with-param name="pFieldName" select="'sa'"/>
+                                        </xsl:call-template>
+                                    </td>
+                                </tr>
+                            </xsl:for-each>
+                        </tbody>
+                    </table></div>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="exp-protocols-section">
         <xsl:param name="pBasePath"/>
         

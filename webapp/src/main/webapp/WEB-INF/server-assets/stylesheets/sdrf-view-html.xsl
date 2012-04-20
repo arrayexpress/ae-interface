@@ -94,7 +94,7 @@
     <xsl:template match="/">
         <html lang="en">
             <xsl:call-template name="page-header">
-                <xsl:with-param name="pTitle">SDRF | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
+                <xsl:with-param name="pTitle">Samples and Data | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_sdrf_view_20.css" type="text/css"/>
                     <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
@@ -124,7 +124,7 @@
                             </a>
                             <xsl:text> > </xsl:text>
                             <a href="{$basepath}/experiments/{fn:upper-case($accession)}/{$vPageName}">
-                                <xsl:text>Sample and Data Relationship View</xsl:text>
+                                <xsl:text>Samples and Data</xsl:text>
                             </a>
                             <xsl:if test="not($vFull)">
                                 <sup><a href="{$basepath}/experiments/{fn:upper-case($accession)}/{$vPageName}?full=true" title="Some columns were omitted from this view; please click here to get full SDRF view">*</a></sup>

@@ -155,7 +155,17 @@
                         <xsl:call-template name="exp-protocols-section">
                             <xsl:with-param name="pBasePath" select="$basepath"/>
                         </xsl:call-template>
-                        
+
+                        <xsl:if test="not($userid)"> <!-- curator logged in -->
+                            <xsl:call-template name="exp-experimental-factors-section">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="exp-sample-attributes-section">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                            </xsl:call-template>
+                        </xsl:if>
+
                         <xsl:call-template name="exp-files-section">
                             <xsl:with-param name="pBasePath" select="$basepath"/>
                             <xsl:with-param name="pFiles" select="$vFiles"/>
