@@ -167,7 +167,7 @@
                 <td class="value">
                     <div class="value">
                         <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html">
-                            <b><xsl:text>Show all samples and data files</xsl:text></b>
+                            <b><xsl:text>Show detailed information</xsl:text></b>
                             <br/>
                             <xsl:variable name="vPossibleMatches">
                                 <xsl:for-each select="experimentalfactor/name">
@@ -309,7 +309,7 @@
                 <td class="value">
                     <div class="value">
                         <a href="{$pBasePath}/protocols/browse.html?keywords=experiment%3A{accession}">
-                            <xsl:text>Experimental protocols</xsl:text>
+                            <xsl:text>Show all experimental protocols</xsl:text>
                         </a>
                     </div>
                 </td>
