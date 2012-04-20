@@ -121,54 +121,7 @@
                                 <xsl:text> identical</xsl:text>
                             </xsl:if>
                             </xsl:attribute>
-                        <xsl:if test="not($userid)"> <!-- curator logged in -->
-                            <xsl:choose>
-                                <xsl:when test="source/@id = 'ae1' and source/@migrated != 'true'">
-                                    <span>&#183;</span>
-                                    <span class="ae1">1</span>
-                                </xsl:when>
-                                <xsl:when test="source/@id = 'ae1' and source/@migrated = 'true'">
-                                    <span>
-                                        <xsl:choose>
-                                            <xsl:when test="false() and source/@identical = 'false'">
-                                                <a href="{$basepath}/experiments/diff/{$vAccession}/ae2">2</a>
-                                            </xsl:when>
-                                            <xsl:otherwise>2</xsl:otherwise>
-                                        </xsl:choose>
-                                    </span>
-                                    <span class="ae1">
-                                        <xsl:choose>
-                                            <xsl:when test="false() and source/@identical = 'false'">
-                                                <a href="{$basepath}/experiments/diff/{$vAccession}/ae1">1</a>
-                                            </xsl:when>
-                                            <xsl:otherwise>1</xsl:otherwise>
-                                        </xsl:choose>
-                                    </span>
-                                </xsl:when>
-                                <xsl:when test="source/@id = 'ae2' and source/@migrated = 'true'">
-                                    <span class="ae2">
-                                        <xsl:choose>
-                                            <xsl:when test="false() and source/@identical = 'false'">
-                                                <a href="{$basepath}/experiments/diff/{$vAccession}/ae2">2</a>
-                                            </xsl:when>
-                                            <xsl:otherwise>2</xsl:otherwise>
-                                        </xsl:choose>
-                                    </span>
-                                    <span>
-                                        <xsl:choose>
-                                            <xsl:when test="false() and source/@identical = 'false'">
-                                                <a href="{$basepath}/experiments/diff/{$vAccession}/ae1">1</a>
-                                            </xsl:when>
-                                            <xsl:otherwise>1</xsl:otherwise>
-                                        </xsl:choose>
-                                    </span>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <span class="ae2">2</span>
-                                    <span>&#183;</span>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:if>
+
                         <xsl:if test="not(user/@id = '1')">
                             <span class="lock">&#160;</span>
                         </xsl:if>
