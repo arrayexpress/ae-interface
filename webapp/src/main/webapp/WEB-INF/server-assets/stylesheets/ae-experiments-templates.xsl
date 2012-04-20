@@ -332,15 +332,19 @@
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                     <xsl:call-template name="exp-data-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-magetab-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-image-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-magetab-files-array">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                 </tbody>
