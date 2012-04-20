@@ -85,6 +85,11 @@
     <!-- arrays -->
     <rule>
         <from>^/arrays/?$</from>
+        <condition type="query-string" operator="greater"/>
+        <to type="redirect">%{context-path}/arrays/browse.html?%{query-string}</to>
+    </rule>
+    <rule>
+        <from>^/arrays/?$</from>
         <to type="redirect">%{context-path}/arrays/browse.html</to>
     </rule>
     <rule>
