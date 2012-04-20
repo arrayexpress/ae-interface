@@ -284,8 +284,9 @@
                     <div>
                         <a href="{$basepath}/files/{../@accession}">
                             <xsl:call-template name="highlight">
-                                <xsl:with-param name="pText" select="../@accession" />
-                                <xsl:with-param name="pFieldName" select="'accession'" />
+                                <xsl:with-param name="pQueryId" select="$queryid" />
+                                <xsl:with-param name="pText" select="../@accession"/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
                             </xsl:call-template>
                         </a>
                     </div>
@@ -294,6 +295,7 @@
                     <div>
                         <a href="{$basepath}/files/{../@accession}/{@name}">
                             <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$queryid" />
                                 <xsl:with-param name="pText" select="@name"/>
                                 <xsl:with-param name="pFieldName"/>
                             </xsl:call-template>

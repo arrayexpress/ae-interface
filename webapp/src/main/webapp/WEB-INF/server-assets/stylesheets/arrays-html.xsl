@@ -22,6 +22,7 @@
     
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
+    <xsl:param name="directsub"/>
     <xsl:param name="accession"/>
 
     <xsl:param name="userid"/>
@@ -45,7 +46,7 @@
             <xsl:call-template name="page-header">
                 <xsl:with-param name="pTitle">
                     <xsl:value-of select="if (not($vBrowseMode)) then concat(upper-case($accession), ' | ') else ''"/>
-                    <xsl:text>Platform Designs | ArrayExpress Archive | EBI</xsl:text>
+                    <xsl:text>Platforms | ArrayExpress Archive | EBI</xsl:text>
                 </xsl:with-param>
 
                 <xsl:with-param name="pExtraCode">
@@ -86,7 +87,7 @@
                     <xsl:text> > </xsl:text>
                     <a href="{$basepath}">ArrayExpress</a>
                     <xsl:text> > </xsl:text>
-                    <a href="{$basepath}/arrays">Platform Designs</a>
+                    <a href="{$basepath}/arrays?directsub=on">Platforms</a>
                     <xsl:if test="not($vBrowseMode)">
                         <xsl:text> > </xsl:text>
                         <a href="{$basepath}/arrays/{upper-case($accession)}">
@@ -98,8 +99,16 @@
                     <div id="ae_query_box">
                         <form id="ae_query_form" method="get" action="browse.html">
                             <fieldset id="ae_keywords_fset">
-                                <label for="ae_keywords_field">Platform design accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
+                                <label for="ae_keywords_field">Platform accessions, names, descriptions and providers [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
                                 <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
+                                <div id="ae_directsub_option">
+                                    <input id="ae_directsub_field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
+                                        <xsl:if test="$directsub = 'on'">
+                                            <xsl:attribute name="checked"/>
+                                        </xsl:if>
+                                    </input>
+                                    <label for="ae_directsub_field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
+                                </div>
                             </fieldset>
                             <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
                             <div id="ae_results_stats">
@@ -197,8 +206,9 @@
                     <div>
                         <a href="{$basepath}/arrays/{accession}">
                             <xsl:call-template name="highlight">
-                                <xsl:with-param name="pText" select="accession" />
-                                <xsl:with-param name="pFieldName" select="'accession'" />
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pText" select="accession"/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
                             </xsl:call-template>
                         </a>
                         <xsl:if test="not(user/@id = '1')">
@@ -209,6 +219,7 @@
                 <td class="col_name">
                     <div>
                         <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pText" select="name"/>
                             <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
@@ -218,6 +229,7 @@
                 <td class="col_species">
                     <div>
                         <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pText" select="string-join(species, ', ')"/>
                             <xsl:with-param name="pFieldName" select="'species'"/>
                         </xsl:call-template>
@@ -264,13 +276,6 @@
 
         <table border="0" cellpadding="0" cellspacing="0">
             <tbody>
-                <xsl:if test="not($userid)">
-                    <xsl:call-template name="detail-row">
-                        <xsl:with-param name="pName" select="'Source'"/>
-                        <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="@source"/>
-                    </xsl:call-template>
-                </xsl:if>
                 <xsl:call-template name="detail-row">
                     <xsl:with-param name="pName" select="'Description'"/>
                     <xsl:with-param name="pFieldName"/>

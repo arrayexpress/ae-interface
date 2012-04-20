@@ -205,8 +205,9 @@
                     <div>
                         <a href="{$basepath}/protocols/{id}">
                             <xsl:call-template name="highlight">
-                                <xsl:with-param name="pText" select="accession" />
-                                <xsl:with-param name="pFieldName" select="'accession'" />
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pText" select="accession"/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
                             </xsl:call-template>
                         </a>
                         <xsl:if test="not(user/@id = '1')">
@@ -217,6 +218,7 @@
                 <td class="col_name">
                     <div>
                         <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pText" select="name"/>
                             <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
@@ -226,6 +228,7 @@
                 <td class="col_type">
                     <div>
                         <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pText" select="type"/>
                             <xsl:with-param name="pFieldName" select="'species'"/>
                         </xsl:call-template>

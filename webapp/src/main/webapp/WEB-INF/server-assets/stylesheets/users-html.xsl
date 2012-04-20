@@ -37,6 +37,7 @@
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-sort-users.xsl"/>
+    <xsl:include href="ae-highlight.xsl"/>
 
     <xsl:template match="/">
         <html lang="en">
@@ -226,7 +227,11 @@
                 <td class="col_id">
                     <div>
                         <a href="{$basepath}/users/{id}">
-                            <xsl:value-of select="id"/>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pText" select="id"/>
+                                <xsl:with-param name="pFieldName" select="'id'"/>
+                            </xsl:call-template>
                         </a>
                     </div>
                 </td>
@@ -237,14 +242,20 @@
                 </td>
                 <td class="col_name">
                     <div>
-                        <xsl:value-of select="name"/>
-                        <xsl:if test="count(name) = 0">&#160;</xsl:if>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
+                            <xsl:with-param name="pText" select="name"/>
+                            <xsl:with-param name="pFieldName" select="'name'"/>
+                        </xsl:call-template>
                     </div>
                 </td>
                 <td class="col_email">
                     <div>
-                        <xsl:value-of select="email"/>
-                        <xsl:if test="count(email) = 0"><xsl:text>&#160;</xsl:text></xsl:if>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$queryid"/>
+                            <xsl:with-param name="pText" select="email"/>
+                            <xsl:with-param name="pFieldName" select="'email'"/>
+                        </xsl:call-template>
                     </div>
                 </td>
             </tr>
