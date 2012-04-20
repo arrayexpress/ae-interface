@@ -248,7 +248,6 @@ $(function() {
         query.keywords = getQueryStringParam("keywords");
         query.directsub = getQueryBooleanParam("directsub");
         query.private = ("" != user) ? getQueryBooleanParam("private") : undefined;
-        query.expandefo = getQueryBooleanParam("expandefo");
         query.species = getQueryStringParam("species");
         query.array = getQueryStringParam("array");
         query.exptype = getQueryArrayParam("exptype");

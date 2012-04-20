@@ -59,6 +59,7 @@ public class IndexEnvironment
         public String analyzer;
         public boolean shouldStore;
         public boolean shouldEscape;
+        public boolean shouldExpand;
 
         public FieldInfo( HierarchicalConfiguration fieldConfig )
         {
@@ -71,6 +72,7 @@ public class IndexEnvironment
                 this.analyzer = fieldConfig.getString("[@analyzer]");
                 this.shouldStore = fieldConfig.getBoolean("[@store]");
                 this.shouldEscape = fieldConfig.getBoolean("[@escape]");
+                this.shouldExpand = fieldConfig.getBoolean("[@expand]");
             }
         }
     }

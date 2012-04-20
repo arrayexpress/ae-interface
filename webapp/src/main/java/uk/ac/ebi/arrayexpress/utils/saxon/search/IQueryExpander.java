@@ -26,5 +26,5 @@ public interface IQueryExpander
     // returns special kind of query info that holds expansions etc
     public QueryInfo newQueryInfo();
     // does query expansion 
-    public Query expandQuery( QueryInfo info ) throws IOException;
+    public Query expandQuery( IndexEnvironment env, QueryInfo info ) throws IOException;
 }

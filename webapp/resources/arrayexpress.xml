@@ -153,17 +153,17 @@
         </index>
         <index id="experiments" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/experiments/experiment" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false" expand="true"/>
                 <field name="accession" title="by Accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" escape="false"/>
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false"/>
-                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
+                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/legacy_id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false"/>
                 <field name="protocol" title="by Protocol" type="string" path="protocol/id | protocol/accession" analyze="true" store="false" escape="false"/>
-                <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false"/>
-                <field name="expdesign" title="by Experiment Design" type="string" path="experimentdesign" analyze="true" store="false" escape="false"/>
-                <field name="ef" title="by Experimental Factor" type="string" path="experimentalfactor/name" analyze="true" store="false" escape="false"/>
-                <field name="efv" title="by Experimental Factor Value" type="string" path="experimentalfactor/value" analyze="true" store="false" escape="false"/>
-                <field name="sa" title="by Sample Attribute Value" type="string" path="sampleattribute/value" analyze="true" store="false" escape="true"/>
+                <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="expdesign" title="by Experiment Design" type="string" path="experimentdesign" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="ef" title="by Experimental Factor" type="string" path="experimentalfactor/name" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="efv" title="by Experimental Factor Value" type="string" path="experimentalfactor/value" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="sa" title="by Sample Attribute Value" type="string" path="sampleattribute/value" analyze="true" store="false" escape="true" expand="true"/>
                 <field name="pmid" title="by PubMed ID" type="string" path="bibliography/accession" analyze="false" store="false" escape="false"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
                 <!-- boolean fields -->
@@ -201,11 +201,11 @@
         </index>
         <index id="arrays" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/array_designs/array_design" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
-                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false"/>
-                <field name="provider" title="by Provider" type="string" path="provider" analyze="true" store="false" escape="false"/>
+                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="provider" title="by Provider" type="string" path="provider" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="@source" analyze="false" store="false" escape="false"/>
@@ -216,11 +216,11 @@
         </index>
         <index id="protocols" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/protocols/protocol" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false"/>
                 <field name="experiment" title="by Experiment Association" type="string" path="experiment" analyze="true" store="false" escape="false"/>
-                <field name="type" title="by Type" type="string" path="type" analyze="true" store="false" escape="false"/>
+                <field name="type" title="by Type" type="string" path="type" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>
             </document>

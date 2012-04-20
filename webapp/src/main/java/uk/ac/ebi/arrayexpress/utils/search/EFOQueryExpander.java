@@ -21,8 +21,8 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryExpander;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryInfo;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public final class EFOQueryExpander implements IQueryExpander
         return new EFOExpandableQueryInfo();
     }
 
-    public Query expandQuery( QueryInfo info ) throws IOException
+    public Query expandQuery( IndexEnvironment env, QueryInfo info ) throws IOException
     {
         EFOExpandableQueryInfo queryInfo = null;
 
@@ -55,17 +55,15 @@ public final class EFOQueryExpander implements IQueryExpander
          }
 
         if (null != queryInfo) {
-            String expandEfo = StringTools.arrayToString(info.getParams().get("expandefo"), "");
-            queryInfo.setExpandEfoFlag("on".equals(expandEfo) || "true".equals(expandEfo));
             queryInfo.setOriginalQuery(queryInfo.getQuery());
 
-            return expand(queryInfo, queryInfo.getQuery());
+            return expand(env, queryInfo, queryInfo.getQuery());
         } else {
             return info.getQuery();
         }
     }
 
-    private Query expand( EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
+    private Query expand( IndexEnvironment env, EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
     {
         Query result;
 
@@ -75,7 +73,7 @@ public final class EFOQueryExpander implements IQueryExpander
             BooleanClause[] clauses = ((BooleanQuery) query).getClauses();
             for (BooleanClause c : clauses) {
                 ((BooleanQuery) result).add(
-                        expand(queryInfo, c.getQuery())
+                        expand(env, queryInfo, c.getQuery())
                         , c.getOccur()
                 );
             }
@@ -85,17 +83,17 @@ public final class EFOQueryExpander implements IQueryExpander
             // for example, for prefix query will found multi-worded terms which, well, is wrong
             return query;
         } else {
-            result = doExpand(queryInfo, query);
+            result = doExpand(env, queryInfo, query);
         }
         return result;
     }
 
-    private Query doExpand( EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
+    private Query doExpand( IndexEnvironment env, EFOExpandableQueryInfo queryInfo, Query query ) throws IOException
     {
         String field = getQueryField(query);
-        if (null != field && -1 != " keywords sa efv exptype species ".indexOf(" " + field + " ")) {
+        if (null != field) {
 
-            boolean shouldExpandEfo = queryInfo.getExpandEfoFlag() || "exptype".equals(field);   // exptype always expands
+            boolean shouldExpandEfo = (env.fields.containsKey(field) && env.fields.get(field).shouldExpand);
 
             EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
             if ((shouldExpandEfo && (0 != expansionTerms.efo.size())) || 0 != expansionTerms.synonyms.size()) {
@@ -158,7 +156,7 @@ public final class EFOQueryExpander implements IQueryExpander
 
     public Query newQueryFromString( String text, String field )
     {
-        if (-1 != text.indexOf(" ")) {
+        if (text.contains(" ")) {
             String[] tokens = text.split("\\s+");
             PhraseQuery q = new PhraseQuery();
             for (String token : tokens) {

@@ -27,7 +27,6 @@ public class EFOExpandableQueryInfo extends QueryInfo
     private Query originalQuery;
     private BooleanQuery synonymPartQuery = new BooleanQuery();
     private BooleanQuery efoExpansionPartQuery = new BooleanQuery();
-    private boolean shouldExpandEfo;
 
     public Query getOriginalQuery()
     {
@@ -57,15 +56,5 @@ public class EFOExpandableQueryInfo extends QueryInfo
     public void addToEfoExpansionPartQuery( Query part )
     {
         efoExpansionPartQuery.add(part, BooleanClause.Occur.SHOULD);
-    }
-
-    public boolean getExpandEfoFlag()
-    {
-        return shouldExpandEfo;
-    }
-
-    public void setExpandEfoFlag( boolean shouldExpandEfo )
-    {
-        this.shouldExpandEfo = shouldExpandEfo;
     }
 }

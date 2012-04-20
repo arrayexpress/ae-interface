@@ -60,7 +60,7 @@ public class QueryPool
         info.setParams(queryParams);
         info.setQuery(queryConstructor.construct(env, queryParams));
         if (null != queryExpander) {
-            info.setQuery(queryExpander.expandQuery(info));
+            info.setQuery(queryExpander.expandQuery(env, info));
         }
         this.queries.put(this.queryId.addAndGet(1), info);
 
