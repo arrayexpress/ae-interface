@@ -408,28 +408,33 @@
                 <td class="value">
                     <div class="value">
                         <xsl:for-each select="$vDates">
-                            <xsl:sort select="translate(text(),'-','')" data-type="number"/>
+                            <xsl:sort select="fn:translate(text(),'-','')" data-type="number"/>
                             <xsl:variable name="vLabel">
+                                <xsl:if test="ae:isFutureDate(text())">will be </xsl:if>
                                 <xsl:choose>
-                                    <xsl:when test="name() = 'submissiondate'">Submitted</xsl:when>
-                                    <xsl:when test="name() = 'lastupdatedate'">Last updated</xsl:when>
-                                    <xsl:otherwise>Released</xsl:otherwise>
+                                    <xsl:when test="fn:name() = 'submissiondate'">submitted</xsl:when>
+                                    <xsl:when test="fn:name() = 'lastupdatedate'">
+                                        <xsl:if test="not(ae:isFutureDate(text()))">last </xsl:if>
+                                        <xsl:text>updated</xsl:text>
+                                    </xsl:when>
+                                    <xsl:otherwise>released</xsl:otherwise>
                                 </xsl:choose>
                             </xsl:variable>
                             <xsl:choose>
-                                <xsl:when test="position() = 1">
-                                    <xsl:value-of select="$vLabel"/>
+                                <xsl:when test="fn:position() = 1">
+                                    <xsl:value-of select="fn:upper-case(fn:substring($vLabel, 1, 1))"/>
+                                    <xsl:value-of select="fn:substring($vLabel, 2)"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:text>, </xsl:text>
-                                    <xsl:value-of select="lower-case($vLabel)"/>
+                                    <xsl:value-of select="$vLabel"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                             <xsl:text> </xsl:text>
                             <xsl:variable name="vDate" select="ae:formatDate(text())"/>
                             <xsl:choose>
-                                <xsl:when test="matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
-                                <xsl:otherwise><xsl:value-of select="lower-case($vDate)"/></xsl:otherwise>
+                                <xsl:when test="fn:matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
+                                <xsl:otherwise><xsl:value-of select="fn:lower-case($vDate)"/></xsl:otherwise>
                             </xsl:choose>
                         </xsl:for-each>
                     </div>

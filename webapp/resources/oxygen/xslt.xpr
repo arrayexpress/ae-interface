@@ -10,13 +10,24 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String>test-compate-experiments</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String>ae-saxon-extensions</String>
                                 </field>
                                 <field name="type">
                                     <String>XML</String>
                                 </field>
                                 <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl</String>
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -38,7 +49,7 @@
                                     <String>XML</String>
                                 </field>
                                 <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl</String>
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -274,17 +285,6 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String>test-compate-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
                                     <String>browse-experiments-html</String>
                                 </field>
                                 <field name="type">
@@ -447,7 +447,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>sample-files-not-processed</String>
+                                    <String>Execute SQL</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -456,19 +456,19 @@
                                     <String></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <String>pdf</String>
+                                    <null/>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String>Apache FOP</String>
+                                    <null/>
                                 </field>
                                 <field name="headerURL">
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
+                                    <String>${currentFileURL}</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String></String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -477,7 +477,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String>XSL</String>
+                                    <String>SQL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean>true</Boolean>
@@ -492,7 +492,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <null/>
+                                    <String></String>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>false</Boolean>
@@ -501,7 +501,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean>true</Boolean>
+                                    <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean>false</Boolean>
@@ -519,7 +519,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String>Saxon-HE</String>
+                                    <String>JDBC</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
@@ -3022,7 +3022,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>Execute SQL</String>
+                                    <String>sample-files-not-processed</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -3031,19 +3031,19 @@
                                     <String></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <null/>
+                                    <String>pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <null/>
+                                    <String>Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String>${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String></String>
+                                    <String>${currentFileURL}</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -3052,7 +3052,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String>SQL</String>
+                                    <String>XSL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean>true</Boolean>
@@ -3067,7 +3067,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <String></String>
+                                    <null/>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>false</Boolean>
@@ -3076,7 +3076,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean>false</Boolean>
+                                    <Boolean>true</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean>false</Boolean>
@@ -3094,7 +3094,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String>JDBC</String>
+                                    <String>Saxon-HE</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
@@ -3126,6 +3126,7 @@
         <folder name="stylesheets">
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-date-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl"/>
@@ -3167,6 +3168,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/protocols-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-arrays-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-events-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"/>
