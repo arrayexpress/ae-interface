@@ -195,7 +195,21 @@
                 <td colspan="9" class="td_ext">
                     <div class="tbl">
                         <table cellpadding="0" cellspacing="0" border="0">
-                            
+
+                            <xsl:call-template name="exp-samples-section">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pBasePath" select="$basepath"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="exp-platforms-section">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pBasePath" select="$basepath"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="exp-protocols-section">
+                                <xsl:with-param name="pBasePath" select="$basepath"/>
+                            </xsl:call-template>
+
                             <xsl:call-template name="exp-description-section">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                             </xsl:call-template>
@@ -217,20 +231,6 @@
                             </xsl:call-template>
                             
                             <xsl:call-template name="exp-miame-section">
-                                <xsl:with-param name="pBasePath" select="$basepath"/>
-                            </xsl:call-template>
-
-                            <xsl:call-template name="exp-platforms-section">
-                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                <xsl:with-param name="pBasePath" select="$basepath"/>
-                            </xsl:call-template>
-
-                            <xsl:call-template name="exp-samples-section">
-                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                <xsl:with-param name="pBasePath" select="$basepath"/>
-                            </xsl:call-template>
-                            
-                            <xsl:call-template name="exp-protocols-section">
                                 <xsl:with-param name="pBasePath" select="$basepath"/>
                             </xsl:call-template>
 
