@@ -409,6 +409,8 @@
                     <div class="value">
                         <xsl:for-each select="$vDates">
                             <xsl:sort select="fn:translate(text(),'-','')" data-type="number"/>
+                            <xsl:sort select="fn:translate(fn:substring(fn:name(), 1, 1), 'slr', 'abc')"/>
+
                             <xsl:variable name="vLabel">
                                 <xsl:if test="ae:isFutureDate(text())">will be </xsl:if>
                                 <xsl:choose>
