@@ -18,7 +18,6 @@
                 <xsl:if test="fn:count(current-group()/ancestor::node()) &gt;= 250">
                     <option>
                         <xsl:attribute name="value" select="fn:current-grouping-key()"/>
-                        <xsl:attribute name="counter" select="fn:count(current-group()/ancestor::node())"/>
                         <xsl:value-of select="fn:current-grouping-key()"/>
                     </option>
                 </xsl:if>

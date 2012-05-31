@@ -20,7 +20,6 @@
                         <xsl:if test="fn:count(current-group()/ancestor::node()) &gt;= 150">
                             <option>
                                 <xsl:attribute name="value" select="accession"/>
-                                <xsl:attribute name="counter" select="fn:count(current-group()/ancestor::node())"/>
                                 <xsl:value-of select="name"/>
                             </option>
                         </xsl:if>
