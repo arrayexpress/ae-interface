@@ -26,7 +26,7 @@
                     </xsl:for-each-group>
                 </xsl:variable>
                 <xsl:for-each select="$vTopArrays/option">
-                    <!-- <xsl:sort select="lower-case(text())"/> -->
+                    <xsl:sort select="lower-case(text())"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </xsl:with-param>
