@@ -43,7 +43,6 @@
     <modules>
         <module>ae-interface-auth</module>
         <module>ae-saxon-exts</module>
-        <module>efo-query-expand</module>
     </modules>
 </project>
 

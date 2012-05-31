@@ -110,6 +110,17 @@
         </arraydesign>
     </xsl:template>
 
+    <xsl:template match="species" mode="copy">
+        <xsl:choose>
+            <xsl:when test="fn:matches(., '^\s*$')">
+                <xsl:message>[WARN] Empty species element found for experiment [<xsl:value-of select="./ancestor::node()/accession"/>]</xsl:message>
+            </xsl:when>
+            <xsl:otherwise>
+                <species><xsl:value-of select="."/></species>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
 
     <xsl:template match="submissiondate | lastupdatedate | releasedate" mode="copy">
         <xsl:choose>

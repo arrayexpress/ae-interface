@@ -207,7 +207,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
-            buildSpeciesArrays();
             updateIndex();
             updateAccelerators();
         } else {
@@ -264,6 +263,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             );
             if (null != updateDoc) {
                 new DocumentUpdater(this, updateDoc).update();
+                buildSpeciesArrays();
                 success = true;
             }
         } finally {

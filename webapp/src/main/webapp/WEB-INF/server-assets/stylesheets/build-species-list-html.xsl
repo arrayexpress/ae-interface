@@ -12,11 +12,29 @@
 
     <xsl:template match="/experiments">
         <option value="">All species</option>
-        <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(text())" collation="http://saxon.sf.net/collation?ignore-case=yes">
-            <xsl:sort select="ae:normalize-species(text())"/>
+        <xsl:variable name="vTopSpecies">
+            <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
+                <xsl:sort select="fn:count(current-group()/ancestor::node())" data-type="number" order="descending"/>
+                <xsl:if test="fn:count(current-group()/ancestor::node()) &gt;= 250">
+                    <option>
+                        <xsl:attribute name="value" select="fn:current-grouping-key()"/>
+                        <xsl:attribute name="counter" select="fn:count(current-group()/ancestor::node())"/>
+                        <xsl:value-of select="fn:current-grouping-key()"/>
+                    </option>
+                </xsl:if>
+            </xsl:for-each-group>
+        </xsl:variable>
+        <option disabled="true" value="-">&#x2500;&#x2500; Top species &#x2500;&#x2500;</option>
+        <xsl:for-each select="$vTopSpecies/option">
+            <xsl:sort select="@value"/>
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
+        <option disabled="true" value="-">&#x2500;&#x2500;  Species (A&#x2192;Z) &#x2500;&#x2500;</option>
+        <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
+            <xsl:sort select="fn:current-grouping-key()"/>
             <option>
-                <xsl:attribute name="value" select="ae:normalize-species(text())"/>
-                <xsl:value-of select="ae:normalize-species(text())"/>
+                <xsl:attribute name="value" select="fn:current-grouping-key()"/>
+                <xsl:value-of select="fn:current-grouping-key()"/>
             </option>
         </xsl:for-each-group>
     </xsl:template>
@@ -24,6 +42,16 @@
     <xsl:function name="ae:normalize-species">
         <xsl:param name="pSpecies"/>
         <xsl:choose>
+            <xsl:when test="fn:matches($pSpecies, '^\s*$')">
+                <xsl:text>Unknown</xsl:text>
+            </xsl:when>
+            <xsl:when test="fn:matches($pSpecies, '^\w+$')">
+                <xsl:value-of select="
+                    fn:concat(
+                    fn:upper-case(fn:substring($pSpecies, 1, 1))
+                    , fn:lower-case(fn:substring($pSpecies, 2))
+                    )"/>
+            </xsl:when>
             <xsl:when test="fn:matches($pSpecies, '\s[xX]\s')">
                 <xsl:value-of select="$pSpecies"/>
             </xsl:when>
