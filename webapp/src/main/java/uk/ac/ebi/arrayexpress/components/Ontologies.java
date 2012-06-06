@@ -65,7 +65,7 @@ public class Ontologies extends ApplicationComponent
             EFONode node = efo.getMap().get(baseNode);
             if (null != node) {
                 for (EFONode subclass : node.getChildren()) {
-                    addOption(subclass.getTerm().toLowerCase(), subclass.getTerm());
+                    addOption("\"" + subclass.getTerm().toLowerCase() + "\"", subclass.getTerm());
                 }
             }
         }
