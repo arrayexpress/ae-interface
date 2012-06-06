@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.HTMLOptions;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.SynonymsFileReader;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
@@ -41,6 +42,35 @@ import java.util.Set;
 
 public class Ontologies extends ApplicationComponent
 {
+    private class EFOSubclassesOptions extends HTMLOptions
+    {
+        private String defaultOption;
+
+        public EFOSubclassesOptions( String defaultOption )
+        {
+            this.defaultOption = defaultOption;
+            initialize();
+            initialize();
+        }
+
+        private void initialize()
+        {
+            clearOptions();
+            addOption("", defaultOption);
+        }
+
+        public void reload( IEFO efo, String baseNode )
+        {
+            initialize();
+            EFONode node = efo.getMap().get(baseNode);
+            if (null != node) {
+                for (EFONode subclass : node.getChildren()) {
+                    addOption(subclass.getTerm().toLowerCase(), subclass.getTerm());
+                }
+            }
+        }
+    }
+
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -49,6 +79,9 @@ public class Ontologies extends ApplicationComponent
 
     private SearchEngine search;
     private Autocompletion autocompletion;
+
+    private EFOSubclassesOptions assayByMolecule;
+    private EFOSubclassesOptions assayByInstrument;
 
     public Ontologies()
     {
@@ -60,6 +93,9 @@ public class Ontologies extends ApplicationComponent
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
         initLookupIndex();
         ((JobsController) getComponent("JobsController")).scheduleJobAtStart("reload-efo");
+
+        this.assayByMolecule = new EFOSubclassesOptions("All assays by molecule");
+        this.assayByInstrument = new EFOSubclassesOptions("All technologies");
     }
 
     public void terminate() throws Exception
@@ -80,11 +116,24 @@ public class Ontologies extends ApplicationComponent
             this.autocompletion.setEfo(getEfo());
             this.autocompletion.rebuild();
         }
+
+        this.assayByMolecule.reload(getEfo(), "http://www.ebi.ac.uk/efo/EFO_0002772");
+        this.assayByInstrument.reload(getEfo(), "http://www.ebi.ac.uk/efo/EFO_0002773");
     }
 
     public IEFO getEfo()
     {
         return this.efo;
+    }
+
+    public String getAssayByMoleculeOptions()
+    {
+        return this.assayByMolecule.getHtml();
+    }
+
+    public String getAssayByInstrumentOptions()
+    {
+        return this.assayByInstrument.getHtml();
     }
 
     private void loadCustomSynonyms() throws IOException

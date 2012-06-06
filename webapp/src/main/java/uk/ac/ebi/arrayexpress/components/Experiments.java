@@ -41,7 +41,10 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Experiments extends ApplicationComponent implements IDocumentSource
 {
@@ -54,8 +57,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     private FilePersistence<PersistableStringList> experimentsInAtlas;
     private FilePersistence<PersistableString> species;
     private FilePersistence<PersistableString> arrays;
-    private Map<String, String> assaysByMolecule;
-    private Map<String, String> assaysByInstrument;
 
     private SaxonEngine saxon;
     private SearchEngine search;
@@ -168,19 +169,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 , new File(getPreferences().getString("ae.arrays.dropdown-html-location"))
         );
 
-        this.assaysByMolecule = new HashMap<String, String>();
-        this.assaysByMolecule.put("", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;metabolomic profiling&quot;\">Metabolite assay</option><option value=\"&quot;protein assay&quot;\">Protein assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
-        this.assaysByMolecule.put("array assay", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
-        this.assaysByMolecule.put("high throughput sequencing assay", "<option value=\"\">All assays by molecule</option><option value=\"&quot;DNA assay&quot;\">DNA assay</option><option value=\"&quot;RNA assay&quot;\">RNA assay</option>");
-        this.assaysByMolecule.put("proteomic profiling by mass spectrometer", "<option value=\"&quot;protein assay&quot;\">Protein assay</option>");
-
-        this.assaysByInstrument = new HashMap<String, String>();
-        this.assaysByInstrument.put("", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option><option value=\"&quot;proteomic profiling by mass spectrometer&quot;\">Mass spectrometer</option>");
-        this.assaysByInstrument.put("DNA assay", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option>");
-        this.assaysByInstrument.put("metabolomic profiling", "<option value=\"\">All technologies</option>");
-        this.assaysByInstrument.put("protein assay", "<option value=\"\">All technologies</option><option value=\"&quot;proteomic profiling by mass spectrometer&quot;\">Mass spectrometer</option>");
-        this.assaysByInstrument.put("RNA assay", "<option value=\"\">All technologies</option><option value=\"&quot;array assay&quot;\">Array</option><option value=\"&quot;high throughput sequencing assay&quot;\">High-throughput sequencing</option>");
-
         updateIndex();
         updateAccelerators();
         this.saxon.registerDocumentSource(this);
@@ -240,16 +228,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     public String getArrays() throws Exception
     {
         return this.arrays.getObject().get();
-    }
-
-    public String getAssaysByMolecule( String key )
-    {
-        return this.assaysByMolecule.get(key);
-    }
-
-    public String getAssaysByInstrument( String key )
-    {
-        return this.assaysByInstrument.get(key);
     }
 
     public void update( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception

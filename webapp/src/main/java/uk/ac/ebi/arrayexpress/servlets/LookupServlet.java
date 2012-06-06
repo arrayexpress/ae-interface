@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Autocompletion;
 import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
 import javax.servlet.ServletException;
@@ -80,14 +81,15 @@ public class LookupServlet extends ApplicationServlet
         try {
             Experiments experiments = (Experiments)getComponent("Experiments");
             Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
+            Ontologies ontologies = (Ontologies)getComponent("Ontologies");
             if (type.equals("arrays")) {
                 out.print(experiments.getArrays());
             } else if (type.equals("species")) {
                 out.print(experiments.getSpecies());
             } else if (type.equals("expdesign")) {
-                out.print(experiments.getAssaysByMolecule(query));
+                out.print(ontologies.getAssayByMoleculeOptions());
             } else if (type.equals("exptech")) {
-                out.print(experiments.getAssaysByInstrument(query));
+                out.print(ontologies.getAssayByInstrumentOptions());
             } else if (type.equals("keywords")) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(autocompletion.getKeywords(query, field, limit));
