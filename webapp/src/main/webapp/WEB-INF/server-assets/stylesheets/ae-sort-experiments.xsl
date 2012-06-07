@@ -28,7 +28,7 @@
             </xsl:when>
             <xsl:when test="$pSortBy='name'">
                 <xsl:apply-templates select="$pExperiments">
-                    <xsl:sort select="lower-case(name)" order="{$pSortOrder}"/>
+                    <xsl:sort select="lower-case(name[1])" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
                     <!-- sort by experiment 4-letter code -->
