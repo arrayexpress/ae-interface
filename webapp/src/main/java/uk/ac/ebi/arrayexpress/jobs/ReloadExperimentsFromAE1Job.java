@@ -24,8 +24,11 @@ import org.quartz.JobListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.*;
+import uk.ac.ebi.arrayexpress.components.ArrayDesigns;
+import uk.ac.ebi.arrayexpress.components.DbConnectionPool;
+import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
+import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.db.ArrayXmlDatabaseRetriever;
 import uk.ac.ebi.arrayexpress.utils.db.ExperimentListDatabaseRetriever;
@@ -54,9 +57,6 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
         String usersXml = null;
         String arrayDesignsXml = null;
         String experimentsXml = null;
-
-        // kicks reload of atlas experiments just in case
-        ((JobsController) getComponent("JobsController")).executeJob("reload-atlas-info");
 
         try {
             // check preferences and if source location is defined, use that
@@ -221,7 +221,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     .append("<experiments total=\"").append(exps.size()).append("\">")
                     ;
 
-            ((JobsController) getComponent("JobsController")).addJobListener(this);
+            getController().addJobListener(this);
 
             if (exps.size() > 0) {
                 if (exps.size() <= numThreadsForRetrieval) {
@@ -230,7 +230,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 // split list into several pieces
                 expsPerThread = (int) Math.ceil(((double) exps.size()) / ((double) numThreadsForRetrieval));
                 for (int i = 0; i < numThreadsForRetrieval; ++i) {
-                    ((JobsController) getComponent("JobsController")).executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
+                    getController().executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
                     Thread.sleep(1);
                 }
 
@@ -238,7 +238,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                     Thread.sleep(1000);
                 }
 
-                ((JobsController) getComponent("JobsController")).removeJobListener(this);
+                getController().removeJobListener(this);
                 xmlBuffer.append("</experiments>");
 
                 experimentsXml = xmlBuffer.toString();

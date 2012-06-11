@@ -39,6 +39,10 @@
         <interface.application.link.links_xml.url>/microarray-srv/ae/ae-main-links.xml</interface.application.link.links_xml.url>
 
         <interface.application.pref.reports.recipients>ae-mgmt@ebi.ac.uk</interface.application.pref.reports.recipients>
+
+        <interface.application.pref.atlasexperiments.reload.schedule>0 0 1 * * ?</interface.application.pref.atlasexperiments.reload.schedule>
+        <interface.application.pref.atlasexperiments.reload.retry>60</interface.application.pref.atlasexperiments.reload.retry>
+
         <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
         <interface.application.pref.experiments.ae1.connections/>
         <interface.application.pref.experiments.ae1.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>

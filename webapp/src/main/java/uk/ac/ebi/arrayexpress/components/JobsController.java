@@ -59,6 +59,7 @@ public class JobsController extends ApplicationComponent
         scheduleJob("check-files", "ae.files.check");
         scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
         scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
+        scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
         scheduleJob("update-efo", "ae.efo.update");
 
         startScheduler();
@@ -103,6 +104,19 @@ public class JobsController extends ApplicationComponent
                 .startNow()
                 .build();
         getScheduler().scheduleJob(atStartTrigger);
+    }
+
+    public void scheduleIntervalJob( String name, Integer interval ) throws SchedulerException
+    {
+        Trigger intervalTrigger = newTrigger()
+                .withIdentity(name + "_interval_trigger", AE_JOBS_GROUP)
+                .forJob(name, AE_JOBS_GROUP)
+                .withSchedule(simpleSchedule()
+                        .withIntervalInMinutes(interval)
+                        .repeatForever())
+                .startNow()
+                .build();
+        getScheduler().scheduleJob(intervalTrigger);
     }
 
     private void startScheduler() throws SchedulerException
@@ -153,19 +167,6 @@ public class JobsController extends ApplicationComponent
         if ((null != atStart && atStart) && !hasScheduledInterval) {
             scheduleJobAtStart(name);
         }
-    }
-
-    private void scheduleIntervalJob( String name, Integer interval ) throws SchedulerException
-    {
-        Trigger intervalTrigger = newTrigger()
-                .withIdentity(name + "_interval_trigger", AE_JOBS_GROUP)
-                .forJob(name, AE_JOBS_GROUP)
-                .withSchedule(simpleSchedule()
-                        .withIntervalInMinutes(interval)
-                        .repeatForever())
-                .startNow()
-                .build();
-        getScheduler().scheduleJob(intervalTrigger);
     }
 
     private void terminateJobs() throws SchedulerException

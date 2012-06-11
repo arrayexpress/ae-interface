@@ -21,7 +21,6 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
@@ -62,7 +61,7 @@ public class UpdateOntologyJob extends ApplicationJob
                             + "Application [${variable.appname}]" + StringTools.EOL
                             + "Host [${variable.hostname}]" + StringTools.EOL
                 );
-                ((JobsController) getComponent("JobsController")).executeJob("reload-efo");
+                getController().executeJob("reload-efo");
             } finally {
                 if ( null != is ) {
                     is.close();

@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.app;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.components.JobsController;
 
 @DisallowConcurrentExecution
 abstract public class ApplicationJob implements InterruptableJob
@@ -60,10 +61,10 @@ abstract public class ApplicationJob implements InterruptableJob
             this.logger.debug("Job [{}] was interrupted", getMyName());
         } catch ( RuntimeException x ) {
             this.logger.error("[SEVERE] Runtime exception while executing job [" + getMyName() + "]:", x);
-            Application.getInstance().sendExceptionReport("[SEVERE] Runtime exception while executing job [" + getMyName() + "]", x);
+            getApplication().sendExceptionReport("[SEVERE] Runtime exception while executing job [" + getMyName() + "]", x);
         } catch ( Error x ) {
             this.logger.error("[SEVERE] Runtime error while executing job [" + getMyName() + "]:", x);
-            Application.getInstance().sendExceptionReport("[SEVERE] Runtime error while executing job [" + getMyName() + "]", x);
+            getApplication().sendExceptionReport("[SEVERE] Runtime error while executing job [" + getMyName() + "]", x);
         } catch ( Exception x ) {
             this.logger.error("Exception while executing job [" + getMyName() + "]:", x);
             throw new JobExecutionException(x);
@@ -89,6 +90,11 @@ abstract public class ApplicationJob implements InterruptableJob
     protected ApplicationPreferences getPreferences()
     {
         return getApplication().getPreferences();
+    }
+
+    protected JobsController getController()
+    {
+        return (JobsController)getComponent("JobsController");
     }
 
     protected ApplicationComponent getComponent(String name)

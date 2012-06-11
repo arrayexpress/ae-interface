@@ -94,8 +94,9 @@
             <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</persistence-location>
             <reload>
-                <atstart>false</atstart>
-                <schedule>${interface.application.pref.experiments.reload.schedule}</schedule>
+                <atstart>true</atstart>
+                <schedule>${interface.application.pref.atlasexperiments.reload.schedule}</schedule>
+                <retry>${interface.application.pref.atlasexperiments.reload.retry}</retry>
             </reload>
         </atlasexperiments>
 
