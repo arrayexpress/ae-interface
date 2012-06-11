@@ -58,11 +58,14 @@ public class ControlServlet extends ApplicationServlet
         }
 
         try {
-            if ("reload-atlas-info".equals(command)
+            if (
+                    "reload-atlas-info".equals(command)
                     || "reload-ae2-xml".equals(command)
                     || "reload-efo".equals(command)
                     || "update-efo".equals(command)
-                    || "check-files".equals(command)) {
+                    || "check-files".equals(command)
+                    || "reload-atlas-info".equals(command)
+                    ) {
                 ((JobsController) getComponent("JobsController")).executeJob(command);
             } else if (command.equals("reload-ae1-xml")) {
                 ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "connections", params);

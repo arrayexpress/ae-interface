@@ -382,6 +382,10 @@
         <to type="forward">/servlets/control/update-efo</to>
     </rule>
     <rule>
+        <from>^/reload-atlas-info</from>
+        <to type="forward">/servlets/control/reload-atlas-info</to>
+    </rule>
+    <rule>
         <from>^/reload-ae1-xml</from>
         <to type="forward">/servlets/control/reload-ae1-xml</to>
     </rule>
