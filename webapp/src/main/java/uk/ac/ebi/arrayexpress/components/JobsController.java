@@ -25,6 +25,7 @@ import uk.ac.ebi.arrayexpress.jobs.*;
 import java.text.ParseException;
 import java.util.List;
 
+import static org.quartz.DateBuilder.futureDate;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -96,12 +97,22 @@ public class JobsController extends ApplicationComponent
         }
     }
 
-    public void scheduleJobAtStart( String name ) throws SchedulerException
+    public void scheduleJobNow( String name ) throws SchedulerException
+    {
+        Trigger nowTrigger = newTrigger()
+                .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
+                .forJob(name, AE_JOBS_GROUP)
+                .startNow()
+                .build();
+        getScheduler().scheduleJob(nowTrigger);
+    }
+
+    public void scheduleJobInFuture( String name, Integer intervalInMinutes ) throws SchedulerException
     {
         Trigger atStartTrigger = newTrigger()
                 .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
                 .forJob(name, AE_JOBS_GROUP)
-                .startNow()
+                .startAt(futureDate(intervalInMinutes, DateBuilder.IntervalUnit.MINUTE))
                 .build();
         getScheduler().scheduleJob(atStartTrigger);
     }
@@ -111,11 +122,14 @@ public class JobsController extends ApplicationComponent
         Trigger intervalTrigger = newTrigger()
                 .withIdentity(name + "_interval_trigger", AE_JOBS_GROUP)
                 .forJob(name, AE_JOBS_GROUP)
-                .withSchedule(simpleSchedule()
-                        .withIntervalInMinutes(interval)
-                        .repeatForever())
+                .withSchedule(
+                        simpleSchedule()
+                                .withIntervalInMinutes(interval)
+                                .repeatForever()
+                )
                 .startNow()
                 .build();
+
         getScheduler().scheduleJob(intervalTrigger);
     }
 
@@ -165,7 +179,7 @@ public class JobsController extends ApplicationComponent
         }
 
         if ((null != atStart && atStart) && !hasScheduledInterval) {
-            scheduleJobAtStart(name);
+            scheduleJobNow(name);
         }
     }
 

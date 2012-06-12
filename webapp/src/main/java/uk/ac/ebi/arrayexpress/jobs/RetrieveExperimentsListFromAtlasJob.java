@@ -40,7 +40,7 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
                 ((Experiments) app.getComponent("Experiments")).reloadExperimentsInAtlas(srcLocation);
             } catch (Exception x) {
                 // update didn't happen - reschedule
-                getController().scheduleIntervalJob(
+                getController().scheduleJobInFuture(
                         jec.getJobDetail().getKey().getName()
                         , app.getPreferences().getInteger("ae.atlasexperiments.reload.retry")
                 );

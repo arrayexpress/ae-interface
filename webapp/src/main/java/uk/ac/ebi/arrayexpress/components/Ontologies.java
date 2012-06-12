@@ -92,7 +92,7 @@ public class Ontologies extends ApplicationComponent
         this.search = (SearchEngine) getComponent("SearchEngine");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
         initLookupIndex();
-        ((JobsController) getComponent("JobsController")).scheduleJobAtStart("reload-efo");
+        ((JobsController) getComponent("JobsController")).scheduleJobNow("reload-efo");
 
         this.assayByMolecule = new EFOSubclassesOptions("All assays by molecule");
         this.assayByInstrument = new EFOSubclassesOptions("All technologies");
