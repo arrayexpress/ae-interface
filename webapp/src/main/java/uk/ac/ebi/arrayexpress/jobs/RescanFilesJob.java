@@ -76,7 +76,7 @@ public class RescanFilesJob extends ApplicationJob
                     )
             );
 
-            source.setXMLReader(new FlatFileXMLReader(' ', '\00'));
+            source.setXMLReader(new FlatFileXMLReader(' ', '\"'));
             
             Map<String, String[]> transformParams = new HashMap<String, String[]>();
             transformParams.put("rootFolder", new String[] { rootFolder });
