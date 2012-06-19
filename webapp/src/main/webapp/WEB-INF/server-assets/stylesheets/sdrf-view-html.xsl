@@ -14,6 +14,7 @@
     <xsl:param name="filename"/>
     <xsl:param name="grouping"/>
     <xsl:param name="full"/>
+    <xsl:param name="debug"/>
 
     <xsl:variable name="vGrouping" as="xs:boolean" select="not(not($grouping))"/>
     <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
@@ -93,19 +94,29 @@
     
     <xsl:template match="/">
         <html lang="en">
-            <xsl:call-template name="page-header">
-                <xsl:with-param name="pTitle">Samples and Data | <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI</xsl:with-param>
-                <xsl:with-param name="pExtraCode">
-                    <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_sdrf_view_20.css" type="text/css"/>
-                    <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
-                    <script src="{$basepath}/assets/scripts/ae_sdrf_view_20.js" type="text/javascript"/>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:call-template name="page-body"/>
+            <xsl:choose>
+                <xsl:when test="not(not($debug))">
+                    <xsl:apply-templates select="/table"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="page-header">
+                        <xsl:with-param name="pTitle">Samples and Data |
+                            <xsl:value-of select="$vAccession"/> | Experiments | ArrayExpress Archive | EBI
+                        </xsl:with-param>
+                        <xsl:with-param name="pExtraCode">
+                            <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_sdrf_view_20.css" type="text/css"/>
+                            <script src="{$basepath}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
+                            <script src="{$basepath}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
+                            <script src="{$basepath}/assets/scripts/ae_common_20.js" type="text/javascript"/>
+                            <script src="{$basepath}/assets/scripts/ae_sdrf_view_20.js" type="text/javascript"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                    <xsl:call-template name="page-body"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </html>
- </xsl:template>
+
+</xsl:template>
     
     <xsl:template name="ae-contents">
         <xsl:choose>
@@ -194,7 +205,7 @@
                         <xsl:variable name="vNextCols" select="following-sibling::*"/>
                         <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
                         <xsl:variable name="vNextGroupCol" select="$vNextCols[@type != $vColType][1]"/>
-                        <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($vTableInfo/header/col))"/>
+                        <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($vTableInfo/header/col) + 1)"/>
                         <xsl:if test="not($vPrevColType = $vColType)">
                             <th>
                                 <xsl:attribute name="class">
