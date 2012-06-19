@@ -67,7 +67,8 @@
     vertical-align: middle;
 }
 
-#ae_results_table th.col_1 {
+#ae_results_table th.col_1
+, #ae_results_table th.col_links {
     background-color: #f5f5f5;
 }
 
@@ -89,8 +90,13 @@
 
 #ae_results_table th.col_sc
 , #ae_results_table th.col_fv
+, #ae_results_table th.col_links
 , #ae_results_table th.col_uni {
     border-top: 1px solid #bdd7d7;
+}
+
+#ae_results_table th.col_links {
+    text-align: center;
 }
 
 #ae_results_table td {

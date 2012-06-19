@@ -270,6 +270,8 @@
                         </xsl:attribute>
                         <xsl:choose>
                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
+                            <xsl:when test="fn:starts-with(fn:lower-case($vColInfo/@name),'derived array data')">Processed</xsl:when>
+                            <xsl:when test="fn:starts-with(fn:lower-case($vColInfo/@name),'array data')">Raw</xsl:when>
                             <xsl:otherwise><xsl:value-of select="$vColInfo/@name"/></xsl:otherwise>
                         </xsl:choose>
                         <xsl:call-template name="add-sort">
@@ -305,21 +307,36 @@
                             </xsl:if>
                             <xsl:choose>
                                 <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                    <xsl:attribute name="style" select="'padding:2px 5px 0 5px;text-align:center'"/>
                                     <xsl:choose>
                                         <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
-                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
+                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name),'derived')) then 'fgem' else 'raw'"/>
                                             <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
                                             <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                             <xsl:choose>
                                                 <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
-                                                    <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}">
-                                                        <xsl:value-of select="$vColText"/>
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                        <xsl:choose>
+                                                            <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
+                                                                <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16"/>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
                                                     </a>
                                                 </xsl:when>
                                                 <xsl:when test="($vColText) and count($vAvailArchives) = 1">
-                                                    <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}">
-                                                        <xsl:value-of select="$vColText"/>
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                        <xsl:choose>
+                                                            <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
+                                                                <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16"/>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
                                                     </a>
                                                 </xsl:when>
                                                 <xsl:otherwise>
@@ -333,15 +350,14 @@
                                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
                                             <xsl:variable name="vAvailBAMs" select="$vDataFolder/file[@extension = 'bam']/@name"/>
                                             <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
-                                            <xsl:attribute name="style" select="'padding:2px 5px 0 5px'"/>
 
-                                            <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}">
-                                                <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16" alt="Link to ENA run data page"/>
+                                            <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
+                                                <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16"/>
                                             </a>
                                             <xsl:if test="fn:index-of($vAvailBAMs, $vBAMFile)">
                                                 <xsl:text> </xsl:text>
-                                                <a href="http://www.ensembl.org/Homo_sapiens/Location/View?r=1:69311767-69437746;contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam">
-                                                    <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16" alt="Add a track to Ensembl Genome Browser"/>
+                                                <a href="http://www.ensembl.org/Homo_sapiens/Location/View?r=1:69311767-69437746;contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
+                                                    <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
                                                 </a>
                                             </xsl:if>
                                         </xsl:when>
