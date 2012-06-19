@@ -171,7 +171,7 @@ public class EFOLoader
                 String value = ((OWLLiteral)annotation.getValue()).getLiteral();
                 // default value should not override ArrayExpress_label
                 // which can appear earlier in the annotations set
-                if (null == node.getTerm() || annotation.getProperty().isLabel() || "".equals(node.getTerm())) {
+                if (null == node.getTerm() && annotation.getProperty().isLabel()) {
                     node.setTerm(value);
                 } else if (IRI_AE_LABEL.equals(annotation.getProperty().getIRI())) {
                     node.setTerm(value);
@@ -183,6 +183,9 @@ public class EFOLoader
                     node.setOrganizationalClass(Boolean.valueOf(value));
                 }
             }
+        }
+        if (null == node.getTerm()) {
+            logger.warn("Could not find term value for class [{}]", node.getId());
         }
         // adding newly created node to the map
         efo.getMap().put(node.getId(), node);
