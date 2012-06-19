@@ -165,10 +165,13 @@ public class EFOLoader
 
         // iterate over the annotations to get relevant ones
         Set<OWLAnnotation> annotations = cls.getAnnotations(ontology);
+
         for (OWLAnnotation annotation : annotations) {
             if (annotation.getValue() instanceof OWLLiteral) {
                 String value = ((OWLLiteral)annotation.getValue()).getLiteral();
-                if (annotation.getProperty().isLabel() || "".equals(node.getTerm())) {
+                // default value should not override ArrayExpress_label
+                // which can appear earlier in the annotations set
+                if (null == node.getTerm() || annotation.getProperty().isLabel() || "".equals(node.getTerm())) {
                     node.setTerm(value);
                 } else if (IRI_AE_LABEL.equals(annotation.getProperty().getIRI())) {
                     node.setTerm(value);
