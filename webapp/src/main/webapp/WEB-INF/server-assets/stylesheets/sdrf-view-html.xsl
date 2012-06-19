@@ -32,16 +32,17 @@
     
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
     
-    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
+    <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run', '\s*,\s*')"/>
 
     <xsl:template name="add-header-col-info">
         <xsl:param name="pPos"/>
         <xsl:param name="pText"/>
 
         <xsl:variable name="vIsColComplex" select="not($vFull) and fn:matches($pText, '.+\[.+\].*')"/>
-        <xsl:variable name="vIsColComment" select="fn:matches(fn:lower-case($pText), 'comment.\s*\[.+\].*')"/>
+        <xsl:variable name="vIsColComment" select="fn:matches(fn:lower-case($pText), 'comment\s*\[.+\].*')"/>
         <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
-        <xsl:variable name="vColType" select="if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText"/>
+        <xsl:variable name="vColType" select="if (fn:exists(fn:index-of($vLinksColName, lower-case($vColName)))) then 'Links' else (if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText)"/>
         <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, lower-case($vColType))"/>
 
         <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}"/>
@@ -220,17 +221,23 @@
                                         <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
                                             <xsl:text> col_fv</xsl:text>
                                         </xsl:when>
+                                        <xsl:when test="matches(lower-case($vColType), 'links')">
+                                            <xsl:text> col_links</xsl:text>
+                                        </xsl:when>
                                     </xsl:choose>
                                 </xsl:attribute>
                                 <xsl:if test="($vColType = $vNextColType)">
                                     <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
                                 </xsl:if>
                                 <xsl:choose>
-                                    <xsl:when test="$vColType = 'Characteristics'">
+                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
                                         <xsl:text>Sample Characteristics</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
                                         <xsl:text>Factor Values</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                        <xsl:text>Links to Data</xsl:text>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text>&#160;</xsl:text>
@@ -250,15 +257,21 @@
                             <xsl:value-of select="$vColInfo/@pos"/>
                             <xsl:choose>
                                 <xsl:when test="$vFull"> col_uni</xsl:when>
-                                <xsl:when test="$vColInfo/@type = 'Characteristics'">
+                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
                                     <xsl:text> col_sc</xsl:text>
                                 </xsl:when>
-                                <xsl:when test="matches(lower-case($vColInfo/@type), 'factor\s*value')">
+                                <xsl:when test="fn:matches(lower-case($vColInfo/@type), 'factor\s*value')">
                                     <xsl:text> col_fv</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                    <xsl:text> col_links</xsl:text>
                                 </xsl:when>
                             </xsl:choose>
                         </xsl:attribute>
-                        <xsl:value-of select="$vColInfo/@name"/>
+                        <xsl:choose>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$vColInfo/@name"/></xsl:otherwise>
+                        </xsl:choose>
                         <xsl:call-template name="add-sort">
                             <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
                         </xsl:call-template>
@@ -291,30 +304,50 @@
                                 <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
                             </xsl:if>
                             <xsl:choose>
-                                <xsl:when test="fn:contains(fn:lower-case($vColInfo/@type),'file')">
-                                    <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
-                                    <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
-                                    <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
-                                    
+                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
                                     <xsl:choose>
-                                        <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
-                                            <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}">
-                                                <xsl:value-of select="$vColText"/>
-                                            </a>
+                                        <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
+                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@type),'derived')) then 'fgem' else 'raw'"/>
+                                            <xsl:variable name="vAvailArchives" select="$vDataFolder/file[@extension = 'zip' and @kind = $vDataKind]/@name"/>
+                                            <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
+
+                                            <xsl:choose>
+                                                <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}">
+                                                        <xsl:value-of select="$vColText"/>
+                                                    </a>
+                                                </xsl:when>
+                                                <xsl:when test="($vColText) and count($vAvailArchives) = 1">
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}">
+                                                        <xsl:value-of select="$vColText"/>
+                                                    </a>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="$vColText"/>
+                                                    <xsl:if test="not($vColText)">
+                                                        <xsl:text>&#160;</xsl:text>
+                                                    </xsl:if>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
                                         </xsl:when>
-                                        <xsl:when test="($vColText) and count($vAvailArchives) = 1">
-                                            <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}">
-                                                <xsl:value-of select="$vColText"/>
+                                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
+                                            <xsl:variable name="vAvailBAMs" select="$vDataFolder/file[@extension = 'bam']/@name"/>
+                                            <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
+                                            <xsl:attribute name="style" select="'padding:2px 5px 0 5px'"/>
+
+                                            <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}">
+                                                <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16" alt="Link to ENA run data page"/>
                                             </a>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$vColText"/>
-                                            <xsl:if test="not($vColText)">
-                                                <xsl:text>&#160;</xsl:text>
+                                            <xsl:if test="fn:index-of($vAvailBAMs, $vBAMFile)">
+                                                <xsl:text> </xsl:text>
+                                                <a href="http://www.ensembl.org/Homo_sapiens/Location/View?r=1:69311767-69437746;contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam">
+                                                    <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16" alt="Add a track to Ensembl Genome Browser"/>
+                                                </a>
                                             </xsl:if>
-                                        </xsl:otherwise>
+                                        </xsl:when>
                                     </xsl:choose>
                                 </xsl:when>
+
                                 <xsl:otherwise>
                                     <xsl:value-of select="$vColText"/>
                                     <xsl:if test="not($vColText)">
