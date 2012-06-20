@@ -271,8 +271,10 @@
                         <xsl:choose>
                             <xsl:when test="$vFull"><xsl:value-of select="$vColInfo/@name"/></xsl:when>
                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
-                            <xsl:when test="fn:starts-with(fn:lower-case($vColInfo/@name),'derived array data')">Processed</xsl:when>
-                            <xsl:when test="fn:starts-with(fn:lower-case($vColInfo/@name),'array data')">Raw</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data file'">Processed</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data matrix file'">Raw Matrix</xsl:when>
                             <xsl:otherwise><xsl:value-of select="$vColInfo/@name"/></xsl:otherwise>
                         </xsl:choose>
                         <xsl:call-template name="add-sort">
