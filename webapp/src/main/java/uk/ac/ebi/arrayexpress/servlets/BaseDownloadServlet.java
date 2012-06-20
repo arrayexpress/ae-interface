@@ -376,7 +376,8 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
                 // Return full file.
                 response.setContentType(contentType);
-                response.setHeader("Content-Range", "bytes " + full.start + "-" + full.end + "/" + full.total);
+                // according to the spec we shouldn't send this for full download requests
+                //response.setHeader("Content-Range", "bytes " + full.start + "-" + full.end + "/" + full.total);
                 response.setHeader("Content-Length", String.valueOf(full.length));
 
                 if (RequestType.GET == requestType || RequestType.POST == requestType) {
