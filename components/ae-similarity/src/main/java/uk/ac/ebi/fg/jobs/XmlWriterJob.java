@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.jobs;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import net.sf.saxon.om.DocumentInfo;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.quartz.*;
@@ -26,15 +43,17 @@ public class XmlWriterJob extends ApplicationJob
     Map<String, SortedSet<ExperimentId>> pubMedResults;
     Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap;
 
-    public XmlWriterJob() {}
+    public XmlWriterJob()
+    {
+    }
 
-    public void doExecute(JobExecutionContext jobExecutionContext) throws Exception
+    public void doExecute( JobExecutionContext jobExecutionContext ) throws Exception
     {
         JobDataMap dataMap = jobExecutionContext.getMergedJobDataMap();
 
-        ontologyResults = (Map<ExperimentId, SortedSet<ExperimentId>>)dataMap.get("ontologyResults");
+        ontologyResults = (Map<ExperimentId, SortedSet<ExperimentId>>) dataMap.get("ontologyResults");
         pubMedResults = (Map<String, SortedSet<ExperimentId>>) dataMap.get("pubMedResults");
-        expToURIMap = (Map<ExperimentId, SortedSet<EfoTerm>>)dataMap.get("expToURIMap");
+        expToURIMap = (Map<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("expToURIMap");
         IXPathEngine saxonEngine = (IXPathEngine) dataMap.get("saxonEngine");
 
         logger.info("XmlWriterJob started");
@@ -43,7 +62,7 @@ public class XmlWriterJob extends ApplicationJob
         logger.info("There are " + allExperimentAccessions.size() + " experiments to write.");
 
         StringBuilder xml = new StringBuilder("<?xml version=\"1.0\"?><similarity>");
-        for ( String accession : allExperimentAccessions )
+        for (String accession : allExperimentAccessions)
             xml.append(getSimilarity(accession));
         xml.append("</similarity>");
 
@@ -59,15 +78,15 @@ public class XmlWriterJob extends ApplicationJob
     /**
      * Creates String containing experiment with similar experiments within xml tags
      *
-     * @param accession     experiment accession
-     * @return              experiment with similarity results in xml tags
+     * @param accession experiment accession
+     * @return experiment with similarity results in xml tags
      */
-    private String getSimilarity(String accession)
+    private String getSimilarity( String accession )
     {
         String ontologyResult = ontologyResult(accession);
         String pubMedResult = pubMedResult(accession);
 
-        if ( !ontologyResult.equals("") || !pubMedResult.equals("") ) {
+        if (!ontologyResult.equals("") || !pubMedResult.equals("")) {
             StringBuilder sb = new StringBuilder("<experiment><accession>" + accession + "</accession>");
 
             sb.append(ontologyResult);
@@ -84,20 +103,20 @@ public class XmlWriterJob extends ApplicationJob
     /**
      * Returns String containing experiment's PubMed results with xml tags
      *
-     * @param accession     experiment accession
-     * @return              PubMed similarity or empty String
+     * @param accession experiment accession
+     * @return PubMed similarity or empty String
      */
-    private String pubMedResult ( String accession )
+    private String pubMedResult( String accession )
     {
         StringBuilder sb = new StringBuilder("");
 
-        if ( pubMedResults.containsKey(accession) && !pubMedResults.get(accession).isEmpty() ) {
+        if (pubMedResults.containsKey(accession) && !pubMedResults.get(accession).isEmpty()) {
 
             sb.append("<similarPubMedExperiments>");
             List<ExperimentId> sortedExpList = new LinkedList<ExperimentId>(pubMedResults.get(accession));
             Collections.sort(sortedExpList, new ExperimentComparator());
 
-            for ( ExperimentId exp : sortedExpList ) {
+            for (ExperimentId exp : sortedExpList) {
                 sb.append("<similarExperiment>" +
                         "<accession>" + exp.getAccession() + "</accession>" +
                         "<distance>" + exp.getPubMedDistance() + "</distance>" +
@@ -114,17 +133,17 @@ public class XmlWriterJob extends ApplicationJob
     /**
      * Returns String containing experiment's ontology results with xml tags
      *
-     * @param accession     experiment accession
-     * @return              ontology similarity or empty string
+     * @param accession experiment accession
+     * @return ontology similarity or empty string
      */
-    private String ontologyResult ( String accession )
+    private String ontologyResult( String accession )
     {
         StringBuilder sb = new StringBuilder("");
         ExperimentId dummyExperiment = new ExperimentId(accession, ReceivingType.OWL, 0);
 
-        if ( ontologyResults.containsKey(dummyExperiment) && !ontologyResults.get(dummyExperiment).isEmpty() ) {
+        if (ontologyResults.containsKey(dummyExperiment) && !ontologyResults.get(dummyExperiment).isEmpty()) {
             sb.append("<ontologyURIs>");
-            for ( EfoTerm efoTerm : expToURIMap.get(dummyExperiment) ) {
+            for (EfoTerm efoTerm : expToURIMap.get(dummyExperiment)) {
                 sb.append("<URI term=\"" + StringEscapeUtils.escapeXml(efoTerm.getTextValue()) + "\">" + StringEscapeUtils.escapeXml(efoTerm.getUri()) + "</URI>");
             }
             sb.append("</ontologyURIs>");
@@ -134,7 +153,7 @@ public class XmlWriterJob extends ApplicationJob
             List<ExperimentId> sortedExpList = new LinkedList<ExperimentId>(ontologyResults.get(dummyExperiment));
             Collections.sort(sortedExpList, new ExperimentComparator());
 
-            for ( ExperimentId exp : sortedExpList ) {
+            for (ExperimentId exp : sortedExpList) {
                 sb.append("<similarExperiment>" +
                         "<accession>" + exp.getAccession() + "</accession>" +
                         "<numberOfMatchedURIs>" + exp.getNumbOfMatches() + "</numberOfMatchedURIs>" +
@@ -142,7 +161,7 @@ public class XmlWriterJob extends ApplicationJob
                         "<ontologyURIs>"
                 );
 
-                for ( EfoTerm efoTerm : expToURIMap.get(exp) ) {
+                for (EfoTerm efoTerm : expToURIMap.get(exp)) {
                     sb.append("<URI term=\"" + StringEscapeUtils.escapeXml(efoTerm.getTextValue()) + "\">" + StringEscapeUtils.escapeXml(efoTerm.getUri()) + "</URI>");
                 }
 
@@ -157,14 +176,14 @@ public class XmlWriterJob extends ApplicationJob
     /**
      * Creates a set of experiment accessions that have similarity results
      *
-     * @return      experiment accessions
+     * @return experiment accessions
      */
     private Set<String> getAccessions()
     {
         Set<String> result = new TreeSet<String>();
         result.addAll(pubMedResults.keySet());
 
-        for ( ExperimentId exp : ontologyResults.keySet() )
+        for (ExperimentId exp : ontologyResults.keySet())
             result.add(exp.getAccession());
 
         return result;
@@ -173,7 +192,7 @@ public class XmlWriterJob extends ApplicationJob
     /**
      * Releases all resources
      *
-     * @param scheduler             job scheduler
+     * @param scheduler job scheduler
      * @throws SchedulerException
      */
     private void releaseResources( Scheduler scheduler ) throws SchedulerException
@@ -185,8 +204,8 @@ public class XmlWriterJob extends ApplicationJob
         List<JobListener> jobListeners = scheduler.getListenerManager().getJobListeners();
 
         // remove jobListeners
-        for ( JobListener jobListener : jobListeners ) {
-            if ( jobListener.getClass().getName().startsWith("uk.ac.ebi.fg.jobListeners.") ) {
+        for (JobListener jobListener : jobListeners) {
+            if (jobListener.getClass().getName().startsWith("uk.ac.ebi.fg.jobListeners.")) {
                 boolean wasRemoved = scheduler.getListenerManager().removeJobListener(jobListener.getName());
                 if (wasRemoved)
                     logger.info(jobListener.getClass().getName() + " removed from jobListeners");

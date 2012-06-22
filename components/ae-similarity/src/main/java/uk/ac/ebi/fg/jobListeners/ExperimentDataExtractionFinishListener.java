@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.jobListeners;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.apache.commons.configuration.Configuration;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -27,17 +44,17 @@ public class ExperimentDataExtractionFinishListener extends ApplicationJobListen
     private int total = 0;
     String jobGroup = "";
 
-    public ExperimentDataExtractionFinishListener(String name)
+    public ExperimentDataExtractionFinishListener( String name )
     {
         super(name);
     }
 
-    public void jobExecuted(JobExecutionContext jobExecutionContext) throws Exception
+    public void jobExecuted( JobExecutionContext jobExecutionContext ) throws Exception
     {
         JobDetail jobDetail = jobExecutionContext.getJobDetail();
 
         if (jobDetail.getJobClass().equals(TermToURIMappingWrapperJob.class)) {
-            if ( jobsRunning <= 0 ) {
+            if (jobsRunning <= 0) {
                 total = ((List) jobDetail.getJobDataMap().get("experiments")).size();
                 ((List) jobDetail.getJobDataMap().get("experiments")).clear();
                 jobGroup = ((Configuration) jobDetail.getJobDataMap().get("properties")).getString("quartz_job_group_name");
@@ -46,15 +63,15 @@ public class ExperimentDataExtractionFinishListener extends ApplicationJobListen
 
         if (jobDetail.getJobClass().equals(TermToURIMappingJob.class)) {
 
-            if ( jobsRunning <= 0 && total != 0 ) {
+            if (jobsRunning <= 0 && total != 0) {
                 int jobsSeparatedAt = (Integer) jobDetail.getJobDataMap().get("separateAt");
 
-                jobsRunning = (total + jobsSeparatedAt - 1 ) / jobsSeparatedAt + jobsRunning;
+                jobsRunning = (total + jobsSeparatedAt - 1) / jobsSeparatedAt + jobsRunning;
             }
 
             --jobsRunning;
 
-            if ( jobsRunning == 0 ) {
+            if (jobsRunning == 0) {
                 printSynonymProblems(StaticIndexedEFODocument.getDoc());
                 StaticIndexedEFODocument.setDoc(null);
                 logger.info("Term to URI mapping jobs finished");
@@ -74,9 +91,9 @@ public class ExperimentDataExtractionFinishListener extends ApplicationJobListen
      */
     private void printSynonymProblems( IndexedDocumentController indexedDocumentController )
     {
-        for ( Map.Entry<String, Set<String>> entry : indexedDocumentController.getLoggedURIsAndTerms().entrySet() ) {
+        for (Map.Entry<String, Set<String>> entry : indexedDocumentController.getLoggedURIsAndTerms().entrySet()) {
             logger.warn("Found " + entry.getValue().size() + " URIs for term " + entry.getKey());
-            for ( String uri : entry.getValue() ) {
+            for (String uri : entry.getValue()) {
                 logger.warn("URI: " + uri);
             }
         }

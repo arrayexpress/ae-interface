@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.jobs;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.apache.commons.configuration.Configuration;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -25,16 +42,17 @@ public class OntologySimilarityJob extends ApplicationJob
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public OntologySimilarityJob()
-    {}
+    {
+    }
 
-    public void doExecute(JobExecutionContext jobExecutionContext) throws JobExecutionException, InterruptedException
+    public void doExecute( JobExecutionContext jobExecutionContext ) throws JobExecutionException, InterruptedException
     {
         JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
-        Map<ExperimentId, SortedSet<EfoTerm>> smallMap = (Map<ExperimentId, SortedSet<EfoTerm>>)dataMap.get("smallMap");
-        OntologyDistanceCalculator distanceCalculator = (OntologyDistanceCalculator)dataMap.get("distanceCalculator");
-        Map<String, SortedSet<ExperimentId>> uriToExpMap = (ConcurrentHashMap<String, SortedSet<ExperimentId>>)dataMap.get("uriToExpMap");
+        Map<ExperimentId, SortedSet<EfoTerm>> smallMap = (Map<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("smallMap");
+        OntologyDistanceCalculator distanceCalculator = (OntologyDistanceCalculator) dataMap.get("distanceCalculator");
+        Map<String, SortedSet<ExperimentId>> uriToExpMap = (ConcurrentHashMap<String, SortedSet<ExperimentId>>) dataMap.get("uriToExpMap");
         Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap = (ConcurrentHashMap<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("expToURIMap");
-        Map<ExperimentId, SortedSet<ExperimentId>> ontologyResults = (ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>)dataMap.get("ontologyResults");
+        Map<ExperimentId, SortedSet<ExperimentId>> ontologyResults = (ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>) dataMap.get("ontologyResults");
         SortedSet<String> lowPriorityURIs = (SortedSet<String>) dataMap.get("lowPriorityOntologyURIs");
         int counter = (Integer) dataMap.get("counter");
         Configuration properties = (Configuration) dataMap.get("properties");
@@ -45,38 +63,38 @@ public class OntologySimilarityJob extends ApplicationJob
 
         logger.info("Started " + (counter - smallMap.size()) + " - " + counter + " ontology similarity jobs");
 
-        for ( Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : smallMap.entrySet() ) {
+        for (Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : smallMap.entrySet()) {
             ExperimentId experiment = entry.getKey();
-                SortedSet<ExperimentId> resultExpSimilaritySet = new TreeSet<ExperimentId>();
+            SortedSet<ExperimentId> resultExpSimilaritySet = new TreeSet<ExperimentId>();
 
-                for( EfoTerm efoTerm : entry.getValue() ) {
-                    Set<OntologySimilarityResult> similars = distanceCalculator.getSimilarNodes(efoTerm.getUri());
+            for (EfoTerm efoTerm : entry.getValue()) {
+                Set<OntologySimilarityResult> similars = distanceCalculator.getSimilarNodes(efoTerm.getUri());
 
-                    if (null != similars) {
-                        for (OntologySimilarityResult ontologySimilarityResult : similars) {
-                            int distance = ontologySimilarityResult.getDistance();
-                            SortedSet<ExperimentId> similarExperiments = uriToExpMap.get(ontologySimilarityResult.getURI());
+                if (null != similars) {
+                    for (OntologySimilarityResult ontologySimilarityResult : similars) {
+                        int distance = ontologySimilarityResult.getDistance();
+                        SortedSet<ExperimentId> similarExperiments = uriToExpMap.get(ontologySimilarityResult.getURI());
 
-                            if ( similarExperiments != null ) {
-                                for ( ExperimentId exp : similarExperiments ) {
-                                    if ( experiment.getSpecies().equals(exp.getSpecies()) && !experiment.equals(exp) ) {
-                                        if ( resultExpSimilaritySet.contains(exp) ) {
-                                            ExperimentId expClone = resultExpSimilaritySet.tailSet(exp).first().clone();
-                                            resultExpSimilaritySet.remove(exp);
-                                            resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
-                                        } else {
-                                            ExperimentId expClone = exp.clone();
-                                            resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
-                                        }
+                        if (similarExperiments != null) {
+                            for (ExperimentId exp : similarExperiments) {
+                                if (experiment.getSpecies().equals(exp.getSpecies()) && !experiment.equals(exp)) {
+                                    if (resultExpSimilaritySet.contains(exp)) {
+                                        ExperimentId expClone = resultExpSimilaritySet.tailSet(exp).first().clone();
+                                        resultExpSimilaritySet.remove(exp);
+                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
+                                    } else {
+                                        ExperimentId expClone = exp.clone();
+                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
 
             ontologyResults.put(experiment, cleanResults(experiment, resultExpSimilaritySet, smallExpAssayCountLimit,
-                       maxOWLSimilarityCount, minCalculatedOntologyDistance, expToURIMap));
+                    maxOWLSimilarityCount, minCalculatedOntologyDistance, expToURIMap));
 
             Thread.currentThread().wait(1);
         }
@@ -89,30 +107,34 @@ public class OntologySimilarityJob extends ApplicationJob
     /**
      * Increases distance count for experiment instance
      *
-     * @param exp               Experiment holding distances
-     * @param URI               URI
-     * @param lowPriorityURIs   URIs with lowered priority
-     * @param dist              URI distance
+     * @param exp             Experiment holding distances
+     * @param URI             URI
+     * @param lowPriorityURIs URIs with lowered priority
+     * @param dist            URI distance
      * @return
      */
     private ExperimentId setDistance( ExperimentId exp, String URI, SortedSet<String> lowPriorityURIs, int dist )
     {
-        if ( lowPriorityURIs.contains(URI) ) {
+        if (lowPriorityURIs.contains(URI)) {
             exp.setLowPriorityMatchCount(exp.getLowPriorityMatchCount() + 1);
             exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
         } else {
             switch (dist) {
-                case 0: exp.setDist0Count(exp.getDist0Count() + 1);
-                        exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
-                        break;
-                case 1: exp.setDist1Count(exp.getDist1Count() + 1);
-                        exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
-                        break;
-                case 2: exp.setDist2Count(exp.getDist2Count() + 1);
-                        exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
-                        break;
-                default: logger.warn("URI distance out of bounds for experiment " + exp.getAccession() + ", URI: " + URI);
-                        break;
+                case 0:
+                    exp.setDist0Count(exp.getDist0Count() + 1);
+                    exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
+                    break;
+                case 1:
+                    exp.setDist1Count(exp.getDist1Count() + 1);
+                    exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
+                    break;
+                case 2:
+                    exp.setDist2Count(exp.getDist2Count() + 1);
+                    exp.setNumbOfMatches(exp.getNumbOfMatches() + 1);
+                    break;
+                default:
+                    logger.warn("URI distance out of bounds for experiment " + exp.getAccession() + ", URI: " + URI);
+                    break;
             }
         }
 
@@ -122,18 +144,18 @@ public class OntologySimilarityJob extends ApplicationJob
     /**
      * Applies all required restrictions to similar experiment set
      *
-     * @param exp                               Main experiment
-     * @param similarExperiments                Similar experiment set
-     * @param smallExpAssayCountLimit           assay limit
-     * @param maxOWLSimilarityCount             maximal number of returned similar experiments
-     * @param minCalculatedOntologyDistance     calculated coefficient that similar experiments need to exceed
-     * @param expToURIMap                       map containing experiments with all URIs associated with each
+     * @param exp                           Main experiment
+     * @param similarExperiments            Similar experiment set
+     * @param smallExpAssayCountLimit       assay limit
+     * @param maxOWLSimilarityCount         maximal number of returned similar experiments
+     * @param minCalculatedOntologyDistance calculated coefficient that similar experiments need to exceed
+     * @param expToURIMap                   map containing experiments with all URIs associated with each
      * @return
      */
     private SortedSet<ExperimentId> cleanResults( ExperimentId exp, SortedSet<ExperimentId> similarExperiments,
                                                   int smallExpAssayCountLimit, int maxOWLSimilarityCount,
                                                   float minCalculatedOntologyDistance,
-                                                  Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap)
+                                                  Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap )
     {
         List<ExperimentId> expList = new LinkedList<ExperimentId>(similarExperiments);
 
@@ -149,19 +171,19 @@ public class OntologySimilarityJob extends ApplicationJob
      * Applies assay (hybridisation) restrictions. If experiment assay count is under the limit
      * similar experiment list is filtrated to remove similar experiments exceeding the limit
      *
-     * @param mainExp                   experiment
-     * @param expList                   similar experiment list
-     * @param smallExpAssayCountLimit   assay limit
+     * @param mainExp                 experiment
+     * @param expList                 similar experiment list
+     * @param smallExpAssayCountLimit assay limit
      * @return
      */
-    private List<ExperimentId> removeLargeOntologyExperiments ( ExperimentId mainExp, List<ExperimentId> expList, int smallExpAssayCountLimit )
+    private List<ExperimentId> removeLargeOntologyExperiments( ExperimentId mainExp, List<ExperimentId> expList, int smallExpAssayCountLimit )
     {
         List<ExperimentId> resultList = new LinkedList<ExperimentId>();
         resultList.addAll(expList);
 
-        if ( mainExp.getAssayCount() <= smallExpAssayCountLimit ) {
-            for ( ExperimentId exp : expList ) {
-                if ( exp.getAssayCount() > smallExpAssayCountLimit )
+        if (mainExp.getAssayCount() <= smallExpAssayCountLimit) {
+            for (ExperimentId exp : expList) {
+                if (exp.getAssayCount() > smallExpAssayCountLimit)
                     resultList.remove(exp);
             }
         }
@@ -172,8 +194,8 @@ public class OntologySimilarityJob extends ApplicationJob
     /**
      * Calculates distances
      *
-     * @param expList       experiments that need distances calculated
-     * @param expToURIMap   map containing experiments with all URIs associated with each
+     * @param expList     experiments that need distances calculated
+     * @param expToURIMap map containing experiments with all URIs associated with each
      */
     private void calculateDistances( List<ExperimentId> expList, Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap )
     {
@@ -181,8 +203,8 @@ public class OntologySimilarityJob extends ApplicationJob
         float dist1Coefficient = 0.25f;
         float dist2Coefficient = 0.5f;
 
-        for ( ExperimentId exp : expList ) {
-            if ( exp.getNumbOfMatches() != 0 ) {
+        for (ExperimentId exp : expList) {
+            if (exp.getNumbOfMatches() != 0) {
                 float numbOfLinks = exp.getNumbOfMatches();
                 float dist0Count = exp.getDist0Count();
                 float dist1Count = exp.getDist1Count();
@@ -204,9 +226,9 @@ public class OntologySimilarityJob extends ApplicationJob
     /**
      * Returns limited set of experiments
      *
-     * @param expList                           experiments
-     * @param maxOWLSimilarityCount             maximal number of returned similar experiments
-     * @param minCalculatedOntologyDistance     calculated coefficient that similar experiments need to exceed
+     * @param expList                       experiments
+     * @param maxOWLSimilarityCount         maximal number of returned similar experiments
+     * @param minCalculatedOntologyDistance calculated coefficient that similar experiments need to exceed
      * @return
      */
     private SortedSet<ExperimentId> limitOntologyExperimentCount( List<ExperimentId> expList, int maxOWLSimilarityCount,
@@ -216,9 +238,9 @@ public class OntologySimilarityJob extends ApplicationJob
         SortedSet<ExperimentId> restrictedSet = new TreeSet<ExperimentId>();
         int OWLCounter = 1;
 
-        while ( iterator.hasNext() ) {
+        while (iterator.hasNext()) {
             ExperimentId exp = iterator.next();
-            if ( exp.getType().equals(ReceivingType.OWL) && (exp.getOWLDistance() != Integer.MAX_VALUE)
+            if (exp.getType().equals(ReceivingType.OWL) && (exp.getOWLDistance() != Integer.MAX_VALUE)
                     && (OWLCounter <= maxOWLSimilarityCount) && minCalculatedOntologyDistance <= exp.getCalculatedDistance()) {
                 restrictedSet.add(exp);
                 ++OWLCounter;

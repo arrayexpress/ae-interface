@@ -1,11 +1,29 @@
 package uk.ac.ebi.fg.utils.objects;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import uk.ac.ebi.fg.utils.ReceivingType;
 
 /**
  * Experiment object containing all required fields for PubMed and ontology similarity calculations
  */
-public class ExperimentId implements Comparable, Cloneable {
+public class ExperimentId implements Comparable, Cloneable
+{
     private String myAccession;
     private String mySpecies = "";
     private int assayCount = 0;             // hybridisations
@@ -22,15 +40,16 @@ public class ExperimentId implements Comparable, Cloneable {
     {
         try {
             return (ExperimentId) super.clone();
-        } catch ( CloneNotSupportedException e ) {
+        } catch (CloneNotSupportedException e) {
             System.out.println("Cloning not allowed");      // todo: check error
             return null;
         }
     }
 
-    public ExperimentId(String id, ReceivingType rType, String species, int assayCount) {
+    public ExperimentId( String id, ReceivingType rType, String species, int assayCount )
+    {
         this.myAccession = id;
-        this.mySpecies = species; 
+        this.mySpecies = species;
         if (rType.equals(ReceivingType.PUBMED))
             myPubMedDist = Integer.MAX_VALUE - 1;
         else if (rType.equals(ReceivingType.OWL))
@@ -38,11 +57,13 @@ public class ExperimentId implements Comparable, Cloneable {
         this.assayCount = assayCount;
     }
 
-    public String getSpecies() {
+    public String getSpecies()
+    {
         return mySpecies;
     }
 
-    public ExperimentId(String id, ReceivingType rType, int dist) {
+    public ExperimentId( String id, ReceivingType rType, int dist )
+    {
         this.myAccession = id;
         if (rType.equals(ReceivingType.PUBMED))
             myPubMedDist = dist;
@@ -55,27 +76,29 @@ public class ExperimentId implements Comparable, Cloneable {
         return myAccession;
     }
 
-    public ReceivingType getType() {
+    public ReceivingType getType()
+    {
         if (myOWLDist != Integer.MAX_VALUE) {
             if (myPubMedDist != Integer.MAX_VALUE)
                 return ReceivingType.PUBMED_AND_OWL;
             else
                 return ReceivingType.OWL;
-        }
-        else if (myPubMedDist != Integer.MAX_VALUE)
+        } else if (myPubMedDist != Integer.MAX_VALUE)
             return ReceivingType.PUBMED;
         return ReceivingType.NONE;
     }
 
-    public int getPubMedDistance() {
+    public int getPubMedDistance()
+    {
         return myPubMedDist;
     }
 
-    public int getOWLDistance() {
+    public int getOWLDistance()
+    {
         return myOWLDist;
     }
 
-    public void setNumbOfMatches(int amount)
+    public void setNumbOfMatches( int amount )
     {
         numbOfMatches = amount;
     }
@@ -105,7 +128,7 @@ public class ExperimentId implements Comparable, Cloneable {
         calculatedDistance = distance;
     }
 
-    public void setAssayCount(int count)
+    public void setAssayCount( int count )
     {
         assayCount = count;
     }
@@ -152,23 +175,26 @@ public class ExperimentId implements Comparable, Cloneable {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals( Object other )
+    {
         if (this == other) return true;
         if (null == other || getClass() != other.getClass()) return false;
-        ExperimentId a = (ExperimentId)other;
+        ExperimentId a = (ExperimentId) other;
 
         if (myAccession.equals(a.myAccession))
             return true;
         return false;
     }
 
-    public int compareTo(Object other) {
-        ExperimentId a = (ExperimentId)other;
+    public int compareTo( Object other )
+    {
+        ExperimentId a = (ExperimentId) other;
 
         return myAccession.compareTo(a.myAccession);
     }
 
-    public String toString() {
+    public String toString()
+    {
         return "[" + myAccession + ", " + getType() + "]  ";
     }
 }

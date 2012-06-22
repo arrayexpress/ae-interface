@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.utils;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
@@ -22,10 +39,10 @@ public class OntologyDistanceCalculator implements Serializable
 
     // Map contains result of calculation
     private Map<String, SortedSet<OntologySimilarityResult>> myQueryMap =
-                    new ConcurrentHashMap<String, SortedSet<OntologySimilarityResult>>();
+            new ConcurrentHashMap<String, SortedSet<OntologySimilarityResult>>();
 
 
-    public OntologyDistanceCalculator( IEFO efo, int maxDistance) throws InterruptedException
+    public OntologyDistanceCalculator( IEFO efo, int maxDistance ) throws InterruptedException
     {
         this.myMaxDistance = maxDistance;
         calculateDistances(efo);
@@ -37,7 +54,7 @@ public class OntologyDistanceCalculator implements Serializable
      * @param efo
      * @throws InterruptedException
      */
-    public void calculateDistances(IEFO efo) throws InterruptedException
+    public void calculateDistances( IEFO efo ) throws InterruptedException
     {
 
         Map<String, EFONode> efoMap = efo.getMap();
@@ -49,7 +66,7 @@ public class OntologyDistanceCalculator implements Serializable
 
         //create and initialize distance Matrix for OWLClasses
         int arrSize = completeURIList.size();
-        int [][] distanceMatrix = new int[arrSize][arrSize];
+        int[][] distanceMatrix = new int[arrSize][arrSize];
         for (int i = 0; i != arrSize; ++i) {
             for (int j = 0; j != arrSize; ++j) {
                 distanceMatrix[i][j] = Integer.MAX_VALUE;
@@ -64,7 +81,7 @@ public class OntologyDistanceCalculator implements Serializable
         for (int k = 0; k != arrSize; ++k) {
             for (int i = 0; i != arrSize; ++i) {
                 for (int j = 0; j != arrSize; ++j) {
-                    if ( distanceMatrix[i][k] >= myMaxDistance || distanceMatrix[k][j] >= myMaxDistance )
+                    if (distanceMatrix[i][k] >= myMaxDistance || distanceMatrix[k][j] >= myMaxDistance)
                         continue;
 
                     distanceMatrix[i][j] =
@@ -79,11 +96,11 @@ public class OntologyDistanceCalculator implements Serializable
         for (int i = 0; i != arrSize; ++i) {
             SortedSet<OntologySimilarityResult> set =
                     Collections.synchronizedSortedSet(new TreeSet<OntologySimilarityResult>());
-            myQueryMap.put( completeURIList.get(i), set);
+            myQueryMap.put(completeURIList.get(i), set);
             for (int j = 0; j != arrSize; ++j) {
                 if (distanceMatrix[i][j] <= myMaxDistance)
-                    set.add( new OntologySimilarityResult(completeURIList.get(j),
-                                                            distanceMatrix[i][j]));
+                    set.add(new OntologySimilarityResult(completeURIList.get(j),
+                            distanceMatrix[i][j]));
             }
         }
 
@@ -98,8 +115,8 @@ public class OntologyDistanceCalculator implements Serializable
      * @param efoMap
      * @param partOfIdMap
      */
-    private void initializeMatrix(int[][] distanceMatrix, ArrayList<String> allURIs,
-                                  Map<String, EFONode> efoMap, Map<String, Set<String>> partOfIdMap)
+    private void initializeMatrix( int[][] distanceMatrix, ArrayList<String> allURIs,
+                                   Map<String, EFONode> efoMap, Map<String, Set<String>> partOfIdMap )
     {
         // initialize distanceMatrix
         for (Map.Entry<String, EFONode> e : efoMap.entrySet()) {
@@ -112,8 +129,8 @@ public class OntologyDistanceCalculator implements Serializable
                     distanceMatrix[clIndex][childNodeIndex] = 1;
 
                     // set same level child distance to 1
-                    for ( EFONode childNode2 : e.getValue().getChildren() ) {
-                        if ( !childNode.equals(childNode2) ) {
+                    for (EFONode childNode2 : e.getValue().getChildren()) {
+                        if (!childNode.equals(childNode2)) {
                             int childNode2Index = allURIs.indexOf(childNode2.getId());
 
                             distanceMatrix[childNodeIndex][childNode2Index] = 1;
@@ -134,8 +151,8 @@ public class OntologyDistanceCalculator implements Serializable
                 distanceMatrix[clIndex][childIndex] = 1;
 
                 // set same level child distance to 1
-                for ( String eChild2 : e.getValue() ) {
-                    if ( !eChild.equals(eChild2) ) {
+                for (String eChild2 : e.getValue()) {
+                    if (!eChild.equals(eChild2)) {
                         int child2Index = allURIs.indexOf(eChild2);
 
                         distanceMatrix[childIndex][child2Index] = 1;
@@ -149,10 +166,10 @@ public class OntologyDistanceCalculator implements Serializable
     /**
      * Returns EFO URIs that are within distance limit
      *
-     * @param   cl the node name in ontology like "http://www.ebi.ac.uk/efo/$NAME$"
-     * @return  set of nodes that connected to cl
+     * @param cl the node name in ontology like "http://www.ebi.ac.uk/efo/$NAME$"
+     * @return set of nodes that connected to cl
      */
-    public Set<OntologySimilarityResult> getSimilarNodes(String cl)
+    public Set<OntologySimilarityResult> getSimilarNodes( String cl )
     {
         return myQueryMap.get(cl);
     }

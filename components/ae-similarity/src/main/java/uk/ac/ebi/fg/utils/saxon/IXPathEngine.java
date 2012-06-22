@@ -26,7 +26,9 @@ import java.util.List;
 
 public interface IXPathEngine
 {
-    DocumentInfo    buildDocument( String xml ) throws XPathException;
-    DocumentInfo    buildDocument( InputStream stream ) throws XPathException;
-    List            evaluateXPath( DocumentInfo document, String xPath ) throws XPathExpressionException;
+    DocumentInfo buildDocument( String xml ) throws XPathException;
+
+    DocumentInfo buildDocument( InputStream stream ) throws XPathException;
+
+    List evaluateXPath( DocumentInfo document, String xPath ) throws XPathExpressionException;
 }

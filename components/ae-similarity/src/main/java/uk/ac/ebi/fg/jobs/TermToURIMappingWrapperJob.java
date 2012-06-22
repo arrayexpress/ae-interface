@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.jobs;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.apache.commons.configuration.Configuration;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -29,18 +46,19 @@ public class TermToURIMappingWrapperJob extends ApplicationJob
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public TermToURIMappingWrapperJob()
-    {}
+    {
+    }
 
-    public void doExecute(JobExecutionContext jobExecutionContext) throws InterruptedException, SchedulerException
+    public void doExecute( JobExecutionContext jobExecutionContext ) throws InterruptedException, SchedulerException
     {
         JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
 
         IJobsController jobsController = (IJobsController) dataMap.get("jobsController");
         Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap = (ConcurrentHashMap<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("expToURIMap");
         Map<String, String> expToPubMedIdMap = (ConcurrentHashMap<String, String>) dataMap.get("expToPubMedIdMap");
-        List experiments = (List)dataMap.get("experiments");
-        XPath xp = (XPath)dataMap.get("experimentXPath");
-        Configuration properties = (Configuration)dataMap.get("properties");
+        List experiments = (List) dataMap.get("experiments");
+        XPath xp = (XPath) dataMap.get("experimentXPath");
+        Configuration properties = (Configuration) dataMap.get("properties");
         String jobGroup = properties.getString("quartz_job_group_name");
 
         List smallExperimentList = new LinkedList();
@@ -48,16 +66,16 @@ public class TermToURIMappingWrapperJob extends ApplicationJob
         final int separateAt = 2000;
 
         logger.info("Term to URI mapping jobs started");
-        for ( Object node : experiments) {
+        for (Object node : experiments) {
             smallExperimentList.add(node);
             ++counter;
 
-            if ( counter % separateAt == 0 || counter == experiments.size()  ) {
+            if (counter % separateAt == 0 || counter == experiments.size()) {
                 JobDetail termToURIMappingJobDetail = newJob(TermToURIMappingJob.class)
-                                        .withIdentity("termToURIMappingJob" + counter, jobGroup)
-                                        .storeDurably(false)
-                                        .requestRecovery(false)
-                                        .build();
+                        .withIdentity("termToURIMappingJob" + counter, jobGroup)
+                        .storeDurably(false)
+                        .requestRecovery(false)
+                        .build();
 
                 termToURIMappingJobDetail.getJobDataMap().put("experiments", new LinkedList(smallExperimentList));
                 termToURIMappingJobDetail.getJobDataMap().put("expToURIMap", expToURIMap);

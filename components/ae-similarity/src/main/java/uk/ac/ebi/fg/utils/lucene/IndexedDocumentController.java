@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.utils.lucene;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -63,22 +80,22 @@ public class IndexedDocumentController
      * Creates a document with fields and adds to document writer.
      * After adding all required fields closewriter() needs to be called
      *
-     * @param term          Class name
-     * @param uri           URI
-     * @param altTerms      Alternative class names
+     * @param term     Class name
+     * @param uri      URI
+     * @param altTerms Alternative class names
      * @throws IOException
      */
-    public synchronized void addFields(String term, String uri, Set<String> altTerms) throws IOException
+    public synchronized void addFields( String term, String uri, Set<String> altTerms ) throws IOException
     {
         String cleanTerm = normalizeTerm(term);
 
-        if ( cleanTerm != null ) {
+        if (cleanTerm != null) {
             doc = new Document();
 
             doc.add(new Field(className, cleanTerm, Field.Store.YES, Field.Index.ANALYZED));
-            for ( String altTerm : altTerms ) {
+            for (String altTerm : altTerms) {
                 String cleanAlt = normalizeTerm(altTerm);
-                if ( cleanAlt != null && !cleanAlt.equals(cleanTerm) )
+                if (cleanAlt != null && !cleanAlt.equals(cleanTerm))
                     doc.add(new Field(classNameAlternatives, cleanAlt, Field.Store.YES, Field.Index.ANALYZED));
             }
 
@@ -104,8 +121,8 @@ public class IndexedDocumentController
     /**
      * Tries to find term in lucene index
      *
-     * @param term              Class name
-     * @return                  URI or null if nothing was found
+     * @param term Class name
+     * @return URI or null if nothing was found
      * @throws IOException
      * @throws ParseException
      */
@@ -117,9 +134,9 @@ public class IndexedDocumentController
     /**
      * Tries to find term in lucene index with limited number of matches
      *
-     * @param term              Class name
-     * @param limit             Number of allowed matches
-     * @return                  URI or null if nothing was found or exceeds limit
+     * @param term  Class name
+     * @param limit Number of allowed matches
+     * @return URI or null if nothing was found or exceeds limit
      * @throws IOException
      * @throws ParseException
      */
@@ -129,18 +146,18 @@ public class IndexedDocumentController
         TopDocs topDocs = getMatchingDocuments(term);
         String uri = null;
 
-        if ( topDocs != null ){
+        if (topDocs != null) {
             // try to decide which term is the best match
-            if ( topDocs.totalHits > 1 ) {
+            if (topDocs.totalHits > 1) {
                 uri = findBestMatch(topDocs, term);
             }
 
-            if ( topDocs.totalHits > 0 && topDocs.totalHits <= limit && uri == null ) {
+            if (topDocs.totalHits > 0 && topDocs.totalHits <= limit && uri == null) {
                 // logging todo: remove
-                if ( topDocs.totalHits > 1 && !loggedURIsAndTerms.containsKey(term) ) {  // todo: remove logging structure
+                if (topDocs.totalHits > 1 && !loggedURIsAndTerms.containsKey(term)) {  // todo: remove logging structure
                     Set<String> uriSet = new TreeSet<String>();
 
-                    for( ScoreDoc doc : topDocs.scoreDocs ) {
+                    for (ScoreDoc doc : topDocs.scoreDocs) {
                         Document document = getDoc(doc.doc);
                         uriSet.add(document.get(URI));
                     }
@@ -148,7 +165,7 @@ public class IndexedDocumentController
                     loggedURIsAndTerms.put(term, uriSet);
                 }
 
-                for( ScoreDoc doc : topDocs.scoreDocs ) {
+                for (ScoreDoc doc : topDocs.scoreDocs) {
                     Document document = getDoc(doc.doc);
 
                     uri = document.get(URI);
@@ -164,8 +181,8 @@ public class IndexedDocumentController
     /**
      * Finds documents that contain term. First looks for class names afterwards for alternative terms.
      *
-     * @param term              search term
-     * @return                  object with all documents containing the term
+     * @param term search term
+     * @return object with all documents containing the term
      * @throws IOException
      * @throws ParseException
      */
@@ -174,7 +191,7 @@ public class IndexedDocumentController
         String cleanTerm = normalizeTerm(term);
         TopDocs topDocs = null;
 
-        if ( cleanTerm != null ) {
+        if (cleanTerm != null) {
             IndexReader reader = IndexReader.open(ramDirectory);
             IndexSearcher searcher = new IndexSearcher(reader);
             QueryParser parser = new QueryParser(Version.LUCENE_35, className, new KeywordAnalyzer());
@@ -182,7 +199,7 @@ public class IndexedDocumentController
             topDocs = searcher.search(query, 10);
 
             // search alternative terms
-            if ( topDocs.totalHits == 0 ) {
+            if (topDocs.totalHits == 0) {
                 // logger.debug("0 matches for: " + term);
 
                 parser = new QueryParser(Version.LUCENE_35, classNameAlternatives, new KeywordAnalyzer());
@@ -200,11 +217,11 @@ public class IndexedDocumentController
     /**
      * Retrieves document from lucene index with document index
      *
-     * @param index         document index
-     * @return              document
+     * @param index document index
+     * @return document
      * @throws IOException
      */
-    public Document getDoc(int index) throws IOException
+    public Document getDoc( int index ) throws IOException
     {
         IndexReader reader = IndexReader.open(ramDirectory);
         IndexSearcher searcher = new IndexSearcher(reader);
@@ -222,11 +239,11 @@ public class IndexedDocumentController
      * @param term
      * @return
      */
-    private String normalizeTerm(String term)
+    private String normalizeTerm( String term )
     {
         String normalizedTerm = term.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
 
-        if ( normalizedTerm.length() <= 2 || normalizedTerm.equals("") )    // todo: skip integers??
+        if (normalizedTerm.length() <= 2 || normalizedTerm.equals(""))    // todo: skip integers??
             return null;
 
         return normalizedTerm;
@@ -235,36 +252,36 @@ public class IndexedDocumentController
     /**
      * Finds EFO URIs for categories and terms that can be found in EFO
      *
-     * @param categoriesWithTerms   categories with set of terms
-     * @return                      URIs with search Strings
+     * @param categoriesWithTerms categories with set of terms
+     * @return URIs with search Strings
      */
     public SortedSet<EfoTerm> getURIs( Map<String, List<String>> categoriesWithTerms )
     {
         SortedSet<EfoTerm> urisWithTerms = new TreeSet<EfoTerm>();
 
         try {
-            for ( Map.Entry<String, List<String>> categoryWithTerms : categoriesWithTerms.entrySet() ) {
+            for (Map.Entry<String, List<String>> categoryWithTerms : categoriesWithTerms.entrySet()) {
                 String category = categoryWithTerms.getKey();
                 String categoryURI = findTerm(category);
                 List<String> values = categoryWithTerms.getValue();
 
                 // get all unique matches
-                for ( String value : values ) {
+                for (String value : values) {
                     String uri = findTerm(value, 1);  // 1 unique match only
-                    if ( uri != null ) {
+                    if (uri != null) {
                         urisWithTerms.add(new EfoTerm(uri, value));
                     }
                 }
 
                 // category + value matches
-                if ( categoryURI != null ) {
+                if (categoryURI != null) {
                     EFONode node = efo.getMap().get(categoryURI);
                     Set<String> childrenURIs = getAllChildURIs(node);
 
-                    for ( String value : categoryWithTerms.getValue() ) {
+                    for (String value : categoryWithTerms.getValue()) {
                         String uri = findTerm(value);
-                        if ( uri != null ) {
-                            if ( childrenURIs.contains(uri) )  // 100% match (found value as child node of category in efo)
+                        if (uri != null) {
+                            if (childrenURIs.contains(uri))  // 100% match (found value as child node of category in efo)
                                 urisWithTerms.add(new EfoTerm(uri, value));
                         }
                     }
@@ -283,14 +300,14 @@ public class IndexedDocumentController
      * Goes through EFO map recursively retrieving all child URIs
      *
      * @param parent
-     * @return          child URIs
+     * @return child URIs
      */
     private Set<String> getAllChildURIs( EFONode parent )
     {
         Set<String> allChildURIs = new TreeSet<String>();
 
-        if ( parent.getChildren().size() != 0 ) {
-            for ( EFONode childNode : parent.getChildren() ) {
+        if (parent.getChildren().size() != 0) {
+            for (EFONode childNode : parent.getChildren()) {
                 allChildURIs.add(childNode.getId());
                 allChildURIs.addAll(getAllChildURIs(childNode));
             }
@@ -302,7 +319,7 @@ public class IndexedDocumentController
     /**
      * Returns all terms that have more than 1 URI
      *
-     * @return      map with terms and URIs
+     * @return map with terms and URIs
      */
     public Map<String, Set<String>> getLoggedURIsAndTerms()
     {
@@ -313,27 +330,27 @@ public class IndexedDocumentController
      * Tries to resolve multiple matches by looking for parent-child relationship between found URIs in EFO and
      * returning parent URI
      *
-     * @param topDocs       documents that contain the term
-     * @param term          search term
-     * @return              URI or null if relationship was not found
+     * @param topDocs documents that contain the term
+     * @param term    search term
+     * @return URI or null if relationship was not found
      * @throws IOException
      */
-    private String findBestMatch(TopDocs topDocs, String term) throws IOException  // todo: term used only for better logging
+    private String findBestMatch( TopDocs topDocs, String term ) throws IOException  // todo: term used only for better logging
     {
         String bestMatch = null;
 
         String tempURI = null;
         Set<String> tempChildURIs = new TreeSet<String>();
 
-        for( ScoreDoc doc : topDocs.scoreDocs ) {
+        for (ScoreDoc doc : topDocs.scoreDocs) {
             Document document = getDoc(doc.doc);
 
-            if ( !tempChildURIs.isEmpty() ) {
-                if ( tempChildURIs.contains(document.get(URI)) ) {
+            if (!tempChildURIs.isEmpty()) {
+                if (tempChildURIs.contains(document.get(URI))) {
                     logger.info("Chose " + tempURI + " over " + document.get(URI) + " for term " + term);
                     bestMatch = tempURI;
                     continue;
-                } else if ( getAllChildURIs(efo.getMap().get(document.get(URI))).contains(tempURI) ) {
+                } else if (getAllChildURIs(efo.getMap().get(document.get(URI))).contains(tempURI)) {
                     logger.info("Chose " + document.get(URI) + " over " + tempURI + " for term " + term);
                     bestMatch = tempURI = document.get(URI);
                     tempChildURIs = getAllChildURIs(efo.getMap().get(document.get(URI)));

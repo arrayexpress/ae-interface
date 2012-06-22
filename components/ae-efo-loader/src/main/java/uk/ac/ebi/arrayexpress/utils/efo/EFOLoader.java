@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Copyright 2009-2011 European Molecular Biology Laboratory
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public class EFOLoader
             String version = "unknown";
             for (OWLAnnotation annotation : ontology.getAnnotations()) {
                 if (IRI_VERSION_INFO.equals(annotation.getProperty().getIRI())) {
-                    version = ((OWLLiteral)annotation.getValue()).getLiteral();
+                    version = ((OWLLiteral) annotation.getValue()).getLiteral();
                     break;
                 }
             }
@@ -148,7 +148,7 @@ public class EFOLoader
 
             for (OWLAnnotation annotation : ontology.getAnnotations()) {
                 if (IRI_VERSION_INFO.equals(annotation.getProperty().getIRI())) {
-                    version = ((OWLLiteral)annotation.getValue()).getLiteral();
+                    version = ((OWLLiteral) annotation.getValue()).getLiteral();
                     break;
                 }
             }
@@ -168,7 +168,7 @@ public class EFOLoader
 
         for (OWLAnnotation annotation : annotations) {
             if (annotation.getValue() instanceof OWLLiteral) {
-                String value = ((OWLLiteral)annotation.getValue()).getLiteral();
+                String value = ((OWLLiteral) annotation.getValue()).getLiteral();
                 // default value should not override ArrayExpress_label
                 // which can appear earlier in the annotations set
                 if (null == node.getTerm() && annotation.getProperty().isLabel()) {
@@ -200,11 +200,11 @@ public class EFOLoader
             reverseSubClassOfMap.get(node.getId()).add(superClass.getRepresentativeElement().toStringID());
         }
 
-        for (OWLSubClassOfAxiom subClassOf : subClassOfAxioms ) {
+        for (OWLSubClassOfAxiom subClassOf : subClassOfAxioms) {
             OWLClassExpression superClass = subClassOf.getSuperClass();
             if (superClass instanceof OWLQuantifiedObjectRestriction) {
                 // may be part-of
-                OWLQuantifiedObjectRestriction restriction = (OWLQuantifiedObjectRestriction)superClass;
+                OWLQuantifiedObjectRestriction restriction = (OWLQuantifiedObjectRestriction) superClass;
                 if (IRI_PART_OF.equals(restriction.getProperty().getNamedProperty().getIRI())
                         && restriction.getFiller() instanceof OWLClass) {
                     if (!reversePartOfMap.containsKey(node.getId())) {

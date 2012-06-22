@@ -1,7 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.efo;
 
 /*
- * Copyright 2009-2011 European Molecular Biology Laboratory
+ * Copyright 2009-2012 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,19 +29,22 @@ public interface IEFO
 
     public final static int INCLUDE_ALL =
             INCLUDE_SELF
-            + INCLUDE_ALT_TERMS
-            + INCLUDE_CHILD_TERMS
-            + INCLUDE_PART_OF_TERMS;
+                    + INCLUDE_ALT_TERMS
+                    + INCLUDE_CHILD_TERMS
+                    + INCLUDE_PART_OF_TERMS;
 
     public final static int INCLUDE_CHILDREN =
             INCLUDE_ALT_TERMS
-            + INCLUDE_CHILD_TERMS
-            + INCLUDE_PART_OF_TERMS;
+                    + INCLUDE_CHILD_TERMS
+                    + INCLUDE_PART_OF_TERMS;
 
     public final static String ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";
 
     public Map<String, EFONode> getMap();
+
     public Map<String, Set<String>> getPartOfIdMap();
+
     public Set<String> getTerms( String efoId, int includeFlags );
+
     public String getVersionInfo();
 }

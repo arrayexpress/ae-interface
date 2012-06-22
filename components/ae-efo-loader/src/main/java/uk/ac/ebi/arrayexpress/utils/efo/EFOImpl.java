@@ -1,7 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.efo;
 
 /*
- * Copyright 2009-2011 European Molecular Biology Laboratory
+ * Copyright 2009-2012 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ public class EFOImpl implements IEFO
         if (null != node) {
             // only alternative terms
             if ((includeFlags & INCLUDE_ALT_TERMS) > 0) {
-                    terms.addAll(node.getAlternativeTerms());
+                terms.addAll(node.getAlternativeTerms());
             }
 
             if ((includeFlags & INCLUDE_SELF) > 0) {

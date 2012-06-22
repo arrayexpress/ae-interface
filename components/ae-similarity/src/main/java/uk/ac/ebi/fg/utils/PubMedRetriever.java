@@ -35,17 +35,15 @@ public class PubMedRetriever
     private IXPathEngine engine;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public PubMedRetriever(IXPathEngine eng)
+    public PubMedRetriever( IXPathEngine eng )
     {
         this.engine = eng;
     }
 
     /**
-     *
-     *
-     * @param sourceURL         base download link
-     * @param publicationId     publication id
-     * @return                  PubMed ids
+     * @param sourceURL     base download link
+     * @param publicationId publication id
+     * @return PubMed ids
      */
     public SortedSet<String> getSimilars( String sourceURL, String publicationId )
     {
@@ -53,15 +51,15 @@ public class PubMedRetriever
         HttpRetriever retriever = new HttpRetriever();
         try {
             DocumentInfo similarDoc = engine.buildDocument(retriever.getPage(sourceURL + publicationId));
-            List nodes = engine.evaluateXPath(similarDoc, "/eLinkResult/LinkSet/LinkSetDb[LinkName = 'pubmed_pubmed_five']/Link/Id[string()!=\'"+publicationId+"\']");
+            List nodes = engine.evaluateXPath(similarDoc, "/eLinkResult/LinkSet/LinkSetDb[LinkName = 'pubmed_pubmed_five']/Link/Id[string()!=\'" + publicationId + "\']");
 
 //            List nodes = engine.evaluateXPath(similarDoc, "//LinkSetDb/Link[../LinkName/text()='pubmed_pubmed_citedin'] |" +
 //                    "//LinkSetDb/Link[../LinkName/text()='pubmed_pubmed'] ");
             retriever.closeConnection();
 
             result = new TreeSet<String>();
-            for (Object node : nodes ) {
-                result.add(((NodeInfo)node).getStringValue());
+            for (Object node : nodes) {
+                result.add(((NodeInfo) node).getStringValue());
             }
         } catch (Throwable ex) {
             logger.warn("URL: " + sourceURL + publicationId + " error: " + ex.getMessage());

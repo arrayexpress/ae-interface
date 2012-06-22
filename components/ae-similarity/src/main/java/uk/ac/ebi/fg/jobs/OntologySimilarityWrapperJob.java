@@ -1,5 +1,22 @@
 package uk.ac.ebi.fg.jobs;
 
+/*
+ * Copyright 2009-2012 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 import org.apache.commons.configuration.Configuration;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -29,15 +46,16 @@ public class OntologySimilarityWrapperJob extends ApplicationJob
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public OntologySimilarityWrapperJob()
-    {}
+    {
+    }
 
-    public void doExecute(JobExecutionContext jobExecutionContext) throws InterruptedException, SchedulerException
+    public void doExecute( JobExecutionContext jobExecutionContext ) throws InterruptedException, SchedulerException
     {
         // get data from context
         JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
         IJobsController jobsController = (IJobsController) dataMap.get("jobsController");
-        OntologyDistanceCalculator distanceCalculator = (OntologyDistanceCalculator)dataMap.get("distanceCalculator");
-        Map<ExperimentId, SortedSet<ExperimentId>> ontologyResults = (ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>)dataMap.get("ontologyResults");
+        OntologyDistanceCalculator distanceCalculator = (OntologyDistanceCalculator) dataMap.get("distanceCalculator");
+        Map<ExperimentId, SortedSet<ExperimentId>> ontologyResults = (ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>) dataMap.get("ontologyResults");
         Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap = (ConcurrentHashMap<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("expToURIMap");
         SortedSet<String> lowPriorityURIs = (SortedSet<String>) dataMap.get("lowPriorityOntologyURIs");
         Configuration properties = (Configuration) dataMap.get("properties");
@@ -50,16 +68,16 @@ public class OntologySimilarityWrapperJob extends ApplicationJob
         Map<String, SortedSet<ExperimentId>> uriToExpMap = reverseMap(expToURIMap);
 
         logger.info("Ontology jobs started");
-        for ( Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : expToURIMap.entrySet() ) {
+        for (Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : expToURIMap.entrySet()) {
             smallMap.put(entry.getKey(), entry.getValue());
             ++counter;
 
-            if ( counter % separateAt == 0 || counter == expToURIMap.size()  ) {
+            if (counter % separateAt == 0 || counter == expToURIMap.size()) {
                 JobDetail ontologyJobDetail = newJob(OntologySimilarityJob.class)
-                                        .withIdentity("ontologySimilarityJob" + counter, jobGroup)
-                                        .storeDurably(false)
-                                        .requestRecovery(false)
-                                        .build();
+                        .withIdentity("ontologySimilarityJob" + counter, jobGroup)
+                        .storeDurably(false)
+                        .requestRecovery(false)
+                        .build();
 
                 ontologyJobDetail.getJobDataMap().put("smallMap", new HashMap<ExperimentId, SortedSet<EfoTerm>>(smallMap));
                 ontologyJobDetail.getJobDataMap().put("distanceCalculator", distanceCalculator);
@@ -83,15 +101,15 @@ public class OntologySimilarityWrapperJob extends ApplicationJob
      * Reverses map containing experiments with URIs.
      *
      * @param map
-     * @return          URI with experiment set
+     * @return URI with experiment set
      */
     private Map<String, SortedSet<ExperimentId>> reverseMap( Map<ExperimentId, SortedSet<EfoTerm>> map )
     {
         Map<String, SortedSet<ExperimentId>> reverseMap = new ConcurrentHashMap<String, SortedSet<ExperimentId>>();  // URI, experiments
 
-        for ( Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : map.entrySet() ) {
-            for ( EfoTerm term : entry.getValue() ) {
-                if ( reverseMap.containsKey(term.getUri()) )
+        for (Map.Entry<ExperimentId, SortedSet<EfoTerm>> entry : map.entrySet()) {
+            for (EfoTerm term : entry.getValue()) {
+                if (reverseMap.containsKey(term.getUri()))
                     reverseMap.get(term.getUri()).add(entry.getKey());
                 else {
                     SortedSet<ExperimentId> set = new TreeSet<ExperimentId>();
