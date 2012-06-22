@@ -62,9 +62,11 @@ public class QueryPool
         if (null != queryExpander) {
             info.setQuery(queryExpander.expandQuery(env, info));
         }
-        this.queries.put(this.queryId.addAndGet(1), info);
 
-        return this.queryId.get();
+        Integer id;
+        this.queries.put(id = this.queryId.addAndGet(1), info);
+
+        return id;
     }
 
     public QueryInfo getQueryInfo( Integer queryId )
