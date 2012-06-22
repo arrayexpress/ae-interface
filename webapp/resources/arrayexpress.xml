@@ -90,6 +90,25 @@
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-experiments.xml</persistence-location>
         </experiments>
 
+        <similarity>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-similarity.xml</persistence-location>
+            <properties>
+                <ignoreList>/WEB-INF/classes/sim-efo-ignore.txt</ignoreList>
+                <lowPriorityOntologyURIs>/WEB-INF/classes/low-priority-URIs.txt</lowPriorityOntologyURIs>
+                <persistence-location-distances>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-ontology-distances.ser</persistence-location-distances>
+                <persistence-location-pubMed>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-PubMed-results.ser</persistence-location-pubMed>
+                <!-- URL with no escape characters - http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?db=pubmed&fromdb=pubmed&rettype=xml&id=    -->
+                <pub_med_url>http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?db=pubmed&amp;fromdb=pubmed&amp;rettype=xml&amp;id=</pub_med_url>
+                <max_ontology_distance>2</max_ontology_distance>
+                <max_pubmed_distance>1</max_pubmed_distance>
+                <max_displayed_OWL_similarities>20</max_displayed_OWL_similarities>
+                <max_displayed_PubMed_similarities>20</max_displayed_PubMed_similarities>
+                <small_experiment_assay_count_limit>500</small_experiment_assay_count_limit>
+                <minimal_calculated_ontology_distance>2.0</minimal_calculated_ontology_distance>
+                <quartz_job_group_name>similarity-jobs</quartz_job_group_name>
+            </properties>
+        </similarity>
+
         <atlasexperiments>
             <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</persistence-location>

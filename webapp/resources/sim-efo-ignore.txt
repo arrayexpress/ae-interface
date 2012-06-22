@@ -1,0 +1,15 @@
+#
+# Ignored EFO classes for ontology similarity calculations
+#
+# sex
+http://www.ebi.ac.uk/efo/EFO_0000695
+# measurement
+http://www.ebi.ac.uk/efo/EFO_0001444
+# unit
+http://purl.org/obo/owl/UO#UO:0000000
+# normal
+http://www.ebi.ac.uk/efo/EFO_0000761
+# obsolete classes
+http://www.geneontology.org/formats/oboInOwl#ObsoleteClass
+# BioSourceType
+http://purl.obolibrary.org/obo/OBI_0001472

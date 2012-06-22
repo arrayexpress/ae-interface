@@ -36,6 +36,7 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
+import uk.ac.ebi.fg.utils.saxon.IXPathEngine;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
@@ -50,7 +51,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class SaxonEngine extends ApplicationComponent implements URIResolver, ErrorListener
+public class SaxonEngine extends ApplicationComponent implements URIResolver, ErrorListener, IXPathEngine
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -190,6 +191,12 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         StringReader reader = new StringReader(xml);
         Configuration config = trFactory.getConfiguration();
         return config.buildDocument(new StreamSource(reader));
+    }
+
+    public DocumentInfo buildDocument( InputStream stream ) throws XPathException
+    {
+        Configuration config = trFactory.getConfiguration();
+        return config.buildDocument(new StreamSource(stream));
     }
 
     public List evaluateXPath( DocumentInfo doc, String xpath ) throws XPathExpressionException

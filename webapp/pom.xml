@@ -232,6 +232,33 @@
             </properties>
         </profile>
         <profile>
+            <id>test.ae2_production</id>
+            <properties>
+                <interface.application.link.www_domain>http://www.ebi.ac.uk</interface.application.link.www_domain>
+                <interface.application.link.www_domain.inc>${interface.application.base.path}/www-inc</interface.application.link.www_domain.inc>
+                <interface.application.link.query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html</interface.application.link.query_help>
+                <interface.application.link.adv_query_help>${interface.application.link.www_domain}/fg/doc/help/ae_help.html#AdvancedSearchesNewInterface</interface.application.link.adv_query_help>
+                <interface.application.link.browse_help>${interface.application.link.www_domain}/fg/doc/help/browse_results.html</interface.application.link.browse_help>
+                <interface.application.link.atlas.base.url>${interface.application.link.www_domain}/gxa</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.species_options.url>atlas_list-species.html</interface.application.link.atlas.species_options.url>
+                <interface.application.link.atlas.stats.url>atlas_stats.txt</interface.application.link.atlas.stats.url>
+                <interface.application.link.atlas.query.url>${interface.application.link.atlas.base.url}/qrs</interface.application.link.atlas.query.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiment/</interface.application.link.atlas.exp_query.url>
+
+                <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
+                <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
+
+                <interface.application.pref.experiments.ae1.connections/>
+                <interface.application.pref.experiments.ae1.reload.schedule/>
+
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0/15 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+
+                <interface.application.pref.files.prefix>ae2-production</interface.application.pref.files.prefix>
+                <interface.application.pref.files.rescan.interval>15</interface.application.pref.files.rescan.interval>
+                <interface.application.body.class/>
+            </properties>
+        </profile>
+        <profile>
             <id>preproduction</id>
             <properties>
                 <interface.application.link.www_domain/>
@@ -528,13 +555,16 @@
             <artifactId>ae-interface-auth</artifactId>
             <version>1.0</version>
         </dependency>
-        <!--
         <dependency>
-            <groupId>efo-query</groupId>
-            <artifactId>efo-query</artifactId>
+            <groupId>uk.ac.ebi.fg</groupId>
+            <artifactId>ae-jobs-controller</artifactId>
             <version>1.0</version>
         </dependency>
-        -->
+        <dependency>
+            <groupId>uk.ac.ebi.fg</groupId>
+            <artifactId>ae-similarity</artifactId>
+            <version>2.0</version>
+        </dependency>
         <dependency>
             <groupId>owlapi</groupId>
             <artifactId>owlapi</artifactId>

@@ -790,6 +790,16 @@ div.acc_status.migrated.identical span.ae1
     text-align: left;
 }
 
+.td_ext .owl {
+    width: 50%;
+    vertical-align: top;
+}
+
+.td_ext .pubmed {
+    width: 50%;
+    vertical-align: top;
+}
+
 #ae_results_status,
 #ae_results_pager {
     float: left;

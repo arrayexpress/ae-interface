@@ -1,0 +1,21 @@
+#
+# Common term URIs that need to have low(close to no) impact on ontology results
+#
+# adult
+http://www.ebi.ac.uk/efo/EFO_0001272
+# C57BL/6J
+http://www.ebi.ac.uk/efo/EFO_0000606
+# BALB/c
+http://www.ebi.ac.uk/efo/EFO_0000602
+# gene_knock_out
+http://www.ebi.ac.uk/efo/EFO_0000506
+# K562
+http://www.ebi.ac.uk/efo/EFO_0002067
+# HeLa
+http://www.ebi.ac.uk/efo/EFO_0001185
+# whole_organism
+http://www.ebi.ac.uk/efo/EFO_0002906
+# organism_part
+http://www.ebi.ac.uk/efo/EFO_0000635
+# control
+http://www.ebi.ac.uk/efo/EFO_0001461

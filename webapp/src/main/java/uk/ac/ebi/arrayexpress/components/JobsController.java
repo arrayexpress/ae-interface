@@ -20,10 +20,13 @@ package uk.ac.ebi.arrayexpress.components;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
 import uk.ac.ebi.arrayexpress.jobs.*;
+import uk.ac.ebi.arrayexpress.utils.controller.IJobsController;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import static org.quartz.DateBuilder.futureDate;
 import static org.quartz.JobBuilder.newJob;
@@ -32,7 +35,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 import static org.quartz.impl.matchers.EverythingMatcher.allJobs;
 
 
-public class JobsController extends ApplicationComponent
+public class JobsController extends ApplicationComponent implements IJobsController
 {
     // jobs group
     private static final String AE_JOBS_GROUP = "ae-jobs";
@@ -54,6 +57,7 @@ public class JobsController extends ApplicationComponent
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
         addJob("update-efo", UpdateOntologyJob.class);
+        addJob("similarity", SimilarityJob.class);
 
         // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");
@@ -64,6 +68,10 @@ public class JobsController extends ApplicationComponent
         scheduleJob("update-efo", "ae.efo.update");
 
         startScheduler();
+
+        executeJob("similarity");
+        AE2ExperimentReloadJobListener ae2ExperimentReloadJobListener = new AE2ExperimentReloadJobListener("ae2ReloadListener");
+        addJobListener(ae2ExperimentReloadJobListener);
     }
 
     public void terminate() throws Exception
@@ -74,6 +82,11 @@ public class JobsController extends ApplicationComponent
     public void executeJob( String name ) throws SchedulerException
     {
         getScheduler().triggerJob(new JobKey(name, AE_JOBS_GROUP));
+    }
+
+    public void executeJob( String name, String group ) throws SchedulerException
+    {
+        getScheduler().triggerJob(new JobKey(name, group));
     }
 
     public void executeJobWithParam( String name, String paramName, String paramValue ) throws SchedulerException
@@ -151,6 +164,23 @@ public class JobsController extends ApplicationComponent
                 .requestRecovery(false)
                 .build();
         getScheduler().addJob(j, false);
+    }
+
+    public void addJob( String name, Class<? extends Job> c, Map<String, Object> dataMap, String group ) throws SchedulerException
+    {
+        JobDetail j = newJob(c)
+                .withIdentity(name, group)
+                .storeDurably(true)
+                .requestRecovery(false)
+                .build();
+
+        j.getJobDataMap().putAll(dataMap);
+        getScheduler().addJob(j, true);
+    }
+
+    public void addJob( String name, Class<? extends Job> c, JobDetail jobDetail ) throws SchedulerException
+    {
+        getScheduler().addJob(jobDetail, true);
     }
 
     private void scheduleJob( String name, String preferencePrefix ) throws ParseException, SchedulerException

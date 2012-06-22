@@ -53,6 +53,7 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new Files());
         addComponent(new JobsController());
         addComponent(new Ontologies());
+        addComponent(new Similarity());
 
     }
 

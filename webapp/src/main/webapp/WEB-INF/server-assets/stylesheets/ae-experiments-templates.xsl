@@ -31,7 +31,134 @@
             </tr>
         </xsl:if>
     </xsl:template>
-    
+
+    <xsl:template name="exp-similarity-section">
+        <xsl:param name="vExpId"/>
+        <xsl:param name="vBasePath"/>
+        <xsl:param name="vSimilarExperiments"/>
+
+        <xsl:if test="$vSimilarExperiments/similarOntologyExperiments/similarExperiment|$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
+            <tr>
+                <td class="name"><div class="name">Similarity</div></td>
+                <td class="attrs"><div class="attrs">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th class="owl">Ontology based:</th>
+                                <th class="pubmed">PubMed based:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="owl" id="{$vExpId}_owl">
+                                    <xsl:for-each select="$vSimilarExperiments/similarOntologyExperiments/similarExperiment">
+                                        <span class="simExp">
+                                            <a href="{$vBasePath}/experiments/{accession}">
+                                                <xsl:value-of select="accession"/>
+                                            </a>
+                                            <xsl:text> </xsl:text>
+                                            <xsl:variable name="v2Experiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', accession)"/>
+                                            <xsl:value-of select="$v2Experiment/name"/>
+                                            <br/><br/>
+                                        </span>
+                                        <xsl:text> </xsl:text>
+                                    </xsl:for-each>
+                                    <a href="javascript:toggleMoreSimExp('{$vExpId}_owl')" class="more" id="{$vExpId}_owl_text"></a>
+                                </td>
+                                <td class="pubmed" id="{$vExpId}_pubmed">
+                                    <xsl:for-each select="$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
+                                        <a href="{$vBasePath}/experiments/{accession}" class="simExp">
+                                            <xsl:value-of select="accession"/>
+                                        </a>
+                                        <xsl:text> </xsl:text>
+                                        <xsl:variable name="v2Experiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', accession)"/>
+                                        <xsl:value-of select="$v2Experiment/name"/>
+                                        <br/> <br/>
+                                    </xsl:for-each>
+                                    <a href="javascript:toggleMoreSimExp('{$vExpId}_pubmed')" class="more" id="{$vExpId}_pubmed_text"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table></div>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="exp-similarity-debug-section">
+        <xsl:param name="vExpId"/>
+        <xsl:param name="vBasePath"/>
+        <xsl:param name="vSimilarExperiments"/>
+        <xsl:if test="$vSimilarExperiments/similarOntologyExperiments/similarExperiment|$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
+            <tr>
+                <td class="name"><div class="name">Similarity</div></td>
+                <td class="attrs"><div class="attrs">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                            <tr class="owl">
+                                <td><b>Ontolgy terms used from this experiment: </b>
+                                    <xsl:for-each select="$vSimilarExperiments/ontologyURIs/URI">
+                                        <a href="{text()}" target="_blank">
+                                            <xsl:value-of select="@term" />
+                                        </a>
+                                        <xsl:if test="position()!=last()">
+                                            <xsl:text>, </xsl:text>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="owl">Ontology based:</th>
+                                <th class="pubmed">PubMed based:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="owl" id="{$vExpId}_owl">
+                                    <xsl:for-each select="$vSimilarExperiments/similarOntologyExperiments/similarExperiment">
+                                        <span class="simExp">
+                                            <a href="{$vBasePath}/experiments/{accession}">
+                                                <xsl:value-of select="accession"/>
+                                            </a>
+                                            <xsl:text>( term(s): </xsl:text>
+                                            <xsl:for-each select="ontologyURIs/URI">
+                                                <a href="{text()}" target="_blank">
+                                                    <xsl:value-of select="@term" />
+                                                </a>
+                                                <xsl:if test="position()!=last()">
+                                                    <xsl:text>, </xsl:text>
+                                                </xsl:if>
+                                            </xsl:for-each>
+                                            <xsl:text>) </xsl:text>
+                                            <xsl:value-of select="numberOfMatchedURIs"/>
+                                            <xsl:text>; </xsl:text>
+                                            <xsl:value-of select="calculatedDistance"/>
+                                            <br/>
+                                        </span>
+                                        <xsl:text> </xsl:text>
+                                    </xsl:for-each>
+                                    <a href="javascript:toggleMoreSimExp('{$vExpId}_owl')" class="more" id="{$vExpId}_owl_text"></a>
+                                </td>
+                                <td class="pubmed" id="{$vExpId}_pubmed">
+                                    <xsl:for-each select="$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
+                                        <a href="{$vBasePath}/experiments/{accession}" class="simExp">
+                                            <xsl:value-of select="accession"/>
+                                            <xsl:text> (</xsl:text>
+                                            <xsl:value-of select="distance"/>
+                                            <xsl:text>)</xsl:text>
+                                        </a>
+                                        <xsl:text> </xsl:text>
+                                    </xsl:for-each>
+                                    <a href="javascript:toggleMoreSimExp('{$vExpId}_pubmed')" class="more" id="{$vExpId}_pubmed_text"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table></div>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="exp-keywords-section">
         <xsl:param name="pQueryId"/>
         <xsl:variable name="vExpTypeAndDesign" select="experimenttype | experimentdesign"/>

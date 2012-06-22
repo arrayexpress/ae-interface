@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Ontologies extends ApplicationComponent
@@ -76,6 +77,7 @@ public class Ontologies extends ApplicationComponent
 
     private IEFO efo;
     private EFOExpansionLookupIndex lookupIndex;
+    private AtomicBoolean hasEfoLoaded = new AtomicBoolean(false);
 
     private SearchEngine search;
     private Autocompletion autocompletion;
@@ -104,6 +106,8 @@ public class Ontologies extends ApplicationComponent
 
     public void update( InputStream ontologyStream ) throws IOException, InterruptedException
     {
+        setEfoLoadedFlag(false);
+
         // load custom synonyms to lookup index
         loadCustomSynonyms();
 
@@ -119,6 +123,8 @@ public class Ontologies extends ApplicationComponent
 
         this.assayByMolecule.reload(getEfo(), "http://www.ebi.ac.uk/efo/EFO_0002772");
         this.assayByInstrument.reload(getEfo(), "http://www.ebi.ac.uk/efo/EFO_0002773");
+
+        setEfoLoadedFlag(true);
     }
 
     public IEFO getEfo()
@@ -154,9 +160,8 @@ public class Ontologies extends ApplicationComponent
         }
     }
 
-    private IEFO removeIgnoredClasses( IEFO efo ) throws IOException
+    public IEFO removeIgnoredClasses( IEFO efo, String ignoreListFileLocation ) throws IOException
     {
-        String ignoreListFileLocation = getPreferences().getString("ae.efo.ignoreList");
         if (null != ignoreListFileLocation) {
             InputStream is = null;
             try {
@@ -176,6 +181,11 @@ public class Ontologies extends ApplicationComponent
             }
         }
         return efo;
+    }
+
+    private IEFO removeIgnoredClasses( IEFO efo ) throws IOException
+    {
+        return removeIgnoredClasses(efo, getPreferences().getString("ae.efo.ignoreList"));
     }
 
     private void removeEFONode( IEFO efo, String nodeId )
@@ -213,5 +223,15 @@ public class Ontologies extends ApplicationComponent
         Controller c = search.getController();
         c.setQueryExpander(new EFOQueryExpander(this.lookupIndex));
         c.setQueryHighlighter(new EFOExpandedHighlighter());
+    }
+
+    public boolean getEfoLoadedFlag()
+    {
+        return hasEfoLoaded.get();
+    }
+
+    private void setEfoLoadedFlag( boolean flag )
+    {
+        hasEfoLoaded.set(flag);
     }
 }
