@@ -2,12 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>uk.ac.ebi.microarray</groupId>
     <artifactId>ae-saxon-exts</artifactId>
     <name>ArrayExpress SAXON Extensions</name>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <url>http://www.ebi.ac.uk/arrayexpress</url>
+    <parent>
+        <groupId>uk.ac.ebi.fg</groupId>
+        <artifactId>components</artifactId>
+        <version>1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <developers>
         <developer>
@@ -27,17 +33,7 @@
             </roles>
         </developer>
     </developers>
-    <!-- if you see 401 error deploying this artifact, please add the following to ~/.m2/settings.xml:
-        <settings>
-            <servers>
-                <server>
-                    <id>artifactory-local-repo</id>
-                    <username>admin</username>
-                    <password>password</password>
-                </server>
-            </servers>
-        </settings>
-    -->
+
     <distributionManagement>
         <repository>
             <id>artifactory-local-repo</id>
@@ -80,9 +76,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.5</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- SaxonHE is used to satisfy latest oXygen,
+             but we also need to move to it in main development
+         -->
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon9he</artifactId>
