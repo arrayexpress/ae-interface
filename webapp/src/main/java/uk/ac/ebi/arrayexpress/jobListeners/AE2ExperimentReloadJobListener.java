@@ -63,7 +63,7 @@ public class AE2ExperimentReloadJobListener implements JobListener
                 }
 
                 if ( !running )
-                    ((JobsController) Application.getAppComponent("JobsController")).executeJob("similarity");
+                    ((JobsController) Application.getAppComponent("JobsController")).executeJob("recalculate-similarity");
             }
         } catch ( SchedulerException ex ) {
             logger.error("Scheduler exception while executing " + getName() + " : " + ex.getMessage());

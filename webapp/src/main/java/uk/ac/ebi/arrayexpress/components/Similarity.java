@@ -22,6 +22,8 @@ import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
+import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
@@ -67,6 +69,12 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
 
         updateAccelerators();
         this.saxon.registerDocumentSource(this);
+
+        JobsController jobsController = (JobsController) getComponent("JobsController");
+
+        jobsController.addJob("recalculate-similarity", SimilarityJob.class);
+        jobsController.addJobListener(new AE2ExperimentReloadJobListener("ae2-data-reload-listener"));
+        jobsController.executeJob("recalculate-similarity");
     }
 
     public void terminate() throws Exception

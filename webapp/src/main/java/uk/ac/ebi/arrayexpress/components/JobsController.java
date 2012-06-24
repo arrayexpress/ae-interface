@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.components;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
 import uk.ac.ebi.arrayexpress.jobs.*;
 import uk.ac.ebi.arrayexpress.utils.controller.IJobsController;
 
@@ -57,7 +56,6 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
         addJob("update-efo", UpdateOntologyJob.class);
-        addJob("similarity", SimilarityJob.class);
 
         // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");
@@ -68,10 +66,6 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         scheduleJob("update-efo", "ae.efo.update");
 
         startScheduler();
-
-        executeJob("similarity");
-        AE2ExperimentReloadJobListener ae2ExperimentReloadJobListener = new AE2ExperimentReloadJobListener("ae2ReloadListener");
-        addJobListener(ae2ExperimentReloadJobListener);
     }
 
     public void terminate() throws Exception
@@ -156,7 +150,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         return scheduler;
     }
 
-    private void addJob( String name, Class<? extends Job> c ) throws SchedulerException
+    public void addJob( String name, Class<? extends Job> c ) throws SchedulerException
     {
         JobDetail j = newJob(c)
                 .withIdentity(name, AE_JOBS_GROUP)
