@@ -3,11 +3,10 @@
     xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-    xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+    xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
     xmlns:html="http://www.w3.org/1999/xhtml"
-    extension-element-prefixes="ae aejava search"
-    exclude-result-prefixes="ae aejava search html fn xs"
+    extension-element-prefixes="ae search"
+    exclude-result-prefixes="ae search html fn xs"
     version="2.0">
     
     <xsl:param name="accession"/>
@@ -86,7 +85,7 @@
     
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
-    <xsl:variable name="vDataFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+    <xsl:variable name="vDataFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
     
     <xsl:output omit-xml-declaration="yes" method="html"
         indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>

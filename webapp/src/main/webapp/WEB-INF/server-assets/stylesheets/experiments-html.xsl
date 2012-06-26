@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="aejava search html"
-                exclude-result-prefixes="aejava search html"
+                extension-element-prefixes="ae search html"
+                exclude-result-prefixes="ae search html"
                 version="2.0">
 
     <xsl:param name="queryid"/>
@@ -103,7 +103,7 @@
     </xsl:template>
 
     <xsl:template match="experiment">
-        <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
 
         <div id="ae_experiment_content">
             <div class="ae_detail">

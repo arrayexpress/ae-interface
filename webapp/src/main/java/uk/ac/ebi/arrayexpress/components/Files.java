@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -121,9 +121,10 @@ public class Files extends ApplicationComponent implements IDocumentSource
         ExtFunctions.clearAccelerator("fgem-files");
 
         try {
-            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
+            DocumentInfo doc = getDocument();
+            XPath xp = new XPathEvaluator(doc.getConfiguration());
             XPathExpression xpe = xp.compile("/files/folder");
-            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
+            List documentNodes = (List) xpe.evaluate(doc, XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("@accession");
             XPathExpression folderKindXpe = xp.compile("@kind");

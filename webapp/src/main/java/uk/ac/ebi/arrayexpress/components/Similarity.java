@@ -25,9 +25,9 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
 import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 import uk.ac.ebi.fg.utils.ISimilarityComponent;
 
 import javax.xml.xpath.XPath;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs aejava search html"
-                exclude-result-prefixes="xs aejava search html"
+                extension-element-prefixes="xs ae search html"
+                exclude-result-prefixes="xs ae search html"
                 version="2.0">
 
     <xsl:param name="page"/>

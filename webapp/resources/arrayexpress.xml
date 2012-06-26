@@ -248,9 +248,10 @@
         <index id="files" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">
             <document path="/files/folder/file" defaultField="keywords">
                 <field name="keywords" type="string" path="string-join(.//@*, ' ')" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="name" title="" type="string" path="@name" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="kind" title="" type="string" path="@kind" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="extension" title="" type="string" path="@extension" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="accession" title="by Accession" type="string" path="../@accession" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="name" title="by File Name" type="string" path="@name" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="kind" title="by Kind" type="string" path="@kind" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="extension" title="by Extension" type="string" path="@extension" analyze="true" store="false" escape="false" expand="false"/>
             </document>
         </index>
         <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">

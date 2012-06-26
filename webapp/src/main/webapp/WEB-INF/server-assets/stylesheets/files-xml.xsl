@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="aejava search"
-                exclude-result-prefixes="aejava search"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
+                extension-element-prefixes="ae search"
+                exclude-result-prefixes="ae search"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -44,7 +44,7 @@
         <xsl:variable name="vAccession" select="accession"/>
         <experiment>
             <accession><xsl:value-of select="$vAccession"/></accession>
-            <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+            <xsl:variable name="vExpFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
             <xsl:for-each select="$vExpFolder/file">
                 <xsl:call-template name="file-for-accession">
                     <xsl:with-param name="pAccession" select="$vAccession"/>
@@ -54,7 +54,7 @@
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
                 <xsl:variable name="vArrAccession" select="string(accession)"/>
-                <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vArrAccession)"/>
+                <xsl:variable name="vArrFolder" select="ae:getAcceleratorValue('ftp-folder', $vArrAccession)"/>
 
                 <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
                     <xsl:call-template name="file-for-accession">

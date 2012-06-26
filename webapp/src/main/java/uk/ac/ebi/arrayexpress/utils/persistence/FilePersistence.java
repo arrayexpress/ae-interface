@@ -46,7 +46,6 @@ public class FilePersistence<T extends Persistable> extends Persistence<T>
                 , persistenceFile.getName());
 
         StringTools.stringToFile(object.toPersistence(), persistenceFile, PERSISTENCE_FILE_ENCODING);
-
     }
 
     protected void restore( T object ) throws IOException

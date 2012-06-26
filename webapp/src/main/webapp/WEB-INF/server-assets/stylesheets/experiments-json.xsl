@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:json="http://json.org/"
                 extension-element-prefixes="search json"
                 exclude-result-prefixes="search json"

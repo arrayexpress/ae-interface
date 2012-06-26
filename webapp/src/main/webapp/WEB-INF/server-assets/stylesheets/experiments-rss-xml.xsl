@@ -2,9 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
                 extension-element-prefixes="ae xs fn saxon search"
                 exclude-result-prefixes="ae xs fn saxon search"
                 version="2.0">
@@ -25,6 +25,7 @@
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
+    <xsl:param name="querystring"/>
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
@@ -39,7 +40,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:query-index($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -58,7 +59,7 @@
                 <link>
                     <xsl:value-of select="$vBaseUrl"/>
                     <xsl:text>/browse.html?</xsl:text>
-                    <xsl:value-of select="search:getQueryString($queryid)"/>
+                    <xsl:value-of select="$querystring"/>
                </link>
                 <description><xsl:text>The ArrayExpress Archive is a database of functional genomics experiments including gene expression where you can query and download data collected to MIAME and MINSEQE standards</xsl:text></description>
                 <language><xsl:text>en</xsl:text></language>
@@ -85,7 +86,7 @@
     <xsl:template match="experiment">
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
-        <xsl:if test="position() &gt;= number($pFrom) and position() &lt;= number($pTo)">
+        <xsl:if test="position() &gt;= xs:integer($pFrom) and position() &lt;= xs:integer($pTo)">
             <item>
                 <title>
                     <xsl:value-of select="accession"/>

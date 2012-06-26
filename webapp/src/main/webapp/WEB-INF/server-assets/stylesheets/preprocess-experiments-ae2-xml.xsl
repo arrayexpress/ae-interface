@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="aejava fn saxon"
-                exclude-result-prefixes="aejava fn saxon html"
+                extension-element-prefixes="ae fn saxon"
+                exclude-result-prefixes="ae fn saxon html"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -25,7 +25,7 @@
         <experiment>
             <xsl:variable name="vAccession" select="accession"/>
 
-            <xsl:if test="aejava:getAcceleratorValueAsString('is-in-atlas', $vAccession)">
+            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
@@ -44,10 +44,10 @@
             </xsl:for-each>
 
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('raw-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
             </fgemdatafiles>
             
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
@@ -106,7 +106,7 @@
                         <xsl:value-of select="." />
                     </xsl:element>
             </xsl:for-each>
-            <xsl:copy-of select="aejava:getAcceleratorValueAsCollection('legacy-array-ids', @accession)"/>
+            <xsl:copy-of select="ae:getAcceleratorValue('legacy-array-ids', @accession)"/>
         </arraydesign>
     </xsl:template>
 

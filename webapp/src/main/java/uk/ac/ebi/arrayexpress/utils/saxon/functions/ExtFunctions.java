@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.saxon;
+package uk.ac.ebi.arrayexpress.utils.saxon.functions;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory

@@ -1,25 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.functions;
-
-import net.sf.saxon.AugmentedSource;
-import net.sf.saxon.Controller;
-import net.sf.saxon.event.Builder;
-import net.sf.saxon.event.Receiver;
-import net.sf.saxon.event.Sender;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionVisitor;
-import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.functions.SystemFunction;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.AtomicValue;
-import net.sf.saxon.value.Whitespace;
-import org.ccil.cowan.tagsoup.Parser;
-import org.xml.sax.InputSource;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.sax.SAXSource;
-import java.io.StringReader;
+package uk.ac.ebi.arrayexpress.utils.saxon.functions.old;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -37,7 +16,7 @@ import java.io.StringReader;
  * limitations under the License.
  *
  */
-
+/*
 public class ParseHtml extends SystemFunction
 {
 
@@ -101,3 +80,4 @@ public class ParseHtml extends SystemFunction
         return parser;
     }
 }
+*/

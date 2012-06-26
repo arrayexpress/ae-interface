@@ -57,6 +57,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
             return ((SaxonEngine)Application.getAppComponent("SaxonEngine")).serializeDocument(getDocument());
         } catch (Exception x)
         {
+            logger.debug( "Caught an exception:", x );
         }
         return null;
     }
@@ -67,6 +68,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
             setDocument(((SaxonEngine)Application.getAppComponent("SaxonEngine")).buildDocument(str));
         } catch (Exception x)
         {
+            setDocument(null);
         }
 
         if (null == getDocument()) {
@@ -84,7 +86,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
              total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
         } catch (XPathExpressionException x)
         {
-
+            logger.debug("Caught an exception:", x);
         }
 
         return (null == total || total.equals("0"));

@@ -2,11 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="aejava fn html saxon xs"
-                exclude-result-prefixes="aejava fn html saxon xs"
+                extension-element-prefixes="ae fn html saxon xs"
+                exclude-result-prefixes="ae fn html saxon xs"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
@@ -50,7 +50,7 @@
                 </xsl:analyze-string>
             </xsl:variable>
 
-            <xsl:if test="aejava:getAcceleratorValueAsString('is-in-atlas', accession)">
+            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', accession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
@@ -112,11 +112,11 @@
                 </xsl:choose>
             </samples>
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('raw-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
                 <xsl:value-of select="$vGenDescription/rawdatafiles"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="if ('0' != aejava:getAcceleratorValueAsString('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
                 <xsl:value-of select="$vGenDescription/fgemdatafiles"/>
             </fgemdatafiles>
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">

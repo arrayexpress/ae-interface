@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="aejava search html"
-                exclude-result-prefixes="aejava search html"
+                extension-element-prefixes="ae search html"
+                exclude-result-prefixes="ae search html"
                 version="2.0">
    
     <xsl:param name="sortby"/>
@@ -214,7 +214,7 @@
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
         <xsl:choose>
-            <xsl:when test="'0' != aejava:getAcceleratorValueAsString($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
+            <xsl:when test="'0' != ae:getAcceleratorValue($pKind, $pAccession)"><img src="{$basepath}/assets/images/basic_tick.gif" width="16" height="16" alt="*"/></xsl:when>
             <xsl:otherwise><img src="{$basepath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>

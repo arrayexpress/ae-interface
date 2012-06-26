@@ -20,14 +20,14 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
-import net.sf.saxon.event.SaxonOutputKeys;
+import net.sf.saxon.event.Builder;
 import net.sf.saxon.event.SequenceWriter;
-import net.sf.saxon.functions.FunctionLibraryList;
-import net.sf.saxon.instruct.TerminationException;
+import net.sf.saxon.expr.instruct.TerminationException;
+import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.tinytree.TinyBuilder;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.tiny.TinyBuilder;
 import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,10 @@ import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.UserFunctionLibrary;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.FormatFileSizeFunction;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.GetAcceleratorValueFunction;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.TrimTrailingDotFunction;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon.ParseHTMLFunction;
 import uk.ac.ebi.fg.utils.saxon.IXPathEngine;
 
 import javax.xml.transform.*;
@@ -74,6 +77,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory = (TransformerFactoryImpl) TransformerFactoryImpl.newInstance();
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
+        trFactory.getConfiguration().setTreeModel(Builder.TINY_TREE_CONDENSED);
 
         // create application document
         appDocument = buildDocument(
@@ -82,12 +86,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
                         + "\"/>"
         );
 
-        // hack into Saxon to add "parse-html" function from 9.2
-        Configuration c = trFactory.getConfiguration();
-        FunctionLibraryList extLibraries = new FunctionLibraryList();
-        extLibraries.addFunctionLibrary(c.getExtensionBinder("java"));
-        extLibraries.addFunctionLibrary(new UserFunctionLibrary());
-        c.setExtensionBinder("java", extLibraries);
+        registerExtensionFunction(new ParseHTMLFunction());
+        registerExtensionFunction(new GetAcceleratorValueFunction());
+        registerExtensionFunction(new FormatFileSizeFunction());
+        registerExtensionFunction(new TrimTrailingDotFunction());
     }
 
     public void terminate() throws Exception
@@ -171,6 +173,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return appDocument;
     }
 
+    public void registerExtensionFunction( ExtensionFunctionDefinition f )
+    {
+        trFactory.getConfiguration().registerExtensionFunction(f);
+    }
+
     public String serializeDocument( DocumentInfo document ) throws Exception
     {
         Transformer transformer = trFactory.newTransformer();
@@ -180,7 +187,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
         transformer.setOutputProperty(OutputKeys.ENCODING, "US-ASCII");
-        transformer.setOutputProperty(SaxonOutputKeys.CHARACTER_REPRESENTATION, "entity;decimal");
 
         transformer.transform(document, new StreamResult(outStream));
         return outStream.toString(XML_STRING_ENCODING);
@@ -219,6 +225,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));
     }
 
+    @SuppressWarnings("unused")
     public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params, File dstFile ) throws Exception
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstFile));
@@ -269,7 +276,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String, String[]> params ) throws Exception
     {
         Source src = new StreamSource(new StringReader(srcXmlString));
-        TinyBuilder dstDocument = new TinyBuilder();
+        TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
         if (transform(src, stylesheet, params, dstDocument)) {
             return (DocumentInfo) dstDocument.getCurrentRoot();
         }
@@ -278,7 +285,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
     public DocumentInfo transform( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
     {
-        TinyBuilder dstDocument = new TinyBuilder();
+        TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
         if (transform(source, stylesheet, params, dstDocument)) {
             return (DocumentInfo) dstDocument.getCurrentRoot();
         }
@@ -325,12 +332,13 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return result;
     }
 
-    private static class LoggerWriter extends SequenceWriter
+    class LoggerWriter extends SequenceWriter
     {
         private Logger logger;
 
-        public LoggerWriter( Logger logger )
+        protected LoggerWriter( Logger logger )
         {
+            super(null);
             this.logger = logger;
         }
 

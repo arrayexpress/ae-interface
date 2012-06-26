@@ -2,11 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs ae aejava search html"
-                exclude-result-prefixes="xs ae aejava search html"
+                extension-element-prefixes="xs ae search html"
+                exclude-result-prefixes="xs ae search html"
                 version="2.0">
 
     <xsl:param name="page"/>
@@ -95,7 +94,7 @@
         <xsl:param name="pTo"/>
         <xsl:variable name="vExpId" select="id" as="xs:string"/>
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
@@ -217,7 +216,7 @@
                             <xsl:call-template name="exp-similarity-debug-section">
                                 <xsl:with-param name="vExpId" select="$vExpId"/>
                                 <xsl:with-param name="vBasePath" select="$basepath"/>
-                                <xsl:with-param name="vSimilarExperiments" select="aejava:getAcceleratorValueAsSequence('similar-experiments', $vAccession)"/>
+                                <xsl:with-param name="vSimilarExperiments" select="ae:getAcceleratorValue('similar-experiments', $vAccession)"/>
                             </xsl:call-template>
 
                             <xsl:call-template name="exp-keywords-section">

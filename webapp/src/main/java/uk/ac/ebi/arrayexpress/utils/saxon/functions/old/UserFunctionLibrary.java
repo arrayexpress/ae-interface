@@ -1,20 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.functions;
-
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.StaticContext;
-import net.sf.saxon.expr.StaticProperty;
-import net.sf.saxon.functions.FunctionLibrary;
-import net.sf.saxon.functions.StandardFunction;
-import net.sf.saxon.functions.SystemFunction;
-import net.sf.saxon.om.NamespaceConstant;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.pattern.NodeKindTest;
-import net.sf.saxon.trans.Err;
-import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.type.BuiltInAtomicType;
-import net.sf.saxon.type.ItemType;
-
-import java.util.HashMap;
+package uk.ac.ebi.arrayexpress.utils.saxon.functions.old;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -32,7 +16,7 @@ import java.util.HashMap;
  * limitations under the License.
  *
  */
-
+/*
 public class UserFunctionLibrary implements FunctionLibrary
 {
     private HashMap<String, StandardFunction.Entry> functionTable;
@@ -131,3 +115,4 @@ public class UserFunctionLibrary implements FunctionLibrary
         return this;
     }
 }
+*/

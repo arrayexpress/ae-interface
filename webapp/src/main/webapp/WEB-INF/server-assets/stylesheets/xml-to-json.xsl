@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="2.0" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:json="http://json.org/">
+	            xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	            xmlns:json="http://json.org/">
 
 	<xsl:output indent="no" omit-xml-declaration="yes" method="text" encoding="utf-8"/>
 	<xsl:strip-space elements="*"/>
@@ -51,7 +51,8 @@
 		can use this function to transform any XML node to JSON.
 	-->
 	<xsl:function name="json:generate" as="xs:string">
-		<xsl:param name="input" as="node()"/>	
+		<xsl:param name="input" as="node()"/>
+	
 		<xsl:variable name="json-tree">
 			<json:object>
 				<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>

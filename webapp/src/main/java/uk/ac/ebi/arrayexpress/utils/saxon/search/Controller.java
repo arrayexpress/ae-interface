@@ -142,7 +142,7 @@ public class Controller
         return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
     }
 
-    public Integer addQuery( String indexId, Map<String, String[]> queryParams, String queryString )
+    public Integer addQuery( String indexId, Map<String, String[]> queryParams )
             throws ParseException, IOException
     {
         if (null == this.queryConstructor) {
@@ -154,15 +154,8 @@ public class Controller
                 getEnvironment(indexId)
                 , this.queryConstructor
                 , queryParams
-                , queryString
                 , this.queryExpander
         );
-    }
-
-    public String getQueryString( Integer queryId )
-    {
-        QueryInfo info = this.queryPool.getQueryInfo(queryId);
-        return null != info ? info.getQueryString() : null;
     }
 
     public List<NodeInfo> queryIndex( Integer queryId ) throws IOException

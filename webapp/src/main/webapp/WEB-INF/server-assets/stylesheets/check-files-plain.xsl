@@ -2,10 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="xs ae aejava search"
-                exclude-result-prefixes="xs ae aejava search"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
+                extension-element-prefixes="xs ae search"
+                exclude-result-prefixes="xs ae search"
                 version="2.0">
     
     <xsl:param name="rescanMessage" as="xs:string"/>

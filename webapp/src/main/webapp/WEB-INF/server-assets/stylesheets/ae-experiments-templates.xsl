@@ -3,10 +3,9 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
     xmlns:html="http://www.w3.org/1999/xhtml"
-    extension-element-prefixes="xs fn ae aejava html"
-    exclude-result-prefixes="xs fn ae aejava html"
+    extension-element-prefixes="xs fn ae html"
+    exclude-result-prefixes="xs fn ae html"
     version="2.0">
     
     <xsl:include href="ae-highlight.xsl"/>
@@ -57,7 +56,7 @@
                                                 <xsl:value-of select="accession"/>
                                             </a>
                                             <xsl:text> </xsl:text>
-                                            <xsl:variable name="v2Experiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', accession)"/>
+                                            <xsl:variable name="v2Experiment" select="ae:getAcceleratorValue('visible-experiments', accession)"/>
                                             <xsl:value-of select="$v2Experiment/name"/>
                                             <br/><br/>
                                         </span>
@@ -71,7 +70,7 @@
                                             <xsl:value-of select="accession"/>
                                         </a>
                                         <xsl:text> </xsl:text>
-                                        <xsl:variable name="v2Experiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', accession)"/>
+                                        <xsl:variable name="v2Experiment" select="ae:getAcceleratorValue('visible-experiments', accession)"/>
                                         <xsl:value-of select="$v2Experiment/name"/>
                                         <br/> <br/>
                                     </xsl:for-each>
@@ -667,7 +666,7 @@
             <xsl:if test="string-length(title) > 0">
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                    <xsl:with-param name="pText" select="aejava:trimTrailingDot(title)"/>
+                    <xsl:with-param name="pText" select="ae:trimTrailingDot(title)"/>
                     <xsl:with-param name="pFieldName"/>
                 </xsl:call-template>
             </xsl:if>
@@ -676,7 +675,7 @@
             <xsl:if test="string-length(authors) > 0">
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                    <xsl:with-param name="pText" select="aejava:trimTrailingDot(authors)"/>
+                    <xsl:with-param name="pText" select="ae:trimTrailingDot(authors)"/>
                     <xsl:with-param name="pFieldName"/>
                 </xsl:call-template>
                 <xsl:text>. </xsl:text>

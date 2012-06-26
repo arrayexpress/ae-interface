@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-    xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-    extension-element-prefixes="xs ae aejava"
-    exclude-result-prefixes="xs ae aejava"                
-    version="2.0">
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                extension-element-prefixes="xs ae"
+                exclude-result-prefixes="xs ae"
+                version="2.0">
+
     <xsl:output method="xml" version="1.0" encoding="UTF8" indent="no"/>
     
     <xsl:param name="rootFolder"/>
     
     <xsl:variable name="vRoot" select="$rootFolder"/>
-    
-    <xsl:include href="ae-file-functions.xsl"/>
     
     <xsl:function name="ae:isFolder" as="xs:boolean">
         <xsl:param name="pRow"/>
@@ -167,7 +165,6 @@
                                 <xsl:if test="$vFileKind = 'raw' or $vFileKind = 'fgem'">
                                     <xsl:call-template name="add-dataformat-attribute">
                                         <xsl:with-param name="pAccession" select="$vAccession"/>
-                                        <xsl:with-param name="pName" select="@name"/>
                                         <xsl:with-param name="pKind" select="@kind"/>
                                     </xsl:call-template>
                                 </xsl:if>
@@ -199,10 +196,9 @@
     
     <xsl:template name="add-dataformat-attribute">
         <xsl:param name="pAccession"/>
-        <xsl:param name="pName"/>
         <xsl:param name="pKind"/>
-        
-        <xsl:variable name="vExperiment" select="aejava:getAcceleratorValueAsSequence('visible-experiments', $pAccession)"/>
+
+        <xsl:variable name="vExperiment" select="ae:getAcceleratorValue('visible-experiments', $pAccession)"/>
         <xsl:attribute name="dataformat" select="ae:getDataFormat($vExperiment/bioassaydatagroup, $pKind)"/>
     </xsl:template>
 </xsl:stylesheet>

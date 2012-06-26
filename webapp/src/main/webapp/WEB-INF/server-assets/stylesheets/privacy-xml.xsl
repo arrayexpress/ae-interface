@@ -15,7 +15,7 @@
             <xsl:for-each select="$vExperiments">
                 <experiment>
                     <accession><xsl:value-of select="accession"/></accession>
-                    <privacy><xsl:value-of select="if (user/@id = '1') then 'public' else 'private'"></xsl:value-of></privacy>
+                    <privacy><xsl:value-of select="if (user/@id = '1') then 'public' else 'private'"/></privacy>
                     <releasedate><xsl:value-of select="releasedate"/></releasedate>
                 </experiment>
             </xsl:for-each>

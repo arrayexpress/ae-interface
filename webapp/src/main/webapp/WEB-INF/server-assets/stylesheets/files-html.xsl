@@ -2,11 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="xs ae aejava search"
-                exclude-result-prefixes="xs ae aejava search html"
+                extension-element-prefixes="xs ae search"
+                exclude-result-prefixes="xs ae search html"
                 version="2.0">
 
     <xsl:param name="page"/>
@@ -30,7 +29,6 @@
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
 
-    <xsl:include href="ae-file-functions.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
     <xsl:include href="ae-sort-files.xsl"/>
@@ -67,7 +65,7 @@
         <xsl:choose>
             <xsl:when test="not($vBrowseMode)">
                 <xsl:variable name="vAccession" select="upper-case($accession)"/>
-                <xsl:variable name="vFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+                <xsl:variable name="vFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
                 <xsl:variable name="vFolderKind" select="$vFolder/@kind"/>
                 <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
                 <xsl:choose>
@@ -94,7 +92,7 @@
                                         <xsl:sort select="accession" order="ascending"/>
                                         <xsl:variable name="vArrAccession" select="string(accession)"/>
                                         <xsl:if test="matches($vArrAccession, '^[aA]-\w{4}-\d+$')">
-                                            <xsl:variable name="vArrFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vArrAccession)"/>
+                                            <xsl:variable name="vArrFolder" select="ae:getAcceleratorValue('ftp-folder', $vArrAccession)"/>
                                             <xsl:variable name="vArrMetaData" select="search:queryIndex('arrays', concat('visible:true accession:', $vArrAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
                                             <xsl:choose>
                                                 <xsl:when test="exists($vArrMetaData)">
@@ -377,9 +375,9 @@
                     <tr><td class="td_all" colspan="3"><div>No files</div></td></tr>
                 </xsl:if>
                 <xsl:for-each select="$pFolder/file[not($kind) or (@kind = $kind)]">
-                    <xsl:sort select="contains(lower-case(@name), 'readme')" order="descending"/>
-                    <xsl:sort select="@kind = 'raw' or @kind = 'fgem'" order="descending"/>
-                    <xsl:sort select="@kind = 'adf' or @kind = 'idf' or @kind = 'sdrf'" order="descending"/>
+                    <xsl:sort select="xs:string(contains(lower-case(@name), 'readme'))" order="descending"/>
+                    <xsl:sort select="xs:string(@kind = 'raw' or @kind = 'fgem')" order="descending"/>
+                    <xsl:sort select="xs:string(@kind = 'adf' or @kind = 'idf' or @kind = 'sdrf')" order="descending"/>
                     <xsl:sort select="lower-case(@name)" order="ascending"/>
                     <tr>
                         <td class="td_name"><a href="{$vBaseUrl}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a></td>

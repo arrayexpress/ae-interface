@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aejava="java:uk.ac.ebi.arrayexpress.utils.saxon.ExtFunctions"
-                xmlns:search="java:uk.ac.ebi.arrayexpress.utils.saxon.search.SearchExtension"
-                extension-element-prefixes="aejava search"
-                exclude-result-prefixes="aejava search"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
+                extension-element-prefixes="ae search"
+                exclude-result-prefixes="ae search"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -55,7 +55,7 @@ For more information, please go to:
     http://www.ebi.ac.uk/microarray/doc/help/programmatic_access.html
                 </xsl:comment>
                 <xsl:variable name="vAccession" select="accession"/>
-                <xsl:variable name="vExpFolder" select="aejava:getAcceleratorValueAsSequence('ftp-folder', $vAccession)"/>
+                <xsl:variable name="vExpFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
                 <xsl:if test="$vExpFolder/file[@kind = 'raw']">
                     <raw name="{$vExpFolder/file[@kind = 'raw']/@name}"
                          count="{rawdatafiles}"

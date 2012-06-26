@@ -121,6 +121,7 @@ public class QueryServlet extends AuthAwareApplicationServlet
             // adding "host" request header so we can dynamically create FQDN URLs
             params.put("host", request.getHeader("host"));
             params.put("basepath", request.getContextPath());
+            params.put("querystring", request.getQueryString());
 
             // to make sure nobody sneaks in the other value w/o proper authentication
             params.put("userid", StringTools.listToString(authUserIDs, " OR "));
@@ -146,7 +147,7 @@ public class QueryServlet extends AuthAwareApplicationServlet
                 DocumentInfo source = saxonEngine.getAppDocument();
                 if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
                     source = saxonEngine.getRegisteredDocument(index + ".xml");
-                    Integer queryId = search.getController().addQuery(index, params, request.getQueryString());
+                    Integer queryId = search.getController().addQuery(index, params);
                     params.put("queryid", String.valueOf(queryId));
                 }
 

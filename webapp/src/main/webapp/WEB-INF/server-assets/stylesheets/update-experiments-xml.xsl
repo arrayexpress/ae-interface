@@ -5,8 +5,6 @@
                 exclude-result-prefixes="ae"
                 version="2.0">
 
-    <xsl:include href="ae-compare-experiments.xsl"/>
-
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
 
     <xsl:variable name="vUpdate" select="doc('update-experiments.xml')"/>
@@ -20,22 +18,14 @@
                 <experiments total="{count($vCombinedExperiments)}">
                     <xsl:for-each-group select="$vCombinedExperiments" group-by="accession">
                         <xsl:variable name="vMigrated" select="count(current-group()) = 2"/>
-                        <xsl:variable name="vIdentical">
-                            <xsl:if test="$vMigrated">
-                                <xsl:value-of select="ae:are-experiments-identical(current-group()[1], current-group()[2])"/>
-                            </xsl:if>
-                        </xsl:variable>
+
                         <xsl:for-each select="current-group()">
                             <!-- will copy all from ae2 and those from ae1 that are not migrated -->
                             <xsl:variable name="vVisible" select="source/@id = 'ae2' or not($vMigrated)"/>
 
                             <experiment>
                                 <xsl:copy-of select="*[name() != 'source']|@*"/>
-                                <source id="{source/@id}" migrated="{$vMigrated}" visible="{$vVisible}">
-                                <xsl:if test="$vMigrated">
-                                    <xsl:attribute name="identical" select="$vIdentical"/>
-                                </xsl:if>
-                                </source>
+                                <source id="{source/@id}" migrated="{$vMigrated}" visible="{$vVisible}"/>
                             </experiment>
                         </xsl:for-each>
 

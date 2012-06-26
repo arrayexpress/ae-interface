@@ -15,7 +15,7 @@
             <xsl:text>accession:</xsl:text>
             <xsl:value-of select="accession"/>
             <xsl:text> privacy:</xsl:text>
-            <xsl:value-of select="if (user/@id = '1') then 'public' else 'private'"></xsl:value-of>
+            <xsl:value-of select="if (user/@id = '1') then 'public' else 'private'"/>
             <xsl:text> releasedate:</xsl:text>
             <xsl:value-of select="releasedate"/>
             <xsl:text>&#10;</xsl:text>

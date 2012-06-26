@@ -80,7 +80,7 @@
         </dependency>
         <dependency>
             <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon9</artifactId>
+            <artifactId>saxon9he</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-httpclient</groupId>

@@ -24,7 +24,6 @@ import java.util.Map;
 public class QueryInfo
 {
     private String indexId;
-    private String queryString;
     private Map<String, String[]> params;
     private Query query;
 
@@ -36,16 +35,6 @@ public class QueryInfo
     public String getIndexId()
     {
         return this.indexId;
-    }
-
-    public void setQueryString( String queryString )
-    {
-        this.queryString = queryString;
-    }
-
-    public String getQueryString()
-    {
-        return queryString;
     }
 
     public void setParams( Map<String, String[]> params )

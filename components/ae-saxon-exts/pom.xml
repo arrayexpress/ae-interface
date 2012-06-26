@@ -78,14 +78,9 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- SaxonHE is used to satisfy latest oXygen,
-             but we also need to move to it in main development
-         -->
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon9he</artifactId>
-            <version>9.3.0.5</version>
         </dependency>
     </dependencies>
 </project>

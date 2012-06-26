@@ -49,20 +49,6 @@
         <to type="forward">/servlets/query/experiments/experiments/html?accession=$1</to>
     </rule>
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)$</from>
-        <condition type="parameter" name="xml" operator="greater"/>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.txt/default/xml</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)$</from>
-        <to type="redirect">%{context-path}/experiments/${upper:$1}/$2.html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.txt/$2-view/html</to>
-    </rule>
-
-    <rule>
         <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
         <condition type="parameter" name="xml" operator="greater"/>
         <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/default/xml</to>
@@ -71,17 +57,27 @@
         <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
         <to type="redirect">%{context-path}/experiments/${upper:$1}/$2.$3.html</to>
     </rule>
+    <!--
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)\.html$</from>
+        <to type="forward">/servlets/fftransform/name:${upper:$1}.$2.txt/$2-view/html</to>
+    </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/$3-view/html</to>
+        <to type="forward">/servlets/fftransform/name:${upper:$1}.$2.$3.txt/$3-view/html</to>
     </rule>
-
+    -->
     <!-- new view for samples -->
+    <!--
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.sdrf.txt/sdrf-view/html</to>
+        <to type="forward">/servlets/fftransform/accession:${upper:$1}%20kind:sdrf/sdrf-view/html</to>
     </rule>
-
+    -->
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
+        <to type="forward">/servlets/query/files/samples-view/html?kind=sdrf&amp;accession=$1</to>
+    </rule>
     <!-- arrays -->
     <rule>
         <from>^/arrays/?$</from>
