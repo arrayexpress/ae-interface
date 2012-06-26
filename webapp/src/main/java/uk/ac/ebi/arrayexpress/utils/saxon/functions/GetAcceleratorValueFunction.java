@@ -59,7 +59,7 @@ public class GetAcceleratorValueFunction extends ExtensionFunctionDefinition
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
     {
-        return SequenceType.OPTIONAL_NODE;
+        return SequenceType.ANY_SEQUENCE;
     }
 
     public ExtensionFunctionCall makeCallExpression()
