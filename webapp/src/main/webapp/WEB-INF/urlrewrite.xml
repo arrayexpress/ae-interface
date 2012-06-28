@@ -76,7 +76,7 @@
     -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
-        <to type="forward">/servlets/query/files/samples-view/html?kind=sdrf&amp;accession=$1</to>
+        <to type="forward">/servlets/query/-/samples-view/html?accession=$1</to>
     </rule>
     <!-- arrays -->
     <rule>
