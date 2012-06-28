@@ -512,16 +512,6 @@
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
         </dependency>
-<!--
-        <dependency>
-            <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon9</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon9-xpath</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon9he</artifactId>
