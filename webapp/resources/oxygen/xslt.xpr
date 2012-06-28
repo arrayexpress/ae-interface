@@ -3161,7 +3161,6 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-date-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-html-page.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-arrays.xsl"/>
@@ -3199,6 +3198,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/privacy-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/protocols-html.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/samples-view-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl"/>
