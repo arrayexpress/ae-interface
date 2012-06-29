@@ -244,17 +244,20 @@
             </header>
             <xsl:copy-of select="$pTableInfo/data"/>
         </xsl:variable>
-
-        <div class="attr_table_scroll">
-            <table class="attr_table" border="0" cellpadding="0" cellspacing="0">
-                <xsl:call-template name="out-header">
-                    <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
-                </xsl:call-template>
-                <xsl:call-template name="out-data">
-                    <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
-                    <xsl:with-param name="pRows" select="$pRows"/>
-                </xsl:call-template>
-            </table>
+        <div class="attr_table_shadow_container">
+            <div class="attr_table_scroll">
+                <table class="attr_table" border="0" cellpadding="0" cellspacing="0">
+                    <xsl:call-template name="out-header">
+                        <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="out-data">
+                        <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
+                        <xsl:with-param name="pRows" select="$pRows"/>
+                    </xsl:call-template>
+                </table>
+            </div>
+            <div class="left_shadow" style=""/>
+            <div class="right_shadow" style=""/>
         </div>
     </xsl:template>
 

@@ -30,7 +30,6 @@
     });
 
     $.AESampleTableSorter = function( elt ) {
-
     };
     */
 

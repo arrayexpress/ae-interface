@@ -124,24 +124,33 @@ table.links_table th
     text-align: center;
 }
 
-.attr_table_left_shadow {
+.attr_table_shadow_container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.left_shadow
+, .right_shadow {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    pointer-events: none;
 }
 
-.left-shadow {
-    box-shadow: inset 6px 0px 6px -6px black;
-    -moz-box-shadow: inset 6px 0px 6px -6px black;
-    -webkit-box-shadow: inset 6px 0px 6px -6px black;
+.left_shadow {
+    box-shadow: inset 5px 0px 5px -3px silver;
+    -moz-box-shadow: inset 5px 0px 5px -3px silver;
+    -webkit-box-shadow: inset 5px 0px 5px -3px silver;
 }
 
-.right-shadow {
-    box-shadow: inset -6px 0px 6px -6px black;
-    -moz-box-shadow: inset -6px 0px 6px -6px black;
-    -webkit-box-shadow: inset -6px 0px 6px -6px black;
+.right_shadow {
+    box-shadow: inset -5px 0px 5px -3px silver;
+    -moz-box-shadow: inset -5px 0px 5px -3px silver;
+    -webkit-box-shadow: inset -5px 0px 5px -3px silver;
 }
 
 .attr_table_scroll {
