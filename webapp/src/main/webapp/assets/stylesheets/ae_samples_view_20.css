@@ -91,7 +91,7 @@
 }
 
 .ae_samples_table td.bottom_filler {
-    background-color: #f5f5f5;
+    background: #f5f5f5 url( ../images/sbg.gif ) left top repeat-x;
 }
 
 table.src_name_table

@@ -295,7 +295,7 @@
                 <td class="value">
                     <div class="value">
                         <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html">
-                            <b><xsl:text>Click for detailed information</xsl:text></b>
+                            <b><xsl:text>Click for detailed sample information and links to data</xsl:text></b>
                             <br/>
                             <xsl:variable name="vPossibleMatches">
                                 <xsl:for-each select="experimentalfactor/name">

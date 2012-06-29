@@ -301,10 +301,10 @@
                                     <xsl:text> col_1</xsl:text>
                                 </xsl:if>
                                 <xsl:choose>
-                                    <xsl:when test="$vColType = 'Characteristics'">
+                                    <xsl:when test="fn:lower-case($vColType) = 'characteristics'">
                                         <xsl:text> sc</xsl:text>
                                     </xsl:when>
-                                    <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
+                                    <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
                                         <xsl:text> fv</xsl:text>
                                     </xsl:when>
                                 </xsl:choose>
@@ -316,7 +316,7 @@
                                 <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
                                     <xsl:text>Sample Characteristics</xsl:text>
                                 </xsl:when>
-                                <xsl:when test="matches(lower-case($vColType), 'factor\s*value')">
+                                <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
                                     <xsl:text>Factor Values</xsl:text>
                                 </xsl:when>
                                 <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
@@ -343,7 +343,7 @@
                             <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
                                 <xsl:text> sc</xsl:text>
                             </xsl:when>
-                            <xsl:when test="fn:matches(lower-case($vColInfo/@type), 'factor\s*value')">
+                            <xsl:when test="fn:matches(fn:lower-case($vColInfo/@type), 'factor\s*value')">
                                 <xsl:text> fv</xsl:text>
                             </xsl:when>
                         </xsl:choose>
@@ -376,6 +376,7 @@
                 <xsl:for-each select="$pTableInfo/header/col">
                     <xsl:variable name="vColPos" as="xs:integer" select="@pos"/>
                     <xsl:variable name="vColInfo" select="."/>
+                    <xsl:variable name="vColType" select="$vColInfo/@type"/>
                     <xsl:variable name="vCol" select="$vRow/col[$vColPos]"/>
                     <xsl:variable name="vColText" select="$vCol/text()"/>
                     <xsl:variable name="vPrevColText" select="$vRow/preceding-sibling::*[1]/col[$vColPos]/text()"/>
@@ -396,6 +397,15 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                                 <xsl:text> col_</xsl:text><xsl:value-of select="$vColInfo/@pos"/>
+                                <xsl:choose>
+                                    <xsl:when test="$vFull"> uni</xsl:when>
+                                    <xsl:when test="fn:lower-case($vColType) = 'characteristics'">
+                                        <xsl:text> sc</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
+                                        <xsl:text> fv</xsl:text>
+                                    </xsl:when>
+                                </xsl:choose>
                             </xsl:attribute>
                             <xsl:if test="($vColText = $vNextColText) and $vGrouping">
                                 <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
