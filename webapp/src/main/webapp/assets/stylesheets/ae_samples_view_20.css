@@ -162,4 +162,5 @@ table.attr_table {
     height: 1px;
     margin: 20px 0;
     background-color: #bdd7d7;
+    overflow: hidden;
 }
