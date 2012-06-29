@@ -108,6 +108,9 @@
                         <div id="ae_results_box">
                             <xsl:for-each select="$vSdrfFiles">
                                 <xsl:apply-templates select="ae:tabularDocument(fn:concat(../../@root, ../@location, '/', @name))/table"/>
+                                <xsl:if test="fn:position() != fn:last()">
+                                    <div class="divider">&#160;</div>
+                                </xsl:if>
                             </xsl:for-each>
                         </div>
                     </div>

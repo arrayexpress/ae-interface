@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
-import net.sf.saxon.event.Builder;
 import net.sf.saxon.event.SequenceWriter;
 import net.sf.saxon.expr.instruct.TerminationException;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
@@ -78,7 +77,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory = (TransformerFactoryImpl) TransformerFactoryImpl.newInstance();
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
-        trFactory.getConfiguration().setTreeModel(Builder.TINY_TREE_CONDENSED);
+        // TODO: study the impact of this change later
+        //trFactory.getConfiguration().setTreeModel(Builder.TINY_TREE_CONDENSED);
 
         // create application document
         appDocument = buildDocument(

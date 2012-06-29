@@ -68,7 +68,7 @@
 }
 
 .ae_samples_table th.odd {
-    border-bottom: 2px solid #408C8C;
+    border-bottom: 2px solid #408c8c;
     text-align: left;
 }
 
@@ -154,4 +154,11 @@ table.links_table th
 table.attr_table {
     table-layout: auto;
     width: 100%;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background-color: #bdd7d7;
 }

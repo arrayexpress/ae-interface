@@ -19,6 +19,7 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
+    /* TODO
     $.fn.extend({
 
         aeSampleTableSorter: function() {
@@ -31,19 +32,26 @@
     $.AESampleTableSorter = function( elt ) {
 
     };
+    */
 
     function
-    tableAdjustColWidth( eltName )
+    tableAdjustColWidth( eltSelector )
     {
-        var tdElt = $(eltName);
-        tdElt.width(tdElt.children().first().width())
+        $(eltSelector).each(function() {
+            var me = $(this);
+            me.width(me.children().first().width())
+        });
     }
 
     function
-    tableAdjustFillerHeight( srcEltName, dstEltName )
+    tableAdjustFillerHeight( tableSelector, srcEltSelector, dstEltSelector )
     {
-        var srcElt = $(srcEltName);
-        $(dstEltName).height(srcElt.height() - srcElt.children().first().height());
+        $(tableSelector).each(function() {
+            var me = $(this);
+            var srcElt = me.find(srcEltSelector).first();
+            var dstElt = me.find(dstEltSelector).first();
+            dstElt.height(srcElt.height() - srcElt.children().first().height());
+        });
     }
 
     function
@@ -77,7 +85,7 @@
 
         tableAdjustColWidth("td.left_fixed");
         tableAdjustColWidth("td.right_fixed");
-        tableAdjustFillerHeight("div.attr_table_scroll", "td.bottom_filler");
+        tableAdjustFillerHeight("table.ae_samples_table", "div.attr_table_scroll", "td.bottom_filler");
 
         if (false && !$.browser.msie) {
             shadowElt = $("td.middle_scrollable");
@@ -89,16 +97,16 @@
             updateScrollShadow();
         }
 
-        $("#ae_results_box").find("th.sortable").each( function() {
-            var thisObj = $(this);
-            var colname = /(col_\d+)/.exec(thisObj.attr("class"))[1];
+        $("table.ae_samples_table").find("th.sortable").each( function() {
+            var me = $(this);
+            var colname = /(col_\d+)/.exec(me.attr("class"))[1];
 
             // so the idea is to set default sorting for all columns except the "current" one
             // (which will be inverted) against its current state
             var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
             var queryString = $.query.set("sortby", colname).set("sortorder", newOrder).toString();
 
-            thisObj.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
+            me.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
         });
     });
 
