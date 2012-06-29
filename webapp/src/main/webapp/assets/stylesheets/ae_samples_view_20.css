@@ -48,6 +48,7 @@
 .ae_samples_table_border {
     width: 100%;
     border: 1px solid #bdd7d7;
+    background-color: white;
 }
 
 .ae_samples_table {
