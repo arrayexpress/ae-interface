@@ -14,6 +14,11 @@
  * limitations under the License.
  *
  */
+
+.ae_contents_frame {
+    overflow-x: hidden; /* opera 9.64 is not happy */
+}
+
 #ae_contents_container {
     overflow: visible;
     _overflow: auto;
