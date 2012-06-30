@@ -25,17 +25,19 @@ public interface IEFO
     public final static int INCLUDE_SELF = 1;
     public final static int INCLUDE_ALT_TERMS = 2;
     public final static int INCLUDE_CHILD_TERMS = 4;
-    public final static int INCLUDE_PART_OF_TERMS = 8;
+    public final static int INCLUDE_CHILD_ALT_TERMS = 8;
+    public final static int INCLUDE_PART_OF_TERMS = 16;
 
     public final static int INCLUDE_ALL =
             INCLUDE_SELF
                     + INCLUDE_ALT_TERMS
                     + INCLUDE_CHILD_TERMS
+                    + INCLUDE_CHILD_ALT_TERMS
                     + INCLUDE_PART_OF_TERMS;
 
     public final static int INCLUDE_CHILDREN =
-            INCLUDE_ALT_TERMS
-                    + INCLUDE_CHILD_TERMS
+            INCLUDE_CHILD_TERMS
+                    + INCLUDE_CHILD_ALT_TERMS
                     + INCLUDE_PART_OF_TERMS;
 
     public final static String ROOT_ID = "http://www.ebi.ac.uk/efo/EFO_0000001";

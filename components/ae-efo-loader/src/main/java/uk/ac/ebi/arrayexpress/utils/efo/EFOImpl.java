@@ -53,23 +53,25 @@ public class EFOImpl implements IEFO
     {
         Set<String> terms = new HashSet<String>();
         if (null != node) {
-            // only alternative terms
-            if ((includeFlags & INCLUDE_ALT_TERMS) > 0) {
-                terms.addAll(node.getAlternativeTerms());
-            }
-
             if ((includeFlags & INCLUDE_SELF) > 0) {
                 terms.add(node.getTerm());
+            }
 
-                if ((includeFlags & INCLUDE_ALT_TERMS) > 0) {
-                    terms.addAll(node.getAlternativeTerms());
-                }
+            if ((includeFlags & INCLUDE_ALT_TERMS) > 0) {
+                terms.addAll(node.getAlternativeTerms());
             }
 
             if ((includeFlags & INCLUDE_CHILD_TERMS) > 0) {
                 if (node.hasChildren()) {
                     for (EFONode child : node.getChildren()) {
-                        terms.addAll(getTerms(child, includeFlags | INCLUDE_SELF));
+                        terms.addAll(
+                                getTerms(
+                                        child
+                                        , includeFlags
+                                        | INCLUDE_SELF
+                                        | ((includeFlags & INCLUDE_CHILD_ALT_TERMS) > 0 ? INCLUDE_ALT_TERMS : 0 )
+                                )
+                        );
                     }
                 }
             }
@@ -78,7 +80,14 @@ public class EFOImpl implements IEFO
                 if (getPartOfIdMap().containsKey(node.getId())) {
                     for (String partOfId : getPartOfIdMap().get(node.getId())) {
                         EFONode partOfNode = getMap().get(partOfId);
-                        terms.addAll(getTerms(partOfNode, includeFlags | INCLUDE_SELF));
+                        terms.addAll(
+                                getTerms(
+                                        partOfNode
+                                        , includeFlags
+                                        | INCLUDE_SELF
+                                        | ((includeFlags & INCLUDE_CHILD_ALT_TERMS) > 0 ? INCLUDE_ALT_TERMS : 0 )
+                                )
+                        );
                     }
                 }
             }
