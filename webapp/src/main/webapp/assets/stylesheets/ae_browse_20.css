@@ -572,7 +572,6 @@ a:active .table_header_label {
 
 .td_expanded,
 .td_expanded div {
-    border-bottom: 0 none;
     white-space: normal;
 }
 
@@ -595,6 +594,7 @@ a:active .table_header_label {
 .td_expanded {
     height: auto;
     line-height: auto;
+    border-bottom: 1px solid transparent;
 }
 
 .td_main div.acc {
