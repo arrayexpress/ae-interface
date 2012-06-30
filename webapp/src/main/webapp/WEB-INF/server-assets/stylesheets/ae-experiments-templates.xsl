@@ -286,15 +286,18 @@
     </xsl:template>
  
     <xsl:template name="exp-samples-section">
+        <xsl:param name="pQueryString"/>
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
-        
+
+        <xsl:variable name="vQueryString" select="if ($pQueryString != '') then concat('?', $pQueryString) else ''"/>
+
         <xsl:if test="samples">
             <tr>
                 <td class="name"><div class="name">Samples (<xsl:value-of select="samples"/>)</div></td>
                 <td class="value">
                     <div class="value">
-                        <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html">
+                        <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html{$vQueryString}">
                             <b><xsl:text>Click for detailed sample information and links to data</xsl:text></b>
                             <br/>
                             <xsl:variable name="vPossibleMatches">

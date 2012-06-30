@@ -26,6 +26,7 @@
     <xsl:param name="detailedview"/>
 
     <xsl:param name="basepath"/>
+    <xsl:param name="querystring"/>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
@@ -196,6 +197,7 @@
                         <table cellpadding="0" cellspacing="0" border="0">
 
                             <xsl:call-template name="exp-samples-section">
+                                <xsl:with-param name="pQueryString" select="$querystring"/>
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                                 <xsl:with-param name="pBasePath" select="$basepath"/>
                             </xsl:call-template>

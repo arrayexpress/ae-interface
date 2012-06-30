@@ -18,11 +18,11 @@
     <xsl:variable name="vGrouping" as="xs:boolean" select="false()"/>
     <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
 
-    <xsl:param name="colsortby"/>
-    <xsl:param name="colsortorder"/>
+    <xsl:param name="sortby"/>
+    <xsl:param name="sortorder"/>
 
-    <xsl:variable name="vSortBy" select="if ($colsortby) then fn:replace($colsortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
-    <xsl:variable name="vSortOrder" select="if ($colsortorder) then $colsortorder else 'ascending'"/>
+    <xsl:variable name="vSortBy" select="if ($sortby) then fn:replace($sortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
+    <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
@@ -42,7 +42,6 @@
                 indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
     <xsl:include href="ae-html-page.xsl"/>
-    <xsl:include href="ae-highlight.xsl"/>
 
     <xsl:template match="/">
         <html lang="en">
@@ -136,9 +135,8 @@
         <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
         <xsl:variable name="vColType" select="if (fn:exists(fn:index-of($vLinksColName, lower-case($vColName)))) then 'Links' else (if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText)"/>
         <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, lower-case($vColType))"/>
-        <xsl:variable name="vColClass" select="if (fn:lower-case($vColType) = 'characteristics') then 'sa' else (if (fn:matches(fn:lower-case($vColType), 'factor\s*value')) then 'ef' else '')"/>
 
-        <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}"/>
+        <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}"/>
     </xsl:template>
 
     <xsl:template match="table">
@@ -158,14 +156,13 @@
 
             <xsl:variable name="vUnitFixedHeaderInfo">
                 <xsl:for-each select="$vHeaderInfo/col">
-                    <xsl:variable name="vNeedsFix" as="xs:boolean" select="not($vFull) and (lower-case(@type) = 'unit' or lower-case(@name) = 'timeunit')"/>
+                    <xsl:variable name="vNeedFix" as="xs:boolean" select="not($vFull) and (lower-case(@type) = 'unit' or lower-case(@name) = 'timeunit')"/>
 
-                    <xsl:variable name="vColType" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@type) else @type"/>
-                    <xsl:variable name="vColName" select="if ($vNeedsFix) then '(unit)' else @name"/>
-                    <xsl:variable name="vColGroup" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@group) else @group"/>
-                    <xsl:variable name="vColClass" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@class) else @class"/>
+                    <xsl:variable name="vColType" select="if ($vNeedFix) then (preceding-sibling::*[1]/@type) else @type"/>
+                    <xsl:variable name="vColName" select="if ($vNeedFix) then '(unit)' else @name"/>
+                    <xsl:variable name="vColGroup" select="if ($vNeedFix) then (preceding-sibling::*[1]/@group) else @group"/>
 
-                    <col pos="{@pos}" type="{$vColType}" name="{$vColName}" group="{$vColGroup}" class="{$vColClass}"/>
+                    <col pos="{@pos}" type="{$vColType}" name="{$vColName}" group="{$vColGroup}"/>
                 </xsl:for-each>
             </xsl:variable>
 
@@ -295,7 +292,6 @@
                     <xsl:variable name="vColInfo" select="."/>
                     <xsl:variable name="vColPos" select="position()"/>
                     <xsl:variable name="vColType" select="$vColInfo/@type"/>
-                    <xsl:variable name="vColClass" select="$vColInfo/@class"/>
                     <xsl:variable name="vPrevColType" select="preceding-sibling::*[1]/@type"/>
                     <xsl:variable name="vNextCols" select="following-sibling::*"/>
                     <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
@@ -308,19 +304,23 @@
                                 <xsl:if test="$vColPos = 1">
                                     <xsl:text> col_1</xsl:text>
                                 </xsl:if>
-                                <xsl:if test="$vColClass != ''">
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="$vColClass"/>
-                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="fn:lower-case($vColType) = 'characteristics'">
+                                        <xsl:text> sc</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
+                                        <xsl:text> fv</xsl:text>
+                                    </xsl:when>
+                                </xsl:choose>
                             </xsl:attribute>
                             <xsl:if test="($vColType = $vNextColType)">
                                 <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
                             </xsl:if>
                             <xsl:choose>
-                                <xsl:when test="$vColClass = 'sa'">
+                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
                                     <xsl:text>Sample Characteristics</xsl:text>
                                 </xsl:when>
-                                <xsl:when test="$vColClass = 'ef'">
+                                <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
                                     <xsl:text>Factor Values</xsl:text>
                                 </xsl:when>
                                 <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
@@ -344,9 +344,11 @@
                         <xsl:value-of select="$vColInfo/@pos"/>
                         <xsl:choose>
                             <xsl:when test="$vFull"> uni</xsl:when>
-                            <xsl:when test="$vColInfo/@class != ''">
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="$vColInfo/@class"/>
+                            <xsl:when test="fn:lower-case($vColInfo/@type) = 'characteristics'">
+                                <xsl:text> sc</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="fn:matches(fn:lower-case($vColInfo/@type), 'factor\s*value')">
+                                <xsl:text> fv</xsl:text>
                             </xsl:when>
                         </xsl:choose>
                     </xsl:attribute>
@@ -357,16 +359,7 @@
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data matrix file'">Raw Matrix</xsl:when>
-                        <xsl:when test="$vColInfo/@class != ''">
-                            <xsl:call-template name="highlight">
-                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                <xsl:with-param name="pText" select="$vColInfo/@name"/>
-                                <xsl:with-param name="pFieldName" select="$vColInfo/@class"/>
-                            </xsl:call-template>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$vColInfo/@name"/>
-                        </xsl:otherwise>
+                        <xsl:otherwise><xsl:value-of select="$vColInfo/@name"/></xsl:otherwise>
                     </xsl:choose>
                     <xsl:call-template name="add-sort">
                         <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
@@ -410,9 +403,11 @@
                                 <xsl:text> col_</xsl:text><xsl:value-of select="$vColInfo/@pos"/>
                                 <xsl:choose>
                                     <xsl:when test="$vFull"> uni</xsl:when>
-                                    <xsl:when test="$vColInfo/@class != ''">
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="$vColInfo/@class"/>
+                                    <xsl:when test="fn:lower-case($vColType) = 'characteristics'">
+                                        <xsl:text> sc</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="fn:matches(fn:lower-case($vColType), 'factor\s*value')">
+                                        <xsl:text> fv</xsl:text>
                                     </xsl:when>
                                 </xsl:choose>
                             </xsl:attribute>
@@ -454,6 +449,9 @@
                                                 </xsl:when>
                                                 <xsl:otherwise>
                                                     <xsl:value-of select="$vColText"/>
+                                                    <xsl:if test="not($vColText)">
+                                                        <xsl:text>&#160;</xsl:text>
+                                                    </xsl:if>
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:when>
@@ -475,18 +473,10 @@
                                 </xsl:when>
 
                                 <xsl:otherwise>
-                                    <xsl:choose>
-                                        <xsl:when test="$vColInfo/@class != ''">
-                                            <xsl:call-template name="highlight">
-                                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                                <xsl:with-param name="pText" select="$vColText"/>
-                                                <xsl:with-param name="pFieldName" select="if ($vColInfo/@class = 'ef') then 'efv' else ($vColInfo/@class)"/>
-                                            </xsl:call-template>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$vColText"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                    <xsl:value-of select="$vColText"/>
+                                    <xsl:if test="not($vColText)">
+                                        <xsl:text>&#160;</xsl:text>
+                                    </xsl:if>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>

@@ -181,7 +181,12 @@ public class Controller
             this.setQueryHighlighter(new QueryHighlighter());
         }
         QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
-        return queryHighlighter.setEnvironment(getEnvironment(queryInfo.getIndexId()))
-                .highlightQuery(queryInfo, fieldName, text);
+        if (null != queryInfo) {
+            return queryHighlighter.setEnvironment(getEnvironment(queryInfo.getIndexId()))
+                    .highlightQuery(queryInfo, fieldName, text);
+        } else {
+            this.logger.error("Unable to find query info for query with id [{}]", queryId);
+            return text;
+        }
     }
 }

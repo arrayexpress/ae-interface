@@ -50,7 +50,7 @@
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
-        <to type="forward">/servlets/query/-/samples-view/html?accession=$1</to>
+        <to type="forward">/servlets/query/experiments/samples-view/html?accession=$1</to>
     </rule>
 
     <!-- legacy sdrf viewer -->
