@@ -210,8 +210,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bottom_filler"></td>
-                    <td class="bottom_filler"></td>
+                    <td class="bottom_filler"/>
+                    <td class="bottom_filler"/>
                 </tr>
             </table>
         </div>
@@ -260,8 +260,8 @@
                     </xsl:call-template>
                 </table>
             </div>
-            <div class="left_shadow" style=""/>
-            <div class="right_shadow" style=""/>
+            <div class="left_shadow" style="display:none"/>
+            <div class="right_shadow" style="display:none"/>
         </div>
     </xsl:template>
 
@@ -387,7 +387,6 @@
                 <xsl:for-each select="$pTableInfo/header/col">
                     <xsl:variable name="vColPos" as="xs:integer" select="@pos"/>
                     <xsl:variable name="vColInfo" select="."/>
-                    <xsl:variable name="vColType" select="$vColInfo/@type"/>
                     <xsl:variable name="vCol" select="$vRow/col[$vColPos]"/>
                     <xsl:variable name="vColText" select="$vCol/text()"/>
                     <xsl:variable name="vPrevColText" select="$vRow/preceding-sibling::*[1]/col[$vColPos]/text()"/>

@@ -19,7 +19,6 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
-    /* TODO
     $.fn.extend({
 
         aeSampleTableSorter: function() {
@@ -29,9 +28,63 @@
         }
     });
 
-    $.AESampleTableSorter = function( elt ) {
+    $.AESampleTableSorter = function(table) {
+        if ($.query == undefined)
+            throw "jQuery.query not loaded";
+
+        var sortby = $.query.get("colsortby") || "col_1";
+        var sortorder = $.query.get("colsortorder") || "ascending";
+
+        var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
+
+        $(table).find("th.sortable").each( function() {
+            var me = $(this);
+            var colname = /(col_\d+)/.exec(me.attr("class"))[1];
+
+            // so the idea is to set default sorting for all columns except the "current" one
+            // (which will be inverted) against its current state
+            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
+            var queryString = $.query.set("colsortby", colname).set("colsortorder", newOrder).toString();
+
+            me.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
+        });
     };
-    */
+
+    $.fn.extend({
+        aeSampleTableScrollShadow: function() {
+            return this.each(function() {
+                if (!$.browser.msie) {
+                    new $.AESSampleTableScrollShadow(this);
+                }
+            });
+        }
+    });
+
+    $.AESSampleTableScrollShadow = function(table) {
+        var $table = $(table);
+        var $leftShadow = $table.find(".left_shadow").first();
+        var $rightShadow = $table.find(".right_shadow").first();
+        var $scrollFrame = $table.find(".attr_table_scroll").first();
+        var $scrollable = $scrollFrame.children().first();
+
+        function updateShadow() {
+            var scrollLeft = $scrollFrame.scrollLeft();
+            if ( scrollLeft !== 0) {
+                $leftShadow.show();
+            } else {
+                $leftShadow.hide();
+            }
+            if ($scrollable.width() - scrollLeft !== $scrollFrame.width()) {
+                $rightShadow.show();
+            } else {
+                $rightShadow.hide();
+            }
+        }
+
+        $scrollFrame.scroll( function() { updateShadow() });
+        $(window).resize( function() { updateShadow() });
+        updateShadow();
+    };
 
     function
     tableAdjustColWidth( eltSelector )
@@ -53,60 +106,15 @@
         });
     }
 
-    function
-    updateScrollShadow()
-    {
-        if (scrollElt.scrollLeft() !== 0) {
-            if (!shadowElt.hasClass("left-shadow")) {
-                shadowElt.addClass("left-shadow");
-            }
-        } else {
-            shadowElt.removeClass("left-shadow");
-        }
-        if (scrollableElt.width() - scrollElt.scrollLeft() !== scrollElt.width()) {
-            if (!scrollElt.hasClass("right-shadow")) {
-                scrollElt.addClass("right-shadow");
-            }
-        } else {
-            scrollElt.removeClass("right-shadow");
-        }
-    }
-
     $(function() {
-
-        if ($.query == undefined)
-            throw "jQuery.query not loaded";
-
-        var sortby = $.query.get("colsortby") || "col_1";
-        var sortorder = $.query.get("colsortorder") || "ascending";
-
-        var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
-
         tableAdjustColWidth("td.left_fixed");
         tableAdjustColWidth("td.right_fixed");
         tableAdjustFillerHeight("table.ae_samples_table", "div.attr_table_scroll", "td.bottom_filler");
 
-        if (false && !$.browser.msie) {
-            shadowElt = $("td.middle_scrollable");
-            scrollElt = shadowElt.children().first();
-            scrollableElt = scrollElt.children().first();
+        var $table = $("table.ae_samples_table");
 
-            scrollElt.scroll( function() { updateScrollShadow() });
-            $(window).resize( function() { updateScrollShadow() });
-            updateScrollShadow();
-        }
-
-        $("table.ae_samples_table").find("th.sortable").each( function() {
-            var me = $(this);
-            var colname = /(col_\d+)/.exec(me.attr("class"))[1];
-
-            // so the idea is to set default sorting for all columns except the "current" one
-            // (which will be inverted) against its current state
-            var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
-            var queryString = $.query.set("colsortby", colname).set("colsortorder", newOrder).toString();
-
-            me.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
-        });
+        $table.aeSampleTableSorter();
+        $table.aeSampleTableScrollShadow();
     });
 
 })(window.jQuery);
