@@ -53,7 +53,7 @@
     $.fn.extend({
         aeSampleTableScrollShadow: function() {
             return this.each(function() {
-                if (!$.browser.msie) {
+                if (!($.browser.msie || $.broswer.opera)) {
                     new $.AESSampleTableScrollShadow(this);
                 }
             });
