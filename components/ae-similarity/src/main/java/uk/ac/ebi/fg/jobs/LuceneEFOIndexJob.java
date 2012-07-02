@@ -29,7 +29,9 @@ import uk.ac.ebi.fg.utils.objects.EFO;
 import uk.ac.ebi.fg.utils.objects.StaticIndexedEFODocument;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Stores required EFO information in lucene index
@@ -102,21 +104,19 @@ public class LuceneEFOIndexJob extends ApplicationJob
         StaticIndexedEFODocument.setDoc(indexer);
 
         for (String uri : efo.getMap().keySet()) {
-            if (null == efo.getMap().get(uri).getTerm()) {
+            String className = getClassName(uri);
+
+            if ("".equals(className)) {
                 logger.warn("URI " + uri + " has no terms");
                 continue;
             }
 
-            if (efo.getMap().get(uri).getTerm().toLowerCase().startsWith("obsolete")) {
+            if (className.toLowerCase().startsWith("obsolete")) {
                 logger.warn("Found obsolete class: " + uri + " ; " + efo.getMap().get(uri).getTerm());
                 continue;
             }
 
-            String className = getClassName(uri);
-
-            Set<String> altTerms = new TreeSet<String>();
-            for (String name : getClassAlternativeNames(uri))
-                altTerms.add(name);
+            Set<String> altTerms = getClassAlternativeNames(uri);
 
             if (!labelToClassMap.containsKey(className))
                 labelToClassMap.put(className, new HashMap<String, Set<String>>());
@@ -131,13 +131,10 @@ public class LuceneEFOIndexJob extends ApplicationJob
      * @param uri
      * @return
      */
+
     private synchronized String getClassName( String uri )
     {
-        String term = null;
-        for (String className : efo.getTerms(uri, IEFO.INCLUDE_SELF))
-            term = className;
-
-        return term;
+        return efo.getMap().get(uri).getTerm();
     }
 
     /**
@@ -146,11 +143,8 @@ public class LuceneEFOIndexJob extends ApplicationJob
      * @param uri
      * @return
      */
-    private synchronized List<String> getClassAlternativeNames( String uri )
+    private synchronized Set<String> getClassAlternativeNames( String uri )
     {
-        List<String> results = new ArrayList<String>();
-        results.addAll(efo.getTerms(uri, IEFO.INCLUDE_ALT_TERMS));
-
-        return results;
+        return efo.getMap().get(uri).getAlternativeTerms();
     }
 }
