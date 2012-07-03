@@ -11,7 +11,7 @@
 
     <xsl:template match="/experiments">
         <experiments
-            version="{@version}" total="{fn:count(experiment)}">
+                version="{@version}" total="{fn:count(experiment)}">
 
             <xsl:apply-templates select="experiment">
                 <xsl:sort select="substring-before(releasedate, '-')" order="descending" data-type="number"/>
@@ -29,7 +29,7 @@
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
-            <source id="ae2" visible="true"/>
+            <source id="ae2"/>
 
             <xsl:if test="count(seqdatauri) > 1">
                 <xsl:message>[WARN] More than one sequence data URI defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
@@ -43,39 +43,13 @@
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
 
-            <xsl:variable name="vSimilarExperiments" select="ae:getAcceleratorValue('similar-experiments', $vAccession)"/>
-            <xsl:if test="$vSimilarExperiments/similarOntologyExperiments/similarExperiment|$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
-                <similarities>
-                    <xsl:for-each select="$vSimilarExperiments/similarOntologyExperiments/similarExperiment">
-                        <similarity>
-                            <accession>
-                                <xsl:value-of select="accession"/>
-                            </accession>
-                            <distance>
-                                <xsl:value-of select="calculatedDistance"/>
-                            </distance>
-                        </similarity>
-                    </xsl:for-each>
-                    <xsl:for-each select="$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
-                        <similarity>
-                            <accession>
-                                <xsl:value-of select="accession"/>
-                            </accession>
-                            <distance>
-                                <xsl:value-of select="distance"/>
-                            </distance>
-                        </similarity>
-                    </xsl:for-each>
-                </similarities>
-            </xsl:if>
-
             <rawdatafiles>
                 <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
             </rawdatafiles>
             <fgemdatafiles>
                 <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
             </fgemdatafiles>
-            
+
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
                 <sampleattribute>
@@ -83,7 +57,7 @@
                     <xsl:for-each select="current-group()">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
-					</xsl:for-each>
+                    </xsl:for-each>
                 </sampleattribute>
             </xsl:for-each-group>
             <xsl:for-each-group select="experimentalfactor[@value != '']" group-by="@name">
@@ -93,7 +67,7 @@
                     <xsl:for-each select="current-group()">
                         <xsl:sort select="fn:lower-case(@value)" order="ascending"/>
                         <value><xsl:value-of select="@value"/></value>
-					</xsl:for-each>
+                    </xsl:for-each>
                 </experimentalfactor>
             </xsl:for-each-group>
             <!-- process miame scores -->
@@ -124,17 +98,17 @@
 
     <!-- this template prohibits default copying of these elements -->
     <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
-                                           <!--                      todo: enable this - crashes when run: Caused by: net.sf.saxon.trans.XPathException: An empty sequence is not allowed as the second argument of ae:getAcceleratorValue()
+
     <xsl:template match="arraydesign" mode="copy">
         <arraydesign>
             <xsl:for-each select="@*">
-                    <xsl:element name="{fn:lower-case(fn:name())}">
-                        <xsl:value-of select="." />
-                    </xsl:element>
+                <xsl:element name="{fn:lower-case(fn:name())}">
+                    <xsl:value-of select="." />
+                </xsl:element>
             </xsl:for-each>
             <xsl:copy-of select="ae:getAcceleratorValue('legacy-array-ids', @accession)"/>
         </arraydesign>
-    </xsl:template>                       -->
+    </xsl:template>
 
     <xsl:template match="species" mode="copy">
         <xsl:choose>
@@ -146,7 +120,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
 
     <xsl:template match="submissiondate | lastupdatedate | releasedate" mode="copy">
         <xsl:choose>
@@ -162,7 +136,7 @@
     </xsl:template>
 
     <xsl:template match="user" mode="copy">
-        <user id="1"/>
+        <user id="{text()}"/>
     </xsl:template>
 
     <xsl:template match="hybs" mode="copy">
@@ -179,7 +153,7 @@
         <xsl:choose>
             <xsl:when test="fn:string-length(.) = 0"/>
             <xsl:when test="fn:contains(., ';G')">
-            <xsl:variable name="vValues" select="fn:tokenize(., '\s*;\s*')"/>
+                <xsl:variable name="vValues" select="fn:tokenize(., '\s*;\s*')"/>
                 <xsl:for-each select="$vValues">
                     <xsl:element name="secondaryaccession">
                         <xsl:value-of select="."/>
