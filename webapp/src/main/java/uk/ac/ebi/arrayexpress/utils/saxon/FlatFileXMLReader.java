@@ -41,9 +41,12 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
     private char columnDelimiter;
     private char columnQuoteChar;
+
+    private String options;
     
-    public FlatFileXMLReader()
+    public FlatFileXMLReader( String options )
     {
+        this.options = options;
         this.columnDelimiter = DEFAULT_COL_DELIMITER;
         this.columnQuoteChar = DEFAULT_COL_QUOTECHAR;
     }

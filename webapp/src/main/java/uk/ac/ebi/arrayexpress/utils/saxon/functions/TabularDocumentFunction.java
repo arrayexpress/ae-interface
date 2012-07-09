@@ -64,12 +64,12 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
 
     public int getMaximumNumberOfArguments()
     {
-        return 1;
+        return 2;
     }
 
     public SequenceType[] getArgumentTypes()
     {
-        return new SequenceType[]{ SequenceType.SINGLE_STRING };
+        return new SequenceType[]{ SequenceType.SINGLE_STRING, SequenceType.OPTIONAL_STRING };
     }
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
@@ -93,6 +93,7 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                 String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
 
                 StringValue locationValue = (StringValue) arguments[0].next();
+                StringValue optionsValue = (StringValue) arguments[1].next();
 
                 if (null != locationValue) {
                     File flatFile = new File(locationValue.getStringValue());
@@ -114,11 +115,17 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                     );
                     is.setSystemId(baseURI);
 
-                    Source source = new SAXSource(new FlatFileXMLReader(), is);
+                    Source source = new SAXSource(
+                            new FlatFileXMLReader(
+                                    null != optionsValue ? optionsValue.getStringValue() : null
+                            )
+                            , is
+                    );
                     source.setSystemId(baseURI);
 
                     Builder b = controller.makeBuilder();
                     Receiver s = b;
+
                     source = AugmentedSource.makeAugmentedSource( source );
                     ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
 
