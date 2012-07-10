@@ -36,70 +36,83 @@ public abstract class AbstractCustomXMLReader implements XMLReader
      * The only abstract method in this class. Derived classes can parse
      * any source of data and emit SAX2 events to the ContentHandler.
      */
-    public abstract void parse( InputSource input ) throws IOException,
-            SAXException;
+    @Override
+    public abstract void parse( InputSource input ) throws IOException, SAXException;
 
+    @Override
     public boolean getFeature( String name ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         Boolean featureValue = this.featureMap.get(name);
         return (featureValue != null) && featureValue;
     }
 
+    @Override
     public void setFeature( String name, boolean value ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         this.featureMap.put(name, value);
     }
 
+    @Override
     public Object getProperty( String name ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         return this.propertyMap.get(name);
     }
 
+    @Override
     public void setProperty( String name, Object value ) throws SAXNotRecognizedException, SAXNotSupportedException
     {
         this.propertyMap.put(name, value);
     }
 
+    @Override
     public void setEntityResolver( EntityResolver entityResolver )
     {
         this.entityResolver = entityResolver;
     }
 
+    @Override
     public EntityResolver getEntityResolver()
     {
         return this.entityResolver;
     }
 
+    @Override
     public void setDTDHandler( DTDHandler dtdHandler )
     {
         this.dtdHandler = dtdHandler;
     }
 
+    @Override
     public DTDHandler getDTDHandler()
     {
         return this.dtdHandler;
     }
 
+    @Override
     public void setContentHandler( ContentHandler contentHandler )
     {
         this.contentHandler = contentHandler;
     }
 
+    @Override
     public ContentHandler getContentHandler()
     {
         return this.contentHandler;
     }
 
+    @Override
     public void setErrorHandler( ErrorHandler errorHandler )
     {
         this.errorHandler = errorHandler;
     }
 
+    @Override
     public ErrorHandler getErrorHandler()
     {
         return this.errorHandler;
     }
 
+    @Override
     public void parse( String systemId ) throws IOException, SAXException
     {
         parse(new InputSource(systemId));
