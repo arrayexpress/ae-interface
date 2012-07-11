@@ -35,6 +35,9 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private static final Attributes EMPTY_ATTR = new AttributesImpl();
 
     private static final String EMPTY_NAMESPACE = "";
+    private static final String EMPTY_LOCAL_NAME = "";
+
+    private static final String CDATA_TYPE = "CDATA";
 
     private static final char DEFAULT_COL_DELIMITER = 0x9;
     private static final char DEFAULT_COL_QUOTECHAR = '"';
@@ -43,12 +46,17 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private char columnQuoteChar;
 
     private String options;
-    
-    public FlatFileXMLReader( String options )
+
+    public FlatFileXMLReader()
     {
-        this.options = options;
         this.columnDelimiter = DEFAULT_COL_DELIMITER;
         this.columnQuoteChar = DEFAULT_COL_QUOTECHAR;
+    }
+
+    public FlatFileXMLReader( String options )
+    {
+        this();
+        this.options = options;
     }
 
     public FlatFileXMLReader( final char columnDelimiter, final char columnQuoteChar )
@@ -85,7 +93,10 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         ch.startDocument();
 
-        ch.startElement(EMPTY_NAMESPACE, "table", "table", EMPTY_ATTR);
+        AttributesImpl attributes = new AttributesImpl();
+        attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "cols", CDATA_TYPE, "50");
+        attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "rows", CDATA_TYPE, "100");
+        ch.startElement(EMPTY_NAMESPACE, "table", "table", attributes);
 
         String[] row;
         while ((row = ffReader.readNext()) != null) {
@@ -102,5 +113,10 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         ch.endElement(EMPTY_NAMESPACE, "table", "table");
         ch.endDocument();
+    }
+
+    private void parseOptions( String options )
+    {
+        // format is the following: "optionName:value,value,...,value;optionName:value,value,...
     }
 }
