@@ -61,12 +61,12 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
 
     public int getMaximumNumberOfArguments()
     {
-        return 2;
+        return 3;
     }
 
     public SequenceType[] getArgumentTypes()
     {
-        return new SequenceType[]{ SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING };
+        return new SequenceType[]{ SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING };
     }
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
@@ -96,6 +96,9 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
             StringValue second = (arguments.length > 1 && null != arguments[1])
                     ? (StringValue) arguments[1].next()
                     : null;
+            StringValue third = (arguments.length > 2 && null != arguments[2])
+                    ? (StringValue) arguments[2].next()
+                    : null;
 
             List<NodeInfo> nodes;
             try {
@@ -109,11 +112,25 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
                     }
 
                     nodes = searchController.queryIndex(intQueryId);
-                } else {
+                } else if (null == third) {
                     String indexId = first.getStringValue();
                     String queryString = second.getStringValue();
 
                     nodes = searchController.queryIndex(indexId, queryString);
+                } else {
+                    String queryId = first.getStringValue();
+                    Integer intQueryId;
+                    try {
+                        intQueryId = Integer.decode(queryId);
+                    } catch (NumberFormatException x) {
+                        throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
+                    }
+
+                    // TODO:
+                    // check if second equalsignorecase to 'similarto' and third is either 'ascending' or 'descending'
+                    // then query and sort by that value
+                    // else do a standard query, e.g. searchController.queryIndex(intQueryId);
+                    nodes = searchController.queryIndex(intQueryId);
                 }
             } catch (IOException x) {
                 throw new XPathException("Caught IOException while querying index", x);
