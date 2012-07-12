@@ -164,6 +164,13 @@ public class Controller
         return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
     }
 
+    // TODO: implement this method
+    public List<NodeInfo> queryIndexSortedByRelevance( Integer queryId ) throws IOException
+    {
+        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
+        return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
+    }
+
     public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException
     {
         return queryIndex(indexId, this.queryConstructor.construct(getEnvironment(indexId), queryString));
