@@ -126,6 +126,7 @@ public class Querier
         return count;
     }
 
+    // TODO: add option to sort/nor sort by relevance
     public List<NodeInfo> query( Query query ) throws IOException
     {
         List<NodeInfo> result = null;
@@ -149,6 +150,7 @@ public class Querier
             result = new ArrayList<NodeInfo>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {
                 result.add(this.env.documentNodes.get(d.doc));
+                // TODO: populate node -> score map in QueryInfo (change the argument to this method to be QueryInfo)
             }
 
             isearcher.close();
