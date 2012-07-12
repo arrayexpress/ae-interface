@@ -26,6 +26,7 @@ public class QueryInfo
     private String indexId;
     private Map<String, String[]> params;
     private Query query;
+    // TODO: add a node to score map
 
     public void setIndexId( String indexId )
     {
