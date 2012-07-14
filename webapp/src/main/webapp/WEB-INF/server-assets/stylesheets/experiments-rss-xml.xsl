@@ -29,19 +29,15 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
-    <xsl:output name="xml" omit-xml-declaration="no" method="xml" encoding="UTF-8" indent="no"/>
+    <xsl:output omit-xml-declaration="no" method="xml" encoding="UTF-8" indent="no"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
-
-    <xsl:function name="ae:dateTimeToRfc822">
-        <xsl:param name="pDateTime"/>
-        <xsl:value-of select="fn:format-dateTime($pDateTime, '[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0000', 'en', (), ())"/>
-    </xsl:function>
+    <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:query-index($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vTotal" select="fn:count($vFilteredExperiments)"/>
 
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
             <channel>
@@ -86,7 +82,7 @@
     <xsl:template match="experiment">
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
-        <xsl:if test="position() &gt;= xs:integer($pFrom) and position() &lt;= xs:integer($pTo)">
+        <xsl:if test="fn:position() &gt;= xs:integer($pFrom) and fn:position() &lt;= xs:integer($pTo)">
             <item>
                 <title>
                     <xsl:value-of select="accession"/>
@@ -109,18 +105,18 @@
                 </guid>
 
                 <description>
-                    <xsl:for-each select="description[contains(text, '(Generated description)')]">
+                    <xsl:for-each select="description[fn:contains(text, '(Generated description)')]">
                         <xsl:value-of select="fn:replace(text, '[(]Generated description[)]', '', 'i')"/>
-                        <xsl:if test="position() != last()">
+                        <xsl:if test="fn:position() != fn:last()">
                             <xsl:text>&lt;br/&gt;</xsl:text>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:if test="(count(description[contains(text, '(Generated description)')]) > 0)">
+                    <xsl:if test="(fn:count(description[fn:contains(text, '(Generated description)')]) > 0)">
                         <xsl:text>&lt;br/&gt;&lt;br/&gt;</xsl:text>
                     </xsl:if>
-                    <xsl:for-each select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]">
+                    <xsl:for-each select="description[fn:string-length(text) > 0 and fn:not(fn:contains(text, '(Generated description)'))]">
                         <xsl:sort select="id" data-type="number"/>
-                        <xsl:value-of select="saxon:serialize(text, 'xml')"/>
+                        <xsl:value-of select="fn:replace(ae:serializeXml(text, 'UTF-8'), '&lt;/?text&gt;', '', 'i')"/>
                         <xsl:if test="position() != last()">
                             <xsl:text>&lt;br/&gt;</xsl:text>
                         </xsl:if>

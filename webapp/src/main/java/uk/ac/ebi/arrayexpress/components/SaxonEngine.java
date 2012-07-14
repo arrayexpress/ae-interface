@@ -34,10 +34,7 @@ import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.FormatFileSizeFunction;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.GetAcceleratorValueFunction;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.TabularDocumentFunction;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.TrimTrailingDotFunction;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon.ParseHTMLFunction;
 import uk.ac.ebi.fg.utils.saxon.IXPathEngine;
 
@@ -88,6 +85,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         );
 
         registerExtensionFunction(new ParseHTMLFunction());
+        registerExtensionFunction(new SerializeXMLFunction());
         registerExtensionFunction(new TabularDocumentFunction());
         registerExtensionFunction(new GetAcceleratorValueFunction());
         registerExtensionFunction(new FormatFileSizeFunction());
