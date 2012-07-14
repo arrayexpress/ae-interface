@@ -40,7 +40,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private static final String CDATA_TYPE = "CDATA";
 
     private static final char DEFAULT_COL_DELIMITER = 0x9;
-    private static final char DEFAULT_COL_QUOTECHAR = '"';
+    private static final char DEFAULT_COL_QUOTE_CHAR = '"';
 
     private char columnDelimiter;
     private char columnQuoteChar;
@@ -50,7 +50,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     public FlatFileXMLReader()
     {
         this.columnDelimiter = DEFAULT_COL_DELIMITER;
-        this.columnQuoteChar = DEFAULT_COL_QUOTECHAR;
+        this.columnQuoteChar = DEFAULT_COL_QUOTE_CHAR;
     }
 
     public FlatFileXMLReader( String options )
