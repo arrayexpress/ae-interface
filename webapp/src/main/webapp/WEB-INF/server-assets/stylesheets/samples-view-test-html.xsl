@@ -9,12 +9,14 @@
                 exclude-result-prefixes="ae search html fn xs"
                 version="2.0">
 
+    <!--
     <xsl:param name="queryid"/>
+    -->
     <xsl:param name="accession"/>
+    <!--
     <xsl:param name="grouping"/>
     <xsl:param name="full"/>
 
-    <!-- TODO: fix this when we're ready -->
     <xsl:variable name="vGrouping" as="xs:boolean" select="false()"/>
     <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
 
@@ -23,6 +25,7 @@
 
     <xsl:variable name="vSortBy" select="if ($sortby) then fn:replace($sortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
+    -->
 
     <xsl:param name="host"/>
     <xsl:param name="basepath"/>
@@ -30,10 +33,12 @@
 
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
+    <!--
     <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
     <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run', '\s*,\s*')"/>
-
+    -->
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
+
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
     <xsl:variable name="vSdrfFiles" select="$vData[@kind='sdrf']"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $vAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
@@ -81,9 +86,11 @@
                             <a href="{$basepath}/experiments/{$vAccession}/samples.html">
                                 <xsl:text>Samples and Data</xsl:text>
                             </a>
+                            <!--
                             <xsl:if test="not($vFull)">
                                 <sup><a href="{$basepath}/experiments/{$vAccession}/samples.html?full=true" title="Some columns were omitted from this view; please click here to get full SDRF view">*</a></sup>
                             </xsl:if>
+                            -->
                         </div>
                         <div id="ae_summary_box">
                             <div id="ae_accession">
@@ -125,7 +132,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
+    <!--
     <xsl:template name="add-header-col-info">
         <xsl:param name="pPos"/>
         <xsl:param name="pText"/>
@@ -138,8 +145,10 @@
 
         <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}"/>
     </xsl:template>
-
+    -->
     <xsl:template match="table">
+        <xsl:message>Table has [<xsl:value-of select="fn:count(row)"/>] rows</xsl:message>
+        <!--
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="row[col[1] = 'Source Name'][1]"/>
             <xsl:variable name="vHeaderPos" select="fn:count(row[col[1] = 'Source Name'][1]/preceding-sibling::*) + 1"/>
@@ -183,8 +192,9 @@
                 <xsl:copy-of select="."/>
             </xsl:for-each>
         </xsl:variable>
-
+        -->
         <div class="ae_samples_table_border">
+            <!--
             <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="left_fixed">
@@ -211,9 +221,11 @@
                     <td class="bottom_filler"></td>
                 </tr>
             </table>
+            -->
         </div>
     </xsl:template>
 
+    <!--
     <xsl:template name="out-source-name-table">
         <xsl:param name="pTableInfo"/>
         <xsl:param name="pRows"/>
@@ -494,5 +506,5 @@
             </xsl:choose>
         </xsl:if>
     </xsl:template>
-
+    -->
 </xsl:stylesheet>
