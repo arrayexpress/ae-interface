@@ -93,10 +93,11 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         ch.startDocument();
 
-        AttributesImpl attributes = new AttributesImpl();
-        attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "cols", CDATA_TYPE, "50");
-        attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "rows", CDATA_TYPE, "100");
-        ch.startElement(EMPTY_NAMESPACE, "table", "table", attributes);
+        //TODO
+        //AttributesImpl attributes = new AttributesImpl();
+        //attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "cols", CDATA_TYPE, "50");
+        //attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "rows", CDATA_TYPE, "100");
+        ch.startElement(EMPTY_NAMESPACE, "table", "table", EMPTY_ATTR);
 
         String[] row;
         while ((row = ffReader.readNext()) != null) {
