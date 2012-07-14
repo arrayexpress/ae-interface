@@ -93,7 +93,9 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                 String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
 
                 StringValue locationValue = (StringValue) arguments[0].next();
-                StringValue optionsValue = (StringValue) arguments[1].next();
+                StringValue optionsValue = (arguments.length > 1 && null != arguments[1])
+                        ? (StringValue) arguments[1].next()
+                        : null;
 
                 if (null != locationValue) {
                     File flatFile = new File(locationValue.getStringValue());
