@@ -35,8 +35,6 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private static final Attributes EMPTY_ATTR = new AttributesImpl();
 
     private static final String EMPTY_NAMESPACE = "";
-    private static final String EMPTY_LOCAL_NAME = "";
-
     private static final String CDATA_TYPE = "CDATA";
 
     private static final char DEFAULT_COL_DELIMITER = 0x9;
@@ -93,11 +91,10 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         ch.startDocument();
 
-        //TODO
-        //AttributesImpl attributes = new AttributesImpl();
-        //attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "cols", CDATA_TYPE, "50");
-        //attributes.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCAL_NAME, "rows", CDATA_TYPE, "100");
-        ch.startElement(EMPTY_NAMESPACE, "table", "table", EMPTY_ATTR);
+        AttributesImpl attributes = new AttributesImpl();
+        attributes.addAttribute(EMPTY_NAMESPACE, "cols", "cols", CDATA_TYPE, "50");
+        attributes.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, "100");
+        ch.startElement(EMPTY_NAMESPACE, "table", "table", attributes);
 
         String[] row;
         while ((row = ffReader.readNext()) != null) {
