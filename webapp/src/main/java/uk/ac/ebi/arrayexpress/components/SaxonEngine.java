@@ -149,12 +149,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     // implements ErrorListener.error
     public void error( TransformerException x ) throws TransformerException
     {
+        getApplication().sendExceptionReport("[PROBLEM] XSLT transformation error occurred", x);
         throw x;
     }
 
     // implements ErrorListener.fatalError
     public void fatalError( TransformerException x ) throws TransformerException
     {
+        getApplication().sendExceptionReport("[SEVERE] XSLT fatal transformation error occurred", x);
         throw x;
     }
 
