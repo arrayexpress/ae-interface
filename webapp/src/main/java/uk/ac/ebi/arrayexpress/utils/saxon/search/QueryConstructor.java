@@ -33,7 +33,7 @@ public class QueryConstructor implements IQueryConstructor
         for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
             if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
                 QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), env.indexAnalyzer);
-                parser.setDefaultOperator(QueryParser.Operator.AND);
+                //parser.setDefaultOperator(QueryParser.Operator.AND);      AND == MUST; enables SHOULD
                 for ( String value : queryItem.getValue() ) {
                     if (!"".equals(value)) {
                         if (env.fields.get(queryItem.getKey()).shouldEscape) {

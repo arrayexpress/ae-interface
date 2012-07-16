@@ -164,11 +164,10 @@ public class Controller
         return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
     }
 
-    // TODO: implement this method
     public List<NodeInfo> queryIndexSortedByRelevance( Integer queryId ) throws IOException
     {
         QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
-        return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
+        return new Querier(getEnvironment(queryInfo.getIndexId())).query(queryInfo);
     }
 
     public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException

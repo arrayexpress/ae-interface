@@ -68,10 +68,11 @@ public class SimilarityJob extends ApplicationJob
             XPathExpression xpe = xp.compile("/experiments/experiment[source/@visible = 'true']");
             List experiments = (List) xpe.evaluate(experimentDocument, XPathConstants.NODESET);
             logger.info("Got " + experiments.size() + " experiments.");
-
+             /*
             new JobController( ((Similarity) Application.getAppComponent("Similarity")),
                     ((SaxonEngine) getComponent("SaxonEngine")), properties, experiments,
-                    xp, jobController, lowPriorityOntologyURIs);
+                    xp, jobController, lowPriorityOntologyURIs);                 */
+            jobController.executeJob("similarity-update-ae2-xml");
         }
     }
 

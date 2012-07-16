@@ -126,11 +126,12 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
                         throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
                     }
 
-                    // TODO:
-                    // check if second equalsignorecase to 'similarto' and third is either 'ascending' or 'descending'
-                    // then query and sort by that value
-                    // else do a standard query, e.g. searchController.queryIndex(intQueryId);
-                    nodes = searchController.queryIndex(intQueryId);
+                    String field = second.getStringValue();
+                    String sortOrder = third.getStringValue();
+                    if ( field.equalsIgnoreCase("relevance") && (sortOrder.endsWith("ascending") || sortOrder.endsWith("descending")) ) {  // ascending not needed
+                        nodes = searchController.queryIndexSortedByRelevance(intQueryId);
+                    } else
+                        nodes = searchController.queryIndex(intQueryId);
                 }
             } catch (IOException x) {
                 throw new XPathException("Caught IOException while querying index", x);

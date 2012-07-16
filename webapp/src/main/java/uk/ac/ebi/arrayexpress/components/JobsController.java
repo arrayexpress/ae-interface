@@ -56,6 +56,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
         addJob("update-efo", UpdateOntologyJob.class);
+        addJob("similarity-update-ae2-xml", ReloadExperimentsAfterSimilarityJob.class);    // todo: change to listener
 
         // schedule jobs
         scheduleJob("rescan-files", "ae.files.rescan");

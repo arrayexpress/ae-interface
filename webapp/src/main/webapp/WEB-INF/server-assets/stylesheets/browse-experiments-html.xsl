@@ -28,6 +28,15 @@
     <xsl:param name="basepath"/>
     <xsl:param name="querystring"/>
 
+    <xsl:param name="keywords"/>
+    <xsl:variable name="vSimilarToAccession">
+        <xsl:for-each select="tokenize($keywords, '\s+')">
+            <xsl:if test="matches(., 'similarto:[a-zA-Z]{1}-[a-zA-Z]{4}-[0-9]{1,4}')">   <!-- match similarto:accession -->
+                <xsl:value-of select="replace(., 'similarto:', '')"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
@@ -59,7 +68,7 @@
         </xsl:variable>
 
         <tr id="ae_results_summary_info">
-            <td colspan="9">
+            <td colspan="10">
                 <div id="ae_results_total"><xsl:value-of select="$vTotal"/></div>
                 <div id="ae_results_total_samples"><xsl:value-of select="$vTotalSamples"/></div>
                 <div id="ae_results_total_assays"><xsl:value-of select="$vTotalAssays"/></div>
@@ -81,7 +90,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <tr class="ae_results_tr_error">
-                    <td colspan="9">
+                    <td colspan="10">
                             <div>There are no experiments matching your search criteria found in ArrayExpress Archive.</div>
                             <div>More information on query syntax available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
                     </td>
@@ -99,6 +108,25 @@
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
+                <td class="{$vDetailedViewMainTdClass}"><!-- todo: show/hide column -->
+                    <xsl:if test="$vSimilarToAccession != ''">
+                        <div>
+                            <xsl:variable name="vSimilarity" select="ae:getAcceleratorValue('similar-experiments', $vSimilarToAccession)"/>
+                            <xsl:for-each select="$vSimilarity/similarOntologyExperiments/similarExperiment | $vSimilarity/similarPubMedExperiments/similarExperiment">
+                                <xsl:if test="$vAccession = accession">
+                                    <xsl:value-of select="calculatedDistance|distance"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </div>
+
+                        <!--     add this
+                       <xsl:for-each select="$pExperiments">
+                           <xsl:if test="$vAccession = accession">
+                               <xsl:value-of select="search:getExperimentScore($queryid, .)"/>
+                           </xsl:if>
+                       </xsl:for-each> -->
+                    </xsl:if>
+                </td>
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass}">
                     <div class="acc">
@@ -192,7 +220,7 @@
                 </td>
             </tr>
             <tr id="{$vExpId}_ext" style="{$vDetailedViewExtStyle}">
-                <td colspan="9" class="td_ext">
+                <td colspan="10" class="td_ext">
                     <div class="tbl">
                         <table cellpadding="0" cellspacing="0" border="0">
 

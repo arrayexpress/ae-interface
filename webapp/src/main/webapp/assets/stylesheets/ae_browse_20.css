@@ -515,6 +515,10 @@ a:active .table_header_label {
     overflow: hidden;
 }
 
+.ae_results_relevance {
+    width: 80px;
+}
+
 .ae_results_more {
     width: 19px;
 }

@@ -363,6 +363,10 @@ ae_results_body img {
     overflow: hidden;
 }
 
+#ae_results_relevance {
+    width: 80px;
+}
+
 .ae_results_more {
     width: 20px;
 }

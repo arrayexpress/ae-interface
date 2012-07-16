@@ -72,6 +72,12 @@
                     <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
+                                <th class="col_relevance sortable">
+                                    <xsl:text>Relevance</xsl:text>
+                                    <xsl:call-template name="add-sort">
+                                        <xsl:with-param name="pKind" select="'relevance'"/> <!-- todo: change sort by -->
+                                    </xsl:call-template>
+                                </th>
                                 <th class="col_accession sortable">
                                     <xsl:text>ID</xsl:text>
                                     <xsl:call-template name="add-sort">
@@ -146,6 +152,12 @@
         <xsl:variable name="vAccession" select="accession"/>
 
         <tr>
+            <td class="col_relevance">                            <!-- todo: change -->
+                <div>
+                    <xsl:apply-templates select="relevance" mode="copy" />
+                    <xsl:if test="count(relevance) = 0">&#160;</xsl:if>
+                </div>
+            </td>
             <td class="col_accession">
                 <div>
                     <a href="{$basepath}/experiments/{accession}">

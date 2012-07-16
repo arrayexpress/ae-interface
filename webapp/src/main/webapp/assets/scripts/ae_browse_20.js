@@ -182,7 +182,7 @@ aeDoLogout(shouldReQuery)
 function
 aeSort( sortby )
 {
-    if ( -1 != String("accession name assays species releasedate fgem raw atlas").indexOf(sortby) ) {
+    if ( -1 != String("accession name assays species releasedate fgem raw atlas relevance").indexOf(sortby) ) {
         var innerElt = $( "#ae_results_header_" + sortby ).find("div.table_header_inner");
         var sortorder = "ascending";
         if ( -1 != String("accession name species").indexOf(sortby)) {

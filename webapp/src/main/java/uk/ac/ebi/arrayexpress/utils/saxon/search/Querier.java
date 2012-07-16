@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  */
 
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.xpath.XPathEvaluator;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
@@ -26,6 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -126,7 +130,6 @@ public class Querier
         return count;
     }
 
-    // TODO: add option to sort/nor sort by relevance
     public List<NodeInfo> query( Query query ) throws IOException
     {
         List<NodeInfo> result = null;
@@ -150,7 +153,46 @@ public class Querier
             result = new ArrayList<NodeInfo>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {
                 result.add(this.env.documentNodes.get(d.doc));
-                // TODO: populate node -> score map in QueryInfo (change the argument to this method to be QueryInfo)
+            }
+
+            isearcher.close();
+            ir.close();
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            if (null != isearcher)
+                isearcher.close();
+            if (null != ir)
+                ir.close();
+        }
+
+        return result;
+    }
+
+    public List<NodeInfo> query( QueryInfo queryInfo ) throws IOException
+    {
+        List<NodeInfo> result = null;
+        IndexReader ir = null;
+        IndexSearcher isearcher = null;
+        try {
+            ir = IndexReader.open(this.env.indexDirectory, true);
+
+            // empty query returns everything
+            if (queryInfo.getQuery() instanceof BooleanQuery && ((BooleanQuery)queryInfo.getQuery()).clauses().isEmpty()) {
+                logger.info("Empty search, returned all [{}] documents", this.env.documentNodes.size());
+                return this.env.documentNodes;
+            }
+
+            // to show _all_ available nodes
+            isearcher = new IndexSearcher(ir);
+            // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
+            TopDocs hits = isearcher.search(queryInfo.getQuery(), this.env.documentNodes.size() + 1);
+            logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", queryInfo.getQuery().toString(), hits.totalHits);
+
+            result = new ArrayList<NodeInfo>(hits.totalHits);
+            for (ScoreDoc d : hits.scoreDocs) {                       // are in descending order
+                result.add(this.env.documentNodes.get(d.doc));
+                queryInfo.putScore(this.env.documentNodes.get(d.doc), d.score);
             }
 
             isearcher.close();

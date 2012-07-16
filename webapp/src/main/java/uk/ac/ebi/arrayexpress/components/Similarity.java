@@ -35,6 +35,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Similarity extends ApplicationComponent implements IDocumentSource, ISimilarityComponent
@@ -118,15 +119,30 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
         this.logger.debug("Updating accelerators for similarity");
 
         ExtFunctions.clearAccelerator("similar-experiments");
+        ExtFunctions.clearAccelerator("similar-experiments-reversed");
         try {
 
             XPath xp = new XPathEvaluator(getDocument().getConfiguration());
             XPathExpression xpe = xp.compile("/similarity/experiment");
+            XPathExpression similarExperiment = xp.compile("similarOntologyExperiments/similarExperiment | similarPubMedExperiments/similarExperiment");
             List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
 
             XPathExpression accessionXpe = xp.compile("accession");
             for (Object node : documentNodes) {
                 try {
+                    List simNodes = (List) similarExperiment.evaluate(node, XPathConstants.NODESET);
+                    for ( Object simNode : simNodes ) {
+                        String similarAccession = accessionXpe.evaluate(simNode);
+
+                        List<Object> list;
+                        if ( (list = (List)ExtFunctions.getAcceleratorValue("similar-experiments-reversed", similarAccession)) != null )
+                            list.add(node);
+                        else {
+                            list = new ArrayList<Object>();
+                            list.add(node);
+                            ExtFunctions.addAcceleratorValue("similar-experiments-reversed", similarAccession, list);
+                        }
+                    }
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);
                     ExtFunctions.addAcceleratorValue("similar-experiments", accession, node);

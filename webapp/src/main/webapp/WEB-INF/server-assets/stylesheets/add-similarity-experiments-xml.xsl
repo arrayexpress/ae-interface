@@ -19,14 +19,13 @@
     <xsl:template match="experiment">
         <experiment>
             <xsl:copy-of select="@* | *[name() != 'similarto']"/>
-            <xsl:for-each select="ae:getAcceleratorValue('similar-experiments', accession)">
+
+            <xsl:for-each select="ae:getAcceleratorValue('similar-experiments-reversed', accession)">
                 <similarto>
                     <accession><xsl:value-of select="accession"/></accession>
-                    <distance>...</distance>
                 </similarto>
             </xsl:for-each>
         </experiment>
     </xsl:template>
-
 
 </xsl:stylesheet>
