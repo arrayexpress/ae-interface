@@ -108,7 +108,8 @@
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
-                <td class="{$vDetailedViewMainTdClass}"><!-- todo: show/hide column -->
+                <td class="{$vDetailedViewMainTdClass} col_relevance">
+                    <!-- todo: show/hide column -->
                     <!--
                     <xsl:if test="$vSimilarToAccession != ''">
                         <div>
@@ -266,7 +267,7 @@
                                 <xsl:with-param name="pBasePath" select="$basepath"/>
                             </xsl:call-template>
 
-                            <xsl:if test="not($userid)"> <!-- curator logged in -->
+                            <xsl:if test="not($userid)">
                                 <xsl:call-template name="exp-experimental-factors-section">
                                     <xsl:with-param name="pQueryId" select="$queryid"/>
                                 </xsl:call-template>

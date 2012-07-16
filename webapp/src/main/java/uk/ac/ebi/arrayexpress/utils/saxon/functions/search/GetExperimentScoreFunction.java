@@ -25,6 +25,7 @@ import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.value.FloatValue;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
@@ -69,7 +70,7 @@ public class GetExperimentScoreFunction extends ExtensionFunctionDefinition
 
     public SequenceType getResultType(SequenceType[] suppliedArgumentTypes)
     {
-        return SequenceType.SINGLE_FLOAT;
+        return SequenceType.OPTIONAL_FLOAT;
     }
 
     public ExtensionFunctionCall makeCallExpression()
@@ -108,7 +109,11 @@ public class GetExperimentScoreFunction extends ExtensionFunctionDefinition
                 throw new XPathException("Caught IOException while querying index", x);
             }
 
-            return Value.asIterator(FloatValue.makeFloatValue(result));
+            if (null != result) {
+                return Value.asIterator(FloatValue.makeFloatValue(result));
+            } else {
+                return EmptyIterator.emptyIterator();
+            }
         }
     }
 }

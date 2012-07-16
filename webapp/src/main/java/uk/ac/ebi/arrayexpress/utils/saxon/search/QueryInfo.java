@@ -60,12 +60,12 @@ public class QueryInfo
         return query;
     }
 
-    public void putScore( NodeInfo node, float score )
+    public void putScore( NodeInfo node, Float score )
     {
         scores.put(node, score);
     }
 
-    public float getScore( NodeInfo node )
+    public Float getScore( NodeInfo node )
     {
         return scores.get(node);
     }

@@ -41,7 +41,6 @@ public class AEInterfaceApplication extends Application implements ServletContex
     {
         super("arrayexpress");
 
-    //    addComponent(new DbConnectionPool());
         addComponent(new SaxonEngine());
         addComponent(new SearchEngine());
         addComponent(new Events());
@@ -54,7 +53,7 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new JobsController());
         addComponent(new Ontologies());
         // disabled until we get a good presentation layer
-        addComponent(new Similarity());
+        // addComponent(new Similarity());
 
     }
 
