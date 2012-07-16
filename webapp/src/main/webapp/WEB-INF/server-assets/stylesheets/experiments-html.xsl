@@ -120,7 +120,7 @@
                         <xsl:call-template name="exp-status-section"/>
 
                         <xsl:call-template name="exp-samples-section">
-                            <xsl:with-param name="pQueryString" select="$querystring"/>
+                            <xsl:with-param name="pQueryString"/>
                             <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pBasePath" select="$basepath"/>
                         </xsl:call-template>
