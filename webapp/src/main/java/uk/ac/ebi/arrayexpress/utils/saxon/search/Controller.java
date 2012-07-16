@@ -180,6 +180,12 @@ public class Controller
         return new Querier(getEnvironment(indexId)).query(query);
     }
 
+    public Float getRelevanceScore( Integer queryId, NodeInfo node ) throws IOException
+    {
+        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
+        return queryInfo.getScore(node);
+    }
+
     public String highlightQuery( Integer queryId, String fieldName, String text )
     {
         if (null == this.queryHighlighter) {

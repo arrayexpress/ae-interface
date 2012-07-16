@@ -16,6 +16,13 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$pSortBy='relevance'">
+                <!-- do not sort here - nodes are already sorted -->
+                <xsl:apply-templates select="$pExperiments">
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:when test="$pSortBy='accession'">
                 <xsl:apply-templates select="$pExperiments">
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
@@ -103,7 +110,7 @@
             <xsl:when test="$pSortBy='raw'">
                 <xsl:apply-templates select="$pExperiments">
                     <!-- sort by presence of seqdata -->
-                    <xsl:sort select="count(seqdatauri)" order="{$pSortOrder}" data-type="number"/>
+                    <xsl:sort select="string(count(seqdatauri))" order="{$pSortOrder}" data-type="number"/>
                     <!-- then by count of data files -->
                     <xsl:sort select="rawdatafiles" order="{$pSortOrder}" data-type="number"/>
                     <!-- then sort by accession -->

@@ -109,6 +109,7 @@
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
                 <td class="{$vDetailedViewMainTdClass}"><!-- todo: show/hide column -->
+                    <!--
                     <xsl:if test="$vSimilarToAccession != ''">
                         <div>
                             <xsl:variable name="vSimilarity" select="ae:getAcceleratorValue('similar-experiments', $vSimilarToAccession)"/>
@@ -119,13 +120,9 @@
                             </xsl:for-each>
                         </div>
 
-                        <!--     add this
-                       <xsl:for-each select="$pExperiments">
-                           <xsl:if test="$vAccession = accession">
-                               <xsl:value-of select="search:getExperimentScore($queryid, .)"/>
-                           </xsl:if>
-                       </xsl:for-each> -->
                     </xsl:if>
+                    -->
+                   <div><xsl:value-of select="search:getExperimentScore($queryid, .)"/></div>
                 </td>
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass}">

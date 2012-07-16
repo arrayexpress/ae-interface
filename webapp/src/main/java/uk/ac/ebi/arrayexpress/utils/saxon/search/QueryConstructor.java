@@ -50,6 +50,7 @@ public class QueryConstructor implements IQueryConstructor
 
     public Query construct( IndexEnvironment env, String queryString ) throws ParseException
     {
+        //TODO: stody if we need to remove AND as a default operator here?
         QueryParser parser = new EnhancedQueryParser(env, env.defaultField, env.indexAnalyzer);
         parser.setDefaultOperator(QueryParser.Operator.AND);
         return parser.parse(queryString);
