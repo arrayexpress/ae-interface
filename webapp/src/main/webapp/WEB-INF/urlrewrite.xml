@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite
-        PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN"
-        "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+        PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <urlrewrite>
     <!-- special treatment for googlebots -->
@@ -46,15 +46,18 @@
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/html</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
-        <to type="forward">/servlets/query/experiments/samples-view/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/samples-view/html</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples-test\.html$</from>
-        <to type="forward">/servlets/query/experiments/samples-view-test/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/samples-view-test/html</to>
     </rule>
 
     <!-- legacy sdrf viewer -->
@@ -92,7 +95,8 @@
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)/?$</from>
-        <to type="forward">/servlets/query/arrays/arrays/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/arrays/arrays/html</to>
     </rule>
 
     <!-- protocols -->
@@ -111,11 +115,13 @@
     </rule>
     <rule>
         <from>^/protocols/(\d+)/?$</from>
-        <to type="forward">/servlets/query/protocols/protocols/html?id=$1</to>
+        <set type="parameter" name="id">$1</set>
+        <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
     <rule>
         <from>^/protocols/(.+)/?$</from>
-        <to type="forward">/servlets/query/protocols/protocols/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
 
     <!-- files -->
@@ -129,11 +135,13 @@
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/?$</from>
-        <to type="forward">/servlets/query/-/files/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/-/files/html</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/index.html$</from>
-        <to type="forward">/servlets/query/-/files/html?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/-/files/html</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+\.zip)/([^/]+)$</from>
@@ -155,7 +163,8 @@
     </rule>
     <rule>
         <from>^/users/(.+)$</from>
-        <to type="forward">/servlets/query/users/users/html?id=$1</to>
+        <set type="parameter" name="id">$1</set>
+        <to type="forward">/servlets/query/users/users/html</to>
     </rule>
 
     <!-- legacy download support -->
@@ -167,7 +176,8 @@
     <!-- rss feeds support, old scheme -->
     <rule>
         <from>^/rss/experiments$</from>
-        <to type="forward">/servlets/query/experiments/experiments-rss/xml?queryversion=1</to>
+        <set type="parameter" name="queryversion">1</set>
+        <to type="forward">/servlets/query/experiments/experiments-rss/xml</to>
     </rule>
 
     <!-- rss feeds support, current scheme -->
@@ -179,31 +189,41 @@
     <!-- rest api support -->
     <rule>
         <from>^/xml/experiments$</from>
-        <to type="forward">/servlets/query/experiments/experiments/xml?queryversion=1</to>
+        <set type="parameter" name="queryversion">1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
         <rule>
         <from>^/xml/experiments/diff/([E]-\w{4}-\d+)/(.+)$</from>
-        <to type="forward">/servlets/query/experiments/diff-experiment/xml?accession=$1&amp;source=$2</to>
+            <set type="parameter" name="accession">$1</set>
+            <set type="parameter" name="source">$2</set>
+            <to type="forward">/servlets/query/experiments/diff-experiment/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/xml?queryversion=1&amp;keywords=$1</to>
+        <set type="parameter" name="queryversion">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/files$</from>
-        <to type="forward">/servlets/query/experiments/files/xml?queryversion=1</to>
+        <set type="parameter" name="queryversion">1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/([AE]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/files/xml?queryversion=1&amp;keywords=$1</to>
+        <set type="parameter" name="queryversion">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
 
     <!-- rest api v2 support -->
@@ -213,11 +233,13 @@
     </rule>
     <rule>
         <from>^/xml/v2/experiments/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/xml?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/xml?keywords=$1</to>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files$</from>
@@ -225,36 +247,46 @@
     </rule>
     <rule>
         <from>^/xml/v2/files/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/files/xml?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/files/xml?keywords=$1</to>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <!-- json-flavored rest api -->
     <rule>
         <from>^/json/v2/experiments$</from>
-        <to type="forward">/servlets/query/experiments/experiments/json?flusheaders=</to>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
     </rule>
     <rule>
         <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/json?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
     </rule>
     <rule>
         <from>^/json/v2/experiments/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/experiments/json?flusheaders=&amp;keywords=$1</to>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files$</from>
-        <to type="forward">/servlets/query/experiments/files/json?flusheaders=</to>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/files/json?accession=$1</to>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files/(.*)$</from>
-        <to type="forward">/servlets/query/experiments/files/json?flusheaders=&amp;keywords=$1</to>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
     </rule>
 
     <!-- proxy calls to json efo api for nils -->
@@ -267,24 +299,16 @@
         <to type="forward">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
     </rule>
 
-    <!-- admin rest-api for atlas -->
-    <rule>
-        <from>^/admin/privacy/([E]-\w{4}-\d+)$</from>
-        <to type="forward">/servlets/query/experiments/privacy/plain?accession=$1</to>
-    </rule>
-    <rule>
-        <from>^/admin/privacy$</from>
-        <to type="forward">/servlets/query/experiments/privacy/plain</to>
-    </rule>
-
     <!-- ebeye export -->
     <rule>
         <from>^/export/AER2EBeye.xml$</from>
-        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml?version=1</to>
+        <set type="parameter" name="version">1</set>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml</to>
     </rule>
     <rule>
         <from>^/export/ebeye_export.xml$</from>
-        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml?version=2</to>
+        <set type="parameter" name="version">2</set>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml</to>
     </rule>
 
     <!-- search results export in tab format -->
