@@ -171,9 +171,18 @@ public class EFOLoader
                 String value = ((OWLLiteral) annotation.getValue()).getLiteral();
                 // default value should not override ArrayExpress_label
                 // which can appear earlier in the annotations set
-                if (null == node.getTerm() && annotation.getProperty().isLabel()) {
-                    node.setTerm(value);
+                if (annotation.getProperty().isLabel()) {
+                    // capture original term as alternative value (if AE_LABEL is also present)
+                    if (null == node.getTerm()) {
+                        node.setTerm(value);
+                    } else {
+                        node.getAlternativeTerms().add(value);
+                    }
                 } else if (IRI_AE_LABEL.equals(annotation.getProperty().getIRI())) {
+                    // capture original term as alternative value
+                    if (null != node.getTerm()) {
+                        node.getAlternativeTerms().add(node.getTerm());
+                    }
                     node.setTerm(value);
                 } else if (IRI_EFO_URI.equals(annotation.getProperty().getIRI())) {
                     node.setEfoUri(value);
