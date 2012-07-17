@@ -19,9 +19,13 @@
         <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html</to>
     </rule>
 
-    <!-- migration infopage -->
     <rule>
         <from>^/migration.html$</from>
+        <to type="permanent-redirect">%{context-path}/admin.html</to>
+    </rule>
+
+    <rule>
+        <from>^/admin.html$</from>
         <to type="forward">/servlets/query/-/admin/html</to>
     </rule>
 

@@ -24,7 +24,7 @@
     <xsl:template match="/">
         <html lang="en">
             <xsl:call-template name="page-header">
-                <xsl:with-param name="pTitle">Migration Status | ArrayExpress Archive | EBI</xsl:with-param>
+                <xsl:with-param name="pTitle">Administration | ArrayExpress Archive | EBI</xsl:with-param>
                 <xsl:with-param name="pExtraCode">
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_common_20.css" type="text/css"/>
                     <link rel="stylesheet" href="{$basepath}/assets/stylesheets/ae_admin_20.css" type="text/css"/>
