@@ -362,6 +362,10 @@
         <to type="forward">/servlets/query/experiments/browse-experiments-debug/html</to>
     </rule>
     <rule>
+        <from>^/browse-table-test.html</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments-test/html</to>
+    </rule>
+    <rule>
         <from>^/species-list.html</from>
         <to type="forward">/servlets/lookup/species</to>
     </rule>
