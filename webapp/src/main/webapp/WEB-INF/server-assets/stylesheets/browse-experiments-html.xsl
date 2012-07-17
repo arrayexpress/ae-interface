@@ -47,7 +47,7 @@
     <xsl:variable name="vDetailedViewMainTdClass">td_main<xsl:if test="'true' = $detailedview"> td_expanded</xsl:if></xsl:variable>
 
     <xsl:template match="/experiments">
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid, $sortby, $sortorder)"/>
+        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
         <xsl:variable name="vTotalSamples" select="sum($vFilteredExperiments/samples)"/>
         <xsl:variable name="vTotalAssays" select="sum($vFilteredExperiments/assays)"/>
@@ -108,6 +108,7 @@
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
+                <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass} col_relevance">
                     <!-- todo: show/hide column -->
                     <!--
@@ -125,7 +126,6 @@
                     -->
                    <div><xsl:value-of select="search:getExperimentScore($queryid, .)"/></div>
                 </td>
-                <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass}">
                     <div class="acc">
                         <div>

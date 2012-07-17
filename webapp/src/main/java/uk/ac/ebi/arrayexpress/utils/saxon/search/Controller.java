@@ -161,23 +161,12 @@ public class Controller
     public List<NodeInfo> queryIndex( Integer queryId ) throws IOException
     {
         QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
-        return queryIndex(queryInfo.getIndexId(), queryInfo.getQuery());
-    }
-
-    public List<NodeInfo> queryIndexSortedByRelevance( Integer queryId ) throws IOException
-    {
-        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
         return new Querier(getEnvironment(queryInfo.getIndexId())).query(queryInfo);
     }
 
     public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException
     {
-        return queryIndex(indexId, this.queryConstructor.construct(getEnvironment(indexId), queryString));
-    }
-
-    public List<NodeInfo> queryIndex( String indexId, Query query ) throws IOException
-    {
-        return new Querier(getEnvironment(indexId)).query(query);
+        return new Querier(getEnvironment(indexId)).query(this.queryConstructor.construct(getEnvironment(indexId), queryString));  // should use "queryIndex( Integer queryId )" instead
     }
 
     public Float getRelevanceScore( Integer queryId, NodeInfo node ) throws IOException
