@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.List;
 
 public class FlatFileXMLReader extends AbstractCustomXMLReader
 {
@@ -43,7 +44,9 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private char columnDelimiter;
     private char columnQuoteChar;
 
-    private String options;
+    private int headerRow = 0;
+    private int startRow = 0;
+    private int endRow = -1;
 
     public FlatFileXMLReader()
     {
@@ -54,7 +57,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     public FlatFileXMLReader( String options )
     {
         this();
-        this.options = options;
+        parseOptions(options);
     }
 
     public FlatFileXMLReader( final char columnDelimiter, final char columnQuoteChar )
@@ -88,24 +91,33 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
                 , this.columnQuoteChar
         );
 
+        List<String[]> ff = ffReader.readAll();
+        Integer rows = ff.size() > 0 ? ff.size() - headerRow : 0;
+        Integer cols = ff.size() > 0 ? ff.get(0).length : 0;
 
         ch.startDocument();
 
         AttributesImpl attributes = new AttributesImpl();
-        attributes.addAttribute(EMPTY_NAMESPACE, "cols", "cols", CDATA_TYPE, "50");
-        attributes.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, "100");
+        attributes.addAttribute(EMPTY_NAMESPACE, "cols", "cols", CDATA_TYPE, String.valueOf(cols));
+        attributes.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, String.valueOf(rows));
         ch.startElement(EMPTY_NAMESPACE, "table", "table", attributes);
 
-        String[] row;
-        while ((row = ffReader.readNext()) != null) {
+        boolean isHeader = (headerRow > 0);
+        String rowTag = isHeader ? "header" : "row";
+
+        for (String[] row : ff) {
             if (row.length > 0) {
-                ch.startElement(EMPTY_NAMESPACE, "row", "row", EMPTY_ATTR);
+                ch.startElement(EMPTY_NAMESPACE, rowTag, rowTag, EMPTY_ATTR);
                 for (String col : row) {
                     ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
                     ch.characters(col.toCharArray(), 0, col.length());
                     ch.endElement(EMPTY_NAMESPACE, "col", "col");
                 }
-                ch.endElement(EMPTY_NAMESPACE, "row", "row");
+                ch.endElement(EMPTY_NAMESPACE, rowTag, rowTag);
+                if (isHeader) {
+                    rowTag = "row";
+                    isHeader = false;
+                }
             }
         }
 
@@ -115,6 +127,14 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
     private void parseOptions( String options )
     {
-        // format is the following: "optionName:value,value,...,value;optionName:value,value,...
+        // format is the following: "optionName:value,value,...,value;optionName:value,value,..."
+        // optionName could be:
+        //
+        //    - headerRow:  specifies whether header is present in the table
+        //                  0 - no header; 1 - header
+        //
+        //
+        //
+        //
     }
 }
