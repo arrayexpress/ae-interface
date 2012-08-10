@@ -531,6 +531,11 @@
             <artifactId>ojdbc14</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openid4java</groupId>
+            <artifactId>openid4java-consumer</artifactId>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 </project>
 
