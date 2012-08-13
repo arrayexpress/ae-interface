@@ -18,7 +18,6 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  */
 
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.xpath.XPathEvaluator;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
@@ -27,9 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -192,7 +188,7 @@ public class Querier
             result = new ArrayList<NodeInfo>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {                       // are in descending order
                 result.add(this.env.documentNodes.get(d.doc));
-                queryInfo.putScore(this.env.documentNodes.get(d.doc), d.score);
+                //queryInfo.putScore(this.env.documentNodes.get(d.doc), d.score);  lucene score is not needed
             }
 
             isearcher.close();

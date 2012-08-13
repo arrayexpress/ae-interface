@@ -586,9 +586,23 @@ a:active .table_header_label {
     vertical-align: top;
     border-bottom: 1px solid #bdd7d7;
 }
-
+  /* todo: enable this for column hiding
 .col_relevance {
     display: none;
+} */
+
+.relevance_bar_holder {
+    background-color: black;
+    border-radius: 13px;
+    padding: 2px;
+    height: 18px;
+}
+
+.relevance_bar {
+    background-color: green;
+    width: 1%;
+    height: 12px;
+    border-radius: 10px;
 }
 
 .td_main div {

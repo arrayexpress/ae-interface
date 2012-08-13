@@ -8,6 +8,7 @@
         <xsl:param name="pTo"/>
         <xsl:param name="pSortBy"/>
         <xsl:param name="pSortOrder"/>
+        <xsl:param name="pSimAccession" select="'empty'"/>
         <xsl:choose>
             <xsl:when test="$pSortBy = '' or ($pSortOrder != 'ascending' and $pSortOrder != 'descending')">
                 <xsl:message>[WARN] Default sorting applied, $pSortBy is [<xsl:value-of select="$pSortBy"/>], $pSortOrder is [<xsl:value-of select="$pSortOrder"/>]</xsl:message>
@@ -16,9 +17,14 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
-            <xsl:when test="$pSortBy='relevance'">
-                <!-- do not sort here - nodes are already sorted -->
+            <xsl:when test="$pSortBy='relevance'">               <!-- todo: set this as default ordering when $pSimAccession != 'empty' ; conflicting releasedate and relevance -->
                 <xsl:apply-templates select="$pExperiments">
+                    <xsl:sort select="similarto[@accession = $pSimAccession]/@distance" order="{$pSortOrder}" data-type="number"/>
+                    <!-- then sort by accession -->
+                    <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
+                    <!-- sort by experiment 4-letter code -->
+                    <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
+
                     <xsl:with-param name="pFrom" select="$pFrom"/>
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>

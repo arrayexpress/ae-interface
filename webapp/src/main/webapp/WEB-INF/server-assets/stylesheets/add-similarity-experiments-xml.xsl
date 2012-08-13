@@ -20,10 +20,29 @@
         <experiment>
             <xsl:copy-of select="@* | *[name() != 'similarto']"/>
 
-            <xsl:for-each select="ae:getAcceleratorValue('similar-experiments-reversed', accession)">
-                <similarto>
-                    <accession><xsl:value-of select="accession"/></accession>
-                </similarto>
+            <xsl:variable name="vAccession" select="accession"/>
+            <xsl:for-each select="ae:getAcceleratorValue('similar-experiments-reversed', $vAccession)">
+                <xsl:variable name="vInnerAccession" select="accession"/>
+                <xsl:choose>
+                    <!-- check if same experiment has ontology and pubmed score -->
+                    <xsl:when test="similarOntologyExperiments/similarExperiment/accession[text() = $vAccession]
+                            and similarPubMedExperiments/similarExperiment/accession[text() = $vAccession]">
+                        <!-- use biggest score -->
+                        <similarto accession="{$vInnerAccession}" distance="{
+                            max((
+                                similarOntologyExperiments/similarExperiment/accession[text() = $vAccession]/../calculatedDistance
+                                , similarPubMedExperiments/similarExperiment/accession[text() = $vAccession]/../distance
+
+                            ))
+                        }"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <similarto accession="{$vInnerAccession}" distance="{
+                                similarOntologyExperiments/similarExperiment/accession[text() = $vAccession]/../calculatedDistance
+                                | similarPubMedExperiments/similarExperiment/accession[text() = $vAccession]/../distance
+                        }"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:for-each>
         </experiment>
     </xsl:template>

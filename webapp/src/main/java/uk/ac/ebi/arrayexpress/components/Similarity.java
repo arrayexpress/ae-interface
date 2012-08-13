@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
+import uk.ac.ebi.arrayexpress.jobListeners.SimilarityJobListener;
+import uk.ac.ebi.arrayexpress.jobs.ReloadExperimentsAfterSimilarityJob;
 import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
@@ -35,8 +37,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Similarity extends ApplicationComponent implements IDocumentSource, ISimilarityComponent
 {
@@ -75,6 +78,8 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
 
         jobsController.addJob("recalculate-similarity", SimilarityJob.class);
         jobsController.addJobListener(new AE2ExperimentReloadJobListener("ae2-data-reload-listener"));
+        jobsController.addJob("similarity-update-ae2-xml", ReloadExperimentsAfterSimilarityJob.class);
+        jobsController.addJobListener(new SimilarityJobListener("similarity-recalculation-listener"));
         jobsController.executeJob("recalculate-similarity");
     }
 
@@ -134,14 +139,12 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
                     for ( Object simNode : simNodes ) {
                         String similarAccession = accessionXpe.evaluate(simNode);
 
-                        List<Object> list;
-                        if ( (list = (List)ExtFunctions.getAcceleratorValue("similar-experiments-reversed", similarAccession)) != null )
-                            list.add(node);
-                        else {
-                            list = new ArrayList<Object>();
-                            list.add(node);
-                            ExtFunctions.addAcceleratorValue("similar-experiments-reversed", similarAccession, list);
+                        Set<Object> similartExperimentsReversed = (Set)ExtFunctions.getAcceleratorValue("similar-experiments-reversed", similarAccession);
+                        if ( similartExperimentsReversed == null ) {
+                            similartExperimentsReversed = new HashSet<Object> ();
+                            ExtFunctions.addAcceleratorValue("similar-experiments-reversed", similarAccession, similartExperimentsReversed);
                         }
+                        similartExperimentsReversed.add(node);
                     }
                     // get all the expressions taken care of
                     String accession = accessionXpe.evaluate(node);

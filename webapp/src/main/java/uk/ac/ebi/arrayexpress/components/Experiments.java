@@ -41,10 +41,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Experiments extends ApplicationComponent implements IDocumentSource
 {
@@ -284,6 +281,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         ExtFunctions.clearAccelerator("visible-experiments");
         ExtFunctions.clearAccelerator("experiments-for-protocol");
         ExtFunctions.clearAccelerator("experiments-for-array");
+        ExtFunctions.clearAccelerator("experiments-with-similarity");
         try {
             for (String accession : this.experimentsInAtlas.getObject()) {
                 ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
@@ -296,6 +294,8 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             XPathExpression accessionXpe = xp.compile("accession");
             XPathExpression protocolIdsXpe = xp.compile("protocol/id");
             XPathExpression arrayAccXpe = xp.compile("arraydesign/accession");
+            XPathExpression similarXpe = xp.compile("similarto");
+            XPathExpression simAccessionXpe = xp.compile("@accession");
             for (Object node : documentNodes) {
 
                 try {
@@ -324,6 +324,18 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                                 ExtFunctions.addAcceleratorValue("experiments-for-array", arrayAcc, experimentsForArray);
                             }
                             experimentsForArray.add(accession);
+                        }
+                    }
+                    List similarityAccessions = (List)similarXpe.evaluate(node, XPathConstants.NODESET);
+                    if (null != similarityAccessions) {
+                        for ( Object similarTo : similarityAccessions ) {
+                            String simAccession = simAccessionXpe.evaluate(similarTo);
+                            Set<Object> experimentsWithSimilarity = (Set<Object>)ExtFunctions.getAcceleratorValue("experiments-with-similarity", simAccession);
+                            if (null == experimentsWithSimilarity) {
+                                experimentsWithSimilarity = new HashSet<Object>();
+                                ExtFunctions.addAcceleratorValue("experiments-with-similarity", simAccession, experimentsWithSimilarity);
+                            }
+                            experimentsWithSimilarity.add(node);
                         }
                     }
                 } catch (XPathExpressionException x) {

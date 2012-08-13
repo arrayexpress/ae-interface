@@ -104,8 +104,9 @@
                 <max_displayed_OWL_similarities>20</max_displayed_OWL_similarities>
                 <max_displayed_PubMed_similarities>20</max_displayed_PubMed_similarities>
                 <small_experiment_assay_count_limit>500</small_experiment_assay_count_limit>
-                <minimal_calculated_ontology_distance>2.0</minimal_calculated_ontology_distance>
+                <minimal_calculated_ontology_distance>1.9</minimal_calculated_ontology_distance>
                 <quartz_job_group_name>similarity-jobs</quartz_job_group_name>
+                <concurrent_job_limit>10</concurrent_job_limit>
             </properties>
         </similarity>
 
@@ -174,7 +175,7 @@
         <index id="experiments" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/experiments/experiment" defaultField="keywords">
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false" expand="true"/>
-                <field name="similarto" title="by Relevance" type="string" path="similarto/accession" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="similarto" title="by Relevance" type="string" path="similarto/@accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false" expand="true"/>

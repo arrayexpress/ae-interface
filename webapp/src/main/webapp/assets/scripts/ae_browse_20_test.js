@@ -343,6 +343,17 @@ onExperimentQuery( tableHtml )
     $("#ae_results_tbody").find(".ae_text_syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
     $("#ae_results_tbody").find(".ae_text_efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
 
+    // display relevance bar percentage
+    $(".relevance_bar").each(function(){
+            var percentage = parseInt($(this).html());
+            if ( percentage > 0 ) {
+                $(this).animate({'width':'' + percentage + '%'}, 800);
+            } else {
+                $(this).animate({'width':'100%'}, 800);
+            }
+        }
+    );
+
     // check if the appstate was saved for the page
     if (checkAppState()) {
         // update checkboxes and scroll position

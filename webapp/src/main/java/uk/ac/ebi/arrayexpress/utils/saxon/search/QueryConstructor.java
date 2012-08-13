@@ -33,7 +33,6 @@ public class QueryConstructor implements IQueryConstructor
         for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
             if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
                 QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), env.indexAnalyzer);
-                //TODO: remove this on a major redesign
                 parser.setDefaultOperator(QueryParser.Operator.AND);
                 for ( String value : queryItem.getValue() ) {
                     if (!"".equals(value)) {
@@ -51,7 +50,6 @@ public class QueryConstructor implements IQueryConstructor
 
     public Query construct( IndexEnvironment env, String queryString ) throws ParseException
     {
-        //TODO: stody if we need to remove AND as a default operator here?
         QueryParser parser = new EnhancedQueryParser(env, env.defaultField, env.indexAnalyzer);
         parser.setDefaultOperator(QueryParser.Operator.AND);
         return parser.parse(queryString);

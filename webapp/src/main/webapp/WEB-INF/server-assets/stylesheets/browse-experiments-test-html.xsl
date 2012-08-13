@@ -16,7 +16,7 @@
     
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
-    
+
     <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
     
@@ -45,6 +45,7 @@
     <xsl:variable name="vDetailedViewMainTrClass">tr_main<xsl:if test="'true' = $detailedview"> exp_expanded</xsl:if></xsl:variable>
     <xsl:variable name="vDetailedViewExtStyle"><xsl:if test="'true' != $detailedview">display:none</xsl:if></xsl:variable>
     <xsl:variable name="vDetailedViewMainTdClass">td_main<xsl:if test="'true' = $detailedview"> td_expanded</xsl:if></xsl:variable>
+    <xsl:variable name="vColSpan" select="if ($vSimilarToAccession = '') then 9 else 10" />
 
     <xsl:template match="/experiments">
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
@@ -68,7 +69,7 @@
         </xsl:variable>
 
         <tr id="ae_results_summary_info">
-            <td colspan="10">
+            <td colspan="{$vColSpan}">
                 <div id="ae_results_total"><xsl:value-of select="$vTotal"/></div>
                 <div id="ae_results_total_samples"><xsl:value-of select="$vTotalSamples"/></div>
                 <div id="ae_results_total_assays"><xsl:value-of select="$vTotalAssays"/></div>
@@ -86,11 +87,12 @@
                     <xsl:with-param name="pTo" select="$vTo"/>
                     <xsl:with-param name="pSortBy" select="$vSortBy"/>
                     <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                    <xsl:with-param name="pSimAccession" select="$vSimilarToAccession"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <tr class="ae_results_tr_error">
-                    <td colspan="10">
+                    <td colspan="{$vColSpan}">
                             <div>There are no experiments matching your search criteria found in ArrayExpress Archive.</div>
                             <div>More information on query syntax available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
                     </td>
@@ -110,21 +112,15 @@
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
                 <td class="{$vDetailedViewMainTdClass} col_relevance">
-                    <!-- todo: show/hide column -->
-                    <!--
                     <xsl:if test="$vSimilarToAccession != ''">
-                        <div>
-                            <xsl:variable name="vSimilarity" select="ae:getAcceleratorValue('similar-experiments', $vSimilarToAccession)"/>
-                            <xsl:for-each select="$vSimilarity/similarOntologyExperiments/similarExperiment | $vSimilarity/similarPubMedExperiments/similarExperiment">
-                                <xsl:if test="$vAccession = accession">
-                                    <xsl:value-of select="calculatedDistance|distance"/>
+                        <div class="relevance_bar_holder">
+                            <div class="relevance_bar">
+                                <xsl:if test="ae:getAcceleratorValue('experiments-with-similarity', $vSimilarToAccession)/accession = $vAccession">
+                                    <xsl:value-of select="similarto[@accession = $vSimilarToAccession]/@distance"/>
                                 </xsl:if>
-                            </xsl:for-each>
+                            </div>
                         </div>
-
                     </xsl:if>
-                    -->
-                   <div><xsl:value-of select="search:getExperimentScore($queryid, .)"/></div>
                 </td>
                 <td class="{$vDetailedViewMainTdClass}">
                     <div class="acc">
@@ -218,7 +214,7 @@
                 </td>
             </tr>
             <tr id="{$vExpId}_ext" style="{$vDetailedViewExtStyle}">
-                <td colspan="10" class="td_ext">
+                <td colspan="{$vColSpan}" class="td_ext">
                     <div class="tbl">
                         <table cellpadding="0" cellspacing="0" border="0">
 
@@ -239,12 +235,6 @@
 
                             <xsl:call-template name="exp-description-section">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
-                            </xsl:call-template>
-
-                            <xsl:call-template name="exp-similarity-section">
-                                <xsl:with-param name="vExpId" select="$vExpId"/>
-                                <xsl:with-param name="vBasePath" select="$basepath"/>
-                                <xsl:with-param name="vSimilarExperiments" select="ae:getAcceleratorValue('similar-experiments', $vAccession)"/>
                             </xsl:call-template>
 
                             <xsl:call-template name="exp-keywords-section">

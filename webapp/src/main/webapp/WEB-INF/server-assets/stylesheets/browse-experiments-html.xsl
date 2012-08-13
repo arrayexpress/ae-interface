@@ -215,12 +215,6 @@
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                             </xsl:call-template>
 
-                            <xsl:call-template name="exp-similarity-section">
-                                <xsl:with-param name="vExpId" select="$vExpId"/>
-                                <xsl:with-param name="vBasePath" select="$basepath"/>
-                                <xsl:with-param name="vSimilarExperiments" select="ae:getAcceleratorValue('similar-experiments', $vAccession)"/>
-                            </xsl:call-template>
-
                             <xsl:call-template name="exp-keywords-section">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                             </xsl:call-template>
