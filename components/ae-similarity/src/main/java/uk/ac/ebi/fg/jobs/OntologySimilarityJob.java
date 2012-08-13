@@ -40,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OntologySimilarityJob extends ApplicationJob
 {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private SortedSet<String> lowPriorityURIs;
 
     public OntologySimilarityJob()
     {
@@ -53,7 +54,7 @@ public class OntologySimilarityJob extends ApplicationJob
         Map<String, SortedSet<ExperimentId>> uriToExpMap = (ConcurrentHashMap<String, SortedSet<ExperimentId>>) dataMap.get("uriToExpMap");
         Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap = (ConcurrentHashMap<ExperimentId, SortedSet<EfoTerm>>) dataMap.get("expToURIMap");
         Map<ExperimentId, SortedSet<ExperimentId>> ontologyResults = (ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>) dataMap.get("ontologyResults");
-        SortedSet<String> lowPriorityURIs = (SortedSet<String>) dataMap.get("lowPriorityOntologyURIs");
+        lowPriorityURIs = (SortedSet<String>) dataMap.get("lowPriorityOntologyURIs");
         int counter = (Integer) dataMap.get("counter");
         Configuration properties = (Configuration) dataMap.get("properties");
 
@@ -81,10 +82,10 @@ public class OntologySimilarityJob extends ApplicationJob
                                     if (resultExpSimilaritySet.contains(exp)) {
                                         ExperimentId expClone = resultExpSimilaritySet.tailSet(exp).first().clone();
                                         resultExpSimilaritySet.remove(exp);
-                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
+                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), distance));
                                     } else {
                                         ExperimentId expClone = exp.clone();
-                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), lowPriorityURIs, distance));
+                                        resultExpSimilaritySet.add(setDistance(expClone, ontologySimilarityResult.getURI(), distance));
                                     }
                                 }
                             }
@@ -93,7 +94,18 @@ public class OntologySimilarityJob extends ApplicationJob
                 }
             }
 
-            ontologyResults.put(experiment, cleanResults(experiment, resultExpSimilaritySet, smallExpAssayCountLimit,
+            // store information for maximal score calculation
+            ExperimentId experimentClone = experiment.clone();
+            for ( EfoTerm efoTerm : expToURIMap.get(experimentClone) ) {
+                if ( lowPriorityURIs.contains(efoTerm.getUri()) )
+                    experimentClone.setLowPriorityMatchCount( experimentClone.getLowPriorityMatchCount() + 1 );
+                else
+                    experimentClone.setDist0Count( experimentClone.getDist0Count() + 1 );
+
+                experimentClone.setNumbOfMatches( experimentClone.getNumbOfMatches() + 1 );
+            }
+
+            ontologyResults.put(experimentClone, cleanResults(experimentClone, resultExpSimilaritySet, smallExpAssayCountLimit,
                     maxOWLSimilarityCount, minCalculatedOntologyDistance, expToURIMap));
 
             Thread.currentThread().wait(1);
@@ -109,11 +121,10 @@ public class OntologySimilarityJob extends ApplicationJob
      *
      * @param exp             Experiment holding distances
      * @param URI             URI
-     * @param lowPriorityURIs URIs with lowered priority
      * @param dist            URI distance
      * @return
      */
-    private ExperimentId setDistance( ExperimentId exp, String URI, SortedSet<String> lowPriorityURIs, int dist )
+    private ExperimentId setDistance( ExperimentId exp, String URI, int dist )
     {
         if (lowPriorityURIs.contains(URI)) {
             exp.setLowPriorityMatchCount(exp.getLowPriorityMatchCount() + 1);
@@ -157,14 +168,15 @@ public class OntologySimilarityJob extends ApplicationJob
                                                   float minCalculatedOntologyDistance,
                                                   Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap )
     {
+        float maxScore = 0;
         List<ExperimentId> expList = new LinkedList<ExperimentId>(similarExperiments);
 
         expList = removeLargeOntologyExperiments(exp, expList, smallExpAssayCountLimit);
-        calculateDistances(expList, expToURIMap);
-        Collections.sort(expList, new ExperimentComparator());
+        calculateDistances(exp, expList, expToURIMap, maxScore);
+        Collections.sort(expList, new ExperimentComparator());    // must sort by scores in descending order
 
         // restrict number of experiments written in file
-        return limitOntologyExperimentCount(expList, maxOWLSimilarityCount, minCalculatedOntologyDistance);
+        return limitOntologyExperimentCount(expList, maxOWLSimilarityCount, minCalculatedOntologyDistance, maxScore );
     }
 
     /**
@@ -197,11 +209,16 @@ public class OntologySimilarityJob extends ApplicationJob
      * @param expList     experiments that need distances calculated
      * @param expToURIMap map containing experiments with all URIs associated with each
      */
-    private void calculateDistances( List<ExperimentId> expList, Map<ExperimentId, SortedSet<EfoTerm>> expToURIMap )
+    private void calculateDistances( ExperimentId mainExp, List<ExperimentId> expList, Map<ExperimentId,
+            SortedSet<EfoTerm>> expToURIMap, float maxScore )
     {
         float lowPriorityCoefficient = 0.001f;
         float dist1Coefficient = 0.25f;
         float dist2Coefficient = 0.5f;
+
+        // calculate max score
+        maxScore = (1 + mainExp.getDist0Count()
+                        + mainExp.getLowPriorityMatchCount() / expToURIMap.get(mainExp).size() * lowPriorityCoefficient) / 9 * 10;
 
         for (ExperimentId exp : expList) {
             if (exp.getNumbOfMatches() != 0) {
@@ -213,12 +230,31 @@ public class OntologySimilarityJob extends ApplicationJob
 
                 float numbOfTerms = expToURIMap.get(exp).size();
 
-                exp.setCalculatedDistance(
-                        numbOfLinks / numbOfTerms + dist0Count
-                                - dist1Count / numbOfTerms * dist1Coefficient
-                                - dist2Count / numbOfTerms * dist2Coefficient
-                                + lowPriorityCount / numbOfTerms * lowPriorityCoefficient
-                );
+                int totalLowPriorityURIs = 0;
+                for ( EfoTerm term : expToURIMap.get(exp) ) {
+                    if ( lowPriorityURIs.contains(term.getUri()) )
+                        totalLowPriorityURIs++;
+                }
+
+                // low priority terms that main exp doesn't have
+                float difference = ( totalLowPriorityURIs - lowPriorityCount ) - mainExp.getLowPriorityMatchCount();
+                if ( difference > 0 ) {          // calculate score taking into account low priority links that mainExp doesn't have
+                    exp.setCalculatedDistance(
+                            (numbOfLinks / (numbOfTerms - difference) > 1) ? 0 : numbOfLinks / (numbOfTerms - difference)
+                            + dist0Count
+                            - dist1Count / numbOfTerms * dist1Coefficient
+                            - dist2Count / numbOfTerms * dist2Coefficient
+                            - difference / (numbOfTerms - difference) * lowPriorityCoefficient
+                    );
+                } else {
+                    exp.setCalculatedDistance(
+                            numbOfLinks / numbOfTerms
+                            + dist0Count
+                            - dist1Count / numbOfTerms * dist1Coefficient
+                            - dist2Count / numbOfTerms * dist2Coefficient
+                            + lowPriorityCount / numbOfTerms * lowPriorityCoefficient
+                    );
+                }
             }
         }
     }
@@ -232,7 +268,7 @@ public class OntologySimilarityJob extends ApplicationJob
      * @return
      */
     private SortedSet<ExperimentId> limitOntologyExperimentCount( List<ExperimentId> expList, int maxOWLSimilarityCount,
-                                                                  float minCalculatedOntologyDistance )
+                                                                  float minCalculatedOntologyDistance, float maxScore )
     {
         Iterator<ExperimentId> iterator = expList.iterator();
         SortedSet<ExperimentId> restrictedSet = new TreeSet<ExperimentId>();
@@ -240,8 +276,14 @@ public class OntologySimilarityJob extends ApplicationJob
 
         while (iterator.hasNext()) {
             ExperimentId exp = iterator.next();
+
+            // deal with large scores - experiment with large number of links can exceed maxScore
+            if ( exp.getCalculatedDistance() > maxScore )
+                maxScore = exp.getCalculatedDistance() / 9 * 10;    // best score becomes 90% of maxScore
+
             if (exp.getType().equals(ReceivingType.OWL) && (exp.getOWLDistance() != Integer.MAX_VALUE)
                     && (OWLCounter <= maxOWLSimilarityCount) && minCalculatedOntologyDistance <= exp.getCalculatedDistance()) {
+                exp.setCalculatedDistance( exp.getCalculatedDistance() / maxScore * 100 );   // change score into percentage
                 restrictedSet.add(exp);
                 ++OWLCounter;
             }

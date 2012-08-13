@@ -60,10 +60,11 @@ public class OntologySimilarityWrapperJob extends ApplicationJob
         SortedSet<String> lowPriorityURIs = (SortedSet<String>) dataMap.get("lowPriorityOntologyURIs");
         Configuration properties = (Configuration) dataMap.get("properties");
         String jobGroup = properties.getString("quartz_job_group_name");
+        int threadLimit = (properties.getInt("concurrent_job_limit") > 1) ? properties.getInt("concurrent_job_limit") - 1 : 1; // leave 1 thread for pubmed calculations
 
         Map<ExperimentId, SortedSet<EfoTerm>> smallMap = new HashMap<ExperimentId, SortedSet<EfoTerm>>();
         int counter = 0;
-        final int separateAt = 1000;
+        int separateAt = expToURIMap.size() / threadLimit + expToURIMap.size() % threadLimit;
 
         Map<String, SortedSet<ExperimentId>> uriToExpMap = reverseMap(expToURIMap);
 
@@ -93,6 +94,7 @@ public class OntologySimilarityWrapperJob extends ApplicationJob
 
                 // clear map
                 smallMap.clear();
+                separateAt = expToURIMap.size() / threadLimit;
             }
         }
     }

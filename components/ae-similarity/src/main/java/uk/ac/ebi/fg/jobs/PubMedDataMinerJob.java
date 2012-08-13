@@ -63,7 +63,8 @@ public class PubMedDataMinerJob extends ApplicationJob
         similarPublications.add(new PubMedId(entry, 0));
 
         // get similar publications (distance 1)
-        similarPublications.addAll(getPubMedIdSet(pubMedRetriever.getSimilars(pubMedURL, entry), 1));
+        if ( maxPubMedDist >= 1 )
+            similarPublications.addAll(getPubMedIdSet(pubMedRetriever.getSimilars(pubMedURL, entry), 1));
 
         // get publications with distance 2
         if (null != similarPublications && maxPubMedDist == 2) {

@@ -92,7 +92,7 @@ public class PubMedSimilarityJob extends ApplicationJob
 
         if (pubMedIdToExpAccessionMap.containsKey(publication.getPublicationId())) {
             for (String expAccession : pubMedIdToExpAccessionMap.get(publication.getPublicationId()))
-                result.add(new ExperimentId(expAccession, ReceivingType.PUBMED, publication.getDistance()));
+                result.add(new ExperimentId(expAccession, ReceivingType.PUBMED, scoreInPercentage(publication.getDistance())));
         }
 
         return result;
@@ -148,5 +148,23 @@ public class PubMedSimilarityJob extends ApplicationJob
         }
 
         return restrictedSet;
+    }
+
+    /**
+     * Transform distance into percentage
+     *
+     * @param score     publication distance
+     * @return          percentage
+     */
+    private int scoreInPercentage ( int score )
+    {
+        switch ( score ) {
+            case 0:
+                return 90;         // todo: adjust scoring
+            case 1:
+                return 70;
+            default:
+                return score;
+        }
     }
 }

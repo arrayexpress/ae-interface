@@ -60,10 +60,11 @@ public class TermToURIMappingWrapperJob extends ApplicationJob
         XPath xp = (XPath) dataMap.get("experimentXPath");
         Configuration properties = (Configuration) dataMap.get("properties");
         String jobGroup = properties.getString("quartz_job_group_name");
+        int threadLimit = (properties.getInt("concurrent_job_limit") > 1) ? properties.getInt("concurrent_job_limit") : 1;
 
         List smallExperimentList = new LinkedList();
         int counter = 0;
-        final int separateAt = 2000;
+        int separateAt = experiments.size() / threadLimit + experiments.size() % threadLimit;
 
         logger.info("Term to URI mapping jobs started");
         for (Object node : experiments) {
