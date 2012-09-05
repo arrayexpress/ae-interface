@@ -157,7 +157,7 @@ public class XmlWriterJob extends ApplicationJob
                 sb.append("<similarExperiment>" +
                         "<accession>" + exp.getAccession() + "</accession>" +
                         "<numberOfMatchedURIs>" + exp.getNumbOfMatches() + "</numberOfMatchedURIs>" +
-                        "<calculatedDistance>" + exp.getCalculatedDistance() + "</calculatedDistance>" +
+                        "<calculatedDistance>" + String.format("%.0f", exp.getCalculatedDistance()) + "</calculatedDistance>" +
                         "<ontologyURIs>"
                 );
 

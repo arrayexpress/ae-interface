@@ -345,7 +345,7 @@ onExperimentQuery( tableHtml )
 
     // display relevance bar percentage
     $(".relevance_bar").each(function(){
-            var percentage = parseInt($(this).html());
+            var percentage = parseInt($(this).parent(".relevance_bar_holder").html());
             if ( percentage > 0 ) {
                 $(this).animate({'width':'' + percentage + '%'}, 800);
             } else {

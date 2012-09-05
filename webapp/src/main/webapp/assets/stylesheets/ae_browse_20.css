@@ -594,15 +594,31 @@ a:active .table_header_label {
 .relevance_bar_holder {
     background-color: black;
     border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
     padding: 2px;
     height: 18px;
+    position: relative;
+    text-align: center;
+    color: white;
 }
 
 .relevance_bar {
-    background-color: green;
+    background-color: #3AAB8C;
     width: 1%;
     height: 12px;
-    border-radius: 10px;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    opacity: 0.6;    /* all but IE */
+    -ms-filter:"prodig:DXImageTransform.Microsoft.Alpha(Opacity=50)";  /* IE8 (should be first) */
+    filter: alpha(opacity = 60);    /* IE7 */
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    right: 2px;
+    buttom: 2px;
+    z-index: 1000;
 }
 
 .td_main div {

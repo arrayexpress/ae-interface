@@ -31,8 +31,8 @@
     <xsl:param name="keywords"/>
     <xsl:variable name="vSimilarToAccession">
         <xsl:for-each select="tokenize($keywords, '\s+')">
-            <xsl:if test="matches(., 'similarto:[a-zA-Z]{1}-[a-zA-Z]{4}-[0-9]{1,4}')">   <!-- match similarto:accession -->
-                <xsl:value-of select="replace(., 'similarto:', '')"/>
+            <xsl:if test="matches(., 'similarto:[Ee]-\w{4}-\d+')">   <!-- match similarto:accession -->
+                <xsl:value-of select="upper-case(replace(., 'similarto:', ''))"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:variable>
@@ -114,11 +114,10 @@
                 <td class="{$vDetailedViewMainTdClass} col_relevance">
                     <xsl:if test="$vSimilarToAccession != ''">
                         <div class="relevance_bar_holder">
-                            <div class="relevance_bar">
                                 <xsl:if test="ae:getAcceleratorValue('experiments-with-similarity', $vSimilarToAccession)/accession = $vAccession">
                                     <xsl:value-of select="similarto[@accession = $vSimilarToAccession]/@distance"/>
                                 </xsl:if>
-                            </div>
+                            <div class="relevance_bar"/>
                         </div>
                     </xsl:if>
                 </td>
