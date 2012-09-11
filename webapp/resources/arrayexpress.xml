@@ -100,7 +100,7 @@
                 <!-- URL with no escape characters - http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?db=pubmed&fromdb=pubmed&rettype=xml&id=    -->
                 <pub_med_url>http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?db=pubmed&amp;fromdb=pubmed&amp;rettype=xml&amp;id=</pub_med_url>
                 <max_ontology_distance>2</max_ontology_distance>
-                <max_pubmed_distance>1</max_pubmed_distance>
+                <max_pubmed_distance>1</max_pubmed_distance>     <!-- negative value disables pubmed calculations -->
                 <max_displayed_OWL_similarities>20</max_displayed_OWL_similarities>
                 <max_displayed_PubMed_similarities>20</max_displayed_PubMed_similarities>
                 <small_experiment_assay_count_limit>500</small_experiment_assay_count_limit>

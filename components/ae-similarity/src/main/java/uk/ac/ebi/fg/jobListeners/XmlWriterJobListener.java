@@ -62,6 +62,11 @@ public class XmlWriterJobListener extends ApplicationJobListener
         }
 
         if (jobDetail.getJobClass().equals(OntologySimilarityJob.class)) {
+            // add pubmed jobs as finished, when max_pubmed_distance < 0
+            int maxPubMedDist = ((Configuration) jobDetail.getJobDataMap().get("properties")).getInt("max_pubmed_distance");
+            if ( maxPubMedDist < 0 )
+                jobsFinished.add("pubMed_empty");
+
             int total = ((Map<ExperimentId, SortedSet<EfoTerm>>) jobDetail.getJobDataMap().get("expToURIMap")).size();
             int ready = ((ConcurrentHashMap<ExperimentId, SortedSet<ExperimentId>>) jobDetail.getJobDataMap().get("ontologyResults")).size();
             if (total == ready) {

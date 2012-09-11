@@ -53,11 +53,12 @@ public class PubMedDataMinerWrapperJob extends ApplicationJob
         PubMedRetriever pubMedRetriever = (PubMedRetriever) dataMap.get("pubMedRetriever");
         IJobsController jobsController = (IJobsController) dataMap.get("jobsController");
         String jobGroup = properties.getString("quartz_job_group_name");
+        int maxPubMedDist = properties.getInt("max_pubmed_distance");
 
         AtomicInteger pubMedCounter = new AtomicInteger();
         int i = 0;
 
-        if (!pubMedNewIds.isEmpty()) {
+        if (!pubMedNewIds.isEmpty() && maxPubMedDist >= 0 ) {
             for (String entry : pubMedNewIds) {
                 ++i;
 
