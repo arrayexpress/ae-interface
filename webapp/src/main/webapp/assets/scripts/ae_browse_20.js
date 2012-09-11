@@ -21,49 +21,6 @@ var user = "";
 var headerPrintElt = null;
 var pageName = /\/?([^\/]+)$/.exec(decodeURI(window.location.pathname))[1];
 var anchor = decodeURI(window.location.hash);
-var hideSimExpWhenOver = 10;
-
-function hideMoreSimilarExperiments(id)
-{
-    id = String(id);
-    if ( $("#"+id).children(".simExp").length >= hideSimExpWhenOver) {
-        var counter = 1;
-        $("#"+id).children(".simExp").each(
-            function() {
-                if (counter > hideSimExpWhenOver) {
-                    $(this).addClass('simExpHidden').hide();
-                    if(!$("#"+id).hasClass('simExpHidden_main'))
-                        $("#"+id).addClass('simExpHidden_main');
-                }
-                counter++;
-            }
-        );
-        $("#"+id+"_text").text(' more...');
-    }
-}
-
-function
-toggleMoreSimExp(id)
-{
-    id = String(id);
-    var exp = $("#"+id);
-    var text = $("#"+id+"_text");
-    if ( exp.hasClass('simExpHidden_main') ) {
-        exp.children(".simExp").each(
-            function() {
-                if ( $(this).hasClass('simExpHidden') ) {
-                    $(this).removeClass('simExpHidden').show();
-                }
-            }
-        )
-        exp.removeClass('simExpHidden_main');
-        text.text(' ...less');
-    } else {
-        exp.addClass('simExpHidden_main');
-        hideMoreSimilarExperiments(id);
-        text.text(' more...');
-    }
-}
 
 function
 aeClearKeywords()
@@ -182,7 +139,7 @@ aeDoLogout(shouldReQuery)
 function
 aeSort( sortby )
 {
-    if ( -1 != String("accession name assays species releasedate fgem raw atlas relevance").indexOf(sortby) ) {
+    if ( -1 != String("accession name assays species releasedate fgem raw atlas").indexOf(sortby) ) {
         var innerElt = $( "#ae_results_header_" + sortby ).find("div.table_header_inner");
         var sortorder = "ascending";
         if ( -1 != String("accession name species").indexOf(sortby)) {
@@ -202,8 +159,6 @@ function
 aeToggleExpand( id, shouldUpdateState )
 {
     id = String(id);
-    hideMoreSimilarExperiments(id+"_owl");
-    hideMoreSimilarExperiments(id+"_pubmed");
     var mainElt = $("#" + id + "_main");
     var extElt = $("#" + id +  "_ext");
     if ( mainElt.hasClass("exp_expanded")) {
