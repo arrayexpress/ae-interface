@@ -54,9 +54,17 @@
         <to type="forward">/servlets/query/experiments/experiments/html</to>
     </rule>
     <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/.*sdrf\.html$</from>
+        <to type="redirect">%{context-path}/experiments/${upper:$1}/samples.html</to>
+    </rule>
+    <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward">/servlets/query/experiments/samples-view/html</to>
+    </rule>
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.samples.xml$</from>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.$3.txt/default/xml</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples-test\.html$</from>
@@ -64,23 +72,15 @@
         <to type="forward">/servlets/query/experiments/samples-view-test/html</to>
     </rule>
 
-    <!-- legacy sdrf viewer -->
+    <!-- legacy idf viewer -->
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
-        <condition type="parameter" name="xml" operator="greater"/>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/default/xml</to>
+        <from>^/experiments/(E-\w{4}-\d+)/idf\.html$</from>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/idf-view/html</to>
     </rule>
+
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)$</from>
-        <to type="redirect">%{context-path}/experiments/${upper:$1}/$2.$3.html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.txt/$2-view/html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.(idf|sdrf)\.html$</from>
-        <to type="forward">/servlets/fftransform/${upper:$1}/${upper:$1}.$2.$3.txt/$3-view/html</to>
+        <from>^/test/(.+)\.html$</from>
+        <to type="redirect">/test/${upper:$1}/${upper:$1}.html</to>
     </rule>
 
     <!-- arrays -->
