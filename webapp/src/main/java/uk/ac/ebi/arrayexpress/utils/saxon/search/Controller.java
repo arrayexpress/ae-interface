@@ -169,12 +169,6 @@ public class Controller
         return new Querier(getEnvironment(indexId)).query(this.queryConstructor.construct(getEnvironment(indexId), queryString));  // should use "queryIndex( Integer queryId )" instead
     }
 
-    public Float getRelevanceScore( Integer queryId, NodeInfo node ) throws IOException
-    {
-        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
-        return queryInfo.getScore(node);
-    }
-
     public String highlightQuery( Integer queryId, String fieldName, String text )
     {
         if (null == this.queryHighlighter) {

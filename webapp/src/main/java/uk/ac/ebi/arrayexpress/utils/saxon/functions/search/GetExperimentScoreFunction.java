@@ -32,8 +32,6 @@ import net.sf.saxon.value.StringValue;
 import net.sf.saxon.value.Value;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 
-import java.io.IOException;
-
 public class GetExperimentScoreFunction extends ExtensionFunctionDefinition
 {
     private static final long serialVersionUID = 5743554447454470186L;
@@ -102,12 +100,12 @@ public class GetExperimentScoreFunction extends ExtensionFunctionDefinition
                 throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
             }
 
-            Float result;
-            try {
-                result = searchController.getRelevanceScore(intQueryId, node);
-            } catch (IOException x) {
-                throw new XPathException("Caught IOException while querying index", x);
-            }
+            Float result = null;
+//            try {
+//                result = searchController.getRelevanceScore(intQueryId, node);
+//            } catch (IOException x) {
+//                throw new XPathException("Caught IOException while querying index", x);
+//            }
 
             if (null != result) {
                 return Value.asIterator(FloatValue.makeFloatValue(result));

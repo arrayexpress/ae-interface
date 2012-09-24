@@ -1,9 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
-import net.sf.saxon.om.NodeInfo;
 import org.apache.lucene.search.Query;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -28,7 +26,6 @@ public class QueryInfo
     private String indexId;
     private Map<String, String[]> params;
     private Query query;
-    private Map<NodeInfo, Float> scores = new HashMap<NodeInfo, Float>();
 
     public void setIndexId( String indexId )
     {
@@ -58,15 +55,5 @@ public class QueryInfo
     public Query getQuery()
     {
         return query;
-    }
-
-    public void putScore( NodeInfo node, Float score )
-    {
-        scores.put(node, score);
-    }
-
-    public Float getScore( NodeInfo node )
-    {
-        return scores.get(node);
     }
 }
