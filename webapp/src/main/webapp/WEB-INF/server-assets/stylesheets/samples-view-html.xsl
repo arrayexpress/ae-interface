@@ -110,7 +110,9 @@
                         </div>
                         <div id="ae_results_box">
                             <xsl:for-each select="$vSdrfFiles">
-                                <xsl:apply-templates select="ae:tabularDocument(fn:concat(../../@root, ../@location, '/', @name))/table"/>
+                                <xsl:apply-templates select="ae:tabularDocument(fn:concat(../../@root, ../@location, '/', @name))/table">
+                                    <xsl:with-param name="pLocation" select="fn:concat(../../@root, ../@location)"/>
+                                </xsl:apply-templates>
                                 <xsl:if test="fn:position() != fn:last()">
                                     <div class="divider"/>
                                 </xsl:if>
@@ -143,6 +145,7 @@
     </xsl:template>
 
     <xsl:template match="table">
+        <xsl:param name="pLocation"/>
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="row[col[1] = 'Source Name'][1]"/>
             <xsl:variable name="vHeaderPos" select="fn:count(row[col[1] = 'Source Name'][1]/preceding-sibling::*) + 1"/>
@@ -207,6 +210,7 @@
                         <xsl:call-template name="out-links-table">
                             <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
                             <xsl:with-param name="pRows" select="$vSortedData/row"/>
+                            <xsl:with-param name="pLocation" select="$pLocation"/>
                         </xsl:call-template>
                     </td>
                 </tr>
@@ -236,6 +240,7 @@
             <xsl:call-template name="out-data">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
                 <xsl:with-param name="pRows" select="$pRows"/>
+                <xsl:with-param name="pLocation"/>
             </xsl:call-template>
         </table>
     </xsl:template>
@@ -243,6 +248,7 @@
     <xsl:template name="out-attributes-table">
         <xsl:param name="pTableInfo"/>
         <xsl:param name="pRows"/>
+
         <xsl:variable name="vTableChunkInfo">
             <header pos="{$pTableInfo/header/@pos}">
                 <xsl:copy-of select="$pTableInfo/header/col[@pos &gt; 1 and @type != 'Links']"/>
@@ -258,6 +264,7 @@
                     <xsl:call-template name="out-data">
                         <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
                         <xsl:with-param name="pRows" select="$pRows"/>
+                        <xsl:with-param name="pLocation"/>
                     </xsl:call-template>
                 </table>
             </div>
@@ -269,6 +276,7 @@
     <xsl:template name="out-links-table">
         <xsl:param name="pTableInfo"/>
         <xsl:param name="pRows"/>
+        <xsl:param name="pLocation"/>
 
         <xsl:variable name="vTableChunkInfo">
             <header pos="{$pTableInfo/header/@pos}">
@@ -284,6 +292,7 @@
             <xsl:call-template name="out-data">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
                 <xsl:with-param name="pRows" select="$pRows"/>
+                <xsl:with-param name="pLocation" select="$pLocation"/>
             </xsl:call-template>
         </table>
     </xsl:template>
@@ -380,6 +389,7 @@
     <xsl:template name="out-data">
         <xsl:param name="pTableInfo"/>
         <xsl:param name="pRows"/>
+        <xsl:param name="pLocation"/>
 
         <xsl:for-each select="$pRows">
             <xsl:variable name="vRowPos" select="fn:position()"/>
@@ -460,13 +470,16 @@
                                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
                                             <xsl:variable name="vAvailBAMs" select="$vData[@extension = 'bam']/@name"/>
                                             <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
+                                            <xsl:variable name="vAvailBAMProps" select="$vData[@extension = 'prop']/@name"/>
+                                            <xsl:variable name="vBAMPropFile" select="fn:concat($vBAMFile, '.prop')"/>
 
                                             <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
                                                 <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16"/>
                                             </a>
-                                            <xsl:if test="fn:index-of($vAvailBAMs, $vBAMFile)">
+                                            <xsl:if test="fn:index-of($vAvailBAMs, $vBAMFile) and fn:index-of($vAvailBAMProps, $vBAMPropFile)">
+                                                <xsl:variable name="vBAMProps" select="ae:tabularDocument(fn:concat($pLocation, '/', $vBAMPropFile, ''))/table/row[2]"/>
                                                 <xsl:text> </xsl:text>
-                                                <a href="http://www.ensembl.org/Homo_sapiens/Location/View?r=1:69311767-69437746;contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
+                                                <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
                                                     <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
                                                 </a>
                                             </xsl:if>

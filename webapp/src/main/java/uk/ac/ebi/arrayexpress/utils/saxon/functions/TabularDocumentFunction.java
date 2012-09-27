@@ -74,7 +74,7 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
     {
-        return SequenceType.SINGLE_NODE;
+        return SequenceType.OPTIONAL_NODE;
     }
 
     public ExtensionFunctionCall makeCallExpression()
@@ -100,45 +100,43 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                 if (null != locationValue) {
                     File flatFile = new File(locationValue.getStringValue());
 
-                    if (!flatFile.exists()) {
-                        throw new XPathException("Unable to open document [" + locationValue.getStringValue() + "]");
+                    if (flatFile.exists()) {
+                        InputStream in = new FileInputStream(flatFile);
+                        InputSource is = new InputSource(
+                                new FilteringIllegalHTMLCharactersReader(
+                                        new UnescapingXMLNumericReferencesReader(
+                                                new InputStreamReader(
+                                                        in
+                                                        , new SmartUTF8CharsetDecoder()
+                                                )
+                                        )
+                                )
+                        );
+                        is.setSystemId(baseURI);
+
+                        Source source = new SAXSource(
+                                new FlatFileXMLReader(
+                                        null != optionsValue ? optionsValue.getStringValue() : null
+                                )
+                                , is
+                        );
+                        source.setSystemId(baseURI);
+
+                        Builder b = controller.makeBuilder();
+                        Receiver s = b;
+
+                        source = AugmentedSource.makeAugmentedSource( source );
+                        ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
+
+                        if (controller.getExecutable().stripsInputTypeAnnotations()) {
+                            s = controller.getConfiguration().getAnnotationStripper(s);
+                        }
+
+                        Sender.send( source, s, null );
+                        NodeInfo node = b.getCurrentRoot();
+                        b.reset();
+                        return SingletonIterator.makeIterator(node);
                     }
-
-                    InputStream in = new FileInputStream(flatFile);
-                    InputSource is = new InputSource(
-                            new FilteringIllegalHTMLCharactersReader(
-                                    new UnescapingXMLNumericReferencesReader(
-                                            new InputStreamReader(
-                                                    in
-                                                    , new SmartUTF8CharsetDecoder()
-                                            )
-                                    )
-                            )
-                    );
-                    is.setSystemId(baseURI);
-
-                    Source source = new SAXSource(
-                            new FlatFileXMLReader(
-                                    null != optionsValue ? optionsValue.getStringValue() : null
-                            )
-                            , is
-                    );
-                    source.setSystemId(baseURI);
-
-                    Builder b = controller.makeBuilder();
-                    Receiver s = b;
-
-                    source = AugmentedSource.makeAugmentedSource( source );
-                    ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
-
-                    if (controller.getExecutable().stripsInputTypeAnnotations()) {
-                        s = controller.getConfiguration().getAnnotationStripper(s);
-                    }
-
-                    Sender.send( source, s, null );
-                    NodeInfo node = b.getCurrentRoot();
-                    b.reset();
-                    return SingletonIterator.makeIterator(node);
                 }
             } catch ( FileNotFoundException x ) {
                 throw new XPathException(x);
