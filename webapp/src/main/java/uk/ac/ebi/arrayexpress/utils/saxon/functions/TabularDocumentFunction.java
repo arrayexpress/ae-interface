@@ -136,6 +136,9 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                         NodeInfo node = b.getCurrentRoot();
                         b.reset();
                         return SingletonIterator.makeIterator(node);
+// TODO: make this parameter dependent
+//                    } else {
+//                        throw new XPathException("Unable to open document [" + locationValue.getStringValue() + "]");
                     }
                 }
             } catch ( FileNotFoundException x ) {
