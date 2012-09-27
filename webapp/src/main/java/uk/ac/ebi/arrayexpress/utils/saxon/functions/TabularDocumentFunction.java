@@ -101,7 +101,7 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                     File flatFile = new File(locationValue.getStringValue());
 
                     if (flatFile.exists()) {
-                        InputStream in = new FileInputStream(flatFile);
+                        try (InputStream in = new FileInputStream(flatFile)) {
                         InputSource is = new InputSource(
                                 new FilteringIllegalHTMLCharactersReader(
                                         new UnescapingXMLNumericReferencesReader(
@@ -133,15 +133,17 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                         }
 
                         Sender.send( source, s, null );
+
                         NodeInfo node = b.getCurrentRoot();
                         b.reset();
                         return SingletonIterator.makeIterator(node);
+                        }
 // TODO: make this parameter dependent
 //                    } else {
 //                        throw new XPathException("Unable to open document [" + locationValue.getStringValue() + "]");
                     }
                 }
-            } catch ( FileNotFoundException x ) {
+            } catch ( IOException x ) {
                 throw new XPathException(x);
             }
             return EmptyIterator.emptyIterator();
