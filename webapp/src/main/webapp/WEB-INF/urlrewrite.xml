@@ -72,6 +72,13 @@
         <to type="forward">/servlets/query/experiments/samples-view-test/html</to>
     </rule>
 
+    <!-- add to genomespace wizard -->
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/genomespace\.html$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/-/add-to-genomespace/html</to>
+    </rule>
+
     <!-- legacy idf viewer -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/idf\.html$</from>

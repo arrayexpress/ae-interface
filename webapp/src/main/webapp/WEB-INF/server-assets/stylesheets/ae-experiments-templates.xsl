@@ -525,6 +525,8 @@
                                 <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             </xsl:call-template>
                         </xsl:if>
+                        <xsl:if test="@loadedinatlas | secondaryaccession"><br/></xsl:if>
+                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html">Send <xsl:value-of select="accession"/> data to <span class="tt" tt-data="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><img src="{$pBasePath}/assets/images/gs_logo_16.gif" width="16" height="16" alt=""/>GenomeSpace</span></a>
                     </div>
                 </td>
             </tr>
