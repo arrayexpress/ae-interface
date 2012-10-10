@@ -454,7 +454,7 @@
         <tr>
             <td class="name"><div class="name">Files</div></td>
             <xsl:choose>
-                <xsl:when test="$pFiles/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples']">
+                <xsl:when test="$pFiles/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
                     
                     <td class="attrs">
                         <div class="attrs">
@@ -473,6 +473,10 @@
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-magetab-files-array">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                        <xsl:with-param name="pFiles" select="$pFiles"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="exp-misc-files">
                                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
@@ -965,7 +969,29 @@
             </tr>
         </xsl:if>
     </xsl:template>
-    
+
+    <xsl:template name="exp-misc-files">
+        <xsl:param name="pFiles"/>
+        <xsl:param name="pBasePath"/>
+
+        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'r-object']"/>
+        <xsl:if test="$vFiles">
+            <tr>
+                <td class="attr_name"><span class="tt" tt-data="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">R ExpressionSet</span></td>
+                <td class="attr_value">
+                    <xsl:for-each select="$vFiles">
+                        <xsl:sort select="lower-case(@extension)"/>
+                        <a href="{$pBasePath}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a>
+                        <xsl:if test="position() != last()">
+                            <xsl:text>, </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="exp-data-files-main">
         <xsl:param name="pFiles"/>
         <xsl:param name="pBasePath"/>

@@ -17,11 +17,9 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions;
  *
  */
 
-import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,32 +27,6 @@ public class ExtFunctions
 {
     // logging machinery
     private static final Logger logger = LoggerFactory.getLogger(ExtFunctions.class);
-
-    public static String formatFileSize( long size )
-    {
-        StringBuilder str = new StringBuilder();
-        if (922L > size) {
-            str.append(size).append(" B");
-        } else if (944128L > size) {
-            str.append(String.format("%.0f KB", (Long.valueOf(size).doubleValue() / 1024.0)));
-        } else if (1073741824L > size) {
-            str.append(String.format("%.1f MB", (Long.valueOf(size).doubleValue() / 1048576.0)));
-        } else if (1099511627776L > size) {
-            str.append(String.format("%.2f GB", (Long.valueOf(size).doubleValue() / 1073741824.0)));
-        }
-        return str.toString();
-    }
-
-
-    public static String trimTrailingDot( String str )
-    {
-        if (str.endsWith(".")) {
-            return str.substring(0, str.length() - 1);
-        } else
-            return str;
-    }
-
-    // todo: this is experimental feature, that should get moved somewhere
 
     private static Map<String, Map<String, Object>> acceleratorMapRegistry = null;
 
@@ -92,38 +64,4 @@ public class ExtFunctions
             return null;
         }
     }
-
-    public synchronized static String getAcceleratorValueAsString( String acceleratorName, String key )
-    {
-        if (null != acceleratorMapRegistry
-                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
-            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
-            return value instanceof String ? (String)value : null;
-        } else {
-            return null;
-        }
-    }
-
-    public synchronized static Collection getAcceleratorValueAsCollection( String acceleratorName, String key )
-    {
-        if (null != acceleratorMapRegistry
-                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
-            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
-            return value instanceof Collection ? (Collection)value : null;
-        } else {
-            return null;
-        }
-    }
-
-    public synchronized static NodeInfo getAcceleratorValueAsSequence( String acceleratorName, String key )
-    {
-        if (null != acceleratorMapRegistry
-                && acceleratorMapRegistry.containsKey(acceleratorName.toLowerCase())) {
-            Object value = acceleratorMapRegistry.get(acceleratorName.toLowerCase()).get(key.toLowerCase());
-            return value instanceof NodeInfo ? (NodeInfo)value : null;
-        } else {
-            return null;
-        }
-    }
-
 }
