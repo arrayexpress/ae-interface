@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.openid4java.OpenIDException;
 import org.openid4java.association.AssociationSessionType;
 import org.openid4java.consumer.ConsumerManager;
@@ -35,7 +36,9 @@ import org.openid4java.util.HttpClientFactory;
 import org.openid4java.util.ProxyProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtension;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtensionFactory;
 
@@ -45,10 +48,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.net.URL;
+import java.util.*;
 
 /*
  *  This servlet supports openId authentication to GenomeSpace
@@ -67,11 +70,17 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
     private static final boolean USE_AX = false;
 
     private ConsumerManager manager;
-    private static final String SESSION_TOKEN = "gs-token";
-    private static final String SESSION_USERNAME = "gs-username";
 
-    private static String xrdUrl;
+    private static final String GS_TOKEN_COOKIE = "gs-token";
+    private static final String GS_USERNAME_COOKIE = "gs-username";
+    private static final String GS_AUTH_MESSAGE = "gs-auth-message";
+
+    private static final String GS_XRD_URL = "https://identity.genomespace.org/identityServer/xrd.jsp";
     private static final String LOGOUT_RETURN_TO = "logout_return_to";
+
+    private static final String REFERER_HEADER = "Referer";
+
+
     @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
@@ -84,30 +93,20 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
-        if (request.getParameter("providerUrl") != null) {
-            xrdUrl = request.getParameter("providerUrl");
-        }
-
-        // TODO: Clears out the error message on the JSP
-        //request.getSession().removeAttribute("gsOIcClientMessage");
+        String returnURL = request.getHeader(REFERER_HEADER);
 
         if ("true".equals(request.getParameter("is_cancel"))) {
             // User clicked "cancel" on the openID login page.
-            displayResult(request, response, null, null, "User has cancelled login");
+            displayResult(response, returnURL, null, null, "User has cancelled login");
 
-//        } else if ("Logout".equals(request.getParameter("logout"))) {
-//            // User logged out
-//            removeGenomeSpaceInfo(request);
-//            doOpenIdLogout(request, response, request.getParameter("returnUrl"));
-//
         } else if ("true".equals(request.getParameter("is_return"))) {
-            // Handles the Auth Response callback from OpenID Provider.
+            // Handles the auth response callback from OpenID provider
             // OpenID protocol requires the response be verified, but that's ignored
             // since GenomeSpace actually uses a 2nd layer of authentication, beyond OpenID
-            // server claiming that the user is authenticated.  The token is all we care about.
+            // server claiming that the user is authenticated. The token is all we care about
             String token = null;
             String username = null;
-            //String email = null;
+
             boolean isTempPasswordLogin = false;  // indicates login using temporary password
 
             // First we look for token in the queryParameters
@@ -124,9 +123,9 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             // If not found then we look for token in the cookies
             if (token == null || token.length() == 0 || username == null || username.length() == 0) {
                 for (Cookie cookie : request.getCookies()) {
-                    if (cookie.getName().equals("gs-token")) {
+                    if (cookie.getName().equals(GS_TOKEN_COOKIE)) {
                         token = cookie.getValue();
-                    } else if (cookie.getName().equals("gs-username")) {
+                    } else if (cookie.getName().equals(GS_USERNAME_COOKIE)) {
                         username = cookie.getValue();
                     }
                 }
@@ -144,7 +143,6 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
                                 && paramList.hasParameter(GenomeSpaceMessageExtension.TEMP_LOGIN_ALIAS)) {
                             token = paramList.getParameterValue(GenomeSpaceMessageExtension.TOKEN_ALIAS);
                             username = paramList.getParameterValue(GenomeSpaceMessageExtension.USERNAME_ALIAS);
-                            //email = paramList.getParameterValue(GenomeSpaceMessageExtension.EMAIL_ALIAS);
                             isTempPasswordLogin = Boolean.valueOf(paramList.getParameterValue(GenomeSpaceMessageExtension.TEMP_LOGIN_ALIAS));
                         }
                     }
@@ -155,65 +153,45 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
             if (token == null || token.length() == 0 || username == null || username.length() == 0) {
                 logger.info("OpenID login failed");
-                removeGenomeSpaceInfo(request);
-                displayResult(request, response, null, null, "OpenID login failed");
+                displayResult(response, returnURL, null, null, "OpenID login failed");
             } else {
-                logger.info("OpenID login succeeded, " + (isTempPasswordLogin ? " used temp password" : ""));
-                putGenomeSpaceInfo(request, token, username);
-                displayResult(request, response, username, token, null);
+                logger.info("OpenID login succeeded" + (isTempPasswordLogin ? ", used temp password" : ""));
+                displayResult(response, returnURL, username, token, null);
             }
 
         } else {
-            // Does an openID login, which will put up a login page if user
-            // has not previously logged into the openID server.
-            authRequest(xrdUrl, request, response);
+            authRequest(GS_XRD_URL, returnURL, request, response);
         }
     }
 
-    // TODO: rewrite this method to use cookies
-    private void putGenomeSpaceInfo( HttpServletRequest request, String token, String username )
-    {
-        //request.getSession().setAttribute(SESSION_TOKEN, token);
-        //request.getSession().setAttribute(SESSION_USERNAME, username);
-    }
-
-    // TODO: rewrite this method to use cookies
-    private void removeGenomeSpaceInfo( HttpServletRequest request )
-    {
-        //request.getSession().removeAttribute(SESSION_TOKEN);
-        //request.getSession().removeAttribute(SESSION_USERNAME);
-    }
-
-    // TODO: rewrite this method to redirect to URL set in returnUrl (in fact we should use referer URL)
-    private void displayResult( HttpServletRequest request, HttpServletResponse response,
-                               String username, String token, String error )
+    private void displayResult( HttpServletResponse response,
+                                String returnURL, String username, String token, String message )
             throws ServletException, IOException
     {
+        setCookie(response, GS_TOKEN_COOKIE, token);
+        setCookie(response, GS_USERNAME_COOKIE, username);
+        setCookie(response, GS_AUTH_MESSAGE, message);
 
-        //request.getSession().setAttribute("gsOIcClientMessage", error);
-        //response.sendRedirect("index.jsp");
-    }
-
-    // TODO: remove this method?
-/*
-    private void doOpenIdLogout( HttpServletRequest request, HttpServletResponse response, String returnToUrl )
-            throws IOException, ServletException {
-
-        String urlRoot = urlRoot(xrdUrl);
-        if (urlRoot != null) {
-            String url = urlRoot + "openIdProvider?_action=logout&" + LOGOUT_RETURN_TO + "=" + returnToUrl;
-            if (url != null) {
-                logger.info("Logging out at " + url);
-                response.sendRedirect(url);
-                return;
+        if (null != returnURL) {
+            response.sendRedirect(returnURL);
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/templates/gs-auth-result.txt");
+                String template = StringTools.streamToString(resource.openStream(), "ISO-8859-1");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("gs.token", null != token ? token : "<null>");
+                params.put("gs.username", null != username ? username : "<null>");
+                params.put("gs.message", null != message ? message : "<null>");
+                StrSubstitutor sub = new StrSubstitutor(params);
+                out.print(sub.replace(template));
+            } catch (Exception x) {
+                logger.error("Caught an exception:", x);
             }
         }
-        displayResult(request, response, null, null, "OpenID Provider does not support logout");
     }
-*/
 
     //@SuppressWarnings("rawtypes")
-    private void authRequest( String claimedId, HttpServletRequest httpRequest, HttpServletResponse httpResponse )
+    private void authRequest( String claimedID, String returnURL, HttpServletRequest httpRequest, HttpServletResponse httpResponse )
             throws IOException, ServletException
     {
         try {
@@ -223,7 +201,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
             // Performs openId discovery, puts association into in-memory
             // store, and creates the auth request.
-            List discoveries = manager.discover(claimedId);
+            List discoveries = manager.discover(claimedID);
             DiscoveryInformation discovered = manager.associate(discoveries);
             httpRequest.getSession().setAttribute("openid-disc", discovered);
             AuthRequest authReq = manager.authenticate(discovered, returnToUrl);
@@ -264,13 +242,13 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             httpResponse.sendRedirect(authReq.getDestinationUrl(true));
 
         } catch (org.openid4java.discovery.yadis.YadisException e) {
-            logger.error("Error requesting OpenId authentication.", e);
-            displayResult(httpRequest, httpResponse, null, null, "OpenId Provider XRD " +
-                    xrdUrl + " is unavailable.<BR/>The internal error is <CODE>" +
+            logger.error("Error requesting OpenID authentication.", e);
+            displayResult(httpResponse, returnURL, null, null, "OpenID Provider XRD " +
+                    GS_XRD_URL + " is unavailable.<BR/>The internal error is <CODE>" +
                     e.getMessage() + "</CODE><P/>");
         } catch (OpenIDException e) {
             logger.error("Error requesting OpenId authentication.", e);
-            displayResult(httpRequest, httpResponse, null, null,
+            displayResult(httpResponse, returnURL, null, null,
                     "Error requesting OpenId authentication.<BR/>The internal error is <CODE>" +
                             e.getMessage() + "</CODE><P/>");
         }
@@ -331,9 +309,6 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
                     String msg = "GenomeSpace login is permitted despite OpenID verification fail. This would be rejected if not on localhost.";
                     logger.info(msg);
                 } else {
-                    // TODO: implement this
-                    //removeGenomeSpaceInfo(httpRequest);
-                    //doOpenIdLogout(httpRequest, httpResponse, returnToUrl);
                     return null;
                 }
             } else {
@@ -342,8 +317,6 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             authSuccess = (AuthSuccess) verification.getAuthResponse();
             return extractGenomeSpaceToken(authSuccess);
 
-//        } catch (IOException e) {
-//            throw new ServletException(e);
         } catch (OpenIDException e) {
             // present error to the user
             throw new ServletException(e);
@@ -467,17 +440,14 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
         return proxyProps;
     }
 
-    /** Returns the URL for identityServer including final "/" from the string, or null if there was a problem. */
-    private String urlRoot(String xrdUrl)
+    private void setCookie( HttpServletResponse response, String name, String value )
     {
-        int idx = xrdUrl.lastIndexOf("identityServer");
-        if (idx < 0) {
-            return null;
+        Cookie cookie = new Cookie(name, null != value ? value : "");
+        // if the value is null - delete cookie by expiring it
+        if (null == value) {
+            cookie.setMaxAge(0);
         }
-        int endIdx = xrdUrl.indexOf("/", idx) + 1;
-        if (endIdx < 1) {
-            return null;
-        }
-        return xrdUrl.substring(0, endIdx);
+        response.addCookie(cookie);
     }
+
 }

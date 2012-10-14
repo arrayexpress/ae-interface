@@ -90,7 +90,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GenomeSpaceAuthServlet</servlet-name>
-        <url-pattern>/servlets/gs-auth</url-pattern>
+        <url-pattern>/gs-auth.txt</url-pattern>
     </servlet-mapping>
 
     <filter>

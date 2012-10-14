@@ -1,0 +1,5 @@
+GenomeSpace Authentication has completed:
+
+Token acquired: ${gs.token}
+Username:       ${gs.username}
+Message:        ${gs.message}

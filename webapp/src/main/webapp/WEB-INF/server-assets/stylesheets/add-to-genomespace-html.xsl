@@ -62,7 +62,9 @@
                                 <xsl:value-of select="upper-case($accession)"/>
                             </a>
                         </div>
-
+                        <div>
+                            <a href="{$basepath}/gs-auth.txt">Log in to GenomeSpace</a>
+                        </div>
                         <!--
                         <xsl:call-template name="list-folder">
                             <xsl:with-param name="pFolder" select="$vFolder"/>
