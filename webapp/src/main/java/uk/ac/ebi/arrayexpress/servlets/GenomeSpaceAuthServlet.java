@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.GenomeSpace;
+import uk.ac.ebi.arrayexpress.utils.CookieMap;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtension;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtensionFactory;
@@ -74,7 +75,8 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
     private static final String GS_TOKEN_COOKIE = "gs-token";
     private static final String GS_USERNAME_COOKIE = "gs-username";
-    private static final String GS_AUTH_MESSAGE = "gs-auth-message";
+    private static final String GS_AUTH_MESSAGE_COOKIE = "gs-auth-message";
+    private static final String GS_RETURN_URL_COOKIE = "gs-auth-return-url";
 
 //    private static final String GS_XRD_URL = "https://identity.genomespace.org/identityServer/xrd.jsp";
 //    private static final String LOGOUT_RETURN_TO = "logout_return_to";
@@ -96,11 +98,9 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
         GenomeSpace gs = (GenomeSpace)getComponent("GenomeSpace");
 
-        String returnURL = request.getHeader(REFERER_HEADER);
-
         if ("true".equals(request.getParameter("is_cancel"))) {
             // User clicked "cancel" on the openID login page.
-            displayResult(response, returnURL, null, null, "User has cancelled login");
+            displayResult(response, getCookie(request, GS_RETURN_URL_COOKIE), null, null, "User has cancelled login");
 
         } else if ("true".equals(request.getParameter("is_return"))) {
             // Handles the auth response callback from OpenID provider
@@ -109,6 +109,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             // server claiming that the user is authenticated. The token is all we care about
             String token = null;
             String username = null;
+            String returnURL = getCookie(request, GS_RETURN_URL_COOKIE);
 
             boolean isTempPasswordLogin = false;  // indicates login using temporary password
 
@@ -123,17 +124,8 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
                     isTempPasswordLogin = Boolean.valueOf(parts[1]);
                 }
             }
-            // If not found then we look for token in the cookies
-            if (token == null || token.length() == 0 || username == null || username.length() == 0) {
-                for (Cookie cookie : request.getCookies()) {
-                    if (cookie.getName().equals(GS_TOKEN_COOKIE)) {
-                        token = cookie.getValue();
-                    } else if (cookie.getName().equals(GS_USERNAME_COOKIE)) {
-                        username = cookie.getValue();
-                    }
-                }
-            }
-            // If still not found we look for token in the OpenId message extension.
+
+            // If not found we look for token in the OpenId message extension.
             // Should only ever get here if bad login is given.
             if (token == null || token.length() == 0 || username == null || username.length() == 0) {
                 // Does the OpenID verification
@@ -163,6 +155,11 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             }
 
         } else {
+            String returnURL = request.getHeader(REFERER_HEADER);
+            if (null != returnURL) {
+                setCookie(response, GS_RETURN_URL_COOKIE, returnURL);
+            }
+
             authRequest(gs.getPropertyValue("prod.openIdUrl"), returnURL, request, response);
         }
     }
@@ -173,7 +170,8 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
     {
         setCookie(response, GS_TOKEN_COOKIE, token);
         setCookie(response, GS_USERNAME_COOKIE, username);
-        setCookie(response, GS_AUTH_MESSAGE, message);
+        setCookie(response, GS_AUTH_MESSAGE_COOKIE, message);
+        setCookie(response, GS_RETURN_URL_COOKIE, null);
 
         if (null != returnURL) {
             response.sendRedirect(returnURL);
@@ -441,6 +439,12 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             proxyProps.setDomain(domain);
         }
         return proxyProps;
+    }
+
+    private String getCookie( HttpServletRequest request, String name )
+    {
+        CookieMap cookies = new CookieMap(request.getCookies());
+        return cookies.containsKey(name) ? cookies.get(name).getValue() : null;
     }
 
     private void setCookie( HttpServletResponse response, String name, String value )

@@ -52,6 +52,11 @@
         <servlet-name>GenomeSpaceAuthServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.GenomeSpaceAuthServlet</servlet-class>
     </servlet>
+    <servlet>
+        <description>ArrayExpress GenomeSpace Upload Servlet</description>
+        <servlet-name>GenomeSpaceUploadServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.GenomeSpaceUploadServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StatusServlet</servlet-name>
         <url-pattern>/servlets/status</url-pattern>
@@ -90,7 +95,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GenomeSpaceAuthServlet</servlet-name>
-        <url-pattern>/gs-auth.txt</url-pattern>
+        <url-pattern>/gs/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenomeSpaceUploadServlet</servlet-name>
+        <url-pattern>/gs/upload</url-pattern>
     </servlet-mapping>
 
     <filter>

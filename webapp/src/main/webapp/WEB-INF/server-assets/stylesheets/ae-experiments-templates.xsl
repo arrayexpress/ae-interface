@@ -510,7 +510,7 @@
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
 
-        <xsl:if test="@loadedinatlas | secondaryaccession">
+        <xsl:if test="true()">
             <tr>
                 <td class="name"><div class="name">Links</div></td>
                 <td class="value">
@@ -526,7 +526,7 @@
                             </xsl:call-template>
                         </xsl:if>
                         <xsl:if test="@loadedinatlas | secondaryaccession"><br/></xsl:if>
-                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html">Send <xsl:value-of select="accession"/> data to <span class="tt" tt-data="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><img src="{$pBasePath}/assets/images/gs_logo_16.gif" width="16" height="16" alt=""/>GenomeSpace</span></a>
+                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html">Send <xsl:value-of select="accession"/> data to <img src="{$pBasePath}/assets/images/gs_logo_16.gif" width="16" height="16" alt=""/>GenomeSpace</a>
                     </div>
                 </td>
             </tr>
@@ -980,7 +980,7 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'r-object']"/>
         <xsl:if test="$vFiles">
             <tr>
-                <td class="attr_name"><span class="tt" tt-data="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">R ExpressionSet</span></td>
+                <td class="attr_name"><span class="tt" tt-data="R object containing annotated experiment data">R ExpressionSet</span></td>
                 <td class="attr_value">
                     <xsl:for-each select="$vFiles">
                         <xsl:sort select="lower-case(@extension)"/>
