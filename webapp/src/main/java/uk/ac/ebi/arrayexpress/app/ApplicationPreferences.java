@@ -23,7 +23,6 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.NoSuchElementException;
 
@@ -116,27 +115,17 @@ public class ApplicationPreferences
     private void load()
     {
         // todo: what to do if file is not there? must be a clear error message + shutdown
-        InputStream prefsStream = null;
-        try {
-            XMLConfiguration.setDefaultListDelimiter('\uffff');
-            XMLConfiguration xmlConfig = new XMLConfiguration();
+        XMLConfiguration.setDefaultListDelimiter('\uffff');
+        XMLConfiguration xmlConfig = new XMLConfiguration();
 
-            prefsStream = Application.getInstance().getResource(
+        try (InputStream prefStream = Application.getInstance().getResource(
                     "/WEB-INF/classes/" + prefsFileName + ".xml"
-            ).openStream();
-            xmlConfig.load(prefsStream);
+            ).openStream()) {
+            xmlConfig.load(prefStream);
 
             prefs = xmlConfig;
         } catch (Exception x) {
             logger.error("Caught an exception:", x);
-        } finally {
-            if (null != prefsStream) {
-                try {
-                    prefsStream.close();
-                } catch (IOException x) {
-                    logger.error("Caught an exception:", x);
-                }
-            }
         }
     }
 }
