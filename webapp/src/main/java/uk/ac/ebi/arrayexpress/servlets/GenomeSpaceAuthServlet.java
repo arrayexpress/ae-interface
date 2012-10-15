@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
+import uk.ac.ebi.arrayexpress.components.GenomeSpace;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtension;
 import uk.ac.ebi.arrayexpress.utils.genomespace.GenomeSpaceMessageExtensionFactory;
@@ -75,8 +76,8 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
     private static final String GS_USERNAME_COOKIE = "gs-username";
     private static final String GS_AUTH_MESSAGE = "gs-auth-message";
 
-    private static final String GS_XRD_URL = "https://identity.genomespace.org/identityServer/xrd.jsp";
-    private static final String LOGOUT_RETURN_TO = "logout_return_to";
+//    private static final String GS_XRD_URL = "https://identity.genomespace.org/identityServer/xrd.jsp";
+//    private static final String LOGOUT_RETURN_TO = "logout_return_to";
 
     private static final String REFERER_HEADER = "Referer";
 
@@ -92,6 +93,8 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             throws ServletException, IOException
     {
         logRequest(logger, request, requestType);
+
+        GenomeSpace gs = (GenomeSpace)getComponent("GenomeSpace");
 
         String returnURL = request.getHeader(REFERER_HEADER);
 
@@ -160,7 +163,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             }
 
         } else {
-            authRequest(GS_XRD_URL, returnURL, request, response);
+            authRequest(gs.getPropertyValue("prod.openIdUrl"), returnURL, request, response);
         }
     }
 
@@ -244,7 +247,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
         } catch (org.openid4java.discovery.yadis.YadisException e) {
             logger.error("Error requesting OpenID authentication.", e);
             displayResult(httpResponse, returnURL, null, null, "OpenID Provider XRD " +
-                    GS_XRD_URL + " is unavailable.<BR/>The internal error is <CODE>" +
+                    claimedID + " is unavailable.<BR/>The internal error is <CODE>" +
                     e.getMessage() + "</CODE><P/>");
         } catch (OpenIDException e) {
             logger.error("Error requesting OpenId authentication.", e);

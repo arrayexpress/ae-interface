@@ -22,6 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
+
 /*
  * GenomeSpace CDK and OpenID wrapper
  */
@@ -32,15 +37,32 @@ public class GenomeSpace extends ApplicationComponent
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // GenomeSpace URLs properties file
-    private final static String gsPropertiesURL = "http://www.genomespace.org/sites/genomespacefiles/config/serverurl.properties";
+    private final static String GS_PROPERTIES_URL = "http://www.genomespace.org/sites/genomespacefiles/config/serverurl.properties";
+
+    //
+    private Properties gsProperties = null;
 
     @Override
     public void initialize() throws Exception
     {
+        loadProperties();
     }
 
     @Override
     public void terminate() throws Exception
     {
+    }
+
+    public String getPropertyValue( String key )
+    {
+        return (null != gsProperties) ? gsProperties.getProperty(key) : null;
+    }
+
+    private void loadProperties() throws IOException
+    {
+        try (InputStream is = new URL(GS_PROPERTIES_URL).openStream()) {
+            gsProperties = new Properties();
+            gsProperties.load(is);
+        }
     }
 }
