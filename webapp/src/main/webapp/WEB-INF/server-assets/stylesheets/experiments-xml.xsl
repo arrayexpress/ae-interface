@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 extension-element-prefixes="ae search"
@@ -26,12 +27,12 @@
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
+        <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <experiments version="1.2" revision="100915"
                      total="{$vTotal}"
-                     total-samples="{sum($vFilteredExperiments/samples)}"
-                     total-assays="{sum($vFilteredExperiments/assays)}">
+                     total-samples="{sum($vFilteredExperiments/samples) cast as xs:integer}"
+                     total-assays="{sum($vFilteredExperiments/assays) cast as xs:integer}">
             <xsl:call-template name="ae-sort-experiments">
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
                 <xsl:with-param name="pFrom"/>

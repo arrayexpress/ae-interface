@@ -31,13 +31,13 @@
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
+        <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <xsl:variable name="vOutput">
             <experiments version="1.2" revision="100915"
                          total="{$vTotal}"
-                         total-samples="{sum($vFilteredExperiments/samples)}"
-                         total-assays="{sum($vFilteredExperiments/assays)}">
+                         total-samples="{sum($vFilteredExperiments/samples) cast as xs:integer}"
+                         total-assays="{sum($vFilteredExperiments/assays) cast as xs:integer}">
                 <xsl:if test="$limit">
                     <xsl:attribute name="limit" select="$limit"/>
                 </xsl:if>

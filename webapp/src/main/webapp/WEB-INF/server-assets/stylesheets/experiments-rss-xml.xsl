@@ -37,7 +37,7 @@
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="fn:count($vFilteredExperiments)"/>
+        <xsl:variable name="vTotal" as="xs:integer" select="fn:count($vFilteredExperiments)"/>
 
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
             <channel>
