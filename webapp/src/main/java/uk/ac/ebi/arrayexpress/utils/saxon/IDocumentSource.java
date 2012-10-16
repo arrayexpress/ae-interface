@@ -19,9 +19,11 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
 
 import net.sf.saxon.om.DocumentInfo;
 
+import java.io.IOException;
+
 public interface IDocumentSource
 {
     public String getDocumentURI();
-    public DocumentInfo getDocument() throws Exception;
-    public void setDocument(DocumentInfo doc) throws Exception;
+    public DocumentInfo getDocument() throws IOException;
+    public void setDocument(DocumentInfo doc) throws IOException;
 }

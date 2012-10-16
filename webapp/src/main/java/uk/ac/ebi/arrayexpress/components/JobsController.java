@@ -116,12 +116,12 @@ public class JobsController extends ApplicationComponent implements IJobsControl
 
     public void scheduleJobInFuture( String name, Integer intervalInMinutes ) throws SchedulerException
     {
-        Trigger atStartTrigger = newTrigger()
-                .withIdentity(name + "_at_start_trigger", AE_JOBS_GROUP)
+        Trigger inFutureTrigger = newTrigger()
+                .withIdentity(name + "_in_" + String.valueOf(intervalInMinutes) + "_mins_trigger", AE_JOBS_GROUP)
                 .forJob(name, AE_JOBS_GROUP)
                 .startAt(futureDate(intervalInMinutes, DateBuilder.IntervalUnit.MINUTE))
                 .build();
-        getScheduler().scheduleJob(atStartTrigger);
+        getScheduler().scheduleJob(inFutureTrigger);
     }
 
     public void scheduleIntervalJob( String name, Integer interval ) throws SchedulerException

@@ -40,8 +40,12 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Experiments extends ApplicationComponent implements IDocumentSource
 {
@@ -145,23 +149,23 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.events = (Events) getComponent("Events");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("experiments")
                 , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
 
-        this.experimentsInAtlas = new FilePersistence<PersistableStringList>(
+        this.experimentsInAtlas = new FilePersistence<>(
                 new PersistableStringList()
                 , new File(getPreferences().getString("ae.atlasexperiments.persistence-location"))
         );
 
-        this.species = new FilePersistence<PersistableString>(
+        this.species = new FilePersistence<>(
                 new PersistableString()
                 , new File(getPreferences().getString("ae.species.dropdown-html-location"))
 
         );
 
-        this.arrays = new FilePersistence<PersistableString>(
+        this.arrays = new FilePersistence<>(
                 new PersistableString()
                 , new File(getPreferences().getString("ae.arrays.dropdown-html-location"))
         );
@@ -182,13 +186,13 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
@@ -308,7 +312,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             String id = ((ValueRepresentation)protocolId).getStringValue();
                             Set<String> experimentsForProtocol = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-protocol", id);
                             if (null == experimentsForProtocol) {
-                                experimentsForProtocol = new HashSet<String>();
+                                experimentsForProtocol = new HashSet<>();
                                 ExtFunctions.addAcceleratorValue("experiments-for-protocol", id, experimentsForProtocol);
                             }
                             experimentsForProtocol.add(accession);
@@ -320,7 +324,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             String arrayAcc = ((ValueRepresentation)arrayAccession).getStringValue();
                             Set<String> experimentsForArray = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-array", arrayAcc);
                             if (null == experimentsForArray) {
-                                experimentsForArray = new HashSet<String>();
+                                experimentsForArray = new HashSet<>();
                                 ExtFunctions.addAcceleratorValue("experiments-for-array", arrayAcc, experimentsForArray);
                             }
                             experimentsForArray.add(accession);
@@ -332,7 +336,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             String simAccession = simAccessionXpe.evaluate(similarTo);
                             Set<Object> experimentsWithSimilarity = (Set<Object>)ExtFunctions.getAcceleratorValue("experiments-with-similarity", simAccession);
                             if (null == experimentsWithSimilarity) {
-                                experimentsWithSimilarity = new HashSet<Object>();
+                                experimentsWithSimilarity = new HashSet<>();
                                 ExtFunctions.addAcceleratorValue("experiments-with-similarity", simAccession, experimentsWithSimilarity);
                             }
                             experimentsWithSimilarity.add(node);

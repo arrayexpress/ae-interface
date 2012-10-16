@@ -27,6 +27,7 @@ import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Protocols extends ApplicationComponent implements IDocumentSource
 {
@@ -82,13 +83,13 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("protocols", doc));

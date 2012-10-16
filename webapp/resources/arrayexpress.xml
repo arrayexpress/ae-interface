@@ -140,6 +140,7 @@
         <files>
             <root><location>${interface.application.pref.files.root.location}</location></root>
             <list-all-command>${interface.application.pref.files.list-all.command}</list-all-command>
+            <get-md5-base64-encoded-command>openssl md5 -binary ${arg.file} | openssl base64</get-md5-base64-encoded-command>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-files.xml</persistence-location>
             <rescan><interval>${interface.application.pref.files.rescan.interval}</interval></rescan>
             <check>

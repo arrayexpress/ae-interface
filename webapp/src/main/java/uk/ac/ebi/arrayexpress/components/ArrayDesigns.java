@@ -16,6 +16,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /*
@@ -90,13 +91,13 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("array_designs", doc));

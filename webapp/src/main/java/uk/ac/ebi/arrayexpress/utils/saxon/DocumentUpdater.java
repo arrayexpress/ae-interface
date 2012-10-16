@@ -4,6 +4,8 @@ import net.sf.saxon.om.DocumentInfo;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 
+import java.io.IOException;
+
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
  *
@@ -41,13 +43,13 @@ public class DocumentUpdater implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.update;
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         // nothing
     }

@@ -33,6 +33,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Files extends ApplicationComponent implements IDocumentSource
@@ -46,7 +47,6 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private SaxonEngine saxon;
     private SearchEngine search;
-    //private Events events;
 
     public final String INDEX_ID = "files";
 
@@ -58,9 +58,8 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
-        //this.events = (Events) getComponent("Events");
 
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("files"),
                 new File(getPreferences().getString("ae.files.persistence-location"))
         );
@@ -81,12 +80,12 @@ public class Files extends ApplicationComponent implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("files", doc));
@@ -179,40 +178,52 @@ public class Files extends ApplicationComponent implements IDocumentSource
     }
 
     // returns true is file is registered in the registry
-    public boolean doesExist( String accession, String name ) throws Exception
+    public boolean doesExist( String accession, String name ) throws IOException
     {
-        if (null != accession && accession.length() > 0) {
-            return Boolean.parseBoolean(
-                    this.saxon.evaluateXPathSingle(
-                            getDocument()
-                            , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
-                    )
-            );
-        } else {
-            return Boolean.parseBoolean(
-                    this.saxon.evaluateXPathSingle(
-                            getDocument()
-                            , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
-                    )
-            );
+        boolean result = false;
+
+        try {
+            if (null != accession && accession.length() > 0) {
+                result = Boolean.parseBoolean(
+                        this.saxon.evaluateXPathSingle(
+                                getDocument()
+                                , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
+                        )
+                );
+            } else {
+                result = Boolean.parseBoolean(
+                        this.saxon.evaluateXPathSingle(
+                                getDocument()
+                                , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
+                        )
+                );
+            }
+        } catch ( XPathExpressionException x ) {
+            logger.error("Caught an exception:", x);
         }
+
+        return result;
     }
 
     // returns absolute file location (if file exists, null otherwise) in local filesystem
-    public String getLocation( String accession, String name ) throws Exception
+    public String getLocation( String accession, String name ) throws IOException
     {
-        String folderLocation;
+        String folderLocation = null;
 
-        if (null != accession && accession.length() > 0) {
-            folderLocation = this.saxon.evaluateXPathSingle(
-                    getDocument()
-                    , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
-            );
-        } else {
-            folderLocation = this.saxon.evaluateXPathSingle(
-                    getDocument()
-                    , "//folder[file/@name = '" + name + "']/@location"
-            );
+        try {
+            if (null != accession && accession.length() > 0) {
+                folderLocation = this.saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
+                );
+            } else {
+                folderLocation = this.saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "//folder[file/@name = '" + name + "']/@location"
+                );
+            }
+        } catch ( XPathExpressionException x ) {
+            logger.error("Caught an exception:", x);
         }
 
         if (null != folderLocation && folderLocation.length() > 0) {

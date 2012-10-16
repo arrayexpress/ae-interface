@@ -10,6 +10,7 @@ import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
 
 import java.io.File;
+import java.io.IOException;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -34,7 +35,6 @@ public class Events extends ApplicationComponent implements IDocumentSource
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private FilePersistence<PersistableDocumentContainer> document;
-    private SaxonEngine saxon;
     private SearchEngine search;
 
     public final String INDEX_ID = "events";
@@ -50,16 +50,16 @@ public class Events extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
-        this.saxon = (SaxonEngine) getComponent("SaxonEngine");
+        SaxonEngine saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
 
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("events")
                 , new File(getPreferences().getString("ae.events.persistence-location"))
         );
 
         updateIndex();
-        this.saxon.registerDocumentSource(this);
+        saxon.registerDocumentSource(this);
     }
 
     public void terminate() throws Exception
@@ -73,13 +73,13 @@ public class Events extends ApplicationComponent implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws Exception
+    public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws Exception
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("events", doc));
