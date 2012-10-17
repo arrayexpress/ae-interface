@@ -62,7 +62,11 @@
                             </a>
                         </div>
                         <div>
-                            <a href="{$basepath}/gs/auth.txt">Log in to GenomeSpace</a>
+                            <a href="{$basepath}/gs/auth">Log in to GenomeSpace</a>
+                        </div>
+                        <div id="status"/>
+                        <div>
+                            <a href="javascript:$.uploadToGS('E-MEXP-31','E-MEXP-31.sdrf.txt','/Home/kolais')">Send E-MEXP-31.sdrf.txt to GenomeSpace</a>
                         </div>
                         <!--
                         <xsl:call-template name="list-folder">

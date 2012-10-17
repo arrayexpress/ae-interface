@@ -96,9 +96,10 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                     StringBuilder jsonOutput = new StringBuilder();
                     jsonOutput
                             .append("{")
-                            .append("\"content_size\":\"").append(file.length()).append("\",")
-                            .append("\"content_md5\":\"").append(getFileMD5(file.getPath())).append("\",")
-                            .append("\"content_type\":\"").append(getServletContext().getMimeType(file.getName())).append("\"")
+                            .append("\"name\":\"").append(file.getName()).append("\",")
+                            .append("\"length\":\"").append(file.length()).append("\",")
+                            .append("\"md5\":\"").append(getFileMD5(file.getPath())).append("\",")
+                            .append("\"mimeType\":\"").append(getServletContext().getMimeType(file.getName())).append("\"")
                             .append("}");
                     response.setContentType("application/json; charset=US-ASCII");
                     try (PrintWriter out = response.getWriter()) {
