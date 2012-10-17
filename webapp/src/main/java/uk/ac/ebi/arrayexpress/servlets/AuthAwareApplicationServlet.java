@@ -34,14 +34,18 @@ import java.util.List;
 
 public abstract class AuthAwareApplicationServlet extends ApplicationServlet
 {
+    private static final long serialVersionUID = -82727624065665432L;
+
     private final static String AE_LOGIN_USER_COOKIE = "AeLoggedUser";
     private final static String AE_LOGIN_TOKEN_COOKIE = "AeLoginToken";
 
     private final static List<String> AE_PUBLIC_ACCESS = Arrays.asList("1");
-    private final static List<String> AE_UNRESTRICTED_ACCESS = new ArrayList<String>();
+    private final static List<String> AE_UNRESTRICTED_ACCESS = new ArrayList<>();
 
     private static class AuthApplicationServletException extends ServletException
     {
+        private static final long serialVersionUID = 1030249369830812548L;
+
         public AuthApplicationServletException( Throwable x )
         {
             super(x);
@@ -64,30 +68,12 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         doAuthenticatedRequest(request, response, requestType, getAuthUserIds(request));
     }
 
-    private String getAuthUserName( HttpServletRequest request ) throws IOException
-    {
-        CookieMap cookies = new CookieMap(request.getCookies());
-        if (cookies.containsKey(AE_LOGIN_USER_COOKIE)) {
-            return URLDecoder.decode(cookies.get(AE_LOGIN_USER_COOKIE).getValue(), "UTF-8");
-        }
-        return null;
-    }
-
-    private String getAuthToken( HttpServletRequest request )
-    {
-        CookieMap cookies = new CookieMap(request.getCookies());
-        if (cookies.containsKey(AE_LOGIN_TOKEN_COOKIE)) {
-            return cookies.get(AE_LOGIN_TOKEN_COOKIE).getValue();
-        } else {
-            return null;
-        }
-    }
-
     private boolean checkAuthCookies( HttpServletRequest request ) throws ServletException
     {
         try {
-            String userName = getAuthUserName(request);
-            String token = getAuthToken(request);
+            CookieMap cookies = new CookieMap(request.getCookies());
+            String userName = URLDecoder.decode(cookies.getCookieValue(AE_LOGIN_USER_COOKIE), "UTF-8");
+            String token = cookies.getCookieValue(AE_LOGIN_TOKEN_COOKIE);
             String userAgent = request.getHeader("User-Agent");
             Users users = (Users) getComponent("Users");
             return users.verifyLogin(
@@ -119,7 +105,10 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         } else {
             try {
                 Users users = (Users) getComponent("Users");
-                String userName = getAuthUserName(request);
+                String userName = URLDecoder.decode(
+                        new CookieMap(request.getCookies()).getCookieValue(AE_LOGIN_USER_COOKIE)
+                        , "UTF-8"
+                );
                 if (users.isPrivileged(userName)) {
                     return AE_UNRESTRICTED_ACCESS;
                 } else {

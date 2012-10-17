@@ -19,7 +19,10 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.FileRequestEntity;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.lang.text.StrSubstitutor;
@@ -57,152 +60,178 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {
-        // implements two commands:
-        //
-        //  info: get file info (JSON format) for given accession and filename
-        //  upload: upload a file (using PUT method) to a given URL, accession and filename
+        logRequest(logger, request, requestType);
 
-        String action = request.getParameter("action");
-        if ("info".equals(action)) {
-            doInfoAction(request, response);
-        } else if ("upload".equals(action)) {
-            doUploadAction(request, response);
-        } else {
-             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action [" + (null != action ? action : "null") + "]");
-        }
-    }
-
-    private void doInfoAction( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
         Files files = (Files) getComponent("Files");
+
         String fileName = request.getParameter("filename");
         String accession = request.getParameter("accession");
+        String targetLocation = request.getParameter("target");
+        String gsToken = request.getParameter("token");
 
-        if (null == fileName || null == accession) {
+        if (null == fileName || null == accession || null == gsToken || null == targetLocation) {
             response.sendError(
                     HttpServletResponse.SC_BAD_REQUEST
-                    , "Expected parameters [filename] and [accession] not found in the request"
+                    , "Expected parameters [filename], [accession], [target], [token] not found in the request"
             );
         } else {
-            try {
-                String fileLocation = files.getLocation(accession, fileName);
-                File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
+            String fileLocation = files.getLocation(accession, fileName);
+            File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
 
-                if (null == file || !file.exists()) {
-                    logger.error("Requested file information of [{}/{}] which is not found", accession, fileName);
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                } else {
-                    StringBuilder jsonOutput = new StringBuilder();
-                    jsonOutput
-                            .append("{")
-                            .append("\"name\":\"").append(file.getName()).append("\",")
-                            .append("\"length\":\"").append(file.length()).append("\",")
-                            .append("\"md5\":\"").append(getFileMD5(file.getPath())).append("\",")
-                            .append("\"mimeType\":\"").append(getServletContext().getMimeType(file.getName())).append("\"")
-                            .append("}");
-                    response.setContentType("application/json; charset=US-ASCII");
-                    try (PrintWriter out = response.getWriter()) {
-                        out.print(jsonOutput.toString());
-                    }
+            if (null == file || !file.exists()) {
+                logger.error("Requested file upload of [{}/{}] which is not found", accession, fileName);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                UploadFileInfo fileInfo = new UploadFileInfo(file);
+                Integer statusCode = getFileUploadURL(fileInfo, "/Home/kolais/", gsToken);
+                if (HttpServletResponse.SC_OK != statusCode) {
+                    response.sendError(statusCode);
+                    return;
                 }
-            } catch (InterruptedException x) {
-                throw new ServletException(x);
+
+                statusCode = putFile(fileInfo);
+                if (HttpServletResponse.SC_OK != statusCode) {
+                    response.sendError(statusCode);
+                    return;
+                }
+                response.setContentType("text/plain; charset=US-ASCII");
+                try (PrintWriter out = response.getWriter()) {
+                    out.print("Done");
+                }
             }
         }
     }
 
-    private void doUploadAction( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
+
+
+    private Integer getFileUploadURL( UploadFileInfo fileInfo, String target, String gsToken ) throws IOException
     {
-        Files files = (Files) getComponent("Files");
-        String fileName = request.getParameter("filename");
-        String accession = request.getParameter("accession");
-        String uploadURL = request.getParameter("url");
-
-        if (null == fileName || null == accession || null == uploadURL) {
-            response.sendError(
-                    HttpServletResponse.SC_BAD_REQUEST
-                    , "Expected parameters [filename], [accession], and [url] not found in the request"
-            );
-        } else {
-            try {
-                String fileLocation = files.getLocation(accession, fileName);
-                File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
-
-                if (null == file || !file.exists()) {
-                    logger.error("Requested file upload of [{}/{}] which is not found", accession, fileName);
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                } else {
-                    int statusCode = putFile(
-                            uploadURL
-                            , file
-                            , getServletContext().getMimeType(file.getName())
-                            , getFileMD5(file.getPath())
-                    );
-                    if (HttpServletResponse.SC_OK != statusCode) {
-                        response.sendError(statusCode);
-                    } else {
-                        response.setContentType("text/plain; charset=US-ASCII");
-                        try (PrintWriter out = response.getWriter()) {
-                            out.print("OK");
-                        }
-                    }
+        GetMethod get = new GetMethod(
+                "https://dm.genomespace.org/datamanager/v1.0/uploadurl"
+                        + target.replaceAll("^/?(.+[^/])/?$", "/$1/")
+                        + fileInfo.getFile().getName()
+        );
+        get.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+        get.setQueryString(
+                new NameValuePair[] {
+                        new NameValuePair("Content-Length", fileInfo.getContentLength())
+                        , new NameValuePair("Content-Type", fileInfo.GetContentType())
+                        , new NameValuePair("Content-MD5", fileInfo.getContentMD5())
                 }
-            } catch (InterruptedException x) {
-                throw new ServletException(x);
-            }
-        }
-    }
-
-    private String getFileMD5( String fileLocation ) throws IOException, InterruptedException
-    {
-        String md5 = null;
-        if (null != fileLocation) {
-            String md5Command = getPreferences().getString("ae.files.get-md5-base64-encoded-command");
-
-            // put fileLocation in place of ${file} in command line
-            Map<String, String> params = new HashMap<>();
-            params.put("arg.file", fileLocation);
-            StrSubstitutor sub = new StrSubstitutor(params);
-            md5Command = sub.replace(md5Command);
-
-            // execute command
-            List<String> commandParams = new ArrayList<>();
-            commandParams.add("/bin/sh");
-            commandParams.add("-c");
-            commandParams.add(md5Command);
-            this.logger.debug("Executing [{}]", md5Command);
-            ProcessBuilder pb = new ProcessBuilder(commandParams);
-            Process process = pb.start();
-
-            try (InputStream stdOut = process.getInputStream()) {
-
-                md5 = StringTools.streamToString(stdOut, "US-ASCII").replaceAll("\\s", "");
-                if (0 != process.waitFor()) {
-                    md5 = null;
-                }
-            }
-        }
-        return md5;
-    }
-
-    private Integer putFile( String url, File file, String contentType, String contentMD5 ) throws IOException
-    {
-        Integer result = null;
-        PutMethod put = new PutMethod(url);
-        RequestEntity entity = new FileRequestEntity(file, contentType);
-        put.setRequestEntity(entity);
-        put.setRequestHeader("Content-MD5", contentMD5);
+        );
+        get.setRequestHeader("Cookie","gs-token=" + gsToken);
         HttpClient httpclient = new HttpClient();
 
+        Integer statusCode = null;
         try {
-            result = httpclient.executeMethod(put);
+            statusCode = httpclient.executeMethod(get);
+            if (HttpServletResponse.SC_OK == statusCode) {
+                fileInfo.setUploadURL(StringTools.streamToString(get.getResponseBodyAsStream(), "US-ASCII"));
+            } else {
+                logger.error("Unable to obtain upload URL, status code [{}]", statusCode);
+            }
+        } catch ( HttpException x ) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            get.releaseConnection();
+        }
+
+        return statusCode;
+    }
+
+    private Integer putFile( UploadFileInfo fileInfo ) throws IOException
+    {
+        PutMethod put = new PutMethod(fileInfo.getUploadURL());
+        RequestEntity entity = new FileRequestEntity(fileInfo.getFile(), fileInfo.GetContentType());
+        put.setRequestEntity(entity);
+        put.setRequestHeader("Content-MD5", fileInfo.getContentMD5());
+        HttpClient httpclient = new HttpClient();
+
+        Integer statusCode = null;
+        try {
+            statusCode = httpclient.executeMethod(put);
         } catch ( HttpException x ) {
             logger.error("Caught an exception:", x);
         } finally {
             put.releaseConnection();
         }
-        return result;
+        return statusCode;
+    }
+
+    private class UploadFileInfo
+    {
+        private File file = null;
+        private String md5 = null;
+        private String uploadURL = null;
+
+        public UploadFileInfo( File file )
+        {
+            this.file = file;
+
+        }
+
+        public File getFile()
+        {
+            return this.file;
+        }
+
+        public String getContentLength()
+        {
+            if (null != getFile()) {
+                return String.valueOf(getFile().length());
+            }
+            return null;
+        }
+
+        public String getContentMD5() throws IOException
+        {
+            if (null != getFile() && null == this.md5) {
+                String md5Command = getPreferences().getString("ae.files.get-md5-base64-encoded-command");
+
+                // put fileLocation in place of ${file} in command line
+                Map<String, String> params = new HashMap<>();
+                params.put("arg.file", getFile().getPath());
+                StrSubstitutor sub = new StrSubstitutor(params);
+                md5Command = sub.replace(md5Command);
+
+                // execute command
+                List<String> commandParams = new ArrayList<>();
+                commandParams.add("/bin/sh");
+                commandParams.add("-c");
+                commandParams.add(md5Command);
+                logger.debug("Executing [{}]", md5Command);
+                ProcessBuilder pb = new ProcessBuilder(commandParams);
+                Process process = pb.start();
+
+                try (InputStream stdOut = process.getInputStream()) {
+
+                    this.md5 = StringTools.streamToString(stdOut, "US-ASCII").replaceAll("\\s", "");
+                    if (0 != process.waitFor()) {
+                        this.md5 = null;
+                    }
+                } catch (InterruptedException x) {
+                    logger.error("Process was interrupted: ", x);
+                }
+            }
+            return this.md5;
+        }
+
+        public String GetContentType()
+        {
+            if (null != getFile()) {
+                return getServletContext().getMimeType(getFile().getName());
+            }
+            return null;
+        }
+
+        public String getUploadURL()
+        {
+            return this.uploadURL;
+        }
+
+        public void setUploadURL( String url )
+        {
+            this.uploadURL = url;
+        }
     }
 }

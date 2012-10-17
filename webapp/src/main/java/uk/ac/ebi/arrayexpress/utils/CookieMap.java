@@ -30,4 +30,12 @@ public class CookieMap extends HashMap<String, Cookie>
             }
         }
     }
+
+    public String getCookieValue( String name )
+    {
+        if (this.containsKey(name)) {
+            return this.get(name).getValue();
+        }
+        return null;
+    }
 }

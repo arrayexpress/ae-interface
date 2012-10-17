@@ -77,7 +77,7 @@ public class StringTools
     public static Set<String> streamToStringSet( InputStream is, String encoding ) throws IOException
     {
         String[] lines = streamToString(is, encoding).split(EOL);
-        return new HashSet<String>(Arrays.asList(lines));
+        return new HashSet<>(Arrays.asList(lines));
     }
 
     public static String fileToString( File f, String encoding ) throws IOException

@@ -19,10 +19,13 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
+    $.gsUserInfo = null;
+
     function
-    gsLoggedIn( gs_username )
+    gsLoggedIn( gsUserInfo )
     {
-        $("#status").html("Logged in as " + gs_username);
+        $("#status").html("Logged in as " + gsUserInfo.username);
+        $.gsUserInfo = gsUserInfo;
         //retrieveGSPersonalDirectory();
     }
 
@@ -30,16 +33,18 @@
     gsLoggedOut()
     {
         $("#status").html("Not logged in");
+        $.gsUserInfo = null;
     }
 
     function
     checkIfLoggedToGS( onLoggedInFunc, onLoggedOutFunc )
     {
         $.ajax({
-            url : "https://identity.genomespace.org/identityServer/usermanagement/utility/token/username"
+            url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
             , xhrFields: { withCredentials: true }
             , success : onLoggedInFunc
             , error : onLoggedOutFunc
+            , dataType: "json"
         });
     }
 
@@ -57,45 +62,20 @@
     }
 
     function
-    upload_sendFileToURL(accession, fileName, url)
-    {
-        $.ajax({
-            url : contextPath + "/gs/upload"
-            , data: {action: "upload", accession: accession, filename: fileName, url: url}
-            , success : function(ok) {
-                alert(ok);
-            }
-            , error: function() {
-                alert("Upload has failed");
-            }
-        });
-    }
-
-    function
-    upload_getAmazonURL(accession, fileName, directory, fileInfo, onSuccess)
-    {
-        $.ajax({
-            url : "https://dm.genomespace.org/datamanager/v1.0/uploadurl/" + directory + "/" + fileName
-            , data: {"Content-Length": fileInfo.length, "Content-MD5": fileInfo.md5, "Content-Type": fileInfo.mimeType}
-            , xhrFields: { withCredentials: true }
-            , success : function(url) {
-                upload_sendFileToURL(accession, fileName, url);
-            }
-            //, dataType: "json"
-        });
-    }
-
-    function
     uploadFile(accession, fileName, destination)
     {
         $.ajax({
             url : contextPath + "/gs/upload"
-            , data: {action: "info", accession: accession, filename: fileName}
-            , xhrFields: { withCredentials: true }
-            , success : function(json) {
-                upload_getAmazonURL(accession, fileName, destination, json, upload_sendFileToURL);
+            , data: { action: "upload"
+                , accession: accession
+                , filename: fileName
+                , target: "/Home/kolais/"
+                , token: $.gsUserInfo.token
             }
-            , dataType: "json"
+            , xhrFields: { withCredentials: true }
+            , success : function(done) {
+                alert(done);
+            }
         });
     }
 
