@@ -40,8 +40,8 @@
     <xsl:template match="/experiments">
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
-        <xsl:variable name="vTotalSamples" as="xs:integer" select="sum($vFilteredExperiments/samples)"/>
-        <xsl:variable name="vTotalAssays"  as="xs:integer" select="sum($vFilteredExperiments/assays)"/>
+        <xsl:variable name="vTotalSamples" as="xs:integer" select="sum($vFilteredExperiments/samples) cast as xs:integer"/>
+        <xsl:variable name="vTotalAssays"  as="xs:integer" select="sum($vFilteredExperiments/assays) cast as xs:integer"/>
 
         <xsl:variable name="vFrom" as="xs:integer">
             <xsl:choose>
