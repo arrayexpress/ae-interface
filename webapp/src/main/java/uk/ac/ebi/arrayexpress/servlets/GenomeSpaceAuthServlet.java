@@ -53,7 +53,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
  *  This servlet supports openId authentication to GenomeSpace
@@ -130,7 +133,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             if (token == null || token.length() == 0 || username == null || username.length() == 0) {
                 // Does the OpenID verification
                 try {
-                    ParameterList paramList = verifyResponse(request, response);
+                    ParameterList paramList = verifyProviderResponse(request);
                     if (paramList != null) {
                         if (paramList.hasParameter(GenomeSpaceMessageExtension.TOKEN_ALIAS)
                                 && paramList.hasParameter(GenomeSpaceMessageExtension.USERNAME_ALIAS)
@@ -179,7 +182,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
             try (PrintWriter out = response.getWriter()) {
                 URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/templates/gs-auth-result.txt");
                 String template = StringTools.streamToString(resource.openStream(), "ISO-8859-1");
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("gs.token", null != token ? token : "<null>");
                 params.put("gs.username", null != username ? username : "<null>");
                 params.put("gs.message", null != message ? message : "<null>");
@@ -261,7 +264,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
      * GenomeSpace token and username, if they are found in the response, and an
      * empty ParameterList if not found. If the verify fails, returns null
      */
-    private ParameterList verifyResponse( HttpServletRequest httpRequest, HttpServletResponse httpResp )
+    private ParameterList verifyProviderResponse( HttpServletRequest httpRequest )
             throws ServletException
     {
         try {
@@ -286,7 +289,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
                     , discovered
             );
 
-            AuthSuccess authSuccess = null;
+            AuthSuccess authSuccess;
             if (verification.getVerifiedId() == null) {
                 // Client verification can fail despite the server doing a
                 // successful login (possibly related to http->https redirect?)
@@ -300,7 +303,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
                 boolean onLocalhost = false;
                 try {
                     URI uri = new URI(receivingURL.toString());
-                    if (uri != null && "localhost".equals(uri.getHost())) {
+                    if ("localhost".equals(uri.getHost())) {
                         onLocalhost = true;
                     }
                 } catch (Exception e) {
@@ -342,49 +345,56 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
         Set<String> extAliases = authSuccess.getExtensions();
         for (String extAlias : extAliases) {
             logger.debug("Found extension " + extAlias);
-            if (extAlias.equals(SRegMessage.OPENID_NS_SREG) || extAlias.equals(SRegMessage.OPENID_NS_SREG11)) {
-                MessageExtension ext = authSuccess.getExtension(extAlias);
-                if (!(ext instanceof SRegResponse)) {
-                    logger.error("Cannot process extension " + extAlias);
-                    continue;
-                }
-                SRegResponse sregResp = (SRegResponse) ext;
-                for (Iterator iter = sregResp.getAttributeNames().iterator(); iter.hasNext();) {
-                    String name = (String) iter.next();
-                    String value = sregResp.getParameterValue(name);
-                    logger.info("Found SReg attribute " + name + ":" + value);
-                    // Maps SReg nickname -> GenomeSpace username
-                    if (name.equals("nickname")) {
-                        returnList.addParams(ParameterList.createFromKeyValueForm(
-                                GenomeSpaceMessageExtension.USERNAME_ALIAS + ":" + value));
+            switch (extAlias) {
+                case SRegMessage.OPENID_NS_SREG:
+                case SRegMessage.OPENID_NS_SREG11:
+                    MessageExtension ext = authSuccess.getExtension(extAlias);
+                    if (!(ext instanceof SRegResponse)) {
+                        logger.error("Cannot process extension " + extAlias);
+                        continue;
                     }
-                    // Maps SReg gender -> GenomeSpace token
-                    if (name.equals("gender")) {
-                        returnList.addParams(ParameterList.createFromKeyValueForm(
-                                GenomeSpaceMessageExtension.TOKEN_ALIAS + ":" + value));
+
+                    SRegResponse sregResp = (SRegResponse) ext;
+                    for (Object name : sregResp.getAttributeNames()) {
+                        String value = sregResp.getParameterValue((String)name);
+                        logger.info("Found SReg attribute " + name + ":" + value);
+                        // Maps SReg nickname -> GenomeSpace username
+                        if (name.equals("nickname")) {
+                            returnList.addParams(ParameterList.createFromKeyValueForm(
+                                    GenomeSpaceMessageExtension.USERNAME_ALIAS + ":" + value));
+                        }
+                        // Maps SReg gender -> GenomeSpace token
+                        if (name.equals("gender")) {
+                            returnList.addParams(ParameterList.createFromKeyValueForm(
+                                    GenomeSpaceMessageExtension.TOKEN_ALIAS + ":" + value));
+                        }
+                        if (name.equals("email")) {
+                            returnList.addParams(ParameterList.createFromKeyValueForm(
+                                    GenomeSpaceMessageExtension.EMAIL_ALIAS + ":" + value));
+                        }
                     }
-                    if (name.equals("email")) {
-                        returnList.addParams(ParameterList.createFromKeyValueForm(
-                                GenomeSpaceMessageExtension.EMAIL_ALIAS + ":" + value));
+                    break;
+
+                case AxMessage.OPENID_NS_AX:
+                    FetchResponse fetchResp = (FetchResponse) authSuccess.getExtension(extAlias);
+                    List aliases = fetchResp.getAttributeAliases();
+                    for (Object name : aliases) {
+                        List values = fetchResp.getAttributeValues((String)name);
+                        if (values.size() > 0) {
+                            String keyValue = name + ":" + values.get(0);
+                            logger.info("Found AX attribute " + keyValue);
+                            returnList.addParams(ParameterList.createFromKeyValueForm(keyValue));
+                        }
                     }
-                }
-            } else if (extAlias.equals(AxMessage.OPENID_NS_AX)) {
-                FetchResponse fetchResp = (FetchResponse) authSuccess.getExtension(extAlias);
-                List aliases = fetchResp.getAttributeAliases();
-                for (Iterator iter = aliases.iterator(); iter.hasNext();) {
-                    String name = (String) iter.next();
-                    List values = fetchResp.getAttributeValues(name);
-                    if (values.size() > 0) {
-                        String keyValue = name + ":" + values.get(0);
-                        logger.info("Found AX attribute " + keyValue);
-                        returnList.addParams(ParameterList.createFromKeyValueForm(keyValue));
-                    }
-                }
-            } else if (extAlias.equals(GenomeSpaceMessageExtension.URI)) {
-                MessageExtension msgExt = authSuccess.getExtension(extAlias);
-                returnList.addParams(msgExt.getParameters());
-            } else {
-                logger.warn("No support for extension " + extAlias);
+                    break;
+
+                case GenomeSpaceMessageExtension.URI:
+                    MessageExtension msgExt = authSuccess.getExtension(extAlias);
+                    returnList.addParams(msgExt.getParameters());
+                    break;
+
+                default:
+                    logger.warn("No support for extension " + extAlias);
             }
         }
 

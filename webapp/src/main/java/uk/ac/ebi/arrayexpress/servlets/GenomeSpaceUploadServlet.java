@@ -17,6 +17,11 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.FileRequestEntity;
+import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,38 +76,82 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
             throws ServletException, IOException
     {
         Files files = (Files) getComponent("Files");
-        String fileName = request.getParameter("file");
+        String fileName = request.getParameter("filename");
         String accession = request.getParameter("accession");
 
-        try {
-            String fileLocation = files.getLocation(accession, fileName);
-            File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
+        if (null == fileName || null == accession) {
+            response.sendError(
+                    HttpServletResponse.SC_BAD_REQUEST
+                    , "Expected parameters [filename] and [accession] not found in the request"
+            );
+        } else {
+            try {
+                String fileLocation = files.getLocation(accession, fileName);
+                File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
 
-            if (null == file || !file.exists()) {
-                logger.error("Requested file information of [{}] which is not found", fileLocation);
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            } else {
-                StringBuilder jsonOutput = new StringBuilder();
-                jsonOutput
-                        .append("{")
-                        .append("\"content_size\":\"").append(file.length()).append("\",")
-                        .append("\"content_md5\":\"").append(getFileMD5(fileLocation)).append("\",")
-                        .append("\"content_type\":\"").append(getServletContext().getMimeType(fileName)).append("\"")
-                        .append("}");
-                response.setContentType("application/json; charset=US-ASCII");
-                try (PrintWriter out = response.getWriter()) {
-                    out.print(jsonOutput.toString());
+                if (null == file || !file.exists()) {
+                    logger.error("Requested file information of [{}/{}] which is not found", accession, fileName);
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                } else {
+                    StringBuilder jsonOutput = new StringBuilder();
+                    jsonOutput
+                            .append("{")
+                            .append("\"content_size\":\"").append(file.length()).append("\",")
+                            .append("\"content_md5\":\"").append(getFileMD5(file.getPath())).append("\",")
+                            .append("\"content_type\":\"").append(getServletContext().getMimeType(file.getName())).append("\"")
+                            .append("}");
+                    response.setContentType("application/json; charset=US-ASCII");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print(jsonOutput.toString());
+                    }
                 }
+            } catch (InterruptedException x) {
+                throw new ServletException(x);
             }
-        } catch (InterruptedException x) {
-            throw new ServletException(x);
         }
     }
 
     private void doUploadAction( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {
+        Files files = (Files) getComponent("Files");
+        String fileName = request.getParameter("filename");
+        String accession = request.getParameter("accession");
+        String uploadURL = request.getParameter("url");
 
+        if (null == fileName || null == accession || null == uploadURL) {
+            response.sendError(
+                    HttpServletResponse.SC_BAD_REQUEST
+                    , "Expected parameters [filename], [accession], and [url] not found in the request"
+            );
+        } else {
+            try {
+                String fileLocation = files.getLocation(accession, fileName);
+                File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
+
+                if (null == file || !file.exists()) {
+                    logger.error("Requested file upload of [{}/{}] which is not found", accession, fileName);
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                } else {
+                    int statusCode = putFile(
+                            uploadURL
+                            , file
+                            , getServletContext().getMimeType(file.getName())
+                            , getFileMD5(file.getPath())
+                    );
+                    if (HttpServletResponse.SC_OK != statusCode) {
+                        response.sendError(statusCode);
+                    } else {
+                        response.setContentType("text/plain; charset=US-ASCII");
+                        try (PrintWriter out = response.getWriter()) {
+                            out.print("OK");
+                        }
+                    }
+                }
+            } catch (InterruptedException x) {
+                throw new ServletException(x);
+            }
+        }
     }
 
     private String getFileMD5( String fileLocation ) throws IOException, InterruptedException
@@ -135,5 +184,24 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
             }
         }
         return md5;
+    }
+
+    private Integer putFile( String url, File file, String contentType, String contentMD5 ) throws IOException
+    {
+        Integer result = null;
+        PutMethod put = new PutMethod(url);
+        RequestEntity entity = new FileRequestEntity(file, contentType);
+        put.setRequestEntity(entity);
+        put.setRequestHeader("Content-MD5", contentMD5);
+        HttpClient httpclient = new HttpClient();
+
+        try {
+            result = httpclient.executeMethod(put);
+        } catch ( HttpException x ) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            put.releaseConnection();
+        }
+        return result;
     }
 }
