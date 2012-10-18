@@ -66,8 +66,7 @@
                             </a>
                         </div>
                         <div>
-                            <img src="{$basepath}/assets/images/send_to_arrow.gif" width="64" height="54" alt=" -> "/>
-                            <img src="{$basepath}/assets/images/gs_header.gif" width="312" height="54" alt="GenomeSpace"/>
+                            <img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/>
                         </div>
                         <div>
                             <a href="{$basepath}/gs/auth">Log in to GenomeSpace</a>
