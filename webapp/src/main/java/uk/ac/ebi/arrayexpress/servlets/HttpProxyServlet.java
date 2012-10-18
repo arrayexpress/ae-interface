@@ -19,12 +19,14 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,12 +42,32 @@ public class HttpProxyServlet extends ApplicationServlet
 
     private static final int PROXY_BUFFER_SIZE = 64000;
 
+    private HttpClient httpClient;
+
+    @Override
+    public void init( ServletConfig config ) throws ServletException
+    {
+        super.init(config);
+
+        httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
+        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+        /* proxy is not needed here I think, but I'll keep this just in case
+        String proxyHost = System.getProperty("http.proxyHost");
+        String proxyPort = System.getProperty("http.proxyPort");
+        logger.info("Checking system properties for proxy configuration: [{}:{}]", proxyHost, proxyPort);
+        if (null != proxyHost && null != proxyPort) {
+            httpClient.getHostConfiguration().setProxy(proxyHost, Integer.parseInt(proxyPort));
+        }
+        */
+    }
+
+    @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return (requestType == RequestType.GET);
     }
 
-    // Respond to HTTP requests from browsers.
+    @Override
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {
@@ -65,7 +87,6 @@ public class HttpProxyServlet extends ApplicationServlet
             }
             logger.debug("Will access [{}]", url);
 
-            HttpClient httpClient = new HttpClient();
             GetMethod getMethod = new GetMethod(url);
 
             if (null != queryString) {
@@ -83,9 +104,6 @@ public class HttpProxyServlet extends ApplicationServlet
             }
 
             try {
-                // establish a connection within 5 seconds
-                httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
-
                 httpClient.executeMethod(getMethod);
 
                 int statusCode = getMethod.getStatusCode();
