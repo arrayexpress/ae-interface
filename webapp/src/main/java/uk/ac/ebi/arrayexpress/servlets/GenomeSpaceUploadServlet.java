@@ -116,7 +116,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                 try (PrintWriter out = response.getWriter()) {
                     out.print("Done");
                 }
-                logger.info("Successfully sent [{}] to [GenomeSpace/{}]", fileLocation, targetLocation);
+                logger.info("Successfully sent [{}] to [GenomeSpace:{}]", fileLocation, targetLocation);
             }
         }
     }

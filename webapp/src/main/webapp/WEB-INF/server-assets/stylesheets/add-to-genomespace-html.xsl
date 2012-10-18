@@ -65,13 +65,26 @@
                                 Send to GenomeSpace
                             </a>
                         </div>
-                        <div>
-                            <img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/>
-                        </div>
-                        <div>
-                            <a href="{$basepath}/gs/auth">Log in to GenomeSpace</a>
-                        </div>
+                        <div><img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/></div>
+                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra quam sed erat facilisis ornare. Aliquam ac ullamcorper magna. Morbi tempus, urna vitae congue consequat, nisi metus hendrerit quam, eu gravida arcu augue eget purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce consequat quam non erat tincidunt mattis. Quisque eget enim risus. Praesent vel mollis eros. Etiam vitae mauris lorem. Integer tempus condimentum molestie. Morbi vulputate iaculis lacus venenatis tempus. Integer imperdiet mollis lectus, id euismod urna ullamcorper sit amet. In eu facilisis tortor. Vestibulum non odio ac enim pulvinar condimentum.</div>
                         <div id="status"/>
+                        <div>
+                            1. <a href="{$basepath}/gs/auth">Log in/register to <img src="{$basepath}/assets/images/gs_logo_title_16.gif" width="120" height="16" alt="GenomeSpace"/></a>
+                        </div>
+                        <div>
+                            2. Select files to upload:
+                            <div><input id="exp-metadata" type="checkbox" checked="true"/><label for="exp-metadata">Experiment metadata (<xsl:value-of select="fn:string-join($vFolder/file[@kind='idf' or @kind='sdrf']/@name, ', ')"/>)</label></div>
+                            <div><input id="exp-raw-data" type="checkbox" checked="true"/><label for="exp-raw-data">Raw data (<xsl:value-of select="fn:string-join($vFolder/file[@kind='raw']/@name, ', ')"/>)</label></div>
+                            <div><input id="exp-fgem-data" type="checkbox" checked="true"/><label for="exp-fgem-data">Processed data (<xsl:value-of select="fn:string-join($vFolder/file[@kind='fgem']/@name, ', ')"/>)</label></div>
+                        </div>
+                        <div>
+                            3. Select destination folder:
+                            <div>
+                                <img src="{$basepath}/assets/images/gs_folder.gif" width="16" height="16"/><span id="gs-home-folder"></span><span>/</span>
+                                <img src="{$basepath}/assets/images/gs_folder.gif" width="16" height="16"/><span>ArrayExpress/</span>
+                                <img src="{$basepath}/assets/images/gs_folder.gif" width="16" height="16"/><input id="gs-dest-folder-name" type="text" value="{$vAccession}"/>
+                            </div>
+                        </div>
                         <div>
                             <a href="javascript:$.uploadToGS('E-MEXP-31','E-MEXP-31.sdrf.txt','/Home/kolais')">Send E-MEXP-31.sdrf.txt to GenomeSpace</a>
                         </div>

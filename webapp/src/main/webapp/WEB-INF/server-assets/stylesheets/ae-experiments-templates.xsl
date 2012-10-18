@@ -169,7 +169,7 @@
                     <div class="value">
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="string-join(experimenttype, ', ')"/>
+                            <xsl:with-param name="pText" select="fn:string-join(experimenttype, ', ')"/>
                             <xsl:with-param name="pFieldName" select="'exptype'"/>
                         </xsl:call-template>
                         <xsl:if test="count(experimenttype) > 0 and count(experimentdesign) > 0">, </xsl:if>
@@ -526,7 +526,7 @@
                             </xsl:call-template>
                         </xsl:if>
                         <xsl:if test="@loadedinatlas | secondaryaccession"><br/></xsl:if>
-                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to</span> <img src="{$pBasePath}/assets/images/gs_logo_title_16.gif" width="120" height="16"/></a>
+                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to</span> <img src="{$pBasePath}/assets/images/gs_logo_title_16.gif" width="120" height="16" alt="GenomeSpace"/></a>
                     </div>
                 </td>
             </tr>
