@@ -22,11 +22,18 @@
     $.gsUserInfo = null;
 
     function
-    gsLoggedIn( gsUserInfo )
+    gsLoggedIn( gsUserName )
     {
-        $("#status").html("Logged in as " + gsUserInfo.username);
-        $.gsUserInfo = gsUserInfo;
-        //retrieveGSPersonalDirectory();
+        $("#status").html("Logged in as " + gsUserName);
+
+        $.ajax({
+            url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
+            , xhrFields: { withCredentials: true }
+            , success : function(json) {
+                $.gsUserInfo = json;
+            }
+            , dataType: "json"
+        });
     }
 
     function
@@ -40,13 +47,14 @@
     checkIfLoggedToGS( onLoggedInFunc, onLoggedOutFunc )
     {
         $.ajax({
-            url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
+            url : "https://identity.genomespace.org/identityServer/usermanagement/utility/token/username"
             , xhrFields: { withCredentials: true }
             , success : onLoggedInFunc
             , error : onLoggedOutFunc
-            , dataType: "json"
         });
     }
+
+
 
     function
     retrieveGSPersonalDirectory()

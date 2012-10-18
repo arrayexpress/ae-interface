@@ -60,6 +60,14 @@
                             <a href="{$basepath}/experiments/{upper-case($accession)}">
                                 <xsl:value-of select="upper-case($accession)"/>
                             </a>
+                            <xsl:text> > </xsl:text>
+                            <a href="{$basepath}/experiments/{upper-case($accession)}/genomespace.html">
+                                Send to GenomeSpace
+                            </a>
+                        </div>
+                        <div>
+                            <img src="{$basepath}/assets/images/send_to_arrow.gif" width="64" height="54" alt=" -> "/>
+                            <img src="{$basepath}/assets/images/gs_header.gif" width="312" height="54" alt="GenomeSpace"/>
                         </div>
                         <div>
                             <a href="{$basepath}/gs/auth">Log in to GenomeSpace</a>
