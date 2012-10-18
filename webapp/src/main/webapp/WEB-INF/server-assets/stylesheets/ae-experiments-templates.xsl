@@ -526,7 +526,7 @@
                             </xsl:call-template>
                         </xsl:if>
                         <xsl:if test="@loadedinatlas | secondaryaccession"><br/></xsl:if>
-                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html">Send <xsl:value-of select="accession"/> data to <img src="{$pBasePath}/assets/images/gs_logo_16.gif" width="16" height="16" alt=""/>GenomeSpace</a>
+                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to</span> <img src="{$pBasePath}/assets/images/gs_logo_title_16.gif" width="120" height="16"/></a>
                     </div>
                 </td>
             </tr>

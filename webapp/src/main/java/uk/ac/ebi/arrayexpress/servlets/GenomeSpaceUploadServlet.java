@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.FileRequestEntity;
@@ -32,6 +33,7 @@ import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +51,22 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     private static final long serialVersionUID = 4447436099042802322L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private HttpClient httpClient;
+
+    @Override
+    public void init( ServletConfig config ) throws ServletException
+    {
+        super.init(config);
+
+        httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
+        String proxyHost = System.getProperty("http.proxyHost");
+        String proxyPort = System.getProperty("http.proxyPort");
+        logger.info("Checking system properties for proxy configuration: [{}:{}]", proxyHost, proxyPort);
+        if (null != proxyHost && null != proxyPort) {
+            httpClient.getHostConfiguration().setProxy(proxyHost, Integer.parseInt(proxyPort));
+        }
+    }
 
     @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
@@ -98,6 +116,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                 try (PrintWriter out = response.getWriter()) {
                     out.print("Done");
                 }
+                logger.info("Successfully sent [{}] to [GenomeSpace/{}]", fileLocation, targetLocation);
             }
         }
     }
@@ -120,11 +139,10 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                 }
         );
         get.setRequestHeader("Cookie","gs-token=" + gsToken);
-        HttpClient httpclient = new HttpClient();
 
         Integer statusCode = null;
         try {
-            statusCode = httpclient.executeMethod(get);
+            statusCode = httpClient.executeMethod(get);
             if (HttpServletResponse.SC_OK == statusCode) {
                 fileInfo.setUploadURL(StringTools.streamToString(get.getResponseBodyAsStream(), "US-ASCII"));
             } else {
@@ -145,11 +163,10 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
         RequestEntity entity = new FileRequestEntity(fileInfo.getFile(), fileInfo.GetContentType());
         put.setRequestEntity(entity);
         put.setRequestHeader("Content-MD5", fileInfo.getContentMD5());
-        HttpClient httpclient = new HttpClient();
 
         Integer statusCode = null;
         try {
-            statusCode = httpclient.executeMethod(put);
+            statusCode = httpClient.executeMethod(put);
         } catch ( HttpException x ) {
             logger.error("Caught an exception:", x);
         } finally {

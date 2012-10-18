@@ -86,6 +86,33 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
     private static final String REFERER_HEADER = "Referer";
 
+    @Override
+    public void init( ServletConfig config ) throws ServletException
+    {
+        super.init(config);
+
+        // --- Forward proxy setup (only if needed) ---
+        ProxyProperties proxyProps = getProxyProperties();
+        if (proxyProps != null) {
+            logger.debug("ProxyProperties: [{}]", proxyProps);
+            HttpClientFactory.setProxyProperties(proxyProps);
+        }
+
+        try {
+            Message.addExtensionFactory(GenomeSpaceMessageExtensionFactory.class);
+        } catch (MessageException e) {
+            throw new ServletException("Unable to register GenomeSpaceMessageExtensionFactory", e);
+        }
+
+        try {
+            manager = new ConsumerManager();
+        } catch (Throwable e) {
+            throw new ServletException(e);
+        }
+        manager.setAssociations(new InMemoryConsumerAssociationStore());
+        manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
+        manager.setMinAssocSessEnc(AssociationSessionType.DH_SHA256);
+    }
 
     @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
@@ -401,52 +428,18 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
         return returnList;
     }
 
-    @Override
-    public void init( ServletConfig config ) throws ServletException
+    private ProxyProperties getProxyProperties()
     {
-        super.init(config);
+        ProxyProperties proxyProps = null;
 
-        // --- Forward proxy setup (only if needed) ---
-        ProxyProperties proxyProps = getProxyProperties(config);
-        if (proxyProps != null) {
-            logger.debug("ProxyProperties: [{}]", proxyProps);
-            HttpClientFactory.setProxyProperties(proxyProps);
-        }
+        String proxyHost = System.getProperty("http.proxyHost");
+        String proxyPort = System.getProperty("http.proxyPort");
+        logger.info("Checking system properties for proxy configuration: [{}:{}]", proxyHost, proxyPort);
 
-        try {
-            Message.addExtensionFactory(GenomeSpaceMessageExtensionFactory.class);
-        } catch (MessageException e) {
-            throw new ServletException("Unable to register GenomeSpaceMessageExtensionFactory", e);
-        }
-
-        try {
-            manager = new ConsumerManager();
-        } catch (Throwable e) {
-            throw new ServletException(e);
-        }
-        manager.setAssociations(new InMemoryConsumerAssociationStore());
-        manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
-        manager.setMinAssocSessEnc(AssociationSessionType.DH_SHA256);
-    }
-
-    private ProxyProperties getProxyProperties( ServletConfig config )
-    {
-        ProxyProperties proxyProps;
-        String host = config.getInitParameter("proxy.host");
-        logger.debug("proxy.host: [{}]", host);
-        if (host == null) {
-            proxyProps = null;
-        } else {
+        if (null != proxyHost && null != proxyPort) {
             proxyProps = new ProxyProperties();
-            String port = config.getInitParameter("proxy.port");
-            String username = config.getInitParameter("proxy.username");
-            String password = config.getInitParameter("proxy.password");
-            String domain = config.getInitParameter("proxy.domain");
-            proxyProps.setProxyHostName(host);
-            proxyProps.setProxyPort(Integer.parseInt(port));
-            proxyProps.setUserName(username);
-            proxyProps.setPassword(password);
-            proxyProps.setDomain(domain);
+            proxyProps.setProxyHostName(proxyHost);
+            proxyProps.setProxyPort(Integer.parseInt(proxyPort));
         }
         return proxyProps;
     }

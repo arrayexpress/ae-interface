@@ -72,7 +72,10 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
     {
         try {
             CookieMap cookies = new CookieMap(request.getCookies());
-            String userName = URLDecoder.decode(cookies.getCookieValue(AE_LOGIN_USER_COOKIE), "UTF-8");
+            String userName = cookies.getCookieValue(AE_LOGIN_USER_COOKIE);
+            if (null != userName) {
+                userName = URLDecoder.decode(userName, "UTF-8");
+            }
             String token = cookies.getCookieValue(AE_LOGIN_TOKEN_COOKIE);
             String userAgent = request.getHeader("User-Agent");
             Users users = (Users) getComponent("Users");
@@ -105,10 +108,10 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         } else {
             try {
                 Users users = (Users) getComponent("Users");
-                String userName = URLDecoder.decode(
-                        new CookieMap(request.getCookies()).getCookieValue(AE_LOGIN_USER_COOKIE)
-                        , "UTF-8"
-                );
+                String userName = new CookieMap(request.getCookies()).getCookieValue(AE_LOGIN_USER_COOKIE);
+                if (null != userName) {
+                    userName = URLDecoder.decode(userName, "UTF-8");
+                }
                 if (users.isPrivileged(userName)) {
                     return AE_UNRESTRICTED_ACCESS;
                 } else {
