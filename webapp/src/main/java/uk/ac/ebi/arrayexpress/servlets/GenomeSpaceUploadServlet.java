@@ -53,6 +53,8 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     private final static String GS_HOME_DIRECTORY = "/personaldirectory";
     private final static String GS_ROOT_DIRECTORY = "/file";
 
+    private final static String JSON_MIME_TYPE = "application/json";
+
     private HttpClient httpClient;
 
     @Override
@@ -85,9 +87,10 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
 
         if ("uploadFile".equals(action)) {
             doUploadFileAction(request, response);
+        } else if ("checkDirectory".equals(action)) {
+            doCheckCreateDirectoryAction(request, response, false);
         } else if ("createDirectory".equals(action)) {
-            doCreateDirectoryAction(request, response);
-
+            doCheckCreateDirectoryAction(request, response, true);
         } else {
             response.sendError(
                     HttpServletResponse.SC_BAD_REQUEST
@@ -97,7 +100,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     }
 
 
-    private void doCreateDirectoryAction( HttpServletRequest request, HttpServletResponse response )
+    private void doCheckCreateDirectoryAction( HttpServletRequest request, HttpServletResponse response, boolean shouldCreate )
             throws IOException
     {
         String accession = request.getParameter("accession");
@@ -124,36 +127,42 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                 return;
             }
 
-            statusCode = getDirectoryInfo( homePath + "/ArrayExpress", dir, gsToken);
-            if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
-                // let's attempt to create subdirectory "ArrayExpress"
-                statusCode = createDirectory(homePath + "/ArrayExpress", dir, gsToken);
-                if (HttpServletResponse.SC_OK != statusCode) {
+            if (shouldCreate) {
+                statusCode = getDirectoryInfo( homePath + "/ArrayExpress", dir, gsToken);
+                if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
+                    // let's attempt to create subdirectory "ArrayExpress"
+                    statusCode = createDirectory(homePath + "/ArrayExpress", dir, gsToken);
+                    if (HttpServletResponse.SC_OK != statusCode) {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        return;
+                    }
+
+                } else if (HttpServletResponse.SC_OK != statusCode) {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
                 }
 
-            } else if (HttpServletResponse.SC_OK != statusCode) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                return;
-            }
-
-            String aePath = dir.getPath();
-            logger.debug("Located GenomeSpace AE directory path: [{}]", aePath);
-            if (null == aePath) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                return;
-            }
-
-            statusCode = getDirectoryInfo( aePath + "/" + accession, dir, gsToken);
-            if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
-                // let's attempt to create subdirectory "ArrayExpress"
-                statusCode = createDirectory(aePath + "/" + accession, dir, gsToken);
-                if (HttpServletResponse.SC_OK != statusCode) {
+                String aePath = dir.getPath();
+                logger.debug("Located GenomeSpace AE directory path: [{}]", aePath);
+                if (null == aePath) {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
                 }
-
+            }
+            String opStatus = "exists";
+            statusCode = getDirectoryInfo( homePath + "/ArrayExpress/" + accession, dir, gsToken);
+            if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
+                if (shouldCreate) {
+                    // let's attempt to create subdirectory "ArrayExpress"
+                    statusCode = createDirectory(homePath + "/ArrayExpress/" + accession, dir, gsToken);
+                    if (HttpServletResponse.SC_OK != statusCode) {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        return;
+                    }
+                    opStatus = "created";
+                } else {
+                    opStatus = "missing";
+                }
             } else if (HttpServletResponse.SC_OK != statusCode) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 return;
@@ -162,9 +171,9 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
             String accessionPath = dir.getPath();
             logger.debug("Located GenomeSpace target directory path for [{}]: [{}]", accession, accessionPath);
 
-            response.setContentType("text/plain; charset=US-ASCII");
+            response.setContentType(JSON_MIME_TYPE);
             try (PrintWriter out = response.getWriter()) {
-                out.print(accessionPath);
+                out.print("{\"target\":\"" + accessionPath + "\",\"status\":\"" + opStatus + "\"}");
             }
         }
     }
@@ -204,9 +213,9 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
                 }
-                response.setContentType("text/plain; charset=US-ASCII");
+                response.setContentType(JSON_MIME_TYPE);
                 try (PrintWriter out = response.getWriter()) {
-                    out.print("Done");
+                    out.print("{\"status\":\"copied\"}");
                 }
                 logger.info("Successfully sent [{}] to [GenomeSpace:{}]", fileLocation, targetLocation);
             }
@@ -237,7 +246,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                     logger.error("Unable to parse JSON response:", x);
                 }
             } else {
-                logger.error("Unable to obtain upload URL, status code [{}]", statusCode);
+                logger.error("Unable to get directory info, status code [{}]", statusCode);
             }
         } catch ( HttpException x ) {
             logger.error("Caught an exception:", x);
@@ -257,7 +266,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
         );
         put.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
         put.setRequestHeader("Cookie", "gs-token=" + gsToken);
-        put.setRequestEntity(new StringRequestEntity("{\"isDirectory\":true}", "application/json", "US-ASCII"));
+        put.setRequestEntity(new StringRequestEntity("{\"isDirectory\":true}", JSON_MIME_TYPE, "US-ASCII"));
         JSONParser jsonParser = new JSONParser();
         Integer statusCode = null;
         try {
@@ -269,7 +278,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                     logger.error("Unable to parse JSON response:", x);
                 }
             } else {
-                logger.error("Unable to obtain upload URL, status code [{}]", statusCode);
+                logger.error("Unable create directory, status code [{}]", statusCode);
             }
         } catch ( HttpException x ) {
             logger.error("Caught an exception:", x);

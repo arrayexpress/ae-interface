@@ -20,22 +20,30 @@
         throw "jQuery not loaded";
 
     $.gsUserInfo = null;
-    $.gsPersonalDirectory = null;
+    $.accession = null;
+    $.gsTargetDir = null;
 
     function
     gsLoggedIn( gsUserName )
     {
-        $("#status").html("Logged in as " + gsUserName);
+        $("#gs_auth_username").html(gsUserName);
+        $("#gs_login_section").hide();
+        $("#gs_upload_section").show();
 
-        retrieveGSUserInformation();
-        retrieveGSPersonalDirectory();
+        $.when(retrieveGSUserInformation()).then( function(json) {
+            $.gsUserInfo = json;
+            checkGSTargetDirectory();
+        });
     }
 
     function
     gsLoggedOut()
     {
-        $("#status").html("Not logged in");
         $.gsUserInfo = null;
+
+        $("#gs_auth_status").html("");
+        $("#gs_login_section").show();
+        $("#gs_upload_section").hide();
     }
 
     function
@@ -49,72 +57,162 @@
         });
     }
 
+    function
+    checkGSMessage()
+    {
+        var message = $.cookie("gs-auth-message");
+        if (null != message) {
+            $("#gs_auth_message").html(message);
+            $.cookie("gs-auth-message", null);
+        }
+    }
 
     function
     retrieveGSUserInformation()
     {
+        var dfr = $.Deferred();
+
         $.ajax({
             url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
             , xhrFields: { withCredentials: true }
-            , success : function(json) {
-                $.gsUserInfo = json;
-            }
+            , success : dfr.resolve
+            , error: dfr.reject
             , dataType: "json"
         });
+
+        return dfr.promise();
     }
 
     function
-    retrieveGSPersonalDirectory()
+    checkGSTargetDirectory()
     {
         $.ajax({
-            url : "https://dm.genomespace.org/datamanager/v1.0/personaldirectory"
-            , xhrFields: { withCredentials: true }
-            , success : function(json) {
-                $.gsPersonalDirectory = json;
+            url : contextPath + "/gs/upload"
+            , data: { action: "checkDirectory"
+                , accession: $.accession
+                , token: $.gsUserInfo.token
             }
             , dataType: "json"
+            , success : function(json) {
+                if (null != json) {
+                    if ("exists" == json.status ) {
+                        $.gsTargetDir = json.target;
+                        $("#gs_target_dir").html(json.target);
+                        $("#gs_warning").show();
+                    }
+                }
+            }
         });
     }
 
     function
-    uploadFile(accession, fileName, target)
+    gsUploadFile(fileName)
     {
+        var dfr = $.Deferred();
+
         $.ajax({
             url : contextPath + "/gs/upload"
             , data: { action: "uploadFile"
-                , accession: accession
+                , accession: $.accession
                 , filename: fileName
-                , target: target
+                , target:  $.gsTargetDir
                 , token: $.gsUserInfo.token
             }
-            , xhrFields: { withCredentials: true }
-            , success : function(done) {
-                alert(done);
-            }
+            , dataType: "json"
+            , success : dfr.resolve
+            , error: dfr.reject
+
         });
+
+        return dfr.promise();
     }
 
     function
-    createDirectory(accession)
+    gsCreateTargetDirectory()
     {
+        var dfr = $.Deferred();
+
         $.ajax({
             url : contextPath + "/gs/upload"
             , data: { action: "createDirectory"
-                , accession: accession
+                , accession: $.accession
                 , token: $.gsUserInfo.token
             }
-            , xhrFields: { withCredentials: true }
-            , success : function(done) {
-                alert(done);
-            }
+            , dataType: "json"
+            , success : dfr.resolve
+            , error: dfr.reject
         });
+
+        return dfr.promise();
     }
 
-    $.gsCreateDir = createDirectory;
-    $.gsUploadFile = uploadFile;
+    function
+    uploadFile(counter)
+    {
+        var $check = $("#file_" + counter + "_check");
+        if (0 != $check.length) {
+            if ($check.prop("checked")) {
+                var fileName = $("#file_" + counter + "_name").val();
+                $.progressStatus.html("Sending " + fileName + " to GenomeSpace...");
+                $check.prop("disabled", true);
+                $("#file_" + counter + "_progress").addClass("in_progress");
+                $.when(gsUploadFile(fileName)).then(function() {
+                    $("#file_" + counter + "_progress").removeClass("in_progress").addClass("ok");
+                    uploadFile(counter + 1);
+                }, function() {
+                    $("#file_" + counter + "_progress").removeClass("in_progress").addClass("failed");
+                    $.progressStatus.html("There was an error uploading " + fileName + " to GenomeSpace");
+                })
+            } else {
+                uploadFile(counter + 1);
+            }
+        } else {
+            if (counter > 1) {
+                $.progressStatus.html("Upload completed");
+            } else {
+                $.progressStatus.html("");
+            }
+            reenableForm();
+        }
+    }
+
+    function
+    uploadFiles()
+    {
+        // first - disable submit button to prevent second event call
+        var $this = $(this);
+        $this.prop("disabled", true);
+        $(".file_div > span").removeClass();
+
+        if (null == $.gsTargetDir) {
+            $.progressStatus.html("Creating target directory " + $.gsTargetDir + " in GenomeSpace...");
+
+            $.when(gsCreateTargetDirectory()).then(function(json) {
+                $.gsTargetDir = json.target;
+                uploadFile(1);
+            }, function() {
+                // directory creation went wrong?
+                $.progressStatus.html("There was an error creating target directory in GenomeSpace");
+                $this.removeProp("disabled");
+            });
+        } else {
+            uploadFile(1);
+        }
+    }
+
+    function
+    reenableForm()
+    {
+        $("#gs_upload_submit").removeProp("disabled");
+        $(".file_check").removeProp("disabled");
+    }
 
     $(function() {
+        $.accession = $("#ae_accession").val();
+        $.progressStatus = $("#gs_progress_status");
+        checkGSMessage();
         checkIfLoggedToGS(gsLoggedIn, gsLoggedOut);
+        $("#gs_upload_submit").click(uploadFiles);
     });
 
 })(window.jQuery);
