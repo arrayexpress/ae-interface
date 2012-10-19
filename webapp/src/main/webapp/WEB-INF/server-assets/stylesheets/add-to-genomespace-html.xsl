@@ -67,7 +67,7 @@
                         </div>
                         <div id="gs_auth_message"></div>
                         <div id="gs_title"><img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/></div>
-                        <div id="gs_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra quam sed erat facilisis ornare. Aliquam ac ullamcorper magna. Morbi tempus, urna vitae congue consequat, nisi metus hendrerit quam, eu gravida arcu augue eget purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce consequat quam non erat tincidunt mattis. Quisque eget enim risus. Praesent vel mollis eros. Etiam vitae mauris lorem. Integer tempus condimentum molestie. Morbi vulputate iaculis lacus venenatis tempus. Integer imperdiet mollis lectus, id euismod urna ullamcorper sit amet. In eu facilisis tortor. Vestibulum non odio ac enim pulvinar condimentum.</div>
+                        <div id="gs_description"></div>
                         <div id="gs_login_section" style="display:none">
                             Please <a href="{$basepath}/gs/auth">follow this link to login (or register an account) to GenomeSpace</a>
                         </div>
