@@ -87,7 +87,8 @@
                                     </div>
                                 </xsl:for-each>
                             </div>
-                            <div id="gs_warning" style="display:none">Warning! Target directory <span id="gs_target_dir"/> already exists in GenomeSpace. Uploaded files will be overwritten while all other files in target directory will remain untouched.</div>
+                            <div id="gs_warning" style="display:none">Warning! Target directory <span id="gs_target_dir"/> already exists in GenomeSpace.<br/>
+                                Uploaded files will be overwritten whilst all other files in target directory will remain untouched.</div>
                             <div id="gs_upload_button">
                                 <div id="gs_progress_status"/>
                                 <div id="gs_upload_form">
