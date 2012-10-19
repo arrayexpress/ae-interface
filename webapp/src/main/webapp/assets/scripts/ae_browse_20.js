@@ -579,7 +579,7 @@ updateAppStateExpand( id )
         } else {
             appStateData = appStateData + ";"+ id;
         }
-        $.cookie("AeAppStateData", appStateData);
+        $.cookie("AeAppStateData", appStateData, {path: '/'});
     }
 }
 
@@ -589,6 +589,6 @@ updateAppStateScroll( scrollValue )
     var appStateData = $.cookie("AeAppStateData");
     if (null != appStateData) {
         appStateData = appStateData.replace(/^\d+/, scrollValue);
-        $.cookie("AeAppStateData", appStateData);
+        $.cookie("AeAppStateData", appStateData, {path: '/'});
     }
 }

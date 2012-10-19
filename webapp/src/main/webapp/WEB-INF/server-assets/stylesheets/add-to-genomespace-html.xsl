@@ -65,12 +65,12 @@
                                 Send to GenomeSpace
                             </a>
                         </div>
-                        <div id="gs_auth_message"></div>
                         <div id="gs_title"><img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/></div>
                         <div id="gs_description"></div>
                         <div id="gs_login_section" style="display:none">
                             Please <a href="{$basepath}/gs/auth">login to (or register an account at) GenomeSpace</a> first.
                         </div>
+                        <div id="gs_auth_message" style="display:none"/>
                         <div id="gs_upload_section" style="display:none">
                             <div id="gs_upload_prompt">You have successfully logged in to GenomeSpace, <span id="gs_auth_username"/>. Please select files to upload:</div>
                             <div id="gs_files">

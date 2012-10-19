@@ -130,7 +130,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
 
         if ("true".equals(request.getParameter("is_cancel"))) {
             // User clicked "cancel" on the openID login page.
-            displayResult(response, getCookie(request, GS_RETURN_URL_COOKIE), null, null, "User has cancelled login");
+            displayResult(response, getCookie(request, GS_RETURN_URL_COOKIE), null, null, "GenomeSpace login was cancelled");
 
         } else if ("true".equals(request.getParameter("is_return"))) {
             // Handles the auth response callback from OpenID provider
@@ -454,6 +454,7 @@ public class GenomeSpaceAuthServlet extends ApplicationServlet
     {
         Cookie cookie = new Cookie(name, null != value ? value : "");
         // if the value is null - delete cookie by expiring it
+        cookie.setPath(getServletContext().getContextPath());
         if (null == value) {
             cookie.setMaxAge(0);
         }

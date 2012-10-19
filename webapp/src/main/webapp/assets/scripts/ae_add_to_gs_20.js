@@ -62,8 +62,8 @@
     {
         var message = $.cookie("gs-auth-message");
         if (null != message) {
-            $("#gs_auth_message").html(message);
-            $.cookie("gs-auth-message", null);
+            $("#gs_auth_message").html(message.replace(/^"?(.+[^"])"?$/g, "$1")).show();
+            $.cookie("gs-auth-message", null, {path: contextPath});
         }
     }
 
