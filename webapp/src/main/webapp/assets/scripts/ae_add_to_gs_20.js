@@ -185,7 +185,7 @@
         $(".file_div > span").removeClass();
 
         if (null == $.gsTargetDir) {
-            $.progressStatus.html("Creating target directory " + $.gsTargetDir + " in GenomeSpace...");
+            $.progressStatus.html("Creating target directory in GenomeSpace...");
 
             $.when(gsCreateTargetDirectory()).then(function(json) {
                 $.gsTargetDir = json.target;
