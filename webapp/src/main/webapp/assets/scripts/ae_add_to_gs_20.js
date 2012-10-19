@@ -162,6 +162,7 @@
                 }, function() {
                     $("#file_" + counter + "_progress").removeClass("in_progress").addClass("failed");
                     $.progressStatus.html("There was an error uploading " + fileName + " to GenomeSpace");
+                    reEnableForm();
                 })
             } else {
                 uploadFile(counter + 1);
@@ -172,7 +173,7 @@
             } else {
                 $.progressStatus.html("");
             }
-            reenableForm();
+            reEnableForm();
         }
     }
 
@@ -201,7 +202,7 @@
     }
 
     function
-    reenableForm()
+    reEnableForm()
     {
         $("#gs_upload_submit").removeProp("disabled");
         $(".file_check").removeProp("disabled");
