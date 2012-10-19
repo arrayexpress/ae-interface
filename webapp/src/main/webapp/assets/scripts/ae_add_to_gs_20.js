@@ -161,7 +161,7 @@
                     uploadFile(counter + 1);
                 }, function() {
                     $("#file_" + counter + "_progress").removeClass("in_progress").addClass("failed");
-                    $.progressStatus.html("There was an error uploading " + fileName + " to GenomeSpace");
+                    $.progressStatus.html("There was an error uploading " + fileName + " to GenomeSpace.");
                     reEnableForm();
                 })
             } else {
@@ -193,7 +193,7 @@
                 uploadFile(1);
             }, function() {
                 // directory creation went wrong?
-                $.progressStatus.html("There was an error creating target directory in GenomeSpace");
+                $.progressStatus.html("There was an error creating target directory in GenomeSpace.");
                 $this.removeProp("disabled");
             });
         } else {
