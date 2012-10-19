@@ -20,20 +20,15 @@
         throw "jQuery not loaded";
 
     $.gsUserInfo = null;
+    $.gsPersonalDirectory = null;
 
     function
     gsLoggedIn( gsUserName )
     {
         $("#status").html("Logged in as " + gsUserName);
 
-        $.ajax({
-            url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
-            , xhrFields: { withCredentials: true }
-            , success : function(json) {
-                $.gsUserInfo = json;
-            }
-            , dataType: "json"
-        });
+        retrieveGSUserInformation();
+        retrieveGSPersonalDirectory();
     }
 
     function
@@ -55,6 +50,18 @@
     }
 
 
+    function
+    retrieveGSUserInformation()
+    {
+        $.ajax({
+            url : "https://identity.genomespace.org/identityServer/selfmanagement/user"
+            , xhrFields: { withCredentials: true }
+            , success : function(json) {
+                $.gsUserInfo = json;
+            }
+            , dataType: "json"
+        });
+    }
 
     function
     retrieveGSPersonalDirectory()
@@ -63,21 +70,21 @@
             url : "https://dm.genomespace.org/datamanager/v1.0/personaldirectory"
             , xhrFields: { withCredentials: true }
             , success : function(json) {
-                alert(json.directory.path);
+                $.gsPersonalDirectory = json;
             }
             , dataType: "json"
         });
     }
 
     function
-    uploadFile(accession, fileName, destination)
+    uploadFile(accession, fileName, target)
     {
         $.ajax({
             url : contextPath + "/gs/upload"
-            , data: { action: "upload"
+            , data: { action: "uploadFile"
                 , accession: accession
                 , filename: fileName
-                , target: "/Home/kolais/"
+                , target: target
                 , token: $.gsUserInfo.token
             }
             , xhrFields: { withCredentials: true }
@@ -87,7 +94,24 @@
         });
     }
 
-    $.uploadToGS = uploadFile;
+    function
+    createDirectory(accession)
+    {
+        $.ajax({
+            url : contextPath + "/gs/upload"
+            , data: { action: "createDirectory"
+                , accession: accession
+                , token: $.gsUserInfo.token
+            }
+            , xhrFields: { withCredentials: true }
+            , success : function(done) {
+                alert(done);
+            }
+        });
+    }
+
+    $.gsCreateDir = createDirectory;
+    $.gsUploadFile = uploadFile;
 
     $(function() {
         checkIfLoggedToGS(gsLoggedIn, gsLoggedOut);

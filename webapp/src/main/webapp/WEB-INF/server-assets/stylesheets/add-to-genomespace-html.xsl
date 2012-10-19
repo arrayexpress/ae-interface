@@ -85,8 +85,9 @@
                         </div>
 
                         <div>
-                            <a href="javascript:$.uploadToGS('E-MEXP-31','E-MEXP-31.sdrf.txt')">Send to GenomeSpace</a>
+                            <a href="javascript:$.gsCreateDir('{$vAccession}')">Create directory</a>
                         </div>
+
                         <!--
                         <xsl:call-template name="list-folder">
                             <xsl:with-param name="pFolder" select="$vFolder"/>

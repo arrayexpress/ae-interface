@@ -22,11 +22,11 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.FileRequestEntity;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
+import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
@@ -37,10 +37,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +48,10 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     private static final long serialVersionUID = 4447436099042802322L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private final static String GS_DM_ROOT_URL = "https://dm.genomespace.org/datamanager/v1.0";
+    private final static String GS_HOME_DIRECTORY = "/personaldirectory";
+    private final static String GS_ROOT_DIRECTORY = "/file";
 
     private HttpClient httpClient;
 
@@ -80,6 +81,97 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
     {
         logRequest(logger, request, requestType);
 
+        String action = request.getParameter("action");
+
+        if ("uploadFile".equals(action)) {
+            doUploadFileAction(request, response);
+        } else if ("createDirectory".equals(action)) {
+            doCreateDirectoryAction(request, response);
+
+        } else {
+            response.sendError(
+                    HttpServletResponse.SC_BAD_REQUEST
+                    , "Action [" + (null != action ? action : "<null>") + "] is not supported"
+            );
+        }
+    }
+
+
+    private void doCreateDirectoryAction( HttpServletRequest request, HttpServletResponse response )
+            throws IOException
+    {
+        String accession = request.getParameter("accession");
+        String gsToken = request.getParameter("token");
+
+        if (null == accession || null == gsToken) {
+            response.sendError(
+                    HttpServletResponse.SC_BAD_REQUEST
+                    , "Expected parameters [accession] and [token] not found in the request"
+            );
+        } else {
+            DirectoryInfo dir = new DirectoryInfo();
+            Integer statusCode = getDirectoryInfo("/", dir, gsToken);
+            if (HttpServletResponse.SC_OK != statusCode) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+
+            String homePath = dir.getPath();
+            logger.debug("Located GenomeSpace user home directory path: [{}]", homePath);
+
+            if (null == homePath) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+
+            statusCode = getDirectoryInfo( homePath + "/ArrayExpress", dir, gsToken);
+            if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
+                // let's attempt to create subdirectory "ArrayExpress"
+                statusCode = createDirectory(homePath + "/ArrayExpress", dir, gsToken);
+                if (HttpServletResponse.SC_OK != statusCode) {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    return;
+                }
+
+            } else if (HttpServletResponse.SC_OK != statusCode) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+
+            String aePath = dir.getPath();
+            logger.debug("Located GenomeSpace AE directory path: [{}]", aePath);
+            if (null == aePath) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+
+            statusCode = getDirectoryInfo( aePath + "/" + accession, dir, gsToken);
+            if (HttpServletResponse.SC_NOT_FOUND == statusCode) {
+                // let's attempt to create subdirectory "ArrayExpress"
+                statusCode = createDirectory(aePath + "/" + accession, dir, gsToken);
+                if (HttpServletResponse.SC_OK != statusCode) {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    return;
+                }
+
+            } else if (HttpServletResponse.SC_OK != statusCode) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+
+            String accessionPath = dir.getPath();
+            logger.debug("Located GenomeSpace target directory path for [{}]: [{}]", accession, accessionPath);
+
+            response.setContentType("text/plain; charset=US-ASCII");
+            try (PrintWriter out = response.getWriter()) {
+                out.print(accessionPath);
+            }
+        }
+    }
+
+    private void doUploadFileAction( HttpServletRequest request, HttpServletResponse response )
+            throws IOException
+    {
         Files files = (Files) getComponent("Files");
 
         String fileName = request.getParameter("filename");
@@ -101,15 +193,15 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
                 UploadFileInfo fileInfo = new UploadFileInfo(file);
-                Integer statusCode = getFileUploadURL(fileInfo, "/Home/kolais/", gsToken);
+                Integer statusCode = getFileUploadURL(fileInfo, targetLocation, gsToken);
                 if (HttpServletResponse.SC_OK != statusCode) {
-                    response.sendError(statusCode);
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
                 }
 
                 statusCode = putFile(fileInfo);
                 if (HttpServletResponse.SC_OK != statusCode) {
-                    response.sendError(statusCode);
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
                 }
                 response.setContentType("text/plain; charset=US-ASCII");
@@ -121,24 +213,90 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
         }
     }
 
+    private Integer getDirectoryInfo( String path, DirectoryInfo directoryInfo, String gsToken ) throws IOException
+    {
+        GetMethod get = new GetMethod(
+                GS_DM_ROOT_URL
+                         + ("/".equals(path) ? GS_HOME_DIRECTORY : GS_ROOT_DIRECTORY + path)
+        );
+        get.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+        get.setRequestHeader("Cookie","gs-token=" + gsToken);
 
+        JSONParser jsonParser = new JSONParser();
+        Integer statusCode = null;
+        try {
+            statusCode = httpClient.executeMethod(get);
+            if (HttpServletResponse.SC_OK == statusCode) {
+                try (InputStream is = get.getResponseBodyAsStream()) {
+                    JSONObject dirInfo = (JSONObject) jsonParser.parse(new BufferedReader(new InputStreamReader(is)));
+                    directoryInfo.setInfo(
+                            (null != dirInfo && dirInfo.containsKey("directory"))
+                                    ? (JSONObject)dirInfo.get("directory") : null
+                    );
+                } catch (ParseException x) {
+                    logger.error("Unable to parse JSON response:", x);
+                }
+            } else {
+                logger.error("Unable to obtain upload URL, status code [{}]", statusCode);
+            }
+        } catch ( HttpException x ) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            get.releaseConnection();
+        }
+
+        return statusCode;
+    }
+
+    private Integer createDirectory( String path, DirectoryInfo directoryInfo, String gsToken ) throws IOException
+    {
+        PutMethod put = new PutMethod(
+                GS_DM_ROOT_URL
+                        + GS_ROOT_DIRECTORY
+                        + path
+        );
+        put.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+        put.setRequestHeader("Cookie", "gs-token=" + gsToken);
+        put.setRequestEntity(new StringRequestEntity("{\"isDirectory\":true}", "application/json", "US-ASCII"));
+        JSONParser jsonParser = new JSONParser();
+        Integer statusCode = null;
+        try {
+            statusCode = httpClient.executeMethod(put);
+            if (HttpServletResponse.SC_OK == statusCode) {
+                try (InputStream is = put.getResponseBodyAsStream()) {
+                    directoryInfo.setInfo((JSONObject)jsonParser.parse(new BufferedReader(new InputStreamReader(is))));
+                } catch (ParseException x) {
+                    logger.error("Unable to parse JSON response:", x);
+                }
+            } else {
+                logger.error("Unable to obtain upload URL, status code [{}]", statusCode);
+            }
+        } catch ( HttpException x ) {
+            logger.error("Caught an exception:", x);
+        } finally {
+            put.releaseConnection();
+        }
+
+        return statusCode;
+    }
 
     private Integer getFileUploadURL( UploadFileInfo fileInfo, String target, String gsToken ) throws IOException
     {
         GetMethod get = new GetMethod(
-                "https://dm.genomespace.org/datamanager/v1.0/uploadurl"
+                GS_DM_ROOT_URL
+                        + "/uploadurl"
                         + target.replaceAll("^/?(.+[^/])/?$", "/$1/")
                         + fileInfo.getFile().getName()
         );
         get.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
         get.setQueryString(
-                new NameValuePair[] {
+                new NameValuePair[]{
                         new NameValuePair("Content-Length", fileInfo.getContentLength())
                         , new NameValuePair("Content-Type", fileInfo.GetContentType())
                         , new NameValuePair("Content-MD5", fileInfo.getContentMD5())
                 }
         );
-        get.setRequestHeader("Cookie","gs-token=" + gsToken);
+        get.setRequestHeader("Cookie", "gs-token=" + gsToken);
 
         Integer statusCode = null;
         try {
@@ -173,6 +331,29 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
             put.releaseConnection();
         }
         return statusCode;
+    }
+
+    private class DirectoryInfo
+    {
+        private JSONObject info = null;
+
+        public void setInfo( JSONObject info )
+        {
+            this.info = info;
+        }
+
+        public JSONObject getInfo()
+        {
+            return this.info;
+        }
+
+        public String getPath()
+        {
+            if (null != info && info.containsKey("path")) {
+                return (String)info.get("path");
+            }
+            return null;
+        }
     }
 
     private class UploadFileInfo
