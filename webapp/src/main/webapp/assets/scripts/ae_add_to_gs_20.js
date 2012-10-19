@@ -168,7 +168,7 @@
             }
         } else {
             if (counter > 1) {
-                $.progressStatus.html("Upload completed");
+                $.progressStatus.html("Upload completed. Follow <a href='https://gsui.genomespace.org/jsui/gsui.html'>this link to open GenomeSpace UI</a>.");
             } else {
                 $.progressStatus.html("");
             }
