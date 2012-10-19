@@ -69,7 +69,7 @@
                         <div id="gs_title"><img src="{$basepath}/assets/images/send_to_gs_header.gif" width="480" height="54" alt="Send to GenomeSpace"/></div>
                         <div id="gs_description"></div>
                         <div id="gs_login_section" style="display:none">
-                            Please <a href="{$basepath}/gs/auth">follow this link to log in (or register an account) to GenomeSpace</a>
+                            Please <a href="{$basepath}/gs/auth">login to (or register an account at) GenomeSpace</a> first.
                         </div>
                         <div id="gs_upload_section" style="display:none">
                             <div id="gs_upload_prompt">You have successfully logged in to GenomeSpace, <span id="gs_auth_username"/>. Please select files to upload:</div>
@@ -88,7 +88,7 @@
                                 </xsl:for-each>
                             </div>
                             <div id="gs_warning" style="display:none">Warning! Target directory <span id="gs_target_dir"/> already exists in GenomeSpace.<br/>
-                                Uploaded files will be overwritten whilst all other files in target directory will remain untouched.</div>
+                                The files you are about to upload will be overwritten if present in the directory whilst all other files will remain unchanged.</div>
                             <div id="gs_upload_button">
                                 <div id="gs_progress_status"/>
                                 <div id="gs_upload_form">
