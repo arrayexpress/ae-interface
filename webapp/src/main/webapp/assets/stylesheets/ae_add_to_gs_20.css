@@ -68,20 +68,28 @@
     float: right;
 }
 
-.file_dev {
-    height: 16px;
+.file_div {
+    position: relative;
 }
 
 .file_div label {
-    width: 100px;
+    width: auto;
     margin: 0 10px;
 }
 
 .file_progress {
-    float: right;
+    position: absolute;
+    top: 0;
+    _top: 3px;
+    right: 3px;
+    _right: 24px;
     height: 16px;
     width: 16px;
-    margin: 0 5px 0 0;
+    margin: 0 0 0 0;
+}
+
+#gs_upload_submit {
+    font-size: 11px;
 }
 
 .in_progress {

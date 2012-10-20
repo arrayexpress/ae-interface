@@ -19,27 +19,33 @@
     if($ == undefined)
         throw "jQuery not loaded";
 
-    $.gsUserInfo = null;
+    $.gsUserName = null;
+    $.gsToken = null;
     $.accession = null;
     $.gsTargetDir = null;
 
     function
-    gsLoggedIn( gsUserName )
+    gsLoggedIn( gsUserName, gsToken )
     {
         $("#gs_auth_username").html(gsUserName);
         $("#gs_login_section").hide();
         $("#gs_upload_section").show();
 
-        $.when(retrieveGSUserInformation()).then( function(json) {
-            $.gsUserInfo = json;
+        if ($.browser.msie) {
+            $.gsToken = gsToken;
             checkGSTargetDirectory();
-        });
+        } else {
+            $.when(retrieveGSUserInformation()).then( function(json) {
+                $.gsToken = json.token;
+                checkGSTargetDirectory();
+            });
+        }
     }
 
     function
     gsLoggedOut()
     {
-        $.gsUserInfo = null;
+        $.gsToken = null;
 
         $("#gs_auth_status").html("");
         $("#gs_login_section").show();
@@ -49,12 +55,22 @@
     function
     checkIfLoggedToGS( onLoggedInFunc, onLoggedOutFunc )
     {
-        $.ajax({
-            url : "https://identity.genomespace.org/identityServer/usermanagement/utility/token/username"
-            , xhrFields: { withCredentials: true }
-            , success : onLoggedInFunc
-            , error : onLoggedOutFunc
-        });
+        if ($.browser.msie) {
+            var userName = $.cookie("gs-username");
+            var token = $.cookie("gs-token");
+            if (null != userName && null != token) {
+                onLoggedInFunc(userName, token);
+            } else {
+                onLoggedOutFunc();
+            }
+        } else {
+            $.ajax({
+                url : "https://identity.genomespace.org/identityServer/usermanagement/utility/token/username"
+                , xhrFields: { withCredentials: true }
+                , success : onLoggedInFunc
+                , error : onLoggedOutFunc
+            });
+        }
     }
 
     function
@@ -90,14 +106,14 @@
             url : contextPath + "/gs/upload"
             , data: { action: "checkDirectory"
                 , accession: $.accession
-                , token: $.gsUserInfo.token
+                , token: $.gsToken
             }
             , dataType: "json"
             , success : function(json) {
                 if (null != json) {
                     if ("exists" == json.status ) {
                         $.gsTargetDir = json.target;
-                        $("#gs_target_dir").html("ArrayExpress/" + $.accession);
+                        $("#gs_target_dir").html("/ArrayExpress/" + $.accession);
                         $("#gs_warning").show();
                     }
                 }
@@ -116,7 +132,7 @@
                 , accession: $.accession
                 , filename: fileName
                 , target:  $.gsTargetDir
-                , token: $.gsUserInfo.token
+                , token: $.gsToken
             }
             , dataType: "json"
             , success : dfr.resolve
@@ -136,7 +152,7 @@
             url : contextPath + "/gs/upload"
             , data: { action: "createDirectory"
                 , accession: $.accession
-                , token: $.gsUserInfo.token
+                , token: $.gsToken
             }
             , dataType: "json"
             , success : dfr.resolve
@@ -171,7 +187,7 @@
             if (counter > 1) {
                 $.progressStatus.html("Upload completed. Please <a href='https://gsui.genomespace.org/jsui/gsui.html'>follow this link to open GenomeSpace UI</a>.");
             } else {
-                $.progressStatus.html("&#160;");
+                $.progressStatus.html("");
             }
             reEnableForm();
         }
