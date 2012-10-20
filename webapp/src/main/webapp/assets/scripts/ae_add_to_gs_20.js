@@ -113,7 +113,7 @@
                 if (null != json) {
                     if ("exists" == json.status ) {
                         $.gsTargetDir = json.target;
-                        $("#gs_target_dir").html("/ArrayExpress/" + $.accession);
+                        $("#gs_target_dir").html(json.target);
                         $("#gs_warning").show();
                     }
                 }
