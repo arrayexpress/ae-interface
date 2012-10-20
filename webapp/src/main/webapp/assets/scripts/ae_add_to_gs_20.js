@@ -169,7 +169,7 @@
         if (0 != $check.length) {
             if ($check.prop("checked")) {
                 var fileName = $("#file_" + counter + "_name").val();
-                $.progressStatus.html("Sending " + fileName + " to GenomeSpace...");
+                $.progressStatus.html("Uploading " + fileName + " to GenomeSpace...");
                 $check.prop("disabled", true);
                 $("#file_" + counter + "_progress").addClass("in_progress");
                 $.when(gsUploadFile(fileName)).then(function() {
