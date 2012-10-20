@@ -90,7 +90,7 @@
                             <div id="gs_warning" style="display:none">Warning! Target directory <span id="gs_target_dir"/> already exists in GenomeSpace.<br/>
                                 The files you are about to upload will be overwritten if present in the directory whilst all other files will remain unchanged.</div>
                             <div id="gs_upload_button">
-                                <div id="gs_progress_status"/>
+                                <div id="gs_progress_status">&#160;</div>
                                 <div id="gs_upload_form">
                                     <form name="upload_form" action="" onsubmit="return false">
                                         <input id="ae_accession" type="hidden" name="ae_accession" value="{$vAccession}"/>
