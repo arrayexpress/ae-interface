@@ -1003,7 +1003,10 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = $pKind]"/>
         <xsl:variable name="vImg">
             <xsl:choose>
-                <xsl:when test="$pKind = 'raw' and seqdatauri">
+                <xsl:when test="$pKind = 'raw' and fn:contains(seqdatauri, '/ega/')">
+                    <img src="{$pBasePath}/assets/images/data_link_ega.gif" width="16" height="16" alt="Link to EGA study"/>
+                </xsl:when>
+                <xsl:when test="$pKind = 'raw' and fn:contains(seqdatauri, '/ena/')">
                     <img src="{$pBasePath}/assets/images/data_link_ena.gif" width="23" height="16" alt="Link to sequence data"/>
                 </xsl:when>
                 <xsl:when test="$pKind = 'raw' and contains($vFiles[1]/@dataformat, 'CEL')">
