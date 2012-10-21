@@ -95,7 +95,7 @@
             <xsl:if test="seqdatauri">
                 <seqdatauri>
                     <xsl:choose>
-                        <xsl:when test="count(seqdatauri > 1)  and contains(seqdatauri[1], '/ena/')">
+                        <xsl:when test="count(seqdatauri) > 1  and contains(seqdatauri[1], '/ena/')">
                             <xsl:for-each select="seqdatauri">
                                 <xsl:choose>
                                     <xsl:when test="fn:position() = 1">
