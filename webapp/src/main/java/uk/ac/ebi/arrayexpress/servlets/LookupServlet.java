@@ -77,29 +77,29 @@ public class LookupServlet extends ApplicationServlet
         response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
 
         // Output goes to the response PrintWriter.
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             Experiments experiments = (Experiments)getComponent("Experiments");
             Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
             Ontologies ontologies = (Ontologies)getComponent("Ontologies");
-            if (type.equals("arrays")) {
+            if ("arrays".equals(type) && null != experiments) {
                 out.print(experiments.getArrays());
-            } else if (type.equals("species")) {
+            } else if ("species".equals(type) && null != experiments) {
                 out.print(experiments.getSpecies());
-            } else if (type.equals("expdesign")) {
+            } else if ("expdesign".equals(type) && null != ontologies) {
                 out.print(ontologies.getAssayByMoleculeOptions());
-            } else if (type.equals("exptech")) {
+            } else if ("exptech".equals(type) && null != ontologies) {
                 out.print(ontologies.getAssayByInstrumentOptions());
-            } else if (type.equals("keywords")) {
+            } else if ("keywords".equals(type) && null != autocompletion) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(autocompletion.getKeywords(query, field, limit));
-            } else if (type.equals("efotree")) {
+            } else if ("efotree".equals(type) && null != autocompletion) {
                 out.print(autocompletion.getEfoChildren(efoId));
+            } else {
+                logger.error("Action [{}] is not supported", type);
             }
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
-        out.close();
     }
 }
 
