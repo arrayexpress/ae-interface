@@ -366,7 +366,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 }
             }
 
-            this.logger.debug("Accelerators updated");
+            this.logger.debug("Maps updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

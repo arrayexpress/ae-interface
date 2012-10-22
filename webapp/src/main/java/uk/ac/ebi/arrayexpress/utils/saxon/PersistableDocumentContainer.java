@@ -83,7 +83,7 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         Long total = null;
         try {
             SaxonEngine saxon = (SaxonEngine)Application.getAppComponent("SaxonEngine");
-                    total = (Long)saxon.evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+            total = (Long)saxon.evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
         } catch (XPathException x)
         {
             logger.debug("Caught an exception:", x);

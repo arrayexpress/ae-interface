@@ -232,6 +232,20 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return xpe.evaluateSingle(node);
     }
 
+    public String evaluateXPathSingleAsString(NodeInfo node, String xpath) throws XPathException
+    {
+        Object e = evaluateXPathSingle(node, xpath);
+        if (null == e) {
+            return null;
+        } else if (e instanceof Item) {
+            return ((Item)e).getStringValue();
+        } else if (e instanceof String ) {
+            return (String)e;
+        } else {
+            throw new XPathException("Conversion from [" + e.getClass() + "] to String was not implemented");
+        }
+    }
+
     public boolean transformToWriter( Source srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws Exception
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));

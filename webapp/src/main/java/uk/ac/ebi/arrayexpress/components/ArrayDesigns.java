@@ -145,15 +145,15 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         try {
             List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
 
-            XPathExpression accessionXpe = saxon.getXPathExpression("accession");
-            XPathExpression legacyIdXpe = saxon.getXPathExpression("legacy_id");
             XPathExpression userIdXpe = saxon.getXPathExpression("user/@id");
             for (Object node : documentNodes) {
 
                 try {
                     NodeInfo array = (NodeInfo)node;
-                    String accession = ((Item)accessionXpe.evaluateSingle(array)).getStringValue();
-                    String legacyId = ((Item)legacyIdXpe.evaluateSingle(array)).getStringValue();
+
+                    String accession = saxon.evaluateXPathSingleAsString(array, "accession");
+                    String legacyId = saxon.evaluateXPathSingleAsString(array, "legacy_id");
+
                     if (null != legacyId) {
                         maps.setMappedValue(MAP_ARRAY_LEGACY_ID, accession, legacyId);
                     }
@@ -170,7 +170,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
                 }
             }
 
-            this.logger.debug("Accelerators updated");
+            this.logger.debug("Maps updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

@@ -174,22 +174,18 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     public boolean isPrivilegedByName( String name ) throws Exception
     {
-        Object isPrivilegedNode = this.saxon.evaluateXPathSingle(
+        return  (Boolean)saxon.evaluateXPathSingle(
                 getDocument()
                 , "(/users/user[name = \"" + name.replaceAll("\"", "&quot;") + "\"]/is_privileged = true())"
         );
-
-        return (Boolean)isPrivilegedNode;
     }
 
     public boolean isPrivilegedByID( String id ) throws Exception
     {
-        Object isPrivilegedNode = this.saxon.evaluateXPathSingle(
+        return (Boolean)saxon.evaluateXPathSingle(
                 getDocument()
                 , "(/users/user[id = \"" + id + "\"]/is_privileged = true())"
         );
-
-        return (Boolean)isPrivilegedNode;
     }
 
     public List<String> getUserIDs( String username ) throws Exception

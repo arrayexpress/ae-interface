@@ -18,7 +18,6 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
@@ -134,8 +133,8 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
                 try {
                     // get all the expressions taken care of
-                    String accession = (String)saxon.evaluateXPathSingle((NodeInfo)node, "@accession cast as xs:string");
-                    String folderKind = (String)saxon.evaluateXPathSingle((NodeInfo)node, "@kind cast as xs:string");
+                    String accession = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@accession");
+                    String folderKind = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@kind");
                     maps.setMappedValue(MAP_FOLDER, accession, node);
                     //todo: remove redundancy here
                     if ("experiment".equals(folderKind)) {
@@ -146,7 +145,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
                     this.logger.error("Caught an exception:", x);
                 }
             }
-            this.logger.debug("Accelerators updated");
+            this.logger.debug("Maps updated");
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
@@ -209,15 +208,15 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
         try {
             if (null != accession && accession.length() > 0) {
-                folderLocation = ((Item)this.saxon.evaluateXPathSingle(
+                folderLocation = this.saxon.evaluateXPathSingleAsString(
                         getDocument()
                         , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
-                )).getStringValue();
+                );
             } else {
-                folderLocation = ((Item)this.saxon.evaluateXPathSingle(
+                folderLocation = this.saxon.evaluateXPathSingleAsString(
                         getDocument()
                         , "//folder[file/@name = '" + name + "']/@location"
-                )).getStringValue();
+                );
             }
         } catch ( XPathException x ) {
             logger.error("Caught an exception:", x);
@@ -239,9 +238,9 @@ public class Files extends ApplicationComponent implements IDocumentSource
             return null;
         }
 
-        return ((Item)this.saxon.evaluateXPathSingle(
+        return this.saxon.evaluateXPathSingleAsString(
                 getDocument()
                 , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
-        )).getStringValue();
+        );
     }
 }
