@@ -44,10 +44,10 @@
             </xsl:for-each>
 
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('raw-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="ae:getMappedValue('raw-files', $vAccession) &gt; 0"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="ae:getMappedValue('fgem-files', $vAccession) &gt; 0"/>
             </fgemdatafiles>
 
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
