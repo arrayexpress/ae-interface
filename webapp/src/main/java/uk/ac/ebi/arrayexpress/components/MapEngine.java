@@ -68,7 +68,7 @@ public class MapEngine extends ApplicationComponent
             if (null != map && map.containsKey(mapKey)) {
                 return map.getValue(mapKey);
             } else {
-                logger.debug("Map [{}] has no value for key [{}]", mapName, mapKey);
+                //logger.debug("Map [{}] has no value for key [{}]", mapName, mapKey);
             }
         } else {
             logger.error("Accessed map [{}] which was not registered", mapName);

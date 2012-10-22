@@ -3,7 +3,6 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,8 +143,6 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
 
         try {
             List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
-
-            XPathExpression userIdXpe = saxon.getXPathExpression("user/@id");
             for (Object node : documentNodes) {
 
                 try {
@@ -157,7 +154,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
                     if (null != legacyId) {
                         maps.setMappedValue(MAP_ARRAY_LEGACY_ID, accession, legacyId);
                     }
-                    List<Object> userIds = userIdXpe.evaluate(array);
+                    List<Object> userIds = saxon.evaluateXPath(array, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> stringSet = new HashSet<>(userIds.size());
                         for (Object userId : userIds) {

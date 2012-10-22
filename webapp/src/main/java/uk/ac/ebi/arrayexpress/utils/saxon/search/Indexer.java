@@ -19,7 +19,6 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -34,9 +33,7 @@ import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Indexer
@@ -46,8 +43,6 @@ public class Indexer
 
     private IndexEnvironment env;
     private SaxonEngine saxon;
-
-    private Map<String, XPathExpression> fieldXpe = new HashMap<>();
 
     public Indexer( IndexEnvironment env, SaxonEngine saxon )
     {
@@ -63,10 +58,6 @@ public class Indexer
             List documentNodes = saxon.evaluateXPath(document, this.env.indexDocumentPath);
             indexedNodes = new ArrayList<>(documentNodes.size());
 
-            for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
-                fieldXpe.put(field.name, saxon.getXPathExpression(field.path));
-            }
-
             IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer);
 
             for (Object node : documentNodes) {
@@ -75,7 +66,7 @@ public class Indexer
                 // get all the fields taken care of
                 for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
                     try {
-                        List<Object> values = fieldXpe.get(field.name).evaluate((NodeInfo)node);
+                        List<Object> values = saxon.evaluateXPath((NodeInfo)node, field.path);
                         for (Object v : values) {
                             if ("integer".equals(field.type)) {
                                 addIntIndexField(d, field.name, v);

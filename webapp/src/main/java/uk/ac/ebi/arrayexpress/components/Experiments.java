@@ -20,7 +20,6 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -298,10 +297,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         try {
             List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/experiments/experiment[source/@visible = 'true']");
 
-            XPathExpression accessionXpe = saxon.getXPathExpression("accession");
-            XPathExpression protocolIdXpe = saxon.getXPathExpression("protocol/id");
-            XPathExpression arrayAccXpe = saxon.getXPathExpression("arraydesign/accession");
-            XPathExpression userIdXpe = saxon.getXPathExpression("user/@id");
             // todo: move this to similarity component
             // XPathExpression similarXpe = saxon.getXPathExpression("similarto");
             // XPathExpression simAccessionXpe = saxon.getXPathExpression("@accession cast as xs:string");
@@ -310,9 +305,9 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 try {
                     NodeInfo exp = (NodeInfo)node;
 
-                    String accession = ((Item)accessionXpe.evaluateSingle(exp)).getStringValue();
+                    String accession = saxon.evaluateXPathSingleAsString(exp, "accession");
                     maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
-                    List<Object> userIds = userIdXpe.evaluate(exp);
+                    List<Object> userIds = saxon.evaluateXPath(exp, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> stringSet = new HashSet<>(userIds.size());
                         for (Object userId : userIds) {
@@ -321,7 +316,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                         users.setUserMapping(INDEX_ID, accession, stringSet);
                     }
 
-                    List<Object> protocolIds = protocolIdXpe.evaluate(exp);
+                    List<Object> protocolIds = saxon.evaluateXPath(exp, "protocol/id");
                     if (null != protocolIds) {
                         for (Object protocolId : protocolIds) {
                             String id = ((Item)protocolId).getStringValue();
@@ -334,7 +329,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             experimentsForProtocol.add(accession);
                         }
                     }
-                    List<Object> arrayAccessions = arrayAccXpe.evaluate(exp);
+                    List<Object> arrayAccessions = saxon.evaluateXPath(exp, "arraydesign/accession");
                     if (null != arrayAccessions) {
                         for (Object arrayAccession : arrayAccessions) {
                             String arrayAcc = ((Item)arrayAccession).getStringValue();

@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.LRUMap;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
@@ -46,6 +47,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private XPathEvaluator xPathEvaluator;
     private Map<String, Templates> templatesCache = new Hashtable<>();
     private Map<String, IDocumentSource> documentSources = new Hashtable<>();
+    private Map<String, XPathExpression> xPathExpMap = Collections.synchronizedMap(new LRUMap<String, XPathExpression>(100));
 
     private DocumentInfo appDocument;
 
@@ -213,9 +216,16 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return config.buildDocument(new StreamSource(stream));
     }
 
-    public XPathExpression getXPathExpression( String xpath ) throws XPathException
+
+    private XPathExpression getXPathExpression( String xpath ) throws XPathException
     {
-        return xPathEvaluator.createExpression(xpath);
+        if (xPathExpMap.containsKey(xpath)) {
+            return xPathExpMap.get(xpath);
+        } else {
+            XPathExpression xpe = xPathEvaluator.createExpression(xpath);
+            xPathExpMap.put(xpath, xpe);
+            return xpe;
+        }
     }
 
     public List<Object> evaluateXPath( NodeInfo node, String xpath ) throws XPathException
