@@ -85,7 +85,7 @@
     
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
-    <xsl:variable name="vDataFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+    <xsl:variable name="vDataFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
     
     <xsl:output omit-xml-declaration="yes" method="html"
         indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>

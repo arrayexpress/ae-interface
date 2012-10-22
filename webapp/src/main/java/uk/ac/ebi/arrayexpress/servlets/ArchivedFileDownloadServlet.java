@@ -21,8 +21,8 @@ import de.schlichtherle.util.zip.ZipEntry;
 import de.schlichtherle.util.zip.ZipFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Files;
+import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
@@ -144,7 +144,7 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
 
         logger.info("Requested download of [{}] from archive [{}],  accession [" + accession + "]", fileName, archName);
         Files files = (Files) getComponent("Files");
-        Experiments experiments = (Experiments) getComponent("Experiments");
+        Users users = (Users) getComponent("Users");
 
         try {
 
@@ -170,12 +170,12 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
                                     + "] were not determined");
                 }
 
-                if (!(null != userIDs && (0 == userIDs.size() || experiments.isAccessible(accession, userIDs)))) {
+                if (!(null != userIDs && (0 == userIDs.size() || users.isAccessible(accession, userIDs)))) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     throw new DownloadServletException(
-                            "The experiment ["
+                            "Data from ["
                                     + accession
-                                    + "] is not accessible for user id(s) ["
+                                    + "] is not accessible for the user with id(s) ["
                                     + StringTools.arrayToString(userIDs.toArray(new String[userIDs.size()]), ", ")
                                     + "]"
                     );

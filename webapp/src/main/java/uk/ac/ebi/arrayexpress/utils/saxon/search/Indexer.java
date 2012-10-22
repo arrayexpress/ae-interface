@@ -19,7 +19,8 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.xpath.XPathEvaluator;
+import net.sf.saxon.sxpath.XPathExpression;
+import net.sf.saxon.trans.XPathException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -28,12 +29,9 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,12 +45,14 @@ public class Indexer
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private IndexEnvironment env;
+    private SaxonEngine saxon;
 
-    private Map<String, XPathExpression> fieldXpe = new HashMap<String, XPathExpression>();
+    private Map<String, XPathExpression> fieldXpe = new HashMap<>();
 
-    public Indexer( IndexEnvironment env )
+    public Indexer( IndexEnvironment env, SaxonEngine saxon )
     {
         this.env = env;
+        this.saxon = saxon;
     }
 
     public List<NodeInfo> index( DocumentInfo document )
@@ -60,13 +60,11 @@ public class Indexer
         List<NodeInfo> indexedNodes = null;
 
         try {
-            XPath xp = new XPathEvaluator(document.getConfiguration());
-            XPathExpression xpe = xp.compile(this.env.indexDocumentPath);
-            List documentNodes = (List)xpe.evaluate(document, XPathConstants.NODESET);
-            indexedNodes = new ArrayList<NodeInfo>(documentNodes.size());
+            List documentNodes = saxon.evaluateXPath(document, this.env.indexDocumentPath);
+            indexedNodes = new ArrayList<>(documentNodes.size());
 
             for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
-                fieldXpe.put(field.name, xp.compile(field.path));
+                fieldXpe.put(field.name, saxon.getXPathExpression(field.path));
             }
 
             IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer);
@@ -77,7 +75,7 @@ public class Indexer
                 // get all the fields taken care of
                 for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
                     try {
-                        List values = (List)fieldXpe.get(field.name).evaluate(node, XPathConstants.NODESET);
+                        List<Object> values = fieldXpe.get(field.name).evaluate((NodeInfo)node);
                         for (Object v : values) {
                             if ("integer".equals(field.type)) {
                                 addIntIndexField(d, field.name, v);
@@ -90,7 +88,7 @@ public class Indexer
                                 addIndexField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
                             }
                         }
-                    } catch (XPathExpressionException x) {
+                    } catch (XPathException x) {
                         logger.error("Caught an exception while indexing expression [" + field.path + "] for document [" + ((NodeInfo)node).getStringValue().substring(0, 20) + "...]", x);
                     }
                 }

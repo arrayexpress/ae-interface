@@ -56,7 +56,7 @@
                                                 <xsl:value-of select="accession"/>
                                             </a>
                                             <xsl:text> </xsl:text>
-                                            <xsl:variable name="v2Experiment" select="ae:getAcceleratorValue('visible-experiments', accession)"/>
+                                            <xsl:variable name="v2Experiment" select="ae:getMappedValue('visible-experiments', accession)"/>
                                             <xsl:value-of select="$v2Experiment/name"/>
                                             <br/><br/>
                                         </span>
@@ -70,7 +70,7 @@
                                             <xsl:value-of select="accession"/>
                                         </a>
                                         <xsl:text> </xsl:text>
-                                        <xsl:variable name="v2Experiment" select="ae:getAcceleratorValue('visible-experiments', accession)"/>
+                                        <xsl:variable name="v2Experiment" select="ae:getMappedValue('visible-experiments', accession)"/>
                                         <xsl:value-of select="$v2Experiment/name"/>
                                         <br/> <br/>
                                     </xsl:for-each>

@@ -59,7 +59,7 @@
             <xsl:variable name="vAccession" select="accession"/>
             <experiment>
                 <accession><xsl:value-of select="$vAccession"/></accession>
-                <xsl:variable name="vExpFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+                <xsl:variable name="vExpFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
                 <xsl:for-each select="$vExpFolder/file">
                     <xsl:call-template name="file-for-accession">
                         <xsl:with-param name="pAccession" select="$vAccession"/>
@@ -69,7 +69,7 @@
                 <xsl:for-each select="arraydesign">
                     <xsl:sort select="accession" order="ascending"/>
                     <xsl:variable name="vArrAccession" select="string(accession)"/>
-                    <xsl:variable name="vArrFolder" select="ae:getAcceleratorValue('ftp-folder', $vArrAccession)"/>
+                    <xsl:variable name="vArrFolder" select="ae:getMappedValue('ftp-folder', $vArrAccession)"/>
     
                     <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
                         <xsl:call-template name="file-for-accession">

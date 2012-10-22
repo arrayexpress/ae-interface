@@ -18,13 +18,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.persistence.Persistable;
-
-import javax.xml.xpath.XPathExpressionException;
 
 // TODO - check XML version on persistence events
 
@@ -81,15 +80,16 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         if (null == getDocument())
             return true;
 
-        String total = null;
+        Long total = null;
         try {
-             total = ((SaxonEngine)Application.getAppComponent("SaxonEngine")).evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
-        } catch (XPathExpressionException x)
+            SaxonEngine saxon = (SaxonEngine)Application.getAppComponent("SaxonEngine");
+                    total = (Long)saxon.evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+        } catch (XPathException x)
         {
             logger.debug("Caught an exception:", x);
         }
 
-        return (null == total || total.equals("0"));
+        return (null == total || 0 == total);
     }
 
     private void createDocument()

@@ -106,7 +106,7 @@
         <xsl:param name="pTo"/>
         <xsl:variable name="vExpId" select="id" as="xs:string"/>
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
@@ -114,7 +114,7 @@
                 <td class="{$vDetailedViewMainTdClass} col_relevance">
                     <xsl:if test="$vSimilarToAccession != ''">
                         <div class="relevance_bar_holder">
-                                <xsl:if test="ae:getAcceleratorValue('experiments-with-similarity', $vSimilarToAccession)/accession = $vAccession">
+                                <xsl:if test="ae:getMappedValue('experiments-with-similarity', $vSimilarToAccession)/accession = $vAccession">
                                     <xsl:value-of select="similarto[@accession = $vSimilarToAccession]/@distance"/>
                                 </xsl:if>
                             <div class="relevance_bar"/>

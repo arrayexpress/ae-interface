@@ -18,7 +18,9 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.xpath.XPathEvaluator;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -26,12 +28,7 @@ import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -41,10 +38,15 @@ public class Files extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final String MAP_FOLDER = "ftp-folder";
+    private final String MAP_RAW_FILES = "raw-files";
+    private final String MAP_PROCESSED_FILES = "fgem-files";
+
     private String rootFolder;
     private FilePersistence<PersistableDocumentContainer> document;
     private String lastReloadMessage = "";
 
+    private MapEngine maps;
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -56,6 +58,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
+        this.maps = (MapEngine) getComponent("MapEngine");
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
 
@@ -63,6 +66,10 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 new PersistableDocumentContainer("files"),
                 new File(getPreferences().getString("ae.files.persistence-location"))
         );
+
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_FOLDER));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_RAW_FILES));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_PROCESSED_FILES));
 
         updateIndex();
         updateAccelerators();
@@ -113,35 +120,29 @@ public class Files extends ApplicationComponent implements IDocumentSource
     
     private void updateAccelerators()
     {
-        this.logger.debug("Updating accelerators for files");
+        this.logger.debug("Updating maps for files");
 
-        ExtFunctions.clearAccelerator("ftp-folder");
-        ExtFunctions.clearAccelerator("raw-files");
-        ExtFunctions.clearAccelerator("fgem-files");
+        maps.clearMap(MAP_FOLDER);
+        maps.clearMap(MAP_RAW_FILES);
+        maps.clearMap(MAP_PROCESSED_FILES);
 
         try {
             DocumentInfo doc = getDocument();
-            XPath xp = new XPathEvaluator(doc.getConfiguration());
-            XPathExpression xpe = xp.compile("/files/folder");
-            List documentNodes = (List) xpe.evaluate(doc, XPathConstants.NODESET);
+            List<Object> documentNodes = saxon.evaluateXPath(doc, "/files/folder");
 
-            XPathExpression accessionXpe = xp.compile("@accession");
-            XPathExpression folderKindXpe = xp.compile("@kind");
-            XPathExpression rawFilePresentXpe = xp.compile("count(file[@kind = 'raw'])");
-            XPathExpression fgemFilePresentXpe = xp.compile("count(file[@kind = 'fgem'])");
             for (Object node : documentNodes) {
 
                 try {
                     // get all the expressions taken care of
-                    String accession = accessionXpe.evaluate(node);
-                    String folderKind = folderKindXpe.evaluate(node);
-                    ExtFunctions.addAcceleratorValue("ftp-folder", accession, node);
+                    String accession = (String)saxon.evaluateXPathSingle((NodeInfo)node, "@accession cast as xs:string");
+                    String folderKind = (String)saxon.evaluateXPathSingle((NodeInfo)node, "@kind cast as xs:string");
+                    maps.setMappedValue(MAP_FOLDER, accession, node);
                     //todo: remove redundancy here
                     if ("experiment".equals(folderKind)) {
-                        ExtFunctions.addAcceleratorValue("raw-files", accession, rawFilePresentXpe.evaluate(node));
-                        ExtFunctions.addAcceleratorValue("fgem-files", accession, fgemFilePresentXpe.evaluate(node));
+                        maps.setMappedValue(MAP_RAW_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'raw'])"));
+                        maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'fgem'])"));
                     }
-                } catch (XPathExpressionException x) {
+                } catch (XPathException x) {
                     this.logger.error("Caught an exception:", x);
                 }
             }
@@ -184,21 +185,17 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
         try {
             if (null != accession && accession.length() > 0) {
-                result = Boolean.parseBoolean(
-                        this.saxon.evaluateXPathSingle(
-                                getDocument()
-                                , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
-                        )
+                result = (Boolean)this.saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                 );
             } else {
-                result = Boolean.parseBoolean(
-                        this.saxon.evaluateXPathSingle(
-                                getDocument()
-                                , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
-                        )
+                result = (Boolean)this.saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                 );
             }
-        } catch ( XPathExpressionException x ) {
+        } catch ( XPathException x ) {
             logger.error("Caught an exception:", x);
         }
 
@@ -212,17 +209,17 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
         try {
             if (null != accession && accession.length() > 0) {
-                folderLocation = this.saxon.evaluateXPathSingle(
+                folderLocation = ((Item)this.saxon.evaluateXPathSingle(
                         getDocument()
                         , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
-                );
+                )).getStringValue();
             } else {
-                folderLocation = this.saxon.evaluateXPathSingle(
+                folderLocation = ((Item)this.saxon.evaluateXPathSingle(
                         getDocument()
                         , "//folder[file/@name = '" + name + "']/@location"
-                );
+                )).getStringValue();
             }
-        } catch ( XPathExpressionException x ) {
+        } catch ( XPathException x ) {
             logger.error("Caught an exception:", x);
         }
 
@@ -242,9 +239,9 @@ public class Files extends ApplicationComponent implements IDocumentSource
             return null;
         }
 
-        return this.saxon.evaluateXPathSingle(
+        return ((Item)this.saxon.evaluateXPathSingle(
                 getDocument()
                 , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
-        );
+        )).getStringValue();
     }
 }

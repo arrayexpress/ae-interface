@@ -104,7 +104,7 @@
     </xsl:template>
 
     <xsl:template match="experiment">
-        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
 
         <div id="ae_experiment_content">
             <div class="ae_detail">

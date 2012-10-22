@@ -202,7 +202,7 @@
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
 
-        <xsl:variable name="vExperiment" select="ae:getAcceleratorValue('visible-experiments', $pAccession)"/>
+        <xsl:variable name="vExperiment" select="ae:getMappedValue('visible-experiments', $pAccession)"/>
         <xsl:attribute name="dataformat" select="ae:getDataFormat($vExperiment/bioassaydatagroup, $pKind)"/>
     </xsl:template>
 </xsl:stylesheet>

@@ -95,7 +95,7 @@
         <xsl:param name="pTo"/>
         <xsl:variable name="vExpId" select="id" as="xs:string"/>
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">

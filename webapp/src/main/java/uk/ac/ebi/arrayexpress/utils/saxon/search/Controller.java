@@ -25,6 +25,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,8 +41,9 @@ public class Controller
     private IQueryConstructor queryConstructor;
     private IQueryExpander queryExpander;
     private IQueryHighlighter queryHighlighter;
+    private SaxonEngine saxon;
 
-    private Map<String, IndexEnvironment> environment = new HashMap<String, IndexEnvironment>();
+    private Map<String, IndexEnvironment> environment = new HashMap<>();
 
     public Controller( URL configFile )
     {
@@ -72,6 +74,11 @@ public class Controller
         this.queryHighlighter = queryHighlighter;
     }
 
+    public void setXPathEngine( SaxonEngine saxon )
+    {
+        this.saxon = saxon;
+    }
+
     public boolean hasIndexDefined( String indexId )
     {
         return this.environment.containsKey(indexId);
@@ -91,7 +98,7 @@ public class Controller
         this.logger.info("Started indexing for index id [{}]", indexId);
         getEnvironment(indexId).putDocumentInfo(
                 document.hashCode()
-                , new Indexer(getEnvironment(indexId)).index(document)
+                , new Indexer(getEnvironment(indexId), saxon).index(document)
         );
         this.logger.info("Indexing for index id [{}] completed", indexId);
     }
@@ -101,7 +108,7 @@ public class Controller
         IndexEnvironment env = getEnvironment(indexId);
         if (!env.doesFieldExist(fieldName)) {
             this.logger.error("Field [{}] for index id [{}] does not exist, returning empty list");
-            return new ArrayList<String>();
+            return new ArrayList<>();
         } else {
             return new Querier(env).getTerms(fieldName, minFreq);
         }

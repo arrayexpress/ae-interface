@@ -18,14 +18,15 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.om.ValueRepresentation;
-import net.sf.saxon.xpath.XPathEvaluator;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.sxpath.XPathExpression;
+import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
@@ -33,12 +34,7 @@ import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -52,15 +48,23 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final RegexHelper ARRAY_ACCESSION_REGEX = new RegexHelper("^[aA]-\\w{4}-\\d+$", "");
+    private final String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
+    private final String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
+    private final String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
+    private final String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
+
+    // todo: move this to similarity component
+    // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";
 
     private FilePersistence<PersistableDocumentContainer> document;
     private FilePersistence<PersistableStringList> experimentsInAtlas;
     private FilePersistence<PersistableString> species;
     private FilePersistence<PersistableString> arrays;
 
+    private MapEngine maps;
     private SaxonEngine saxon;
     private SearchEngine search;
+    private Users users;
     private Events events;
     private Autocompletion autocompletion;
 
@@ -144,8 +148,10 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     public void initialize() throws Exception
     {
+        this.maps = (MapEngine) getComponent("MapEngine");
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
+        this.users = (Users) getComponent("Users");
         this.events = (Events) getComponent("Events");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
@@ -170,8 +176,17 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 , new File(getPreferences().getString("ae.arrays.dropdown-html-location"))
         );
 
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_IN_ATLAS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));
+        users.registerUserMap(new MapEngine.SimpleValueMap(INDEX_ID));
+
+        // todo: move this to similarity component
+        // maps.registerMap(new SimpleValueMap(MAP_EXPERIMENTS_WITH_SIMILARITY));
+
         updateIndex();
-        updateAccelerators();
+        updateMaps();
         this.saxon.registerDocumentSource(this);
     }
 
@@ -197,28 +212,10 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
             updateIndex();
-            updateAccelerators();
+            updateMaps();
         } else {
             this.logger.error("Experiments NOT updated, NULL document passed");
         }
-    }
-
-    public boolean isAccessible( String accession, List<String> userIds ) throws Exception
-    {
-        for (String userId : userIds) {
-            if ( "0".equals(userId)                         // superuser
-                || ARRAY_ACCESSION_REGEX.test(accession)    // todo: check array accessions against arrays
-                || Boolean.parseBoolean(                    // tests document for access
-                    saxon.evaluateXPathSingle(              //
-                            getDocument()                   //
-                            , "exists(/experiments/experiment[accession = '" + accession + "' and user/@id = '" + userId + "'])"
-                    )
-                )
-            ) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public String getSpecies() throws Exception
@@ -259,7 +256,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             String[] exps = result.split("\n");
             if (exps.length > 0) {
                 this.experimentsInAtlas.setObject(new PersistableStringList(Arrays.asList(exps)));
-                updateAccelerators();
+                updateAtlasMap();
                 this.logger.info("Stored GXA info, [{}] experiments listed", exps.length);
             } else {
                 this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
@@ -277,72 +274,94 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void updateAccelerators()
+    private void updateAtlasMap() throws IOException
     {
-        this.logger.debug("Updating accelerators for experiments");
+        maps.clearMap(MAP_EXPERIMENTS_IN_ATLAS);
+        for (String accession : experimentsInAtlas.getObject()) {
+            maps.setMappedValue(MAP_EXPERIMENTS_IN_ATLAS, accession, "1");
+        }
 
-        ExtFunctions.clearAccelerator("is-in-atlas");
-        ExtFunctions.clearAccelerator("visible-experiments");
-        ExtFunctions.clearAccelerator("experiments-for-protocol");
-        ExtFunctions.clearAccelerator("experiments-for-array");
-        ExtFunctions.clearAccelerator("experiments-with-similarity");
+    }
+    private void updateMaps() throws IOException
+    {
+        this.logger.debug("Updating maps for experiments");
+
+        updateAtlasMap();
+
+        maps.clearMap(MAP_VISIBLE_EXPERIMENTS);
+        maps.clearMap(MAP_EXPERIMENTS_FOR_PROTOCOL);
+        maps.clearMap(MAP_EXPERIMENTS_FOR_ARRAY);
+        users.clearUserMap(INDEX_ID);
+
+        // todo: move this to similarity component
+        // maps.clearMap(MAP_EXPERIMENTS_WITH_SIMILARITY);
         try {
-            for (String accession : this.experimentsInAtlas.getObject()) {
-                ExtFunctions.addAcceleratorValue("is-in-atlas", accession, "1");
-            }
+            List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/experiments/experiment[source/@visible = 'true']");
 
-            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
-            XPathExpression xpe = xp.compile("/experiments/experiment[source/@visible = 'true']");
-            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
+            XPathExpression accessionXpe = saxon.getXPathExpression("accession");
+            XPathExpression protocolIdXpe = saxon.getXPathExpression("protocol/id");
+            XPathExpression arrayAccXpe = saxon.getXPathExpression("arraydesign/accession");
+            XPathExpression userIdXpe = saxon.getXPathExpression("user/@id");
+            // todo: move this to similarity component
+            // XPathExpression similarXpe = saxon.getXPathExpression("similarto");
+            // XPathExpression simAccessionXpe = saxon.getXPathExpression("@accession cast as xs:string");
 
-            XPathExpression accessionXpe = xp.compile("accession");
-            XPathExpression protocolIdsXpe = xp.compile("protocol/id");
-            XPathExpression arrayAccXpe = xp.compile("arraydesign/accession");
-            XPathExpression similarXpe = xp.compile("similarto");
-            XPathExpression simAccessionXpe = xp.compile("@accession");
             for (Object node : documentNodes) {
-
                 try {
-                    // get all the expressions taken care of
-                    String accession = accessionXpe.evaluate(node);
-                    ExtFunctions.addAcceleratorValue("visible-experiments", accession, node);
-                    List protocolIds = (List)protocolIdsXpe.evaluate(node, XPathConstants.NODESET);
+                    NodeInfo exp = (NodeInfo)node;
+
+                    String accession = ((Item)accessionXpe.evaluateSingle(exp)).getStringValue();
+                    maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
+                    List<Object> userIds = userIdXpe.evaluate(exp);
+                    if (null != userIds && userIds.size() > 0) {
+                        Set<String> stringSet = new HashSet<>(userIds.size());
+                        for (Object userId : userIds) {
+                            stringSet.add(((Item)userId).getStringValue());
+                        }
+                        users.setUserMapping(INDEX_ID, accession, stringSet);
+                    }
+
+                    List<Object> protocolIds = protocolIdXpe.evaluate(exp);
                     if (null != protocolIds) {
                         for (Object protocolId : protocolIds) {
-                            String id = ((ValueRepresentation)protocolId).getStringValue();
-                            Set<String> experimentsForProtocol = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-protocol", id);
+                            String id = ((Item)protocolId).getStringValue();
+                            @SuppressWarnings("unchecked")
+                            Set<String> experimentsForProtocol = (Set<String>)maps.getMappedValue(MAP_EXPERIMENTS_FOR_PROTOCOL, id);
                             if (null == experimentsForProtocol) {
                                 experimentsForProtocol = new HashSet<>();
-                                ExtFunctions.addAcceleratorValue("experiments-for-protocol", id, experimentsForProtocol);
+                                maps.setMappedValue(MAP_EXPERIMENTS_FOR_PROTOCOL, id, experimentsForProtocol);
                             }
                             experimentsForProtocol.add(accession);
                         }
                     }
-                    List arrayAccessions = (List)arrayAccXpe.evaluate(node, XPathConstants.NODESET);
+                    List<Object> arrayAccessions = arrayAccXpe.evaluate(exp);
                     if (null != arrayAccessions) {
                         for (Object arrayAccession : arrayAccessions) {
-                            String arrayAcc = ((ValueRepresentation)arrayAccession).getStringValue();
-                            Set<String> experimentsForArray = (Set<String>)ExtFunctions.getAcceleratorValue("experiments-for-array", arrayAcc);
+                            String arrayAcc = ((Item)arrayAccession).getStringValue();
+                            @SuppressWarnings("unchecked")
+                            Set<String> experimentsForArray = (Set<String>)maps.getMappedValue(MAP_EXPERIMENTS_FOR_ARRAY, arrayAcc);
                             if (null == experimentsForArray) {
                                 experimentsForArray = new HashSet<>();
-                                ExtFunctions.addAcceleratorValue("experiments-for-array", arrayAcc, experimentsForArray);
+                                maps.setMappedValue(MAP_EXPERIMENTS_FOR_ARRAY, arrayAcc, experimentsForArray);
                             }
                             experimentsForArray.add(accession);
                         }
                     }
-                    List similarityAccessions = (List)similarXpe.evaluate(node, XPathConstants.NODESET);
-                    if (null != similarityAccessions) {
-                        for ( Object similarTo : similarityAccessions ) {
-                            String simAccession = simAccessionXpe.evaluate(similarTo);
-                            Set<Object> experimentsWithSimilarity = (Set<Object>)ExtFunctions.getAcceleratorValue("experiments-with-similarity", simAccession);
+                    /* todo: move this to similarity component
+                    List<Object> similarToElements = similarXpe.evaluate(exp);
+                    if (null != similarToElements) {
+                        for ( Object similarTo : similarToElements ) {
+                            String simAccession = (String)simAccessionXpe.evaluateSingle((NodeInfo)similarTo);
+                            Set<Object> experimentsWithSimilarity = (Set<Object>)maps.getMappedValue(MAP_EXPERIMENTS_WITH_SIMILARITY, simAccession);
                             if (null == experimentsWithSimilarity) {
                                 experimentsWithSimilarity = new HashSet<>();
-                                ExtFunctions.addAcceleratorValue("experiments-with-similarity", simAccession, experimentsWithSimilarity);
+                                maps.setMappedValue(MAP_EXPERIMENTS_WITH_SIMILARITY, simAccession, experimentsWithSimilarity);
                             }
                             experimentsWithSimilarity.add(node);
                         }
                     }
-                } catch (XPathExpressionException x) {
+                    */
+                } catch (XPathException x) {
                     this.logger.error("Caught an exception:", x);
                 }
             }

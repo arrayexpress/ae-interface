@@ -41,15 +41,16 @@ public class AEInterfaceApplication extends Application implements ServletContex
     {
         super("arrayexpress");
 
+        addComponent(new MapEngine());
         addComponent(new SaxonEngine());
         addComponent(new SearchEngine());
-        addComponent(new Events());
         addComponent(new Autocompletion());
         addComponent(new GenomeSpace());
+        addComponent(new Events());
+        addComponent(new Users());
         addComponent(new Experiments());
         addComponent(new ArrayDesigns());
         addComponent(new Protocols());
-        addComponent(new Users());
         addComponent(new Files());
         addComponent(new JobsController());
         addComponent(new Ontologies());

@@ -21,7 +21,7 @@
             <xsl:copy-of select="@* | *[name() != 'similarto']"/>
 
             <xsl:variable name="vAccession" select="accession"/>
-            <xsl:for-each select="ae:getAcceleratorValue('similar-experiments-reversed', $vAccession)">
+            <xsl:for-each select="ae:getMappedValue('similar-experiments-reversed', $vAccession)">
                 <xsl:variable name="vInnerAccession" select="accession"/>
                 <xsl:choose>
                     <!-- check if same experiment has ontology and pubmed score -->

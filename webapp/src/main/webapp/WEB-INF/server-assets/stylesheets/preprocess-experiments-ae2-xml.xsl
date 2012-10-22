@@ -25,7 +25,7 @@
         <experiment>
             <xsl:variable name="vAccession" select="accession"/>
 
-            <xsl:if test="ae:getAcceleratorValue('is-in-atlas', $vAccession)">
+            <xsl:if test="ae:getMappedValue('experiments-in-atlas', $vAccession)">
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
@@ -44,10 +44,10 @@
             </xsl:for-each>
 
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('raw-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('raw-files', $vAccession)) then 'true' else 'false'"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="if ('0' != ae:getAcceleratorValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
             </fgemdatafiles>
 
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
@@ -127,7 +127,7 @@
                     <xsl:value-of select="." />
                 </xsl:element>
             </xsl:for-each>
-            <xsl:copy-of select="ae:getAcceleratorValue('legacy-array-ids', @accession)"/>
+            <xsl:copy-of select="ae:getMappedValue('array-legacy-ids', @accession)"/>
         </arraydesign>
     </xsl:template>
 

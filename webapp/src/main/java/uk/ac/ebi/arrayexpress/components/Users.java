@@ -18,11 +18,10 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
@@ -33,14 +32,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Users extends ApplicationComponent implements IDocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final static String MAP_USERS_FOR_ACCESSION = "users-for-accession";
+
     private AuthenticationHelper authHelper;
     private FilePersistence<PersistableDocumentContainer> document;
+    private MapEngine.JointValueMap userMap;
+
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -64,37 +68,46 @@ public class Users extends ApplicationComponent implements IDocumentSource
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("users")
                 , new File(getPreferences().getString("ae.users.persistence-location"))
         );
+
+
+        this.userMap = new MapEngine.JointValueMap(MAP_USERS_FOR_ACCESSION);
+        ((MapEngine) getComponent("MapEngine")).registerMap(this.userMap);
 
         updateIndex();
         this.authHelper = new AuthenticationHelper();
         this.saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
 
     // implementation of IDocumentSource.getDocumentURI()
+    @Override
     public String getDocumentURI()
     {
         return "users.xml";
     }
 
     // implementation of IDocumentSource.getDocument()
+    @Override
     public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
+    @Override
     public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         if (null != doc) {
@@ -103,6 +116,43 @@ public class Users extends ApplicationComponent implements IDocumentSource
         } else {
             this.logger.error("User information NOT updated, NULL document passed");
         }
+    }
+
+    public void registerUserMap( MapEngine.IValueMap map )
+    {
+        this.userMap.addMap(map);
+    }
+
+    public void clearUserMap( String name )
+    {
+        MapEngine.IValueMap map = this.userMap.getMap(name);
+        if (null != map) {
+            map.clearValues();
+        } else {
+            logger.error("Map [{}] not found", name);
+        }
+    }
+
+    public void setUserMapping( String name, String accession, Object ids )
+    {
+        MapEngine.IValueMap map = this.userMap.getMap(name);
+        if (null != map) {
+            map.setValue(accession, ids);
+        } else {
+            logger.error("Map [{}] not found", name);
+        }
+    }
+
+
+    public boolean isAccessible( String accession, List<String> userIds ) throws Exception
+    {
+        @SuppressWarnings("unchecked")
+        Set<String> ids = (Set<String>)this.userMap.getValue(accession);
+        for (String userId : userIds) {
+            if (isPrivilegedByID(userId) || ids.contains(userId))
+                return true;
+        }
+        return false;
     }
 
     public void update( String xmlString, UserSource source ) throws Exception
@@ -122,19 +172,24 @@ public class Users extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public boolean isPrivileged( String username ) throws Exception
+    public boolean isPrivilegedByName( String name ) throws Exception
     {
-        List boolNodes = this.saxon.evaluateXPath(
-                        getDocument()
-                        , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/is_privileged"
-                );
+        Object isPrivilegedNode = this.saxon.evaluateXPathSingle(
+                getDocument()
+                , "(/users/user[name = \"" + name.replaceAll("\"", "&quot;") + "\"]/is_privileged = true())"
+        );
 
-        for (Object node : boolNodes ) {
-            if (StringTools.stringToBoolean(((NodeInfo)node).getStringValue())) {
-                return true;
-            }
-        }
-        return false;
+        return (Boolean)isPrivilegedNode;
+    }
+
+    public boolean isPrivilegedByID( String id ) throws Exception
+    {
+        Object isPrivilegedNode = this.saxon.evaluateXPathSingle(
+                getDocument()
+                , "(/users/user[id = \"" + id + "\"]/is_privileged = true())"
+        );
+
+        return (Boolean)isPrivilegedNode;
     }
 
     public List<String> getUserIDs( String username ) throws Exception
@@ -144,9 +199,9 @@ public class Users extends ApplicationComponent implements IDocumentSource
                         , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
                 );
 
-        ArrayList<String> ids = new ArrayList<String>(idNodes.size());
+        ArrayList<String> ids = new ArrayList<>(idNodes.size());
         for (Object node : idNodes ) {
-            ids.add(((NodeInfo)node).getStringValue());
+            ids.add(((Item)node).getStringValue());
         }
 
         return ids;
@@ -159,9 +214,9 @@ public class Users extends ApplicationComponent implements IDocumentSource
                 , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
         );
 
-        ArrayList<String> passwords = new ArrayList<String>(passwordNodes.size());
+        ArrayList<String> passwords = new ArrayList<>(passwordNodes.size());
         for (Object node : passwordNodes ) {
-            passwords.add(((NodeInfo)node).getStringValue());
+            passwords.add(((Item)node).getStringValue());
         }
 
         return passwords;

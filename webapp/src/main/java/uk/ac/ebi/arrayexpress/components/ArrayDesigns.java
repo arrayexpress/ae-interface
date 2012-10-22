@@ -1,7 +1,10 @@
 package uk.ac.ebi.arrayexpress.components;
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.xpath.XPathEvaluator;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.sxpath.XPathExpression;
+import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -9,15 +12,12 @@ import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -41,9 +41,14 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final String MAP_ARRAY_LEGACY_ID = "array-legacy-ids";
+
     private FilePersistence<PersistableDocumentContainer> document;
+
+    private MapEngine maps;
     private SaxonEngine saxon;
     private SearchEngine search;
+    private Users users;
 
     public final String INDEX_ID = "arrays";
     
@@ -67,16 +72,21 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
 
     public void initialize() throws Exception
     {
+        this.maps = (MapEngine) getComponent("MapEngine");
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
+        this.users = (Users) getComponent("Users");
         
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("array_designs")
                 , new File(getPreferences().getString("ae.arrays.persistence-location"))
         );
 
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_ARRAY_LEGACY_ID));
+        users.registerUserMap(new MapEngine.SimpleValueMap(INDEX_ID));
+
         updateIndex();
-        updateAccelerators();
+        updateMaps();
         this.saxon.registerDocumentSource(this);
     }
 
@@ -102,7 +112,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
             updateIndex();
-            updateAccelerators();
+            updateMaps();
         } else {
             this.logger.error("Array designs NOT updated, NULL document passed");
         }
@@ -125,28 +135,37 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         }
     }
 
-    private void updateAccelerators()
+    private void updateMaps()
     {
-        this.logger.debug("Updating accelerators for arrays");
+        this.logger.debug("Updating maps for arrays");
 
-        ExtFunctions.clearAccelerator("legacy-array-ids");
+        maps.clearMap(MAP_ARRAY_LEGACY_ID);
+        users.clearUserMap(INDEX_ID);
+
         try {
-            XPath xp = new XPathEvaluator(getDocument().getConfiguration());
-            XPathExpression xpe = xp.compile("/array_designs/array_design[@visible = 'true']");
-            List documentNodes = (List) xpe.evaluate(getDocument(), XPathConstants.NODESET);
+            List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
 
-            XPathExpression accessionXpe = xp.compile("accession");
-            XPathExpression legacyIdsXpe = xp.compile("legacy_id");
+            XPathExpression accessionXpe = saxon.getXPathExpression("accession");
+            XPathExpression legacyIdXpe = saxon.getXPathExpression("legacy_id");
+            XPathExpression userIdXpe = saxon.getXPathExpression("user/@id");
             for (Object node : documentNodes) {
 
                 try {
-                    // get all the expressions taken care of
-                    String accession = accessionXpe.evaluate(node);
-                    List legacyIds = (List)legacyIdsXpe.evaluate(node, XPathConstants.NODESET);
-                    if (null != legacyIds) {
-                        ExtFunctions.addAcceleratorValue("legacy-array-ids", accession, legacyIds);
+                    NodeInfo array = (NodeInfo)node;
+                    String accession = ((Item)accessionXpe.evaluateSingle(array)).getStringValue();
+                    String legacyId = ((Item)legacyIdXpe.evaluateSingle(array)).getStringValue();
+                    if (null != legacyId) {
+                        maps.setMappedValue(MAP_ARRAY_LEGACY_ID, accession, legacyId);
                     }
-                } catch (XPathExpressionException x) {
+                    List<Object> userIds = userIdXpe.evaluate(array);
+                    if (null != userIds && userIds.size() > 0) {
+                        Set<String> stringSet = new HashSet<>(userIds.size());
+                        for (Object userId : userIds) {
+                            stringSet.add(((Item)userId).getStringValue());
+                        }
+                        users.setUserMapping(INDEX_ID, accession, stringSet);
+                    }
+                } catch (XPathException x) {
                     this.logger.error("Caught an exception:", x);
                 }
             }

@@ -65,7 +65,7 @@
         <xsl:choose>
             <xsl:when test="not($vBrowseMode)">
                 <xsl:variable name="vAccession" select="upper-case($accession)"/>
-                <xsl:variable name="vFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+                <xsl:variable name="vFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
                 <xsl:variable name="vFolderKind" select="$vFolder/@kind"/>
                 <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
                 <xsl:choose>
@@ -92,7 +92,7 @@
                                         <xsl:sort select="accession" order="ascending"/>
                                         <xsl:variable name="vArrAccession" select="string(accession)"/>
                                         <xsl:if test="matches($vArrAccession, '^[aA]-\w{4}-\d+$')">
-                                            <xsl:variable name="vArrFolder" select="ae:getAcceleratorValue('ftp-folder', $vArrAccession)"/>
+                                            <xsl:variable name="vArrFolder" select="ae:getMappedValue('ftp-folder', $vArrAccession)"/>
                                             <xsl:variable name="vArrMetaData" select="search:queryIndex('arrays', concat('visible:true accession:', $vArrAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
                                             <xsl:choose>
                                                 <xsl:when test="exists($vArrMetaData)">
@@ -135,138 +135,112 @@
                             <xsl:text> > </xsl:text>
                             <a href="{$basepath}/files">Files</a>
                         </div>
-                        <xsl:choose>
-                            <xsl:when test="not($userid)">
-                                <xsl:variable name="vFilteredFiles" select="search:queryIndex($queryid)"/>
-                                <xsl:variable name="vTotal" select="count($vFilteredFiles)"/>
 
-                                <xsl:variable name="vFrom" as="xs:integer">
-                                    <xsl:choose>
-                                        <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
-                                        <xsl:when test="$vTotal = 0">0</xsl:when>
-                                        <xsl:otherwise>1</xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:variable>
-                                <xsl:variable name="vTo" as="xs:integer">
-                                    <xsl:choose>
-                                        <xsl:when test="( $vFrom + $vPageSize - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
-                                        <xsl:otherwise><xsl:value-of select="$vFrom + $vPageSize - 1"/></xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:variable>
+                        <xsl:variable name="vFilteredFiles" select="search:queryIndex($queryid)"/>
+                        <xsl:variable name="vTotal" select="count($vFilteredFiles)"/>
 
-                                <div id="ae_query_box">
-                                    <form id="ae_query_form" method="get" action="browse.html">
-                                        <fieldset id="ae_keywords_fset">
-                                            <label for="ae_keywords_field">Filter by folder, name, kind, or extension [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
-                                            <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
-                                        </fieldset>
-                                        <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
-                                        <div id="ae_results_stats">
-                                            <div>
-                                                <xsl:value-of select="$vTotal"/>
-                                                <xsl:text> file</xsl:text>
-                                                <xsl:if test="$vTotal != 1">
-                                                    <xsl:text>s</xsl:text>
-                                                </xsl:if>
-                                                <xsl:text> found</xsl:text>
-                                                <xsl:if test="$vTotal > $vPageSize">
-                                                    <xsl:text>, displaying </xsl:text>
-                                                    <xsl:value-of select="$vFrom"/>
-                                                    <xsl:text> - </xsl:text>
-                                                    <xsl:value-of select="$vTo"/>
-                                                </xsl:if>
-                                                <xsl:text>.</xsl:text>
-                                            </div>
-                                            <xsl:if test="$vTotal > $vPageSize">
-                                                <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
-                                                <div id="ae_results_pager">
-                                                    <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
-                                                    <div id="page"><xsl:value-of select="$vPage"/></div>
-                                                    <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
-                                                </div>
-                                            </xsl:if>
+                        <xsl:variable name="vFrom" as="xs:integer">
+                            <xsl:choose>
+                                <xsl:when test="$vPage > 0"><xsl:value-of select="1 + ( $vPage - 1 ) * $vPageSize"/></xsl:when>
+                                <xsl:when test="$vTotal = 0">0</xsl:when>
+                                <xsl:otherwise>1</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="vTo" as="xs:integer">
+                            <xsl:choose>
+                                <xsl:when test="( $vFrom + $vPageSize - 1 ) > $vTotal"><xsl:value-of select="$vTotal"/></xsl:when>
+                                <xsl:otherwise><xsl:value-of select="$vFrom + $vPageSize - 1"/></xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+
+                        <div id="ae_query_box">
+                            <form id="ae_query_form" method="get" action="browse.html">
+                                <fieldset id="ae_keywords_fset">
+                                    <label for="ae_keywords_field">Filter by folder, name, kind, or extension [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
+                                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
+                                </fieldset>
+                                <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
+                                <div id="ae_results_stats">
+                                    <div>
+                                        <xsl:value-of select="$vTotal"/>
+                                        <xsl:text> file</xsl:text>
+                                        <xsl:if test="$vTotal != 1">
+                                            <xsl:text>s</xsl:text>
+                                        </xsl:if>
+                                        <xsl:text> found</xsl:text>
+                                        <xsl:if test="$vTotal > $vPageSize">
+                                            <xsl:text>, displaying </xsl:text>
+                                            <xsl:value-of select="$vFrom"/>
+                                            <xsl:text> - </xsl:text>
+                                            <xsl:value-of select="$vTo"/>
+                                        </xsl:if>
+                                        <xsl:text>.</xsl:text>
+                                    </div>
+                                    <xsl:if test="$vTotal > $vPageSize">
+                                        <xsl:variable name="vTotalPages" select="floor( ( $vTotal - 1 ) div $vPageSize ) + 1"/>
+                                        <div id="ae_results_pager">
+                                            <div id="total_pages"><xsl:value-of select="$vTotalPages"/></div>
+                                            <div id="page"><xsl:value-of select="$vPage"/></div>
+                                            <div id="page_size"><xsl:value-of select="$vPageSize"/></div>
                                         </div>
-                                    </form>
+                                    </xsl:if>
                                 </div>
-                                <xsl:choose>
-                                    <xsl:when test="$vTotal&gt;0">
-                                        <div id="ae_results_box">
-                                            <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="col_accession sortable">
-                                                            <xsl:text>Accession</xsl:text>
-                                                            <xsl:call-template name="add-sort">
-                                                                <xsl:with-param name="pKind" select="'accession'"/>
-                                                            </xsl:call-template>
-                                                        </th>
-                                                        <th class="col_name sortable">
-                                                            <xsl:text>Name</xsl:text>
-                                                            <xsl:call-template name="add-sort">
-                                                                <xsl:with-param name="pKind" select="'name'"/>
-                                                            </xsl:call-template>
-                                                        </th>
-                                                        <th class="col_size sortable">
-                                                            <xsl:text>Size</xsl:text>
-                                                            <xsl:call-template name="add-sort">
-                                                                <xsl:with-param name="pKind" select="'size'"/>
-                                                            </xsl:call-template>
-                                                        </th>
-                                                        <th class="col_lastmodified sortable">
-                                                            <xsl:text>Last modified</xsl:text>
-                                                            <xsl:call-template name="add-sort">
-                                                                <xsl:with-param name="pKind" select="'lastmodified'"/>
-                                                            </xsl:call-template>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <xsl:call-template name="ae-sort-files">
-                                                        <xsl:with-param name="pFiles" select="$vFilteredFiles"/>
-                                                        <xsl:with-param name="pFrom" select="$vFrom"/>
-                                                        <xsl:with-param name="pTo" select="$vTo"/>
-                                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                            </form>
+                        </div>
+                        <xsl:choose>
+                            <xsl:when test="$vTotal&gt;0">
+                                <div id="ae_results_box">
+                                    <table id="ae_results_table" border="0" cellpadding="0" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="col_accession sortable">
+                                                    <xsl:text>Accession</xsl:text>
+                                                    <xsl:call-template name="add-sort">
+                                                        <xsl:with-param name="pKind" select="'accession'"/>
                                                     </xsl:call-template>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:call-template name="block-warning">
-                                            <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
-                                            <xsl:with-param name="pMessage">
-                                                <xsl:text>There are no files matching your search criteria found in ArrayExpress Archive.</xsl:text>
-                                            </xsl:with-param>
-                                        </xsl:call-template>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:when>
-                            <xsl:when test="$userid = '1'">
-                                <div id="ae_login_box">
-                                    <div id="ae_login_title">Please login to access this page</div>
-                                    <form id="ae_login_form" method="get" action="." onsubmit="return false">
-                                        <fieldset id="ae_login_user_fset">
-                                            <label for="ae_user_field">User name</label>
-                                            <input id="ae_user_field" name="u" maxlength="50" class="ae_assign_font"/>
-                                        </fieldset>
-                                        <fieldset id="ae_login_pass_fset">
-                                            <label for="ae_pass_field">Password</label>
-                                            <input id="ae_pass_field" type="password" name="p" maxlength="50" class="ae_assign_font"/>
-                                        </fieldset>
-                                        <input id="ae_login_submit" type="submit" name="s" value="Log in"/>
-                                        <span>
-                                            <input id="ae_login_remember" name="r" type="checkbox"/>
-                                            <label for="ae_login_remember">Remember me</label>
-                                        </span>
-                                    </form>
-                                    <div id="ae_login_status"/>
+                                                </th>
+                                                <th class="col_name sortable">
+                                                    <xsl:text>Name</xsl:text>
+                                                    <xsl:call-template name="add-sort">
+                                                        <xsl:with-param name="pKind" select="'name'"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                                <th class="col_size sortable">
+                                                    <xsl:text>Size</xsl:text>
+                                                    <xsl:call-template name="add-sort">
+                                                        <xsl:with-param name="pKind" select="'size'"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                                <th class="col_lastmodified sortable">
+                                                    <xsl:text>Last modified</xsl:text>
+                                                    <xsl:call-template name="add-sort">
+                                                        <xsl:with-param name="pKind" select="'lastmodified'"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <xsl:call-template name="ae-sort-files">
+                                                <xsl:with-param name="pFiles" select="$vFilteredFiles"/>
+                                                <xsl:with-param name="pFrom" select="$vFrom"/>
+                                                <xsl:with-param name="pTo" select="$vTo"/>
+                                                <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                                <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                            </xsl:call-template>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:call-template name="block-access-restricted"/>
+                                <xsl:call-template name="block-warning">
+                                    <xsl:with-param name="pStyle" select="'ae_warn_area'"/>
+                                    <xsl:with-param name="pMessage">
+                                        <xsl:text>There are no files matching your search criteria found in ArrayExpress Archive.</xsl:text>
+                                    </xsl:with-param>
+                                </xsl:call-template>
                             </xsl:otherwise>
                         </xsl:choose>
+
                     </div>
                 </div>
             </xsl:otherwise>

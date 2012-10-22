@@ -29,13 +29,15 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Value;
+import uk.ac.ebi.arrayexpress.app.Application;
+import uk.ac.ebi.arrayexpress.components.MapEngine;
 
-public class GetAcceleratorValueFunction extends ExtensionFunctionDefinition
+public class GetMappedValueFunction extends ExtensionFunctionDefinition
 {
-    private static final long serialVersionUID = 5507446309416498174L;
+    private static final long serialVersionUID = 4695269638102509735L;
 
     private static final StructuredQName qName =
-            new StructuredQName("", NamespaceConstant.AE_EXT, "getAcceleratorValue");
+            new StructuredQName("", NamespaceConstant.AE_EXT, "getMappedValue");
 
     public StructuredQName getFunctionQName()
     {
@@ -64,20 +66,29 @@ public class GetAcceleratorValueFunction extends ExtensionFunctionDefinition
 
     public ExtensionFunctionCall makeCallExpression()
     {
-        return new GetAcceleratorValueCall();
+        return new GetMappedValueCall();
     }
 
-    private static class GetAcceleratorValueCall extends ExtensionFunctionCall
+    private static class GetMappedValueCall extends ExtensionFunctionCall
     {
-        private static final long serialVersionUID = -4826080754394968349L;
+        private static final long serialVersionUID = -1342342397189997194L;
+
+        private MapEngine mapEngine;
+
+        public GetMappedValueCall()
+        {
+            mapEngine = (MapEngine) Application.getAppComponent("MapEngine");
+        }
 
         public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
         {
-            // to do: redevelop accelerators as a part of search engine;
-            // or make them a separate component with configuration
-            String acceleratorName = arguments[0].next().getStringValue();
-            String key = arguments[1].next().getStringValue();
-            Object value = ExtFunctions.getAcceleratorValue(acceleratorName, key);
+            if (null == mapEngine) {
+                return EmptyIterator.emptyIterator();
+            }
+
+            String mapName = arguments[0].next().getStringValue();
+            String mapKey = arguments[1].next().getStringValue();
+            Object value = mapEngine.getMappedValue(mapName, mapKey);
             if (null == value) {
                 return EmptyIterator.emptyIterator();
             } else {

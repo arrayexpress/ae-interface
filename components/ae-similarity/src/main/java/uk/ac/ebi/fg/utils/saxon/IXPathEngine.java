@@ -18,9 +18,9 @@ package uk.ac.ebi.fg.utils.saxon;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
 
-import javax.xml.xpath.XPathExpressionException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -30,5 +30,5 @@ public interface IXPathEngine
 
     DocumentInfo buildDocument( InputStream stream ) throws XPathException;
 
-    List evaluateXPath( DocumentInfo document, String xPath ) throws XPathExpressionException;
+    List evaluateXPath( NodeInfo node, String xPath ) throws XPathException;
 }

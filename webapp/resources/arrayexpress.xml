@@ -255,6 +255,7 @@
                 <field name="name" title="by File Name" type="string" path="@name" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="kind" title="by Kind" type="string" path="@kind" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="extension" title="by Extension" type="string" path="@extension" analyze="true" store="false" escape="false" expand="false"/>
+                <field name="userid" type="string" path="ae:getMappedValue('users-for-accession', ../@accession)" analyze="false" store="false" escape="false" expand="false"/>
             </document>
         </index>
         <index id="users" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer">

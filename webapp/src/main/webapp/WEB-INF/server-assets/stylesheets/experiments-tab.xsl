@@ -92,7 +92,7 @@
     <xsl:template name="list-data">
         <xsl:param name="pKind"/>
         <xsl:param name="pAccession"/>
-        <xsl:variable name="vFilesOfAKind" select="ae:getAcceleratorValue('ftp-folder', $pAccession)/file[@kind = $pKind]"/>
+        <xsl:variable name="vFilesOfAKind" select="ae:getMappedValue('ftp-folder', $pAccession)/file[@kind = $pKind]"/>
         <xsl:choose>
             <xsl:when test="count($vFilesOfAKind) > 1">
                 <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>?kind=<xsl:value-of select="$pKind"/>

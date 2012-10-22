@@ -25,9 +25,12 @@ import net.sf.saxon.expr.instruct.TerminationException;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.sxpath.IndependentContext;
+import net.sf.saxon.sxpath.XPathEvaluator;
+import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.tiny.TinyBuilder;
-import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
@@ -41,10 +44,6 @@ import uk.ac.ebi.fg.utils.saxon.IXPathEngine;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.net.URL;
 import java.util.Hashtable;
@@ -56,9 +55,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public TransformerFactoryImpl trFactory;
-    private Map<String, Templates> templatesCache = new Hashtable<String, Templates>();
-    private Map<String, IDocumentSource> documentSources = new Hashtable<String, IDocumentSource>();
+    private TransformerFactoryImpl trFactory;
+    private XPathEvaluator xPathEvaluator;
+    private Map<String, Templates> templatesCache = new Hashtable<>();
+    private Map<String, IDocumentSource> documentSources = new Hashtable<>();
 
     private DocumentInfo appDocument;
 
@@ -74,6 +74,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory = (TransformerFactoryImpl) TransformerFactoryImpl.newInstance();
         trFactory.setErrorListener(this);
         trFactory.setURIResolver(this);
+
         // TODO: study the impact of this change later
         //trFactory.getConfiguration().setTreeModel(Builder.TINY_TREE_CONDENSED);
 
@@ -87,9 +88,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         registerExtensionFunction(new ParseHTMLFunction());
         registerExtensionFunction(new SerializeXMLFunction());
         registerExtensionFunction(new TabularDocumentFunction());
-        registerExtensionFunction(new GetAcceleratorValueFunction());
+        registerExtensionFunction(new GetMappedValueFunction());
         registerExtensionFunction(new FormatFileSizeFunction());
         registerExtensionFunction(new TrimTrailingDotFunction());
+
+        xPathEvaluator = new XPathEvaluator(trFactory.getConfiguration());
+        IndependentContext namespaces = new IndependentContext(trFactory.getConfiguration());
+        namespaces.declareNamespace("ae", NamespaceConstant.AE_EXT);
+        xPathEvaluator.setNamespaceResolver(namespaces);
     }
 
     public void terminate() throws Exception
@@ -207,19 +213,23 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return config.buildDocument(new StreamSource(stream));
     }
 
-    public List evaluateXPath( DocumentInfo doc, String xpath ) throws XPathExpressionException
+    public XPathExpression getXPathExpression( String xpath ) throws XPathException
     {
-        XPath xp = new XPathEvaluator(trFactory.getConfiguration());
-        XPathExpression xpe = xp.compile(xpath);
-        Object o = xpe.evaluate(doc, XPathConstants.NODESET);
-        return (o instanceof List) ? (List)o : null;
+        return xPathEvaluator.createExpression(xpath);
     }
 
-    public String evaluateXPathSingle( DocumentInfo doc, String xpath ) throws XPathExpressionException
+    public List<Object> evaluateXPath( NodeInfo node, String xpath ) throws XPathException
     {
-        XPath xp = new XPathEvaluator(trFactory.getConfiguration());
-        XPathExpression xpe = xp.compile(xpath);
-        return xpe.evaluate(doc);
+        XPathExpression xpe = getXPathExpression(xpath);
+
+        return xpe.evaluate(node);
+    }
+
+    public Object evaluateXPathSingle( NodeInfo node, String xpath ) throws XPathException
+    {
+        XPathExpression xpe = getXPathExpression(xpath);
+
+        return xpe.evaluateSingle(node);
     }
 
     public boolean transformToWriter( Source srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws Exception
@@ -236,11 +246,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     public String transformToString( URL src, String stylesheet, Map<String, String[]> params ) throws Exception
     {
         String str;
-        InputStream inStream = null;
-        ByteArrayOutputStream outStream = null;
-        try {
-            inStream = src.openStream();
-            outStream = new ByteArrayOutputStream();
+
+        try (InputStream inStream = src.openStream(); ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             if (transform(new StreamSource(inStream), stylesheet, params, new StreamResult(outStream))) {
                 str = outStream.toString(XML_STRING_ENCODING);
                 outStream.close();
@@ -248,20 +255,14 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             } else {
                 return null;
             }
-        } finally {
-            if (null != inStream)
-                inStream.close();
-            if (null != outStream)
-                outStream.close();
         }
     }
 
     public String transformToString( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
     {
         String str;
-        ByteArrayOutputStream outStream = null;
-        try {
-            outStream = new ByteArrayOutputStream();
+
+        try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
 
             if (transform(source, stylesheet, params, new StreamResult(outStream))) {
                 str = outStream.toString(XML_STRING_ENCODING);
@@ -269,9 +270,6 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             } else {
                 return null;
             }
-        } finally {
-            if (null != outStream)
-                outStream.close();
         }
     }
 

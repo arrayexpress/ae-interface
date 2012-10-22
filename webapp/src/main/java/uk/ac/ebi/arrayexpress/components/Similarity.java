@@ -18,7 +18,6 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.xpath.XPathEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -29,18 +28,10 @@ import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.ExtFunctions;
 import uk.ac.ebi.fg.utils.ISimilarityComponent;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class Similarity extends ApplicationComponent implements IDocumentSource, ISimilarityComponent
 {
@@ -122,6 +113,7 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
 
     private void updateAccelerators()
     {
+        /* todo:
         this.logger.debug("Updating accelerators for similarity");
 
         ExtFunctions.clearAccelerator("similar-experiments");
@@ -159,6 +151,7 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
+        */
     }
 
     public void sendExceptionReport( String message, Throwable x )

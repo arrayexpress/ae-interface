@@ -197,7 +197,7 @@
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
-            <xsl:variable name="vArrFolder" select="ae:getAcceleratorValue('ftp-folder', accession)"/>
+            <xsl:variable name="vArrFolder" select="ae:getMappedValue('ftp-folder', accession)"/>
             <tr>
                 <xsl:if test="not($vBrowseMode)">
                     <xsl:attribute name="class">expanded</xsl:attribute>

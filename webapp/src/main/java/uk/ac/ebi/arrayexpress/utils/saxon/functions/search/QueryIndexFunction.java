@@ -122,7 +122,7 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
 
             }
             if (null != nodes) {
-                return new ListIterator<NodeInfo>(nodes);
+                return new ListIterator<>(nodes);
             } else {
                 return EmptyIterator.emptyIterator();
             }

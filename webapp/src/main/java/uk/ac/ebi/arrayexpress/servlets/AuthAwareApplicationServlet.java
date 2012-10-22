@@ -112,7 +112,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
                 if (null != userName) {
                     userName = URLDecoder.decode(userName, "UTF-8");
                 }
-                if (users.isPrivileged(userName)) {
+                if (users.isPrivilegedByName(userName)) {
                     return AE_UNRESTRICTED_ACCESS;
                 } else {
                     List<String> userIds = users.getUserIDs(userName);

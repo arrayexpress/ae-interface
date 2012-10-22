@@ -35,10 +35,11 @@ public class SearchEngine extends ApplicationComponent
 
     public void initialize() throws Exception
     {
+        SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
+
         this.controller = new Controller((HierarchicalConfiguration)getPreferences().getConfSubset("ae"));
         getController().setQueryConstructor(new BackwardsCompatibleQueryConstructor());
-
-        SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
+        getController().setXPathEngine(saxon);
         if (null != saxon) {
             saxon.registerExtensionFunction(new QueryIndexFunction(getController()));
             saxon.registerExtensionFunction(new HighlightQueryFunction(getController()));

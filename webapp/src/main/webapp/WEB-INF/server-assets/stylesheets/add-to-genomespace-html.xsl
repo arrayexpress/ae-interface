@@ -44,7 +44,7 @@
     </xsl:template>
 
     <xsl:template name="ae-contents">
-        <xsl:variable name="vFolder" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
         <xsl:choose>
             <xsl:when test="exists($vFolder) and exists($vMetaData)">

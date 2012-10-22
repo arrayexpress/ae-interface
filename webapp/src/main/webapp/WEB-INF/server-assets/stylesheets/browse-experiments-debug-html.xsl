@@ -94,7 +94,7 @@
         <xsl:param name="pTo"/>
         <xsl:variable name="vExpId" select="id" as="xs:string"/>
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="ae:getAcceleratorValue('ftp-folder', $vAccession)"/>
+        <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
@@ -216,7 +216,7 @@
                             <xsl:call-template name="exp-similarity-debug-section">
                                 <xsl:with-param name="vExpId" select="$vExpId"/>
                                 <xsl:with-param name="vBasePath" select="$basepath"/>
-                                <xsl:with-param name="vSimilarExperiments" select="ae:getAcceleratorValue('similar-experiments', $vAccession)"/>
+                                <xsl:with-param name="vSimilarExperiments" select="ae:getMappedValue('similar-experiments', $vAccession)"/>
                             </xsl:call-template>
 
                             <xsl:call-template name="exp-keywords-section">
