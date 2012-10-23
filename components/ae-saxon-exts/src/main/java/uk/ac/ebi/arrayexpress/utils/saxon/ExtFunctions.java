@@ -17,53 +17,11 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import net.sf.saxon.om.NodeInfo;
-
+@SuppressWarnings("unused")
 public class ExtFunctions
 {
-    public static String formatFileSize( long size )
+    public ExtFunctions()
     {
-        StringBuilder str = new StringBuilder();
-        if (922L > size) {
-            str.append(size).append(" B");
-        } else if (944128L > size) {
-            str.append(String.format("%.0f KB", (Long.valueOf(size).doubleValue() / 1024.0)));
-        } else if (1073741824L > size) {
-            str.append(String.format("%.1f MB", (Long.valueOf(size).doubleValue() / 1048576.0)));
-        } else if (1099511627776L > size) {
-            str.append(String.format("%.2f GB", (Long.valueOf(size).doubleValue() / 1073741824.0)));
-        }
-        return str.toString();
-    }
-
-    public static String trimTrailingDot( String str )
-    {
-        if (str.endsWith(".")) {
-            return str.substring(0, str.length() - 2);
-        } else
-            return str;
-    }
-
-    public synchronized static void clearAccelerator( String acceleratorName )
-    {
-    }
-
-    public synchronized static void addAcceleratorValue( String acceleratorName, String key, String value )
-    {
-    }
-
-    public synchronized static Object getAcceleratorValue( String acceleratorName, String key )
-    {
-        return "1";
-    }
-
-    public synchronized static String getAcceleratorValueAsString( String acceleratorName, String key )
-    {
-        return "1";
-    }
-
-    public synchronized static NodeInfo getAcceleratorValueAsSequence( String acceleratorName, String key )
-    {
-        return null;
+        throw new IllegalArgumentException("Not implemented!");
     }
 }

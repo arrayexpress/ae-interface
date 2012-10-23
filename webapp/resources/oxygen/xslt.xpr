@@ -10,6 +10,17 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String>preprocess-experiments-xml-ae2</String>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String>browse-experiments-html</String>
                                 </field>
                                 <field name="type">
@@ -17,17 +28,6 @@
                                 </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/add-similarity-experiments-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -552,6 +552,89 @@
                                     <null/>
                                 </field>
                                 <field name="name">
+                                    <String>preprocess-experiments-xml-ae2</String>
+                                </field>
+                                <field name="baseURL">
+                                    <String></String>
+                                </field>
+                                <field name="footerURL">
+                                    <String></String>
+                                </field>
+                                <field name="fOPMethod">
+                                    <String>pdf</String>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <String>Apache FOP</String>
+                                </field>
+                                <field name="headerURL">
+                                    <String></String>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>${currentFileURL}</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String>${pdu}/documents/sample-experiments-not-processed-ae2.xml</String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XML</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputFile">
+                                    <null/>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Saxon-PE</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </scenario>
+                            <scenario>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
                                     <String>ae-saxon-extensions</String>
                                 </field>
                                 <field name="baseURL">
@@ -627,9 +710,7 @@
                                     <String>Saxon-PE</String>
                                 </field>
                                 <field name="extensionURLs">
-                                    <String-array>
-                                        <String>${pdu}/../../../components/ae-saxon-exts/target/ae-saxon-exts-1.0.jar</String>
-                                    </String-array>
+                                    <String-array/>
                                 </field>
                             </scenario>
                             <scenario>
@@ -2263,91 +2344,6 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>preprocess-experiments-xml-ae2</String>
-                                </field>
-                                <field name="baseURL">
-                                    <String></String>
-                                </field>
-                                <field name="footerURL">
-                                    <String></String>
-                                </field>
-                                <field name="fOPMethod">
-                                    <String>pdf</String>
-                                </field>
-                                <field name="fOProcessorName">
-                                    <String>Apache FOP</String>
-                                </field>
-                                <field name="headerURL">
-                                    <String></String>
-                                </field>
-                                <field name="inputXSLURL">
-                                    <String>${currentFileURL}</String>
-                                </field>
-                                <field name="inputXMLURL">
-                                    <String>${pdu}/documents/sample-experiments-not-processed-ae2.xml</String>
-                                </field>
-                                <field name="defaultScenario">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="isFOPPerforming">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="saveAs">
-                                    <Boolean>true</Boolean>
-                                </field>
-                                <field name="openInBrowser">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="outputFile">
-                                    <null/>
-                                </field>
-                                <field name="openOtherLocationInBrowser">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="locationToOpenInBrowserURL">
-                                    <null/>
-                                </field>
-                                <field name="openInEditor">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInHTMLPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInXMLPane">
-                                    <Boolean>true</Boolean>
-                                </field>
-                                <field name="showInSVGPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInResultSetPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="useXSLTInput">
-                                    <Boolean>true</Boolean>
-                                </field>
-                                <field name="xsltParams">
-                                    <list/>
-                                </field>
-                                <field name="cascadingStylesheets">
-                                    <String-array/>
-                                </field>
-                                <field name="xslTransformer">
-                                    <String>Saxon-PE</String>
-                                </field>
-                                <field name="extensionURLs">
-                                    <String-array>
-                                        <String>${pdu}/../../../components/ae-saxon-exts/target/ae-saxon-exts-1.0.jar</String>
-                                    </String-array>
-                                </field>
-                            </scenario>
-                            <scenario>
-                                <field name="advancedOptionsMap">
-                                    <null/>
-                                </field>
-                                <field name="name">
                                     <String>preprocess-files-xml</String>
                                 </field>
                                 <field name="baseURL">
@@ -3173,6 +3169,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-date-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-extensions-stub.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-html-page.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-arrays.xsl"/>
