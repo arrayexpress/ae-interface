@@ -23,7 +23,7 @@ import uk.ac.ebi.arrayexpress.utils.saxon.functions.search.GetExperimentScoreFun
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.search.HighlightQueryFunction;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.search.QueryIndexFunction;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
-import uk.ac.ebi.arrayexpress.utils.search.BackwardsCompatibleQueryConstructor;
+import uk.ac.ebi.arrayexpress.utils.search.BatchQueryConstructor;
 
 public class SearchEngine extends ApplicationComponent
 {
@@ -38,7 +38,7 @@ public class SearchEngine extends ApplicationComponent
         SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
 
         this.controller = new Controller((HierarchicalConfiguration)getPreferences().getConfSubset("ae"));
-        getController().setQueryConstructor(new BackwardsCompatibleQueryConstructor());
+        getController().setQueryConstructor(new BatchQueryConstructor());
         getController().setXPathEngine(saxon);
         if (null != saxon) {
             saxon.registerExtensionFunction(new QueryIndexFunction(getController()));

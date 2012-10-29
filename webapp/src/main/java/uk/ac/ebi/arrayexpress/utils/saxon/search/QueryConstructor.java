@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class QueryConstructor implements IQueryConstructor
 {
+    @Override
     public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
     {
         BooleanQuery result = new BooleanQuery();
@@ -48,6 +49,7 @@ public class QueryConstructor implements IQueryConstructor
         return result;
     }
 
+    @Override
     public Query construct( IndexEnvironment env, String queryString ) throws ParseException
     {
         QueryParser parser = new EnhancedQueryParser(env, env.defaultField, env.indexAnalyzer);

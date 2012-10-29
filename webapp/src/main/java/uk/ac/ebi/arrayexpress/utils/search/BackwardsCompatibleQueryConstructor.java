@@ -5,7 +5,6 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.*;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.IQueryConstructor;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryConstructor;
 
@@ -28,17 +27,11 @@ import java.util.Map;
  *
  */
 
-public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
+public class BackwardsCompatibleQueryConstructor extends QueryConstructor
 {
-    private QueryConstructor originalConstructor;
+    private final static RegexHelper ACCESSION_REGEX = new RegexHelper("^[ae]-\\w{4}-\\d+$", "i");
 
-    private final RegexHelper ACCESSION_REGEX = new RegexHelper("^[aAeE]-\\w{4}-\\d+$", "i");
-
-    public BackwardsCompatibleQueryConstructor()
-    {
-        this.originalConstructor = new QueryConstructor();
-    }
-
+    @Override
     public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
     {
         if ("1".equals(StringTools.arrayToString(querySource.get("queryversion"), ""))) {
@@ -47,7 +40,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             // 2. if "wholewords" is "on" or "true" -> don't add *_*, otherwise add *_*
             BooleanQuery result = new BooleanQuery();
             String wholeWords = StringTools.arrayToString(querySource.get("wholewords"), "");
-            boolean useWildcards = (null == wholeWords ? false : !(StringTools.stringToBoolean(wholeWords)));
+            boolean useWildcards = (null != wholeWords && !(StringTools.stringToBoolean(wholeWords)));
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
                 String field = queryItem.getKey();
                 if (env.fields.containsKey(field) && queryItem.getValue().length > 0) {
@@ -70,7 +63,7 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
                                     for (String token : tokens) {
                                         // we use wildcards for keywords depending on "wholewords" switch,
                                         // *ALWAYS* for other fields, *NEVER* for user id and accession
-                                        Query q = -1 == " userid  accession ".indexOf(" " + field + " ") && (useWildcards || (-1 == " keywords ".indexOf(" " + field + " ")))
+                                        Query q = !" userid  accession ".contains(" " + field + " ") && (useWildcards || (!" keywords ".contains(" " + field + " ")))
                                                 ? new WildcardQuery(new Term(field, "*" + token + "*"))
                                                 : new TermQuery(new Term(field, token));
                                         result.add(q, BooleanClause.Occur.MUST);
@@ -84,12 +77,13 @@ public class BackwardsCompatibleQueryConstructor implements IQueryConstructor
             }
             return result;
         } else {
-            return this.originalConstructor.construct(env, querySource);
+            return super.construct(env, querySource);
         }
     }
 
+    @Override
     public Query construct( IndexEnvironment env, String queryString ) throws ParseException
     {
-        return this.originalConstructor.construct(env, queryString);
+        return super.construct(env, queryString);
     }
 }
