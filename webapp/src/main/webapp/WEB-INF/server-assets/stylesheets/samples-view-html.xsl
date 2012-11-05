@@ -32,7 +32,7 @@
     <xsl:variable name="vBaseUrl">http://<xsl:value-of select="$host"/><xsl:value-of select="$basepath"/></xsl:variable>
 
     <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
-    <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run', '\s*,\s*')"/>
+    <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,fastq_uri', '\s*,\s*')"/>
 
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
@@ -363,6 +363,7 @@
                     <xsl:choose>
                         <xsl:when test="$vFull"><xsl:value-of select="$vColInfo/@name"/></xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
+                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">FASTQ</xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data file'">Processed</xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
@@ -462,6 +463,18 @@
                                                         </xsl:choose>
                                                     </a>
                                                 </xsl:when>
+                                                <xsl:when test="($vColText) and ($vColText = $vArchive)">
+                                                    <a href="{$basepath}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                        <xsl:choose>
+                                                            <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
+                                                                <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <img src="{$basepath}/assets/images/silk_data_save.gif" width="16" height="16"/>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                    </a>
+                                                </xsl:when>
                                                 <xsl:otherwise>
                                                     <xsl:value-of select="$vColText"/>
                                                 </xsl:otherwise>
@@ -485,6 +498,12 @@
                                                     </a>
                                                 </xsl:if>
                                             </xsl:if>
+                                        </xsl:when>
+                                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
+                                            <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
+                                            <a href="{$vColText}" title="{$vFileName}">
+                                                <img src="{$basepath}/assets/images/ena_data_save.gif" width="16" height="16"/>
+                                            </a>
                                         </xsl:when>
                                     </xsl:choose>
                                 </xsl:when>
