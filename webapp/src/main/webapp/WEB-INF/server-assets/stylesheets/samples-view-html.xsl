@@ -474,6 +474,12 @@
                                                             </xsl:otherwise>
                                                         </xsl:choose>
                                                     </a>
+                                                    <xsl:if test="fn:ends-with($vColText, '.bam')">
+                                                        <xsl:call-template name="ensembl-link">
+                                                            <xsl:with-param name="pBAMFile" select="$vColText"/>
+                                                            <xsl:with-param name="pLocation" select="$pLocation"/>
+                                                        </xsl:call-template>
+                                                    </xsl:if>
                                                 </xsl:when>
                                                 <xsl:otherwise>
                                                     <xsl:value-of select="$vColText"/>
@@ -481,23 +487,15 @@
                                             </xsl:choose>
                                         </xsl:when>
                                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
-                                            <xsl:variable name="vAvailBAMs" select="$vData[@extension = 'bam']/@name"/>
                                             <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
-                                            <xsl:variable name="vAvailBAMProps" select="$vData[@extension = 'prop']/@name"/>
-                                            <xsl:variable name="vBAMPropFile" select="fn:concat($vBAMFile, '.prop')"/>
 
                                             <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
                                                 <img src="{$basepath}/assets/images/data_link_ena.gif" width="23" height="16"/>
                                             </a>
-                                            <xsl:if test="fn:index-of($vAvailBAMs, $vBAMFile) and fn:index-of($vAvailBAMProps, $vBAMPropFile)">
-                                                <xsl:variable name="vBAMProps" select="ae:tabularDocument(fn:concat($pLocation, '/', $vBAMPropFile, ''))/table/row[2]"/>
-                                                <xsl:if test="count($vBAMProps/col) = 3">
-                                                    <xsl:text> </xsl:text>
-                                                    <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$vBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
-                                                        <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
-                                                    </a>
-                                                </xsl:if>
-                                            </xsl:if>
+                                            <xsl:call-template name="ensembl-link">
+                                                <xsl:with-param name="pBAMFile" select="$vBAMFile"/>
+                                                <xsl:with-param name="pLocation" select="$pLocation"/>
+                                            </xsl:call-template>
                                         </xsl:when>
                                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
                                             <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
@@ -529,6 +527,27 @@
             </tr>
         </xsl:for-each>
     </xsl:template>
+
+    <xsl:template name="ensembl-link">
+        <xsl:param name="pBAMFile"/>
+        <xsl:param name="pLocation"/>
+
+        <xsl:variable name="vAvailBAMs" select="$vData[@extension = 'bam']/@name"/>
+        <xsl:variable name="vAvailBAMProps" select="$vData[@extension = 'prop']/@name"/>
+        <xsl:variable name="vBAMPropFile" select="fn:concat($pBAMFile, '.prop')"/>
+
+
+        <xsl:if test="fn:index-of($vAvailBAMs, $pBAMFile) and fn:index-of($vAvailBAMProps, $vBAMPropFile)">
+            <xsl:variable name="vBAMProps" select="ae:tabularDocument(fn:concat($pLocation, '/', $vBAMPropFile, ''))/table/row[2]"/>
+            <xsl:if test="count($vBAMProps/col) = 3">
+                <xsl:text> </xsl:text>
+                <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$pBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
+                    <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
+                </a>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="add-sort">
         <xsl:param name="pKind"/>
         <xsl:if test="$pKind = $vSortBy">
