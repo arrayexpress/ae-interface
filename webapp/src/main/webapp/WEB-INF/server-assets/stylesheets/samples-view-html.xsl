@@ -499,7 +499,7 @@
                                         </xsl:when>
                                         <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
                                             <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
-                                            <a href="{$vColText}" title="{$vFileName}">
+                                            <a href="{$vColText}" title="Click to download {$vFileName}">
                                                 <img src="{$basepath}/assets/images/ena_data_save.gif" width="16" height="16"/>
                                             </a>
                                         </xsl:when>
