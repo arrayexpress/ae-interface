@@ -1026,6 +1026,12 @@
                 <xsl:when test="$pKind = 'raw' and seqdatauri">
                     <xsl:value-of select="seqdatauri"/>
                 </xsl:when>
+                <xsl:when test="$vAccession = 'E-GEUV-1' and $pKind = 'fgem'">
+                    <xsl:value-of select="$pBasePath"/>
+                    <xsl:text>/files/</xsl:text>
+                    <xsl:value-of select="$vAccession"/>
+                    <xsl:text>?kind=bam</xsl:text>
+                </xsl:when>
                 <xsl:when test="count($vFiles) > 1">
                     <xsl:value-of select="$pBasePath"/>
                     <xsl:text>/files/</xsl:text>
@@ -1043,7 +1049,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="string-length($vLinkUrl)>0"><a href="{$vLinkUrl}"><xsl:copy-of select="$vImg"/></a></xsl:when>
+            <xsl:when test="string-length($vLinkUrl)>0"><a href="{$vLinkUrl}" title="{$vImg/img/@alt}"><xsl:copy-of select="$vImg"/></a></xsl:when>
             <xsl:otherwise><img src="{$pBasePath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
