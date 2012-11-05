@@ -440,7 +440,7 @@
 
                                             <xsl:choose>
                                                 <xsl:when test="($vColText) and (fn:index-of($vAvailArchives, $vArchive))">
-                                                    <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
                                                                 <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
@@ -452,7 +452,7 @@
                                                     </a>
                                                 </xsl:when>
                                                 <xsl:when test="($vColText) and count($vAvailArchives) = 1">
-                                                    <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                    <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
                                                                 <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
@@ -464,7 +464,7 @@
                                                     </a>
                                                 </xsl:when>
                                                 <xsl:when test="($vColText) and ($vColText = $vArchive)">
-                                                    <a href="{$basepath}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="{$vColText}">
+                                                    <a href="{$basepath}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
                                                                 <img src="{$basepath}/assets/images/silk_data_save_affy.gif" width="16" height="16"/>
@@ -541,7 +541,7 @@
             <xsl:variable name="vBAMProps" select="ae:tabularDocument(fn:concat($pLocation, '/', $vBAMPropFile, ''))/table/row[2]"/>
             <xsl:if test="count($vBAMProps/col) = 3">
                 <xsl:text> </xsl:text>
-                <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$pBAMFile};format=Bam" title="Click to add a track to Ensembl Genome Browser">
+                <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$vBaseUrl}/files/{$vAccession}/{$pBAMFile};format=Bam" title="Click to view {$pBAMFile} in Ensembl Genome Browser">
                     <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
                 </a>
             </xsl:if>
