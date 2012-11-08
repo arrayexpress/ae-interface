@@ -97,7 +97,7 @@
             <xsl:when test="fn:matches(fn:lower-case($vPath), '[.]eset[.]r$')">
                 <xsl:text>r-object</xsl:text>
             </xsl:when>
-            <xsl:when test="fn:matches($vPath, '[.]bam([.]bai)?$')">
+            <xsl:when test="fn:matches($vPath, '[.]bam$')">
                 <xsl:text>bam</xsl:text>
             </xsl:when>
             <xsl:otherwise>
