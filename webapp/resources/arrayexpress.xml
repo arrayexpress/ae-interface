@@ -193,6 +193,8 @@
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="private" type="boolean" path="not(user/@id = '1')"/>
+                <field name="raw" type="boolean" path="ae:getMappedValue('raw-files', ../@accession) > 0" />
+                <field name="processed" type="boolean" path="ae:getMappedValue('fgem-files', ../@accession) > 0" />
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="source/@id" analyze="false" store="false" escape="false" expand="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>
@@ -202,18 +204,12 @@
                 <!-- numeric fields -->
                 <field name="assaycount" title="Number of Assays" type="integer" path="(if (assays castable as xs:integer) then assays else 0) cast as xs:integer" />
                 <field name="samplecount" title="Number of Samples" type="integer" path="(if (samples castable as xs:integer) then samples else 0) cast as xs:integer" />
-                <field name="rawcount" type="integer" path="(if (rawdatafiles castable as xs:integer) then rawdatafiles else 0) cast as xs:integer" />
-                <field name="fgemcount" type="integer" path="(if (fgemdatafiles castable as xs:integer) then fgemdatafiles else 0) cast as xs:integer" />
                 <field name="efcount"  title="Number of Experimental Factors" type="integer" path="count(distinct-values(experimentalfactor/name, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
                 <field name="sacount" title="Number of Sample Attributes" type="integer" path="count(distinct-values(sampleattribute/category, 'http://saxon.sf.net/collation?ignore-case=yes'))" />
                 <field name="miamescore" title="MIAME Score" type="integer" path="(if (miamescores/overallscore castable as xs:integer) then miamescores/overallscore else 0) cast as xs:integer" />
                 <field name="minseqescore" title="MINSEQE Score" type="integer" path="(if (minseqescores/overallscore castable as xs:integer) then minseqescores/overallscore else 0) cast as xs:integer" />
-
                 <!-- internal filters -->
-                <field name="raw-ftp" type="boolean" path="rawdatafiles/@available = 'true'"/>
-                <field name="fgem-ftp" type="boolean" path="fgemdatafiles/@available = 'true'"/>
                 <field name="seq-uri" type="boolean" path="exists(seqdatauri)"/>
-
                 <field name="array-score" type="boolean" path="(miamescores/reportersequencescore = '1')"/>
                 <field name="protocol-score" type="boolean" path="(miamescores/protocolscore = '1') or (minseqescores/protocolscore = '1')"/>
                 <field name="ef-score" type="boolean" path="(miamescores/factorvaluescore = '1') or (minseqescores/factorvaluescore = '1')"/>
