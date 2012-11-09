@@ -18,8 +18,10 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.BooleanValue;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -130,10 +132,13 @@ public class Indexer
         Boolean boolValue = null;
         if (value instanceof Boolean) {
             boolValue = (Boolean)value;
-        } else if (null != value ) {
-            String stringValue = value.toString();
+        } else if (value instanceof BooleanValue) {
+            boolValue = ((BooleanValue)value).getBooleanValue();
+        } else if (value instanceof Item) {
+            String stringValue = ((Item)value).getStringValue();
             boolValue = StringTools.stringToBoolean(stringValue);
-            logger.warn("Not sure if I handle string value [{}] for the field [{}] correctly, relying on Object.toString()", stringValue, name);
+        } else {
+            logger.error("Cannot convert value of type [{}] for the field [{}] to boolean", value.getClass(), name);
         }
 
         document.add(new Field(name, null == boolValue ? "" : boolValue.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
