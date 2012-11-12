@@ -193,7 +193,7 @@
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="private" type="boolean" path="not(user/@id = '1')"/>
-                <field name="raw" type="boolean" path="(rawdatafiles/@available or exists(seqdatauri))" />
+                <field name="raw" type="boolean" path="(rawdatafiles/@available = true() or exists(seqdatauri))" />
                 <field name="processed" type="boolean" path="fgemdatafiles/@available" />
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="source/@id" analyze="false" store="false" escape="false" expand="false"/>
