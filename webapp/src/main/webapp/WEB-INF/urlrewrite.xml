@@ -552,4 +552,24 @@
         <to type="permanent-redirect">http://www.ebi.ac.uk/fg/submissions_overview.html</to>
     </rule>
 
+    <!-- hack for Ibrahim's tool -->
+    <rule>
+        <from>^/AEVisualCurate/main.jsp</from>
+        <to type="forward">/servlets/proxy/http://rachmaninoff.windows.ebi.ac.uk:8080/AEvisualCurate/main.jsp</to>
+    </rule>
+
+    <rule>
+        <from>^/AEVisualCurate/getPlotJSON.jsp</from>
+        <to type="forward">/servlets/proxy/http://rachmaninoff.windows.ebi.ac.uk:8080/AEvisualCurate/getPlotJSON.jsp</to>
+    </rule>
+
+    <rule>
+        <from>^/AEVisualCurate/plots.jsp</from>
+        <to type="forward">/servlets/proxy/http://rachmaninoff.windows.ebi.ac.uk:8080/AEvisualCurate/plots.jsp</to>
+    </rule>
+
+    <rule>
+        <from>^/AEVisualCurate/updateXML.jsp</from>
+        <to type="forward">/servlets/proxy/http://rachmaninoff.windows.ebi.ac.uk:8080/AEvisualCurate/updateXML.jsp</to>
+    </rule>
 </urlrewrite>
