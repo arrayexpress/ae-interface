@@ -34,6 +34,7 @@ public class UpdateOntologyJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         // check the version of EFO from update location; if newer, copy it
@@ -50,9 +51,7 @@ public class UpdateOntologyJob extends ApplicationJob
                 ) {
             // we have newer version, let's fetch it and copy it over to our working location
             logger.info("Updating EFO with version [{}]", version);
-            InputStream is = null;
-            try {
-                is = efoURI.toURL().openStream();
+            try (InputStream is = efoURI.toURL().openStream()) {
                 File efoFile = new File(getPreferences().getString("ae.efo.location"));
                 StringTools.stringToFile(StringTools.streamToString(is, "UTF-8"), efoFile, "UTF-8");
                 getApplication().sendEmail("EFO update",
@@ -62,10 +61,6 @@ public class UpdateOntologyJob extends ApplicationJob
                             + "Host [${variable.hostname}]" + StringTools.EOL
                 );
                 getController().executeJob("reload-efo");
-            } finally {
-                if ( null != is ) {
-                    is.close();
-                }
             }
             
         } else {

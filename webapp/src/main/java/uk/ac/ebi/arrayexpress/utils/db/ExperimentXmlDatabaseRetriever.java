@@ -85,7 +85,7 @@ public class ExperimentXmlDatabaseRetriever extends SqlStatementExecutor
                     experimentXml = new StringBuilder();
                     break;
                 }
-                Thread.sleep(1);
+                Thread.sleep(0);
             }
             logger.debug("Retrieval completed");
         } catch (InterruptedException x) {

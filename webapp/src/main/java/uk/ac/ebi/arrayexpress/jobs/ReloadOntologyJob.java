@@ -33,8 +33,7 @@ public class ReloadOntologyJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final static String EFO_FILE_ENCODING = "UTF-8";
-
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         // check if efo.owl is in temp folder; if it's not there, copy from source
@@ -42,27 +41,16 @@ public class ReloadOntologyJob extends ApplicationJob
         File efoFile = new File(efoLocation);
         if (!efoFile.exists()) {
             String efoBuiltinSource = getPreferences().getString("ae.efo.source");
-            InputStream is = null;
-            try {
-                is = getApplication().getResource(efoBuiltinSource).openStream();
+            try (InputStream is = getApplication().getResource(efoBuiltinSource).openStream()){
                 StringTools.stringToFile(StringTools.streamToString(is, "UTF-8"), efoFile, "UTF-8");
-            } finally {
-                if (null != is) {
-                    is.close();
-                }
             }
         }
         
         logger.info("Loading EFO ontology from [{}]", efoFile.getPath());
-        InputStream is = null;
-        try {
-            is = new FileInputStream(efoFile);
+
+        try (InputStream is = new FileInputStream(efoFile)){
             ((Ontologies)getComponent("Ontologies")).update(is);
             logger.info("EFO loading completed");
-        } finally {
-            if (null != is) {
-                is.close();
-            }
         }
     }
 }

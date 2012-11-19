@@ -39,6 +39,7 @@ public class Autocompletion extends ApplicationComponent
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.autocompleteStore = new AutocompleteStore();
@@ -47,6 +48,7 @@ public class Autocompletion extends ApplicationComponent
         this.search = (SearchEngine) getComponent("SearchEngine");
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }

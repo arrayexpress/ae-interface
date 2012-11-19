@@ -89,6 +89,7 @@ public class Ontologies extends ApplicationComponent
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.search = (SearchEngine) getComponent("SearchEngine");
@@ -100,6 +101,7 @@ public class Ontologies extends ApplicationComponent
         this.assayByInstrument = new EFOSubclassesOptions("All technologies");
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
@@ -146,16 +148,10 @@ public class Ontologies extends ApplicationComponent
     {
         String synFileLocation = getPreferences().getString("ae.efo.synonyms");
         if (null != synFileLocation) {
-            InputStream is = null;
-            try {
-                is = getApplication().getResource(synFileLocation).openStream();
+            try (InputStream is = getApplication().getResource(synFileLocation).openStream()) {
                 Map<String, Set<String>> synonyms = new SynonymsFileReader(new InputStreamReader(is)).readSynonyms();
                 this.lookupIndex.setCustomSynonyms(synonyms);
                 logger.debug("Loaded custom synonyms from [{}]", synFileLocation);
-            } finally {
-                if (null != is) {
-                    is.close();
-                }
             }
         }
     }
@@ -163,9 +159,7 @@ public class Ontologies extends ApplicationComponent
     public IEFO removeIgnoredClasses( IEFO efo, String ignoreListFileLocation ) throws IOException
     {
         if (null != ignoreListFileLocation) {
-            InputStream is = null;
-            try {
-                is = getApplication().getResource(ignoreListFileLocation).openStream();
+            try (InputStream is = getApplication().getResource(ignoreListFileLocation).openStream()) {
                 Set<String> ignoreList = StringTools.streamToStringSet(is, "UTF-8");
 
                 logger.debug("Loaded EFO ignored classes from [{}]", ignoreListFileLocation);
@@ -173,10 +167,6 @@ public class Ontologies extends ApplicationComponent
                     if (null != id && !"".equals(id) && !id.startsWith("#") && efo.getMap().containsKey(id)) {
                         removeEFONode(efo, id);
                     }
-                }
-            } finally {
-                if (null != is) {
-                    is.close();
                 }
             }
         }
@@ -210,7 +200,7 @@ public class Ontologies extends ApplicationComponent
 
     private void initLookupIndex() throws IOException
     {
-        Set<String> stopWords = new HashSet<String>();
+        Set<String> stopWords = new HashSet<>();
         String[] words = getPreferences().getString("ae.efo.stopWords").split("\\s*,\\s*");
         if (null != words && words.length > 0) {
             stopWords.addAll(Arrays.asList(words));

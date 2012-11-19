@@ -27,8 +27,10 @@ import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 
 public class ReloadExperimentsAfterSimilarityJob extends ApplicationJob
 {
+    @SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute(JobExecutionContext jobExecutionContext) throws Exception
     {
         SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");

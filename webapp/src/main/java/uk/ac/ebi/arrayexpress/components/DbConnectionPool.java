@@ -37,6 +37,7 @@ public class DbConnectionPool extends ApplicationComponent
 
     private Map<String, BoneCPConfig> configs = new HashMap<String, BoneCPConfig>();
 
+    @Override
     public void initialize() throws Exception
     {
         HierarchicalConfiguration connsConf = (HierarchicalConfiguration)getPreferences().getConfSubset("ae.db.connections");
@@ -65,11 +66,12 @@ public class DbConnectionPool extends ApplicationComponent
         }
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
 
-    public IConnectionSource getConnectionSource( String connectionNames ) throws Exception
+    public IConnectionSource getConnectionSource( String connectionNames )
     {
         if (null != connectionNames) {
             String[] conns = connectionNames.trim().split("\\s*,\\s*");

@@ -42,6 +42,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
     // quartz scheduler
     private Scheduler scheduler;
 
+    @Override
     public void initialize() throws Exception
     {
         // create scheduler
@@ -68,6 +69,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         startScheduler();
     }
 
+    @Override
     public void terminate() throws Exception
     {
         terminateJobs();
@@ -78,6 +80,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         getScheduler().triggerJob(new JobKey(name, AE_JOBS_GROUP));
     }
 
+    @Override
     public void executeJob( String name, String group ) throws SchedulerException
     {
         getScheduler().triggerJob(new JobKey(name, group));
@@ -90,6 +93,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         getScheduler().triggerJob(new JobKey(name, AE_JOBS_GROUP), map);
     }
 
+    @Override
     public void addJobListener( JobListener jl ) throws SchedulerException
     {
         if (null != jl) {

@@ -1,4 +1,4 @@
-package uk.ac.ebi.arrayexpress.utils.saxon;
+package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -17,13 +17,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
-
-import java.io.IOException;
-
-public interface IDocumentSource
+public class IndexerException extends Exception
 {
-    public String getDocumentURI();
-    public DocumentInfo getDocument() throws IOException;
-    public void setDocument(DocumentInfo doc) throws IOException, InterruptedException;
+    private static final long serialVersionUID = 7927511922284327331L;
+
+    public IndexerException( Throwable original )
+    {
+        super(original);
+    }
 }

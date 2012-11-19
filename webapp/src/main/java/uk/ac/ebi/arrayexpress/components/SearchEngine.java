@@ -33,6 +33,7 @@ public class SearchEngine extends ApplicationComponent
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
@@ -47,6 +48,7 @@ public class SearchEngine extends ApplicationComponent
         }
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }

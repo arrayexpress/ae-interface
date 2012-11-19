@@ -17,13 +17,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
-
-import java.io.IOException;
-
-public interface IDocumentSource
+public class SaxonException extends Exception
 {
-    public String getDocumentURI();
-    public DocumentInfo getDocument() throws IOException;
-    public void setDocument(DocumentInfo doc) throws IOException, InterruptedException;
+    private static final long serialVersionUID = 7783136999141837623L;
+
+    public SaxonException( Throwable x )
+    {
+        super(x);
+    }
 }

@@ -30,9 +30,10 @@ import java.util.Map;
 
 public class CheckFilesJob extends ApplicationJob
 {
-    // logging machinery
+    @SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         Files files = (Files)getComponent("Files");

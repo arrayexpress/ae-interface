@@ -27,12 +27,15 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +55,12 @@ public class Indexer
         this.saxon = saxon;
     }
 
-    public List<NodeInfo> index( DocumentInfo document )
+    public List<NodeInfo> index( DocumentInfo document ) throws IndexerException, InterruptedException
     {
-        List<NodeInfo> indexedNodes = null;
+        try (IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer)) {
 
-        try {
             List documentNodes = saxon.evaluateXPath(document, this.env.indexDocumentPath);
-            indexedNodes = new ArrayList<>(documentNodes.size());
-
-            IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer);
+            List<NodeInfo> indexedNodes = new ArrayList<>(documentNodes.size());
 
             for (Object node : documentNodes) {
                 Document d = new Document();
@@ -80,36 +80,36 @@ public class Indexer
                             } else {
                                 addIndexField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
                             }
+                            Thread.sleep(0);
                         }
                     } catch (XPathException x) {
                         logger.error("Caught an exception while indexing expression [" + field.path + "] for document [" + ((NodeInfo)node).getStringValue().substring(0, 20) + "...]", x);
+                        throw x;
                     }
                 }
 
-                addIndexDocument(w, d);
+                w.addDocument(d);
                 // append node to the list
                 indexedNodes.add((NodeInfo)node);
             }
-            commitIndex(w);
 
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
+            w.commit();
+
+            return indexedNodes;
+        } catch (IOException x) {
+            throw new IndexerException(x);
+        } catch (XPathException x) {
+            throw new IndexerException(x);
         }
-
-        return indexedNodes;
     }
 
 
-    private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer )
+    private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer ) throws IOException
     {
-        IndexWriter iwriter = null;
-        try {
-            iwriter = new IndexWriter(indexDirectory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
-        return iwriter;
+        return new IndexWriter(indexDirectory, config);
     }
 
     private void addIndexField( Document document, String name, Object value, boolean shouldAnalyze, boolean shouldStore )
@@ -159,26 +159,6 @@ public class Indexer
             document.add(new NumericField(name).setLongValue(longValue));
         } else {
             logger.warn("Long value of the field [{}] was null", name);
-        }
-    }
-
-    private void addIndexDocument( IndexWriter iwriter, Document document )
-    {
-        try {
-            iwriter.addDocument(document);
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        }
-    }
-
-    private void commitIndex( IndexWriter iwriter )
-    {
-        try {
-            iwriter.optimize();
-            iwriter.commit();
-            iwriter.close();
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
         }
     }
 }

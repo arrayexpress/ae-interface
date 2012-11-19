@@ -11,6 +11,7 @@ import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.maps = (MapEngine) getComponent("MapEngine");
@@ -89,6 +91,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         this.saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
@@ -117,11 +120,15 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         }
     }
 
-    public void update( String xmlString, ArrayDesignSource source ) throws Exception
+    public void update( String xmlString, ArrayDesignSource source ) throws IOException, InterruptedException
     {
-        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
+        try {
+            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            if (null != updateDoc) {
+                new DocumentUpdater(this, updateDoc).update();
+            }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         }
     }
 

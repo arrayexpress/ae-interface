@@ -38,6 +38,7 @@ import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon.ParseHTMLFunction;
 import uk.ac.ebi.fg.utils.saxon.IXPathEngine;
@@ -71,6 +72,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         // This is so we make sure we use Saxon and not anything else
@@ -101,6 +103,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         xPathEvaluator.setNamespaceResolver(namespaces);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
@@ -117,7 +120,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         this.documentSources.remove(documentSource.getDocumentURI());
     }
 
-    public DocumentInfo getRegisteredDocument( String documentURI ) throws Exception
+    public DocumentInfo getRegisteredDocument( String documentURI ) throws IOException
     {
         if (this.documentSources.containsKey(documentURI)) {
             return this.documentSources.get(documentURI).getDocument();
@@ -127,6 +130,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     }
 
     // implements URIResolver.resolve
+    @Override
     public Source resolve( String href, String base ) throws TransformerException
     {
         Source src;
@@ -156,6 +160,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     }
 
     // implements ErrorListener.error
+    @Override
     public void error( TransformerException x ) throws TransformerException
     {
         getApplication().sendExceptionReport("[PROBLEM] XSLT transformation error occurred", x);
@@ -163,6 +168,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     }
 
     // implements ErrorListener.fatalError
+    @Override
     public void fatalError( TransformerException x ) throws TransformerException
     {
         getApplication().sendExceptionReport("[SEVERE] XSLT fatal transformation error occurred", x);
@@ -170,6 +176,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     }
 
     // implements ErrorListener.warning
+    @Override
     public void warning( TransformerException x )
     {
         //if (logger.isDebugEnabled()) {
@@ -189,18 +196,21 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         trFactory.getConfiguration().registerExtensionFunction(f);
     }
 
-    public String serializeDocument( DocumentInfo document ) throws Exception
+    public String serializeDocument( DocumentInfo document ) throws SaxonException, IOException
     {
-        Transformer transformer = trFactory.newTransformer();
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
+            Transformer transformer = trFactory.newTransformer();
 
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.setOutputProperty(OutputKeys.INDENT, "no");
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "US-ASCII");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "US-ASCII");
 
-        transformer.transform(document, new StreamResult(outStream));
-        return outStream.toString(XML_STRING_ENCODING);
+            transformer.transform(document, new StreamResult(outStream));
+            return outStream.toString(XML_STRING_ENCODING);
+        } catch (TransformerException x) {
+            throw new SaxonException(x);
+        }
     }
 
     public DocumentInfo buildDocument( String xml ) throws XPathException
@@ -256,48 +266,40 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public boolean transformToWriter( Source srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws Exception
+    public boolean transformToWriter( Source srcDocument, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws SaxonException
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstWriter));
     }
 
     @SuppressWarnings("unused")
-    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params, File dstFile ) throws Exception
+    public boolean transformToFile( DocumentInfo srcDocument, String stylesheet, Map<String, String[]> params, File dstFile ) throws SaxonException
     {
         return transform(srcDocument, stylesheet, params, new StreamResult(dstFile));
     }
 
-    public String transformToString( URL src, String stylesheet, Map<String, String[]> params ) throws Exception
+    public String transformToString( URL src, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
     {
-        String str;
-
         try (InputStream inStream = src.openStream(); ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             if (transform(new StreamSource(inStream), stylesheet, params, new StreamResult(outStream))) {
-                str = outStream.toString(XML_STRING_ENCODING);
-                outStream.close();
-                return str;
+                return outStream.toString(XML_STRING_ENCODING);
             } else {
                 return null;
             }
         }
     }
 
-    public String transformToString( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
+    public String transformToString( Source source, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
     {
-        String str;
-
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
-
             if (transform(source, stylesheet, params, new StreamResult(outStream))) {
-                str = outStream.toString(XML_STRING_ENCODING);
-                return str;
+                return outStream.toString(XML_STRING_ENCODING);
             } else {
                 return null;
             }
         }
     }
 
-    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String, String[]> params ) throws Exception
+    public DocumentInfo transform( String srcXmlString, String stylesheet, Map<String, String[]> params ) throws SaxonException
     {
         Source src = new StreamSource(new StringReader(srcXmlString));
         TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
@@ -307,7 +309,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    public DocumentInfo transform( Source source, String stylesheet, Map<String, String[]> params ) throws Exception
+    public DocumentInfo transform( Source source, String stylesheet, Map<String, String[]> params ) throws SaxonException
     {
         TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
         if (transform(source, stylesheet, params, dstDocument)) {
@@ -316,7 +318,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return null;
     }
 
-    private boolean transform( Source src, String stylesheet, Map<String, String[]> params, Result dst ) throws Exception
+    private boolean transform( Source src, String stylesheet, Map<String, String[]> params, Result dst ) throws SaxonException
     {
         boolean result = false;
         try {
@@ -351,7 +353,9 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
 
             result = true;
         } catch (TerminationException x) {
-            logger.error("Transformation has been terminated by xsl instruction, please inspect log for details");
+            logger.error("Transformation has been terminated by XSL instruction, please inspect log for details");
+        } catch (TransformerException x) {
+            throw new SaxonException(x);
         }
         return result;
     }

@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.components;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -26,6 +27,8 @@ import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
 import java.io.File;
@@ -108,7 +111,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("users", doc));
@@ -144,7 +147,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     }
 
 
-    public boolean isAccessible( String accession, List<String> userIds ) throws Exception
+    public boolean isAccessible( String accession, List<String> userIds ) throws IOException
     {
         @SuppressWarnings("unchecked")
         Set<String> ids = (Set<String>)this.userMap.getValue(accession);
@@ -155,71 +158,91 @@ public class Users extends ApplicationComponent implements IDocumentSource
         return false;
     }
 
-    public void update( String xmlString, UserSource source ) throws Exception
-    {
-        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
-        }
-    }
-
-    private void updateIndex()
+    public void update( String xmlString, UserSource source ) throws IOException, InterruptedException
     {
         try {
-            this.search.getController().index(INDEX_ID, this.getDocument());
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            if (null != updateDoc) {
+                new DocumentUpdater(this, updateDoc).update();
+            }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         }
     }
 
-    public boolean isPrivilegedByName( String name ) throws Exception
+    private void updateIndex() throws IOException, InterruptedException
     {
-        return  (Boolean)saxon.evaluateXPathSingle(
-                getDocument()
-                , "(/users/user[name = \"" + name.replaceAll("\"", "&quot;") + "\"]/is_privileged = true())"
-        );
+        Thread.sleep(0);
+        try {
+            this.search.getController().index(INDEX_ID, this.getDocument());
+        } catch (IndexerException x) {
+            throw new RuntimeException(x);
+        }
     }
 
-    public boolean isPrivilegedByID( String id ) throws Exception
+    public boolean isPrivilegedByName( String name ) throws IOException
     {
-        return (Boolean)saxon.evaluateXPathSingle(
+        try {
+            return  (Boolean)saxon.evaluateXPathSingle(
+                    getDocument()
+                    , "(/users/user[name = \"" + name.replaceAll("\"", "&quot;") + "\"]/is_privileged = true())"
+            );
+        } catch (XPathException x) {
+        throw new RuntimeException(x);
+    }
+}
+
+    public boolean isPrivilegedByID( String id ) throws IOException
+    {
+        try {
+            return (Boolean)saxon.evaluateXPathSingle(
                 getDocument()
                 , "(/users/user[id = \"" + id + "\"]/is_privileged = true())"
         );
-    }
-
-    public List<String> getUserIDs( String username ) throws Exception
-    {
-        List idNodes = this.saxon.evaluateXPath(
-                        getDocument()
-                        , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
-                );
-
-        ArrayList<String> ids = new ArrayList<>(idNodes.size());
-        for (Object node : idNodes ) {
-            ids.add(((Item)node).getStringValue());
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
         }
-
-        return ids;
     }
 
-    private List<String> getUserPasswords( String username ) throws Exception
+    public List<String> getUserIDs( String username ) throws IOException
     {
-        List passwordNodes = this.saxon.evaluateXPath(
-                getDocument()
-                , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
-        );
+        try {
+            List idNodes = this.saxon.evaluateXPath(
+                            getDocument()
+                            , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
+                    );
 
-        ArrayList<String> passwords = new ArrayList<>(passwordNodes.size());
-        for (Object node : passwordNodes ) {
-            passwords.add(((Item)node).getStringValue());
+            ArrayList<String> ids = new ArrayList<>(idNodes.size());
+            for (Object node : idNodes ) {
+                ids.add(((Item)node).getStringValue());
+            }
+
+            return ids;
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
         }
-
-        return passwords;
-
     }
 
-    public String hashLogin( String username, String password, String suffix ) throws Exception
+    private List<String> getUserPasswords( String username ) throws IOException
+    {
+        try {
+            List passwordNodes = this.saxon.evaluateXPath(
+                    getDocument()
+                    , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
+            );
+
+            ArrayList<String> passwords = new ArrayList<>(passwordNodes.size());
+            for (Object node : passwordNodes ) {
+                passwords.add(((Item)node).getStringValue());
+            }
+            return passwords;
+
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
+        }
+    }
+
+    public String hashLogin( String username, String password, String suffix ) throws IOException
     {
         if ( null != username && null != password && null != suffix ) {
             List<String> userPasswords = getUserPasswords(username);
@@ -231,7 +254,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         return "";
     }
 
-    public boolean verifyLogin( String username, String hash, String suffix ) throws Exception
+    public boolean verifyLogin( String username, String hash, String suffix ) throws IOException
     {
         if ( null != username && null != hash && null != suffix ) {
             List<String> userPasswords = getUserPasswords(username);

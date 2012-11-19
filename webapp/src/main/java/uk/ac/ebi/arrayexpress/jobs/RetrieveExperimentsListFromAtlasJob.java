@@ -29,6 +29,7 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         Application app = Application.getInstance();

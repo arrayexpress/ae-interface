@@ -12,6 +12,7 @@ import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
+import java.io.IOException;
 
 /*
  * Copyright 2009-2012 European Molecular Biology Laboratory
@@ -35,6 +36,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         String usersXml = null;
@@ -92,7 +94,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         }
     }
 
-    private String getXmlFromFile(File xmlFile) throws Exception
+    private String getXmlFromFile(File xmlFile) throws IOException
     {
         logger.info("Getting XML from file [{}]", xmlFile);
         String xml =  StringTools.fileToString(
@@ -106,7 +108,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         return xml;
     }
 
-    private void updateUsers( String xmlString ) throws Exception
+    private void updateUsers( String xmlString ) throws IOException, InterruptedException
     {
         ((Users) getComponent("Users")).update(xmlString, Users.UserSource.AE2);
 
@@ -114,7 +116,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     }
 
-    private void updateArrayDesigns( String xmlString ) throws Exception
+    private void updateArrayDesigns( String xmlString ) throws IOException, InterruptedException
     {
         ((ArrayDesigns) getComponent("ArrayDesigns")).update(xmlString, ArrayDesigns.ArrayDesignSource.AE2);
 
@@ -122,7 +124,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     }
 
-    private void updateProtocols( String xmlString ) throws Exception
+    private void updateProtocols( String xmlString ) throws IOException, InterruptedException
     {
         ((Protocols) getComponent("Protocols")).update(xmlString, Protocols.ProtocolsSource.AE2);
 
@@ -130,7 +132,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
 
     }
 
-    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
+    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws IOException, InterruptedException
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString

@@ -8,6 +8,8 @@ import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,13 +43,14 @@ public class Events extends ApplicationComponent implements IDocumentSource
 
     public static interface IEventInformation
     {
-        public abstract DocumentInfo getEventXML() throws Exception;
+        public abstract DocumentInfo getEventXML();
     }
 
     public Events()
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         SaxonEngine saxon = (SaxonEngine) getComponent("SaxonEngine");
@@ -62,24 +65,28 @@ public class Events extends ApplicationComponent implements IDocumentSource
         saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
 
     // implementation of IDocumentSource.getDocumentURI()
+    @Override
     public String getDocumentURI()
     {
         return "events.xml";
     }
 
     // implementation of IDocumentSource.getDocument()
+    @Override
     public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    @Override
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("events", doc));
@@ -89,20 +96,25 @@ public class Events extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void addEvent( IEventInformation event ) throws Exception
+    public void addEvent( IEventInformation event ) throws IOException, InterruptedException
     {
-        DocumentInfo eventDoc = event.getEventXML();
-        if (null != eventDoc) {
-            new DocumentUpdater(this, eventDoc).update();
+        try {
+            DocumentInfo eventDoc = event.getEventXML();
+            if (null != eventDoc) {
+                new DocumentUpdater(this, eventDoc).update();
+            }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         }
     }
     
-    private void updateIndex()
+    private void updateIndex() throws IOException, InterruptedException
     {
+        Thread.sleep(0);
         try {
             this.search.getController().index(INDEX_ID, this.getDocument());
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+        } catch (IndexerException x) {
+            throw new RuntimeException(x);
         }
     }
 }

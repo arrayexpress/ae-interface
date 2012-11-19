@@ -42,6 +42,7 @@ public class SimilarityJob extends ApplicationJob
 {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute(JobExecutionContext jobExecutionContext) throws Exception
     {
         Ontologies ontologies = ((Ontologies) getComponent("Ontologies"));
@@ -89,12 +90,11 @@ public class SimilarityJob extends ApplicationJob
 
     private SortedSet<String> getLowPriorityURIList( IEFO efo, String ignoreListFileLocation ) throws IOException
     {
-        SortedSet<String> lowPriorityURIs = new TreeSet<String>();
+        SortedSet<String> lowPriorityURIs = new TreeSet<>();
 
         if (null != ignoreListFileLocation) {
-            InputStream is = null;
-            try {
-                is = getApplication().getResource(ignoreListFileLocation).openStream();
+
+            try (InputStream is = getApplication().getResource(ignoreListFileLocation).openStream()){
                 Set<String> lowPriorityURIList = StringTools.streamToStringSet(is, "UTF-8");
 
                 logger.debug("Loaded low priority ontology classes from [{}]", ignoreListFileLocation);
@@ -105,10 +105,6 @@ public class SimilarityJob extends ApplicationJob
                         else
                             logger.warn("URI: " + uri + " doesn't exist in EFO");
                     }
-                }
-            } finally {
-                if (null != is) {
-                    is.close();
                 }
             }
         }

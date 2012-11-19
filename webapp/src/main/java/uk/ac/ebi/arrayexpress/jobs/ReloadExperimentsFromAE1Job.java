@@ -17,10 +17,7 @@ package uk.ac.ebi.arrayexpress.jobs;
  *
  */
 
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.JobListener;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
@@ -36,6 +33,7 @@ import uk.ac.ebi.arrayexpress.utils.db.IConnectionSource;
 import uk.ac.ebi.arrayexpress.utils.db.UserXmlDatabaseRetriever;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -52,6 +50,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
     private AtomicInteger numThreadsCompleted;
     private int expsPerThread;
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         String usersXml = null;
@@ -155,7 +154,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
         }
     }
 
-    private String getXmlFromFile(File xmlFile) throws Exception
+    private String getXmlFromFile(File xmlFile) throws IOException
     {
         logger.info("Getting XML from file [{}]", xmlFile);
         return StringTools.fileToString(
@@ -164,7 +163,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
         );
     }
 
-    private void updateUsers( String xmlString ) throws Exception
+    private void updateUsers( String xmlString ) throws IOException, InterruptedException
     {
         ((Users) getComponent("Users")).update(xmlString, Users.UserSource.AE1);
 
@@ -172,7 +171,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
-    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
+    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws IOException, InterruptedException
     {
         ((Experiments) getComponent("Experiments")).update(
                 xmlString
@@ -183,7 +182,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
-    private void updateArrayDesigns( String xmlString ) throws Exception
+    private void updateArrayDesigns( String xmlString ) throws IOException, InterruptedException
     {
         ((ArrayDesigns) getComponent("ArrayDesigns")).update(
                 xmlString
@@ -194,17 +193,17 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
 
     }
 
-    private String getUsersXmlFromDb() throws Exception
+    private String getUsersXmlFromDb()
     {
         return new UserXmlDatabaseRetriever(this.connectionSource).getXml();
     }
 
-    private String getArrayDesignsXmlFromDb() throws Exception
+    private String getArrayDesignsXmlFromDb()
     {
         return new ArrayXmlDatabaseRetriever(this.connectionSource).getXml();
     }
 
-    private String getExperimentsXmlFromDb() throws Exception
+    private String getExperimentsXmlFromDb() throws IOException, SchedulerException, InterruptedException
     {
         String experimentsXml = null;
         Long threads = getPreferences().getLong("ae.experiments.ae1.reload.threads");
@@ -213,7 +212,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
             numThreadsCompleted = new AtomicInteger();
 
             exps = new ExperimentListDatabaseRetriever(connectionSource).getExperimentList();
-            Thread.sleep(1);
+            Thread.sleep(0);
 
             logger.info("Got [{}] experiments listed in the database, scheduling retrieval", exps.size());
             xmlBuffer = new StringBuffer(20000000);
@@ -231,7 +230,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                 expsPerThread = (int) Math.ceil(((double) exps.size()) / ((double) numThreadsForRetrieval));
                 for (int i = 0; i < numThreadsForRetrieval; ++i) {
                     getController().executeJobWithParam("retrieve-xml", "index", String.valueOf(i));
-                    Thread.sleep(1);
+                    Thread.sleep(0);
                 }
 
                 while (numThreadsCompleted.get() < numThreadsForRetrieval) {

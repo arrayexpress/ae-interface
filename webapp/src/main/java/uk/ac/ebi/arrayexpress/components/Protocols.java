@@ -25,6 +25,8 @@ import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,12 +60,13 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
 
-        this.document = new FilePersistence<PersistableDocumentContainer>(
+        this.document = new FilePersistence<>(
                 new PersistableDocumentContainer("protocols")
                 , new File(getPreferences().getString("ae.protocols.persistence-location"))
         );
@@ -72,6 +75,7 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
         this.saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
@@ -89,7 +93,7 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("protocols", doc));
@@ -99,20 +103,25 @@ public class Protocols extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void update( String xmlString, ProtocolsSource source ) throws Exception
+    public void update( String xmlString, ProtocolsSource source ) throws IOException, InterruptedException
     {
-        DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-        if (null != updateDoc) {
-            new DocumentUpdater(this, updateDoc).update();
+        try {
+            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            if (null != updateDoc) {
+                new DocumentUpdater(this, updateDoc).update();
+            }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         }
     }
 
-    private void updateIndex()
+    private void updateIndex() throws IOException, InterruptedException
     {
+        Thread.sleep(0);
         try {
             this.search.getController().index(INDEX_ID, this.getDocument());
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+        } catch (IndexerException x) {
+            throw new RuntimeException(x);
         }
     }
 }

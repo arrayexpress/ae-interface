@@ -27,6 +27,7 @@ import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.maps = (MapEngine) getComponent("MapEngine");
@@ -75,23 +77,27 @@ public class Files extends ApplicationComponent implements IDocumentSource
         this.saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
 
     // implementation of IDocumentSource.getDocumentURI()
+    @Override
     public String getDocumentURI()
     {
         return "files.xml";
     }
 
     // implementation of IDocumentSource.getDocument()
+    @Override
     public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    @Override
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("files", doc));
@@ -102,22 +108,23 @@ public class Files extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void reload( DocumentInfo doc, String message ) throws Exception
+    public void reload( DocumentInfo doc, String message ) throws IOException, InterruptedException
     {
         setDocument(doc);
         this.lastReloadMessage = message;
     }
 
-    private void updateIndex()
+    private void updateIndex() throws IOException, InterruptedException
     {
+        Thread.sleep(0);
         try {
             this.search.getController().index(INDEX_ID, this.getDocument());
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+        } catch (IndexerException x) {
+            throw new RuntimeException(x);
         }
     }
     
-    private void updateAccelerators()
+    private void updateAccelerators() throws IOException
     {
         this.logger.debug("Updating maps for files");
 
@@ -125,30 +132,26 @@ public class Files extends ApplicationComponent implements IDocumentSource
         maps.clearMap(MAP_RAW_FILES);
         maps.clearMap(MAP_PROCESSED_FILES);
 
-        try {
+         try {
             DocumentInfo doc = getDocument();
             List<Object> documentNodes = saxon.evaluateXPath(doc, "/files/folder");
 
             for (Object node : documentNodes) {
 
-                try {
-                    // get all the expressions taken care of
-                    String accession = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@accession");
-                    String folderKind = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@kind");
-                    maps.setMappedValue(MAP_FOLDER, accession, node);
-                    //todo: remove redundancy here
-                    if ("experiment".equals(folderKind)) {
-                        maps.setMappedValue(MAP_RAW_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'raw'])"));
-                        maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'fgem'])"));
-                    }
-                } catch (XPathException x) {
-                    this.logger.error("Caught an exception:", x);
+                // get all the expressions taken care of
+                String accession = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@accession");
+                String folderKind = saxon.evaluateXPathSingleAsString((NodeInfo) node, "@kind");
+                maps.setMappedValue(MAP_FOLDER, accession, node);
+                //todo: remove redundancy here
+                if ("experiment".equals(folderKind)) {
+                    maps.setMappedValue(MAP_RAW_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'raw'])"));
+                    maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'fgem'])"));
                 }
             }
             this.logger.debug("Maps updated");
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
-        }
+         } catch (XPathException x) {
+             throw new RuntimeException(x);
+         }
     }
 
     public synchronized void setRootFolder( String folder )
@@ -229,7 +232,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public String getAccession( String fileLocation ) throws Exception
+    public String getAccession( String fileLocation ) throws IOException
     {
         String[] nameFolder = new RegexHelper("^(.+)/([^/]+)$", "i")
                 .match(fileLocation);
@@ -238,9 +241,13 @@ public class Files extends ApplicationComponent implements IDocumentSource
             return null;
         }
 
-        return this.saxon.evaluateXPathSingleAsString(
-                getDocument()
-                , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
-        );
+        try {
+            return this.saxon.evaluateXPathSingleAsString(
+                    getDocument()
+                    , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
+            );
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
+        }
     }
 }

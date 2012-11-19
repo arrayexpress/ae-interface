@@ -33,6 +33,8 @@ import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,7 +128,8 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             return this.source;
         }
 
-        public DocumentInfo getEventXML() throws Exception
+        @Override
+        public DocumentInfo getEventXML()
         {
             String xml = "<?xml version=\"1.0\"?><event><category>experiments-update-"
                             + this.source.toString().toLowerCase()
@@ -136,8 +139,11 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             + "</lastmodified><successful>"
                             + (this.outcome ? "true" : "false")
                             + "</successful></event>";
-
-            return ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(xml);
+            try {
+                return ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(xml);
+            } catch (XPathException x) {
+                throw new RuntimeException(x);
+            }
         }
     }
 
@@ -145,6 +151,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
     }
 
+    @Override
     public void initialize() throws Exception
     {
         this.maps = (MapEngine) getComponent("MapEngine");
@@ -189,24 +196,28 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.saxon.registerDocumentSource(this);
     }
 
+    @Override
     public void terminate() throws Exception
     {
     }
 
     // implementation of IDocumentSource.getDocumentURI()
+    @Override
     public String getDocumentURI()
     {
         return "experiments.xml";
     }
 
     // implementation of IDocumentSource.getDocument()
+    @Override
     public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    @Override
+    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
@@ -217,17 +228,17 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public String getSpecies() throws Exception
+    public String getSpecies() throws IOException
     {
         return this.species.getObject().get();
     }
 
-    public String getArrays() throws Exception
+    public String getArrays() throws IOException
     {
         return this.arrays.getObject().get();
     }
 
-    public void update( String xmlString, UpdateSourceInformation sourceInformation ) throws Exception
+    public void update( String xmlString, UpdateSourceInformation sourceInformation ) throws IOException, InterruptedException
     {
         boolean success = false;
         try {
@@ -241,35 +252,42 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 buildSpeciesArrays();
                 success = true;
             }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         } finally {
             sourceInformation.setOutcome(success);
             events.addEvent(sourceInformation);
         }
     }
 
-    public void reloadExperimentsInAtlas( String sourceLocation ) throws Exception
+    public void reloadExperimentsInAtlas( String sourceLocation ) throws IOException
     {
-        URL source = new URL(sourceLocation);
-        String result = this.saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
-        if (null != result) {
-            String[] exps = result.split("\n");
-            if (exps.length > 0) {
-                this.experimentsInAtlas.setObject(new PersistableStringList(Arrays.asList(exps)));
-                updateAtlasMap();
-                this.logger.info("Stored GXA info, [{}] experiments listed", exps.length);
-            } else {
-                this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
+        try {
+            URL source = new URL(sourceLocation);
+            String result = this.saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
+            if (null != result) {
+                String[] exps = result.split("\n");
+                if (exps.length > 0) {
+                    this.experimentsInAtlas.setObject(new PersistableStringList(Arrays.asList(exps)));
+                    updateAtlasMap();
+                    this.logger.info("Stored GXA info, [{}] experiments listed", exps.length);
+                } else {
+                    this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
+                }
             }
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
         }
     }
 
-    private void updateIndex()
+    private void updateIndex() throws IOException, InterruptedException
     {
+        Thread.sleep(0);
         try {
             this.search.getController().index(INDEX_ID, this.getDocument());
             this.autocompletion.rebuild();
-        } catch (Exception x) {
-            this.logger.error("Caught an exception:", x);
+        } catch (IndexerException x) {
+            throw new RuntimeException(x);
         }
     }
 
@@ -367,13 +385,18 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void buildSpeciesArrays() throws Exception
+    private void buildSpeciesArrays() throws IOException
     {
         // todo: move this to a separate component (autocompletion?)
-        String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);
-        this.species.setObject(new PersistableString(speciesString));
+        try {
+            String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);
+            this.species.setObject(new PersistableString(speciesString));
 
-        String arraysString = saxon.transformToString(this.getDocument(), "build-arrays-list-html.xsl", null);
-        this.arrays.setObject(new PersistableString(arraysString));
+            String arraysString = saxon.transformToString(this.getDocument(), "build-arrays-list-html.xsl", null);
+            this.arrays.setObject(new PersistableString(arraysString));
+        } catch (SaxonException x) {
+            throw new RuntimeException(x);
+        }
+
     }
 }

@@ -37,24 +37,27 @@ public class DocumentUpdater implements IDocumentSource
     }
 
     // implementation of IDocumentSource.getDocumentURI()
+    @Override
     public String getDocumentURI()
     {
         return "update-" + source.getDocumentURI();
     }
 
     // implementation of IDocumentSource.getDocument()
+    @Override
     public synchronized DocumentInfo getDocument() throws IOException
     {
         return this.update;
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
+    @Override
     public synchronized void setDocument( DocumentInfo doc ) throws IOException
     {
         // nothing
     }
 
-    public void update() throws Exception
+    public void update() throws SaxonException, IOException, InterruptedException
     {
         synchronized(getClass()) {
             saxon.registerDocumentSource(this);

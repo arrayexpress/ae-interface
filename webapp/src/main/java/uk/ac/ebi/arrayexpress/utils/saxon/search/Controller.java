@@ -93,7 +93,7 @@ public class Controller
         return this.environment.get(indexId);
     }
 
-    public void index( String indexId, DocumentInfo document )
+    public void index( String indexId, DocumentInfo document ) throws IndexerException, InterruptedException
     {
         this.logger.info("Started indexing for index id [{}]", indexId);
         getEnvironment(indexId).putDocumentInfo(

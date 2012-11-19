@@ -42,6 +42,7 @@ public class RescanFilesJob extends ApplicationJob
 {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
         Files files = (Files) getComponent("Files");
@@ -52,7 +53,7 @@ public class RescanFilesJob extends ApplicationJob
             String listAllFilesCommand = getPreferences().getString("ae.files.list-all-command");
             this.logger.info("Rescan of downloadable files from [{}] requested", rootFolder);
 
-            List<String> commandParams = new ArrayList<String>();
+            List<String> commandParams = new ArrayList<>();
             commandParams.add("/bin/sh");
             commandParams.add("-c");
             commandParams.add(listAllFilesCommand);
@@ -78,7 +79,7 @@ public class RescanFilesJob extends ApplicationJob
 
             source.setXMLReader(new FlatFileXMLReader(' ', '\"'));
             
-            Map<String, String[]> transformParams = new HashMap<String, String[]>();
+            Map<String, String[]> transformParams = new HashMap<>();
             transformParams.put("rootFolder", new String[] { rootFolder });
 
             DocumentInfo result = saxonEngine.transform(
