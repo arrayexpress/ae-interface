@@ -96,9 +96,7 @@ public class Indexer
             w.commit();
 
             return indexedNodes;
-        } catch (IOException x) {
-            throw new IndexerException(x);
-        } catch (XPathException x) {
+        } catch (IOException|XPathException x) {
             throw new IndexerException(x);
         }
     }
@@ -106,7 +104,7 @@ public class Indexer
 
     private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer ) throws IOException
     {
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_31, analyzer);
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
         return new IndexWriter(indexDirectory, config);
