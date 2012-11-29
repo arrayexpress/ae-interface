@@ -47,13 +47,9 @@ public class Querier
 
     public List<String> getTerms( String fieldName, int minFreq ) throws IOException
     {
-        List<String> termsList = new ArrayList<String>();
-        IndexReader ir = null;
-        TermEnum terms = null;
+        List<String> termsList = new ArrayList<>();
 
-        try {
-            ir = IndexReader.open(this.env.indexDirectory, true);
-            terms = ir.terms(new Term(fieldName, ""));
+        try (IndexReader reader = IndexReader.open(this.env.indexDirectory); TermEnum terms = reader.terms(new Term(fieldName, ""))) {
             if (null != terms) {
                 while (null != terms.term() && fieldName.equals(terms.term().field())) {
                     if (terms.docFreq() >= minFreq) {
@@ -64,75 +60,45 @@ public class Querier
                 }
                 terms.close();
             }
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        } finally {
-            if (null != terms) {
-                terms.close();
-            }
-            if (null != ir) {
-                ir.close();
-            }
         }
+
         return termsList;
     }
 
-    public void dumpTerms( String fieldName )
+    public void dumpTerms( String fieldName ) throws IOException
     {
-        try {
-            IndexReader ir = IndexReader.open(this.env.indexDirectory, true);
-            TermEnum terms = ir.terms(new Term(fieldName, ""));
+        try (IndexReader reader = IndexReader.open(this.env.indexDirectory); TermEnum terms = reader.terms(new Term(fieldName, ""))) {
+
             File f = new File(System.getProperty("java.io.tmpdir"), fieldName + "_terms.txt");
-            BufferedWriter w = new BufferedWriter(new FileWriter(f));
-            StringBuilder sb = new StringBuilder();
-            while (fieldName.equals(terms.term().field())) {
-                sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append(StringTools.EOL);
-                if (!terms.next())
-                    break;
+            try (BufferedWriter w = new BufferedWriter(new FileWriter(f))) {
+                StringBuilder sb = new StringBuilder();
+                while (fieldName.equals(terms.term().field())) {
+                    sb.append(terms.docFreq()).append('\t').append(terms.term().text()).append(StringTools.EOL);
+                    if (!terms.next())
+                        break;
+                }
+                w.write(sb.toString());
             }
-            w.write(sb.toString());
-            w.close();
-            terms.close();
-            ir.close();
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
         }
     }
 
     public Integer getDocCount( Query query ) throws IOException
     {
-        Integer count = null;
-        IndexReader ir = null;
-        IndexSearcher isearcher = null;
-        try {
-            ir = IndexReader.open(this.env.indexDirectory, true);
-
-            isearcher = new IndexSearcher(ir);
+        try (IndexReader reader =  IndexReader.open(this.env.indexDirectory); IndexSearcher searcher = new IndexSearcher(reader)) {
 
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = isearcher.search(query, this.env.documentNodes.size() + 1);
+            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
 
 
-            count = hits.totalHits;
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        } finally {
-            if (null != isearcher)
-                isearcher.close();
-            if (null != ir)
-                ir.close();
+            return hits.totalHits;
         }
-
-        return count;
     }
 
     public List<NodeInfo> query( Query query ) throws IOException
     {
-        List<NodeInfo> result = null;
-        IndexReader ir = null;
-        IndexSearcher isearcher = null;
-        try {
-            ir = IndexReader.open(this.env.indexDirectory, true);
+        List<NodeInfo> result;
+
+        try (IndexReader reader =  IndexReader.open(this.env.indexDirectory); IndexSearcher searcher = new IndexSearcher(reader)) {
 
             // empty query returns everything
             if (query instanceof BooleanQuery && ((BooleanQuery)query).clauses().isEmpty()) {
@@ -141,25 +107,14 @@ public class Querier
             }
 
             // to show _all_ available nodes
-            isearcher = new IndexSearcher(ir);
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = isearcher.search(query, this.env.documentNodes.size() + 1);
+            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
             logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", query.toString(), hits.totalHits);
 
-            result = new ArrayList<NodeInfo>(hits.totalHits);
+            result = new ArrayList<>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {
                 result.add(this.env.documentNodes.get(d.doc));
             }
-
-            isearcher.close();
-            ir.close();
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        } finally {
-            if (null != isearcher)
-                isearcher.close();
-            if (null != ir)
-                ir.close();
         }
 
         return result;
@@ -167,11 +122,9 @@ public class Querier
 
     public List<NodeInfo> query( QueryInfo queryInfo ) throws IOException
     {
-        List<NodeInfo> result = null;
-        IndexReader ir = null;
-        IndexSearcher isearcher = null;
-        try {
-            ir = IndexReader.open(this.env.indexDirectory, true);
+        List<NodeInfo> result;
+
+        try (IndexReader reader =  IndexReader.open(this.env.indexDirectory); IndexSearcher searcher = new IndexSearcher(reader)) {
 
             // empty query returns everything
             if (queryInfo.getQuery() instanceof BooleanQuery && ((BooleanQuery)queryInfo.getQuery()).clauses().isEmpty()) {
@@ -180,26 +133,15 @@ public class Querier
             }
 
             // to show _all_ available nodes
-            isearcher = new IndexSearcher(ir);
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = isearcher.search(queryInfo.getQuery(), this.env.documentNodes.size() + 1);
+            TopDocs hits = searcher.search(queryInfo.getQuery(), this.env.documentNodes.size() + 1);
             logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", queryInfo.getQuery().toString(), hits.totalHits);
 
-            result = new ArrayList<NodeInfo>(hits.totalHits);
+            result = new ArrayList<>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {                       // are in descending order
                 result.add(this.env.documentNodes.get(d.doc));
                 //queryInfo.putScore(this.env.documentNodes.get(d.doc), d.score);  lucene score is not needed
             }
-
-            isearcher.close();
-            ir.close();
-        } catch (Exception x) {
-            logger.error("Caught an exception:", x);
-        } finally {
-            if (null != isearcher)
-                isearcher.close();
-            if (null != ir)
-                ir.close();
         }
 
         return result;
