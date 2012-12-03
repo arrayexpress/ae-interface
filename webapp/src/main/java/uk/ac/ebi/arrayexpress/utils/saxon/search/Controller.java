@@ -45,6 +45,7 @@ public class Controller
 
     private Map<String, IndexEnvironment> environment = new HashMap<>();
 
+    @SuppressWarnings("unused")
     public Controller( URL configFile )
     {
         this.config = new Configuration(configFile);
@@ -114,6 +115,7 @@ public class Controller
         }
     }
 
+    @SuppressWarnings("unused")
     public Integer getDocCount( String indexId, Map<String, String[]> queryParams ) throws IOException, ParseException
     {
         IndexEnvironment env = getEnvironment(indexId);
@@ -123,7 +125,8 @@ public class Controller
 
     }
 
-    public void dumpTerms( String indexId, String fieldName )
+    @SuppressWarnings("unused")
+    public void dumpTerms( String indexId, String fieldName ) throws IOException
     {
         IndexEnvironment env = getEnvironment(indexId);
         if (env.doesFieldExist(fieldName)) {
