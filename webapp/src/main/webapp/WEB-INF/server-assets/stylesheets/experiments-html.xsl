@@ -123,6 +123,7 @@
                             <xsl:with-param name="pQueryString"/>
                             <xsl:with-param name="pQueryId" select="$queryid"/>
                             <xsl:with-param name="pBasePath" select="$basepath"/>
+                            <xsl:with-param name="pFiles" select="$vFiles"/>
                         </xsl:call-template>
 
                         <xsl:call-template name="exp-platforms-section">

@@ -289,10 +289,11 @@
         <xsl:param name="pQueryString"/>
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
+        <xsl:param name="pFiles"/>
 
         <xsl:variable name="vQueryString" select="if ($pQueryString != '') then concat('?', $pQueryString) else ''"/>
 
-        <xsl:if test="samples">
+        <xsl:if test="$pFiles/file[@extension = 'txt' and@kind = 'sdrf']">
             <tr>
                 <td class="name"><div class="name">Samples (<xsl:value-of select="samples"/>)</div></td>
                 <td class="value">
