@@ -439,7 +439,7 @@
                                             <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                             <xsl:choose>
-                                                <xsl:when test="string-length($vColText) > 1 and (fn:index-of($vAvailArchives, $vArchive))">
+                                                <xsl:when test="string-length($vColText) > 2 and (fn:index-of($vAvailArchives, $vArchive))">
                                                     <a href="{$basepath}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
@@ -451,7 +451,7 @@
                                                         </xsl:choose>
                                                     </a>
                                                 </xsl:when>
-                                                <xsl:when test="string-length($vColText) > 1 and count($vAvailArchives) = 1">
+                                                <xsl:when test="string-length($vColText) > 2 and count($vAvailArchives) = 1">
                                                     <a href="{$basepath}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
@@ -463,7 +463,7 @@
                                                         </xsl:choose>
                                                     </a>
                                                 </xsl:when>
-                                                <xsl:when test="string-length($vColText) > 1 and ($vColText = $vArchive)">
+                                                <xsl:when test="string-length($vColText) > 2 and ($vColText = $vArchive)">
                                                     <a href="{$basepath}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                         <xsl:choose>
                                                             <xsl:when test="fn:ends-with(fn:lower-case($vColText), '.cel')">
