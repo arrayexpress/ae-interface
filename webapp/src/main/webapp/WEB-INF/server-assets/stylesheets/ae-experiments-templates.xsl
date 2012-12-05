@@ -454,7 +454,7 @@
         <tr>
             <td class="name"><div class="name">Files</div></td>
             <xsl:choose>
-                <xsl:when test="$pFiles/file[@kind='raw' or @kind='fgem' or @kind='adf' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
+                <xsl:when test="$pFiles/file[@kind='raw' or @kind='fgem' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
                     
                     <td class="attrs">
                         <div class="attrs">
@@ -474,7 +474,6 @@
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-magetab-files-array">
                                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="exp-misc-files">
                                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
@@ -773,8 +772,8 @@
                 <xsl:if test="string-length(title)">
                     <xsl:text>, </xsl:text>
                 </xsl:if>
-                <a href="http://ukpmc.ac.uk/abstract/MED/{accession}">
-                    <xsl:text>UKPMC </xsl:text>
+                <a href="http://europepmc.org/abstract/MED/{accession}">
+                    <xsl:text>Europe PMC </xsl:text>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
                         <xsl:with-param name="pText" select="accession"/>
@@ -929,16 +928,19 @@
     </xsl:template>
     
     <xsl:template name="exp-magetab-files-array">
-        <xsl:param name="pFiles"/>
         <xsl:param name="pBasePath"/>
         
-        <xsl:variable name="vArrayAccession" select="distinct-values(arraydesign/accession)"/>
-        <xsl:variable name="vFiles" select="$pFiles/file[@extension = 'txt' and @kind = 'adf']"/>
+        <xsl:variable name="vArrayAccession" select="fn:distinct-values(arraydesign/accession)"/>
+        <xsl:variable name="vFiles">
+            <xsl:for-each select="$vArrayAccession">
+                <xsl:copy-of select="ae:getMappedValue('ftp-folder', current())/file[@extension = 'txt' and @kind = 'adf']"/>
+            </xsl:for-each>
+        </xsl:variable>
         <xsl:if test="$vFiles">
             <tr>
-                <td class="attr_name">Array Design</td>
+                <td class="attr_name">Array Design<xsl:if test="count($vFiles/file) > 1">s</xsl:if></td>
                 <td class="attr_value">
-                    <xsl:for-each select="$vFiles">
+                    <xsl:for-each select="$vFiles/file">
                         <xsl:sort select="@name"/>
                         <a href="{$pBasePath}/files/{../@accession}/{@name}"><xsl:value-of select="@name"/></a>
                         <xsl:if test="position() != last()">
