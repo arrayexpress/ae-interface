@@ -47,7 +47,7 @@
                 <xsl:attribute name="available" select="ae:getMappedValue('raw-files', $vAccession) &gt; 0"/>
             </rawdatafiles>
             <fgemdatafiles>
-                <xsl:attribute name="available" select="((ae:getMappedValue('fgem-files', $vAccession) &gt; 0) or $vAccession = 'E-GEUV-1')"/>
+                <xsl:attribute name="available" select="((ae:getMappedValue('fgem-files', $vAccession) &gt; 0) or $vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3')"/>
             </fgemdatafiles>
 
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">

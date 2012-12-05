@@ -1026,7 +1026,7 @@
                 <xsl:when test="$pKind = 'raw' and seqdatauri">
                     <xsl:value-of select="seqdatauri"/>
                 </xsl:when>
-                <xsl:when test="$vAccession = 'E-GEUV-1' and $pKind = 'fgem'">
+                <xsl:when test="($vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3') and $pKind = 'fgem'">
                     <xsl:value-of select="$pBasePath"/>
                     <xsl:text>/files/</xsl:text>
                     <xsl:value-of select="$vAccession"/>
