@@ -45,7 +45,6 @@ public class GenomeSpace extends ApplicationComponent
     @Override
     public void initialize() throws Exception
     {
-        loadProperties();
     }
 
     @Override
@@ -55,14 +54,19 @@ public class GenomeSpace extends ApplicationComponent
 
     public String getPropertyValue( String key )
     {
+        if (null == gsProperties) {
+            loadProperties();
+        }
         return (null != gsProperties) ? gsProperties.getProperty(key) : null;
     }
 
-    private void loadProperties() throws IOException
+    private void loadProperties()
     {
         try (InputStream is = new URL(GS_PROPERTIES_URL).openStream()) {
             gsProperties = new Properties();
             gsProperties.load(is);
+        } catch (IOException x) {
+            logger.error("Unable to load properties:", x);
         }
     }
 }
