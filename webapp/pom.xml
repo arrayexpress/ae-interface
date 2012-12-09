@@ -281,10 +281,16 @@
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0/30 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-                
                 <interface.application.pref.files.rescan.interval>15</interface.application.pref.files.rescan.interval>
 
                 <interface.application.body.class>dev_preview</interface.application.body.class>
+            </properties>
+        </profile>
+        <profile>
+            <id>frequent-data-updates</id>
+            <properties>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0/30 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+                <interface.application.pref.files.rescan.interval>15</interface.application.pref.files.rescan.interval>
             </properties>
         </profile>
         <profile>
