@@ -35,7 +35,7 @@
 
     <rule>
         <from>^/microarray-as/aer/login</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html#login</to>
     </rule>
 
     <rule>
@@ -76,13 +76,13 @@
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html</to>
     </rule>
 
     <rule>
@@ -107,7 +107,7 @@
     <!-- /microarray-as/aer fallback rule -->
     <rule>
         <from>/microarray-as/aer/(.+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/upgraded.html</to>
     </rule>
 
     <!-- /aerep redirection -->
@@ -123,7 +123,7 @@
 
     <rule>
         <from>^/aerep/login</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html#login</to>
     </rule>
 
     <rule>
@@ -164,13 +164,13 @@
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/browse.html</to>
     </rule>
 
     <rule>
@@ -189,7 +189,7 @@
     <!-- /aerep fallback rule -->
     <rule>
         <from>^/aerep/(.+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect">${redirector.interface.base.path}/upgraded.html</to>
     </rule>
 
     <!-- default fallback rule -->

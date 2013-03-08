@@ -328,7 +328,7 @@
 							<xsl:for-each select="$node/namespace::*">
 								<json:member>
 									<xsl:choose>
-										<xsl:when test="string(prefix-from-QName(node-name($node))) eq ''">
+										<xsl:when test="prefix-from-QName(node-name($node)) eq ''">
 											<json:name>$</json:name>
 										</xsl:when>
 										<xsl:otherwise>

@@ -1,193 +1,999 @@
-<?xml version="1.0" encoding="US-ASCII"?>
-<table cols="8" rows="17">
-    <row>
-        <col>drwxr-xr-x</col>
-        <col>2</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>267</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1115</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.README.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1547751</col>
-        <col>2011-01-10</col>
-        <col>22:36</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.adf.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>2040084</col>
-        <col>2010-03-14</col>
-        <col>02:31</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.adf.xls</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>5639117</col>
-        <col>2009-01-23</col>
-        <col>17:02</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.cdf.zip</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>725355</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.compositesequences.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>17624880</col>
-        <col>2010-03-14</col>
-        <col>02:33</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.features.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>11222703</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/A-AFFY-1.reporters.txt</col>
-    </row>
-    <row>
-        <col>drwxr-xr-x</col>
-        <col>2</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>267</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/test</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1115</col>
-        <col>2010-03-14</col>
-        <col>02:34</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-1/test/README.txt</col>
-    </row>
-    <row>
-        <col>drwxr-xr-x</col>
-        <col>2</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>315</col>
-        <col>2010-03-14</col>
-        <col>18:57</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1115</col>
-        <col>2010-03-14</col>
-        <col>18:57</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.README.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1103523</col>
-        <col>2011-01-10</col>
-        <col>21:11</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.adf.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>1570423</col>
-        <col>2010-03-14</col>
-        <col>18:55</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.adf.xls</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>5655132</col>
-        <col>2009-01-23</col>
-        <col>17:02</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.cdf.zip</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>702288</col>
-        <col>2010-03-14</col>
-        <col>18:57</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.compositesequences.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>16822850</col>
-        <col>2010-03-14</col>
-        <col>18:57</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.features.txt</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>18344301</col>
-        <col>2008-08-14</col>
-        <col>12:49</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.mageml.tar.gz</col>
-    </row>
-    <row>
-        <col>-rwxr--r--</col>
-        <col>1</col>
-        <col>tomcat</col>
-        <col>microarray</col>
-        <col>10842101</col>
-        <col>2010-03-14</col>
-        <col>18:57</col>
-        <col>/ebi/ArrayExpress-ftp/array/AFFY/A-AFFY-10/A-AFFY-10.reporters.txt</col>
-    </row>
-</table>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<files root="/Users/kolais/Projects/AE/ftp">
+    <folder location="/Users/kolais/Projects/AE/ftp/array">
+        <folder location="/Users/kolais/Projects/AE/ftp/array/AFFY">
+            <folder location="/Users/kolais/Projects/AE/ftp/array/AFFY/A-AFFY-33">
+                <file kind="adf" extension="txt" name="A-AFFY-33.adf.txt" size="3550471" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-33.compositesequences.txt" size="1334428" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-33.features.txt" size="21175737" lastmodified="10 October 2008, 13:50"/>
+                <file kind="mageml" extension="tar.gz" name="A-AFFY-33.mageml.tar.gz" size="16932530" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-33.README.txt" size="1186" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-33.reporters.txt" size="13895746" lastmodified="10 October 2008, 13:50"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/array/AFFY/A-AFFY-34">
+                <file kind="adf" extension="txt" name="A-AFFY-34.adf.txt" size="3550471" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-34.compositesequences.txt" size="1334428" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-34.features.txt" size="21175737" lastmodified="10 October 2008, 13:50"/>
+                <file kind="mageml" extension="tar.gz" name="A-AFFY-34.mageml.tar.gz" size="16932530" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-34.README.txt" size="1186" lastmodified="10 October 2008, 13:50"/>
+                <file kind="" extension="txt" name="A-AFFY-34.reporters.txt" size="13895746" lastmodified="10 October 2008, 13:50"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/array/AFFY/A-AFFY-40">
+                <file kind="adf" extension="txt" name="A-AFFY-40.adf.txt" size="2359075" lastmodified="7 December 2007, 00:00"/>
+                <file kind="" extension="txt" name="A-AFFY-40.compositesequences.txt" size="1513766" lastmodified="9 February 2006, 00:00"/>
+                <file kind="" extension="txt" name="A-AFFY-40.features.txt" size="21427536" lastmodified="9 February 2006, 00:00"/>
+                <file kind="mageml" extension="tar.gz" name="A-AFFY-40.mageml.tar.gz" size="20379940" lastmodified="13 August 2008, 12:00"/>
+                <file kind="" extension="txt" name="A-AFFY-40.README.txt" size="1186" lastmodified="6 March 2008, 00:00"/>
+                <file kind="" extension="txt" name="A-AFFY-40.reporters.txt" size="14939373" lastmodified="9 February 2006, 00:00"/>
+            </folder>
+        </folder>
+    </folder>
+    <folder location="/Users/kolais/Projects/AE/ftp/experiment">
+        <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX">
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-1">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-1.2columns.txt" size="3198" lastmodified="2 June 2008, 15:16"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-1.2columns.xls" size="7680" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-1.biosamples.map" size="23748" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-1.biosamples.png" size="34304" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-1.biosamples.svg" size="92520" lastmodified="2 June 2008, 15:16"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-1.cel.tar.gz" size="61210243" lastmodified="2 June 2008, 15:16"/>
+                <file kind="cel" extension="zip" name="E-AFMX-1.cel.zip" size="59077897" lastmodified="2 June 2008, 15:16"/>
+                <file kind="idf" extension="txt" name="E-AFMX-1.idf.txt" size="3843" lastmodified="2 June 2008, 15:16"/>
+                <file kind="idf" extension="xls" name="E-AFMX-1.idf.xls" size="9728" lastmodified="2 June 2008, 15:16"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-1.mageml.tgz" size="66725016" lastmodified="2 June 2008, 15:16"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-1.processed.zip" size="1450820" lastmodified="2 June 2008, 15:16"/>
+                <file kind="raw" extension="zip" name="E-AFMX-1.raw.zip" size="61213727" lastmodified="2 June 2008, 15:16"/>
+                <file kind="" extension="txt" name="E-AFMX-1.README.txt" size="3950" lastmodified="2 June 2008, 15:16"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-1.sdrf.txt" size="16313" lastmodified="2 June 2008, 15:16"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-1.sdrf.xls" size="26112" lastmodified="2 June 2008, 15:16"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-10">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-10.2columns.txt" size="2295" lastmodified="2 June 2008, 15:16"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-10.2columns.xls" size="6144" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-10.biosamples.map" size="6869" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-10.biosamples.png" size="7829" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-10.biosamples.svg" size="27593" lastmodified="2 June 2008, 15:16"/>
+                <file kind="idf" extension="txt" name="E-AFMX-10.idf.txt" size="3016" lastmodified="2 June 2008, 15:16"/>
+                <file kind="idf" extension="xls" name="E-AFMX-10.idf.xls" size="9216" lastmodified="2 June 2008, 15:16"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-10.mageml.tgz" size="17939170" lastmodified="2 June 2008, 15:16"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-10.processed.zip" size="670893" lastmodified="2 June 2008, 15:16"/>
+                <file kind="raw" extension="zip" name="E-AFMX-10.raw.zip" size="96976084" lastmodified="2 June 2008, 15:16"/>
+                <file kind="" extension="txt" name="E-AFMX-10.README.txt" size="3950" lastmodified="2 June 2008, 15:16"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-10.sdrf.txt" size="8277" lastmodified="2 June 2008, 15:16"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-10.sdrf.xls" size="14848" lastmodified="2 June 2008, 15:16"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-11">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-11.2columns.txt" size="9161" lastmodified="2 June 2008, 15:17"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-11.2columns.xls" size="15360" lastmodified="2 June 2008, 15:17"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-11.biosamples.map" size="62309" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-11.biosamples.png" size="97138" lastmodified="2 June 2008, 15:16"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-11.biosamples.svg" size="244180" lastmodified="2 June 2008, 15:16"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-11.cel.tar.gz" size="513746993" lastmodified="2 June 2008, 15:16"/>
+                <file kind="cel" extension="zip" name="E-AFMX-11.cel.zip" size="523049114" lastmodified="2 June 2008, 15:17"/>
+                <file kind="idf" extension="txt" name="E-AFMX-11.idf.txt" size="3791" lastmodified="2 June 2008, 15:17"/>
+                <file kind="idf" extension="xls" name="E-AFMX-11.idf.xls" size="9728" lastmodified="2 June 2008, 15:17"/>
+                <file kind="mageml" extension="tar.gz" name="E-AFMX-11.mageml.tar.gz" size="532443687" lastmodified="2 June 2008, 15:17"/>
+                <file kind="raw" extension="zip" name="E-AFMX-11.raw.zip" size="513755860" lastmodified="2 June 2008, 15:17"/>
+                <file kind="" extension="txt" name="E-AFMX-11.README.txt" size="3950" lastmodified="2 June 2008, 15:17"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-11.sdrf.txt" size="42533" lastmodified="2 June 2008, 15:17"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-11.sdrf.xls" size="62976" lastmodified="2 June 2008, 15:16"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-12">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-12.2columns.txt" size="9253" lastmodified="2 June 2008, 15:18"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-12.2columns.xls" size="18432" lastmodified="2 June 2008, 15:17"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-12.biosamples.map" size="55390" lastmodified="2 June 2008, 15:17"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-12.biosamples.png" size="60717" lastmodified="2 June 2008, 15:17"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-12.biosamples.svg" size="223710" lastmodified="2 June 2008, 15:17"/>
+                <file kind="idf" extension="txt" name="E-AFMX-12.idf.txt" size="5189" lastmodified="2 June 2008, 15:18"/>
+                <file kind="idf" extension="xls" name="E-AFMX-12.idf.xls" size="11264" lastmodified="2 June 2008, 15:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-AFMX-12.mageml.tar.gz" size="155165207" lastmodified="2 June 2008, 15:18"/>
+                <file kind="raw" extension="zip" name="E-AFMX-12.raw.zip" size="1145144909" lastmodified="2 June 2008, 15:18"/>
+                <file kind="" extension="txt" name="E-AFMX-12.README.txt" size="3950" lastmodified="2 June 2008, 15:18"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-12.sdrf.txt" size="44154" lastmodified="2 June 2008, 15:18"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-12.sdrf.xls" size="68096" lastmodified="2 June 2008, 15:17"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-13">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-13.2columns.txt" size="2521" lastmodified="2 June 2008, 15:18"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-13.2columns.xls" size="7680" lastmodified="2 June 2008, 15:18"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-13.biosamples.map" size="13581" lastmodified="2 June 2008, 15:18"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-13.biosamples.png" size="17666" lastmodified="2 June 2008, 15:18"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-13.biosamples.svg" size="53844" lastmodified="2 June 2008, 15:18"/>
+                <file kind="idf" extension="txt" name="E-AFMX-13.idf.txt" size="3949" lastmodified="2 June 2008, 15:18"/>
+                <file kind="idf" extension="xls" name="E-AFMX-13.idf.xls" size="10240" lastmodified="2 June 2008, 15:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-AFMX-13.mageml.tar.gz" size="36154791" lastmodified="2 June 2008, 15:18"/>
+                <file kind="raw" extension="zip" name="E-AFMX-13.raw.zip" size="278410861" lastmodified="2 June 2008, 15:19"/>
+                <file kind="" extension="txt" name="E-AFMX-13.README.txt" size="3950" lastmodified="2 June 2008, 15:19"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-13.sdrf.txt" size="11680" lastmodified="2 June 2008, 15:18"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-13.sdrf.xls" size="21504" lastmodified="2 June 2008, 15:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-2">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-2.2columns.txt" size="24858" lastmodified="2 June 2008, 15:20"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-2.2columns.xls" size="36864" lastmodified="2 June 2008, 15:19"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-2.biosamples.map" size="185877" lastmodified="2 June 2008, 15:19"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-2.biosamples.png" size="177760" lastmodified="2 June 2008, 15:19"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-2.biosamples.svg" size="743125" lastmodified="2 June 2008, 15:19"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-2.cel.tar.gz" size="398872605" lastmodified="2 June 2008, 15:19"/>
+                <file kind="cel" extension="zip" name="E-AFMX-2.cel.zip" size="404693354" lastmodified="2 June 2008, 15:19"/>
+                <file kind="idf" extension="txt" name="E-AFMX-2.idf.txt" size="9368" lastmodified="2 June 2008, 15:20"/>
+                <file kind="idf" extension="xls" name="E-AFMX-2.idf.xls" size="15360" lastmodified="2 June 2008, 15:20"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-2.mageml.tgz" size="417742362" lastmodified="2 June 2008, 15:20"/>
+                <file kind="raw" extension="zip" name="E-AFMX-2.raw.zip" size="398901871" lastmodified="2 June 2008, 15:20"/>
+                <file kind="" extension="txt" name="E-AFMX-2.README.txt" size="3950" lastmodified="2 June 2008, 15:20"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-2.sdrf.txt" size="114320" lastmodified="2 June 2008, 15:20"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-2.sdrf.xls" size="171008" lastmodified="2 June 2008, 15:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-3">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-3.2columns.txt" size="20653" lastmodified="2 June 2008, 15:20"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-3.2columns.xls" size="22528" lastmodified="2 June 2008, 15:20"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-3.biosamples.map" size="81605" lastmodified="2 June 2008, 15:20"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-3.biosamples.png" size="77091" lastmodified="2 June 2008, 15:20"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-3.biosamples.svg" size="332583" lastmodified="2 June 2008, 15:20"/>
+                <file kind="idf" extension="txt" name="E-AFMX-3.idf.txt" size="9037" lastmodified="2 June 2008, 15:20"/>
+                <file kind="idf" extension="xls" name="E-AFMX-3.idf.xls" size="14848" lastmodified="2 June 2008, 15:20"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-3.mageml.tgz" size="259420014" lastmodified="2 June 2008, 15:20"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-3.processed.zip" size="10309832" lastmodified="2 June 2008, 15:20"/>
+                <file kind="raw" extension="zip" name="E-AFMX-3.raw.zip" size="595008449" lastmodified="2 June 2008, 15:21"/>
+                <file kind="" extension="txt" name="E-AFMX-3.README.txt" size="3950" lastmodified="11 February 2009, 19:10"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-3.sdrf.txt" size="66138" lastmodified="2 June 2008, 15:20"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-3.sdrf.xls" size="93696" lastmodified="2 June 2008, 15:20"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-4">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-4.2columns.txt" size="38530" lastmodified="2 June 2008, 15:22"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-4.2columns.xls" size="41984" lastmodified="2 June 2008, 15:21"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-4.biosamples.map" size="160730" lastmodified="2 June 2008, 15:21"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-4.biosamples.png" size="139597" lastmodified="2 June 2008, 15:21"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-4.biosamples.svg" size="666503" lastmodified="2 June 2008, 15:21"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-4.cel.tar.gz" size="626253611" lastmodified="2 June 2008, 15:21"/>
+                <file kind="idf" extension="txt" name="E-AFMX-4.idf.txt" size="3450" lastmodified="2 June 2008, 15:22"/>
+                <file kind="idf" extension="xls" name="E-AFMX-4.idf.xls" size="9216" lastmodified="2 June 2008, 15:22"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-4.mageml.tgz" size="11593270" lastmodified="2 June 2008, 15:21"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-4.processed.zip" size="21308040" lastmodified="2 June 2008, 15:21"/>
+                <file kind="raw" extension="zip" name="E-AFMX-4.raw.zip" size="629154969" lastmodified="2 June 2008, 15:22"/>
+                <file kind="" extension="txt" name="E-AFMX-4.README.txt" size="3950" lastmodified="2 June 2008, 15:22"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-4.sdrf.txt" size="129542" lastmodified="2 June 2008, 15:22"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-4.sdrf.xls" size="189440" lastmodified="2 June 2008, 15:21"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-5">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-5.2columns.txt" size="187037" lastmodified="2 June 2008, 15:23"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-5.2columns.xls" size="116224" lastmodified="2 June 2008, 15:23"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-5.biosamples.map" size="285443" lastmodified="2 June 2008, 15:22"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-5.biosamples.png" size="387937" lastmodified="2 June 2008, 15:22"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-5.biosamples.svg" size="1166791" lastmodified="2 June 2008, 15:22"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-5.cel.tar.gz" size="1127123974" lastmodified="2 June 2008, 15:23"/>
+                <file kind="idf" extension="txt" name="E-AFMX-5.idf.txt" size="19346" lastmodified="2 June 2008, 15:23"/>
+                <file kind="idf" extension="xls" name="E-AFMX-5.idf.xls" size="25600" lastmodified="2 June 2008, 15:23"/>
+                <file kind="mageml" extension="tar.gz" name="E-AFMX-5.mageml.tar.gz" size="2932076" lastmodified="2 June 2008, 15:23"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-5.processed.zip" size="34520831" lastmodified="2 June 2008, 15:23"/>
+                <file kind="raw" extension="zip" name="E-AFMX-5.raw.zip" size="1134739783" lastmodified="2 June 2008, 15:23"/>
+                <file kind="" extension="txt" name="E-AFMX-5.README.txt" size="3950" lastmodified="2 June 2008, 15:23"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-5.sdrf.txt" size="646072" lastmodified="2 June 2008, 15:23"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-5.sdrf.xls" size="651264" lastmodified="2 June 2008, 15:22"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-6">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-6.2columns.txt" size="1" lastmodified="2 June 2008, 15:25"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-6.2columns.xls" size="4096" lastmodified="2 June 2008, 15:24"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-6.biosamples.map" size="346724" lastmodified="2 June 2008, 15:23"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-6.biosamples.png" size="566860" lastmodified="2 June 2008, 15:24"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-6.biosamples.svg" size="1364010" lastmodified="2 June 2008, 15:24"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-6.cel.tar.gz" size="1481350952" lastmodified="2 June 2008, 15:24"/>
+                <file kind="idf" extension="txt" name="E-AFMX-6.idf.txt" size="3519" lastmodified="2 June 2008, 15:25"/>
+                <file kind="idf" extension="xls" name="E-AFMX-6.idf.xls" size="8704" lastmodified="2 June 2008, 15:25"/>
+                <file kind="mageml" extension="tar.gz" name="E-AFMX-6.mageml.tar.gz" size="2965817" lastmodified="2 June 2008, 15:25"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-6.processed.zip" size="41331004" lastmodified="2 June 2008, 15:25"/>
+                <file kind="raw" extension="zip" name="E-AFMX-6.raw.zip" size="26011368" lastmodified="2 June 2008, 15:25"/>
+                <file kind="" extension="txt" name="E-AFMX-6.README.txt" size="3950" lastmodified="2 June 2008, 15:25"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-6.sdrf.txt" size="1" lastmodified="2 June 2008, 15:25"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-6.sdrf.xls" size="4096" lastmodified="2 June 2008, 15:23"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-7">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-7.2columns.txt" size="78052" lastmodified="2 June 2008, 15:26"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-7.2columns.xls" size="75264" lastmodified="2 June 2008, 15:25"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-7.biosamples.map" size="292587" lastmodified="2 June 2008, 15:25"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-7.biosamples.png" size="297890" lastmodified="2 June 2008, 15:25"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-7.biosamples.svg" size="1191621" lastmodified="2 June 2008, 15:25"/>
+                <file kind="cel" extension="tar.gz" name="E-AFMX-7.cel.tar.gz" size="654539381" lastmodified="2 June 2008, 15:25"/>
+                <file kind="idf" extension="txt" name="E-AFMX-7.idf.txt" size="29253" lastmodified="2 June 2008, 15:26"/>
+                <file kind="idf" extension="xls" name="E-AFMX-7.idf.xls" size="35328" lastmodified="2 June 2008, 15:26"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-7.mageml.tgz" size="703332730" lastmodified="2 June 2008, 15:25"/>
+                <file kind="fgem" extension="zip" name="E-AFMX-7.processed.zip" size="17197475" lastmodified="2 June 2008, 15:25"/>
+                <file kind="raw" extension="zip" name="E-AFMX-7.raw.zip" size="654586467" lastmodified="2 June 2008, 15:26"/>
+                <file kind="" extension="txt" name="E-AFMX-7.README.txt" size="3950" lastmodified="2 June 2008, 15:26"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-7.sdrf.txt" size="265125" lastmodified="2 June 2008, 15:26"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-7.sdrf.xls" size="325632" lastmodified="2 June 2008, 15:25"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-8">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-8.2columns.txt" size="8527" lastmodified="2 June 2008, 15:26"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-8.2columns.xls" size="15360" lastmodified="2 June 2008, 15:26"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-8.biosamples.map" size="45245" lastmodified="2 June 2008, 15:26"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-8.biosamples.png" size="65361" lastmodified="2 June 2008, 15:26"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-8.biosamples.svg" size="180768" lastmodified="2 June 2008, 15:26"/>
+                <file kind="idf" extension="txt" name="E-AFMX-8.idf.txt" size="4087" lastmodified="2 June 2008, 15:26"/>
+                <file kind="idf" extension="xls" name="E-AFMX-8.idf.xls" size="9728" lastmodified="2 June 2008, 15:26"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-8.mageml.tgz" size="145069207" lastmodified="2 June 2008, 15:26"/>
+                <file kind="raw" extension="zip" name="E-AFMX-8.raw.zip" size="599601285" lastmodified="2 June 2008, 15:27"/>
+                <file kind="" extension="txt" name="E-AFMX-8.README.txt" size="3950" lastmodified="2 June 2008, 15:27"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-8.sdrf.txt" size="36876" lastmodified="2 June 2008, 15:26"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-8.sdrf.xls" size="51200" lastmodified="2 June 2008, 15:26"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/AFMX/E-AFMX-9">
+                <file kind="twocolumns" extension="txt" name="E-AFMX-9.2columns.txt" size="43748" lastmodified="2 June 2008, 15:27"/>
+                <file kind="twocolumns" extension="xls" name="E-AFMX-9.2columns.xls" size="60416" lastmodified="2 June 2008, 15:27"/>
+                <file kind="biosamples" extension="map" name="E-AFMX-9.biosamples.map" size="269171" lastmodified="2 June 2008, 15:27"/>
+                <file kind="biosamples" extension="png" name="E-AFMX-9.biosamples.png" size="368253" lastmodified="2 June 2008, 15:27"/>
+                <file kind="biosamples" extension="svg" name="E-AFMX-9.biosamples.svg" size="1085836" lastmodified="2 June 2008, 15:27"/>
+                <file kind="idf" extension="txt" name="E-AFMX-9.idf.txt" size="4019" lastmodified="2 June 2008, 15:27"/>
+                <file kind="idf" extension="xls" name="E-AFMX-9.idf.xls" size="9728" lastmodified="2 June 2008, 15:27"/>
+                <file kind="mageml" extension="tgz" name="E-AFMX-9.mageml.tgz" size="856993322" lastmodified="2 June 2008, 15:27"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.1.zip" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.2.zip" size="3557295789" lastmodified="2 June 2008, 15:31"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.3.zip" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.4.zip" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.5.zip" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="raw" extension="zip" name="E-AFMX-9.raw.6.zip" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="" extension="txt" name="E-AFMX-9.README.txt" size="3950" lastmodified="2 June 2008, 15:31"/>
+                <file kind="sdrf" extension="txt" name="E-AFMX-9.sdrf.txt" size="197281" lastmodified="2 June 2008, 15:27"/>
+                <file kind="sdrf" extension="xls" name="E-AFMX-9.sdrf.xls" size="250880" lastmodified="2 June 2008, 15:27"/>
+            </folder>
+        </folder>
+        <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX">
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-1">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-1.2columns.txt" size="659" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-1.2columns.xls" size="5120" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-1.biosamples.map" size="5407" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-1.biosamples.png" size="4882" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-1.biosamples.svg" size="20450" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-1.cel.tar.gz" size="8123945" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-1.idf.txt" size="6024" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-1.idf.xls" size="12288" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-1.mageml.tar.gz" size="310514" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-1.processed.zip" size="331076" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-1.raw.zip" size="8420161" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-1.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-1.sdrf.txt" size="4328" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-1.sdrf.xls" size="10752" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-10">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-10.2columns.txt" size="827" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-10.2columns.xls" size="5632" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-10.biosamples.png" size="6532" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-10.biosamples.svg" size="25336" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-10.cel.tar.gz" size="9097126" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-10.idf.txt" size="4279" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-10.idf.xls" size="10240" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-10.mageml.tar.gz" size="385187" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-10.processed.zip" size="396595" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-10.raw.zip" size="9198704" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-10.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-10.sdrf.txt" size="5898" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-10.sdrf.xls" size="12800" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-11">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-11.2columns.txt" size="15120" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-11.2columns.xls" size="22016" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-11.biosamples.png" size="50311" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-11.biosamples.svg" size="146080" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-11.idf.txt" size="15879" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-11.idf.xls" size="22016" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-11.mageml.tar.gz" size="46556889" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-11.raw.zip" size="65949710" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-11.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-11.sdrf.txt" size="49398" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-11.sdrf.xls" size="76800" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-12">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-12.2columns.txt" size="1084" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-12.2columns.xls" size="6144" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-12.biosamples.png" size="5667" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-12.biosamples.svg" size="26162" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-12.idf.txt" size="4242" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-12.idf.xls" size="10240" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-12.mageml.tar.gz" size="31767306" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-12.processed.zip" size="1673346" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-12.raw.zip" size="34405083" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-12.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-12.sdrf.txt" size="5551" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-12.sdrf.xls" size="13312" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-13">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-13.2columns.txt" size="2365" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-13.2columns.xls" size="8192" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-13.biosamples.map" size="18560" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-13.biosamples.png" size="31356" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-13.biosamples.svg" size="79616" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-13.cel.tar.gz" size="30533138" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-13.idf.txt" size="3020" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-13.idf.xls" size="9216" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-13.mageml.tar.gz" size="1841263" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-13.processed.zip" size="1896763" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-13.raw.zip" size="31493064" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-13.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-13.sdrf.txt" size="12393" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-13.sdrf.xls" size="24064" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-14">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-14.2columns.txt" size="2312" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-14.2columns.xls" size="7168" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-14.biosamples.map" size="12398" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-14.biosamples.png" size="11206" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-14.biosamples.svg" size="49654" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-14.idf.txt" size="7394" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-14.idf.xls" size="13312" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-14.mageml.tar.gz" size="15290645" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-14.processed.zip" size="2227584" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-14.raw.zip" size="25139099" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-14.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-14.sdrf.txt" size="11622" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-14.sdrf.xls" size="21504" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-15">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-15.2columns.txt" size="9263" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-15.2columns.xls" size="15360" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-15.biosamples.map" size="29012" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-15.biosamples.png" size="96956" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-15.biosamples.svg" size="140414" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-15.idf.txt" size="7037" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-15.idf.xls" size="13312" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-15.mageml.tar.gz" size="28164896" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-15.processed.zip" size="587069" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-15.raw.zip" size="31184406" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-15.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-15.sdrf.txt" size="31514" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-15.sdrf.xls" size="60416" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-16">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-16.2columns.txt" size="1333" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-16.2columns.xls" size="5632" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-16.biosamples.map" size="8311" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-16.biosamples.png" size="7091" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-16.biosamples.svg" size="33005" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-16.idf.txt" size="6253" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-16.idf.xls" size="12288" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-16.mageml.tar.gz" size="9746349" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-16.processed.zip" size="653468" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-16.raw.zip" size="17343017" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-16.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-16.sdrf.txt" size="4528" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-16.sdrf.xls" size="11776" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-17">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-17.2columns.txt" size="1532" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-17.2columns.xls" size="6144" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-17.biosamples.map" size="8312" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-17.biosamples.png" size="7567" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-17.biosamples.svg" size="32974" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-17.idf.txt" size="6476" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-17.idf.xls" size="12288" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-17.mageml.tar.gz" size="9993213" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-17.processed.zip" size="644152" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-17.raw.zip" size="17636955" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-17.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-17.sdrf.txt" size="4779" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-17.sdrf.xls" size="12288" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-18">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-18.2columns.txt" size="4575" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-18.2columns.xls" size="12288" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-18.biosamples.map" size="24682" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-18.biosamples.png" size="23660" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-18.biosamples.svg" size="99223" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-18.idf.txt" size="6265" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-18.idf.xls" size="12288" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-18.mageml.tar.gz" size="27086873" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-18.raw.zip" size="51474066" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-18.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-18.sdrf.txt" size="19024" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-18.sdrf.xls" size="38400" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-19">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-19.2columns.txt" size="3309" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-19.2columns.xls" size="7168" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-19.biosamples.map" size="11978" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-19.biosamples.png" size="9560" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-19.biosamples.svg" size="47055" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-19.cel.tar.gz" size="18010705" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-19.idf.txt" size="4488" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-19.idf.xls" size="10752" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-19.mageml.tar.gz" size="1462706" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-19.processed.zip" size="1294292" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-19.raw.zip" size="18553061" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-19.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-19.sdrf.txt" size="10092" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-19.sdrf.xls" size="18944" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-2">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-2.2columns.txt" size="868" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-2.2columns.xls" size="5632" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-2.biosamples.map" size="5404" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-2.biosamples.png" size="4558" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-2.biosamples.svg" size="20738" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-2.cel.tar.gz" size="7578087" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-2.idf.txt" size="4132" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-2.idf.xls" size="10240" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-2.mageml.tar.gz" size="7173" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-2.raw.zip" size="7689573" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-2.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-2.sdrf.txt" size="4055" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-2.sdrf.xls" size="11264" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-20">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-20.2columns.txt" size="1936" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-20.2columns.xls" size="6144" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-20.biosamples.map" size="8039" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-20.biosamples.png" size="14388" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-20.biosamples.svg" size="36788" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-20.cel.tar.gz" size="11788911" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-20.idf.txt" size="4532" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-20.idf.xls" size="10752" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-20.mageml.tar.gz" size="1002888" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-20.processed.zip" size="920076" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-20.raw.zip" size="12137314" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-20.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-20.sdrf.txt" size="6567" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-20.sdrf.xls" size="13824" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-21">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-21.2columns.txt" size="6131" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-21.2columns.xls" size="11264" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-21.biosamples.map" size="23838" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-21.biosamples.png" size="41391" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-21.biosamples.svg" size="110794" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-21.cel.tar.gz" size="36364062" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-21.idf.txt" size="5752" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-21.idf.xls" size="11776" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-21.mageml.tar.gz" size="2685973" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-21.processed.zip" size="2191373" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-21.raw.zip" size="37465183" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-21.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-21.sdrf.txt" size="17818" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-21.sdrf.xls" size="32768" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-22">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-22.2columns.txt" size="2815" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-22.2columns.xls" size="8192" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-22.biosamples.map" size="16503" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-22.biosamples.png" size="23354" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-22.biosamples.svg" size="77696" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-22.idf.txt" size="14438" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-22.idf.xls" size="20480" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-22.mageml.tar.gz" size="25064514" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-22.raw.zip" size="28848226" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-22.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-22.sdrf.txt" size="11008" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-22.sdrf.xls" size="23040" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-23">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-23.2columns.txt" size="2873" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-23.2columns.xls" size="8192" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-23.biosamples.map" size="16501" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-23.biosamples.png" size="23003" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-23.biosamples.svg" size="77991" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-23.idf.txt" size="14343" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-23.idf.xls" size="20480" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-23.mageml.tar.gz" size="25026966" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-23.raw.zip" size="28809083" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-23.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-23.sdrf.txt" size="11370" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-23.sdrf.xls" size="23040" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-24">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-24.2columns.txt" size="3721" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-24.2columns.xls" size="10240" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-24.biosamples.map" size="23862" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-24.biosamples.png" size="43909" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-24.biosamples.svg" size="109707" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-24.cel.tar.gz" size="38801370" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-24.idf.txt" size="2862" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-24.idf.xls" size="8704" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-24.mageml.tar.gz" size="10857" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-24.raw.zip" size="40176707" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-24.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-24.sdrf.txt" size="14290" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-24.sdrf.xls" size="31232" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-25">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-25.2columns.txt" size="1772" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-25.2columns.xls" size="6656" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-25.biosamples.map" size="11983" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-25.biosamples.png" size="27408" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-25.biosamples.svg" size="53585" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-25.cel.tar.gz" size="16655323" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-25.idf.txt" size="2798" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-25.idf.xls" size="8704" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-25.mageml.tar.gz" size="7726" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-25.raw.zip" size="17141732" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-25.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-25.sdrf.txt" size="6644" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-25.sdrf.xls" size="16896" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-26">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-26.2columns.txt" size="1605" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-26.2columns.xls" size="6144" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-26.biosamples.map" size="8039" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-26.biosamples.png" size="13071" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-26.biosamples.svg" size="36926" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-26.cel.tar.gz" size="11091301" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-26.idf.txt" size="2980" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-26.idf.xls" size="9216" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-26.mageml.tar.gz" size="6985" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-26.raw.zip" size="11421838" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-26.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-26.sdrf.txt" size="5871" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-26.sdrf.xls" size="14848" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-27">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-27.2columns.txt" size="3403" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-27.2columns.xls" size="9728" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-27.biosamples.map" size="23910" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-27.biosamples.png" size="56416" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-27.biosamples.svg" size="107895" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-27.cel.tar.gz" size="33409383" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-27.idf.txt" size="2787" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-27.idf.xls" size="8704" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-27.mageml.tar.gz" size="10678" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-27.raw.zip" size="34385406" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-27.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-27.sdrf.txt" size="12777" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-27.sdrf.xls" size="29696" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-28">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-28.2columns.txt" size="1442" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-28.2columns.xls" size="6144" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-28.biosamples.map" size="5411" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-28.biosamples.png" size="11201" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-28.biosamples.svg" size="24237" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-28.cel.tar.gz" size="14123775" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-28.idf.txt" size="4404" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-28.idf.xls" size="10752" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-28.mageml.tar.gz" size="649717" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-28.processed.zip" size="605981" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-28.raw.zip" size="14212983" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-28.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-28.sdrf.txt" size="4573" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-28.sdrf.xls" size="11264" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-29">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-29.2columns.txt" size="1033" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-29.2columns.xls" size="5120" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-29.biosamples.map" size="6264" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-29.biosamples.png" size="9109" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-29.biosamples.svg" size="28111" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-29.idf.txt" size="7469" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-29.idf.xls" size="13824" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-29.mageml.tar.gz" size="7670469" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-29.processed.zip" size="850075" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-29.raw.zip" size="12993956" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-29.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-29.sdrf.txt" size="3343" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-29.sdrf.xls" size="9728" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-3">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-3.2columns.txt" size="5109" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-3.2columns.xls" size="10240" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-3.biosamples.png" size="22690" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-3.biosamples.svg" size="81530" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-3.cel.tar.gz" size="43048831" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-3.idf.txt" size="3755" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-3.idf.xls" size="9728" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-3.mageml.tar.gz" size="0" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-3.processed.zip" size="2043815" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-3.raw.zip" size="43881038" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-3.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-3.sdrf.txt" size="16293" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-3.sdrf.xls" size="30720" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-30">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-30.2columns.txt" size="3966" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-30.2columns.xls" size="8192" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-30.biosamples.map" size="15924" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-30.biosamples.png" size="26792" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-30.biosamples.svg" size="68041" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-30.cel.tar.gz" size="25327295" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-30.idf.txt" size="5980" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-30.idf.xls" size="12288" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-30.mageml.tar.gz" size="1901016" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-30.processed.zip" size="1649197" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-30.raw.zip" size="26132619" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-30.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-30.sdrf.txt" size="13035" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-30.sdrf.xls" size="24576" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-31">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-31.2columns.txt" size="2755" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-31.2columns.xls" size="6656" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-31.biosamples.map" size="11982" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-31.biosamples.png" size="23299" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-31.biosamples.svg" size="50523" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-31.cel.tar.gz" size="18638563" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-31.idf.txt" size="4924" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-31.idf.xls" size="10752" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-31.mageml.tar.gz" size="1439680" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-31.processed.zip" size="1269312" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-31.raw.zip" size="19204270" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-31.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-31.sdrf.txt" size="8379" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-31.sdrf.xls" size="16896" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-32">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-32.2columns.txt" size="2743" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-32.2columns.xls" size="8192" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-32.biosamples.map" size="18548" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-32.biosamples.png" size="27074" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-32.biosamples.svg" size="80514" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-32.cel.tar.gz" size="28929582" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="txt" name="E-ATMX-32.idf.txt" size="3984" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-32.idf.xls" size="10240" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-32.mageml.tar.gz" size="1258549" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-32.processed.zip" size="1349315" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-32.raw.zip" size="29804114" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-32.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-32.sdrf.txt" size="15274" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-32.sdrf.xls" size="27648" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-33">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-33.2columns.txt" size="2115" lastmodified="18 August 2009, 13:19"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-33.2columns.xls" size="7168" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-33.biosamples.map" size="15921" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-33.biosamples.png" size="21718" lastmodified="18 August 2009, 13:19"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-33.biosamples.svg" size="67954" lastmodified="18 August 2009, 13:19"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-33.cel.tar.gz" size="37352595" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="txt" name="E-ATMX-33.idf.txt" size="4217" lastmodified="18 August 2009, 13:19"/>
+                <file kind="idf" extension="xls" name="E-ATMX-33.idf.xls" size="10240" lastmodified="18 August 2009, 13:19"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-33.mageml.tar.gz" size="1656540" lastmodified="18 August 2009, 13:19"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-33.processed.zip" size="1708825" lastmodified="18 August 2009, 13:19"/>
+                <file kind="raw" extension="zip" name="E-ATMX-33.raw.zip" size="37841917" lastmodified="18 August 2009, 13:19"/>
+                <file kind="" extension="txt" name="E-ATMX-33.README.txt" size="3950" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-33.sdrf.txt" size="11842" lastmodified="18 August 2009, 13:19"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-33.sdrf.xls" size="23040" lastmodified="18 August 2009, 13:19"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-34">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-34.2columns.txt" size="1976" lastmodified="18 August 2009, 13:20"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-34.2columns.xls" size="6144" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-34.biosamples.map" size="8039" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-34.biosamples.png" size="14311" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-34.biosamples.svg" size="34265" lastmodified="18 August 2009, 13:20"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-34.cel.tar.gz" size="19142892" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="txt" name="E-ATMX-34.idf.txt" size="5263" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="xls" name="E-ATMX-34.idf.xls" size="11264" lastmodified="18 August 2009, 13:20"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-34.mageml.tar.gz" size="1899216" lastmodified="18 August 2009, 13:20"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-34.processed.zip" size="1951151" lastmodified="18 August 2009, 13:20"/>
+                <file kind="raw" extension="zip" name="E-ATMX-34.raw.zip" size="19296311" lastmodified="18 August 2009, 13:20"/>
+                <file kind="" extension="txt" name="E-ATMX-34.README.txt" size="3950" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-34.sdrf.txt" size="6107" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-34.sdrf.xls" size="13312" lastmodified="18 August 2009, 13:20"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-35">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-35.2columns.txt" size="1497" lastmodified="18 August 2009, 13:20"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-35.2columns.xls" size="6144" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-35.biosamples.map" size="11982" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-35.biosamples.png" size="23731" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-35.biosamples.svg" size="51029" lastmodified="18 August 2009, 13:20"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-35.cel.tar.gz" size="17809565" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="txt" name="E-ATMX-35.idf.txt" size="9251" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="xls" name="E-ATMX-35.idf.xls" size="15360" lastmodified="18 August 2009, 13:20"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-35.mageml.tar.gz" size="10732" lastmodified="18 August 2009, 13:20"/>
+                <file kind="raw" extension="zip" name="E-ATMX-35.raw.zip" size="18360312" lastmodified="18 August 2009, 13:20"/>
+                <file kind="" extension="txt" name="E-ATMX-35.README.txt" size="3950" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-35.sdrf.txt" size="8108" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-35.sdrf.xls" size="18432" lastmodified="18 August 2009, 13:20"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-36">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-36.2columns.txt" size="1043" lastmodified="18 August 2009, 13:20"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-36.2columns.xls" size="5120" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-36.biosamples.map" size="4809" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-36.biosamples.png" size="11452" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-36.biosamples.svg" size="21529" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="txt" name="E-ATMX-36.idf.txt" size="8767" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="xls" name="E-ATMX-36.idf.xls" size="14848" lastmodified="18 August 2009, 13:20"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-36.mageml.tar.gz" size="5023875" lastmodified="18 August 2009, 13:20"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-36.processed.zip" size="1139990" lastmodified="18 August 2009, 13:20"/>
+                <file kind="raw" extension="zip" name="E-ATMX-36.raw.zip" size="5339045" lastmodified="18 August 2009, 13:20"/>
+                <file kind="" extension="txt" name="E-ATMX-36.README.txt" size="3950" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-36.sdrf.txt" size="3065" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-36.sdrf.xls" size="9216" lastmodified="18 August 2009, 13:20"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-37">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-37.2columns.txt" size="1054" lastmodified="18 August 2009, 13:20"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-37.2columns.xls" size="5120" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-37.biosamples.map" size="4803" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-37.biosamples.png" size="8365" lastmodified="18 August 2009, 13:20"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-37.biosamples.svg" size="21956" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="txt" name="E-ATMX-37.idf.txt" size="8830" lastmodified="18 August 2009, 13:20"/>
+                <file kind="idf" extension="xls" name="E-ATMX-37.idf.xls" size="14848" lastmodified="18 August 2009, 13:20"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-37.mageml.tar.gz" size="5019196" lastmodified="18 August 2009, 13:20"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-37.processed.zip" size="1106489" lastmodified="18 August 2009, 13:20"/>
+                <file kind="raw" extension="zip" name="E-ATMX-37.raw.zip" size="5371882" lastmodified="18 August 2009, 13:20"/>
+                <file kind="" extension="txt" name="E-ATMX-37.README.txt" size="3950" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-37.sdrf.txt" size="3645" lastmodified="18 August 2009, 13:20"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-37.sdrf.xls" size="9728" lastmodified="18 August 2009, 13:20"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-4">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-4.2columns.txt" size="733" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-4.2columns.xls" size="5120" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-4.biosamples.png" size="2385" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-4.biosamples.svg" size="10915" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-4.cel.tar.gz" size="3892166" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-4.idf.txt" size="3331" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-4.idf.xls" size="9216" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-4.mageml.tar.gz" size="8637809" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-4.processed.zip" size="4686330" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-4.raw.zip" size="3938575" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-4.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-4.sdrf.txt" size="2699" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-4.sdrf.xls" size="8704" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-5">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-5.2columns.txt" size="782" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-5.2columns.xls" size="5120" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-5.biosamples.png" size="2368" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-5.biosamples.svg" size="11285" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-5.cel.tar.gz" size="4123120" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-5.idf.txt" size="3753" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-5.idf.xls" size="9728" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-5.mageml.tar.gz" size="1678698" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-5.processed.zip" size="826957" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-5.raw.zip" size="4254118" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-5.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-5.sdrf.txt" size="3049" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-5.sdrf.xls" size="9216" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-6">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-6.2columns.txt" size="2733" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-6.2columns.xls" size="6656" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-6.biosamples.png" size="11972" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-6.biosamples.svg" size="45219" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-6.cel.tar.gz" size="23721300" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-6.idf.txt" size="4873" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-6.idf.xls" size="10752" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-6.mageml.tar.gz" size="1437576" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-6.processed.zip" size="1259973" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-6.raw.zip" size="24323244" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-6.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-6.sdrf.txt" size="8726" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-6.sdrf.xls" size="17408" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-7">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-7.2columns.txt" size="1907" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-7.2columns.xls" size="6144" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-7.biosamples.png" size="7147" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-7.biosamples.svg" size="30529" lastmodified="18 August 2009, 13:18"/>
+                <file kind="cel" extension="tar.gz" name="E-ATMX-7.cel.tar.gz" size="13101466" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-7.idf.txt" size="5604" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-7.idf.xls" size="11776" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-7.mageml.tar.gz" size="986002" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-7.processed.zip" size="889003" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-7.raw.zip" size="13526290" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-7.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-7.sdrf.txt" size="6320" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-7.sdrf.xls" size="13824" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-8">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-8.2columns.txt" size="2970" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-8.2columns.xls" size="7168" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="map" name="E-ATMX-8.biosamples.map" size="9691" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-8.biosamples.png" size="12477" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-8.biosamples.svg" size="39642" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-8.idf.txt" size="5576" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-8.idf.xls" size="11776" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-8.mageml.tar.gz" size="17617171" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-8.raw.zip" size="21612938" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-8.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-8.sdrf.txt" size="11586" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-8.sdrf.xls" size="20480" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/ATMX/E-ATMX-9">
+                <file kind="twocolumns" extension="txt" name="E-ATMX-9.2columns.txt" size="3240" lastmodified="18 August 2009, 13:18"/>
+                <file kind="twocolumns" extension="xls" name="E-ATMX-9.2columns.xls" size="7168" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="png" name="E-ATMX-9.biosamples.png" size="18440" lastmodified="18 August 2009, 13:18"/>
+                <file kind="biosamples" extension="svg" name="E-ATMX-9.biosamples.svg" size="81670" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="txt" name="E-ATMX-9.idf.txt" size="9609" lastmodified="18 August 2009, 13:18"/>
+                <file kind="idf" extension="xls" name="E-ATMX-9.idf.xls" size="15872" lastmodified="18 August 2009, 13:18"/>
+                <file kind="mageml" extension="tar.gz" name="E-ATMX-9.mageml.tar.gz" size="16668766" lastmodified="18 August 2009, 13:18"/>
+                <file kind="fgem" extension="zip" name="E-ATMX-9.processed.zip" size="3437202" lastmodified="18 August 2009, 13:18"/>
+                <file kind="raw" extension="zip" name="E-ATMX-9.raw.zip" size="18111080" lastmodified="18 August 2009, 13:18"/>
+                <file kind="" extension="txt" name="E-ATMX-9.README.txt" size="3950" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="txt" name="E-ATMX-9.sdrf.txt" size="10481" lastmodified="18 August 2009, 13:18"/>
+                <file kind="sdrf" extension="xls" name="E-ATMX-9.sdrf.xls" size="20992" lastmodified="18 August 2009, 13:18"/>
+            </folder>
+        </folder>
+        <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR">
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-1">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-1.2columns.txt" size="4404" lastmodified="18 August 2009, 13:22"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-1.2columns.xls" size="8192" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-1.biosamples.map" size="25604" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-1.biosamples.png" size="45597" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-1.biosamples.svg" size="98843" lastmodified="18 August 2009, 13:22"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-1.cel.tar.gz" size="100394554" lastmodified="18 August 2009, 13:22"/>
+                <file kind="idf" extension="txt" name="E-BAIR-1.idf.txt" size="31290" lastmodified="18 August 2009, 13:22"/>
+                <file kind="idf" extension="xls" name="E-BAIR-1.idf.xls" size="36864" lastmodified="18 August 2009, 13:22"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-1.mageml.tar.gz" size="108728917" lastmodified="18 August 2009, 13:22"/>
+                <file kind="raw" extension="zip" name="E-BAIR-1.raw.zip" size="80198763" lastmodified="18 August 2009, 13:22"/>
+                <file kind="" extension="txt" name="E-BAIR-1.README.txt" size="3950" lastmodified="18 August 2009, 13:22"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-1.sdrf.txt" size="19517" lastmodified="18 August 2009, 13:22"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-1.sdrf.xls" size="29184" lastmodified="18 August 2009, 13:22"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-10">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-10.2columns.txt" size="6049" lastmodified="18 August 2009, 13:22"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-10.2columns.xls" size="11776" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-10.biosamples.map" size="40104" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-10.biosamples.png" size="61999" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-10.biosamples.svg" size="161184" lastmodified="18 August 2009, 13:22"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-10.cel.tar.gz" size="211475194" lastmodified="18 August 2009, 13:22"/>
+                <file kind="idf" extension="txt" name="E-BAIR-10.idf.txt" size="28235" lastmodified="18 August 2009, 13:22"/>
+                <file kind="idf" extension="xls" name="E-BAIR-10.idf.xls" size="33792" lastmodified="18 August 2009, 13:22"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-10.mageml.tar.gz" size="5568739" lastmodified="18 August 2009, 13:22"/>
+                <file kind="fgem" extension="zip" name="E-BAIR-10.processed.zip" size="5707001" lastmodified="18 August 2009, 13:22"/>
+                <file kind="raw" extension="zip" name="E-BAIR-10.raw.zip" size="213319850" lastmodified="18 August 2009, 13:22"/>
+                <file kind="" extension="txt" name="E-BAIR-10.README.txt" size="3950" lastmodified="18 August 2009, 13:22"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-10.sdrf.txt" size="36270" lastmodified="18 August 2009, 13:22"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-10.sdrf.xls" size="45056" lastmodified="18 August 2009, 13:22"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-11">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-11.2columns.txt" size="5892" lastmodified="18 August 2009, 13:23"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-11.2columns.xls" size="11776" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-11.biosamples.map" size="38987" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-11.biosamples.png" size="61953" lastmodified="18 August 2009, 13:22"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-11.biosamples.svg" size="156365" lastmodified="18 August 2009, 13:22"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-11.cel.tar.gz" size="210014447" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="txt" name="E-BAIR-11.idf.txt" size="27723" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="xls" name="E-BAIR-11.idf.xls" size="33280" lastmodified="18 August 2009, 13:23"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-11.mageml.tar.gz" size="5445082" lastmodified="18 August 2009, 13:23"/>
+                <file kind="fgem" extension="zip" name="E-BAIR-11.processed.zip" size="5577834" lastmodified="18 August 2009, 13:23"/>
+                <file kind="raw" extension="zip" name="E-BAIR-11.raw.zip" size="212207641" lastmodified="18 August 2009, 13:23"/>
+                <file kind="" extension="txt" name="E-BAIR-11.README.txt" size="3950" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-11.sdrf.txt" size="35203" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-11.sdrf.xls" size="43520" lastmodified="18 August 2009, 13:22"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-12">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-12.2columns.txt" size="2045" lastmodified="18 August 2009, 13:23"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-12.2columns.xls" size="6656" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-12.biosamples.map" size="13365" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-12.biosamples.png" size="17877" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-12.biosamples.svg" size="53140" lastmodified="18 August 2009, 13:23"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-12.cel.tar.gz" size="74740232" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="txt" name="E-BAIR-12.idf.txt" size="27895" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="xls" name="E-BAIR-12.idf.xls" size="33792" lastmodified="18 August 2009, 13:23"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-12.mageml.tar.gz" size="2003811" lastmodified="18 August 2009, 13:23"/>
+                <file kind="fgem" extension="zip" name="E-BAIR-12.processed.zip" size="2102276" lastmodified="18 August 2009, 13:23"/>
+                <file kind="raw" extension="zip" name="E-BAIR-12.raw.zip" size="75681829" lastmodified="18 August 2009, 13:23"/>
+                <file kind="" extension="txt" name="E-BAIR-12.README.txt" size="3950" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-12.sdrf.txt" size="12236" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-12.sdrf.xls" size="18432" lastmodified="18 August 2009, 13:23"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-13">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-13.2columns.txt" size="4024" lastmodified="18 August 2009, 13:27"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-13.2columns.xls" size="8704" lastmodified="18 August 2009, 13:27"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-13.biosamples.png" size="33695" lastmodified="18 August 2009, 13:27"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-13.biosamples.svg" size="99553" lastmodified="18 August 2009, 13:27"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-13.cel.tar.gz" size="132569205" lastmodified="18 August 2009, 13:27"/>
+                <file kind="idf" extension="txt" name="E-BAIR-13.idf.txt" size="31460" lastmodified="18 August 2009, 13:27"/>
+                <file kind="idf" extension="xls" name="E-BAIR-13.idf.xls" size="37376" lastmodified="18 August 2009, 13:27"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-13.mageml.tar.gz" size="21603" lastmodified="18 August 2009, 13:27"/>
+                <file kind="raw" extension="zip" name="E-BAIR-13.raw.zip" size="134095315" lastmodified="18 August 2009, 13:27"/>
+                <file kind="" extension="txt" name="E-BAIR-13.README.txt" size="3950" lastmodified="18 August 2009, 13:27"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-13.sdrf.txt" size="17648" lastmodified="18 August 2009, 13:27"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-13.sdrf.xls" size="27136" lastmodified="18 August 2009, 13:27"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-2">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-2.2columns.txt" size="3256" lastmodified="18 August 2009, 13:23"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-2.2columns.xls" size="7168" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-2.biosamples.map" size="18776" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-2.biosamples.png" size="32318" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-2.biosamples.svg" size="72516" lastmodified="18 August 2009, 13:23"/>
+                <file kind="cel" extension="zip" name="E-BAIR-2.cel.zip" size="72972883" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="txt" name="E-BAIR-2.idf.txt" size="31301" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="xls" name="E-BAIR-2.idf.xls" size="36864" lastmodified="18 August 2009, 13:23"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-2.mageml.tar.gz" size="78269713" lastmodified="18 August 2009, 13:23"/>
+                <file kind="raw" extension="zip" name="E-BAIR-2.raw.zip" size="71880920" lastmodified="18 August 2009, 13:23"/>
+                <file kind="" extension="txt" name="E-BAIR-2.README.txt" size="3950" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-2.sdrf.txt" size="14473" lastmodified="18 August 2009, 13:23"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-2.sdrf.xls" size="22528" lastmodified="18 August 2009, 13:23"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-3">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-3.2columns.txt" size="4686" lastmodified="18 August 2009, 13:24"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-3.2columns.xls" size="8704" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-3.biosamples.map" size="27309" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-3.biosamples.png" size="48134" lastmodified="18 August 2009, 13:23"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-3.biosamples.svg" size="105522" lastmodified="18 August 2009, 13:23"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-3.cel.tar.gz" size="106109819" lastmodified="18 August 2009, 13:23"/>
+                <file kind="idf" extension="txt" name="E-BAIR-3.idf.txt" size="31144" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="xls" name="E-BAIR-3.idf.xls" size="36864" lastmodified="18 August 2009, 13:24"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-3.mageml.tar.gz" size="112917248" lastmodified="18 August 2009, 13:24"/>
+                <file kind="raw" extension="zip" name="E-BAIR-3.raw.zip" size="107168820" lastmodified="18 August 2009, 13:24"/>
+                <file kind="" extension="txt" name="E-BAIR-3.README.txt" size="3950" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-3.sdrf.txt" size="20565" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-3.sdrf.xls" size="31232" lastmodified="18 August 2009, 13:23"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-4">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-4.2columns.txt" size="3256" lastmodified="18 August 2009, 13:24"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-4.2columns.xls" size="7168" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-4.biosamples.map" size="18774" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-4.biosamples.png" size="32166" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-4.biosamples.svg" size="72520" lastmodified="18 August 2009, 13:24"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-4.cel.tar.gz" size="72228627" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="txt" name="E-BAIR-4.idf.txt" size="31030" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="xls" name="E-BAIR-4.idf.xls" size="36864" lastmodified="18 August 2009, 13:24"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-4.mageml.tar.gz" size="78730021" lastmodified="18 August 2009, 13:24"/>
+                <file kind="raw" extension="zip" name="E-BAIR-4.raw.zip" size="73055267" lastmodified="18 August 2009, 13:24"/>
+                <file kind="" extension="txt" name="E-BAIR-4.README.txt" size="3950" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-4.sdrf.txt" size="14335" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-4.sdrf.xls" size="23040" lastmodified="18 August 2009, 13:24"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-5">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-5.2columns.txt" size="4122" lastmodified="18 August 2009, 13:24"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-5.2columns.xls" size="7680" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-5.biosamples.map" size="23897" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-5.biosamples.png" size="41818" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-5.biosamples.svg" size="92220" lastmodified="18 August 2009, 13:24"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-5.cel.tar.gz" size="94883692" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="txt" name="E-BAIR-5.idf.txt" size="31088" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="xls" name="E-BAIR-5.idf.xls" size="36864" lastmodified="18 August 2009, 13:24"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-5.mageml.tar.gz" size="101074847" lastmodified="18 August 2009, 13:24"/>
+                <file kind="raw" extension="zip" name="E-BAIR-5.raw.zip" size="95778870" lastmodified="18 August 2009, 13:24"/>
+                <file kind="" extension="txt" name="E-BAIR-5.README.txt" size="3950" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-5.sdrf.txt" size="18177" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-5.sdrf.xls" size="27648" lastmodified="18 August 2009, 13:24"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-6">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-6.2columns.txt" size="3256" lastmodified="18 August 2009, 13:24"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-6.2columns.xls" size="7168" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-6.biosamples.map" size="18774" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-6.biosamples.png" size="32352" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-6.biosamples.svg" size="72516" lastmodified="18 August 2009, 13:24"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-6.cel.tar.gz" size="72770129" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="txt" name="E-BAIR-6.idf.txt" size="31089" lastmodified="18 August 2009, 13:24"/>
+                <file kind="idf" extension="xls" name="E-BAIR-6.idf.xls" size="36864" lastmodified="18 August 2009, 13:24"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-6.mageml.tar.gz" size="78293260" lastmodified="18 August 2009, 13:24"/>
+                <file kind="raw" extension="zip" name="E-BAIR-6.raw.zip" size="73583184" lastmodified="18 August 2009, 13:24"/>
+                <file kind="" extension="txt" name="E-BAIR-6.README.txt" size="3950" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-6.sdrf.txt" size="14407" lastmodified="18 August 2009, 13:24"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-6.sdrf.xls" size="22528" lastmodified="18 August 2009, 13:24"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-7">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-7.2columns.txt" size="8014" lastmodified="18 August 2009, 13:25"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-7.2columns.xls" size="13824" lastmodified="18 August 2009, 13:25"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-7.biosamples.map" size="53007" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-7.biosamples.png" size="82111" lastmodified="18 August 2009, 13:24"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-7.biosamples.svg" size="205086" lastmodified="18 August 2009, 13:24"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-7.cel.tar.gz" size="188877859" lastmodified="18 August 2009, 13:25"/>
+                <file kind="idf" extension="txt" name="E-BAIR-7.idf.txt" size="30138" lastmodified="18 August 2009, 13:25"/>
+                <file kind="idf" extension="xls" name="E-BAIR-7.idf.xls" size="35840" lastmodified="18 August 2009, 13:25"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-7.mageml.tar.gz" size="196023119" lastmodified="18 August 2009, 13:25"/>
+                <file kind="raw" extension="zip" name="E-BAIR-7.raw.zip" size="190591227" lastmodified="18 August 2009, 13:25"/>
+                <file kind="" extension="txt" name="E-BAIR-7.README.txt" size="3950" lastmodified="18 August 2009, 13:25"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-7.sdrf.txt" size="53584" lastmodified="18 August 2009, 13:25"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-7.sdrf.xls" size="61952" lastmodified="18 August 2009, 13:24"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-8">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-8.2columns.txt" size="8077" lastmodified="18 August 2009, 13:25"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-8.2columns.xls" size="13824" lastmodified="18 August 2009, 13:25"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-8.biosamples.map" size="53015" lastmodified="18 August 2009, 13:25"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-8.biosamples.png" size="84624" lastmodified="18 August 2009, 13:25"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-8.biosamples.svg" size="204974" lastmodified="18 August 2009, 13:25"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-8.cel.tar.gz" size="195189997" lastmodified="18 August 2009, 13:25"/>
+                <file kind="idf" extension="txt" name="E-BAIR-8.idf.txt" size="31318" lastmodified="18 August 2009, 13:25"/>
+                <file kind="idf" extension="xls" name="E-BAIR-8.idf.xls" size="36864" lastmodified="18 August 2009, 13:25"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-8.mageml.tar.gz" size="194909919" lastmodified="18 August 2009, 13:25"/>
+                <file kind="raw" extension="zip" name="E-BAIR-8.raw.zip" size="687006602" lastmodified="18 August 2009, 13:26"/>
+                <file kind="" extension="txt" name="E-BAIR-8.README.txt" size="3950" lastmodified="18 August 2009, 13:26"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-8.sdrf.txt" size="38509" lastmodified="18 August 2009, 13:25"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-8.sdrf.xls" size="56320" lastmodified="18 August 2009, 13:25"/>
+            </folder>
+            <folder location="/Users/kolais/Projects/AE/ftp/experiment/BAIR/E-BAIR-9">
+                <file kind="twocolumns" extension="txt" name="E-BAIR-9.2columns.txt" size="5882" lastmodified="18 August 2009, 13:27"/>
+                <file kind="twocolumns" extension="xls" name="E-BAIR-9.2columns.xls" size="11776" lastmodified="18 August 2009, 13:27"/>
+                <file kind="biosamples" extension="map" name="E-BAIR-9.biosamples.map" size="40106" lastmodified="18 August 2009, 13:26"/>
+                <file kind="biosamples" extension="png" name="E-BAIR-9.biosamples.png" size="62043" lastmodified="18 August 2009, 13:26"/>
+                <file kind="biosamples" extension="svg" name="E-BAIR-9.biosamples.svg" size="161075" lastmodified="18 August 2009, 13:26"/>
+                <file kind="cel" extension="tar.gz" name="E-BAIR-9.cel.tar.gz" size="218560511" lastmodified="18 August 2009, 13:27"/>
+                <file kind="idf" extension="txt" name="E-BAIR-9.idf.txt" size="28046" lastmodified="18 August 2009, 13:27"/>
+                <file kind="idf" extension="xls" name="E-BAIR-9.idf.xls" size="33792" lastmodified="18 August 2009, 13:27"/>
+                <file kind="mageml" extension="tar.gz" name="E-BAIR-9.mageml.tar.gz" size="5636607" lastmodified="18 August 2009, 13:27"/>
+                <file kind="fgem" extension="zip" name="E-BAIR-9.processed.zip" size="5770514" lastmodified="18 August 2009, 13:27"/>
+                <file kind="raw" extension="zip" name="E-BAIR-9.raw.zip" size="220940063" lastmodified="18 August 2009, 13:27"/>
+                <file kind="" extension="txt" name="E-BAIR-9.README.txt" size="3950" lastmodified="18 August 2009, 13:27"/>
+                <file kind="sdrf" extension="txt" name="E-BAIR-9.sdrf.txt" size="36255" lastmodified="18 August 2009, 13:27"/>
+                <file kind="sdrf" extension="xls" name="E-BAIR-9.sdrf.xls" size="44032" lastmodified="18 August 2009, 13:26"/>
+            </folder>
+        </folder>
+    </folder>
+</files>

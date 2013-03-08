@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- * Copyright 2009-2013 European Molecular Biology Laboratory
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
--->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
@@ -53,7 +37,7 @@
                         <hybs>0</hybs>
                         <samples>0</samples>
                         <rawdatafiles>0</rawdatafiles>
-                        <processeddatafiles>0</processeddatafiles>
+                        <fgemdatafiles>0</fgemdatafiles>
                     </xsl:when>
                 </xsl:choose>
                 <xsl:analyze-string select="fn:string($vGenDescriptionRaw[1])" regex="with\s(\d+)\shybridizations.+using\s(\d*)\s*samples.+producing\s(\d+)\sraw.+and\s(\d+)\stransformed" flags="i">
@@ -61,7 +45,7 @@
                         <hybs><xsl:value-of select="regex-group(1)"/></hybs>
                         <samples><xsl:value-of select="regex-group(2)"/></samples>
                         <rawdatafiles><xsl:value-of select="regex-group(3)"/></rawdatafiles>
-                        <processeddatafiles><xsl:value-of select="regex-group(4)"/></processeddatafiles>
+                        <fgemdatafiles><xsl:value-of select="regex-group(4)"/></fgemdatafiles>
                     </xsl:matching-substring>
                 </xsl:analyze-string>
             </xsl:variable>
@@ -128,13 +112,13 @@
                 </xsl:choose>
             </samples>
             <rawdatafiles>
-                <xsl:attribute name="available" select="if ('0' != fn:sum(ae:getMappedValue('raw-files', $vAccession))) then 'true' else 'false'"/>
+                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('raw-files', $vAccession)) then 'true' else 'false'"/>
                 <xsl:value-of select="$vGenDescription/rawdatafiles"/>
             </rawdatafiles>
-            <processeddatafiles>
-                <xsl:attribute name="available" select="if ('0' != fn:sum(ae:getMappedValue('processed-files', $vAccession))) then 'true' else 'false'"/>
-                <xsl:value-of select="$vGenDescription/processeddatafiles"/>
-            </processeddatafiles>
+            <fgemdatafiles>
+                <xsl:attribute name="available" select="if ('0' != ae:getMappedValue('fgem-files', $vAccession)) then 'true' else 'false'"/>
+                <xsl:value-of select="$vGenDescription/fgemdatafiles"/>
+            </fgemdatafiles>
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
                 <sampleattribute>

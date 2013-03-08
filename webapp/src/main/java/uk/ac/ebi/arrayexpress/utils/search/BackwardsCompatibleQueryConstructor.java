@@ -40,7 +40,7 @@ public class BackwardsCompatibleQueryConstructor extends QueryConstructor
             // 2. if "wholewords" is "on" or "true" -> don't add *_*, otherwise add *_*
             BooleanQuery result = new BooleanQuery();
             String wholeWords = StringTools.arrayToString(querySource.get("wholewords"), "");
-            boolean useWildcards = !(null != wholeWords && StringTools.stringToBoolean(wholeWords));
+            boolean useWildcards = (null != wholeWords && !(StringTools.stringToBoolean(wholeWords)));
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
                 String field = queryItem.getKey();
                 if (env.fields.containsKey(field) && queryItem.getValue().length > 0) {
@@ -62,8 +62,8 @@ public class BackwardsCompatibleQueryConstructor extends QueryConstructor
                                     String[] tokens = value.split("\\s+");
                                     for (String token : tokens) {
                                         // we use wildcards for keywords depending on "wholewords" switch,
-                                        // *ALWAYS* for other fields, *NEVER* for user id and accession or boolean fields
-                                        Query q = !"boolean".equals(env.fields.get(field).type) &&  !" userid  accession ".contains(" " + field + " ") && (useWildcards || (!" keywords ".contains(" " + field + " ")))
+                                        // *ALWAYS* for other fields, *NEVER* for user id and accession
+                                        Query q = !" userid  accession ".contains(" " + field + " ") && (useWildcards || (!" keywords ".contains(" " + field + " ")))
                                                 ? new WildcardQuery(new Term(field, "*" + token + "*"))
                                                 : new TermQuery(new Term(field, token));
                                         result.add(q, BooleanClause.Occur.MUST);

@@ -175,11 +175,11 @@
         </index>
         <index id="experiments" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/experiments/experiment" defaultField="keywords">
-                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="true" escape="false" expand="true"/>
+                <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="false" escape="false" expand="true"/>
                 <field name="similarto" title="by Relevance" type="string" path="similarto/@accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="organism" title="by Organism" type="string" path="organism" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/legacy_id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="protocol" title="by Protocol" type="string" path="protocol/id | protocol/accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false" expand="true"/>
@@ -193,8 +193,8 @@
                 <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="private" type="boolean" path="not(user/@id = '1')"/>
-                <field name="raw" title="experiments with raw data available" type="boolean" path="(rawdatafiles/@available = 'true' or exists(seqdatauri))" />
-                <field name="processed" title="experiments with processed data available" type="boolean" path="processeddatafiles/@available = 'true'" />
+                <field name="raw" title="experiments with raw data available" type="boolean" path="(rawdatafiles/@available = true() or exists(seqdatauri))" />
+                <field name="processed" title="experiments with processed data available" type="boolean" path="fgemdatafiles/@available" />
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="source/@id" analyze="false" store="false" escape="false" expand="false"/>
                 <field name="public" type="boolean" path="user/@id = '1'"/>
@@ -213,7 +213,7 @@
                 <field name="array-score" type="boolean" path="(miamescores/reportersequencescore = '1')"/>
                 <field name="protocol-score" type="boolean" path="(miamescores/protocolscore = '1') or (minseqescores/protocolscore = '1')"/>
                 <field name="ef-score" type="boolean" path="(miamescores/factorvaluescore = '1') or (minseqescores/factorvaluescore = '1')"/>
-                <field name="processed-score" type="boolean" path="(miamescores/derivedbioassaydatascore = '1') or (minseqescores/derivedbioassaydatascore = '1')"/>
+                <field name="fgem-score" type="boolean" path="(miamescores/derivedbioassaydatascore = '1') or (minseqescores/derivedbioassaydatascore = '1')"/>
                 <field name="raw-score" type="boolean" path="(miamescores/measuredbioassaydatascore = '1')"/>
                 <field name="seq-score" type="boolean" path="(minseqescores/measuredbioassaydatascore = '1')"/>
             </document>
@@ -223,8 +223,7 @@
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
-                <field name="experiment" title="by Experiment Association" type="string" path="experiment" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="organism" title="by Organism" type="string" path="organism" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="species" title="by Species" type="string" path="species" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="provider" title="by Provider" type="string" path="provider" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false" expand="false"/>
                 <!-- multiple-source filters for curators -->
@@ -239,7 +238,6 @@
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="id" title="" type="string" path="id" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="accession" title="by Accession" type="string" path="accession" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="standard" title="" type="boolean" path="standardpublicprotocol = '1'"/>
                 <field name="experiment" title="by Experiment Association" type="string" path="experiment" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="type" title="by Type" type="string" path="type" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false" expand="false"/>
@@ -253,7 +251,6 @@
                 <field name="name" title="by File Name" type="string" path="@name" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="kind" title="by Kind" type="string" path="@kind" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="extension" title="by Extension" type="string" path="@extension" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="visible" type="boolean" path="@hidden = 'false'"/>
                 <field name="userid" type="string" path="ae:getMappedValue('users-for-accession', ../@accession)" analyze="false" store="false" escape="false" expand="false"/>
             </document>
         </index>

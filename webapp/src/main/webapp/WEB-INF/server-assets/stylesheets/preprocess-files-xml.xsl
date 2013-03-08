@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- * Copyright 2009-2013 European Molecular Biology Laboratory
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
--->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
@@ -24,7 +8,7 @@
                 version="2.0">
 
     <xsl:output method="xml" version="1.0" encoding="UTF8" indent="no"/>
-
+    
     <xsl:param name="rootFolder"/>
     
     <xsl:variable name="vRoot" select="$rootFolder"/>
@@ -83,77 +67,57 @@
         <xsl:param name="pRow"/>
         <xsl:variable name="vPath" select="$pRow/col[8]"/>
         <xsl:choose>
-            <xsl:when test="fn:matches($vPath, '^.+/[aAeE]-\w{4}-\d+/[^/]+/.*$')">
-                <xsl:value-of select="fn:replace($vPath, '^.+/[aAeE]-\w{4}-\d+/([^/]+)/.*$', '$1')"/>
+            <xsl:when test="fn:matches($vPath, '[.]processed[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
+                <xsl:text>fgem</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]raw[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
+                <xsl:text>raw</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]cel[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
+                <xsl:text>cel</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]mageml[.](zip|tgz|tar[.]gz)$')">
+                <xsl:text>mageml</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]adf[.](txt|xls)$')">
+                <xsl:text>adf</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]idf[.](txt|xls)$')">
+                <xsl:text>idf</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]sdrf[.](txt|xls)$')">
+                <xsl:text>sdrf</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]2columns[.](txt|xls)$')">
+                <xsl:text>twocolumns</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]biosamples[.](map|png|svg)$')">
+                <xsl:text>biosamples</xsl:text>    
+            </xsl:when>
+            <xsl:when test="fn:matches(fn:lower-case($vPath), '[.]eset[.]r$')">
+                <xsl:text>r-object</xsl:text>
+            </xsl:when>
+            <xsl:when test="fn:matches($vPath, '[.]bam$')">
+                <xsl:text>bam</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="fn:matches($vPath, '[.]processed[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
-                        <xsl:text>processed</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]raw[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
-                        <xsl:text>raw</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]cel[.](\d+[.])?(zip|tgz|tar[.]gz)$')">
-                        <xsl:text>cel</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]mageml[.](zip|tgz|tar[.]gz)$')">
-                        <xsl:text>mageml</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]adf[.](txt|xls)$')">
-                        <xsl:text>adf</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]idf[.](txt|xls)$')">
-                        <xsl:text>idf</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]sdrf[.](txt|xls)$')">
-                        <xsl:text>sdrf</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]2columns[.](txt|xls)$')">
-                        <xsl:text>twocolumns</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]biosamples[.](map|png|svg)$')">
-                        <xsl:text>biosamples</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches(fn:lower-case($vPath), '[.]eset[.]r$')">
-                        <xsl:text>r-object</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="fn:matches($vPath, '[.]bam([.][^.]+)?$')">
-                        <xsl:text>bam</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:text/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-
-    <xsl:function name="ae:isFileHidden" as="xs:boolean">
+    
+    <xsl:function name="ae:getFolder" as="xs:string">
         <xsl:param name="pRow"/>
-        <xsl:variable name="vPath" select="$pRow/col[8]"/>
-        <xsl:value-of select="fn:matches($vPath, '[.]bam[.](bai|prop)?$')"/>
+        <xsl:choose>
+            <xsl:when test="ae:isFolder($pRow)">
+                <xsl:value-of select="$pRow/col[8]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="fn:replace($pRow/col[8], '/[^/]+$', '')"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
-
-    <xsl:function name="ae:getAccessionFolder" as="xs:string">
-        <xsl:param name="pRow"/>
-
-        <xsl:value-of select="fn:replace($pRow/col[8], '^(.+/[aAeE]-\w{4}-\d+)/.*$', '$1')"/>
-    </xsl:function>
-
-    <xsl:function name="ae:getLocation" as="xs:string">
-        <xsl:param name="pRow"/>
-
-        <xsl:value-of select="$pRow/col[8]"/>
-    </xsl:function>
-
-    <xsl:function name="ae:getSubLocation" as="xs:string">
-        <xsl:param name="pRow"/>
-
-        <xsl:value-of select="fn:replace($pRow/col[8], '^.+/[aAeE]-\w{4}-\d+/(.*)$', '$1')"/>
-    </xsl:function>
-
-
+    
     <xsl:function name="ae:getFolderKind" as="xs:string">
         <xsl:param name="pPath"/>
         <xsl:choose>
@@ -172,21 +136,20 @@
     <xsl:function name="ae:getAccession" as="xs:string">
         <xsl:param name="pPath"/>
         
-        <xsl:value-of select="fn:replace($pPath, '^.+/([aAeE]-\w{4}-\d+).*$', '$1')"/>
+        <xsl:value-of select="fn:replace($pPath, '.+/([aAeE]-\w{4}-.+)$', '$1')"/>
     </xsl:function>
-
+    
     <xsl:function name="ae:getRelativePath" as="xs:string">
         <xsl:param name="pPath" as="xs:string"/>
-        <xsl:value-of select="fn:replace($pPath, fn:concat('^', $vRoot), '')"/>
+        <xsl:value-of select="fn:replace($pPath, concat('^', $vRoot), '')"/>
     </xsl:function>
     
     <xsl:template match="table">
         <files root="{$vRoot}">
-            <xsl:attribute name="updated" select="fn:current-dateTime()"/>
-            <xsl:for-each-group select="row" group-by="ae:getAccessionFolder(.)">
-                <xsl:variable name="vFolder" select="fn:current-group()[col[8] = fn:current-grouping-key()]"/>
+            <xsl:for-each-group select="row" group-by="ae:getFolder(.)">
+                <xsl:variable name="vFolder" select="fn:current-group()[ae:isFolder(.)]"/>
                 <xsl:if test="$vFolder">
-                    <xsl:variable name="vAccession" select="ae:getAccession(fn:current-grouping-key())"/>
+                    <xsl:variable name="vAccession" select="ae:getAccession(current-grouping-key())"/>
                     <folder
                         location="{ae:getRelativePath(current-grouping-key())}"
                         kind="{ae:getFolderKind(current-grouping-key())}"
@@ -198,23 +161,22 @@
                         <xsl:for-each select="fn:current-group()[not(ae:isFolder(.))]">
                             <xsl:variable name="vFileKind" select="ae:getFileKind(.)"/>
                             <file
-                                location="{ae:getSubLocation(.)}"
                                 name="{ae:getName(.)}"
                                 extension="{ae:getExtension(.)}"
                                 kind="{$vFileKind}"
-                                owner="{ae:getOwner(.)}"
+                                owner="{ae:getOwner($vFolder)}"
                                 group="{ae:getGroup(.)}"
                                 access="{ae:getAccess(.)}"
                                 size="{ae:getSize(.)}"
-                                lastmodified="{ae:getModifyDate(.)}"
-                                hidden="{ae:isFileHidden(.)}">
-                                <xsl:if test="$vFileKind = 'raw' or $vFileKind = 'processed'">
+                                lastmodified="{ae:getModifyDate(.)}">
+                                <xsl:if test="$vFileKind = 'raw' or $vFileKind = 'fgem'">
                                     <xsl:call-template name="add-dataformat-attribute">
                                         <xsl:with-param name="pAccession" select="$vAccession"/>
                                         <xsl:with-param name="pKind" select="@kind"/>
                                     </xsl:call-template>
                                 </xsl:if>
                             </file>
+                            
                         </xsl:for-each>
                     </folder>
                 </xsl:if>    
@@ -227,7 +189,7 @@
         <xsl:param name="pKind"/>
         <xsl:variable name="vIsDerived">
             <xsl:choose>
-                <xsl:when test="$pKind = 'processed'">
+                <xsl:when test="$pKind = 'fgem'">
                     <xsl:text>1</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -242,9 +204,8 @@
     <xsl:template name="add-dataformat-attribute">
         <xsl:param name="pAccession"/>
         <xsl:param name="pKind"/>
-        <!--
+
         <xsl:variable name="vExperiment" select="ae:getMappedValue('visible-experiments', $pAccession)"/>
         <xsl:attribute name="dataformat" select="ae:getDataFormat($vExperiment/bioassaydatagroup, $pKind)"/>
-        -->
     </xsl:template>
 </xsl:stylesheet>

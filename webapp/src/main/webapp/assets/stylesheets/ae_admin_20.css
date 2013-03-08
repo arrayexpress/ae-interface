@@ -1,0 +1,201 @@
+/*
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/* login part */
+#ae_login_box {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #eef5f5;
+    border: 1px solid #5e9e9e;
+    padding: 5px 10px 10px;
+    width: 400px;
+}
+
+#ae_login_title {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #005555;
+}
+
+#ae_login_form fieldset {
+    border: 0 none;
+    padding: 0;
+}
+
+#ae_login_user_fset {
+    width: 50%;
+    margin: 0 5px 0 0;
+    float: left;
+}
+
+#ae_login_pass_fset {
+    margin: 0;
+}
+
+#ae_login_form label {
+    font-size: 11px;
+}
+
+#ae_user_field,
+#ae_pass_field {
+    border: 1px solid #5e9e9e;
+    width: 100%;
+    font-size: 11px;
+    margin: 3px 0 8px 0;
+}
+#ae_login_submit {
+    float: right;
+    font-size: 11px;
+}
+
+#ae_login_status {
+    margin: 5px 0 0;
+    color: red;
+}
+
+#ae_adm_header {
+    text-align: center;
+    position: relative;
+}
+
+#ae_top_secret_img {
+    position: absolute;
+    top: 0;
+    left: 30px;
+}
+
+#ae_adm_h1 {
+    font-size: 22px;
+    line-height: normal;
+    padding: 10px 0 5px;
+}
+
+#ae_adm_h2 {
+    font-size: 12px;
+    padding: 0 0 5px 0;
+}
+
+.ae_adm_table_box
+, .ae_adm_last_updated_box {
+    background: url("../images/trbg.gif") 0 0 repeat;
+    border: 1px solid #bdd7d7;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.ae_adm_table_box {
+    width: 370px;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.ae_adm_table {
+    table-layout: fixed;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.ae_adm_table td
+, .ae_adm_table th {
+    line-height: 1.5em;
+    font-size: 11px
+}
+
+.ae_adm_table th {
+    font-weight: bold;
+}
+
+.ae_adm_table td {
+    border-top: 1px solid #e5f0f0;
+}
+
+.ae_adm_table .col_item {
+    text-align: right;
+    padding-right: 10px;
+    width: 50%
+}
+
+.ae_adm_table .col_ae1 {
+    text-align: center;
+    padding: 0 10px;
+    width: 25%
+}
+
+.ae_adm_table .col_ae2 {
+    text-align: center;
+    padding: 0 10px;
+    width: 25%
+}
+
+.ae_adm_table td.col_ae1 {
+    background-color: #f2f8f8;
+}
+
+.ae_adm_table td.col_ae2 {
+    background-color: #f2f8f8;
+}
+
+.ae_adm_last_updated_box {
+    margin: 10px auto 0;
+    padding: 5px;
+    width: 800px;
+}
+
+div.ae_twotone_bar
+, div.ae_tritone_bar {
+    border: 1px solid #ccc;
+    width: 400px;
+    margin: 2px 5px 2px 0;
+    padding: 1px;
+    float: left;
+    background-color: white;
+}
+
+div.ae_twotone_bar div
+, div.ae_tritone_bar div {
+    height: 12px;
+}
+
+div.ae_twotone_bar div.ae_total {
+    background-color: #e87b7b;
+    width: 100%;
+}
+
+div.ae_twotone_bar div.ae_value {
+    background-color: #ace97c;
+}
+
+div.ae_tritone_bar div.ae_left {
+    background-color: #e87b7b;
+    float: left;
+}
+
+div.ae_tritone_bar div.ae_total {
+    background-color: #e8e87b;
+}
+
+div.ae_tritone_bar div.ae_right {
+    background-color: #ace97c;
+    float: right;
+}
+
+

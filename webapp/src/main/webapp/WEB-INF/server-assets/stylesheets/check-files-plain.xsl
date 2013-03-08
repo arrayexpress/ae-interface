@@ -1,27 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- * Copyright 2009-2013 European Molecular Biology Laboratory
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
--->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-                extension-element-prefixes="xs fn ae search"
-                exclude-result-prefixes="xs fn ae search"
+                extension-element-prefixes="xs ae search"
+                exclude-result-prefixes="xs ae search"
                 version="2.0">
     
     <xsl:param name="rescanMessage" as="xs:string"/>
@@ -64,7 +47,6 @@
             2. check directory ownership; tomcat/microarray
             3. check directory permissions; rwxr-xr-x for public; rwxr-x... for private
             4. check idf and sdrf files presence
-            5. check file name is unique within folder
         -->
         
         <xsl:text>--- EXPERIMENTS ----------------------------------------------------------------&#10;</xsl:text>
@@ -74,10 +56,10 @@
             
             <xsl:variable name="vExpFolder" select="$vExperimentFolders[@accession = current()/accession]"/>
             <xsl:choose>
-                <xsl:when test="not($vExpFolder)">
-                    <xsl:value-of select="current()/accession"/>
-                    <xsl:text> - directory not found or inaccessible&#10;</xsl:text>
-                </xsl:when>
+            <xsl:when test="not($vExpFolder)">
+                <xsl:value-of select="current()/accession"/>
+                <xsl:text> - directory not found or inaccessible&#10;</xsl:text>
+            </xsl:when>
                 <xsl:otherwise>
                     <xsl:if test="$vExpFolder/@owner != 'tomcat'">
                         <xsl:value-of select="current()/accession"/>
@@ -111,14 +93,6 @@
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - missing SDRF file(s)&#10;</xsl:text>
                     </xsl:if>
-                    <xsl:for-each-group select="$vExpFolder/file" group-by="@name">
-                        <xsl:if test="fn:count(fn:current-group()) > 1">
-                            <xsl:text> - multiple files with name </xsl:text>
-                            <xsl:value-of select="fn:current-grouping-key()"/>
-                            <xsl:text> found in the following locations: </xsl:text>
-                            <xsl:value-of select="fn:string-join(fn:current-group()/@location, ', ')"/>
-                        </xsl:if>
-                    </xsl:for-each-group>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -180,15 +154,7 @@
                     <xsl:if test="not($vArrayFolder/file[@kind = 'adf'])">
                         <xsl:value-of select="current()/accession"/>
                         <xsl:text> - missing ADF file&#10;</xsl:text>
-                    </xsl:if>
-                    <xsl:for-each-group select="$vArrayFolder/file" group-by="@name">
-                        <xsl:if test="fn:count(fn:current-group()) > 1">
-                            <xsl:text> - multiple files with name </xsl:text>
-                            <xsl:value-of select="fn:current-grouping-key()"/>
-                            <xsl:text> found in the following locations: </xsl:text>
-                            <xsl:value-of select="fn:string-join(fn:current-group()/@location, ', ')"/>
-                        </xsl:if>
-                    </xsl:for-each-group>
+                    </xsl:if>            
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>

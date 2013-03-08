@@ -17,97 +17,36 @@ package uk.ac.ebi.arrayexpress.utils.search;
  *
  */
 
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.*;
+import org.apache.lucene.search.Query;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
 {
     private final static String FIELD_KEYWORDS = "keywords";
-    private final static String FIELD_ACCESSION = "accession";
 
-    private final static String RE_MATCHES_BATCH_OF_ACCESSIONS = "^\\s*(([ae]-\\w{4}-\\d+)[\\s,;]+)+$";
-    private final static String RE_SPLIT_BATCH_OF_ACCESSIONS = "[\\s,;]+";
+    private final static String RE_MATCHES_BATCH_OF_ACCESSIONS = "^\\s*(([aAeE]-\\w{4}-\\d+)[\\s,;]+)+$";
+    private final static String RE_REPLACE_BATCH_OF_ACCESSIONS = "\\s*([aAeE]-\\w{4}-\\d+)[\\s,;]+";
 
     @Override
     public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
     {
-        Query query = super.construct(env, querySource);
-
         if (querySource.containsKey(FIELD_KEYWORDS)) {
-            String keywords = StringTools.arrayToString(querySource.get(FIELD_KEYWORDS), " ").toLowerCase() + " ";
+            String keywords = StringTools.arrayToString(querySource.get(FIELD_KEYWORDS), " ") + " ";
             if (keywords.matches(RE_MATCHES_BATCH_OF_ACCESSIONS)) {
-                String[] accessions = keywords.split(RE_SPLIT_BATCH_OF_ACCESSIONS);
-
-                query = removeTermQueriesForField(query, FIELD_KEYWORDS);
-
-                BooleanQuery accQuery = new BooleanQuery();
-                for (String acc : accessions) {
-                    accQuery.add(new TermQuery(new Term(FIELD_ACCESSION, acc)), BooleanClause.Occur.SHOULD);
-                }
-
-                BooleanQuery topQuery;
-                if (query instanceof BooleanQuery) {
-                    topQuery = (BooleanQuery)query;
-                } else {
-                    topQuery = new BooleanQuery();
-                    topQuery.add(query, BooleanClause.Occur.MUST);
-                }
-
-                topQuery.add(accQuery, BooleanClause.Occur.MUST);
-                query = topQuery;
+                keywords = keywords.replaceAll(RE_REPLACE_BATCH_OF_ACCESSIONS, " OR accession:$1").replaceFirst("^ OR", "");
+                querySource.put(FIELD_KEYWORDS, new String[]{keywords});
             }
         }
-        return query;
+        return super.construct(env, querySource);
     }
 
     @Override
     public Query construct( IndexEnvironment env, String queryString ) throws ParseException
     {
         return super.construct(env, queryString);
-    }
-
-    private Query removeTermQueriesForField( Query query, String fieldName )
-    {
-        Query q = removeTermQueryForField(query, fieldName);
-        if (null == q) {
-            q = new BooleanQuery();
-        }
-
-        return q;
-    }
-
-
-    private Query removeTermQueryForField( Query query, String fieldName )
-    {
-        if (query instanceof BooleanQuery) {
-            BooleanQuery boolQuery = new BooleanQuery();
-            for ( BooleanClause clause : ((BooleanQuery)query).clauses() ) {
-                Query q = removeTermQueryForField(clause.getQuery(), fieldName);
-                if (null != q) {
-                    boolQuery.add(q, clause.getOccur());
-                }
-                if (0 != boolQuery.clauses().size()) {
-                    query = boolQuery;
-                } else {
-                    query = null;
-                }
-            }
-        } else if (query instanceof TermQuery || query instanceof PhraseQuery) {
-            Set<Term> terms = new HashSet<>();
-            query.extractTerms(terms);
-            for (Term term : terms) {
-                if (fieldName.equals(term.field())) {
-                    return null;
-                }
-            }
-        }
-        return query;
     }
 }

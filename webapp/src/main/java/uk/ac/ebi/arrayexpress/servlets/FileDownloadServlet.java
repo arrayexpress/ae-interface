@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.Users;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,54 +104,54 @@ public class FileDownloadServlet extends BaseDownloadServlet
     ) throws DownloadServletException
     {
         String accession = "";
-        String kind = "";
         String name = "";
         IDownloadFile file;
 
         try {
-            String[] requestArgs = request.getPathInfo().replaceFirst("^/", "").split("/");
+            String[] requestArgs = new RegexHelper("/download/([^/]+)/?([^/]*)", "i")
+                    .match(request.getRequestURL().toString());
             if (null != requestArgs) {
-                if (1 == requestArgs.length) { // name only passed
-                    name = requestArgs[0];
-                } else if (2 == requestArgs.length) { // accession/name passed
+                if (requestArgs[1].equals("")) {
+                    name = requestArgs[0]; // old-style
+                } else {
                     accession = requestArgs[0];
                     name = requestArgs[1];
-                } else { // all params passed: accession/kind/name
-                    accession = requestArgs[0];
-                    kind = requestArgs[1];
-                    name = requestArgs[2];
                 }
             }
-            logger.info("Requested download of [" + name + "], kind [" + kind + "], accession [" + accession + "]");
+            logger.info("Requested download of [{}], accession [{}]", name, accession);
             Files files = (Files) getComponent("Files");
             Users users = (Users) getComponent("Users");
 
 
 
-            if (!files.doesExist(accession, kind, name)) {
+            if (!files.doesExist(accession, name)) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 throw new DownloadServletException(
-                        "File [" + name + "], kind [" + kind + "], accession [" + accession + "] is not in files.xml");
+                        "File with name ["
+                                + name
+                                + "], accession ["
+                                + accession
+                                + "] is not in files.xml");
             } else {
-                String location = files.getLocation(accession, kind, name);
+                String fileLocation = files.getLocation(accession, name);
 
-                if (!"".equals(location) && "".equals(accession)) {
+                if (!"".equals(fileLocation) && "".equals(accession)) {
                     // attempt to resolve accession for file by its location
-                    accession = location.replaceFirst("^.+/([AE]-\\w{4}-\\d+)/.+$", "$1");
+                    accession = files.getAccession(fileLocation);
                 }
 
                 // finally if there is no accession or location determined at the stage - panic
-                if ("".equals(location) || "".equals(accession)) {
+                if ("".equals(fileLocation) || "".equals(accession)) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     throw new DownloadServletException(
                             "Either accession ["
                                     + String.valueOf(accession)
                                     + "] or location ["
-                                    + String.valueOf(location)
+                                    + String.valueOf(fileLocation)
                                     + "] were not determined");
                 }
 
-                if (null != userIDs && 0 != userIDs.size() && !users.isAccessible(accession, userIDs)) {
+                if (!(null != userIDs && (0 == userIDs.size() || users.isAccessible(accession, userIDs)))) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     throw new DownloadServletException(
                             "Data from ["
@@ -161,8 +162,8 @@ public class FileDownloadServlet extends BaseDownloadServlet
                     );
                 }
 
-                logger.debug("Will be serving file [{}]", location);
-                file = new RegularDownloadFile(new File(files.getRootFolder(), location));
+                logger.debug("Will be serving file [{}]", fileLocation);
+                file = new RegularDownloadFile(new File(files.getRootFolder(), fileLocation));
             }
         } catch (DownloadServletException x) {
             throw x;

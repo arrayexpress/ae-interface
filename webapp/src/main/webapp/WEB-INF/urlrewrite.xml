@@ -4,613 +4,341 @@
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <urlrewrite>
-    <!-- global rule to set original request uri as a parameter -->
+    <!-- special treatment for googlebots -->
     <rule>
-        <from>.*</from>
-        <set type="parameter" name="original-request-uri">%{request-uri}</set>
-    </rule>
-
-    <!-- skip all requests for assets -->
-    <rule>
-        <from>^(/assets/.*)$</from>
-        <to last="true">$1</to>
-    </rule>
-
-    <!-- rewrite all requests to .htm pages -->
-    <rule>
-        <from>^(.+)[.]htm$</from>
-        <to type="permanent-redirect">%{context-path}$1.html</to>
-    </rule>
-
-    <!-- home page -->
-    <rule>
-        <from>^/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/</to>
+        <from>^/browse\.html$</from>
+        <condition type="parameter" name="keywords" operator="equal">E-\w{4}-\d+</condition>
+        <condition type="parameter" name="detailedview" operator="equal">on</condition>
+        <condition name="user-agent">.*Googlebot.*</condition>
+        <to type="permanent-redirect">%{context-path}/experiments/%{parameter:keywords}</to>
     </rule>
 
     <rule>
-        <from>^/$</from>
-        <to type="forward" last="true">/servlets/query/-/home/html</to>
+        <from>^/browse\.html$</from>
+        <condition name="user-agent">.*Googlebot.*</condition>
+        <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html</to>
+    </rule>
+
+    <rule>
+        <from>^/migration.html$</from>
+        <to type="permanent-redirect">%{context-path}/admin.html</to>
+    </rule>
+
+    <rule>
+        <from>^/admin.html$</from>
+        <to type="forward">/servlets/query/-/admin/html</to>
     </rule>
 
     <!-- accession shortcuts -->
     <rule>
         <from>^/(E-\w{4}-\d+)$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/</to>
+        <to type="redirect">%{context-path}/experiments/$1</to>
     </rule>
-    <rule>
-        <from>^/experiments/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/search[.]html?$</from>
-        <condition type="parameter" name="query">^\s*(E-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
-    </rule>
-
     <rule>
         <from>^/(A-\w{4}-\d+)$</from>
-        <to type="redirect" last="true">%{context-path}/arrays/${upper:$1}/</to>
-    </rule>
-    <rule>
-        <from>^/arrays/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/search[.]html?$</from>
-        <condition type="parameter" name="query">^\s*(A-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
+        <to type="redirect">%{context-path}/arrays/$1</to>
     </rule>
 
-    <rule>
-        <from>^/(P-\w{4}-\d+)$</from>
-        <to type="redirect" last="true">%{context-path}/protocols/${upper:$1}/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(P-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/protocols/${upper:%1}/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/search[.]html?$</from>
-        <condition type="parameter" name="query">^\s*(P-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/protocols/${upper:%1}/</to>
-    </rule>
-
-    <!-- empty search shortcut -->
-    <rule>
-        <from>^/experiments/search[.]html?$</from>
-        <condition type="parameter" name="query">^\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html</to>
-    </rule>
-
-    <!-- legacy browse.html redirection -->
-    <rule>
-        <from>^/browse[.]html?$</from>
-        <condition type="query-string" operator="greater"/>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
-    </rule>
-    <rule>
-        <from>^/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/browse.html</to>
-    </rule>
-
-    <!-- search page -->
-    <rule>
-        <from>^/search/?$</from>
-        <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/experiments/search.html?%{query-string}</to>
-    </rule>
-    <rule>
-        <from>^/search/?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html</to>
-    </rule>
-
-    <!-- experiments section -->
+    <!-- experiments -->
     <rule>
         <from>^/experiments/?$</from>
-        <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
+        <to type="redirect">%{context-path}/browse.html</to>
     </rule>
     <rule>
-        <from>^/experiments/?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html</to>
-    </rule>
-
-    <rule>
-        <from>^/experiments/browse[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/experiments/browse/html</to>
-    </rule>
-
-    <rule>
-        <from>^/experiments/search[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/experiments/browse/html</to>
-    </rule>
-
-    <!-- experiment detail -->
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/detail/html</to>
+        <from>^/experiments/browse\.html$</from>
+        <to type="forward">/servlets/query/experiments/experiments/html</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/$1/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/</to>
-    </rule>
-
-    <!-- experiment arrays -->
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/arrays/$</from>
-        <set type="parameter" name="experiment">$1</set>
-        <to type="forward" last="true">/servlets/query/arrays/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/arrays$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/$1/arrays/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/arrays/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/arrays/</to>
-    </rule>
-
-    <!-- experiment protocols -->
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/protocols/$</from>
-        <set type="parameter" name="experiment">$1</set>
-        <to type="forward" last="true">/servlets/query/protocols/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/protocols$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/$1/protocols/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/protocols/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/protocols/</to>
-    </rule>
-
-    <!-- experiment files -->
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files/$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/files/browse/html</to>
+        <to type="forward">/servlets/query/experiments/experiments/html</to>
     </rule>
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/$1/files/</to>
+        <from>^/experiments/(E-\w{4}-\d+)/.*sdrf\.html$</from>
+        <to type="redirect">%{context-path}/experiments/${upper:$1}/samples.html</to>
     </rule>
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/files/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)/$</from>
+        <from>^/experiments/(E-\w{4}-\d+)/samples\.html$</from>
         <set type="parameter" name="accession">$1</set>
-        <set type="parameter" name="kind">$2</set>
-        <to type="forward" last="true">/servlets/query/files/browse/html</to>
+        <to type="forward">/servlets/query/experiments/samples-view/html</to>
     </rule>
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/$1/files/$2/</to>
+        <from>^/experiments/(E-\w{4}-\d+)/([^\.]+)\.samples.xml$</from>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.$3.txt/default/xml</to>
     </rule>
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/files/$2/</to>
-    </rule>
-
-    <!-- experiment samples -->
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples/$</from>
+        <from>^/experiments/(E-\w{4}-\d+)/samples-test\.html$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/samples/html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples/(.+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <set type="parameter" name="sourcename">$2</set>
-        <to type="forward" last="true">/servlets/query/experiments/samples/html</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/sdrf[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
+        <to type="forward">/servlets/query/experiments/samples-view-test/html</to>
     </rule>
 
     <!-- add to genomespace wizard -->
     <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/genomespace[.]html?$</from>
+        <from>^/experiments/(E-\w{4}-\d+)/genomespace\.html$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/-/add-to-genomespace/html</to>
+        <to type="forward">/servlets/query/-/add-to-genomespace/html</to>
     </rule>
 
     <!-- legacy idf viewer -->
-    <!-- TODO: remove or update
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/idf\.html$</from>
-        <to type="forward" last="true">/servlets/fftransform/$1/$1.$2.txt/idf-view/html</to>
+        <to type="forward">/servlets/fftransform/$1/$1.$2.txt/idf-view/html</to>
     </rule>
-    -->
 
+    <rule>
+        <from>^/test/(.+)\.html$</from>
+        <to type="redirect">/test/${upper:$1}/${upper:$1}.html</to>
+    </rule>
 
     <!-- arrays -->
     <rule>
         <from>^/arrays/?$</from>
         <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/arrays/browse.html?%{query-string}</to>
+        <to type="redirect">%{context-path}/arrays/browse.html?%{query-string}</to>
     </rule>
     <rule>
         <from>^/arrays/?$</from>
-        <to type="redirect" last="true">%{context-path}/arrays/browse.html</to>
+        <to type="redirect">%{context-path}/arrays/browse.html</to>
     </rule>
     <rule>
-        <from>^/arrays/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/arrays/browse.html</to>
+        <from>^/arrays/browse\.html$</from>
+        <to type="forward">/servlets/query/arrays/arrays/html</to>
     </rule>
     <rule>
-        <from>^/arrays/browse[.]html$</from>
-        <to type="forward" last="true">/servlets/query/arrays/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/arrays/(A-\w{4}-\d+)/$</from>
+        <from>^/arrays/(A-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/arrays/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/arrays/(A-\w{4}-\d+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="redirect" last="true">%{context-path}/arrays/$1/</to>
-    </rule>
-    <rule>
-        <from>^/arrays/(A-\w{4}-\d+)/index[.]html?$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="permanent-redirect" last="true">%{context-path}/arrays/$1/</to>
+        <to type="forward">/servlets/query/arrays/arrays/html</to>
     </rule>
 
     <!-- protocols -->
     <rule>
         <from>^/protocols/?$</from>
         <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/protocols/browse.html?%{query-string}</to>
+        <to type="redirect">%{context-path}/protocols/browse.html?%{query-string}</to>
     </rule>
     <rule>
         <from>^/protocols/?$</from>
-        <to type="redirect" last="true">%{context-path}/protocols/browse.html</to>
+        <to type="redirect">%{context-path}/protocols/browse.html</to>
     </rule>
     <rule>
-        <from>^/protocols/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/protocols/browse.html</to>
+        <from>^/protocols/browse\.html$</from>
+        <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
     <rule>
-        <from>^/protocols/browse[.]html$</from>
-        <to type="forward" last="true">/servlets/query/protocols/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/protocols/(\d+)/$</from>
+        <from>^/protocols/(\d+)/?$</from>
         <set type="parameter" name="id">$1</set>
-        <to type="forward" last="true">/servlets/query/protocols/browse/html</to>
+        <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
     <rule>
-        <from>^/protocols/([^/]+)/$</from>
+        <from>^/protocols/(.+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/protocols/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/protocols/([^/]+)$</from>
-        <to type="redirect" last="true">%{context-path}/protocols/$1/</to>
-    </rule>
-    <rule>
-        <from>^/protocols/([^/]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/protocols/$1/</to>
+        <to type="forward">/servlets/query/protocols/protocols/html</to>
     </rule>
 
     <!-- files -->
     <rule>
         <from>^/files/?$</from>
-        <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/files/browse.html?%{query-string}</to>
+        <to type="redirect">%{context-path}/files/browse.html</to>
     </rule>
     <rule>
-        <from>^/files/?$</from>
-        <to type="redirect" last="true">%{context-path}/files/browse.html</to>
+        <from>^/files/browse\.html$</from>
+        <to type="forward">/servlets/query/files/files/html</to>
     </rule>
     <rule>
-        <from>^/files/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/files/browse.html</to>
-    </rule>
-    <rule>
-        <from>^/files/browse[.]html$</from>
-        <to type="forward" last="true">/servlets/query/files/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/$</from>
+        <from>^/files/([AE]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/files/browse/html</to>
+        <to type="forward">/servlets/query/-/files/html</to>
     </rule>
     <rule>
-        <from>^/files/([AE]-\w{4}-\d+)$</from>
-        <to type="redirect" last="true">%{context-path}/files/$1/</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/files/$1/</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/$</from>
+        <from>^/files/([AE]-\w{4}-\d+)/index.html$</from>
         <set type="parameter" name="accession">$1</set>
-        <set type="parameter" name="kind">$2</set>
-        <to type="forward" last="true">/servlets/query/files/browse/html</to>
+        <to type="forward">/servlets/query/-/files/html</to>
     </rule>
     <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)$</from>
-        <to type="redirect" last="true">%{context-path}/files/$1/$2/</to>
+        <from>^/files/([AE]-\w{4}-\d+)/([^/]+\.zip)/([^/]+)$</from>
+        <to type="forward">/servlets/archdownload/${upper:$1}/$2/$3</to>
     </rule>
     <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/files/$1/$2/</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <to type="forward" last="true">/servlets/archdownload/${upper:$1}/$2/$3</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/]+)$</from>
-        <to type="forward" last="true">/servlets/download/${upper:$1}/$2</to>
-    </rule>
-    <rule>
-        <from>^/files/([AE]-\w{4}-\d+)/([^/]+)/([^/]+)$</from>
-        <to type="forward" last="true">/servlets/download/${upper:$1}/$2/$3</to>
-    </rule>
-
-    <!-- legacy download support -->
-    <rule>
-        <from>^/download/(.+)$</from>
-        <to type="forward" last="true">/servlets/download/$1</to>
+        <from>^/files/([AE]-\w{4}-\d+)/(.+)$</from>
+        <to type="forward">/servlets/download/${upper:$1}/$2</to>
     </rule>
 
     <!-- users -->
     <rule>
         <from>^/users/?$</from>
-        <condition type="query-string" operator="greater"/>
-        <to type="redirect" last="true">%{context-path}/users/browse.html?%{query-string}</to>
+        <to type="redirect">%{context-path}/users/browse.html</to>
     </rule>
     <rule>
-        <from>^/users/?$</from>
-        <to type="redirect" last="true">%{context-path}/users/browse.html</to>
+        <from>^/users/browse\.html$</from>
+        <to type="forward">/servlets/query/users/users/html</to>
     </rule>
     <rule>
-        <from>^/users/index[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/users/browse.html</to>
-    </rule>
-    <rule>
-        <from>^/users/browse[.]html$</from>
-        <to type="forward" last="true">/servlets/query/users/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/users/([^/]+)/$</from>
+        <from>^/users/(.+)$</from>
         <set type="parameter" name="id">$1</set>
-        <to type="forward" last="true">/servlets/query/users/browse/html</to>
-    </rule>
-    <rule>
-        <from>^/users/([^/]+)$</from>
-        <to type="redirect" last="true">%{context-path}/users/$1</to>
-    </rule>
-    <rule>
-        <from>^/users/([^/]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/users/$1</to>
+        <to type="forward">/servlets/query/users/users/html</to>
     </rule>
 
-    <!-- submit section -->
+    <!-- legacy download support -->
     <rule>
-        <from>^/submit/?$</from>
-        <to type="redirect" last="true">%{context-path}/submit/overview.html</to>
-    </rule>
-    <rule>
-        <from>^/submit/overview.html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=help/submissions_overview.html</to>
-    </rule>
-    <rule>
-        <from>^/submit/(.+)[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/help/$1.html</to>
-    </rule>
-
-    <!-- about arrayexpress page -->
-    <rule>
-        <from>^/about[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=about.html</to>
-    </rule>
-    <rule>
-        <from>^/acknowledgements[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/about.html#acknowledgements</to>
-    </rule>
-    <!-- help pages -->
-    <rule>
-        <from>^/help/?$</from>
-        <to type="redirect" last="true">%{context-path}/help/index.html</to>
-    </rule>
-    <rule>
-        <from>^/help/browse_results[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/help/quick_start.html</to>
-    </rule>
-    <rule>
-        <from>^/help/ae_help[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/help/how_to_search.html</to>
-    </rule>
-    <rule>
-        <from>^/help/(.+)[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=help/${lower:$1}.html</to>
-    </rule>
-
-
-    <!-- rss feeds support, current scheme -->
-    <rule>
-        <from>^/rss/v2/experiments$</from>
-        <to type="forward" last="true">/servlets/query/experiments/rss/xml</to>
+        <from>^/download/(.+)$</from>
+        <to type="forward">/servlets/download/$1</to>
     </rule>
 
     <!-- rss feeds support, old scheme -->
     <rule>
         <from>^/rss/experiments$</from>
         <set type="parameter" name="queryversion">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/rss/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments-rss/xml</to>
     </rule>
 
-    <!-- rest api v2 support -->
+    <!-- rss feeds support, current scheme -->
     <rule>
-        <from>^/xml/v2/experiments$</from>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/experiments/([E]-\w{4}-\d+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/experiments/(.*)$</from>
-        <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/files$</from>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/files/([E]-\w{4}-\d+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
-    </rule>
-    <rule>
-        <from>^/xml/v2/files/(.*)$</from>
-        <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <from>^/rss/v2/experiments$</from>
+        <to type="forward">/servlets/query/experiments/experiments-rss/xml</to>
     </rule>
 
-    <!-- rest api in json -->
-    <rule>
-        <from>^/json/v2/experiments$</from>
-        <set type="parameter" name="flusheaders">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/experiments/(.*)$</from>
-        <set type="parameter" name="flusheaders">1</set>
-        <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/files$</from>
-        <set type="parameter" name="flusheaders">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
-        <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/files/(.*)$</from>
-        <set type="parameter" name="flusheaders">1</set>
-        <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
-    </rule>
-
-    <!-- rest api legacy support -->
+    <!-- rest api support -->
     <rule>
         <from>^/xml/experiments$</from>
         <set type="parameter" name="queryversion">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/([E]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
+    </rule>
+        <rule>
+        <from>^/xml/experiments/diff/([E]-\w{4}-\d+)/(.+)$</from>
+            <set type="parameter" name="accession">$1</set>
+            <set type="parameter" name="source">$2</set>
+            <to type="forward">/servlets/query/experiments/diff-experiment/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/(.*)$</from>
         <set type="parameter" name="queryversion">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
         <from>^/xml/files$</from>
         <set type="parameter" name="queryversion">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/([AE]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/(.*)$</from>
         <set type="parameter" name="queryversion">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
     </rule>
 
-    <!-- search results export in tab format -->
+    <!-- rest api v2 support -->
     <rule>
-        <from>^/ArrayExpress-Experiments[.]xls$</from>
-        <to type="forward" last="true">/servlets/query/experiments/export/xls</to>
+        <from>^/xml/v2/experiments$</from>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
-        <from>^/ArrayExpress-Experiments[.]txt$</from>
-        <to type="forward" last="true">/servlets/query/experiments/export/tab</to>
-    </rule>
-
-    <!-- global search dump export -->
-    <rule>
-        <from>^/export/AER2EBeye[.]xml$</from>
-        <set type="parameter" name="version">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/ebeye/xml</to>
+        <from>^/xml/v2/experiments/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
     </rule>
     <rule>
-        <from>^/export/ebeye_export[.]xml$</from>
-        <set type="parameter" name="version">2</set>
-        <to type="forward" last="true">/servlets/query/experiments/ebeye/xml</to>
+        <from>^/xml/v2/experiments/(.*)$</from>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files$</from>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v2/files/(.*)$</from>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/files/xml</to>
+    </rule>
+    <!-- json-flavored rest api -->
+    <rule>
+        <from>^/json/v2/experiments$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/experiments/(.*)$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/experiments/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/files$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/files/(.*)$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward">/servlets/query/experiments/files/json</to>
     </rule>
 
     <!-- proxy calls to json efo api for nils -->
     <rule>
         <from>^/json/v2/efotree$</from>
-        <to type="forward" last="true">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efotree</to>
+        <to type="forward">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efotree</to>
     </rule>
     <rule>
         <from>^/json/v2/efodict$</from>
-        <to type="forward" last="true">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
+        <to type="forward">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
+    </rule>
+
+    <!-- ebeye export -->
+    <rule>
+        <from>^/export/AER2EBeye.xml$</from>
+        <set type="parameter" name="version">1</set>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml</to>
+    </rule>
+    <rule>
+        <from>^/export/ebeye_export.xml$</from>
+        <set type="parameter" name="version">2</set>
+        <to type="forward">/servlets/query/experiments/experiments-ebeye/xml</to>
+    </rule>
+
+    <!-- search results export in tab format -->
+    <rule>
+        <from>^/ArrayExpress-Experiments\.xls$</from>
+        <to type="forward">/servlets/query/experiments/experiments/xls</to>
+    </rule>
+    <rule>
+        <from>^/ArrayExpress-Experiments\.txt$</from>
+        <to type="forward">/servlets/query/experiments/experiments/tab</to>
+    </rule>
+
+    <!-- print-friendly layout for the experiments -->
+    <rule>
+        <from>^/browse\.printer\.html$</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments-printer/html</to>
     </rule>
 
     <!-- redirects to some pages at www.ebi.ac.uk (via proxy servlet) -->
-    <!-- TODO: remove or update
     <rule>
         <from>^/ae-news.xml</from>
         <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/microarray-srv/ae/ae-main-news.xml</to>
@@ -631,160 +359,207 @@
         <from>^/www-inc/(.+)</from>
         <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/inc/$1</to>
     </rule>
-    -->
-
+    <!-- hiding browse helpers behind innocent names -->
     <rule>
-        <from>^/species-list[.]html</from>
-        <to type="forward" last="true">/servlets/lookup/species</to>
+        <from>^/browse-table.html</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments/html</to>
     </rule>
     <rule>
-        <from>^/arrays-list[.]html</from>
-        <to type="forward" last="true">/servlets/lookup/arrays</to>
+        <from>^/browse-table-debug.html</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments-debug/html</to>
     </rule>
     <rule>
-        <from>^/expdesign-list[.]html</from>
-        <to type="forward" last="true">/servlets/lookup/expdesign</to>
+        <from>^/browse-table-test.html</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments-test/html</to>
     </rule>
     <rule>
-        <from>^/exptech-list[.]html</from>
-        <to type="forward" last="true">/servlets/lookup/exptech</to>
+        <from>^/species-list.html</from>
+        <to type="forward">/servlets/lookup/species</to>
     </rule>
     <rule>
-        <from>^/keywords[.]txt</from>
-        <to type="forward" last="true">/servlets/lookup/keywords</to>
+        <from>^/arrays-list.html</from>
+        <to type="forward">/servlets/lookup/arrays</to>
     </rule>
     <rule>
-        <from>^/efotree[.]txt</from>
-        <to type="forward" last="true">/servlets/lookup/efotree</to>
+        <from>^/expdesign-list.html</from>
+        <to type="forward">/servlets/lookup/expdesign</to>
     </rule>
     <rule>
-        <from>^/ae-stats[.]xml</from>
-        <to type="forward" last="true">/servlets/query/experiments/stats/xml</to>
+        <from>^/exptech-list.html</from>
+        <to type="forward">/servlets/lookup/exptech</to>
     </rule>
     <rule>
-        <from>^/verify-login[.]txt</from>
-        <to type="forward" last="true">/auth</to>
+        <from>^/keywords.txt</from>
+        <to type="forward">/servlets/lookup/keywords</to>
+    </rule>
+    <rule>
+        <from>^/efotree.txt</from>
+        <to type="forward">/servlets/lookup/efotree</to>
+    </rule>
+    <rule>
+        <from>^/ae-stats.xml</from>
+        <to type="forward">/servlets/query/experiments/stats/xml</to>
+    </rule>
+    <rule>
+        <from>^/verify-login.txt</from>
+        <to type="forward">/servlets/verify-login</to>
     </rule>
 
     <!-- control links -->
     <rule>
         <from>^/reload-atlas-info</from>
-        <to type="forward" last="true">/servlets/control/reload-atlas-info</to>
+        <to type="forward">/servlets/control/reload-atlas-info</to>
     </rule>
     <rule>
         <from>^/reload-efo</from>
-        <to type="forward" last="true">/servlets/control/reload-efo</to>
+        <to type="forward">/servlets/control/reload-efo</to>
     </rule>
     <rule>
         <from>^/update-efo</from>
-        <to type="forward" last="true">/servlets/control/update-efo</to>
+        <to type="forward">/servlets/control/update-efo</to>
     </rule>
     <rule>
         <from>^/reload-atlas-info</from>
-        <to type="forward" last="true">/servlets/control/reload-atlas-info</to>
+        <to type="forward">/servlets/control/reload-atlas-info</to>
     </rule>
     <rule>
         <from>^/reload-ae1-xml</from>
-        <to type="forward" last="true">/servlets/control/reload-ae1-xml</to>
+        <to type="forward">/servlets/control/reload-ae1-xml</to>
     </rule>
     <rule>
         <from>^/reload-ae1-xml/(.+)</from>
-        <to type="forward" last="true">/servlets/control/reload-ae1-xml/$1</to>
+        <to type="forward">/servlets/control/reload-ae1-xml/$1</to>
     </rule>
     <rule>
         <from>^/reload-ae2-xml</from>
-        <to type="forward" last="true">/servlets/control/reload-ae2-xml</to>
+        <to type="forward">/servlets/control/reload-ae2-xml</to>
     </rule>
     <rule>
         <from>^/rescan-ftp</from>
-        <to type="forward" last="true">/servlets/control/rescan-files</to>
+        <to type="forward">/servlets/control/rescan-files</to>
     </rule>
     <rule>
         <from>^/rescan-ftp/(.+)</from>
-        <to type="forward" last="true">/servlets/control/rescan-files/$1</to>
+        <to type="forward">/servlets/control/rescan-files/$1</to>
     </rule>
     <rule>
         <from>^/check-ftp</from>
-        <to type="forward" last="true">/servlets/control/check-files</to>
+        <to type="forward">/servlets/control/check-files</to>
     </rule>
     <rule>
         <from>^/test-email</from>
-        <to type="forward" last="true">/servlets/control/test-email</to>
+        <to type="forward">/servlets/control/test-email</to>
     </rule>
 
+    <!-- experimental noajax browse interface -->
+    <rule>
+        <from>^/browse-noajax.html$</from>
+        <to type="forward">/servlets/query/experiments/browse-experiments-noajax/html?cache=true</to>
+    </rule>
 
     <!-- legacy links -->
     <rule>
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/%{parameter:eAccession}/</to>
+        <to type="permanent-redirect">%{context-path}/experiments/%{parameter:eAccession}</to>
     </rule>
     
     <rule>
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect" last="true">%{context-path}/experiments/browse.html</to>
+        <to type="permanent-redirect">%{context-path}/browse.html</to>
     </rule>
 
     <rule>
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
         <condition type="parameter" name="aAccession">.+</condition>
-        <to type="permanent-redirect" last="true">%{context-path}/arrays/%{parameter:aAccession}/</to>
+        <to type="permanent-redirect">%{context-path}/arrays/%{parameter:aAccession}</to>
     </rule>
 
     <rule>
         <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
-        <to type="permanent-redirect" last="true">%{context-path}/arrays/browse.html</to>
+        <to type="permanent-redirect">%{context-path}/arrays/browse.html</to>
     </rule>
 
     <rule>
         <from>^/query/(.+)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/</to>
+        <to type="permanent-redirect">%{context-path}/upgraded.html</to>
     </rule>
 
     <rule>
         <from>^/query/?$</from>
-        <to type="permanent-redirect" last="true">%{context-path}/</to>
+        <to type="permanent-redirect">%{context-path}</to>
     </rule>
 
     <rule>
         <from>^/genes/uniprot/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
     </rule>
     <rule>
         <from>^/genes/ensembl/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
     </rule>
     <rule>
         <from>^/genes/any/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+        <to type="permanent-redirect">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
+    </rule>
+    <!-- ArrayExpress old link redirects  -->
+    <rule>
+        <from>^/news_archive.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/general/news.html</to>
     </rule>
 
-    <!-- ArrayExpress old link redirects  -->
-    <!-- TODO: remove or update
     <rule>
-        <from>^/news_archive[.]html$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/general/news.html</to>
+        <from>^/Help/faq.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/faq.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/stats/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/stats/index.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/index.html$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/ae_help.html</to>
+    </rule>
+
+    <rule>
+        <from>^/Help/?$</from>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/help/ae_help.html</to>
     </rule>
 
     <rule>
         <from>^/Implementation/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
     </rule>
+
     <rule>
         <from>^/Schema/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
     </rule>
+
     <rule>
         <from>^/Standards/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/standards.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/doc/standards.html</to>
     </rule>
+
     <rule>
         <from>^/Submissions/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/submissions_overview.html</to>
+        <to type="permanent-redirect">http://www.ebi.ac.uk/fg/submissions_overview.html</to>
     </rule>
-    -->
+
+    <!-- hack for Ibrahim's tool -->
+    <rule>
+        <from>^/AEVisualCurate/?$</from>
+        <to type="redirect">%{context-path}/AEVisualCurate/main.jsp</to>
+    </rule>
+
+    <rule>
+        <from>^/AEVisualCurate/(.+)$</from>
+        <to type="forward">/servlets/proxy/http://rachmaninoff.windows.ebi.ac.uk:8080/AEvisualCurate/$1</to>
+    </rule>
 </urlrewrite>

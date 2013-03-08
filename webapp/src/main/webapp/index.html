@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Language" content="en-GB"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>
+
+    <title>ArrayExpress Home | EBI</title>
+
+    <link rel="stylesheet" href="${interface.application.link.www_domain.inc}/css/contents.css" type="text/css"/>
+    <link rel="stylesheet" href="${interface.application.link.www_domain.inc}/css/userstyles.css" type="text/css"/>
+    <script src="${interface.application.link.www_domain.inc}/js/contents.js" type="text/javascript"></script>
+    <link rel="SHORTCUT ICON" href="${interface.application.link.www_domain}/bookmark.ico"/>
+
+    <link rel="stylesheet" href="assets/stylesheets/ae_common_20.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/stylesheets/ae_index_20.css" type="text/css"/>
+    <script src="assets/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="assets/scripts/jsdeferred.jquery-0.3.1.js" type="text/javascript"></script>
+    <script src="assets/scripts/jquery.cookie-1.0.js" type="text/javascript"></script>
+    <script src="assets/scripts/ae_common_20.js" type="text/javascript"></script>
+    <script src="assets/scripts/ae_index_20.js" type="text/javascript"></script>
+    <link rel="alternate" href="rss/v2/experiments"
+              type="application/rss+xml" title="ArrayExpress Experiments Feed"/>    
+
+${interface.application.google.analytics}
+</head>
+
+<body class="${interface.application.body.class}" onload="aeOnLoad()">
+<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
+    <iframe src="${interface.application.link.www_domain.inc}/head.html" name="head" id="head"
+            frameborder="0" marginwidth="0px" marginheight="0px" scrolling="no" width="100%"
+            style="position:absolute; z-index: 1; height: 57px;">
+        Your browser does not support inline frames or is currently configured not to display inline frames. Content can
+        be viewed at actual source page: http://www.ebi.ac.uk/inc/head.html
+    </iframe>
+</div>
+<div id="ae_contents" class="ae_contents_frame ae_assign_font">
+    <div id="ae_contents_container" class="ae_center_box">
+        <div id="ae_contents_box_915px">
+            <div id="ae_index_content">
+                <div id="ae_intro_area">
+                    <div class="lite_form_outer"><div class="lite_form_top"><div class="lite_form_bottom"><div class="lite_form_left"><div class="lite_form_right"><div class="lite_form_bottom_left"><div class="lite_form_bottom_right"><div class="lite_form_top_left"><div class="lite_form_top_right"><div class="lite_form_inner">
+                        <div id="ae_logo"><img src="assets/images/ae_logo.gif" alt="ArrayExpress Logo" title="ArrayExpress ${project.version}.r${buildNumber}"/></div>
+                        <div id="ae_header"><img src="assets/images/ae_header.gif" alt="ArrayExpress"/></div>
+                        <div id="ae_intro_text">
+                            <div>The <strong>ArrayExpress Archive</strong> is a database of functional genomics experiments
+                                including gene expression where you can query and download data
+                                collected to <a href="http://www.mged.org/Workgroups/MIAME/miame.html">MIAME</a> and <a href="http://www.mged.org/minseqe">MINSEQE</a> standards.
+                                <strong>Gene Expression Atlas</strong> contains a subset of curated and re-annotated Archive data which can be queried for individual gene expression
+                                under different biological conditions across experiments.</div>
+                    </div></div></div></div></div></div></div></div></div></div></div>
+                </div>
+                <div class="ie_clear"><img src="assets/images/empty.gif" width="1" height="1" alt=""/></div>
+                <noscript>
+                    <div class="ae_warn_area">ArrayExpress uses JavaScript for data handling and enhanced
+                        representation. Please enable JavaScript if you want to continue using ArrayExpress.
+                    </div>
+                </noscript>
+                <div id="ae_jquery_unsupported" class="ae_warn_area ae_nodisplay">ArrayExpress uses powerful jQuery library for data handling and enhanced
+                    representation. Unfortunately this browser is not fully supported by jQuery. We recommend to use Firefox 3+, Safari 3+, Opera 10+, or IE 6+.
+                </div>
+                <div id="ae_query_area" class="ae_nodisplay">
+                    <div class="ae_left_box">
+                        <div class="form_outer"><div class="form_top"><div class="form_bottom"><div class="form_left"><div class="form_right"><div class="form_bottom_left"><div class="form_bottom_right"><div class="form_top_left"><div class="form_top_right"><div class="form_inner">
+                            <div id="aer_feed_link">
+                                <a href="rss/v2/experiments" title="ArrayExpress Experiments Feed"><img src="assets/images/silk_feed.gif" alt="ArrayExpress Experiments RSS feed"></a>
+                            </div>
+                            <div class="ae_box_title"><img src="assets/images/ae_exps_header.gif" alt="Experiments"></div>
+                            <div id="aer_avail_info">Retrieving data, please wait...</div>
+                            <form id="aer_query_form" method="get" action="browse.html">
+                                <label for="aer_query_field">Experiment, citation, sample and factor annotations</label>
+                                <input id="aer_query_field" name="keywords" maxlength="200" class="ae_assign_font">
+                                <input id="aer_query_submit" type="submit" value="Query">
+                            </form>
+                            <div id="aer_browse_link"><a href="browse.html"><img src="assets/images/silk_browse.gif" width="16" height="16" alt="">Browse experiments</a> | <a href="arrays/browse.html?directsub=on">platform designs</a> | <a href="protocols/browse.html">protocols</a> | <a href="files/browse.html">files</a></div>
+                            <div id="aer_help_link"><a href="${interface.application.link.query_help}" target="ae_help"><img src="assets/images/basic_help.gif" width="16" height="16" alt="">ArrayExpress Query Help</a></div>
+                            <div id="aer_login_link"><a href="javascript:aeShowLoginForm();"><img src="assets/images/basic_key.gif" width="16" height="16" alt="">Submitter/reviewer login</a></div>
+                            <div id="aer_login_box"><div class="login_outer"><div class="login_top"><div class="login_bottom"><div class="login_left"><div class="login_right"><div class="login_top_left"><div class="login_top_right"><div class="login_bottom_left"><div class="login_bottom_right"><div class="login_inner">
+                                <div id="aer_login_title">Submitter/reviewer login [<a href="javascript:aeHideLoginForm();">close</a>]</div>
+                                <form id="aer_login_form" method="get" action="index.html" onsubmit="aeDoLogin(); return false">
+                                    <fieldset id="aer_login_user_fset">
+                                        <label for="aer_user_field">User name</label>
+                                        <input id="aer_user_field" name="u" maxlength="50" class="ae_assign_font">
+                                    </fieldset>
+                                    <fieldset id="aer_login_pass_fset">
+                                        <label for="aer_pass_field">Password</label>
+                                        <input id="aer_pass_field" type="password" name="p" maxlength="50" class="ae_assign_font">
+                                    </fieldset>
+                                    <input id="aer_login_submit" type="submit" value="Log in">
+                                    <span><input id="aer_login_remember" type="checkbox"><label for="aer_login_remember">Remember me</label></span>
+                                </form>
+                                <div id="aer_login_status"></div>
+                            </div></div></div></div></div></div></div></div></div></div></div>
+                            <div id="aer_login_info"><img src="assets/images/basic_suser.gif" width="16" height="16" alt="Logged in as"><strong>user</strong> [<a href="javascript:aeDoLogout(true)">log out</a>]</div>
+                        </div></div></div></div></div></div></div></div></div></div>
+                    </div>
+                    <div id="ae_atlas_box" class="ae_right_box">
+                        <div class="form_outer"><div class="form_top"><div class="form_bottom"><div class="form_left"><div class="form_right"><div class="form_bottom_left"><div class="form_bottom_right"><div class="form_top_left"><div class="form_top_right"><div class="form_inner">
+                            <div class="ae_box_title"><img src="assets/images/ae_atlas_header.gif" alt="Gene Expression Atlas"></div>
+                            <div id="atlas_avail_info">Retrieving data, please wait...</div>
+                            <form id="atlas_query_form" method="get" action="${interface.application.link.atlas.query.url}">
+                                <input type="hidden" name="gprop_0" value="">
+                                <fieldset id="atlas_gene_fset">
+                                    <label for="atlas_query_field">Genes</label>
+                                    <input id="atlas_query_field" name="gval_0" maxlength="60" class="ae_assign_font">
+                                </fieldset>
+                                <fieldset id="atlas_updn_fset">
+                                    <label for="atlas_updn_field">&#160;</label>
+                                    <select id="atlas_updn_field" name="fexp_0" class="ae_assign_font">
+                                        <option value="UP_DOWN">up/down in</option>
+                                        <option value="UP">up in</option>
+                                        <option value="DOWN">down in</option>
+                                    </select>
+                                </fieldset>
+                                <input type="hidden" name="fact_0" value="">
+                                <fieldset id="atlas_exps_fset">
+                                    <label for="atlas_experiments_field">Conditions</label>
+                                    <input id="atlas_experiments_field" name="fval_0" maxlength="120" class="ae_assign_font">
+                                </fieldset>
+                                <input id="atlas_query_submit" type="submit" value="Query">
+                                <fieldset id="atlas_species_fset">
+                                    <select id="atlas_species_field" name="specie_0" class="ae_assign_font" disabled><option value="">Any species (loading options)</option></select>
+                                </fieldset>
+                                <input type="hidden" name="view" value="hm">
+                                <input type="hidden" name="ref" value="aehome">
+                                <input type="hidden" name="searchMode" value="simple"/>
+                            </form>
+                            <div id="atlas_browse_link"><a href="${interface.application.link.atlas.base.url}/">Gene Expression Atlas Home</a></div>
+                        </div></div></div></div></div></div></div></div></div></div>
+                    </div>
+                </div>
+
+                <div class="ie_clear"><img src="assets/images/empty.gif" width="1" height="1" alt=""></div>
+                <div id="ae_news_links_area" class="ae_nodisplay">
+                    <div class="ae_left_box">
+                        <div class="lite_form_outer"><div class="lite_form_top"><div class="lite_form_bottom"><div class="lite_form_left"><div class="lite_form_right"><div class="lite_form_bottom_left"><div class="lite_form_bottom_right"><div class="lite_form_top_left"><div class="lite_form_top_right"><div class="lite_form_inner">
+                            <div class="ae_box_title"><img src="assets/images/ae_news_header.gif" alt="News"></div>
+                            <div id="ae_news"></div>
+                        </div></div></div></div></div></div></div></div></div></div>
+                    </div>
+                    <div class="ae_right_box">
+                        <div class="lite_form_outer"><div class="lite_form_top"><div class="lite_form_bottom"><div class="lite_form_left"><div class="lite_form_right"><div class="lite_form_bottom_left"><div class="lite_form_bottom_right"><div class="lite_form_top_left"><div class="lite_form_top_right"><div class="lite_form_inner">
+                            <div class="ae_box_title"><img src="assets/images/ae_links_header.gif" alt="Links"></div>
+                            <div id="ae_links"></div>
+                        </div></div></div></div></div></div></div></div></div></div>
+                    </div>
+                </div>
+                <div class="ie_clear"><img src="assets/images/empty.gif" width="1" height="1" alt=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ebi_footer" class="ae_nodisplay">
+    <iframe src="${interface.application.link.www_domain.inc}/foot.html"
+            name="foot" frameborder="0" marginwidth="0px" marginheight="0px"
+            scrolling="no" height="22px" width="100%" style="z-index:2">
+        Your browser does not support inline frames or is currently configured not to display inline frames.
+        Content can be viewed at actual source page: http://www.ebi.ac.uk/inc/foot.html
+    </iframe>
+</div>
+</body>
+</html>

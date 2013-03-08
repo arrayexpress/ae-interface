@@ -20,11 +20,10 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
@@ -41,7 +40,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     private final String MAP_FOLDER = "ftp-folder";
     private final String MAP_RAW_FILES = "raw-files";
-    private final String MAP_PROCESSED_FILES = "processed-files";
+    private final String MAP_PROCESSED_FILES = "fgem-files";
 
     private String rootFolder;
     private FilePersistence<PersistableDocumentContainer> document;
@@ -124,8 +123,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
             throw new RuntimeException(x);
         }
     }
-
-    @SuppressWarnings("unchecked")
+    
     private void updateAccelerators() throws IOException
     {
         this.logger.debug("Updating maps for files");
@@ -147,7 +145,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 //todo: remove redundancy here
                 if ("experiment".equals(folderKind)) {
                     maps.setMappedValue(MAP_RAW_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'raw'])"));
-                    maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'processed'])"));
+                    maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'fgem'])"));
                 }
             }
             this.logger.debug("Maps updated");
@@ -182,55 +180,74 @@ public class Files extends ApplicationComponent implements IDocumentSource
         return this.lastReloadMessage;
     }
 
-    private String getFileLocatingXPQuery( String accession, String kind, String name )
-    {
-        accession = StringEscapeUtils.escapeXml(accession);
-        kind = StringEscapeUtils.escapeXml(kind);
-        name = StringEscapeUtils.escapeXml(name);
-        return "/files/folder" +
-                ( StringUtils.isNotBlank(accession) ? "[@accession = '" + accession + "']" : "" ) +
-                "/file[@name = '" + name + "'" +
-                ( StringUtils.isNotBlank(kind) ? " and @kind = '" + kind + "'" : "" ) +
-                "]";
-    }
-
     // returns true is file is registered in the registry
-    public boolean doesExist( String accession, String kind, String name ) throws IOException
+    public boolean doesExist( String accession, String name ) throws IOException
     {
         boolean result = false;
 
-        if (StringUtils.isNotBlank(name)) {
-
-            try {
+        try {
+            if (null != accession && accession.length() > 0) {
                 result = (Boolean)this.saxon.evaluateXPathSingle(
                         getDocument()
-                        , "exists(" + getFileLocatingXPQuery(accession, kind, name) + ")"
+                        , "exists(//folder[@accession = \"" + accession.replaceAll("\"", "&quot;") + "\"]/file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
                 );
-            } catch ( XPathException x ) {
-                logger.error("Caught an exception:", x);
+            } else {
+                result = (Boolean)this.saxon.evaluateXPathSingle(
+                        getDocument()
+                        , "exists(//file[@name = \"" + name.replaceAll("\"", "&quot;") + "\"])"
+                );
             }
+        } catch ( XPathException x ) {
+            logger.error("Caught an exception:", x);
         }
+
         return result;
     }
 
     // returns absolute file location (if file exists, null otherwise) in local filesystem
-    public String getLocation( String accession, String kind, String name ) throws IOException
+    public String getLocation( String accession, String name ) throws IOException
     {
-        String location = null;
+        String folderLocation = null;
 
-        if (StringUtils.isNotBlank(name)) {
-            try {
-                String fileXPQuery = getFileLocatingXPQuery(accession, kind, name);
-                String xPathQuery = "concat(" + fileXPQuery + "/../@location, '/', " + fileXPQuery + "/@location)";
-                location = this.saxon.evaluateXPathSingleAsString(
+        try {
+            if (null != accession && accession.length() > 0) {
+                folderLocation = this.saxon.evaluateXPathSingleAsString(
                         getDocument()
-                        , xPathQuery
+                        , "//folder[@accession = '" + accession + "' and file/@name = '" + name + "']/@location"
                 );
-            } catch ( XPathException x ) {
-                logger.error("Caught an exception:", x);
+            } else {
+                folderLocation = this.saxon.evaluateXPathSingleAsString(
+                        getDocument()
+                        , "//folder[file/@name = '" + name + "']/@location"
+                );
             }
+        } catch ( XPathException x ) {
+            logger.error("Caught an exception:", x);
         }
 
-        return location;
+        if (null != folderLocation && folderLocation.length() > 0) {
+            return folderLocation + File.separator + name;
+        } else {
+            return null;
+        }
+    }
+
+    public String getAccession( String fileLocation ) throws IOException
+    {
+        String[] nameFolder = new RegexHelper("^(.+)/([^/]+)$", "i")
+                .match(fileLocation);
+        if (null == nameFolder || 2 != nameFolder.length) {
+            this.logger.error("Unable to parse the location [{}]", fileLocation);
+            return null;
+        }
+
+        try {
+            return this.saxon.evaluateXPathSingleAsString(
+                    getDocument()
+                    , "//folder[file/@name = '" + nameFolder[1] + "' and @location = '" + nameFolder[0] + "']/@accession"
+            );
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
+        }
     }
 }

@@ -1,5 +1,29 @@
 package uk.ac.ebi.arrayexpress.servlets;
 
+import net.sf.saxon.om.DocumentInfo;
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.lucene.queryParser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.Application;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.components.SearchEngine;
+import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /*
  * Copyright 2009-2013 European Molecular Biology Laboratory
  *
@@ -17,51 +41,29 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
-import org.apache.lucene.queryParser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.components.SaxonEngine;
-import uk.ac.ebi.arrayexpress.components.SearchEngine;
-import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
-import uk.ac.ebi.arrayexpress.utils.saxon.functions.HTTPStatusException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class QueryServlet extends AuthAwareApplicationServlet
 {
     private static final long serialVersionUID = 6806580383145704364L;
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return (requestType == RequestType.GET || requestType == RequestType.POST);
     }
 
-    @Override
     protected void doAuthenticatedRequest(
             HttpServletRequest request
             , HttpServletResponse response
             , RequestType requestType
-            , String authUserName
+            , List<String> authUserIDs
     ) throws ServletException, IOException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)$", "i");
 
         logRequest(logger, request, requestType);
 
-        String[] requestArgs = PARSE_ARGUMENTS_REGEX.match(request.getPathInfo());
+        String[] requestArgs = PARSE_ARGUMENTS_REGEX.match(request.getRequestURL().toString());
 
         if (null == requestArgs || requestArgs.length != 3
                 || "".equals(requestArgs[0]) || "".equals(requestArgs[1]) || "".equals(requestArgs[2])) {
@@ -73,23 +75,23 @@ public class QueryServlet extends AuthAwareApplicationServlet
         String outputType = requestArgs[2];
 
 
-        if ("xls".equals(outputType)) {
+        if (outputType.equals("xls")) {
             // special case for Excel docs
             // we actually send tab-delimited file but mimick it as XLS doc
             String timestamp = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
             response.setContentType("application/vnd.ms-excel; charset=ISO-8859-1");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".xls\"");
             outputType = "tab";
-        } else if ("tab".equals(outputType)) {
+        } else if (outputType.equals("tab")) {
             // special case for tab-delimited files
             // we send tab-delimited file as an attachment
             String timestamp = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
             response.setContentType("text/plain; charset=ISO-8859-1");
             response.setHeader("Content-disposition", "attachment; filename=\"ArrayExpress-Experiments-" + timestamp + ".txt\"");
             outputType = "tab";
-        } else if ("json".equals(outputType)) {
+        } else if (outputType.equals("json")) {
             response.setContentType("application/json; charset=UTF-8");
-        } else if ("html".equals(outputType)) {
+        } else if (outputType.equals("html")) {
             response.setContentType("text/html; charset=UTF-8");
         } else {
             response.setContentType("text/" + outputType + "; charset=UTF-8");
@@ -104,24 +106,40 @@ public class QueryServlet extends AuthAwareApplicationServlet
         }
 
         // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
-        // because it disallows sending errors like 404 and alike
         if (null != request.getParameter("flusheaders")) {
             response.flushBuffer();
         }
 
         // Output goes to the response PrintWriter.
-        try (PrintWriter out = response.getWriter()) {
-            String stylesheetName = ("-".equals(index) ? "" : index + "-")
-                    + stylesheet + "-" + outputType + ".xsl";
+        PrintWriter out = response.getWriter();
+        try {
+            String stylesheetName = new StringBuilder(stylesheet)
+                    .append('-').append(outputType).append(".xsl").toString();
 
             HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
 
-            // to make sure nobody sneaks in the other value w/o proper authentication
-            params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
-            params.put("username", authUserName);
+            // adding "host" request header so we can dynamically create FQDN URLs
+            params.put("host", request.getHeader("host"));
+            params.put("basepath", request.getContextPath());
+            params.put("querystring", request.getQueryString());
 
-            // migration rudiment - show only "visible" i.e. overlapping experiments from AE2
-            params.put("visible", "true");
+            // to make sure nobody sneaks in the other value w/o proper authentication
+            params.put("userid", StringTools.listToString(authUserIDs, " OR "));
+
+            // setting "preferred" parameter to true allows only preferred experiments to be displayed, but if
+            // any of source control parameters are present in the query, it will not be added
+            String[] keywords = params.get("keywords");
+
+            if (!(params.containsKey("migrated")
+                || params.containsKey("source")
+                || params.containsKey("visible")
+                || ( null != keywords && keywords[0].matches(".*\\bmigrated:.*"))
+                || ( null != keywords && keywords[0].matches(".*\\bsource:.*"))
+                || ( null != keywords && keywords[0].matches(".*\\bvisible:.*"))
+                )) {
+
+                params.put("visible", "true");
+            }
 
             try {
                 SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
@@ -143,23 +161,25 @@ public class QueryServlet extends AuthAwareApplicationServlet
                 }
             } catch (ParseException x) {
                 logger.error("Caught lucene parse exception:", x);
-                response.sendError(
-                        HttpServletResponse.SC_BAD_REQUEST
-                        , params.getString("keywords"));
-            } catch (SaxonException x) {
-                if (x.getCause() instanceof HTTPStatusException) {
-                    HTTPStatusException xx = (HTTPStatusException)x.getCause();
-                    logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
-                    if ( null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500 ) {
-                        response.sendError(xx.getStatusCode());
-                    } else {
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    }
-                }
+                reportQueryError(out, "query-syntax-error.txt", request.getParameter("keywords"));
             }
-
         } catch (Exception x) {
             throw new RuntimeException(x);
+        }
+        out.close();
+    }
+
+    private void reportQueryError( PrintWriter out, String templateName, String query )
+    {
+        try {
+            URL resource = Application.getInstance().getResource("/WEB-INF/server-assets/templates/" + templateName);
+            String template = StringTools.streamToString(resource.openStream(), "ISO-8859-1");
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("variable.query", query);
+            StrSubstitutor sub = new StrSubstitutor(params);
+            out.print(sub.replace(template));
+        } catch (Exception x) {
+            logger.error("Caught an exception:", x);
         }
     }
 }

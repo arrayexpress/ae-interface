@@ -84,7 +84,7 @@ public class AutocompleteStore
     public List<AutocompleteData> findCompletions( String prefix, String fieldName, Integer limit )
     {
         List<AutocompleteData> comps = new ArrayList<AutocompleteData>();
-        if ("".equals(fieldName) || -1 == " assaycount samplecount rawcount processedcount efcount sacount miamescore ".indexOf(" " + fieldName + " ")) {
+        if ("".equals(fieldName) || -1 == " assaycount samplecount rawcount fgemcount efcount sacount miamescore ".indexOf(" " + fieldName + " ")) {
             List<String> matches = trie.findCompletions(prefix);
 
             for (String key : matches) {

@@ -51,6 +51,7 @@ public class Ontologies extends ApplicationComponent
         {
             this.defaultOption = defaultOption;
             initialize();
+            initialize();
         }
 
         private void initialize()
@@ -76,8 +77,6 @@ public class Ontologies extends ApplicationComponent
 
     private IEFO efo;
     private EFOExpansionLookupIndex lookupIndex;
-
-    
     private AtomicBoolean hasEfoLoaded = new AtomicBoolean(false);
 
     private SearchEngine search;
@@ -96,7 +95,6 @@ public class Ontologies extends ApplicationComponent
         this.search = (SearchEngine) getComponent("SearchEngine");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
         initLookupIndex();
-        //initLookBackIndex();
         ((JobsController) getComponent("JobsController")).scheduleJobNow("reload-efo");
 
         this.assayByMolecule = new EFOSubclassesOptions("All assays by molecule");
@@ -146,11 +144,6 @@ public class Ontologies extends ApplicationComponent
         return this.assayByInstrument.getHtml();
     }
 
-    public EFOExpansionLookupIndex getExpansionLookupIndex()
-    {
-        return this.lookupIndex;
-    }
-
     private void loadCustomSynonyms() throws IOException
     {
         String synFileLocation = getPreferences().getString("ae.efo.synonyms");
@@ -158,8 +151,6 @@ public class Ontologies extends ApplicationComponent
             try (InputStream is = getApplication().getResource(synFileLocation).openStream()) {
                 Map<String, Set<String>> synonyms = new SynonymsFileReader(new InputStreamReader(is)).readSynonyms();
                 this.lookupIndex.setCustomSynonyms(synonyms);
-                //lookBack index
-                //this.lookBackIndex.setCustomSynonyms(synonyms);
                 logger.debug("Loaded custom synonyms from [{}]", synFileLocation);
             }
         }

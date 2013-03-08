@@ -86,7 +86,6 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
         private String baseURI;
         private transient Parser parser;
 
-        @SuppressWarnings("unchecked")
         public SequenceIterator<? extends Item> call(SequenceIterator[] arguments, XPathContext context) throws XPathException
         {
             Controller controller = context.getController();

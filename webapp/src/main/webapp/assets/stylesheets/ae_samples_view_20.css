@@ -1,0 +1,181 @@
+/*
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+.ae_contents_frame {
+    overflow-x: hidden; /* opera 9.64 is not happy */
+}
+
+#ae_contents_container {
+    min-width: 0;
+    overflow: visible;
+    _overflow: auto;
+}
+
+#ae_summary_box {
+    padding: 0 0 10px 0;
+}
+
+#ae_accession {
+    font-size: 18px;
+    line-height: normal;
+    padding: 10px 0 0;
+}
+
+#ae_accession img {
+    margin:0 3px;
+    vertical-align: baseline;
+}
+
+#ae_title {
+    display: inline-block; /* ie hasLayout hack */
+}
+
+#ae_title div {
+    border-bottom: 1px solid #bdd7d7;
+    float: left;
+    padding: 0 0 5px;
+    text-align: justify;
+}
+
+.ae_samples_table_border {
+    width: 100%;
+    border: 1px solid #bdd7d7;
+    background-color: white;
+}
+
+.ae_samples_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.ae_samples_table th
+, .ae_samples_table td {
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 11px;
+}
+
+.ae_samples_table th.even {
+    color: #5e5e5e;
+    font-style: italic;
+}
+
+.ae_samples_table th.odd {
+    border-bottom: 2px solid #408c8c;
+    text-align: left;
+}
+
+.ae_samples_table td.even {
+    background-color: #eef5f5;
+}
+
+.ae_samples_table th.sa {
+    background-color: #edf5ea;
+}
+
+.ae_samples_table th.ef {
+    background-color: #fef5e0;
+}
+
+#ae_results_box th.sortable img {
+    vertical-align: middle;
+    margin: 0 0 0 2px;
+}
+
+.ae_samples_table td.bottom_filler {
+    background: #f5f5f5 url( ../images/sbg.gif ) left top repeat-x;
+}
+
+table.src_name_table
+, table.links_table {
+    table-layout: auto;
+}
+
+table.src_name_table th
+, table.src_name_table td
+, table.attr_table th
+, table.attr_table td
+, table.links_table th
+, table.links_table td {
+    padding: 0 5px;
+    height: 20px
+}
+
+table.src_name_table th
+, table.links_table th {
+    background-color: #f5f5f5;
+}
+
+table.src_name_table td {
+    font-weight: bold;
+    color: #5e5e5e;
+}
+
+table.links_table th
+, table.links_table td {
+    text-align: center;
+}
+
+.attr_table_shadow_container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.left_shadow
+, .right_shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.left_shadow {
+    box-shadow: inset 5px 0px 5px -3px silver;
+    -moz-box-shadow: inset 5px 0px 5px -3px silver;
+    -webkit-box-shadow: inset 5px 0px 5px -3px silver;
+}
+
+.right_shadow {
+    box-shadow: inset -5px 0px 5px -3px silver;
+    -moz-box-shadow: inset -5px 0px 5px -3px silver;
+    -webkit-box-shadow: inset -5px 0px 5px -3px silver;
+}
+
+.attr_table_scroll {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+}
+
+table.attr_table {
+    table-layout: auto;
+    width: 100%;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background-color: #bdd7d7;
+    overflow: hidden;
+}

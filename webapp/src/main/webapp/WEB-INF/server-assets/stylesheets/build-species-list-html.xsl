@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- * Copyright 2009-2013 European Molecular Biology Laboratory
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
--->
 <xsl:stylesheet
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:html="http://www.w3.org/1999/xhtml"
@@ -27,9 +11,9 @@
     <xsl:output omit-xml-declaration="yes" method="html" encoding="UTF-8" />
 
     <xsl:template match="/experiments">
-        <option value="">All organisms</option>
+        <option value="">All species</option>
         <xsl:variable name="vTopSpecies">
-            <xsl:for-each-group select="experiment[source/@visible = 'true']/organism" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
+            <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
                 <xsl:sort select="fn:count(current-group()/ancestor::node())" data-type="number" order="descending"/>
                 <xsl:if test="fn:count(current-group()/ancestor::node()) &gt;= 250">
                     <option>
@@ -39,13 +23,13 @@
                 </xsl:if>
             </xsl:for-each-group>
         </xsl:variable>
-        <option disabled="true" value="-">&#x2500;&#x2500; Top organisms &#x2500;&#x2500;</option>
+        <option disabled="true" value="-">&#x2500;&#x2500; Top species &#x2500;&#x2500;</option>
         <xsl:for-each select="$vTopSpecies/option">
             <xsl:sort select="@value"/>
             <xsl:copy-of select="."/>
         </xsl:for-each>
-        <option disabled="true" value="-">&#x2500;&#x2500;  Organisms (A&#x2192;Z) &#x2500;&#x2500;</option>
-        <xsl:for-each-group select="experiment[source/@visible = 'true']/organism" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
+        <option disabled="true" value="-">&#x2500;&#x2500;  Species (A&#x2192;Z) &#x2500;&#x2500;</option>
+        <xsl:for-each-group select="experiment[source/@visible = 'true']/species" group-by="ae:normalize-species(.)" collation="http://saxon.sf.net/collation?ignore-case=yes">
             <xsl:sort select="fn:current-grouping-key()"/>
             <option>
                 <xsl:attribute name="value" select="fn:current-grouping-key()"/>

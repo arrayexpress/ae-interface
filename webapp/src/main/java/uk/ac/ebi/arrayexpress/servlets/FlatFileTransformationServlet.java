@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
+import java.util.List;
 
 public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
 {
@@ -53,7 +54,7 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
             HttpServletRequest request
             , HttpServletResponse response
             , RequestType requestType
-            , String authUserName
+            , List<String> authUserIDs
     ) throws ServletException, IOException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)/([^/]+)$", "i");
@@ -75,11 +76,15 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
 
         HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
 
+        // adding "host" request header so we can dynamically create FQDN URLs
+        params.put("host", request.getHeader("host"));
+        params.put("basepath", request.getContextPath());
+
         params.put("accession", accession);
         params.put("filename", fileName);
 
         // to make sure nobody sneaks in the other value w/o proper authentication
-        params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
+        params.put("userid", StringTools.listToString(authUserIDs, " OR "));
 
         InputStream in = null;
         PrintWriter out = null;
@@ -88,9 +93,10 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
             Files files = (Files) getComponent("Files");
 
-            String stylesheetName = stylesheet + "-" + outputType + ".xsl";
+            String stylesheetName = new StringBuilder(stylesheet)
+                    .append('-').append(outputType).append(".xsl").toString();
 
-            String flatFileLocation = files.getLocation(accession, null, fileName);
+            String flatFileLocation = files.getLocation(accession, fileName);
             SAXSource source = new SAXSource();
             File flatFile = null != flatFileLocation ? new File(files.getRootFolder(), flatFileLocation) : null;
 
