@@ -50,7 +50,7 @@ public class EmailSender
         session.setDebug(debug);
 
         // create a message
-        Message msg = new MimeMessage(session);
+        MimeMessage msg = new MimeMessage(session);
 
         // set the from and to address
         InternetAddress addressFrom = new InternetAddress(from);
@@ -64,7 +64,7 @@ public class EmailSender
 
         // Setting the Subject and Content Type
         msg.setSubject(subject);
-        msg.setContent(message, "text/plain");
+        msg.setText(message, "UTF-8");
         Transport.send(msg);
     }
 }

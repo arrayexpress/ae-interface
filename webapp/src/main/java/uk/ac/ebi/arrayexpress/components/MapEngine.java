@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +92,34 @@ public class MapEngine extends ApplicationComponent
         } else {
             logger.error("Accessed map [{}] which was not registered", mapName);
         }
+    }
+
+    public synchronized void addMappedValue( String mapName, String mapKey, Object mapValue )
+    {
+        if (mapRegistry.containsKey(mapName)) {
+            IValueMap map = mapRegistry.get(mapName);
+            if (null != map) {
+                if (map.containsKey(mapKey)) {
+                    Object oldValue = map.getValue(mapKey);
+                    MapList mapList = new MapList();
+                    if (oldValue instanceof MapList) {
+                        mapList = (MapList)oldValue;
+                    } else {
+                        mapList.add(oldValue);
+                    }
+                    mapList.add(mapValue);
+                    map.setValue(mapKey, mapList);
+                } else {
+                    map.setValue(mapKey, mapValue);
+                }
+            }
+        } else {
+            logger.error("Accessed map [{}] which was not registered", mapName);
+        }
+    }
+
+    private class MapList extends ArrayList<Object>
+    {
     }
 
     public interface IValueMap

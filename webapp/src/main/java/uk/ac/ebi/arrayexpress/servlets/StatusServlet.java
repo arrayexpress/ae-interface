@@ -29,12 +29,14 @@ public class StatusServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = 8929729058610937695L;
 
+    @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return (requestType == RequestType.GET || requestType == RequestType.POST);
     }
 
     // Respond to HTTP requests from browsers.
+    @Override
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {

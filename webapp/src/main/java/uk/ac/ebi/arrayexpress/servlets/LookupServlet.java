@@ -49,7 +49,7 @@ public class LookupServlet extends ApplicationServlet
         logRequest(logger, request, requestType);
 
         String[] requestArgs = new RegexHelper("/([^/]+)$", "i")
-                .match(request.getRequestURL().toString());
+                .match(request.getPathInfo());
 
         String type = "";
         String query = null != request.getParameter("q") ? request.getParameter("q") : "";

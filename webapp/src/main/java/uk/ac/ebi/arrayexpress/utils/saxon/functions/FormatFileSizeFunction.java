@@ -24,10 +24,7 @@ import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.NumericValue;
-import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.StringValue;
-import net.sf.saxon.value.Value;
+import net.sf.saxon.value.*;
 
 public class FormatFileSizeFunction extends ExtensionFunctionDefinition
 {
@@ -53,7 +50,7 @@ public class FormatFileSizeFunction extends ExtensionFunctionDefinition
 
     public SequenceType[] getArgumentTypes()
     {
-        return new SequenceType[]{ SequenceType.SINGLE_LONG };
+        return new SequenceType[]{ SequenceType.SINGLE_INTEGER };
     }
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
@@ -70,10 +67,11 @@ public class FormatFileSizeFunction extends ExtensionFunctionDefinition
     {
         private static final long serialVersionUID = -8209172163832123502L;
 
+        @SuppressWarnings("unchecked")
         public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
         {
             NumericValue sizeValue = (NumericValue) arguments[0].next();
-            Long size = sizeValue.longValue();
+            Long size = (sizeValue instanceof Int64Value) ? ((Int64Value)sizeValue).asBigInteger().longValue() : sizeValue.longValue();
 
             StringBuilder str = new StringBuilder();
             if (922L > size) {
@@ -84,6 +82,8 @@ public class FormatFileSizeFunction extends ExtensionFunctionDefinition
                 str.append(String.format("%.1f MB", (size / 1048576.0)));
             } else if (1099511627776L > size) {
                 str.append(String.format("%.2f GB", (size / 1073741824.0)));
+            } else if (1125899906842624L > size) {
+                str.append(String.format("%.2f TB", (size / 1099511627776.0)));
             }
             return Value.asIterator(StringValue.makeStringValue(str.toString()));
         }

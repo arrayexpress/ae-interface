@@ -71,13 +71,13 @@ public class HttpProxyServlet extends ApplicationServlet
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
             throws ServletException, IOException
     {
-        RegexHelper MATCH_URL_REGEX = new RegexHelper("servlets/proxy/+(.+)", "i");
+        RegexHelper MATCH_URL_REGEX = new RegexHelper("/+(.+)", "i");
         RegexHelper TEST_HOST_IN_URL_REGEX = new RegexHelper("^http\\:/{2}([^/]+)/", "i");
         RegexHelper SQUARE_BRACKETS_REGEX = new RegexHelper("\\[\\]", "g");
 
         logRequest(logger, request, requestType);
 
-        String url = MATCH_URL_REGEX.matchFirst(request.getRequestURL().toString());
+        String url = MATCH_URL_REGEX.matchFirst(request.getPathInfo());
         url = url.replaceFirst("http:/{1,2}", "http://");   // stupid hack as tomcat 6.0 removes second forward slash
         String queryString = request.getQueryString();
 

@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
@@ -11,7 +27,7 @@
 
     <xsl:template match="/experiments">
         <experiments
-                version="{@version}" total="{fn:count(experiment)}">
+                version="{@version}" total="{fn:count(experiment)}" retrieved="{ae:fixRetrievedDateTimeFormat(@retrieved)}">
 
             <xsl:apply-templates select="experiment">
                 <xsl:sort select="substring-before(releasedate, '-')" order="descending" data-type="number"/>
@@ -46,9 +62,9 @@
             <rawdatafiles>
                 <xsl:attribute name="available" select="ae:getMappedValue('raw-files', $vAccession) &gt; 0"/>
             </rawdatafiles>
-            <fgemdatafiles>
-                <xsl:attribute name="available" select="((ae:getMappedValue('fgem-files', $vAccession) &gt; 0) or $vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3')"/>
-            </fgemdatafiles>
+            <processeddatafiles>
+                <xsl:attribute name="available" select="((ae:getMappedValue('processed-files', $vAccession) &gt; 0) or $vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3')"/>
+            </processeddatafiles>
 
             <xsl:for-each-group select="sampleattribute[@value != '']" group-by="@category">
                 <xsl:sort select="fn:lower-case(@category)" order="ascending"/>
@@ -248,4 +264,8 @@
         </xsl:element>
     </xsl:template>
 
+    <xsl:function name="ae:fixRetrievedDateTimeFormat">
+        <xsl:param name="pInvalidDateTime"/>
+        <xsl:value-of select="fn:replace($pInvalidDateTime,'T(\d{1,2})[:-](\d{1,2})[:-](\d{1,2})', 'T$1:$2:$3')"/>
+    </xsl:function>
 </xsl:stylesheet>

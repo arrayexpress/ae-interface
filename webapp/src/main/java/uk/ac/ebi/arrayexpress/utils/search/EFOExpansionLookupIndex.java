@@ -158,9 +158,14 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                 synonyms.remove(term);
             }
 
+            // just to remove ridiculously long terms/synonyms from the list
+
+
             if (synonyms.size() > 0 || childTerms.size() > 0) {
 
                 Document d = new Document();
+
+                int terms = 0, efoChildren = 0;
 
                 for (String syn : synonyms) {
                     if (childTerms.contains(syn)) {
@@ -169,6 +174,8 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                         // this.logger.debug("Synonym [{}] for term [{}] is a stop-word, skipping", syn, term);
                     } else {
                         addIndexField(d, "term", syn, true, true);
+                        addIndexField(d, "all", syn, true, true);
+                        terms++;
                     }
                 }
 
@@ -177,14 +184,27 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                         // this.logger.debug("Child EFO term [{}] for term [{}] is a stop-word, skipping", efoTerm, term);
                     } else {
                         addIndexField(d, "efo", efoTerm, false, true);
+                        addIndexField(d, "all", efoTerm, true, true);
+                        efoChildren++;
                     }
                 }
 
-                addIndexField(d, "term", term, true, true);
-                w.addDocument(d);
+                if (!isStopExpansionTerm(term)) {
+                    addIndexField(d, "term", term, true, true);
+                    addIndexField(d, "all", term, true, true);
+                    terms++;
+                }
+
+                if ( terms > 1 || ( 1 == terms && efoChildren > 0 )) {
+                    w.addDocument(d);
+                } else {
+                    // this.logger.debug("EFO term [{}] was not added due to insufficient mappings", term);
+                }
 
                 Thread.sleep(0);
             }
+        } else {
+            // this.logger.debug("EFO Term [{}] is a stop-word, skipping", term);
         }
     }
 
@@ -218,6 +238,55 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
 
         return expansion;
+    }
+
+    public Set<String> getReverseExpansion( String text ) throws IOException
+    {
+        Set<String> reverseExpansion = new HashSet<>();
+
+        if (null != text && IndexReader.indexExists(getIndexDirectory())) {
+
+            try (IndexReader reader = IndexReader.open(getIndexDirectory()); IndexSearcher searcher = new IndexSearcher(reader)) {
+
+                // step 1: split terms
+                String[] terms = text.split("\\s+");
+
+                for (int termIndex = 0; termIndex < terms.length; ++termIndex) {
+                    BooleanQuery q = new BooleanQuery();
+
+                    Term t = new Term("all",  terms[termIndex]);
+                    q.add(new TermQuery(t), BooleanClause.Occur.SHOULD);
+
+                    for (int phraseLength = 4; phraseLength <= 2; --phraseLength) {
+                        if (termIndex + phraseLength > terms.length) {
+                            continue;
+                        }
+                        PhraseQuery pq = new PhraseQuery();
+                        for (int phraseTermIndex = 0; phraseTermIndex < phraseLength; ++phraseTermIndex) {
+                            t = new Term("all", terms[termIndex + phraseTermIndex]);
+                            pq.add(t);
+                        }
+                        q.add(pq, BooleanClause.Occur.SHOULD);
+                    }
+
+                    TopDocs hits = searcher.search(q, MAX_INDEX_HITS);
+                    this.logger.debug("Expansion lookup for query [{}] returned [{}] hits", q.toString(), hits.totalHits);
+
+                    for (ScoreDoc d : hits.scoreDocs) {
+                        Document doc = searcher.doc(d.doc);
+                        String[] reverseTerms = doc.getValues("term");
+                        //this.logger.debug("Synonyms [{}], EFO Terms [{}]", StringUtils.join(terms, ", "), StringUtils.join(efo, ", "));
+                        if (0 != reverseTerms.length) {
+                            reverseExpansion.addAll(Arrays.asList(reverseTerms));
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        return reverseExpansion;
     }
 
     private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer ) throws IOException
@@ -281,11 +350,18 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
 
     private boolean isStopTerm( String str )
     {
-        return null == str || str.length() < 3 || stopWords.contains(str.toLowerCase());
+        return null == str || stopWords.contains(str.toLowerCase());
     }
 
     private boolean isStopExpansionTerm( String str )
     {
-        return isStopTerm(str) || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
+        return isStopTerm(str) || str.length() < 3 || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
+    }
+
+    @SuppressWarnings("unused")
+    private boolean isLongTerm( String str )
+    {
+        // returns true if number of words is over 5;
+        return null != str && str.replaceAll("\\s+", " ").replaceAll("[^ ]+", "").length() >= 4;
     }
 }

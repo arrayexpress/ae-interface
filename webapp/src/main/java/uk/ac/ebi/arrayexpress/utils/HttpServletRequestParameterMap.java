@@ -23,7 +23,19 @@ import java.util.*;
 
 public class HttpServletRequestParameterMap extends HashMap<String,String[]>
 {
+    private static final long serialVersionUID = -9113326940165926711L;
+
     private final static RegexHelper ALL_SANS_SQUARE_BRACKETS = new RegexHelper("^(.*)\\[\\d*\\]$", "ig");
+
+    private final static Map<String, String> PARAM_ALIASES_MAP = createAliasesMap();
+
+    private static Map<String, String> createAliasesMap()
+    {
+        Map<String, String> result = new HashMap<>();
+        result.put("query", "keywords");
+        result.put("species", "organism");
+        return Collections.unmodifiableMap(result);
+    }
 
     public HttpServletRequestParameterMap( HttpServletRequest request ) throws UnsupportedEncodingException
     {
@@ -34,9 +46,9 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
                 String key = filterArrayBrackets((String)p.getKey());
                 String[] values = fixUTF8Values((String[])p.getValue());
                 List<String> newValues = Arrays.asList(values);
-                if (this.containsKey(key) && null != newValues) {
+                if (this.containsKey(key)) {
                     List<String> oldValues = Arrays.asList(this.get(key));
-                    List<String> combined = new ArrayList<String>();
+                    List<String> combined = new ArrayList<>();
                     combined.addAll(oldValues);
                     combined.addAll(newValues);
                     this.put(key, combined.toArray(new String[combined.size()]));
@@ -44,14 +56,45 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
                     this.put(key, values);
                 }
             }
+            // populating some extra parameters from the Request object
+            String host = request.getScheme() + "://" + request.getHeader("host");
+            this.put("host", host);
+            this.put("context-path", request.getContextPath());
+            this.put("request-uri", request.getRequestURI());
+            this.put("path-info", request.getPathInfo());
+            this.put("query-string", request.getQueryString());
+
+            String referer = request.getHeader("Referer");
+
+            if (null != referer && referer.startsWith(host)) {
+                referer = referer.replace(host, "");
+            }
+            this.put("referer", referer);
+
+            if (null != request.getAttribute("javax.servlet.error.status_code")) {
+                this.put("error-code", String.valueOf(request.getAttribute("javax.servlet.error.status_code")));
+                this.put("error-message", String.valueOf(request.getAttribute("javax.servlet.error.message")));
+                this.put("error-request-uri", StringTools.safeToString(request.getAttribute("javax.servlet.error.request_uri"), ""));
+            }
         }
+    }
+
+    @Override
+    public String[] put( String key, String[] value )
+    {
+        if (PARAM_ALIASES_MAP.containsKey(key)) {
+            key = PARAM_ALIASES_MAP.get(key);
+        }
+        return super.put(key, value);
     }
 
     public void put( String key, String value )
     {
-        String[] arrValue = new String[1];
-        arrValue[0] = value;
-        this.put(key, arrValue);
+        if (null != value) {
+            String[] arrValue = new String[1];
+            arrValue[0] = value;
+            this.put(key, arrValue);
+        }
     }
 
     public void put( String key, List<String> values )
@@ -59,6 +102,14 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
         if (null != values) {
             this.put(key, values.toArray(new String[values.size()]));
         }
+    }
+
+    public String getString( String key )
+    {
+        if (this.containsKey(key)) {
+            return StringTools.arrayToString(this.get(key), ",");
+        }
+        return null;
     }
 
     private String filterArrayBrackets( String key )

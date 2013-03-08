@@ -81,7 +81,16 @@ public class RescanFilesJob extends ApplicationJob
             
             Map<String, String[]> transformParams = new HashMap<>();
             transformParams.put("rootFolder", new String[] { rootFolder });
-
+            /*
+            StringTools.stringToFile(
+                    saxonEngine.serializeDocument(source)
+                    , new File(
+                        System.getProperty("java.io.tmpdir")
+                        , "ae-files-src.xml"
+                    )
+                    , "UTF-8"
+            );
+            */
             DocumentInfo result = saxonEngine.transform(
                     source
                     , "preprocess-files-xml.xsl"

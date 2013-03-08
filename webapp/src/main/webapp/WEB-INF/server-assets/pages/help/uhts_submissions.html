@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head><title>Sequencing Submissions &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<body class="level2">
+    <div id="content" role="main" class="grid_24 clearfix">
+        <section class="grid_18 alpha">
+            <h2>Sequencing Submissions</h2>
+            <p>
+                <a href="#DataTypes">1. Types of data that can be submitted</a><br>
+                <a href="#HowToSubmit">2. What data files to submit, and how</a><br>
+                <a href="#Examples">3. Example submissions</a><br>
+                <a href="#MoreHelp">4. More help on sequencing submissions</a><br>
+            </p>
+            <br>
+            <h3><a id="DataTypes"></a>1. Types of data that can be submitted</h3>
+            <p>ArrayExpress accepts submissions of <strong>non-human and human non-identifiable</strong> functional genomics data generated using high throughput sequencing (HTS) assays like RNA-seq and ChIP-seq.  To submit to ArrayExpress, all you need to do is fill in a simple spreadsheet (easily editable in any spreadsheet program, e.g. Microsoft Excel) and transfer your data files to us.</p>
+            <p>The meta-data about your experiment (e.g. experiment description, sample annotation, wet- and dry-lab protocols) will be stored at ArrayExpress, and the raw data files (e.g. fastq files) are eventually stored at the <a href="/ena/about/sra_submissions">Sequence Read Archive</a> (SRA) of the <a href="/ena/">European Nucleotide Archive</a> (ENA). ArrayExpress will transfer the raw data files to the ENA for you so you do not need to submit those files separately to the ENA. You can also send us processed data (i.e. processed from the raw reads, e.g. BAM alignment files, differential expression data, expression values linked to genome coordinates, etc).  Depending on the file format, it will either be stored at ArrayExpress or the ENA.</p>
+            <p>&nbsp;</p>
+            <p>If you have <strong>human potentially-identifiable </strong>sequencing data you need to submit to the <a href="/ega/">European Genome-phenome Archive</a> (EGA) and not ArrayExpress. They will supply you with a template for submission and store human identifiable data securely. They will then pass the non-identifiable data to us as shown in the diagram below.</p>
+            <p>&nbsp;</p>
+            <p><img src="UHTS_HighThroughputSequencingSubmissionDiagram.jpg" alt="Diagram of data submission routes" height="328" width="542"></p>
+            <p>Diagram of the submission of different sequencing data types to ArrayExpress or the European Genome-phenome archive.</p>
+            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+            <p>&nbsp;</p>
+            <h3><a id="HowToSubmit"></a>2. What data files to submit, and how</h3>
+            <p><strong>For your experiment's meta-data</strong>, it should be prepared in MAGE-TAB format in the spreadsheet. You don't have to construct the spreadsheet from scratch: go to the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB submission tool</a> and use its template-generation software to create a template spreadsheet tailored for your experiment.  While creating the template spreadsheet, make sure you've ticked the "UHTS experiment" box. Take your time to fill in the spreadsheet offline, and upload it using the same tool when you are ready. To find out more about the MAGE-TAB format and how to fill in the spreadsheet, please take a look at this online tutorial: <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">ArrayExpress:Submitting data using MAGE-TAB</a>. </p>
+            <p><strong>For raw data files</strong>, please prepare them according to <a href='/ena/about/sra_data_format'>ENA specifications</a> (e.g. each individual fastq file should be compressed by gzip or bzip2). This is a developing field and the specifications are updated regularly, so please do check them every time you submit to us. Once you have the files ready, send them to ArrayExpress by <a href="/miamexpress/help/datafile_help.html#ftp"><strong>FTP</strong></a>. You can either upload the files one by one to the FTP site, or upload a single archive (e.g. .tar.gz file). Once the transfer has finished, please email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a> to tell us about the files so that we can identify your files on the FTP site and check integrity of files.</p>
+            <p><strong>For processed data files</strong>, make sure the file(s) are compressed (e.g. .zip, .gz). If the compressed file is under 5MB in size, you can upload them using the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB submission tool</a> alongside your MAGE-TAB spreadsheet. For any files larger than 5MB, please send them to ArrayExpress by <a href="/miamexpress/help/datafile_help.html#ftp">FTP</a>. Again, please email us at miamexpress@ebi.ac.uk when the transfer has finished, so that we can go and retrieve the files from the FTP site.</p>
+            <p><strong>If you have both sequencing and microarray data related to the same study</strong>, you can either submit them as one single ArrayExpress experiment (especially if you used the same biological samples for both data sets), or separate ArrayExpress experiments:</p>
+            <ul>
+                <li>When creating a single submission, you will have one "IDF" (Investigation description format) file describing your study, contact details and all wet-lab/dry-lab protocols used, which is then linked to multiple "SDRFs" (Sample and Data Relationship format) files describing the samples used and the data files they're associated with, e.g. one SDRF for sequencing data and another SDRF for microarray data.  See experiment <a href="/experiments/E-GEOD-32120">E-GEOD-32120</a> as an example.</li>
+                <li>If you would prefer to submit your data as separate ArrayExpress experiments, that is fine too. Just email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a> and let us know that your submissions are related, and we will cross-reference them in their description fields (e.g. "Data from an accompanying microarray experiment has also been deposited at ArrayExpress under accession xxxx"). See experiments <a href="/arrayexpress/experiments/E-MTAB-1432">E-MTAB-1432</a> and <a href="/arrayexpress/experiments/E-MTAB-1433">E-MTAB-1433</a> as examples.</li>
+            </ul>
+            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+            <p>&nbsp;</p>
+            <h3><a id="Examples"></a>3. Example submissions</h3>
+            <p>All examples are taken from public experiments on the <a href="/arrayexpress">ArrayExpress website</a>. For each of the examples below, the link will take you to the experiment's frontpage, where you will find all the meta-data and curated spreadsheet (idf.txt / sdrf.txt) in the "Files" section to download.</p>
+            <h4>RNA-seq, Illumina Genome Analyzer IIx platform, single-end</h4>
+            <p>Experiment's page: <a href="/arrayexpress/experiments/E-MTAB-997">E-MTAB-997</a></p>
+            <h4>RNA-seq example, Illumina Genome Analyzer II platform, paired-end</h4>
+            <p>Experiment's page: <a href="/arrayexpress/experiments/E-MTAB-1091">E-MTAB-1091</a></p>
+            <h4>RNA-seq, AB SOLiD System 3.0 platform, single-end</h4>
+            <p>Experiment's page: <a href="/arrayexpress/experiments/E-MTAB-682">E-MTAB-682*</a></p>
+            <p>* Please note that this submission was created at a time when the ENA accepted srf files for SOLiD experiments. This is no longer the case and ENA requires csfasta and qual files for SOLiD experiments. See <a href='/ena/about/sra_data_format#solid_csfasta_qual_format'>ENA SOLiD file formats.</a></p>
+            <h4>DNA-seq, AB SOLiD System 3.0 platform, paired-end</h4>
+            <p>Experiment's page: <a href="/arrayexpress/experiments/E-MTAB-1082">E-MTAB-1082</a></p>
+            <h4>ChIP-seq, Illumina HiSeq 2000 platform, single-end</h4>
+            <p>Experiment's page: <a href="/arrayexpress/experiments/E-MTAB-1084">E-MTAB-1084</a></p>
+            <p>&nbsp;</p>
+            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+            <h3><a id="MoreHelp"></a>4. More help on sequencing submissions</h3>
+            <p>The EBI Train Online bite-size tutorial on <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">submitting data using MAGE-TAB</a> contains lots of useful information on how to prepare your submission. Two sub-sections deal specifically with high-throughput sequencing submissions: <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/submission-hts-data">Submisssion of HTS data</a> and <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/appendix-1-%E2%80%93-hts-submission-library-terms">HTS Submission Library Terms</a> (a useful glossary when you are filling in the MAGE-TAB spreadsheet).</p>
+            <p>If your questions remain unanswered, drop us an email at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>. Don't forget to include a brief description of what you're trying to do, e.g. which sequencing platform you're using, whether it's a single-end or paired-end experiment, or specific error messages you've encountered while using the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB submission tool</a> or FTP.</p>
+            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+        </section>
+        <aside class="grid_6 omega">
+            <h3>Help</h3>
+            <ul id="secondary-nav">
+                <li><a href="index.html">Help home</a></li>
+                <li><a href="quick_start.html">Quick Start guide</a></li>
+                <li><a href="how_to_search.html">How to search</a></li>
+                <li><a href="programmatic_access.html">Other ways to get data</a>
+                    <ul>
+                        <li><a href="programmatic_access.html">Programmatic access</a></li>
+                        <li><a href="FTP_archives.html">FTP archives</a></li>
+                    </ul>
+                </li>
+                <li><a href="submissions_overview.html">How to submit</a>
+                    <ul>
+                        <li class="active"><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                        <li><a href="third_party_tools.html">3rd party tools</a></li>
+                    </ul>
+                </li>
+                <li><a href="FAQ.html">FAQ</a></li>
+                <li><a href="data_availability.html">Learn more about our data</a>
+                    <ul>
+                        <li><a href="data_availability.html">Data access policy</a></li>
+                        <li><a href="accession_codes.html">Accession codes</a></li>
+                        <li><a href="GEO_data.html">GEO data</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact_us.html">Contact us</a></li>
+            </ul>
+        </aside>
+    </div>
+</body></html>

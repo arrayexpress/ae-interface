@@ -73,24 +73,26 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         public void close() throws IOException;
     }
-    
+
+    @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
         return true; // all requests are supported
     }
 
+    @Override
     protected void doAuthenticatedRequest(
             HttpServletRequest request
             , HttpServletResponse response
             , RequestType requestType
-            , List<String> authUserIDs
+            , String authUserName
     ) throws ServletException, IOException
     {
         logRequest(logger, request, requestType);
 
         IDownloadFile downloadFile = null;
         try {
-            downloadFile = getDownloadFileFromRequest(request, response, authUserIDs);
+            downloadFile = getDownloadFileFromRequest(request, response, getUserIds(authUserName));
             if (null != downloadFile) {
                 verifyFile(downloadFile, response);
 
@@ -142,8 +144,12 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
    }
 
-    private void sendSequentialFile( IDownloadFile downloadFile, HttpServletRequest request, HttpServletResponse response, RequestType requestType )
-            throws IOException
+    private void sendSequentialFile(
+            IDownloadFile downloadFile
+            , HttpServletRequest request
+            , HttpServletResponse response
+            , RequestType requestType
+    ) throws IOException
     {
         // Prepare some variables. The ETag is an unique identifier of the file
         String fileName = downloadFile.getName();
@@ -278,7 +284,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         // Prepare some variables. The full Range represents the complete file
         Range full = new Range(0, length - 1, length);
-        List<Range> ranges = new ArrayList<Range>();
+        List<Range> ranges = new ArrayList<>();
 
         // Validate and process Range and If-Range headers
         String range = request.getHeader("Range");
@@ -363,14 +369,8 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         // Send requested file (part(s)) to client ------------------------------------------------
 
-        // Prepare streams.
-        RandomAccessFile input = null;
-        ServletOutputStream output = null;
-
-        try {
-            // Open streams.
-            input = downloadFile.getRandomAccessFile();
-            output = response.getOutputStream();
+        try ( RandomAccessFile input = downloadFile.getRandomAccessFile();
+              ServletOutputStream output = response.getOutputStream() ) {
 
             if (ranges.isEmpty() || ranges.get(0) == full) {
 
@@ -430,10 +430,6 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
             // Finalize task
             output.flush();
-        } finally {
-            // Gently close streams
-            close(output);
-            close(input);
         }
     }
     

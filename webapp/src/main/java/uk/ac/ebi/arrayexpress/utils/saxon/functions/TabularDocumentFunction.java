@@ -35,7 +35,11 @@ import net.sf.saxon.tree.iter.SingletonIterator;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
 import net.sf.saxon.value.Whitespace;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
+import uk.ac.ebi.arrayexpress.app.Application;
+import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
 import uk.ac.ebi.arrayexpress.utils.io.SmartUTF8CharsetDecoder;
 import uk.ac.ebi.arrayexpress.utils.io.UnescapingXMLNumericReferencesReader;
@@ -59,17 +63,21 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
 
     public int getMinimumNumberOfArguments()
     {
-        return 1;
+        return 2;
     }
 
     public int getMaximumNumberOfArguments()
     {
-        return 2;
+        return 3;
     }
 
     public SequenceType[] getArgumentTypes()
     {
-        return new SequenceType[]{ SequenceType.SINGLE_STRING, SequenceType.OPTIONAL_STRING };
+        return new SequenceType[]{
+                SequenceType.SINGLE_STRING
+                , SequenceType.SINGLE_STRING
+                , SequenceType.OPTIONAL_STRING
+        };
     }
 
     public SequenceType getResultType( SequenceType[] suppliedArgumentTypes )
@@ -86,62 +94,81 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
     {
         private static final long serialVersionUID = 8149635307726580689L;
 
+        // logging machinery
+        private final Logger logger = LoggerFactory.getLogger(getClass());
+
+        private Files files;
+
+        public TabularDocumentCall()
+        {
+            files = (Files) Application.getAppComponent("Files");
+        }
+
+        @SuppressWarnings("unchecked")
         public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
         {
             try {
                 Controller controller = context.getController();
                 String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
 
-                StringValue locationValue = (StringValue) arguments[0].next();
-                StringValue optionsValue = (arguments.length > 1 && null != arguments[1])
-                        ? (StringValue) arguments[1].next()
+                StringValue accessionValue = (StringValue) arguments[0].next();
+                StringValue nameValue = (StringValue) arguments[1].next();
+                StringValue optionsValue = (arguments.length > 2 && null != arguments[2])
+                        ? (StringValue) arguments[2].next()
                         : null;
 
-                if (null != locationValue) {
-                    File flatFile = new File(locationValue.getStringValue());
+                String location = files.getLocation(accessionValue.getStringValue(), null, nameValue.getStringValue());
+                if (null != location) {
+                    File flatFile = new File(files.getRootFolder(), location);
 
                     if (flatFile.exists()) {
                         try (InputStream in = new FileInputStream(flatFile)) {
-                        InputSource is = new InputSource(
-                                new FilteringIllegalHTMLCharactersReader(
-                                        new UnescapingXMLNumericReferencesReader(
-                                                new InputStreamReader(
-                                                        in
-                                                        , new SmartUTF8CharsetDecoder()
-                                                )
-                                        )
-                                )
-                        );
-                        is.setSystemId(baseURI);
+                            InputSource is = new InputSource(
+                                    new FilteringIllegalHTMLCharactersReader(
+                                            new UnescapingXMLNumericReferencesReader(
+                                                    new InputStreamReader(
+                                                            in
+                                                            , new SmartUTF8CharsetDecoder()
+                                                    )
+                                            )
+                                    )
+                            );
+                            is.setSystemId(baseURI);
 
-                        Source source = new SAXSource(
-                                new FlatFileXMLReader(
-                                        null != optionsValue ? optionsValue.getStringValue() : null
-                                )
-                                , is
-                        );
-                        source.setSystemId(baseURI);
+                            Source source = new SAXSource(
+                                    new FlatFileXMLReader(
+                                            null != optionsValue ? optionsValue.getStringValue() : null
+                                    )
+                                    , is
+                            );
+                            source.setSystemId(baseURI);
 
-                        Builder b = controller.makeBuilder();
-                        Receiver s = b;
+                            Builder b = controller.makeBuilder();
+                            Receiver s = b;
 
-                        source = AugmentedSource.makeAugmentedSource( source );
-                        ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
+                            source = AugmentedSource.makeAugmentedSource( source );
+                            ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
 
-                        if (controller.getExecutable().stripsInputTypeAnnotations()) {
-                            s = controller.getConfiguration().getAnnotationStripper(s);
+                            if (controller.getExecutable().stripsInputTypeAnnotations()) {
+                                s = controller.getConfiguration().getAnnotationStripper(s);
+                            }
+
+                            Sender.send(source, s, null);
+
+                            NodeInfo node = b.getCurrentRoot();
+                            b.reset();
+
+                            return SingletonIterator.makeIterator(node);
                         }
-
-                        Sender.send( source, s, null );
-
-                        NodeInfo node = b.getCurrentRoot();
-                        b.reset();
-                        return SingletonIterator.makeIterator(node);
-                        }
-// TODO: make this parameter dependent
-//                    } else {
-//                        throw new XPathException("Unable to open document [" + locationValue.getStringValue() + "]");
+                    } else {
+                        logger.error("Unable to open document [{}]", location);
                     }
+                } else {
+                    logger.error(
+                            "Unable to locate document [{}], accesion [{}]"
+                            , nameValue.getStringValue()
+                            , accessionValue.getStringValue())
+                    ;
                 }
             } catch ( IOException x ) {
                 throw new XPathException(x);

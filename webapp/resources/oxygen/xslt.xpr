@@ -1,462 +1,641 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="13.2">
+<project version="14.1">
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="13.2" xml:space="preserve">
+            <serialized version="14.1" xml:space="preserve">
                 <map>
                     <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-experiments-xml-ae2</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/add-similarity-experiments-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>sdrf-view-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html (real data)</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-arrays-list-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html (real data)</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-species-list-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>test-compate-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>users-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/users-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/arrays-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>check-files-plain</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-files2-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files2-xml.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-files2-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>files-json</String>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/page-html.xsl</String>
                                 </field>
-                                <field name="type">
-                                    <String>XML</String>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
                                 </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae2-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-experiments-xml-ae2</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/add-similarity-experiments-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>sdrf-view-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-arrays-list-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html (real data)</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-species-list-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html (real data)</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-compate-experiments</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-highlight.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/users-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>users-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/arrays-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>check-files-plain</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files2-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-files2-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-file-functions.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>files-json</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>files-json</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-json.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>files-json</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-experiments-ae1-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>idf-view-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/idf-view-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>idf-view-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiment-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>browse-experiments-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-exptypes-list-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-atlas-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-atlas-experiments</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>test-compate-experiments</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-compate-experiments.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-compate-experiments</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-experiments-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/default-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-experiments-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>sdrf-view-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sdrf-view-html.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>sdrf-view-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>ae-saxon-extensions</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>ae-saxon-extensions</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-experiments-xml-ae2</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>documents/sort_by_id.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-experiments-xml-ae2</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>preprocess-protocols-xml</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-protocols-ae2-xml.xsl</String>
                                 </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-protocols-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
-                                <field name="name">
-                                    <String>protocols-html</String>
-                                </field>
-                                <field name="type">
-                                    <String>XML</String>
-                                </field>
                                 <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/protocols-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>protocols-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -469,7 +648,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>Execute SQL</String>
+                                    <String>sample-files-not-processed</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -478,19 +657,19 @@
                                     <String></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <null/>
+                                    <String>pdf</String>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <null/>
+                                    <String>Apache FOP</String>
                                 </field>
                                 <field name="headerURL">
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String>${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String></String>
+                                    <String>${currentFileURL}</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -499,7 +678,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String>SQL</String>
+                                    <String>XSL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean>true</Boolean>
@@ -514,7 +693,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <String></String>
+                                    <null/>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>false</Boolean>
@@ -523,7 +702,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean>false</Boolean>
+                                    <Boolean>true</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean>false</Boolean>
@@ -541,7 +720,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String>JDBC</String>
+                                    <String>Saxon-HE</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
@@ -2410,7 +2589,29 @@
                                     <Boolean>true</Boolean>
                                 </field>
                                 <field name="xsltParams">
-                                    <list/>
+                                    <list>
+                                        <transformationParameter>
+                                            <field name="paramDescription">
+                                                <paramDescriptor>
+                                                    <field name="localName">
+                                                        <String>rootFolder</String>
+                                                    </field>
+                                                    <field name="prefix">
+                                                        <null/>
+                                                    </field>
+                                                    <field name="namespace">
+                                                        <null/>
+                                                    </field>
+                                                </paramDescriptor>
+                                            </field>
+                                            <field name="value">
+                                                <String>/ebi/ArrayExpress-ftp</String>
+                                            </field>
+                                            <field name="hasXPathValue">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                        </transformationParameter>
+                                    </list>
                                 </field>
                                 <field name="cascadingStylesheets">
                                     <String-array/>
@@ -2448,7 +2649,7 @@
                                     <String>${currentFileURL}</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>${home}/ae-files-src.xml</String>
+                                    <String>${home}/Library/Java/apache-tomcat-6.0.35-dev/temp/ae-raw-files.xml</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -2493,7 +2694,29 @@
                                     <Boolean>true</Boolean>
                                 </field>
                                 <field name="xsltParams">
-                                    <list/>
+                                    <list>
+                                        <transformationParameter>
+                                            <field name="paramDescription">
+                                                <paramDescriptor>
+                                                    <field name="localName">
+                                                        <String>rootFolder</String>
+                                                    </field>
+                                                    <field name="prefix">
+                                                        <null/>
+                                                    </field>
+                                                    <field name="namespace">
+                                                        <null/>
+                                                    </field>
+                                                </paramDescriptor>
+                                            </field>
+                                            <field name="value">
+                                                <String>/ebi/ArrayExpress-ftp</String>
+                                            </field>
+                                            <field name="hasXPathValue">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                        </transformationParameter>
+                                    </list>
                                 </field>
                                 <field name="cascadingStylesheets">
                                     <String-array/>
@@ -3062,7 +3285,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>sample-files-not-processed</String>
+                                    <String>Execute SQL</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -3071,19 +3294,19 @@
                                     <String></String>
                                 </field>
                                 <field name="fOPMethod">
-                                    <String>pdf</String>
+                                    <null/>
                                 </field>
                                 <field name="fOProcessorName">
-                                    <String>Apache FOP</String>
+                                    <null/>
                                 </field>
                                 <field name="headerURL">
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${pdu}/../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
+                                    <String>${currentFileURL}</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>${currentFileURL}</String>
+                                    <String></String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>
@@ -3092,7 +3315,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="type">
-                                    <String>XSL</String>
+                                    <String>SQL</String>
                                 </field>
                                 <field name="saveAs">
                                     <Boolean>true</Boolean>
@@ -3107,7 +3330,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <null/>
+                                    <String></String>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>false</Boolean>
@@ -3116,7 +3339,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInXMLPane">
-                                    <Boolean>true</Boolean>
+                                    <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
                                     <Boolean>false</Boolean>
@@ -3134,7 +3357,7 @@
                                     <String-array/>
                                 </field>
                                 <field name="xslTransformer">
-                                    <String>Saxon-HE</String>
+                                    <String>JDBC</String>
                                 </field>
                                 <field name="extensionURLs">
                                     <String-array/>
@@ -3145,6 +3368,10 @@
                     <entry>
                         <String>scenarios.load.from.project</String>
                         <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
+                        <String>validation.scenarios</String>
+                        <validationScenario-array/>
                     </entry>
                 </map>
             </serialized>
@@ -3165,7 +3392,6 @@
         </folder>
         <folder name="stylesheets">
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/add-similarity-experiments-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/admin-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-compare-experiments.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-date-functions.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-experiments-templates.xsl"/>
@@ -3176,26 +3402,12 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-experiments.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-files.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/ae-sort-users.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/arrays-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-noajax-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/browse-experiments-printer-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-arrays-list-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-species-list-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/default.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/default-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-json.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-tab.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-json.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/files-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/idf-view-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl"/>
@@ -3205,18 +3417,11 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-protocols-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-users-ae2-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/privacy-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/protocols-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/samples-view-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/sdrf-view-html.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/stats-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/test-sort-experiment.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-arrays-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-events-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-experiments-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-protocols-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/update-users-xml.xsl"/>
-            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/users-html.xsl"/>
         </folder>
     </projectTree>
 </project>

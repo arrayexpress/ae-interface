@@ -194,7 +194,7 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
                     , "Expected parameters [filename], [accession], [target], [token] not found in the request"
             );
         } else {
-            String fileLocation = files.getLocation(accession, fileName);
+            String fileLocation = files.getLocation(accession, null, fileName);
             File file = null != fileLocation ? new File(files.getRootFolder(), fileLocation) : null;
 
             if (null == file || !file.exists()) {
