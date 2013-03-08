@@ -142,7 +142,7 @@
     <xsl:template match="table">
 
         <xsl:variable name="vSortBy" select="if ($colsortby) then fn:replace($colsortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
-        <xsl:variable name="vSortOrder" select="if ($colsortorder) then $colsortorder else 'ascending'"/>
+        <xsl:variable name="vSortOrder" select="if (fn:starts-with($colsortorder, 'd')) then 'descending' else 'ascending'"/>
 
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="row[col[1] = 'Source Name'][1]"/>
