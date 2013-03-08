@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head><title>Programmatic Access &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<body class="level2">
+    <div id="content" role="main" class="grid_24 clearfix">
+    <!--
+    <section class="grid_18 alpha">
+        <h2>Programmatic access</h2>
+        <p><strong>Experiment search results can be retrieved either in <a href="#Reststyle_xml">parsable XML format</a> or <a href="#JSON">JSON</a>.</strong></p>
+
+        <h3>Notifications of programmatic access changes</h3>
+        <p>To be notified of any future changes and extensions to the programmatic access please subscribe to the announcement list using the form below.</p>
+        <div style="margin-left: 10%; margin-right: 45%; text-align: left; margin-top: 10px;">
+            <div class="iconboxheading" style="background: transparent url(http://www.ebi.ac.uk/inc/images/head_blue2cwide.gif) no-repeat scroll right top; text-align: center; width: auto; padding-left: 0pt; padding-right: 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">ArrayExpress announcements and important news</div>
+            <div class="iconboxcontents" style="width: auto; display: block;">
+                <form method="post" action="http://listserver.ebi.ac.uk/mailman/subscribe/arrayexpress-announce" onsubmit="return validateForm(this);">
+                    <input id="email" name="email" size="18" style="margin-top: 10px; margin-bottom: 10px;" onfocus="if(this.value='Enter your email') this.value='';" value="Enter your email" type="text">
+                    <br>
+                    <input class="submit_button" value="Subscribe" style="margin-bottom: 10px;" type="submit">
+                    <br>
+                    (Closed mailing list so please wait for approval)
+                </form>
+            </div>
+        </div>
+    </section>
+    -->
+    <section id="ae-help" class="grid_18 alpha">
+    <h2>Programmatic access</h2>
+    <p>
+        <a href="#Reststyle_xml">1. REST-style queries to retrieve results in XML format</a><br>
+        &nbsp;&nbsp;<a href="#Keyword">1.1. Keyword searches for experiments and data files</a><br>
+        &nbsp;&nbsp;<a href="#Fields">1.2. Specifing particular fields for searching</a><br>
+        &nbsp;&nbsp;<a href="#EFO">1.3. Expanding searches using the Experimental Factor Ontology</a><br>
+        &nbsp;&nbsp;<a href="#Complex_queries">1.4. Construction of  queries using AND, OR and NOT operators</a><br>
+        &nbsp;&nbsp;<a href="#DirectSubmissions">1.5. Filtering to get ArrayExpress direct submission data</a><br>
+        &nbsp;&nbsp;<a href="#Counts">1.6. Filtering by counts</a><br>
+        &nbsp;&nbsp;<a href="#Sorting">1.7. Sorting</a><br>
+        &nbsp;&nbsp;<a href="#Oldstyle_queries">1.8. Old-style queries</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_keyword">1.8.1. Keyword searches</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_species">1.8.2. Species searches</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_files">1.8.3. Retrieving files</a><br>
+        &nbsp;&nbsp;<a href="#Private_data">1.9. Accessing private data</a><br>
+        &nbsp;&nbsp;<a href="#All_experiments">1.10. Retrieve information about all public experiments</a><br>
+        &nbsp;&nbsp;<a href="#Format_XML_results">1.11. Format of XML results </a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_experiments">1.11.1. Searches for experiments</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_files">1.11.2. Searches for files</a><br>
+        <a href="#JSON">2. JSON web services format</a><br>
+        <a href="#Updates">3. Changes to programmatic access since September 2010</a>
+    </p>
+    <p>&nbsp;</p>
+    <h3><a id="Reststyle_xml">1. REST-style queries to retrieve results in XML format</a></h3>
+    <p>Experiments and files linked to experiments can by searched for using keywords, by
+        searching specific fields (e.g. sample attributes or experiment types),
+        or by selecting experiments that have fulfill certain conditions such
+        as the number of assays (hybridizations) or were released on a
+        particular date.</p>
+    <h4><a id="Keyword">1.1. Keyword searches for experiments and files associated with experiments</a></h4>
+    <p>Keyword searches of all fields for experiments and files linked to
+        experiments can be made using the following format of URLs:</p>
+    <table>
+        <tbody>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?keywords=glioblastoma</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+    <p>A few points to note when using keyword search:</p>
+    <ul>
+        <li>Accession number and keyword searches are case <strong>insensitive</strong></li>
+        <li><strong>Phrases</strong> of more than one word must be entered in quotes e.g. keywords="breast cancer cells"</li>
+        <li><strong>More than one keyword</strong>
+            can by searched for using the '+' sign e.g. keywords=lung+cancer. The
+            search treats these as 'AND' statements. See below for using <a href="#Complex_queries">OR and NOT</a>.</li>
+        <li>Use an asterisk<strong> *</strong> as a <strong>multiple character wild card</strong> e.g. keywords=colo* will search for colon, colorectal, color etc</li>
+        <li>Use a question mark <strong>?</strong> as a <strong>single character  wild card</strong> e.g. keywords=te?t will search for text and test</li>
+    </ul>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+
+    <h4><a id="Fields"></a>1.2 Specifing particular fields for searching</h4>
+    <p></p>
+    <p>The
+        following terms can be used to specify the field in which a term is
+        searched for. Either experiments or files can be searched for in all
+        cases by using the 'experiments' or 'files' term in the URL.</p>
+    <p></p>
+    <table>
+        <tbody><tr>
+            <th>Field name</th>
+            <th>Searches</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><strong>accession</strong></td>
+            <td>Experiment primary or secondary accession</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?accession=E-MEXP-31</td>
+        </tr>
+        <tr>
+            <td><strong>array</strong></td>
+            <td>Array design accession or name</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?array=A-AFFY-33</td>
+        </tr>
+        <tr>
+            <td><strong>ef</strong></td>
+            <td>Experimental factor, the name of the main variables in an experiment. </td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?ef=CellType</td>
+        </tr>
+        <tr>
+            <td><strong>efv</strong></td>
+            <td>Experimental factor value. Has EFO expansion.</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?efv=HeLa</td>
+        </tr>
+        <tr>
+            <td><strong>expdesign</strong></td>
+            <td>Experiment design type</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?expdesign=dose+response</td>
+        </tr>
+        <tr>
+            <td><strong>exptype</strong></td>
+            <td>Experiment type.  Has EFO expansion.</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?exptype="RNA-seq"</td>
+        </tr>
+        <tr>
+            <td><strong>gxa</strong></td>
+            <td>Presence in the Gene Expression Atlas. Only value is gxa=true. </td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?gxa=true</td>
+        </tr>
+        <tr>
+            <td><strong>pmid</strong></td>
+            <td>PubMed identifier</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?pmid=16553887</td>
+        </tr>
+        <tr>
+            <td><strong>sa</strong></td>
+            <td><p>Sample attribute values. Has EFO expansion.</p></td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?sa=fibroblast</td>
+        </tr>
+        <tr>
+            <td><strong>species</strong></td>
+            <td>Species of the samples.Has EFO expansion. </td>
+            <td><p>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?species="homo sapiens"</p>
+            </td>
+        </tr>
+        </tbody></table>
+    <p></p>
+    <p>To link different search criteria together use the '&amp;' symbol. E.g.        </p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=gliobastoma&amp;species="homo sapiens" </td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?sa=fibroblast&amp;species="mus musculus" </td>
+        </tr>
+        </tbody></table>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+
+    <h4><a id="EFO"></a>1.3 Expanding searches using the Experimental Factor Ontology</h4>
+    <p>The <a href="/efo/">Experimental Factor Ontology</a>
+        is an application-focused ontology modelling the experimental factors
+        in ArrayExpress. If the term expandefo=true is included in the URL then
+        the search will be for occurrences of your term, and for synonyms and
+        child terms in the Experimental Factor Ontology. E.g. if 'cancer' is
+        entered the search will be for the term cancer, for synonyms of cancer
+        and sub types of cancer such as <span title="This is matched child term from Experimental Factor   Ontology e.g. brain and subparts of brain">lymphoma</span>. </p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=heart&amp;expandefo=on </td>
+        </tr>
+        </tbody></table>
+    <p>Some specific fields have EFO expansion on always: experimental factor value, experiment type, sample attribute and species. </p>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Complex_queries"></a>1.4 Construction of queries using AND, OR and NOT operators</h4>
+    <p>More complex queries can be constructed using the operators <strong>AND, OR </strong>or <strong>NOT</strong>.
+        AND is the default if no operator is specified. Again, either
+        experiments or files can be searched for in all cases by using the
+        'experiments' or 'files' term in the URL.</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate+<strong>AND</strong>+breast</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate+breast (same as above)</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate+<strong>OR</strong>+breast</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate+<strong>NOT</strong>+breast</td>
+        </tr>
+        </tbody></table>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="DirectSubmissions"></a>1.5 Filtering to get ArrayExpress direct submission data</h4>
+    <p>Searches
+        can be limited to experiments submitted directly to ArrayExpress (this
+        is excludes data imported from the Gene Expression Omnibus (GEO, <a href="http://www.ncbi.nlm.nih.gov/geo/">www.ncbi.nlm.nih.gov/geo/</a>)) or to only the imported data. To do this use the following syntax:</p>
+    <table>
+        <tbody><tr>
+            <th>Field</th>
+            <th> What is searched </th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><p>directsub</p></td>
+            <td>
+                only experiments directly submitted to ArrayExpress (directsub=true),
+                or only experiments imported from the GEO database (directsub=false)</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?directsub=true</td>
+        </tr>
+        </tbody></table>
+    <p>For more information about how we import data from GEO see the <a href="GEO_data.html">GEO data help page</a>. </p>
+    <p>&nbsp;</p>
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Counts"></a>1.6 Filtering by counts</h4>
+
+    <p>Experiments fulfilling certain count critera can also be searched for e.g. having more than 10
+        assays (hybridizations). These searches use the following syntax: <br>
+    </p>
+    <table>
+        <tbody><tr>
+            <th>Filter</th>
+            <th> What is filtered </th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><p>assaycount:[x TO y]</p></td>
+            <td>filter on the number of of assays where x &lt;= y and both values are between 0 and 99,999 (<strong>inclusive</strong>) . To count <strong>excluding</strong>
+                the values given use curly brackets e.g. assaycount:{1 TO 5} will find
+                experiments with 2-4 assays. Single numbers may also be given e.g.
+                assaycount:10 will find experiments with 10 assays.</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?assaycount=[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>efcount:[x TO y]</td>
+            <td>filter on the number of experimental factors </td>
+            <td>http://www.ebi.ac.uk/arrayexpressxml/v2/experiments?efcount=[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>samplecount:[x TO y] </td>
+            <td> filter on the number of samples</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?samplecount=[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>sacount:[x TO y] </td>
+            <td>filter on the number of sample attribute categories</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?sacount=[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>raw:true/faslse</td>
+            <td>filter on the presence/absence of raw data files<br>
+            </td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?raw=true</td>
+        </tr>
+        <tr>
+            <td>processed:true/false</td>
+            <td>filter on the presence/absence of processed data files<br>
+            </td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?processed=true</td>
+        </tr>
+        <tr>
+            <td>miamescore:[x TO y] </td>
+            <td>filter on the MIAME compliance score (maximum score is 5) </td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?miamescore=[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>date:yyyy-mm-dd</td>
+            <td><p>filter by release date</p>
+                <ul>
+                    <li>date:2009-12-01 - will search for experiments released on 1st of Dec 2009 </li>
+                    <li>date:2009* - will search for experiments released in 2009</li>
+                    <li>date:[2008-01-01 2008-05-31] - will search for experiments released between 1st of Jan and end of May 2008 </li>
+                </ul></td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?date=[2008-01-01 2008-05-31]</td>
+        </tr>
+        </tbody></table>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Sorting"></a>1.7 Sorting</h4>
+    <p>The results of a query can be sorted on several fields in ascending or descending order using <strong>sortby=xxx</strong> and <strong>sortorder=ascending/descending. </strong>The fields that can be used for sorting are:</p>
+    <ul>
+        <li>accession</li>
+        <li>name</li>
+        <li>assays</li>
+        <li>species</li>
+        <li>releasedate</li>
+        <li>fgem (for "final gene expression matrix", i.e. processed data)<br>
+        </li>
+        <li>raw</li>
+        <li>atlas</li>
+    </ul>
+    <p>Example queries:<br>
+    </p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=prostate&amp;sortby=accession&amp;sortorder=ascending</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?sa=heart&amp;sortby=releasedate&amp;sortorder=descending</td>
+        </tr>
+        </tbody></table>
+    <p></p>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Oldstyle_queries"></a>1.8 Old-style queries</h4>
+    <p>The URL format for ArrayExpress searches was changed in September 2010 to allow searching of specific
+        fields, use of AND, OR, NOT, counts of attributes and ordering of
+        results. </p>
+    <p>The old-style URLs are still fully functional however. The format of the pre-September 2010 URL is described below. </p>
+    <p>&nbsp;<a href="programmatic_access.html#top" class="linktotop">Top</a></p>
+    <h5><br>
+    </h5>
+    <h5><a id="Oldstyle_keyword"></a>1.8.1. Keyword searches</h5>
+    <p>Keywords
+        can be used to search for specific experiments, with the results
+        returned in an XML document, using URLs with the experiments term and
+        keywords=X format. E.g.</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/experiments/E-MEXP-31</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/experiments?keywords=cancer</td>
+        </tr>
+        </tbody></table>
+    <p> To narrow the search by using <strong>more than one keyword</strong>, separate terms by +  e.g.</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/experiments?keywords=cancer+breast</td>
+        </tr>
+        </tbody></table>
+
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h5><a id="Oldstyle_species"></a>1.8.2 Species searches</h5>
+    <p>To narrow search to experiments with samples of a particular<strong> species</strong> include the 'species' term </p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/experiments?keywords=cancer&amp;<strong>species</strong>=Homo+sapiens </td>
+        </tr>
+        </tbody></table>
+    <p><a href="#top" class="linktotop">op</a></p>
+    <p>&nbsp;      </p>
+    <h5><a id="Oldstyle_files"></a>1.8.3 Retrieving files</h5>
+    <p>To retrieve the list of<strong> files</strong> associated with a set of experiments use the 'files' term in the URL </p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/<strong>files</strong>?keywords=cancer+breast</td>
+        </tr>
+        </tbody></table>
+    <p></p>
+    <p>To retrieve a list of<strong> files</strong> for a particular experiment format the query as follows:</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/<strong>files</strong>/E-MEXP-31</td>
+        </tr>
+        </tbody></table>
+    <p>Also note:</p>
+    <ul>
+        <li>Accession number and keyword searches are case <strong>insensitive</strong>. </li>
+        <li>Parts
+            of words can also be searched e.g. colo will retrieve results with
+            matches to both colon and colorectal (and also color, colony etc),
+            unless there is a paramter wholewords=on in the query string e.g.</li>
+    </ul>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/experiments?keywords=cancer&amp;species=Homo+sapiens&amp;wholewords=on</td>
+        </tr>
+        </tbody></table>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Private_data"></a>1.9 Accessing private data</h4>
+    <p>Private data are usually pre-published/unpublished data. Access to private data is under password control.</p>
+
+
+    <ol>
+        <li> Use your client to retrieve the following URL (inserting the
+            username and password provided to you by the ArrayExpress curators): <br>
+            <a href="/arrayexpress/verify-login.txt?u=username&amp;p=password">http://www.ebi.ac.uk/arrayexpress/verify-login.txt?u=username&amp;p=password</a>
+
+            If the login details are correct this will return a login token that is
+            unique to your username, IP address and client. If the login fails you
+            will get a blank page.</li>
+        <li>Set up 2 cookies for the domain <a href="/">http://www.ebi.ac.uk/</a> : <br>
+            AeLoggedUser = username <br>
+            AeLoginToken = login token from URL in step 1 </li>
+        <li>Use these cookies when making all subsequent requests to ArrayExpress. It
+            is important to use the same client that was used in step 1. </li>
+    </ol>
+
+
+
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="All_experiments"></a>1.10 Retrieve information about all public experiments        </h4>
+    <p>To retrieve an xml file with information about all public experiments remove the keyword part of the search.</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments</td>
+        </tr>
+        </tbody></table>
+
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h4><a id="Format_XML_results"></a>1.11 Format of XML results</h4>
+    <p>The XML
+        documents returned from a search lists how many experiments were
+        retrieved and then either information about the experiment or lists the
+        files associated with an experiment depending on the search made. In
+        both cases information about each experiment is in an
+        &lt;experiment&gt;&lt;/experiment&gt; element. </p>
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h5><a id="Format_XML_experiments"></a>1.11.1 Searches for experiments</h5>
+    <p>Example:</p>
+    <p><img alt="xml example - experiment" src="prog_acc_ExperimentsXMLexample.gif" height="577" width="663"></p>
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h5><a id="Format_XML_files"></a>1.11.2 Searches for files</h5>
+    <p>Example:</p>
+    <p><img src="prog_acc_FilesXMLexample.gif" alt="xml example - files" height="579" width="637"></p>
+    <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    <h3><a id="JSON"></a>2. JSON web services format </h3>
+    <p>To retrieve the results of queries in JSON format, the base URL
+        changes from http://www.ebi.ac.uk/arrayexpress/xml/v2/ to
+        http://www.ebi.ac.uk/arrayexpress/json/v2/. All queries described above
+        can be carried out and will produce a JSON-format file while can by
+        downloaded.</p>
+    <p>E.g. experiment queries:</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/json/v2/experiments?keywords=cancer+breast</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/json/v2/experiments/E-MEXP-31</td>
+        </tr>
+        </tbody></table>
+    <p>E.g. file queries:</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/json/v2/files?keywords=cancer+breast</td>
+        </tr>
+        <tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/json/v2/files/E-MEXP-31</td>
+        </tr>
+        </tbody></table>
+    <p>There is one extra parameter 'jsonp' - Enable JSONP; the JSON output
+        will be prepended with the value of the jsonp parameter and wrapped in
+        parentheses. For example:</p>
+    <table>
+        <tbody><tr>
+            <td>http://www.ebi.ac.uk/arrayexpress/json/v2/experiments/E-MEXP-31?jsonp=experiment</td>
+        </tr>
+        </tbody></table>
+
+    <p>&nbsp;</p>
+    <h3><a id="Updates"></a>3. Changes to programmatic access since September 2010</h3>
+    <p> See also <a href="#Oldstyle_queries">section 1.8 above</a> for old-style queries used before September 2010.</p>
+    <ol>
+        <li>URL change - the base URL for queries has
+            changed to http://www.ebi.ac.uk/arrayexpress/xml/v2/. The previous
+            format for queries is still supported.</li>
+        <li>Additional functionality including filtering and complex queries (AND, OR , NOT) has been added </li>
+        <li>Addition of JSON web services</li>
+    </ol>
+    </section>
+        <aside class="grid_6 omega">
+            <h3>Help</h3>
+            <ul id="secondary-nav">
+                <li><a href="index.html">Help home</a></li>
+                <li><a href="quick_start.html">Quick Start guide</a></li>
+                <li><a href="how_to_search.html">How to search</a></li>
+                <li><a href="programmatic_access.html">Other ways to get data</a>
+                    <ul>
+                        <li class="active"><a href="programmatic_access.html">Programmatic access</a></li>
+                        <li><a href="FTP_archives.html">FTP archives</a></li>
+                    </ul>
+                </li>
+                <li><a href="submissions_overview.html">How to submit</a>
+                    <ul>
+                        <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                        <li><a href="third_party_tools.html">Third-party tools</a></li>
+                    </ul>
+                </li>
+                <li><a href="FAQ.html">FAQ</a></li>
+                <li><a href="data_availability.html">Learn more about our data</a>
+                    <ul>
+                        <li><a href="data_availability.html">Data access policy</a></li>
+                        <li><a href="accession_codes.html">Accession codes</a></li>
+                        <li><a href="GEO_data.html">GEO data</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact_us.html">Contact us</a></li>
+            </ul>
+        </aside>
+    </div>
+</body>
+</html>

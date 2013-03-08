@@ -1,0 +1,209 @@
+/*
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#ae-results {
+    padding: 0 9px;
+}
+
+#ae-results * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#ae-results .icon-functional::before {
+    margin: 0;
+    font-size: 93%;
+    color: inherit;
+}
+
+#ae-results th,
+#ae-results td {
+    border-collapse: separate;
+}
+
+#ae-results .ae_samples_table_border {
+    width: 100%;
+    background-color: #FFFFFF
+}
+
+#ae-results .ae_samples_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#ae-results .ae_samples_table th
+, #ae-results .ae_samples_table td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+#ae-results .ae_samples_table td.left_fixed,
+#ae-results .ae_samples_table td.middle_scrollable,
+#ae-results .ae_samples_table td.right_fixed {
+    vertical-align: top;
+}
+
+#ae-results th {
+    font-size: 108%;
+    font-weight: normal;
+}
+
+#ae-results td {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+#ae-results .ae_samples_table th.even {
+    color: #888;
+    font-weight: bold;
+    text-align: center;
+}
+
+#ae-results .ae_samples_table th.odd {
+    border-bottom: 2px solid #5E8CC0;
+    text-align: left;
+    vertical-align: bottom;
+    padding-bottom: 3px;
+}
+
+#ae-results .ae_samples_table td.odd {
+    background-color: #E8F1FC
+}
+
+#ae-results .ae_samples_table th {
+    background-color: #EEEEEE
+}
+
+#ae-results .ae_samples_table th.sa {
+    background-color: #E2ECF8
+}
+
+#ae-results .ae_samples_table th.ef {
+    background-color: #FDF0DB
+}
+
+#ae-results .ae_samples_table td.selected {
+    background-color: #FFE0B1
+}
+
+#ae-results th.sortable a:link,
+#ae-results th.sortable a:visited {
+    color: #666
+}
+
+#ae-results th.sortable a:hover,
+#ae-results th.sortable a:focus,
+#ae-results th.sortable a:active {
+    color: #1C7E60
+}
+
+#ae-results th.sortable i {
+    margin: 0 0 0 2px;
+}
+
+
+#ae-results .ae_samples_table td.bottom_filler {
+    background: #F5F5F5 url(../images/_old_/sbg.gif) left top repeat-x;
+}
+
+#ae-results .src_name_table
+, #ae-results .links_table {
+    table-layout: auto;
+}
+
+#ae-results .src_name_table th
+, #ae-results .src_name_table td
+, #ae-results .attr_table th
+, #ae-results .attr_table td
+, #ae-results .links_table th
+, #ae-results .links_table td {
+    padding: 0 5px;
+    height: 25px;
+
+}
+
+#ae-results .src_name_table th
+, #ae-results .links_table th {
+    background-color: #EEEEEE;
+}
+
+#ae-results .src_name_table td,
+#ae-results .attr_table td,
+#ae-results .links_table td {
+    font-size: 93%;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+#ae-results .links_table th
+, #ae-results .links_table td {
+    text-align: center;
+}
+
+#ae-results .middle_scrollable {
+    vertical-align: top;
+}
+
+#ae-results .attr_table_shadow_container {
+    position: relative;
+    /* display: inline-block; */
+    width: 100%;
+    overflow: hidden;
+}
+
+#ae-results .left_shadow
+, #ae-results .right_shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#ae-results .left_shadow {
+    box-shadow: inset 5px 0px 5px -3px #CCC;
+    -moz-box-shadow: inset 5px 0px 5px -3px #CCC;
+    -webkit-box-shadow: inset 5px 0px 5px -3px #CCC;
+}
+
+#ae-results .right_shadow {
+    box-shadow: inset -5px 0px 5px -3px #CCC;
+    -moz-box-shadow: inset -5px 0px 5px -3px #CCC;
+    -webkit-box-shadow: inset -5px 0px 5px -3px #CCC;
+}
+
+#ae-results .attr_table_scroll {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-left: 1px dashed #CCC;
+    border-right: 1px dashed #CCC
+}
+
+#ae-results .attr_table {
+    table-layout: auto;
+    width: 100%;
+}
+
+#ae-results .divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background-color: #5E8CC0;
+    overflow: hidden;
+}

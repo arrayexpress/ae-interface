@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
@@ -56,7 +55,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             HttpServletRequest request
             , HttpServletResponse response
             , RequestType requestType
-            , List<String> authUserIDs
+            , String authUserName
             ) throws ServletException, IOException;
 
     protected void doRequest( HttpServletRequest request, HttpServletResponse response, RequestType requestType )
@@ -65,7 +64,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         if (!checkAuthCookies(request)) {
             invalidateAuthCookies(response);
         }
-        doAuthenticatedRequest(request, response, requestType, getAuthUserIds(request));
+        doAuthenticatedRequest(request, response, requestType, getAuthUserName(request));
     }
 
     private boolean checkAuthCookies( HttpServletRequest request ) throws ServletException
@@ -101,28 +100,40 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         response.addCookie(userCookie);
     }
 
-    protected List<String> getAuthUserIds( HttpServletRequest request ) throws ServletException
+    protected String getAuthUserName( HttpServletRequest request ) throws ServletException
     {
-        if (!checkAuthCookies(request)) {
-            return AE_PUBLIC_ACCESS;
-        } else {
+        if (checkAuthCookies(request)) {
             try {
-                Users users = (Users) getComponent("Users");
                 String userName = new CookieMap(request.getCookies()).getCookieValue(AE_LOGIN_USER_COOKIE);
                 if (null != userName) {
-                    userName = URLDecoder.decode(userName, "UTF-8");
-                }
-                if (users.isPrivilegedByName(userName)) {
-                    return AE_UNRESTRICTED_ACCESS;
-                } else {
-                    List<String> userIds = users.getUserIDs(userName);
-                    // so we allow public access as well
-                    userIds.addAll(AE_PUBLIC_ACCESS);
-                    return userIds;
+                    return URLDecoder.decode(userName, "UTF-8");
                 }
             } catch (Exception x) {
-               throw new AuthApplicationServletException(x);
+                throw new AuthApplicationServletException(x);
             }
+        }
+        return null;
+    }
+
+    protected List<String> getUserIds( String userName ) throws ServletException
+    {
+        if (null == userName) {
+            return AE_PUBLIC_ACCESS;
+        }
+        try {
+            userName = URLDecoder.decode(userName, "UTF-8");
+            Users users = (Users) getComponent("Users");
+
+            if (users.isPrivilegedByName(userName)) {
+                return AE_UNRESTRICTED_ACCESS;
+            } else {
+                List<String> userIds = users.getUserIDs(userName);
+                // so we allow public access as well
+                userIds.addAll(AE_PUBLIC_ACCESS);
+                return userIds;
+            }
+        } catch (Exception x) {
+           throw new AuthApplicationServletException(x);
         }
     }
 }

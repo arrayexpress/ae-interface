@@ -50,8 +50,8 @@ public class ControlServlet extends ApplicationServlet
         String command = "";
         String params = "";
 
-        String[] requestArgs = new RegexHelper("/control/([^/]+)/?(.*)", "i")
-                .match(request.getRequestURL().toString());
+        String[] requestArgs = new RegexHelper("/([^/]+)/?(.*)", "i")
+                .match(request.getPathInfo());
         if (null != requestArgs) {
             command = requestArgs[0];
             params = requestArgs[1];

@@ -1,36 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+    xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
     xmlns:html="http://www.w3.org/1999/xhtml"
-    extension-element-prefixes="xs fn ae html"
-    exclude-result-prefixes="xs fn ae html"
+    extension-element-prefixes="xs fn ae search html"
+    exclude-result-prefixes="xs fn ae search html"
     version="2.0">
     
     <xsl:include href="ae-highlight.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
 
-    <xsl:template name="exp-description-section">
+    <xsl:template name="exp-organism-section">
         <xsl:param name="pQueryId"/>
-        <xsl:variable name="vDescription" select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]"/>
-        <xsl:if test="$vDescription">
+        <xsl:if test="organism">
             <tr>
-                <td class="name"><div class="name">Description</div></td>
+                <td class="name"><div>Organism</div></td>
                 <td class="value">
-                    <div class="value">
-                        <xsl:for-each select="$vDescription">
-                            <xsl:sort select="id" data-type="number"/>
-                            <xsl:apply-templates select="text" mode="highlight">
-                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            </xsl:apply-templates>
-                        </xsl:for-each>
+                    <div>
+                        <xsl:call-template name="highlight">
+                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                            <xsl:with-param name="pText" select="string-join(organism, ', ')"/>
+                            <xsl:with-param name="pFieldName" select="'organism'"/>
+                        </xsl:call-template>
                     </div>
                 </td>
             </tr>
         </xsl:if>
     </xsl:template>
 
+    <xsl:template name="exp-description-section">
+        <xsl:param name="pQueryId"/>
+        <xsl:variable name="vDescription" select="description[string-length(text) > 0 and not(contains(text, '(Generated description)'))]"/>
+        <xsl:if test="$vDescription">
+            <tr>
+                <td class="name"><div>Description</div></td>
+                <td class="value">
+                    <xsl:for-each select="$vDescription">
+                        <xsl:sort select="id" data-type="number"/>
+                        <xsl:apply-templates select="text" mode="highlight">
+                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                        </xsl:apply-templates>
+                    </xsl:for-each>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
+
+    <!-- TODO:
     <xsl:template name="exp-similarity-section">
         <xsl:param name="vExpId"/>
         <xsl:param name="vBasePath"/>
@@ -38,8 +72,8 @@
 
         <xsl:if test="$vSimilarExperiments/similarOntologyExperiments/similarExperiment|$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
             <tr>
-                <td class="name"><div class="name">Similarity</div></td>
-                <td class="attrs"><div class="attrs">
+                <td class="name"><div>Similarity</div></td>
+                <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr>
@@ -90,8 +124,8 @@
         <xsl:param name="vSimilarExperiments"/>
         <xsl:if test="$vSimilarExperiments/similarOntologyExperiments/similarExperiment|$vSimilarExperiments/similarPubMedExperiments/similarExperiment">
             <tr>
-                <td class="name"><div class="name">Similarity</div></td>
-                <td class="attrs"><div class="attrs">
+                <td class="name"><div>Similarity</div></td>
+                <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr class="owl">
@@ -157,16 +191,16 @@
             </tr>
         </xsl:if>
     </xsl:template>
+    -->
 
     <xsl:template name="exp-keywords-section">
         <xsl:param name="pQueryId"/>
         <xsl:variable name="vExpTypeAndDesign" select="experimenttype | experimentdesign"/>
         <xsl:if test="$vExpTypeAndDesign">
             <tr>
-                
-                <td class="name"><div class="name">Experiment type<xsl:if test="count($vExpTypeAndDesign) > 1">s</xsl:if></div></td>
+                <td class="name"><div>Experiment type<xsl:if test="count($vExpTypeAndDesign) > 1">s</xsl:if></div></td>
                 <td class="value">
-                    <div class="value">
+                    <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                             <xsl:with-param name="pText" select="fn:string-join(experimenttype, ', ')"/>
@@ -191,9 +225,9 @@
         <xsl:if test="$vContacts">
             <tr>
                 <td class="name">
-                    <div class="name">Contact<xsl:if test="count($vContacts) > 1">s</xsl:if></div></td>
+                    <div>Contact<xsl:if test="count($vContacts) > 1">s</xsl:if></div></td>
                 <td class="value">
-                    <div class="value">
+                    <div>
                         <xsl:call-template name="exp-provider">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                             <xsl:with-param name="pContacts" select="$vContacts"/>
@@ -210,14 +244,12 @@
         <xsl:if test="bibliography/accession | bibliography/title">
             <tr>
                 <td class="name">
-                    <div class="name">Citation<xsl:if test="count(bibliography) > 1">s</xsl:if></div>
+                    <div>Citation<xsl:if test="count(bibliography) > 1">s</xsl:if></div>
                 </td>
                 <td class="value">
-                    <div class="value">
-                        <xsl:apply-templates select="bibliography">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>    
-                        </xsl:apply-templates>
-                    </div>
+                    <xsl:apply-templates select="bibliography">
+                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                    </xsl:apply-templates>
                 </td>
             </tr>
         </xsl:if>        
@@ -228,9 +260,9 @@
 
         <xsl:if test="minseqescores">
             <tr>
-                <td class="name"><div class="name">MINSEQE</div></td>
+                <td class="name"><div>MINSEQE</div></td>
                 <td class="value">
-                    <div class="value">
+                    <div>
                         <xsl:call-template name="exp-score">
                             <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pScores" select="minseqescores"/>
@@ -247,9 +279,9 @@
         
         <xsl:if test="miamescores">
             <tr>
-                <td class="name"><div class="name">MIAME</div></td>
+                <td class="name"><div>MIAME</div></td>
                 <td class="value">
-                    <div class="value">
+                    <div>
                         <xsl:call-template name="exp-score">
                             <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pScores" select="miamescores"/>
@@ -261,24 +293,45 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="exp-platforms-section">
+    <xsl:template name="exp-arrays-section">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
-        <xsl:if test="arraydesign">
+
+        <xsl:variable name="vArrays" select="search:queryIndex('arrays', fn:concat('visible:true experiment:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))"/>
+        <xsl:variable name="vArrayCount" select="fn:count($vArrays)"/>
+
+        <xsl:if test="$vArrayCount > 0">
             <tr>
-                <td class="name"><div class="name">Platform<xsl:if test="fn:count(arraydesign) > 1">s</xsl:if> (<xsl:value-of select="fn:count(arraydesign)"/>)</div></td>
+                <td class="name"><div>Array<xsl:if test="$vArrayCount > 1">s</xsl:if> (<xsl:value-of select="$vArrayCount"/>)</div></td>
                 <td class="value">
-                    <div class="value">
-                        <xsl:for-each select="arraydesign">
-                            <a href="{$pBasePath}/arrays/{accession}">
-                                <xsl:call-template name="highlight">
-                                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                                    <xsl:with-param name="pText" select="fn:concat(accession, ' - ', name)"/>
-                                    <xsl:with-param name="pFieldName" select="'array'"/>
-                                </xsl:call-template>
-                            </a>
-                            <xsl:if test="fn:position() != fn:last()"><br/></xsl:if>
-                        </xsl:for-each>
+                    <div>
+                        <xsl:choose>
+                            <xsl:when test="$vArrayCount &lt;= 3">
+                                <xsl:variable name="vExpAccession" select="accession"/>
+                                <xsl:for-each select="$vArrays">
+                                    <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
+                                    <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
+
+                                    <a href="{$pBasePath}/arrays/{accession}?ref={$vExpAccession}">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="fn:concat(accession, ' - ', name)"/>
+                                            <xsl:with-param name="pFieldName" select="'array'"/>
+                                        </xsl:call-template>
+                                        <xsl:if test="not(user/@id = '1')">
+                                            <span class="icon icon-functional" data-icon="L"/>
+                                        </xsl:if>
+                                    </a>
+                                    <xsl:if test="fn:position() != fn:last()"><br/></xsl:if>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <a href="{$pBasePath}/experiments/{accession}/arrays/">
+                                    <xsl:text>Click for detailed array information</xsl:text>
+                                </a>
+                            </xsl:otherwise>
+
+                        </xsl:choose>
                     </div>
                 </td>
             </tr>
@@ -291,15 +344,13 @@
         <xsl:param name="pBasePath"/>
         <xsl:param name="pFiles"/>
 
-        <xsl:variable name="vQueryString" select="if ($pQueryString != '') then concat('?', $pQueryString) else ''"/>
-
         <xsl:if test="$pFiles/file[@extension = 'txt' and@kind = 'sdrf']">
             <tr>
-                <td class="name"><div class="name">Samples (<xsl:value-of select="samples"/>)</div></td>
+                <td class="name"><div>Samples (<xsl:value-of select="samples"/>)</div></td>
                 <td class="value">
-                    <div class="value">
-                        <a class="samples" href="{$pBasePath}/experiments/{accession}/samples.html{$vQueryString}">
-                            <b><xsl:text>Click for detailed sample information and links to data</xsl:text></b>
+                    <div>
+                        <a class="samples" href="{$pBasePath}/experiments/{accession}/samples/{$pQueryString}">
+                            <span class="sample-view"><xsl:text>Click for detailed sample information and links to data</xsl:text></span>
                             <br/>
                             <xsl:variable name="vPossibleMatches">
                                 <xsl:for-each select="experimentalfactor/name">
@@ -357,26 +408,26 @@
 
         <xsl:if test="experimentalfactor/name">
             <tr>
-                <td class="name"><div class="name">Experimental factors</div></td>
-                <td class="attrs"><div class="attrs">
+                <td class="name"><div>Experimental factors</div></td>
+                <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr>
-                                <th class="attr_name">Factor name</th>
-                                <th class="attr_value">Factor values</th>
+                                <th class="name">Factor name</th>
+                                <th class="value">Factor values</th>
                             </tr>
                         </thead>
                         <tbody>
                             <xsl:for-each select="experimentalfactor">
                                 <tr>
-                                    <td class="attr_name">
+                                    <td class="name">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="name"/>
                                             <xsl:with-param name="pFieldName" select="'ef'"/>
                                         </xsl:call-template>
                                     </td>
-                                    <td class="attr_value">
+                                    <td class="value">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="string-join(value, ', ')"/>
@@ -397,26 +448,26 @@
 
         <xsl:if test="sampleattribute/category">
             <tr>
-                <td class="name"><div class="name">Sample attributes</div></td>
-                <td class="attrs"><div class="attrs">
+                <td class="name"><div>Sample attributes</div></td>
+                <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr>
-                                <th class="attr_name">Attribute name</th>
-                                <th class="attr_value">Attribute values</th>
+                                <th class="name">Attribute name</th>
+                                <th class="value">Attribute values</th>
                             </tr>
                         </thead>
                         <tbody>
                             <xsl:for-each select="sampleattribute">
                                 <tr>
-                                    <td class="attr_name">
+                                    <td class="name">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="category"/>
                                             <xsl:with-param name="pFieldName"/>
                                         </xsl:call-template>
                                     </td>
-                                    <td class="attr_value">
+                                    <td class="value">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="string-join(value, ', ')"/>
@@ -437,11 +488,11 @@
         
         <xsl:if test="protocol">
             <tr>
-                <td class="name"><div class="name">Protocols (<xsl:value-of select="count(protocol)"/>)</div></td>
+                <td class="name"><div>Protocols (<xsl:value-of select="count(protocol)"/>)</div></td>
                 <td class="value">
-                    <div class="value">
-                        <a href="{$pBasePath}/protocols/browse.html?keywords=experiment%3A{accession}">
-                            <xsl:text>Click for all experimental protocols</xsl:text>
+                    <div>
+                        <a href="{$pBasePath}/experiments/{accession}/protocols/">
+                            <xsl:text>Click for detailed protocol information</xsl:text>
                         </a>
                     </div>
                 </td>
@@ -453,56 +504,42 @@
         <xsl:param name="pBasePath"/>
         <xsl:param name="pFiles"/>
         <tr>
-            <td class="name"><div class="name">Files</div></td>
-            <xsl:choose>
-                <xsl:when test="$pFiles/file[@kind='raw' or @kind='fgem' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
-                    
-                    <td class="attrs">
-                        <div class="attrs">
-                            <table cellpadding="0" cellspacing="0" border="0">
-                                <tbody>
-                                    <xsl:call-template name="exp-data-files">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
-                                    </xsl:call-template>
-                                    <xsl:call-template name="exp-magetab-files">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
-                                    </xsl:call-template>
-                                    <xsl:call-template name="exp-image-files">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
-                                    </xsl:call-template>
-                                    <xsl:call-template name="exp-magetab-files-array">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                    </xsl:call-template>
-                                    <xsl:call-template name="exp-misc-files">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
-                                    </xsl:call-template>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="attrs">
-                            <a href="{$pBasePath}/files/{accession}">
-                                <img src="{$pBasePath}/assets/images/silk_ftp.gif" width="16" height="16" alt=""/>
-                                <xsl:text>Browse all available files</xsl:text>
-                            </a>
-                        </div>
-                        
-                    </td>
-                </xsl:when>
-                <xsl:otherwise>
-                    <td class="value">
-                        <div class="value">
-                            <a href="{$pBasePath}/files/{accession}">
-                                <img src="{$pBasePath}/assets/images/silk_ftp.gif" width="16" height="16" alt=""/>
-                                <xsl:text>Browse all available files</xsl:text>
-                            </a>
-                        </div>
-                    </td>
-                </xsl:otherwise>
-            </xsl:choose>
+            <td class="name"><div>Files</div></td>
+            <td class="value">
+                <xsl:if test="$pFiles/file[@kind='raw' or @kind='processed' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
+                    <div>
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                                <xsl:call-template name="exp-magetab-files">
+                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                    <xsl:with-param name="pFiles" select="$pFiles"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="exp-data-files">
+                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                    <xsl:with-param name="pFiles" select="$pFiles"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="exp-image-files">
+                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                    <xsl:with-param name="pFiles" select="$pFiles"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="exp-magetab-files-array">
+                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="exp-misc-files">
+                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                    <xsl:with-param name="pFiles" select="$pFiles"/>
+                                </xsl:call-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </xsl:if>
+                <div>
+                    <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{accession}/files/">
+                        <xsl:text>Click to browse all available files</xsl:text>
+                    </a>
+                </div>
+
+            </td>
         </tr>
     </xsl:template>
     
@@ -510,27 +547,25 @@
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
 
-        <xsl:if test="true()">
-            <tr>
-                <td class="name"><div class="name">Links</div></td>
-                <td class="value">
-                    <div class="value">
-                        <xsl:if test="@loadedinatlas">
-                            <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Gene Expression Atlas - <xsl:value-of select="accession"/></a>
-                        </xsl:if>
-                        <xsl:if test="secondaryaccession">
-                            <xsl:if test="@loadedinatlas"><br/></xsl:if>
-                            <xsl:call-template name="exp-secondaryaccession">
-                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                                <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                            </xsl:call-template>
-                        </xsl:if>
-                        <xsl:if test="@loadedinatlas | secondaryaccession"><br/></xsl:if>
-                        <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to</span> <img src="{$pBasePath}/assets/images/gs_logo_title_16.gif" width="120" height="16" alt="GenomeSpace"/></a>
+        <tr>
+            <td class="name"><div>Links</div></td>
+            <td class="value">
+                <xsl:if test="@loadedinatlas">
+                    <div>
+                        <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
                     </div>
-                </td>
-            </tr>
-        </xsl:if>
+                </xsl:if>
+                <xsl:if test="secondaryaccession">
+                    <xsl:call-template name="exp-secondaryaccession">
+                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                    </xsl:call-template>
+                </xsl:if>
+                <div>
+                    <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to</span> <img src="{$pBasePath}/assets/images/gs-logo-title-16.gif" width="120" height="16" alt="GenomeSpace"/></a>
+                </div>
+            </td>
+        </tr>
     </xsl:template>
 
     <xsl:template name="exp-status-section">
@@ -538,10 +573,10 @@
         <xsl:if test="$vDates">
             <tr>
                 <td class="name">
-                    <div class="name">Status</div>
+                    <div>Status</div>
                 </td>
                 <td class="value">
-                    <div class="value">
+                    <div>
                         <xsl:for-each select="$vDates">
                             <xsl:sort select="fn:translate(text(),'-','')" data-type="number"/>
                             <xsl:sort select="fn:translate(fn:substring(fn:name(), 1, 1), 'slr', 'abc')"/>
@@ -568,11 +603,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                             <xsl:text> </xsl:text>
-                            <xsl:variable name="vDate" select="ae:formatDate(text())"/>
-                            <xsl:choose>
-                                <xsl:when test="fn:matches($vDate, '\d')">on <xsl:value-of select="$vDate"/></xsl:when>
-                                <xsl:otherwise><xsl:value-of select="fn:lower-case($vDate)"/></xsl:otherwise>
-                            </xsl:choose>
+                            <xsl:value-of select="ae:formatDate(text())"/>
                         </xsl:for-each>
                     </div>
                 </td>
@@ -584,59 +615,61 @@
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
 
-        <xsl:for-each select="secondaryaccession">
-            <xsl:choose>
-                <xsl:when test="fn:string-length(.) = 0"/>
-                <xsl:when test="fn:substring(., 1, 3)='GSE' or fn:substring(., 1, 3)='GDS'">
-                    <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={.}">
-                        <xsl:text>GEO - </xsl:text>
+        <div>
+            <xsl:for-each select="secondaryaccession">
+                <xsl:choose>
+                    <xsl:when test="fn:string-length(.) = 0"/>
+                    <xsl:when test="fn:substring(., 1, 3)='GSE' or fn:substring(., 1, 3)='GDS'">
+                        <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={.}">
+                            <xsl:text>GEO - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
+                    <xsl:when test="fn:substring(., 1, 2)='E-' and fn:substring(., 7, 1)='-'">
+                        <a href="{$pBasePath}/experiments/{.}">
+                            <xsl:text>ArrayExpress - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
+                    <xsl:when test="fn:substring(., 1, 3)='SRP' or fn:substring(., 1, 3)='ERP'">
+                        <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
+                            <xsl:text>ENA - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
+                    <xsl:when test="fn:substring(., 1, 4)='EGAS'">
+                        <a href="https://www.ebi.ac.uk/ega/studies/{.}">
+                            <xsl:text>EGA - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
+                    <xsl:otherwise>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                             <xsl:with-param name="pText" select="."/>
                             <xsl:with-param name="pFieldName" select="'accession'"/>
                         </xsl:call-template>
-                    </a>
-                </xsl:when>
-                <xsl:when test="fn:substring(., 1, 2)='E-' and fn:substring(., 7, 1)='-'">
-                    <a href="{$pBasePath}/experiments/{.}">
-                        <xsl:text>ArrayExpress - </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="."/>
-                            <xsl:with-param name="pFieldName" select="'accession'"/>
-                        </xsl:call-template>
-                    </a>
-                </xsl:when>
-                <xsl:when test="fn:substring(., 1, 3)='SRP' or fn:substring(., 1, 3)='ERP'">
-                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
-                        <xsl:text>ENA - </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="."/>
-                            <xsl:with-param name="pFieldName" select="'accession'"/>
-                        </xsl:call-template>
-                    </a>
-                </xsl:when>
-                <xsl:when test="fn:substring(., 1, 4)='EGAS'">
-                    <a href="https://www.ebi.ac.uk/ega/studies/{.}">
-                        <xsl:text>EGA - </xsl:text>
-                        <xsl:call-template name="highlight">
-                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                            <xsl:with-param name="pText" select="."/>
-                            <xsl:with-param name="pFieldName" select="'accession'"/>
-                        </xsl:call-template>
-                    </a>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="."/>
-                        <xsl:with-param name="pFieldName" select="'accession'"/>
-                    </xsl:call-template>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:if test="fn:position() != fn:last() and fn:string-length(.) > 0">, </xsl:if>
-        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="fn:position() != fn:last() and fn:string-length(.) > 0">, </xsl:if>
+            </xsl:for-each>
+        </div>
     </xsl:template>
     
     <xsl:template name="exp-provider">
@@ -648,7 +681,7 @@
             <xsl:sort select="fn:lower-case(contact)"/>
             <xsl:choose>
                 <xsl:when test="fn:string-length(email) > 0">
-                    <a href="mailto:{email}">
+                    <a href="mailto:{email}" class="icon icon-generic" data-icon="E">
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                             <xsl:with-param name="pText" select="fn:concat(contact, ' &lt;', email, '&gt;')"/>
@@ -672,7 +705,7 @@
         <xsl:param name="pQueryId"/>
         
         <xsl:variable name="vTitle">
-            <xsl:if test="string-length(title) > 0">
+            <xsl:if test="fn:string-length(title) > 0">
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
                     <xsl:with-param name="pText" select="ae:trimTrailingDot(title)"/>
@@ -681,7 +714,7 @@
             </xsl:if>
         </xsl:variable>
         <xsl:variable name="vPubInfo">
-            <xsl:if test="string-length(authors) > 0">
+            <xsl:if test="fn:string-length(authors) > 0">
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
                     <xsl:with-param name="pText" select="ae:trimTrailingDot(authors)"/>
@@ -689,7 +722,7 @@
                 </xsl:call-template>
                 <xsl:text>. </xsl:text>
             </xsl:if>
-            <xsl:if test="string-length(publication) > 0">
+            <xsl:if test="fn:string-length(publication) > 0">
                 <em>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
@@ -697,13 +730,13 @@
                         <xsl:with-param name="pFieldName"/>
                     </xsl:call-template>
                 </em><xsl:text>&#160;</xsl:text></xsl:if>
-            <xsl:if test="string-length(volume) > 0">
+            <xsl:if test="fn:string-length(volume) > 0">
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
                     <xsl:with-param name="pText" select="volume"/>
                     <xsl:with-param name="pFieldName"/>
                 </xsl:call-template>
-                <xsl:if test="string-length(issue) > 0">
+                <xsl:if test="fn:string-length(issue) > 0">
                     <xsl:text>(</xsl:text>
                     <xsl:call-template name="highlight">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
@@ -713,7 +746,7 @@
                     <xsl:text>)</xsl:text>
                 </xsl:if>
             </xsl:if>
-            <xsl:if test="string-length(pages) > 0">
+            <xsl:if test="fn:string-length(pages) > 0">
                 <xsl:text>:</xsl:text>
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
@@ -721,7 +754,7 @@
                     <xsl:with-param name="pFieldName"/>
                 </xsl:call-template>
             </xsl:if>
-            <xsl:if test="string-length(year) > 0">
+            <xsl:if test="fn:string-length(year) > 0">
                 <xsl:text>&#160;(</xsl:text>
                 <xsl:call-template name="highlight">
                     <xsl:with-param name="pQueryId" select="$pQueryId"/>
@@ -732,56 +765,62 @@
             </xsl:if>
         </xsl:variable>
 
-        <xsl:if test="string-length(title)">
-            <xsl:choose>
-                <xsl:when test="doi">
-                    <a href="http://dx.doi.org/{doi}"><xsl:copy-of select="$vTitle"/></a>
-                    <xsl:text>. </xsl:text>
-                    <xsl:copy-of select="$vPubInfo"/>
-                </xsl:when>
-                <xsl:when test="starts-with(uri, 'http')">
-                    <a href="{uri}"><xsl:copy-of select="$vTitle"/></a>
-                    <xsl:text>. </xsl:text>
-                    <xsl:copy-of select="$vPubInfo"/>
-                </xsl:when>
-                <xsl:when test="uri">
-                    <xsl:copy-of select="$vTitle"/>
-                    <xsl:text>. </xsl:text>
-                    <xsl:copy-of select="$vPubInfo"/>
-                    <xsl:text> (</xsl:text>
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="uri"/>
-                        <xsl:with-param name="pFieldName"/>
-                    </xsl:call-template>
-                    <xsl:text>)</xsl:text>
-                </xsl:when>
-                <xsl:when test="accession">
-                    <a href="http://ukpmc.ac.uk/abstract/MED/{accession}"><xsl:copy-of select="$vTitle"/></a>
-                    <xsl:text>. </xsl:text>
-                    <xsl:copy-of select="$vPubInfo"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="$vTitle"/>
-                    <xsl:text>. </xsl:text>
-                    <xsl:copy-of select="$vPubInfo"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
-        <xsl:if test="(doi or uri or string-length(title) = 0) and accession">
-            <xsl:if test="number(accession) > 0">
-                <xsl:if test="string-length(title)">
-                    <xsl:text>, </xsl:text>
+        <xsl:if test="(fn:string-length(title) > 0) or ((doi or uri or fn:string-length(title) = 0) and accession)">
+            <div>
+                <xsl:if test="fn:string-length(title) > 0">
+                    <xsl:choose>
+                        <xsl:when test="doi">
+                            <a href="http://dx.doi.org/{doi}"><xsl:copy-of select="$vTitle"/></a>
+                            <xsl:text>. </xsl:text>
+                            <xsl:copy-of select="$vPubInfo"/>
+                        </xsl:when>
+                        <xsl:when test="fn:starts-with(uri, 'http://')">
+                            <a href="{uri}"><xsl:copy-of select="$vTitle"/></a>
+                            <xsl:text>. </xsl:text>
+                            <xsl:copy-of select="$vPubInfo"/>
+                        </xsl:when>
+                        <xsl:when test="uri">
+                            <xsl:copy-of select="$vTitle"/>
+                            <xsl:text>. </xsl:text>
+                            <xsl:copy-of select="$vPubInfo"/>
+                            <xsl:text> (</xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="uri"/>
+                                <xsl:with-param name="pFieldName"/>
+                            </xsl:call-template>
+                            <xsl:text>)</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="accession">
+                            <a href="http://europepmc.org/abstract/MED/{accession}">
+                                <xsl:copy-of select="$vTitle"/>
+                            </a>
+                            <xsl:text>. </xsl:text>
+                            <xsl:copy-of select="$vPubInfo"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:copy-of select="$vTitle"/>
+                            <xsl:text>. </xsl:text>
+                            <xsl:copy-of select="$vPubInfo"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:if>
-                <a href="http://europepmc.org/abstract/MED/{accession}">
-                    <xsl:text>Europe PMC </xsl:text>
-                    <xsl:call-template name="highlight">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pText" select="accession"/>
-                        <xsl:with-param name="pFieldName" select="'pmid'"/>
-                    </xsl:call-template>
-                </a>
-            </xsl:if>
+                <xsl:if test="(doi or uri or fn:string-length(title) = 0) and accession">
+                    <xsl:if test="fn:number(accession) > 0">
+                        <xsl:if test="fn:string-length(title)">
+                            <xsl:text>, </xsl:text>
+                        </xsl:if>
+                        <a href="http://europepmc.org/abstract/MED/{accession}">
+                            <xsl:text>Europe PMC </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="accession"/>
+                                <xsl:with-param name="pFieldName" select="'pmid'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:if>
+                </xsl:if>
+            </div>
         </xsl:if>
     </xsl:template>
     
@@ -859,10 +898,10 @@
         
         <xsl:choose>
             <xsl:when test="$pValue='1'">
-                <img src="{$pBasePath}/assets/images/silk_asterisk.gif" width="16" height="16" alt="*"/>
+                <i class="aw-icon-asterisk"/>
             </xsl:when>
             <xsl:otherwise>
-                <img src="{$pBasePath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/>
+                <i class="aw-icon-minus"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -873,24 +912,36 @@
         <xsl:param name="pBasePath"/>
         
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'raw' or @kind = 'fgem']"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[(@kind = 'raw' or @kind = 'processed') and @hidden != 'true']"/>
         
         <xsl:if test="$vFiles">
-            <tr>
-                <td class="attr_name">Data Archives</td>
-                <td class="attr_value">
-                    <xsl:for-each select="$vFiles">
-                        <xsl:sort select="@kind"/>
-                        <xsl:sort select="lower-case(@name)"/>
-                        <a href="{$pBasePath}/files/{$vAccession}/{@name}">
-                            <xsl:value-of select="@name"/>
-                        </a>
-                        <xsl:if test="position() != last()">
-                            <xsl:text>, </xsl:text>
-                        </xsl:if>
-                    </xsl:for-each>
-                </td>
-            </tr>
+            <xsl:for-each-group select="$vFiles" group-by="@kind">
+                <xsl:sort select="@kind" order="descending"/>
+                <tr>
+                    <td class="name"><xsl:value-of select="fn:concat(fn:upper-case(fn:substring(fn:current-grouping-key(), 1, 1)), fn:substring(fn:current-grouping-key(), 2), ' Files (', fn:count(fn:current-group()), ')')"/></td>
+                    <td class="value">
+                        <xsl:choose>
+                            <xsl:when test="fn:count(fn:current-group()) > 10">
+                                <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{$vAccession}/files/{fn:current-grouping-key()}/">
+                                    <xsl:text>Click to browse </xsl:text><xsl:value-of select="fn:current-grouping-key()"/><xsl:text> files</xsl:text>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="fn:current-group()">
+                                    <xsl:sort select="@kind"/>
+                                    <xsl:sort select="lower-case(@name)"/>
+                                    <a href="{$pBasePath}/files/{$vAccession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="=">
+                                        <xsl:value-of select="@name"/>
+                                    </a>
+                                    <xsl:if test="position() != last()">
+                                        <xsl:text>, </xsl:text>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </td>
+                </tr>
+            </xsl:for-each-group>
         </xsl:if>
     </xsl:template>
     
@@ -904,16 +955,16 @@
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind"/>
                 <tr>
-                    <td class="attr_name">
+                    <td class="name">
                         <xsl:choose>
                             <xsl:when test="current-grouping-key() = 'idf'">Investigation Description</xsl:when>
                             <xsl:when test="current-grouping-key() = 'sdrf'">Sample and Data Relationship</xsl:when>
                         </xsl:choose>
                     </td>
-                    <td class="attr_value">
+                    <td class="value">
                         <xsl:for-each select="current-group()">
                             <xsl:sort select="lower-case(@name)"/>
-                            <a href="{$pBasePath}/files/{$vAccession}/{@name}">
+                            <a href="{$pBasePath}/files/{$vAccession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="=">
                                 <xsl:value-of select="@name"/>
                             </a>
                             <xsl:if test="position() != last()">
@@ -934,16 +985,18 @@
         <xsl:variable name="vArrayAccession" select="fn:distinct-values(arraydesign/accession)"/>
         <xsl:variable name="vFiles">
             <xsl:for-each select="$vArrayAccession">
-                <xsl:copy-of select="ae:getMappedValue('ftp-folder', current())/file[@extension = 'txt' and @kind = 'adf']"/>
+                <xsl:for-each select="ae:getMappedValue('ftp-folder', current())/file[@extension = 'txt' and @kind = 'adf']">
+                    <file accession="{../@accession}" name="{@name}"/>
+                </xsl:for-each>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:if test="$vFiles">
+        <xsl:if test="$vFiles/file">
             <tr>
-                <td class="attr_name">Array Design<xsl:if test="count($vFiles/file) > 1">s</xsl:if></td>
-                <td class="attr_value">
+                <td class="name">Array Design<xsl:if test="count($vFiles/file) > 1">s</xsl:if></td>
+                <td class="value">
                     <xsl:for-each select="$vFiles/file">
                         <xsl:sort select="@name"/>
-                        <a href="{$pBasePath}/files/{../@accession}/{@name}"><xsl:value-of select="@name"/></a>
+                        <a href="{$pBasePath}/files/{@accession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="="><xsl:value-of select="@name"/></a>
                         <xsl:if test="position() != last()">
                             <xsl:text>, </xsl:text>
                         </xsl:if>
@@ -961,11 +1014,11 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
         <xsl:if test="$vFiles">
             <tr>
-                <td class="attr_name">Experiment Design Images</td>
-                <td class="attr_value">
+                <td class="name">Experiment Design Images</td>
+                <td class="value">
                     <xsl:for-each select="$vFiles">
                         <xsl:sort select="lower-case(@extension)"/>
-                        <a href="{$pBasePath}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a>
+                        <a href="{$pBasePath}/files/{$vAccession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="="><xsl:value-of select="@name"/></a>
                         <xsl:if test="position() != last()">
                             <xsl:text>, </xsl:text>
                         </xsl:if>
@@ -983,11 +1036,11 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'r-object']"/>
         <xsl:if test="$vFiles">
             <tr>
-                <td class="attr_name"><span class="tt" tt-data="R object containing annotated experiment data">R ExpressionSet</span></td>
-                <td class="attr_value">
+                <td class="name"><span class="tt" tt-data="R object containing annotated experiment data">R ExpressionSet</span></td>
+                <td class="value">
                     <xsl:for-each select="$vFiles">
                         <xsl:sort select="lower-case(@extension)"/>
-                        <a href="{$pBasePath}/files/{$vAccession}/{@name}"><xsl:value-of select="@name"/></a>
+                        <a href="{$pBasePath}/files/{$vAccession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="="><xsl:value-of select="@name"/></a>
                         <xsl:if test="position() != last()">
                             <xsl:text>, </xsl:text>
                         </xsl:if>
@@ -1029,18 +1082,19 @@
                 <xsl:when test="$pKind = 'raw' and seqdatauri">
                     <xsl:value-of select="seqdatauri"/>
                 </xsl:when>
-                <xsl:when test="($vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3') and $pKind = 'fgem'">
+                <xsl:when test="($vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3') and $pKind = 'processed'">
                     <xsl:value-of select="$pBasePath"/>
                     <xsl:text>/files/</xsl:text>
                     <xsl:value-of select="$vAccession"/>
-                    <xsl:text>?kind=bam</xsl:text>
+                    <xsl:text>/bam/</xsl:text>
                 </xsl:when>
                 <xsl:when test="count($vFiles) > 1">
                     <xsl:value-of select="$pBasePath"/>
                     <xsl:text>/files/</xsl:text>
                     <xsl:value-of select="$vAccession"/>
-                    <xsl:text>?kind=</xsl:text>
+                    <xsl:text>/</xsl:text>
                     <xsl:value-of select="$pKind"/>
+                    <xsl:text>/</xsl:text>
                 </xsl:when>
                 <xsl:when test="$vFiles">
                     <xsl:value-of select="$pBasePath"/>

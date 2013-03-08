@@ -152,7 +152,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         @SuppressWarnings("unchecked")
         Set<String> ids = (Set<String>)this.userMap.getValue(accession);
         for (String userId : userIds) {
-            if (isPrivilegedByID(userId) || ids.contains(userId))
+            if (isPrivilegedByID(userId) || (null != ids && ids.contains(userId)))
                 return true;
         }
         return false;

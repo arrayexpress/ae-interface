@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2009-2013 European Molecular Biology Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
 
@@ -59,11 +75,11 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
-            <xsl:when test="$pSortBy='species'">
+            <xsl:when test="$pSortBy='organism'">
                 <xsl:apply-templates select="$pArrays">
-                    <xsl:sort select="species[1]" order="{$pSortOrder}"/>
-                    <xsl:sort select="species[2]" order="{$pSortOrder}"/>
-                    <xsl:sort select="species[3]" order="{$pSortOrder}"/>
+                    <xsl:sort select="organism[1]" order="{$pSortOrder}"/>
+                    <xsl:sort select="organism[2]" order="{$pSortOrder}"/>
+                    <xsl:sort select="organism[3]" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
                     <!-- sort by experiment 4-letter code -->
@@ -76,7 +92,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="$pArrays">
-                    <xsl:sort select="*[name()=$pSortBy]" order="{$pSortOrder}"/>
+                    <xsl:sort select="*[name()=$pSortBy][1]" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
                     <!-- sort by experiment 4-letter code -->

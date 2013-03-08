@@ -90,6 +90,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="org.coode.owlapi.rdfxml.parser.OWLRDFConsumer" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <root>
         <priority value="${interface.application.log.default.priority}"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>

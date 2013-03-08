@@ -8,6 +8,11 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.StatusServlet</servlet-class>
     </servlet>
     <servlet>
+        <description>ArrayExpress Error Pages Servlet</description>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.ErrorServlet</servlet-class>
+    </servlet>
+    <servlet>
         <description>ArrayExpress Experiments Query Servlet</description>
         <servlet-name>QueryServlet</servlet-name>
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.QueryServlet</servlet-class>
@@ -33,9 +38,14 @@
         <servlet-class>uk.ac.ebi.arrayexpress.servlets.ControlServlet</servlet-class>
     </servlet>
     <servlet>
-        <description>ArrayExpress Login Verification Servlet</description>
-        <servlet-name>VerifyLoginServlet</servlet-name>
-        <servlet-class>uk.ac.ebi.arrayexpress.servlets.VerifyLoginServlet</servlet-class>
+        <description>ArrayExpress Feedback Reporter Servlet</description>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.FeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>ArrayExpress Authentication Servlet</description>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.arrayexpress.servlets.AuthServlet</servlet-class>
     </servlet>
     <servlet>
         <description>ArrayExpress HTTP Proxy Servlet</description>
@@ -62,6 +72,10 @@
         <url-pattern>/servlets/status</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/servlets/error/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>QueryServlet</servlet-name>
         <url-pattern>/servlets/query/*</url-pattern>
     </servlet-mapping>
@@ -82,8 +96,12 @@
         <url-pattern>/servlets/control/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>VerifyLoginServlet</servlet-name>
-        <url-pattern>/servlets/verify-login/*</url-pattern>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HttpProxyServlet</servlet-name>
@@ -143,15 +161,19 @@
     </session-config>
 
     <error-page>
-        <error-code>500</error-code>
-        <location>/server_error.html</location>
+        <error-code>400</error-code>
+        <location>/servlets/error/400</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/restricted_access.html</location>
+        <location>/servlets/error/403</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/not_found.html</location>
+        <location>/servlets/error/404</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/servlets/error/500</location>
     </error-page>
 </web-app>
