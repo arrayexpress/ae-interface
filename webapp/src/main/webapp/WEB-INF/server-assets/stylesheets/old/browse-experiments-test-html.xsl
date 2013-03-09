@@ -16,7 +16,7 @@
     
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
-    
+
     <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
     
@@ -26,15 +26,26 @@
     <xsl:param name="detailedview"/>
 
     <xsl:param name="context-path"/>
+    <xsl:param name="querystring"/>
+
+    <xsl:param name="keywords"/>
+    <xsl:variable name="vSimilarToAccession">
+        <xsl:for-each select="tokenize($keywords, '\s+')">
+            <xsl:if test="matches(., 'similarto:[Ee]-\w{4}-\d+')">   <!-- match similarto:accession -->
+                <xsl:value-of select="upper-case(replace(., 'similarto:', ''))"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
-    <xsl:include href="ae-sort-experiments.xsl"/>
-    <xsl:include href="ae-experiments-templates.xsl"/>
+    <xsl:include href="../ae-sort-experiments.xsl"/>
+    <xsl:include href="../ae-experiments-templates.xsl"/>
 
     <xsl:variable name="vDetailedViewMainTrClass">tr_main<xsl:if test="'true' = $detailedview"> exp_expanded</xsl:if></xsl:variable>
     <xsl:variable name="vDetailedViewExtStyle"><xsl:if test="'true' != $detailedview">display:none</xsl:if></xsl:variable>
     <xsl:variable name="vDetailedViewMainTdClass">td_main<xsl:if test="'true' = $detailedview"> td_expanded</xsl:if></xsl:variable>
+    <xsl:variable name="vColSpan" select="if ($vSimilarToAccession = '') then 9 else 10" />
 
     <xsl:template match="/experiments">
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
@@ -58,7 +69,7 @@
         </xsl:variable>
 
         <tr id="ae_results_summary_info">
-            <td colspan="9">
+            <td colspan="{$vColSpan}">
                 <div id="ae_results_total"><xsl:value-of select="$vTotal"/></div>
                 <div id="ae_results_total_samples"><xsl:value-of select="$vTotalSamples"/></div>
                 <div id="ae_results_total_assays"><xsl:value-of select="$vTotalAssays"/></div>
@@ -76,11 +87,12 @@
                     <xsl:with-param name="pTo" select="$vTo"/>
                     <xsl:with-param name="pSortBy" select="$vSortBy"/>
                     <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                    <xsl:with-param name="pSimAccession" select="$vSimilarToAccession"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <tr class="ae_results_tr_error">
-                    <td colspan="9">
+                    <td colspan="{$vColSpan}">
                             <div>There are no experiments matching your search criteria found in ArrayExpress Archive.</div>
                             <div>More information on query syntax available in <a href="${interface.application.link.query_help}">ArrayExpress Query Help</a>.</div>
                     </td>
@@ -99,6 +111,16 @@
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr id="{$vExpId}_main" class="{$vDetailedViewMainTrClass}">
                 <td class="{$vDetailedViewMainTdClass}"><div class="table_row_expand"/></td>
+                <td class="{$vDetailedViewMainTdClass} col_relevance">
+                    <xsl:if test="$vSimilarToAccession != ''">
+                        <div class="relevance_bar_holder">
+                                <xsl:if test="ae:getMappedValue('experiments-with-similarity', $vSimilarToAccession)/accession = $vAccession">
+                                    <xsl:value-of select="similarto[@accession = $vSimilarToAccession]/@distance"/>
+                                </xsl:if>
+                            <div class="relevance_bar"/>
+                        </div>
+                    </xsl:if>
+                </td>
                 <td class="{$vDetailedViewMainTdClass}">
                     <div class="acc">
                         <div>
@@ -131,7 +153,7 @@
                     <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$queryid"/>
-                            <xsl:with-param name="pText" select="name"/>
+                            <xsl:with-param name="pText" select="name[1]"/>
                             <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                     </div>
@@ -191,11 +213,12 @@
                 </td>
             </tr>
             <tr id="{$vExpId}_ext" style="{$vDetailedViewExtStyle}">
-                <td colspan="9" class="td_ext">
+                <td colspan="{$vColSpan}" class="td_ext">
                     <div class="tbl">
                         <table cellpadding="0" cellspacing="0" border="0">
 
                             <xsl:call-template name="exp-samples-section">
+                                <xsl:with-param name="pQueryString" select="$querystring"/>
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                                 <xsl:with-param name="pBasePath" select="$context-path"/>
                             </xsl:call-template>
@@ -211,12 +234,6 @@
 
                             <xsl:call-template name="exp-description-section">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
-                            </xsl:call-template>
-
-                            <xsl:call-template name="exp-similarity-debug-section">
-                                <xsl:with-param name="vExpId" select="$vExpId"/>
-                                <xsl:with-param name="vBasePath" select="$context-path"/>
-                                <xsl:with-param name="vSimilarExperiments" select="ae:getMappedValue('similar-experiments', $vAccession)"/>
                             </xsl:call-template>
 
                             <xsl:call-template name="exp-keywords-section">
@@ -239,7 +256,7 @@
                                 <xsl:with-param name="pBasePath" select="$context-path"/>
                             </xsl:call-template>
 
-                            <xsl:if test="not($userid)"> <!-- curator logged in -->
+                            <xsl:if test="not($userid)">
                                 <xsl:call-template name="exp-experimental-factors-section">
                                     <xsl:with-param name="pQueryId" select="$queryid"/>
                                 </xsl:call-template>

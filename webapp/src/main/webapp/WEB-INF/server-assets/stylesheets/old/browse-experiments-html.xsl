@@ -30,8 +30,8 @@
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
-    <xsl:include href="ae-sort-experiments.xsl"/>
-    <xsl:include href="ae-experiments-templates.xsl"/>
+    <xsl:include href="../ae-sort-experiments.xsl"/>
+    <xsl:include href="../ae-experiments-templates.xsl"/>
 
     <xsl:variable name="vDetailedViewMainTrClass">tr_main<xsl:if test="'true' = $detailedview"> exp_expanded</xsl:if></xsl:variable>
     <xsl:variable name="vDetailedViewExtStyle"><xsl:if test="'true' != $detailedview">display:none</xsl:if></xsl:variable>

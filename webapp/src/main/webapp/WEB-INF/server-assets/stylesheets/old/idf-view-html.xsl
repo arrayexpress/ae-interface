@@ -23,7 +23,7 @@
     <xsl:output omit-xml-declaration="yes" method="html"
                 indent="no" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
-    <xsl:include href="ae-html-page.xsl"/>
+    <xsl:include href="../ae-html-page.xsl"/>
 
     <xsl:template match="/">
         <html lang="en">

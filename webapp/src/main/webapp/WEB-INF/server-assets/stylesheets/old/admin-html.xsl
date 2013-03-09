@@ -13,8 +13,8 @@
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="yes" encoding="UTF-8"/>
 
-    <xsl:include href="ae-html-page.xsl"/>
-    <xsl:include href="ae-date-functions.xsl"/>
+    <xsl:include href="../ae-html-page.xsl"/>
+    <xsl:include href="../ae-date-functions.xsl"/>
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page-fluid">
