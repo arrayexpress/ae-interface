@@ -23,6 +23,7 @@
                 extension-element-prefixes="html xs fn ae"
                 exclude-result-prefixes="html xs fn ae"
                 version="2.0">
+
     <xsl:param name="host"/>
     <xsl:param name="context-path"/>
     <xsl:param name="original-request-uri"/>
@@ -31,7 +32,7 @@
     <xsl:param name="userid"/>
     <xsl:param name="username"/>
 
-    <xsl:output omit-xml-declaration="yes" indent="yes" encoding="UTF-8"/>
+    <xsl:output omit-xml-declaration="yes" method="html" indent="yes" encoding="UTF-8"/>
 
     <xsl:variable name="relative-uri" select="fn:substring-after($original-request-uri, $context-path)"/>
     <xsl:variable name="relative-referer" select="if (fn:starts-with($referer, '/')) then fn:substring-after($referer, $context-path) else ''"/>
