@@ -51,7 +51,7 @@
         <xsl:param name="pText" as="xs:string"/>
         <xsl:param name="pFieldName" as="xs:string" select="''"/>
         <xsl:choose>
-            <xsl:when test="fn:string-length($pQueryId) = 0 and fn:string-length($pText)!=0">
+            <xsl:when test="fn:string-length($pQueryId) = 0 and fn:string-length($pText) != 0">
                 <xsl:value-of select="$pText"/>
             </xsl:when>
             <xsl:when test="fn:string-length($pText)!=0">
