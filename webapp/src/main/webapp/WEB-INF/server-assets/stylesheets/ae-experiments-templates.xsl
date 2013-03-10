@@ -1106,7 +1106,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="string-length($vLinkUrl)>0"><a href="{$vLinkUrl}" title="{$vImg/img/@alt}"><xsl:copy-of select="$vImg"/></a></xsl:when>
+            <xsl:when test="fn:string-length($vLinkUrl)>0"><a href="{$vLinkUrl}" title="{$vImg/img/@alt}"><xsl:copy-of select="$vImg"/></a></xsl:when>
             <xsl:otherwise><img src="{$pBasePath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
