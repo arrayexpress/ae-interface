@@ -52,7 +52,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private char columnDelimiter;
     private char columnQuoteChar;
 
-    private OptionSet options;
+    private OptionSet options = null;
 
     public FlatFileXMLReader()
     {
@@ -165,7 +165,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
     private Integer getIntOptionValue( String option, Integer defaultValue )
     {
-        if (options.has(option)) {
+        if (null != options && options.has(option)) {
             return (Integer)this.options.valueOf(option);
         } else {
             return defaultValue;
