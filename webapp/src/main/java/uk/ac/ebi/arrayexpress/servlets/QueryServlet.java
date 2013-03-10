@@ -89,8 +89,6 @@ public class QueryServlet extends AuthAwareApplicationServlet
             outputType = "tab";
         } else if ("json".equals(outputType)) {
             response.setContentType("application/json; charset=UTF-8");
-        } else if ("html".equals(outputType)) {
-            response.setContentType("text/html; charset=UTF-8");
         } else {
             response.setContentType("text/" + outputType + "; charset=UTF-8");
         }

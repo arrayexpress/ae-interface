@@ -555,6 +555,10 @@
             <groupId>nu.validator.htmlparser</groupId>
             <artifactId>htmlparser</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+        </dependency>
     </dependencies>
 </project>
 

@@ -1,3220 +1,926 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<table>
-    <row>
-        <col>Source Name</col>
-        <col>Material Type</col>
-        <col>Description</col>
-        <col>Characteristics[Organism]</col>
-        <col>Characteristics[Age]</col>
-        <col>Unit[TimeUnit]</col>
-        <col>Characteristics[OrganismPart]</col>
-        <col>Characteristics[Sex]</col>
-        <col>Characteristics[Phenotype]</col>
-        <col>Characteristics[BioSourceProvider]</col>
-        <col>Protocol REF</col>
-        <col>Extract Name</col>
-        <col>Comment[LIBRARY_LAYOUT]</col>
-        <col>Comment[ORIENTATION]</col>
-        <col>Comment[NOMINAL_LENGTH]</col>
-        <col>Comment[NOMINAL_SDEV]</col>
-        <col>Comment[LIBRARY_SOURCE]</col>
-        <col>Comment[LIBRARY_STRATEGY]</col>
-        <col>Comment[LIBRARY_SELECTION]</col>
-        <col>Comment[spiked_in]</col>
-        <col>Comment[insertSize]</col>
-        <col>Protocol REF</col>
-        <col>Performer</col>
-        <col>Assay Name</col>
-        <col>Technology Type</col>
-        <col>Comment[ENA_EXPERIMENT]</col>
-        <col>Comment[CYCLE_COUNT]</col>
-        <col>Comment[SPOT_LENGTH]</col>
-        <col>Comment[SEQUENCE_LENGTH]</col>
-        <col>Comment[READ_INDEX_0_READ_TYPE]</col>
-        <col>Comment[READ_INDEX_0_READ_CLASS]</col>
-        <col>Comment[READ_INDEX_0_BASE_COORD]</col>
-        <col>Comment[READ_INDEX_1_READ_TYPE]</col>
-        <col>Comment[READ_INDEX_1_READ_CLASS]</col>
-        <col>Comment[READ_INDEX_1_BASE_COORD]</col>
-        <col>Protocol REF</col>
-        <col>Scan Name</col>
-        <col>Comment[FASTQ_URI]</col>
-        <col>Comment[ENA_RUN]</col>
-        <col>Comment[SUBMITTED_FILE_NAME]</col>
-        <col>Comment[quality_scoring_system]</col>
-        <col>Comment[quality_encoding]</col>
-        <col>Comment[ascii_offset]</col>
-        <col>Comment[MD5]</col>
-        <col>Factor Value[ORGANISMPART]</col>
-        <col>Factor Value[LIBRARYPREP]</col>
-        <col>Factor Value[PHENOTYPE]</col>
-    </row>
-    <row>
-        <col>HCT20152</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>thyroid</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human thyroid total RNA, lot 0908003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20152</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011194</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_1_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030872/ERR030872_1.fastq.gz</col>
-        <col>ERR030872</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_1_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>22a4ef52de88ee6894116da14fbea44a</col>
-        <col>thyroid</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20152</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>thyroid</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human thyroid total RNA, lot 0908003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20152</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011194</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_1_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030872/ERR030872_2.fastq.gz</col>
-        <col>ERR030872</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_1_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>9ea81bd42e706b451d7630e81c046139</col>
-        <col>thyroid</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20151</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>19</col>
-        <col>years</col>
-        <col>testes</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human testes total RNA, lot 05060392</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20151</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011203</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_2_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030873/ERR030873_1.fastq.gz</col>
-        <col>ERR030873</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_2_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>3c7ae012fa2456b2a514948c9de4ead7</col>
-        <col>testes</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20151</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>19</col>
-        <col>years</col>
-        <col>testes</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human testes total RNA, lot 05060392</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20151</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011203</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_2_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030873/ERR030873_2.fastq.gz</col>
-        <col>ERR030873</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_2_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>c7beeb8f478996fe888dd16319459350</col>
-        <col>testes</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20150</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>47</col>
-        <col>years</col>
-        <col>ovary</col>
-        <col>female</col>
-        <col>african american</col>
-        <col>Human ovary total RNA, lot 0812002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20150</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>237</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011184</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_3_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030874/ERR030874_1.fastq.gz</col>
-        <col>ERR030874</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_3_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>6a7b5e2f46c00c45409a860dc1226f1b</col>
-        <col>ovary</col>
-        <col>mRNA-Seq</col>
-        <col>african american</col>
-    </row>
-    <row>
-        <col>HCT20150</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>47</col>
-        <col>years</col>
-        <col>ovary</col>
-        <col>female</col>
-        <col>african american</col>
-        <col>Human ovary total RNA, lot 0812002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20150</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>237</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011184</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_3_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030874/ERR030874_2.fastq.gz</col>
-        <col>ERR030874</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_3_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>2b9be3cfc439d7740f87effb092d17be</col>
-        <col>ovary</col>
-        <col>mRNA-Seq</col>
-        <col>african american</col>
-    </row>
-    <row>
-        <col>HCT20149</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>58</col>
-        <col>years</col>
-        <col>white blood cells</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human White Blood Cells total RNA</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20149</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011195</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_4_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030875/ERR030875_1.fastq.gz</col>
-        <col>ERR030875</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_4_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7603fe1cda84f3cf1706090a46ca8195</col>
-        <col>white blood cells</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20149</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>58</col>
-        <col>years</col>
-        <col>white blood cells</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human White Blood Cells total RNA</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20149</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>263</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011195</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_4_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030875/ERR030875_2.fastq.gz</col>
-        <col>ERR030875</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_4_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>311e6646cf507a8b3a7bc527e60438a6</col>
-        <col>white blood cells</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20148</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>skeletal muscle</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human skeletal muscle total RNA, lot 046P021205086A</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20148</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>245</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011212</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_5_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030876/ERR030876_1.fastq.gz</col>
-        <col>ERR030876</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_5_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>c868b245b98677d0b6a65ab2098911ec</col>
-        <col>skeletal muscle</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20148</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>skeletal muscle</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human skeletal muscle total RNA, lot 046P021205086A</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20148</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>245</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011212</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_5_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030876/ERR030876_2.fastq.gz</col>
-        <col>ERR030876</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_5_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7e0f235d5853b09a7e8a1452c2b3e4c1</col>
-        <col>skeletal muscle</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20147</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>prostate</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human prostate total RNA, lot 0906002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20147</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>218</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011205</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_6_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030877/ERR030877_1.fastq.gz</col>
-        <col>ERR030877</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_6_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>bb5be125418f7ea8db982cc921a9afd2</col>
-        <col>prostate</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20147</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>prostate</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human prostate total RNA, lot 0906002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20147</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>218</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011205</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_6_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030877/ERR030877_2.fastq.gz</col>
-        <col>ERR030877</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_6_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>1c2957d90e43491e2a5dc52ea5d4b733</col>
-        <col>prostate</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20146</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>86</col>
-        <col>years</col>
-        <col>lymph node</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human lymph node total RNA, lot 026P010305032B</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20146</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>162</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011193</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_7_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030878/ERR030878_1.fastq.gz</col>
-        <col>ERR030878</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_7_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>71a93c717f488c94b634dbf149112b60</col>
-        <col>lymph node</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20146</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>86</col>
-        <col>years</col>
-        <col>lymph node</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human lymph node total RNA, lot 026P010305032B</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20146</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>162</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011193</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_7_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030878/ERR030878_2.fastq.gz</col>
-        <col>ERR030878</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_7_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>4013bfe133db621c69dcd5bd0cf04b8f</col>
-        <col>lymph node</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20145</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>65</col>
-        <col>years</col>
-        <col>lung</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human lung total RNA, lot 0904002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20145</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>181</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011227</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_8_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030879/ERR030879_1.fastq.gz</col>
-        <col>ERR030879</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_8_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>a2d462a7d2cd971f5dcf362e4701b097</col>
-        <col>lung</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20145</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>65</col>
-        <col>years</col>
-        <col>lung</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human lung total RNA, lot 0904002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20145</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>181</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G0DAAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011227</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_8_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030879/ERR030879_2.fastq.gz</col>
-        <col>ERR030879</col>
-        <col>50bp_PE_mRNA_Seq_FCA_s_8_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>6dc260e4d0f082159ac41635c357edf5</col>
-        <col>lung</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20158</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>adipose</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human adipose total RNA, lot 05060581</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20158</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011215</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030888/ERR030888.fastq.gz</col>
-        <col>ERR030888</col>
-        <col>75bp_mRNA_Seq_FCA_s_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>af1be496cbe1df464fc691d4a388365d</col>
-        <col>adipose</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20159</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>adrenal</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human adrenal total RNA, lot 0812003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20159</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011198</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030889/ERR030889.fastq.gz</col>
-        <col>ERR030889</col>
-        <col>75bp_mRNA_Seq_FCA_s_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>0b922194743cdd7d3ec34de2e2dc589e</col>
-        <col>adrenal</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20160</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>brain</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human brain total RNA, Ambion</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20160</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011186</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_3_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030890/ERR030890.fastq.gz</col>
-        <col>ERR030890</col>
-        <col>75bp_mRNA_Seq_FCA_s_3_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>2de6066e6698909be2c99dee3816e537</col>
-        <col>brain</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20161</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>29</col>
-        <col>years</col>
-        <col>breast</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human breast total RNA, lot 04060013</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20161</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011191</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_4_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030891/ERR030891.fastq.gz</col>
-        <col>ERR030891</col>
-        <col>75bp_mRNA_Seq_FCA_s_4_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>d347e855848dfd4fe818fbbeb155a889</col>
-        <col>breast</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20162</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>68</col>
-        <col>years</col>
-        <col>colon</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human colon total RNA, lot 05060063</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20162</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011192</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_5_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030892/ERR030892.fastq.gz</col>
-        <col>ERR030892</col>
-        <col>75bp_mRNA_Seq_FCA_s_5_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>6bcfb49d82f5fb9431f35a32aa28e14c</col>
-        <col>colon</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20142</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>kidney</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human kidney total RNA, lot 0908002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20142</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011219</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_6_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030893/ERR030893.fastq.gz</col>
-        <col>ERR030893</col>
-        <col>75bp_mRNA_Seq_FCA_s_6_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>af8e73633377e35dec1afccff5aa93d1</col>
-        <col>kidney</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20143</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>heart</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human heart total RNA, lot 07040023</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20143</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011183</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_7_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030894/ERR030894.fastq.gz</col>
-        <col>ERR030894</col>
-        <col>75bp_mRNA_Seq_FCA_s_7_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7c69dfbaa108f28835b20f88847370f2</col>
-        <col>heart</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20144</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>37</col>
-        <col>years</col>
-        <col>liver</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human liver total RNA, lot 040000124</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20144</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>A20G14AAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011211</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCA_s_8_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030895/ERR030895.fastq.gz</col>
-        <col>ERR030895</col>
-        <col>75bp_mRNA_Seq_FCA_s_8_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>85dd8dcb48db1f4b5ab8fb10b6e4f704</col>
-        <col>liver</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20170</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19503</col>
-        <col>HCT20170</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011226</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030856/ERR030856.fastq.gz</col>
-        <col>ERR030856</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>97674b50aa336a27d441f18a99f1eb6e</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20170</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19503</col>
-        <col>HCT20170</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011216</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030857/ERR030857.fastq.gz</col>
-        <col>ERR030857</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>e442747e97aa88307117edd9cf1032dd</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20170</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19503</col>
-        <col>HCT20170</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011224</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_3_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030858/ERR030858.fastq.gz</col>
-        <col>ERR030858</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_3_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>fa1f588fe89004e286f028e851daf8e9</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20172</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19504</col>
-        <col>HCT20172</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011189</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_4_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030859/ERR030859.fastq.gz</col>
-        <col>ERR030859</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_4_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>4068302527f421c66e6a0f5d054ba7c3</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded+ DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20172</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19504</col>
-        <col>HCT20172</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011223</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_5_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030860/ERR030860.fastq.gz</col>
-        <col>ERR030860</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_5_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>8f3a710b6c3522e4fc8a55ffed9c6018</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded+ DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20172</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19504</col>
-        <col>HCT20172</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011199</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_6_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030861/ERR030861.fastq.gz</col>
-        <col>ERR030861</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_6_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7d832418909c85bec378c03821e08b79</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded+ DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011218</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_7_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030862/ERR030862.fastq.gz</col>
-        <col>ERR030862</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_7_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>9768b2b315e7c6f89476f76eb6174f83</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>AFC20G6IAAXI_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011209</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_8_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030863/ERR030863.fastq.gz</col>
-        <col>ERR030863</col>
-        <col>100bp_Stranded_RNA_Seq_FCA_s_8_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7006b6cc447511d898461eb473801c81</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20158</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>adipose</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human adipose total RNA, lot 05060581</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20158</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>267</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011220</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_1_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030880/ERR030880_1.fastq.gz</col>
-        <col>ERR030880</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_1_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>3eba6e6241891676c0f9651f50f9fc3d</col>
-        <col>adipose</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20158</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>adipose</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human adipose total RNA, lot 05060581</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20158</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>267</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011220</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_1_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030880/ERR030880_2.fastq.gz</col>
-        <col>ERR030880</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_1_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>bd3f7d974ee8340c056772b016b8c6b2</col>
-        <col>adipose</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20159</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>adrenal</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human adrenal total RNA, lot 0812003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20159</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>248</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011217</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_2_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030881/ERR030881_1.fastq.gz</col>
-        <col>ERR030881</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_2_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>672e92bfc8e9972b7e641a92c49446dc</col>
-        <col>adrenal</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20159</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>adrenal</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human adrenal total RNA, lot 0812003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20159</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>248</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011217</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_2_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030881/ERR030881_2.fastq.gz</col>
-        <col>ERR030881</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_2_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>f9ba78784bff09c80d684166fd3a9a90</col>
-        <col>adrenal</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20160</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>brain</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human brain total RNA, Ambion</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20160</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>264</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011200</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_3_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030882/ERR030882_1.fastq.gz</col>
-        <col>ERR030882</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_3_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>cf4a257e6a1297339b1eaee4b5b0966a</col>
-        <col>brain</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20160</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>brain</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human brain total RNA, Ambion</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20160</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>264</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011200</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_3_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030882/ERR030882_2.fastq.gz</col>
-        <col>ERR030882</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_3_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>437fea5c195516c3d9919b867d23b8c5</col>
-        <col>brain</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20161</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>29</col>
-        <col>years</col>
-        <col>breast</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human breast total RNA, lot 04060013</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20161</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>186</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011225</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_4_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030883/ERR030883_1.fastq.gz</col>
-        <col>ERR030883</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_4_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>1b99e7a62d0379122898f152c60fa2c4</col>
-        <col>breast</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20161</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>29</col>
-        <col>years</col>
-        <col>breast</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human breast total RNA, lot 04060013</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20161</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>186</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011225</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_4_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030883/ERR030883_2.fastq.gz</col>
-        <col>ERR030883</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_4_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>9077d395f5932d4c660ee20067b9dc5f</col>
-        <col>breast</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20162</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>68</col>
-        <col>years</col>
-        <col>colon</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human colon total RNA, lot 05060063</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20162</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>180</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011204</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_5_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030884/ERR030884_1.fastq.gz</col>
-        <col>ERR030884</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_5_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>703c26024ca62fcdf51dc1fe6a257d4f</col>
-        <col>colon</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20162</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>68</col>
-        <col>years</col>
-        <col>colon</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human colon total RNA, lot 05060063</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20162</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>180</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011204</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_5_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030884/ERR030884_2.fastq.gz</col>
-        <col>ERR030884</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_5_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>b80006ef1d5f4e418f0752ff74e69793</col>
-        <col>colon</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20142</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>kidney</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human kidney total RNA, lot 0908002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20142</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>184</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011182</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_6_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030885/ERR030885_1.fastq.gz</col>
-        <col>ERR030885</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_6_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>86b6c75d7d477a467b54455dc21dfe1d</col>
-        <col>kidney</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20142</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>kidney</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human kidney total RNA, lot 0908002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20142</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>184</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011182</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_6_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030885/ERR030885_2.fastq.gz</col>
-        <col>ERR030885</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_6_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>fd27b972cce4bcba8ad183bdc1d629ef</col>
-        <col>kidney</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20143</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>heart</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human heart total RNA, lot 07040023</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20143</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>188</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011197</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_7_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030886/ERR030886_1.fastq.gz</col>
-        <col>ERR030886</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_7_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>437671ee2ff4ad0df71d8b2931b8fbfb</col>
-        <col>heart</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20143</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>heart</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human heart total RNA, lot 07040023</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20143</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>188</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011197</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_7_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030886/ERR030886_2.fastq.gz</col>
-        <col>ERR030886</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_7_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>da59a9d2a2348fb23c86fed2dfd0fa08</col>
-        <col>heart</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20144</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ1</col>
-        <col>Homo sapiens</col>
-        <col>37</col>
-        <col>years</col>
-        <col>liver</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human liver total RNA, lot 040000124</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20144</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>174</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011229</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_8_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030887/ERR030887_1.fastq.gz</col>
-        <col>ERR030887</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_8_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>cebab7f0d50241fc967ede1d64ee2401</col>
-        <col>liver</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20144</col>
-        <col>total_RNA</col>
-        <col>2x50 PE mRNA-seq READ2</col>
-        <col>Homo sapiens</col>
-        <col>37</col>
-        <col>years</col>
-        <col>liver</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human liver total RNA, lot 040000124</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20144</col>
-        <col>PAIRED</col>
-        <col>5'-3'-3'-5'</col>
-        <col>174</col>
-        <col>0</col>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G06AAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011229</col>
-        <col>50</col>
-        <col>100</col>
-        <col>100</col>
-        <col>Forward</col>
-        <col>Application</col>
-        <col>1</col>
-        <col>Reverse</col>
-        <col>Application Run</col>
-        <col>51</col>
-        <col>P-MTAB-19507</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_8_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030887/ERR030887_2.fastq.gz</col>
-        <col>ERR030887</col>
-        <col>50bp_PE_mRNA_Seq_FCB_s_8_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>71dd587ebed4e4f6ac926b6ad3e0bde7</col>
-        <col>liver</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20145</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>65</col>
-        <col>years</col>
-        <col>lung</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human lung total RNA, lot 0904002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20145</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011222</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030896/ERR030896.fastq.gz</col>
-        <col>ERR030896</col>
-        <col>75bp_mRNA_Seq_FCB_s_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>0a1c4df4619b86e27eccce635ded032c</col>
-        <col>lung</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20146</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>86</col>
-        <col>years</col>
-        <col>lymph node</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human lymph node total RNA, lot 026P010305032B</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20146</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011188</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030897/ERR030897.fastq.gz</col>
-        <col>ERR030897</col>
-        <col>75bp_mRNA_Seq_FCB_s_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>daac205e4c24b8cd15a120bc5bacd9ef</col>
-        <col>lymph node</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20147</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>73</col>
-        <col>years</col>
-        <col>prostate</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human prostate total RNA, lot 0906002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20147</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011214</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_3_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030898/ERR030898.fastq.gz</col>
-        <col>ERR030898</col>
-        <col>75bp_mRNA_Seq_FCB_s_3_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>af153f3c0171745df7ffd5cdad37a412</col>
-        <col>prostate</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20148</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>77</col>
-        <col>years</col>
-        <col>skeletal muscle</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human skeletal muscle total RNA, lot 046P021205086A</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20148</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011228</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_4_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030899/ERR030899.fastq.gz</col>
-        <col>ERR030899</col>
-        <col>75bp_mRNA_Seq_FCB_s_4_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>2dd4a7e7cb3fa6e998928e62966acbac</col>
-        <col>skeletal muscle</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20149</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>58</col>
-        <col>years</col>
-        <col>white blood cells</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human White Blood Cells total RNA</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20149</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011208</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_5_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030900/ERR030900.fastq.gz</col>
-        <col>ERR030900</col>
-        <col>75bp_mRNA_Seq_FCB_s_5_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>2ea5a825902b18b67f2ce1d0a4ad4167</col>
-        <col>white blood cells</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20150</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>47</col>
-        <col>years</col>
-        <col>ovary</col>
-        <col>female</col>
-        <col>african american</col>
-        <col>Human ovary total RNA, lot 0812002</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20150</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011196</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_6_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030901/ERR030901.fastq.gz</col>
-        <col>ERR030901</col>
-        <col>75bp_mRNA_Seq_FCB_s_6_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>62e6839ee09097c6d4e4c3188c56620a</col>
-        <col>ovary</col>
-        <col>mRNA-Seq</col>
-        <col>african american</col>
-    </row>
-    <row>
-        <col>HCT20151</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>19</col>
-        <col>years</col>
-        <col>testes</col>
-        <col>male</col>
-        <col>caucasian</col>
-        <col>Human testes total RNA, lot 05060392</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20151</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011202</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_7_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030902/ERR030902.fastq.gz</col>
-        <col>ERR030902</col>
-        <col>75bp_mRNA_Seq_FCB_s_7_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7a28b6ac89d7d068f441fc0e6e191cf5</col>
-        <col>testes</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20152</col>
-        <col>total_RNA</col>
-        <col>1x75 single mRNA-Seq</col>
-        <col>Homo sapiens</col>
-        <col>60</col>
-        <col>years</col>
-        <col>thyroid</col>
-        <col>female</col>
-        <col>caucasian</col>
-        <col>Human thyroid total RNA, lot 0908003</col>
-        <col>P-MTAB-19502</col>
-        <col>HCT20152</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>~210 bps</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>B20G0GAAX1_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011213</col>
-        <col>75</col>
-        <col>75</col>
-        <col>75</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>75bp_mRNA_Seq_FCB_s_8_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030903/ERR030903.fastq.gz</col>
-        <col>ERR030903</col>
-        <col>75bp_mRNA_Seq_FCB_s_8_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>3e32610aead708825e6a45490e24b115</col>
-        <col>thyroid</col>
-        <col>mRNA-Seq</col>
-        <col>caucasian</col>
-    </row>
-    <row>
-        <col>HCT20170</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19503</col>
-        <col>HCT20170</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s1</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011201</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_1_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030864/ERR030864.fastq.gz</col>
-        <col>ERR030864</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_1_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>9297478e46ee3f675a0d1615a2e8733a</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20170</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19503</col>
-        <col>HCT20170</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s2</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011206</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_2_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030865/ERR030865.fastq.gz</col>
-        <col>ERR030865</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_2_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>cb5f23b27b8aca367fe0de2bd96fe360</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20172</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19504</col>
-        <col>HCT20172</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s3</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011210</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_3_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030866/ERR030866.fastq.gz</col>
-        <col>ERR030866</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_3_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>7307ee637814e78c4758342b4bc25d87</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded+ DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20172</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19504</col>
-        <col>HCT20172</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s4</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011190</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_4_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030867/ERR030867.fastq.gz</col>
-        <col>ERR030867</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_4_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>eab8158ab740247423e90f64736c0df0</col>
-        <col>16 Tissues mixture</col>
-        <col>mRNA-stranded+ DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s5</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011185</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_5_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030868/ERR030868.fastq.gz</col>
-        <col>ERR030868</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_5_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>49421bef4ac8a781021a37afd97a34cb</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s6</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011187</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_6_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030869/ERR030869.fastq.gz</col>
-        <col>ERR030869</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_6_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>d0b8ea6c2793e9da917e9c25be617548</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s7</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011221</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_7_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030870/ERR030870.fastq.gz</col>
-        <col>ERR030870</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_7_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>b080a68aa61d739ae55e76d826e8e2de</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
-    <row>
-        <col>HCT20173</col>
-        <col>molecular_mixture</col>
-        <col>1x100 stranded total transcriptome preps; the insert size is variable; could be less
-            than 100 bp. The linker sequence at the end of read will be
-            ATCTCGTATGCCGTCTTCTGCTTG.</col>
-        <col>Homo sapiens</col>
-        <col/>
-        <col/>
-        <col>16 Tissues mixture</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19505</col>
-        <col>HCT20173</col>
-        <col>SINGLE</col>
-        <col/>
-        <col/>
-        <col/>
-        <col>TRANSCRIPTOMIC</col>
-        <col>RNA-Seq</col>
-        <col>cDNA</col>
-        <col>~ 0.5% phiX DNA</col>
-        <col>variable, could be less than 100 bp</col>
-        <col>P-MTAB-19506</col>
-        <col>ILLUMINA-CA</col>
-        <col>BFC20G6NAAXI_s8</col>
-        <col>high_throughput_sequencing</col>
-        <col>ERX011207</col>
-        <col>100</col>
-        <col>100</col>
-        <col>100</col>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col>P-MTAB-19507</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_8_sequence.txt.gz</col>
-        <col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR030/ERR030871/ERR030871.fastq.gz</col>
-        <col>ERR030871</col>
-        <col>100bp_Stranded_RNA_Seq_FCB_s_8_sequence.txt.gz</col>
-        <col>phred</col>
-        <col>ascii</col>
-        <col>@</col>
-        <col>f46adcd3839d36f697c27dbc8fd68a1a</col>
-        <col>16 Tissues mixture</col>
-        <col>totalRNA-stranded+DSN</col>
-        <col/>
-    </row>
+<table rows="20">
+   <header cols="42">
+      <col>Source Name</col>
+      <col>Characteristics [Age]</col>
+      <col>Term Source REF</col>
+      <col>Characteristics [TimeUnit]</col>
+      <col>Term Source REF</col>
+      <col>Characteristics [TargetedCellType]</col>
+      <col>Characteristics [OrganismPart]</col>
+      <col>Term Source REF</col>
+      <col>Characteristics [Sex]</col>
+      <col>Characteristics [DevelopmentalStage]</col>
+      <col>Characteristics [StrainOrLine]</col>
+      <col>Characteristics [Organism]</col>
+      <col>Characteristics [BioSourceType]</col>
+      <col>Sample Name</col>
+      <col>Protocol REF</col>
+      <col>Parameter Value [Extracted product]</col>
+      <col>Parameter Value [Amplification]</col>
+      <col>Protocol REF</col>
+      <col>Extract Name</col>
+      <col>Material Type</col>
+      <col>Protocol REF</col>
+      <col>Parameter Value [Amplification]</col>
+      <col>Parameter Value [Label used]</col>
+      <col>Parameter Value [Amount of nucleic acid labeled]</col>
+      <col>Labeled Extract Name</col>
+      <col>Label</col>
+      <col>Material Type</col>
+      <col>Protocol REF</col>
+      <col>Hybridization Name</col>
+      <col>Array Design REF</col>
+      <col>Term Source REF</col>
+      <col>Comment [Array Design URI]</col>
+      <col>Protocol REF</col>
+      <col>Scan Name</col>
+      <col>Array Data File</col>
+      <col>Comment [ArrayExpress FTP file]</col>
+      <col>Comment [ArrayExpress Data Retrieval URI]</col>
+      <col>Protocol REF</col>
+      <col>Derived Array Data Matrix File</col>
+      <col>Comment [Derived ArrayExpress FTP file]</col>
+      <col>Comment [Derived ArrayExpress Data Retrieval URI]</col>
+      <col/>
+   </header>
+   <row seq="1" cols="42">
+      <col>Rattus norvegicus</col>
+      <col>9</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatogonia</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>pre-puberty</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SG2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SG2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SG2B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SG2_u34a</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SG2_u34a</col>
+      <col>SG2_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="2" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166482</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatocytes</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SC1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SC1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SC1A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SC1_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SC1_u34a</col>
+      <col>SC1_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="3" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166485</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatides</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>ST2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>ST2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>ST2B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>ST2_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>ST2_u34b</col>
+      <col>ST2_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="4" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166478</col>
+      <col>20</col>
+      <col>mo</col>
+      <col>days</col>
+      <col>mo</col>
+      <col>Sertoli cells</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SE1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SE1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SE1B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SE1_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SE1_u34b</col>
+      <col>SE1_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="5" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166485</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatides</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>ST2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>ST2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>ST2A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>ST2_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>ST2_u34a</col>
+      <col>ST2_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="6" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166479</col>
+      <col>20</col>
+      <col>mo</col>
+      <col>days</col>
+      <col>mo</col>
+      <col>Sertoli cells</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SE2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SE2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SE2A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SE2_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SE2_u34a</col>
+      <col>SE2_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="7" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166478</col>
+      <col>20</col>
+      <col>mo</col>
+      <col>days</col>
+      <col>mo</col>
+      <col>Sertoli cells</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SE1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SE1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SE1A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SE1_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SE1_u34a</col>
+      <col>SE1_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="8" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166487</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>total testis</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>TT2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>TT2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>TT2B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>TT2_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>TT2_u34b</col>
+      <col>TT2_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="9" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166487</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>total testis</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>TT2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>TT2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>TT2A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>TT2_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>TT2_u34a</col>
+      <col>TT2_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="10" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166479</col>
+      <col>20</col>
+      <col>mo</col>
+      <col>days</col>
+      <col>mo</col>
+      <col>Sertoli cells</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SE2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SE2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SE2B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SE2_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SE2_u34b</col>
+      <col>SE2_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="11" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166480</col>
+      <col>9</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatogonia</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>pre-puberty</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SG1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SG1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SG1B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SG2_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SG2_u34b</col>
+      <col>SG2_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="12" cols="42">
+      <col>Rattus norvegicus</col>
+      <col>9</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatogonia</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>pre-puberty</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SG2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SG2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SG2A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SG1_u34b</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SG1_u34b</col>
+      <col>SG1_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="13" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166480</col>
+      <col>9</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatogonia</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>pre-puberty</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SG1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col>P-MEXP-1358</col>
+      <col>SG1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SG1A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SG1_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SG1_u34a</col>
+      <col>SG1_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="14" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166486</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>total testis</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>TT1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>TT1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>TT1B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>TT1_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>TT1_u34b</col>
+      <col>TT1_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="15" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166483</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatocytes</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SC2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SC2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SC2B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SC2_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SC2_u34b</col>
+      <col>SC2_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="16" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166484</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatides</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>ST1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>ST1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>ST1A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>ST1_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>ST1_u34a</col>
+      <col>ST1_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="17" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166486</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>total testis</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>TT1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>TT1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>TT1A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>TT1_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>TT1_u34a</col>
+      <col>TT1_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="18" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166484</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatides</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>ST1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>ST1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>ST1B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>ST1_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>ST1_u34b</col>
+      <col>ST1_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="19" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166482</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatocytes</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SC1</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SC1</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SC1B</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SC1_u34b</col>
+      <col>A-AFFY-19</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-19</col>
+      <col>P-AFFY-6</col>
+      <col>SC1_u34b</col>
+      <col>SC1_u34b.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281221.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
+   <row seq="20" cols="42">
+      <col>Rattus norvegicus__S:BioSource:166483</col>
+      <col>90</col>
+      <col/>
+      <col>days</col>
+      <col>mo</col>
+      <col>spermatocytes</col>
+      <col>testis</col>
+      <col>mo</col>
+      <col>male</col>
+      <col>adult</col>
+      <col>Sprague Dawley</col>
+      <col>Rattus norvegicus</col>
+      <col>cells</col>
+      <col>SC2</col>
+      <col>P-MEXP-1359</col>
+      <col>total RNA</col>
+      <col>none</col>
+      <col/>
+      <col>SC2</col>
+      <col>total_RNA</col>
+      <col>P-MEXP-1360</col>
+      <col>RNA polymerases</col>
+      <col>biotin</col>
+      <col>10</col>
+      <col>SC2A</col>
+      <col>Biotin</col>
+      <col>total_RNA</col>
+      <col>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</col>
+      <col>SC2_u34a</col>
+      <col>A-AFFY-18</col>
+      <col>ArrayExpress</col>
+      <col>http://www.ebi.ac.uk/aerep/result?queryFor=PhysicalArrayDesign&amp;aAccession=A-AFFY-18</col>
+      <col>P-AFFY-6</col>
+      <col>SC2_u34a</col>
+      <col>SC2_u34a.CEL</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.raw.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col>Affymetrix:Protocol:ExpressionStat</col>
+      <col>E-MEXP-31-processed-data-2481281219.txt</col>
+      <col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MEXP/E-MEXP-31/E-MEXP-31.processed.1.zip</col>
+      <col>http://www.ebi.ac.uk/arrayexpress/query/dataselection?expid=192008314</col>
+      <col/>
+   </row>
 </table>

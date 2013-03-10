@@ -44,7 +44,7 @@
 
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
-    <xsl:variable name="vSdrfFiles" select="$vData[@kind='sdrf']"/>
+    <xsl:variable name="vSampleFiles" select="$vData[@kind = 'sdrf']"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('visible:true accession:', $vAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
 
     <xsl:include href="ae-html-page.xsl"/>
@@ -81,26 +81,26 @@
         </xsl:call-template>
     </xsl:template>
 
-
     <xsl:template name="ae-content-section">
         <section>
             <div id="ae-content">
                 <xsl:choose>
-                    <xsl:when test="fn:exists($vSdrfFiles) and fn:exists($vMetaData)">
+                    <xsl:when test="fn:exists($vSampleFiles) and fn:exists($vMetaData)">
                         <h4>
                             <xsl:if test="not($vMetaData/user/@id = '1')">
                                 <xsl:attribute name="class" select="'icon icon-functional'"/>
                                 <xsl:attribute name="data-icon" select="'L'"/>
-                            </xsl:if>                            <xsl:value-of select="$vMetaData/accession"/>
+                            </xsl:if>
+                            <xsl:value-of select="$vMetaData/accession"/>
                             <xsl:text> - </xsl:text>
-                            <xsl:value-of select="$vMetaData/name"/>
+                            <xsl:value-of select="fn:string-join($vMetaData/name, ', ')"/>
                         </h4>
                         <div id="ae-results">
-                            <xsl:for-each select="$vSdrfFiles">
-                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name)/table"/>
+                            <xsl:for-each select="$vSampleFiles">
+                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, '--header=1;--page=1;--pagesize=-1')/table"/>
                                 <xsl:choose>
                                     <xsl:when test="fn:not(fn:exists($vTable))">
-                                        <xsl:if test="fn:count($vSdrfFiles) = 1">
+                                        <xsl:if test="fn:count($vSampleFiles) = 1">
                                             <xsl:value-of select="ae:httpStatus(404)"/>
                                         </xsl:if>
                                     </xsl:when>
@@ -114,7 +114,7 @@
                             </xsl:for-each>
                         </div>
                     </xsl:when>
-                    <xsl:when test="fn:exists($vSdrfFiles) and fn:not(fn:exists($vMetaData))">
+                    <xsl:when test="fn:exists($vSampleFiles) and fn:not(fn:exists($vMetaData))">
                         <xsl:value-of select="ae:httpStatus(403)"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -145,9 +145,7 @@
         <xsl:variable name="vSortOrder" select="if (fn:starts-with($colsortorder, 'd')) then 'descending' else 'ascending'"/>
 
         <xsl:variable name="vTableInfo">
-            <xsl:variable name="vHeaderRow" select="row[col[1] = 'Source Name'][1]"/>
-            <xsl:variable name="vHeaderPos" select="fn:count(row[col[1] = 'Source Name'][1]/preceding-sibling::*) + 1"/>
-            <xsl:variable name="vDataLastPos" select="fn:count(row[(col[1] = '') and (fn:position() > $vHeaderPos)][1]/preceding-sibling::*)"/>
+            <xsl:variable name="vHeaderRow" select="header"/>
 
             <xsl:variable name="vHeaderInfo">
                 <xsl:for-each select="$vHeaderRow/col[fn:matches(text(), '[^\s]')]">
@@ -171,18 +169,17 @@
                 </xsl:for-each>
             </xsl:variable>
 
-            <header pos="{$vHeaderPos}">
+            <header data-rows="{@rows}">
                 <xsl:for-each select="$vUnitFixedHeaderInfo/col[@group != '']">
                     <xsl:sort select="@group" order="ascending" data-type="number"/>
                     <xsl:sort select="@pos" order="ascending" data-type="number"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </header>
-            <data firstpos="{$vHeaderPos + 1}" lastpos="{if ($vDataLastPos = 0) then count(row) else $vDataLastPos}"/>
         </xsl:variable>
 
         <xsl:variable name="vSortedData">
-            <xsl:for-each select="row[(position() >= $vTableInfo/data/@firstpos) and (position() &lt;= $vTableInfo/data/@lastpos)]">
+            <xsl:for-each select="row">
                 <xsl:sort select="col[$vSortBy]" data-type="number" order="{$vSortOrder}"/>
                 <xsl:sort select="col[$vSortBy]" order="{$vSortOrder}"/>
                 <xsl:copy-of select="."/>
@@ -232,10 +229,9 @@
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
-            <header pos="{$pTableInfo/header/@pos}">
+            <header data-rows="{$pTableInfo/header/@data-rows}">
                 <xsl:copy-of select="$pTableInfo/header/col[1]"/>
             </header>
-            <xsl:copy-of select="$pTableInfo/data"/>
         </xsl:variable>
 
         <table class="src_name_table" border="0" cellpadding="0" cellspacing="0">
@@ -258,10 +254,9 @@
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
-            <header pos="{$pTableInfo/header/@pos}">
+            <header data-rows="{$pTableInfo/header/@data-rows}">
                 <xsl:copy-of select="$pTableInfo/header/col[@pos &gt; 1 and @type != 'Links']"/>
             </header>
-            <xsl:copy-of select="$pTableInfo/data"/>
         </xsl:variable>
         <div class="attr_table_shadow_container">
            <div class="attr_table_scroll">
@@ -290,10 +285,9 @@
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
-            <header pos="{$pTableInfo/header/@pos}">
+            <header data-rows="{$pTableInfo/header/@data-rows}">
                 <xsl:copy-of select="$pTableInfo/header/col[@type='Links']"/>
             </header>
-            <xsl:copy-of select="$pTableInfo/data"/>
         </xsl:variable>
 
         <table class="links_table" border="0" cellpadding="0" cellspacing="0">
@@ -421,7 +415,7 @@
                     <xsl:variable name="vNextRows" select="$vRow/following-sibling::*"/>
                     <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
                     <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
-                    <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($pTableInfo/data/@lastpos - $pTableInfo/data/@firstpos + 2)"/>
+                    <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($pTableInfo/header/@data-rows + 1)"/>
 
                     <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
                         <td>
