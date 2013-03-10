@@ -82,7 +82,7 @@
             <xsl:text> - </xsl:text>
             <xsl:call-template name="highlight">
                 <xsl:with-param name="pQueryId" select="$queryid"/>
-                <xsl:with-param name="pText" select="$pExperiment/name"/>
+                <xsl:with-param name="pText" select="fn:string-join($pExperiment/name, ', ')"/>
                 <xsl:with-param name="pFieldName"/>
             </xsl:call-template>
         </h4>

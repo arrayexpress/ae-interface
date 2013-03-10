@@ -367,7 +367,7 @@
             </xsl:if>
             <xsl:value-of select="$pMetaData/accession"/>
             <xsl:text> - </xsl:text>
-            <xsl:value-of select="$pMetaData/name"/>
+            <xsl:value-of select="fn:string-join($pMetaData/name, ', ')"/>
         </h4>
         <xsl:call-template name="list-files">
             <xsl:with-param name="pFolder" select="$pFolder"/>

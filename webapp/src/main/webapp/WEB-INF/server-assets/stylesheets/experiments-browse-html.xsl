@@ -292,7 +292,7 @@
                     <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$queryid"/>
-                            <xsl:with-param name="pText" select="name[1]"/>
+                            <xsl:with-param name="pText" select="fn:string-join(name, ', ')"/>
                             <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
 
