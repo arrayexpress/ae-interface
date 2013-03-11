@@ -12,12 +12,22 @@
     margin: 0;
 }
 
+#content form {
+    font-size: 100%;
+}
+
+#content form input
+, #content form textarea {
+    font-family: inherit;
+}
+
 #content table {
     width: auto;
     margin: 0;
     padding: 0;
     border: 0 none;
 }
+
 #content th, #content td {
     padding: 0;
     border:  0 none;
@@ -491,21 +501,22 @@ p.justify {
 }
 
 #ae-query {
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     background-color: #E3E1F2;
-    border: 1px solid #ADA7E3;
-    padding: 5px 10px;
-    margin: 0 0 10px 0;
+    /* border: 1px solid #ADA7E3; */
+    padding: 10px;
+    margin: 0 9px 10px;
 }
 
 #ae-query form {
     padding: 0;
     margin: 0;
+}
+
+#ae-query label {
+    font-size: 100%;
 }
 
 #ae-query fieldset {
@@ -516,10 +527,24 @@ p.justify {
 }
 
 #ae-query input[type='text'] {
-    border: 1px solid #ADA7E3;
+    /* border: 1px solid #ADA7E3; */
     width: 100%;
-    font-size: 11px;
+    font-size: 100%;
     margin: 3px 0 8px 0;
+}
+
+#ae-query input[type='checkbox'] {
+    vertical-align: baseline;
+    margin: 0 0.25em
+}
+
+#ae-query div.option {
+    float: left;
+    margin-right: 10px
+}
+
+#ae-query input[type='submit'] {
+    float: right
 }
 
 /* browse table stuff */
@@ -566,11 +591,11 @@ p.justify {
     margin: 0 0 0 2px
 }
 
-#ae-browse tr:nth-child(odd) {
+#ae-browse tbody tr:nth-child(odd) {
     background-color: #E8F1FC
 }
 
-#ae-browse tr:nth-child(even) {
+#ae-browse tbody tr:nth-child(even) {
     background-color: #FFFFFF
 }
 

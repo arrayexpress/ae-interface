@@ -300,216 +300,220 @@
     <xsl:template name="out-header">
         <xsl:param name="pTableInfo"/>
 
-        <xsl:if test="not($vFull)">
+        <thead>
+            <xsl:if test="not($vFull)">
+                <tr>
+                    <xsl:for-each select="$pTableInfo/header/col">
+                        <xsl:variable name="vColInfo" select="."/>
+                        <xsl:variable name="vColPos" select="position()"/>
+                        <xsl:variable name="vColType" select="$vColInfo/@type"/>
+                        <xsl:variable name="vColClass" select="$vColInfo/@class"/>
+                        <xsl:variable name="vPrevColType" select="preceding-sibling::*[1]/@type"/>
+                        <xsl:variable name="vNextCols" select="following-sibling::*"/>
+                        <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
+                        <xsl:variable name="vNextGroupCol" select="$vNextCols[@type != $vColType][1]"/>
+                        <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($pTableInfo/header/col) + 1)"/>
+                        <xsl:if test="not($vPrevColType = $vColType)">
+                            <th>
+                                <xsl:attribute name="class">
+                                    <xsl:text>even</xsl:text>
+                                    <xsl:if test="$vColPos = 1">
+                                        <xsl:text> col_1</xsl:text>
+                                    </xsl:if>
+                                    <xsl:if test="$vColClass != ''">
+                                        <xsl:text> </xsl:text>
+                                        <xsl:value-of select="$vColClass"/>
+                                    </xsl:if>
+                                </xsl:attribute>
+                                <xsl:if test="($vColType = $vNextColType)">
+                                    <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="$vColClass = 'sa'">
+                                        <xsl:text>Sample Characteristics</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="$vColClass = 'ef'">
+                                        <xsl:text>Factor Values</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                        <xsl:text>Links to Data</xsl:text>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text>&#160;</xsl:text>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </th>
+                        </xsl:if>
+                    </xsl:for-each>
+                </tr>
+            </xsl:if>
             <tr>
                 <xsl:for-each select="$pTableInfo/header/col">
                     <xsl:variable name="vColInfo" select="."/>
-                    <xsl:variable name="vColPos" select="position()"/>
-                    <xsl:variable name="vColType" select="$vColInfo/@type"/>
-                    <xsl:variable name="vColClass" select="$vColInfo/@class"/>
-                    <xsl:variable name="vPrevColType" select="preceding-sibling::*[1]/@type"/>
-                    <xsl:variable name="vNextCols" select="following-sibling::*"/>
-                    <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
-                    <xsl:variable name="vNextGroupCol" select="$vNextCols[@type != $vColType][1]"/>
-                    <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($pTableInfo/header/col) + 1)"/>
-                    <xsl:if test="not($vPrevColType = $vColType)">
-                        <th>
-                            <xsl:attribute name="class">
-                                <xsl:text>even</xsl:text>
-                                <xsl:if test="$vColPos = 1">
-                                    <xsl:text> col_1</xsl:text>
-                                </xsl:if>
-                                <xsl:if test="$vColClass != ''">
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="$vColClass"/>
-                                </xsl:if>
-                            </xsl:attribute>
-                            <xsl:if test="($vColType = $vNextColType)">
-                                <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
-                            </xsl:if>
+                    <th>
+                        <xsl:attribute name="class">
+                            <xsl:text>odd sortable col_</xsl:text>
+                            <xsl:value-of select="$vColInfo/@pos"/>
                             <xsl:choose>
-                                <xsl:when test="$vColClass = 'sa'">
-                                    <xsl:text>Sample Characteristics</xsl:text>
+                                <xsl:when test="$vFull"> uni</xsl:when>
+                                <xsl:when test="$vColInfo/@class != ''">
+                                    <xsl:text> </xsl:text>
+                                    <xsl:value-of select="$vColInfo/@class"/>
                                 </xsl:when>
-                                <xsl:when test="$vColClass = 'ef'">
-                                    <xsl:text>Factor Values</xsl:text>
-                                </xsl:when>
-                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
-                                    <xsl:text>Links to Data</xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>&#160;</xsl:text>
-                                </xsl:otherwise>
                             </xsl:choose>
-                        </th>
-                    </xsl:if>
+                        </xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test="$vFull"><xsl:value-of select="$vColInfo/@name"/></xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">FASTQ</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data file'">Processed</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
+                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data matrix file'">Raw Matrix</xsl:when>
+                            <xsl:when test="$vColInfo/@class != ''">
+                                <xsl:call-template name="highlight">
+                                    <xsl:with-param name="pQueryId" select="$queryid"/>
+                                    <xsl:with-param name="pText" select="$vColInfo/@name"/>
+                                    <xsl:with-param name="pFieldName" select="$vColInfo/@class"/>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$vColInfo/@name"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:call-template name="add-table-sort">
+                            <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
+                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                        </xsl:call-template>
+                    </th>
                 </xsl:for-each>
             </tr>
-        </xsl:if>
-        <tr>
-            <xsl:for-each select="$pTableInfo/header/col">
-                <xsl:variable name="vColInfo" select="."/>
-                <th>
-                    <xsl:attribute name="class">
-                        <xsl:text>odd sortable col_</xsl:text>
-                        <xsl:value-of select="$vColInfo/@pos"/>
-                        <xsl:choose>
-                            <xsl:when test="$vFull"> uni</xsl:when>
-                            <xsl:when test="$vColInfo/@class != ''">
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="$vColInfo/@class"/>
-                            </xsl:when>
-                        </xsl:choose>
-                    </xsl:attribute>
-                    <xsl:choose>
-                        <xsl:when test="$vFull"><xsl:value-of select="$vColInfo/@name"/></xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">ENA</xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">FASTQ</xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data file'">Processed</xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
-                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data matrix file'">Raw Matrix</xsl:when>
-                        <xsl:when test="$vColInfo/@class != ''">
-                            <xsl:call-template name="highlight">
-                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                <xsl:with-param name="pText" select="$vColInfo/@name"/>
-                                <xsl:with-param name="pFieldName" select="$vColInfo/@class"/>
-                            </xsl:call-template>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$vColInfo/@name"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:call-template name="add-table-sort">
-                        <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
-                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                    </xsl:call-template>
-                </th>
-            </xsl:for-each>
-        </tr>
+        </thead>
     </xsl:template>
 
     <xsl:template name="out-data">
         <xsl:param name="pTableInfo"/>
         <xsl:param name="pRows"/>
 
-        <xsl:for-each select="$pRows">
-            <xsl:variable name="vRowPos" select="fn:position()"/>
-            <tr>
-                <xsl:variable name="vRow" select="."/>
-                <xsl:for-each select="$pTableInfo/header/col">
-                    <xsl:variable name="vColPos" as="xs:integer" select="@pos"/>
-                    <xsl:variable name="vColInfo" select="."/>
-                    <xsl:variable name="vCol" select="$vRow/col[$vColPos]"/>
-                    <xsl:variable name="vColText" select="$vCol/text()"/>
-                    <xsl:variable name="vPrevColText" select="$vRow/preceding-sibling::*[1]/col[$vColPos]/text()"/>
-                    <xsl:variable name="vNextRows" select="$vRow/following-sibling::*"/>
-                    <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
-                    <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
-                    <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($pTableInfo/header/@data-rows + 1)"/>
+        <tbody>
+            <xsl:for-each select="$pRows">
+                <xsl:variable name="vRowPos" select="fn:position()"/>
+                <tr>
+                    <xsl:variable name="vRow" select="."/>
+                    <xsl:for-each select="$pTableInfo/header/col">
+                        <xsl:variable name="vColPos" as="xs:integer" select="@pos"/>
+                        <xsl:variable name="vColInfo" select="."/>
+                        <xsl:variable name="vCol" select="$vRow/col[$vColPos]"/>
+                        <xsl:variable name="vColText" select="$vCol/text()"/>
+                        <xsl:variable name="vPrevColText" select="$vRow/preceding-sibling::*[1]/col[$vColPos]/text()"/>
+                        <xsl:variable name="vNextRows" select="$vRow/following-sibling::*"/>
+                        <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
+                        <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
+                        <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($pTableInfo/header/@data-rows + 1)"/>
 
-                    <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
-                        <td>
-                            <xsl:attribute name="class">
-                                <xsl:choose>
-                                    <xsl:when test="$vRowPos mod 2 = 0">
-                                        <xsl:text>even</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>odd</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text> col_</xsl:text><xsl:value-of select="$vColInfo/@pos"/>
-                                <xsl:choose>
-                                    <xsl:when test="$vFull"> uni</xsl:when>
-                                    <xsl:when test="$vColInfo/@class != ''">
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="$vColInfo/@class"/>
-                                    </xsl:when>
-                                </xsl:choose>
-                                <xsl:if test="$sourcename != '' and $vRow/col[1] = $sourcename">
-                                    <xsl:text> selected</xsl:text>
-                                </xsl:if>
-                            </xsl:attribute>
-                            <xsl:if test="($vColText = $vNextColText) and $vGrouping">
-                                <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
-                            </xsl:if>
-                            <xsl:choose>
-                                <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                        <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
+                            <td>
+                                <xsl:attribute name="class">
                                     <xsl:choose>
-                                        <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
-                                            <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name),'derived')) then 'processed' else 'raw'"/>
-                                            <xsl:variable name="vAvailArchives" select="$vData[@extension = 'zip' and @kind = $vDataKind]/@name"/>
-                                            <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
-
-                                            <xsl:choose>
-                                                <xsl:when test="string-length($vColText) > 2 and (fn:index-of($vAvailArchives, $vArchive))">
-                                                    <a href="{$context-path}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
-                                                        <span class="icon icon-functional" data-icon="="/>
-                                                    </a>
-                                                </xsl:when>
-                                                <xsl:when test="string-length($vColText) > 2 and count($vAvailArchives) = 1">
-                                                    <a href="{$context-path}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
-                                                        <span class="icon icon-functional" data-icon="="/>
-                                                    </a>
-                                                </xsl:when>
-                                                <xsl:when test="string-length($vColText) > 2 and ($vColText = $vArchive)">
-                                                    <a href="{$context-path}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
-                                                        <span class="icon icon-functional" data-icon="="/>
-                                                    </a>
-                                                    <xsl:if test="fn:ends-with($vColText, '.bam')">
-                                                        <xsl:call-template name="ensembl-link">
-                                                            <xsl:with-param name="pBAMFile" select="$vColText"/>
-                                                        </xsl:call-template>
-                                                    </xsl:if>
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:value-of select="'-'"/>
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                        </xsl:when>
-                                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
-                                            <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
-
-                                            <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
-                                                <span class="icon icon-generic" data-icon="L"/>
-                                                <!-- <img src="{$context-path}/assets/images/data_link_ena.gif" width="23" height="16"/> -->
-                                            </a>
-                                            <xsl:call-template name="ensembl-link">
-                                                <xsl:with-param name="pBAMFile" select="$vBAMFile"/>
-                                            </xsl:call-template>
-                                        </xsl:when>
-                                        <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
-                                            <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
-                                            <a href="{$vColText}" title="Click to download {$vFileName}">
-                                                <span class="icon icon-functional" data-icon="="/>
-                                                <!-- <img src="{$context-path}/assets/images/ena_data_save.gif" width="16" height="16"/> -->
-                                            </a>
-                                        </xsl:when>
-                                    </xsl:choose>
-                                </xsl:when>
-
-                                <xsl:otherwise>
-                                    <xsl:choose>
-                                        <xsl:when test="$vColInfo/@class != ''">
-                                            <xsl:call-template name="highlight">
-                                                <xsl:with-param name="pQueryId" select="$queryid"/>
-                                                <xsl:with-param name="pText" select="$vColText"/>
-                                                <xsl:with-param name="pFieldName" select="if ($vColInfo/@class = 'ef') then 'efv' else ($vColInfo/@class)"/>
-                                            </xsl:call-template>
+                                        <xsl:when test="$vRowPos mod 2 = 0">
+                                            <xsl:text>even</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <xsl:value-of select="$vColText"/>
+                                            <xsl:text>odd</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </td>
-                    </xsl:if>
-                </xsl:for-each>
-            </tr>
-        </xsl:for-each>
+                                    <xsl:text> col_</xsl:text><xsl:value-of select="$vColInfo/@pos"/>
+                                    <xsl:choose>
+                                        <xsl:when test="$vFull"> uni</xsl:when>
+                                        <xsl:when test="$vColInfo/@class != ''">
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="$vColInfo/@class"/>
+                                        </xsl:when>
+                                    </xsl:choose>
+                                    <xsl:if test="$sourcename != '' and $vRow/col[1] = $sourcename">
+                                        <xsl:text> selected</xsl:text>
+                                    </xsl:if>
+                                </xsl:attribute>
+                                <xsl:if test="($vColText = $vNextColText) and $vGrouping">
+                                    <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                        <xsl:choose>
+                                            <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
+                                                <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name),'derived')) then 'processed' else 'raw'"/>
+                                                <xsl:variable name="vAvailArchives" select="$vData[@extension = 'zip' and @kind = $vDataKind]/@name"/>
+                                                <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
+
+                                                <xsl:choose>
+                                                    <xsl:when test="string-length($vColText) > 2 and (fn:index-of($vAvailArchives, $vArchive))">
+                                                        <a href="{$context-path}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                            <span class="icon icon-functional" data-icon="="/>
+                                                        </a>
+                                                    </xsl:when>
+                                                    <xsl:when test="string-length($vColText) > 2 and count($vAvailArchives) = 1">
+                                                        <a href="{$context-path}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                            <span class="icon icon-functional" data-icon="="/>
+                                                        </a>
+                                                    </xsl:when>
+                                                    <xsl:when test="string-length($vColText) > 2 and ($vColText = $vArchive)">
+                                                        <a href="{$context-path}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                            <span class="icon icon-functional" data-icon="="/>
+                                                        </a>
+                                                        <xsl:if test="fn:ends-with($vColText, '.bam')">
+                                                            <xsl:call-template name="ensembl-link">
+                                                                <xsl:with-param name="pBAMFile" select="$vColText"/>
+                                                            </xsl:call-template>
+                                                        </xsl:if>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:value-of select="'-'"/>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </xsl:when>
+                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
+                                                <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
+
+                                                <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
+                                                    <span class="icon icon-generic" data-icon="L"/>
+                                                    <!-- <img src="{$context-path}/assets/images/data_link_ena.gif" width="23" height="16"/> -->
+                                                </a>
+                                                <xsl:call-template name="ensembl-link">
+                                                    <xsl:with-param name="pBAMFile" select="$vBAMFile"/>
+                                                </xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
+                                                <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
+                                                <a href="{$vColText}" title="Click to download {$vFileName}">
+                                                    <span class="icon icon-functional" data-icon="="/>
+                                                    <!-- <img src="{$context-path}/assets/images/ena_data_save.gif" width="16" height="16"/> -->
+                                                </a>
+                                            </xsl:when>
+                                        </xsl:choose>
+                                    </xsl:when>
+
+                                    <xsl:otherwise>
+                                        <xsl:choose>
+                                            <xsl:when test="$vColInfo/@class != ''">
+                                                <xsl:call-template name="highlight">
+                                                    <xsl:with-param name="pQueryId" select="$queryid"/>
+                                                    <xsl:with-param name="pText" select="$vColText"/>
+                                                    <xsl:with-param name="pFieldName" select="if ($vColInfo/@class = 'ef') then 'efv' else ($vColInfo/@class)"/>
+                                                </xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="$vColText"/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </td>
+                        </xsl:if>
+                    </xsl:for-each>
+                </tr>
+            </xsl:for-each>
+        </tbody>
     </xsl:template>
 
     <xsl:template name="ensembl-link">

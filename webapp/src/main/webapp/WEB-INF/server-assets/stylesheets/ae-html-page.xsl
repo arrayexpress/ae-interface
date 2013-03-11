@@ -32,7 +32,7 @@
     <xsl:param name="userid"/>
     <xsl:param name="username"/>
 
-    <xsl:output omit-xml-declaration="yes" method="html" indent="yes" encoding="UTF-8"/>
+    <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
     <xsl:variable name="relative-uri" select="fn:substring-after($original-request-uri, $context-path)"/>
     <xsl:variable name="relative-referer" select="if (fn:starts-with($referer, '/')) then fn:substring-after($referer, $context-path) else ''"/>

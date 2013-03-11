@@ -155,11 +155,11 @@
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'accession'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
         <div id="ae-query">
-            <form id="ae-query-form" method="get" action="browse.html">
+            <form method="get" action="browse.html">
                 <fieldset>
-                    <label for="ae-keywords-field">Platform accessions, names, descriptions and providers [<a href="javascript:aeClearKeywords()">clear</a>]</label>
+                    <label for="ae-keywords-field">Accessions, names, descriptions and providers</label>
                     <input id="ae-keywords-field" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div id="ae-directsub-option">
+                    <div class="option">
                         <input id="ae-directsub-field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
                             <xsl:if test="$directsub = 'on'">
                                 <xsl:attribute name="checked"/>
@@ -167,8 +167,8 @@
                         </input>
                         <label for="ae-directsub-field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
                     </div>
+                    <div><input type="submit" value="Query"/></div>
                 </fieldset>
-                <div id="ae-submit-box"><input id="ae-query-submit" type="submit" value="Query"/></div>
             </form>
         </div>
         <xsl:choose>

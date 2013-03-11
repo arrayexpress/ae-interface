@@ -109,9 +109,6 @@
                                 <form method="get" action="{$context-path}/experiments/browse.html">
                                     <fieldset>
                                         <legend>Filter experiments</legend>
-                                        <!--
-                                        <label for="ae-keywords" class="block">Experiment, citation, sample and factor annotations</label>
-                                        -->
                                         <input id="ae-keywords" type="hidden" name="keywords" value="{$keywords}" maxlength="255"/>
                                         <label id="ae-organism-label" for="ae-organism">By organism</label>
                                         <label  id="ae-array-label" for="ae-array">By array</label>
