@@ -46,7 +46,7 @@
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="fn:count($vFilteredExperiments)"/>
 
-        <files version="1.1" revision="100915"
+        <files version="1.2" revision="130311"
                      total-experiments="{$vTotal}">
             <xsl:call-template name="ae-sort-experiments">
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
@@ -90,7 +90,7 @@
         
         <xsl:element name="file">
             <xsl:if test="$pFile/@*">
-                <xsl:for-each select="$pFile/@*[fn:name() != 'owner' and fn:name() != 'group' and fn:name() != 'access']">
+                <xsl:for-each select="$pFile/@*[fn:name() != 'owner' and fn:name() != 'group' and fn:name() != 'access' and fn:name() != 'hidden']">
                     <xsl:element name="{fn:lower-case(fn:name())}">
                         <xsl:value-of select="." />
                     </xsl:element>
