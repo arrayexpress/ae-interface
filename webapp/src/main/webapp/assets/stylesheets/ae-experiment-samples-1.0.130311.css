@@ -31,6 +31,78 @@
     color: inherit;
 }
 
+/*** pager stuff ***/
+
+#ae-results th.col_pager {
+    font-size: 100%;
+    padding: 2px 0;
+    border-bottom: 1px solid #CCC;
+}
+
+#ae-results .ae-stats {
+    position: relative;
+    text-align: center;
+    pointer-events: none;
+    margin: 0
+}
+
+#ae-results .ae-page-size {
+    float: left;
+    text-align: left
+}
+
+#ae-results .ae-pager {
+    float: right;
+    text-align: right
+}
+
+#ae-results .ae-pager,
+#ae-results .ae-page-size {
+    width: 33%
+}
+
+#ae-results .col_pager div {
+    color: #A67325;
+}
+
+#ae-results .col_pager a {
+    padding: 2px 3px 0 3px;
+    margin: 0 2px;
+    color: #A67325;
+}
+
+#ae-results .col_pager span {
+    padding: 2px 3px;
+    margin: 0 2px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+#ae-results .col_pager a:link,
+#ae-results .col_pager a:visited {
+}
+
+#ae-results .col_pager a:hover,
+#ae-results .col_pager a:focus,
+#ae-results .col_pager a:active {
+    padding: 2px 3px;
+    margin: 0 2px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-bottom: 0 none;
+    background-color: #A67325;
+    color: white;
+}
+
+#ae-results .col_pager span {
+    background-color: black;
+    color: white;
+}
+
+/***********************/
+
 #ae-results th,
 #ae-results td {
     border-collapse: separate;
@@ -191,8 +263,8 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    border-left: 1px dashed #CCC;
-    border-right: 1px dashed #CCC
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
 }
 
 #ae-results .attr_table {

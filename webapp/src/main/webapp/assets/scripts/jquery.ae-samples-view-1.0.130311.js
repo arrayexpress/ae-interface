@@ -32,8 +32,8 @@
         if ($.query == undefined)
             throw "jQuery.query not loaded";
 
-        var sortby = $.query.get("colsortby") || "col_1";
-        var sortorder = $.query.get("colsortorder") || "ascending";
+        var sortby = $.query.get("s_sortby") || "col_1";
+        var sortorder = $.query.get("s_sortorder") || "ascending";
 
         var localPath = /(\/.+)$/.exec(decodeURI(window.location.pathname))[1];
 
@@ -44,7 +44,7 @@
             // so the idea is to set default sorting for all columns except the "current" one
             // (which will be inverted) against its current state
             var newOrder = (colname === sortby) ? ("ascending" === sortorder ? "descending" : "ascending"): "ascending";
-            var queryString = $.query.set("colsortby", colname).set("colsortorder", newOrder).toString();
+            var queryString = $.query.set("s_sortby", colname).set("s_sortorder", newOrder).toString();
 
             me.wrapInner("<a href=\"" + localPath + queryString + "\" title=\"Click to sort table by this column\"/>");
         });
@@ -87,11 +87,11 @@
     };
 
     function
-    tableAdjustColWidth( eltSelector )
+    tableAdjustColWidth( tdClassName )
     {
-        $(eltSelector).each(function() {
-            var me = $(this);
-            me.width(me.children().first().width())
+        $("td." + tdClassName).each(function() {
+            var col = $("col.col_" + tdClassName);
+            col.width($(this).children().first().width())
         });
     }
 
@@ -109,8 +109,8 @@
     function
     tableAdjust()
     {
-        tableAdjustColWidth("td.left_fixed");
-        tableAdjustColWidth("td.right_fixed");
+        tableAdjustColWidth("left_fixed");
+        tableAdjustColWidth("right_fixed");
         tableAdjustFillerHeight("table.ae_samples_table", "div.attr_table_scroll", "td.bottom_filler");
     }
 

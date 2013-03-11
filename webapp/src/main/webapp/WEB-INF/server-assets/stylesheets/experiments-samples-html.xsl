@@ -36,11 +36,16 @@
     <xsl:variable name="vGrouping" as="xs:boolean" select="false()"/>
     <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
 
-    <xsl:param name="colsortby"/>
-    <xsl:param name="colsortorder"/>
+    <xsl:param name="s_page"/>
+    <xsl:param name="s_pagesize"/>
+    <xsl:param name="s_sortby"/>
+    <xsl:param name="s_sortorder"/>
 
-    <xsl:variable name="vSortBy" select="if ($colsortby) then fn:replace($colsortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
-    <xsl:variable name="vSortOrder" select="if (fn:starts-with($colsortorder, 'd')) then 'd' else 'a'" as="xs:string"/>
+    <xsl:variable name="vSortBy" select="if ($s_sortby) then fn:replace($s_sortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
+    <xsl:variable name="vSortOrder" select="if (fn:starts-with($s_sortorder, 'd')) then 'd' else 'a'" as="xs:string"/>
+
+    <xsl:variable name="vPage" select="if ($s_page) then $s_page cast as xs:integer else 1"/>
+    <xsl:variable name="vPageSize" select="if ($s_pagesize) then $s_pagesize cast as xs:integer else 25"/>
 
     <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
     <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,fastq_uri', '\s*,\s*')"/>
@@ -64,7 +69,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.0.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130311.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments">Experiments</a>
@@ -79,7 +84,7 @@
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.0.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130311.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -100,7 +105,7 @@
                         </h4>
                         <div id="ae-results">
                             <xsl:for-each select="$vSampleFiles">
-                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=1;--pagesize=-1;--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
+                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=', $vPage, ';--pagesize=', $vPageSize, ';--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
                                 <xsl:choose>
                                     <xsl:when test="fn:not(fn:exists($vTable))">
                                         <xsl:if test="fn:count($vSampleFiles) = 1">
@@ -180,30 +185,45 @@
 
         <div class="ae_samples_table_border">
             <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="left_fixed">
-                        <xsl:call-template name="out-source-name-table">
-                            <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pRows" select="row"/>
-                        </xsl:call-template>
-                    </td>
-                    <td class="middle_scrollable" rowspan="2">
-                        <xsl:call-template name="out-attributes-table">
-                            <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pRows" select="row"/>
-                        </xsl:call-template>
-                    </td>
-                    <td class="right_fixed">
-                        <xsl:call-template name="out-links-table">
-                            <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pRows" select="row"/>
-                        </xsl:call-template>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="bottom_filler"/>
-                    <td class="bottom_filler"/>
-                </tr>
+                <col class="col_left_fixed"/>
+                <col class="col_middle_scrollable"/>
+                <col class="col_right_fixed"/>
+                <thead>
+                    <xsl:call-template name="table-pager">
+                        <xsl:with-param name="pColumnsToSpan" select="3"/>
+                        <xsl:with-param name="pName" select="'row'"/>
+                        <xsl:with-param name="pTotal" select="@rows"/>
+                        <xsl:with-param name="pPage" select="$vPage"/>
+                        <xsl:with-param name="pPageSize" select="$vPageSize"/>
+                        <xsl:with-param name="pParamPrefix" select="'s_'"/>
+                    </xsl:call-template>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="left_fixed">
+                            <xsl:call-template name="out-source-name-table">
+                                <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
+                                <xsl:with-param name="pRows" select="row"/>
+                            </xsl:call-template>
+                        </td>
+                        <td class="middle_scrollable" rowspan="2">
+                            <xsl:call-template name="out-attributes-table">
+                                <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
+                                <xsl:with-param name="pRows" select="row"/>
+                            </xsl:call-template>
+                        </td>
+                        <td class="right_fixed">
+                            <xsl:call-template name="out-links-table">
+                                <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
+                                <xsl:with-param name="pRows" select="row"/>
+                            </xsl:call-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bottom_filler"/>
+                        <td class="bottom_filler"/>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </xsl:template>

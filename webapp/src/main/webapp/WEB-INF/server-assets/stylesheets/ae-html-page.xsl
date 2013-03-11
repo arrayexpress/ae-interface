@@ -405,9 +405,10 @@
     </xsl:function>
     
     <xsl:template name="table-page-size">
-        <xsl:param name="pCurrentPageSize"/>
-        <xsl:param name="pTotal"/>
-
+        <xsl:param name="pCurrentPageSize" as="xs:integer"/>
+        <xsl:param name="pTotal" as="xs:integer"/>
+        <xsl:param name="pPageParam" as="xs:string"/>
+        <xsl:param name="pPageSizeParam" as="xs:string"/>
         <div class="ae-page-size">
             <xsl:choose>
                 <xsl:when test="$pTotal > 25">
@@ -419,7 +420,7 @@
                                 <span><xsl:value-of select="."/></span>
                             </xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, 'page', '1'), 'pagesize', fn:string(fn:current()))}">
+                                <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, $pPageParam, '1'), $pPageSizeParam, fn:string(fn:current()))}">
                                     <xsl:value-of select="fn:current()"/>
                                 </a>
                             </xsl:otherwise>
@@ -437,6 +438,8 @@
         <xsl:param name="pTotal" as="xs:integer"/>
         <xsl:param name="pPage" as="xs:integer"/>
         <xsl:param name="pPageSize" as="xs:integer"/>
+        <xsl:param name="pPageParam" as="xs:string"/>
+        <xsl:param name="pPageSizeParam" as="xs:string"/>
 
         <div class="ae-pager">
             <xsl:choose>
@@ -449,6 +452,8 @@
                         <xsl:with-param name="pCurrentPage" select="$pPage"/>
                         <xsl:with-param name="pPageSize" select="$pPageSize"/>
                         <xsl:with-param name="pTotalPages" select="$vTotalPages"/>
+                        <xsl:with-param name="pPageParam" select="$pPageParam"/>
+                        <xsl:with-param name="pPageSizeParam" select="$pPageSizeParam"/>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
@@ -463,6 +468,8 @@
         <xsl:param name="pCurrentPage" as="xs:integer"/>
         <xsl:param name="pPageSize" as="xs:integer"/>
         <xsl:param name="pTotalPages" as="xs:integer"/>
+        <xsl:param name="pPageParam" as="xs:string"/>
+        <xsl:param name="pPageSizeParam" as="xs:string"/>
 
         <xsl:if test="$pPage &lt;= $pTotalPages">
 
@@ -477,12 +484,12 @@
                     <xsl:text>..</xsl:text>
                 </xsl:when>
                 <xsl:when test="($pPage = 1) or (($pPage &lt; 7) and ($pCurrentPage &lt; 4)) or (fn:abs($pPage - $pCurrentPage) &lt; 3)">
-                    <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, 'page', fn:string($pPage)), 'pagesize', fn:string($pPageSize))}">
+                    <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, $pPageParam, fn:string($pPage)), $pPageSizeParam, fn:string($pPageSize))}">
                         <xsl:value-of select="$pPage"/>
                     </a>
                 </xsl:when>
                 <xsl:when test="((($pTotalPages - $pCurrentPage) &lt; 2) and ($pTotalPages - $pPage &lt; 6)) or ($pPage = $pTotalPages) or ($pTotalPages &lt;= 6)">
-                    <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, 'page', fn:string($pPage)), 'pagesize', fn:string($pPageSize))}">
+                    <a href="{$context-path}{$relative-uri}?{ae:setQSParam(ae:setQSParam($query-string, $pPageParam, fn:string($pPage)), $pPageSizeParam, fn:string($pPageSize))}">
                         <xsl:value-of select="$pPage"/>
                     </a>
                 </xsl:when>
@@ -494,6 +501,8 @@
                     <xsl:with-param name="pCurrentPage" select="$pCurrentPage"/>
                     <xsl:with-param name="pPageSize" select="$pPageSize"/>
                     <xsl:with-param name="pTotalPages" select="$pTotalPages"/>
+                    <xsl:with-param name="pPageParam" select="$pPageParam"/>
+                    <xsl:with-param name="pPageSizeParam" select="$pPageSizeParam"/>
                 </xsl:call-template>
             </xsl:if>
         </xsl:if>
@@ -503,9 +512,13 @@
     <xsl:template name="table-pager">
         <xsl:param name="pColumnsToSpan" as="xs:integer"/>
         <xsl:param name="pName" as="xs:string"/>
+        <xsl:param name="pParamPrefix" as="xs:string" select="''"/>
         <xsl:param name="pTotal" as="xs:integer"/>
         <xsl:param name="pPage" as="xs:integer"/>
         <xsl:param name="pPageSize" as="xs:integer"/>
+
+        <xsl:variable name="vPageParam" select="fn:concat($pParamPrefix, 'page')"/>
+        <xsl:variable name="vPageSizeParam" select="fn:concat($pParamPrefix, 'pagesize')"/>
 
         <xsl:variable name="vFrom" as="xs:integer">
             <xsl:choose>
@@ -526,11 +539,15 @@
                 <xsl:call-template name="table-page-size">
                     <xsl:with-param name="pCurrentPageSize" select="$pPageSize"/>
                     <xsl:with-param name="pTotal" select="$pTotal"/>
+                    <xsl:with-param name="pPageParam" select="$vPageParam"/>
+                    <xsl:with-param name="pPageSizeParam" select="$vPageSizeParam"/>
                 </xsl:call-template>
                 <xsl:call-template name="table-pager-pages">
                     <xsl:with-param name="pPage" select="$pPage"/>
                     <xsl:with-param name="pPageSize" select="$pPageSize"/>
                     <xsl:with-param name="pTotal" select="$pTotal"/>
+                    <xsl:with-param name="pPageParam" select="$vPageParam"/>
+                    <xsl:with-param name="pPageSizeParam" select="$vPageSizeParam"/>
                 </xsl:call-template>
                 <div class="ae-stats">
                     <xsl:if test="$pTotal > $pPageSize">
