@@ -153,7 +153,7 @@
                             <tr>
                                 <th class="col_id sortable">
                                     <xsl:text>ID</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'id'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -161,7 +161,7 @@
                                 </th>
                                 <th class="col_name sortable">
                                     <xsl:text>Name</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'name'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -169,7 +169,7 @@
                                 </th>
                                 <th class="col_email sortable">
                                     <xsl:text>E-mail</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'email'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -177,7 +177,7 @@
                                 </th>
                                 <th class="col_source sortable">
                                     <xsl:text>Source</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'source'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>

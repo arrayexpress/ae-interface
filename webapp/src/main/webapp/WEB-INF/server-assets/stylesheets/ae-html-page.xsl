@@ -370,7 +370,7 @@
         </body>
     </xsl:template>
 
-    <xsl:template name="table-sort">
+    <xsl:template name="add-table-sort">
         <xsl:param name="pKind"/>
         <xsl:param name="pSortBy"/>
         <xsl:param name="pSortOrder"/>

@@ -187,7 +187,7 @@
                             <tr>
                                 <th class="col_accession sortable">
                                     <xsl:text>Accession</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'accession'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -195,7 +195,7 @@
                                 </th>
                                 <th class="col_name sortable">
                                     <xsl:text>Name</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'name'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -203,7 +203,7 @@
                                 </th>
                                 <th class="col_kind sortable">
                                     <xsl:text>Kind</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'kind'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -211,7 +211,7 @@
                                 </th>
                                 <th class="col_size sortable">
                                     <xsl:text>Size</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'size'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -219,7 +219,7 @@
                                 </th>
                                 <th class="col_lastmodified sortable">
                                     <xsl:text>Last modified</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'lastmodified'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>

@@ -190,7 +190,7 @@
                                 </xsl:call-template>
                                 <th class="col_accession sortable">
                                     <xsl:text>Accession</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'accession'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -198,7 +198,7 @@
                                 </th>
                                 <th class="col_name sortable">
                                     <xsl:text>Name</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'name'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
@@ -206,7 +206,7 @@
                                 </th>
                                 <th class="col_organism sortable">
                                     <xsl:text>Organism</xsl:text>
-                                    <xsl:call-template name="table-sort">
+                                    <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'organism'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>

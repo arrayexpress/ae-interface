@@ -32,12 +32,15 @@
     <xsl:param name="grouping"/>
     <xsl:param name="full"/>
 
-    <!-- TODO: fix this when we're ready -->
+    <!-- TODO: fix grouping when we're ready -->
     <xsl:variable name="vGrouping" as="xs:boolean" select="false()"/>
     <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
 
     <xsl:param name="colsortby"/>
     <xsl:param name="colsortorder"/>
+
+    <xsl:variable name="vSortBy" select="if ($colsortby) then fn:replace($colsortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
+    <xsl:variable name="vSortOrder" select="if (fn:starts-with($colsortorder, 'd')) then 'd' else 'a'" as="xs:string"/>
 
     <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
     <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,fastq_uri', '\s*,\s*')"/>
@@ -97,7 +100,7 @@
                         </h4>
                         <div id="ae-results">
                             <xsl:for-each select="$vSampleFiles">
-                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, '--header=1;--page=1;--pagesize=-1')/table"/>
+                                <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=1;--pagesize=-1;--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
                                 <xsl:choose>
                                     <xsl:when test="fn:not(fn:exists($vTable))">
                                         <xsl:if test="fn:count($vSampleFiles) = 1">
@@ -141,9 +144,6 @@
 
     <xsl:template match="table">
 
-        <xsl:variable name="vSortBy" select="if ($colsortby) then fn:replace($colsortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
-        <xsl:variable name="vSortOrder" select="if (fn:starts-with($colsortorder, 'd')) then 'descending' else 'ascending'"/>
-
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="header"/>
 
@@ -178,39 +178,25 @@
             </header>
         </xsl:variable>
 
-        <xsl:variable name="vSortedData">
-            <xsl:for-each select="row">
-                <xsl:sort select="col[$vSortBy]" data-type="number" order="{$vSortOrder}"/>
-                <xsl:sort select="col[$vSortBy]" order="{$vSortOrder}"/>
-                <xsl:copy-of select="."/>
-            </xsl:for-each>
-        </xsl:variable>
-
         <div class="ae_samples_table_border">
             <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="left_fixed">
                         <xsl:call-template name="out-source-name-table">
                             <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                            <xsl:with-param name="pRows" select="$vSortedData/row"/>
+                            <xsl:with-param name="pRows" select="row"/>
                         </xsl:call-template>
                     </td>
                     <td class="middle_scrollable" rowspan="2">
                         <xsl:call-template name="out-attributes-table">
                             <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                            <xsl:with-param name="pRows" select="$vSortedData/row"/>
+                            <xsl:with-param name="pRows" select="row"/>
                         </xsl:call-template>
                     </td>
                     <td class="right_fixed">
                         <xsl:call-template name="out-links-table">
                             <xsl:with-param name="pTableInfo" select="$vTableInfo"/>
-                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                            <xsl:with-param name="pRows" select="$vSortedData/row"/>
+                            <xsl:with-param name="pRows" select="row"/>
                         </xsl:call-template>
                     </td>
                 </tr>
@@ -224,8 +210,6 @@
 
     <xsl:template name="out-source-name-table">
         <xsl:param name="pTableInfo"/>
-        <xsl:param name="pSortBy"/>
-        <xsl:param name="pSortOrder"/>
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
@@ -237,8 +221,6 @@
         <table class="src_name_table" border="0" cellpadding="0" cellspacing="0">
             <xsl:call-template name="out-header">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
-                <xsl:with-param name="pSortBy" select="$pSortBy"/>
-                <xsl:with-param name="pSortOrder" select="$pSortOrder"/>
             </xsl:call-template>
             <xsl:call-template name="out-data">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
@@ -249,8 +231,6 @@
 
     <xsl:template name="out-attributes-table">
         <xsl:param name="pTableInfo"/>
-        <xsl:param name="pSortBy"/>
-        <xsl:param name="pSortOrder"/>
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
@@ -263,8 +243,6 @@
                 <table class="attr_table" border="0" cellpadding="0" cellspacing="0">
                     <xsl:call-template name="out-header">
                         <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
-                        <xsl:with-param name="pSortBy" select="$pSortBy"/>
-                        <xsl:with-param name="pSortOrder" select="$pSortOrder"/>
                     </xsl:call-template>
                     <xsl:call-template name="out-data">
                         <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
@@ -280,8 +258,6 @@
 
     <xsl:template name="out-links-table">
         <xsl:param name="pTableInfo"/>
-        <xsl:param name="pSortBy"/>
-        <xsl:param name="pSortOrder"/>
         <xsl:param name="pRows"/>
 
         <xsl:variable name="vTableChunkInfo">
@@ -293,8 +269,6 @@
         <table class="links_table" border="0" cellpadding="0" cellspacing="0">
             <xsl:call-template name="out-header">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
-                <xsl:with-param name="pSortBy" select="$pSortBy"/>
-                <xsl:with-param name="pSortOrder" select="$pSortOrder"/>
             </xsl:call-template>
             <xsl:call-template name="out-data">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
@@ -305,8 +279,6 @@
 
     <xsl:template name="out-header">
         <xsl:param name="pTableInfo"/>
-        <xsl:param name="pSortBy"/>
-        <xsl:param name="pSortOrder"/>
 
         <xsl:if test="not($vFull)">
             <tr>
@@ -388,10 +360,10 @@
                             <xsl:value-of select="$vColInfo/@name"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:call-template name="table-sort">
+                    <xsl:call-template name="add-table-sort">
                         <xsl:with-param name="pKind" as="xs:integer" select="$vColInfo/@pos"/>
-                        <xsl:with-param name="pSortBy" select="$pSortBy"/>
-                        <xsl:with-param name="pSortOrder" select="$pSortOrder"/>
+                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                     </xsl:call-template>
                 </th>
             </xsl:for-each>

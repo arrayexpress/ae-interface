@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,6 +50,10 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private static final String OPTION_HEADER_ROWS = "header";
     private static final String OPTION_PAGE = "page";
     private static final String OPTION_PAGE_SIZE = "pagesize";
+    private static final String OPTION_SORT_BY = "sortby";
+    private static final String OPTION_SORT_ORDER = "sortorder";
+
+    private enum ColDataType { STRING, INTEGER, DECIMAL }
 
     private char columnDelimiter;
     private char columnQuoteChar;
@@ -63,10 +69,14 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     public FlatFileXMLReader( String options )
     {
         this();
+
         OptionParser parser = new OptionParser();
         parser.accepts(OPTION_HEADER_ROWS).withRequiredArg().ofType(Integer.class);
         parser.accepts(OPTION_PAGE).withRequiredArg().ofType(Integer.class);
         parser.accepts(OPTION_PAGE_SIZE).withRequiredArg().ofType(Integer.class);
+        parser.accepts(OPTION_SORT_BY).withRequiredArg().ofType(Integer.class);
+        parser.accepts(OPTION_SORT_ORDER).withRequiredArg().ofType(String.class);
+
         this.options = parser.parse(null != options ? options.split("[ ;]") : new String[]{""});
     }
 
@@ -78,9 +88,11 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     
     public void parse( InputSource input ) throws IOException, SAXException
     {
-        Integer headerRows = getIntOptionValue(OPTION_HEADER_ROWS, 0);
-        Integer page = getIntOptionValue(OPTION_PAGE, 0);
-        Integer pageSize = getIntOptionValue(OPTION_PAGE_SIZE, -1);
+        int headerRows = getIntOptionValue(OPTION_HEADER_ROWS, 0);
+        int page = getIntOptionValue(OPTION_PAGE, 0);
+        int pageSize = getIntOptionValue(OPTION_PAGE_SIZE, -1);
+        Integer sortBy = getIntOptionValue(OPTION_SORT_BY, null);
+        String sortOrder = getStringOptionValue(OPTION_SORT_ORDER, "a");
 
         ContentHandler ch = getContentHandler();
         if (null == ch) {
@@ -108,11 +120,34 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         List<String[]> ff = ffReader.readAll();
         int cols = ff.size() > 0 ? ff.get(0).length : 0;
 
-        // removes all dodgy rows (that have less columns than the first one)
+        // verify that sort by column is with in range of columns
+        // if not then sort will not be performed
+        // else - switch from 1-based to 0-based index
+        if (null != sortBy && (sortBy < 1 || sortBy > cols)) {
+            sortBy = null;
+        } else {
+            sortBy = sortBy - 1;
+        }
+
+        // 1. removes all dodgy rows (that have less columns than the first one)
+        // 2. determines if column to be sorted is numeric
+        ColDataType sortColDataType = ColDataType.INTEGER;
+        int colTypeSkipRows = headerRows;
         for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext();) {
             String[] row = iterator.next();
             if (row.length != cols || isRowBlank(row)) {
                 iterator.remove();
+            } else {
+                if (null != sortBy && 0 == colTypeSkipRows && ColDataType.STRING != sortColDataType) {
+                    ColDataType dataType = getColDataType(row[sortBy]);
+
+                    if (ColDataType.INTEGER == sortColDataType && ColDataType.INTEGER != dataType) {
+                        sortColDataType = dataType;
+                    }
+                }
+                if (colTypeSkipRows > 0) {
+                    colTypeSkipRows--;
+                }
             }
         }
 
@@ -129,44 +164,58 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         tableAttrs.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, String.valueOf(rows));
         ch.startElement(EMPTY_NAMESPACE, "table", "table", tableAttrs);
 
-        boolean isHeader = (headerRows > 0);
-        String rowTag = isHeader ? "header" : "row";
+        for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext() && headerRows > 0; headerRows--) {
+            String[] row = iterator.next();
+            outputRow(ch, "header", null, row);
+            iterator.remove();
+        }
 
-        int rowSeq = 0;
+        if (null != sortBy) {
+            Collections.sort(ff, new SortColumnComparator(sortBy, sortOrder, sortColDataType));
+        }
 
+        int rowSeq = 1;
         for (String[] row : ff) {
-            if (!isHeader) {
-                ++rowSeq;
+            if (rowSeq > (pageSize * (page - 1)) && rowSeq <= (pageSize * page)) {
+                outputRow(ch, "row", String.valueOf(rowSeq), row);
             }
-            if (isHeader || (rowSeq > (pageSize * (page - 1)) && rowSeq <= (pageSize * page))) {
-                AttributesImpl rowAttrs = new AttributesImpl();
-                if (!isHeader) {
-                    rowAttrs.addAttribute(EMPTY_NAMESPACE, "seq", "seq", CDATA_TYPE, String.valueOf(rowSeq));
-                }
-                rowAttrs.addAttribute(EMPTY_NAMESPACE, "cols", "cols", CDATA_TYPE, String.valueOf(row.length));
-                ch.startElement(EMPTY_NAMESPACE, rowTag, rowTag, rowAttrs);
-
-                for (String col : row) {
-                    ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
-                    ch.characters(col.toCharArray(), 0, col.length());
-                    ch.endElement(EMPTY_NAMESPACE, "col", "col");
-                }
-                ch.endElement(EMPTY_NAMESPACE, rowTag, rowTag);
-                if (isHeader) {
-                    rowTag = "row";
-                    isHeader = false;
-                }
-            }
+            ++rowSeq;
         }
 
         ch.endElement(EMPTY_NAMESPACE, "table", "table");
         ch.endDocument();
     }
 
+    private void outputRow( ContentHandler ch, String rowElement, String seqValue, String[] rowData ) throws SAXException
+    {
+        AttributesImpl rowAttrs = new AttributesImpl();
+        if (null !=seqValue) {
+            rowAttrs.addAttribute(EMPTY_NAMESPACE, "seq", "seq", CDATA_TYPE, seqValue);
+        }
+        rowAttrs.addAttribute(EMPTY_NAMESPACE, "cols", "cols", CDATA_TYPE, String.valueOf(rowData.length));
+        ch.startElement(EMPTY_NAMESPACE, rowElement, rowElement, rowAttrs);
+
+        for (String col : rowData) {
+            ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
+            ch.characters(col.toCharArray(), 0, col.length());
+            ch.endElement(EMPTY_NAMESPACE, "col", "col");
+        }
+        ch.endElement(EMPTY_NAMESPACE, rowElement, rowElement);
+    }
+
     private Integer getIntOptionValue( String option, Integer defaultValue )
     {
         if (null != options && options.has(option)) {
             return (Integer)this.options.valueOf(option);
+        } else {
+            return defaultValue;
+        }
+    }
+
+    private String getStringOptionValue( String option, String defaultValue )
+    {
+        if (null != options && options.has(option)) {
+            return (String)this.options.valueOf(option);
         } else {
             return defaultValue;
         }
@@ -182,5 +231,56 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
             }
         }
         return true;
+    }
+
+    private ColDataType getColDataType( String string )
+    {
+        if (null != string) {
+            if (string.matches("^\\s*\\d+\\s*$")) {
+                return ColDataType.INTEGER;
+            } else if (string.matches("^\\s*\\d*[.]\\d+\\s*$")) {
+                return ColDataType.DECIMAL;
+            }
+        }
+        return ColDataType.STRING;
+    }
+
+    private class SortColumnComparator implements Comparator<String[]>
+    {
+        private int sortBy;
+        private String sortOrder;
+        ColDataType sortColDataType;
+
+        public SortColumnComparator( int sortBy, String sortOrder, ColDataType sortColDataType )
+        {
+            this.sortBy = sortBy;
+            this.sortOrder = sortOrder;
+            this.sortColDataType = sortColDataType;
+        }
+
+        @Override
+        public int compare(String[] o1, String[] o2) {
+            int result;
+            switch (sortColDataType) {
+                case INTEGER:
+                    long int1 = Long.valueOf(o1[sortBy]);
+                    long int2 = Long.valueOf(o2[sortBy]);
+
+                    result = Long.compare(int1, int2);
+                    break;
+                case DECIMAL:
+                    double dec1 = Double.valueOf(o1[sortBy]);
+                    double dec2 = Double.valueOf(o2[sortBy]);
+
+                    result = Double.compare(dec1, dec2);
+                    break;
+                case STRING:
+                    result = o1[sortBy].compareToIgnoreCase(o2[sortBy]);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Sort column data type is not defined");
+            }
+            return ("a".equalsIgnoreCase(sortOrder)) ? result : -result;
+        }
     }
 }

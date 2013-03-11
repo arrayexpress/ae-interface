@@ -27,7 +27,7 @@
     <xsl:template match="*" mode="highlight">
         <xsl:param name="pQueryId" as="xs:string" select="''"/>
         <xsl:param name="pFieldName" as="xs:string" select="''"/>
-        <xsl:element name="{if (fn:name() = 'text') then 'div' else name() }">
+        <xsl:element name="{if (fn:name() = 'text') then 'div' else name()}">
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates mode="highlight">
                 <xsl:with-param name="pQueryId" select="$pQueryId"/>
