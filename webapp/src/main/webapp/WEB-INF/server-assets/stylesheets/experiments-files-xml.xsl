@@ -16,10 +16,12 @@
  *
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-                extension-element-prefixes="ae search"
-                exclude-result-prefixes="ae search"
+                extension-element-prefixes="xs fn ae search"
+                exclude-result-prefixes="xs fn ae search"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -42,7 +44,7 @@
     <xsl:template match="/experiments">
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
+        <xsl:variable name="vTotal" select="fn:count($vFilteredExperiments)"/>
 
         <files version="1.1" revision="100915"
                      total-experiments="{$vTotal}">
@@ -69,7 +71,7 @@
             </xsl:for-each>
             <xsl:for-each select="arraydesign">
                 <xsl:sort select="accession" order="ascending"/>
-                <xsl:variable name="vArrAccession" select="string(accession)"/>
+                <xsl:variable name="vArrAccession" select="fn:string(accession)"/>
                 <xsl:variable name="vArrFolder" select="ae:getMappedValue('ftp-folder', $vArrAccession)"/>
 
                 <xsl:for-each select="$vArrFolder/file[@kind = 'adf']">
@@ -88,11 +90,15 @@
         
         <xsl:element name="file">
             <xsl:if test="$pFile/@*">
-                <xsl:for-each select="$pFile/@*[name() != 'owner' and name() != 'group' and name() != 'access']">
-                    <xsl:element name="{lower-case(name())}">
+                <xsl:for-each select="$pFile/@*[fn:name() != 'owner' and fn:name() != 'group' and fn:name() != 'access']">
+                    <xsl:element name="{fn:lower-case(fn:name())}">
                         <xsl:value-of select="." />
                     </xsl:element>
+                    <xsl:if test="'kind' = fn:name() and 'processed' = .">
+                        <kind>fgem</kind>
+                    </xsl:if>
                 </xsl:for-each>
+
                 <xsl:if test="$pFile/@name">
                     <xsl:element name="url">
                         <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>/<xsl:value-of select="$pFile/@name"/>
