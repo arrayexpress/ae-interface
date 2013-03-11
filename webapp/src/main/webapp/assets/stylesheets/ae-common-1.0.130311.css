@@ -546,12 +546,6 @@ p.justify {
     border-bottom: 2px solid #5E8CC0;
 }
 
-#ae-browse th.col_pager {
-    border-top: 0 none;
-    border-bottom: 2px solid #FFF;
-}
-
-
 #ae-browse table.floating-header th.col_pager {
     /* border-top: 1px solid #CCCCCC; */
 }
@@ -620,6 +614,15 @@ p.justify {
 
 #ae-browse th.col_pager {
     font-size: 100%;
+    padding: 3px 5px;
+    border-bottom: 2px solid #FFF;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #f5f5f5 !important;
 }
 
 #ae-browse .ae-stats {
