@@ -548,7 +548,7 @@ p.justify {
 
 #ae-browse th.col_pager {
     border-top: 0 none;
-    border-bottom: 0 none;
+    border-bottom: 2px solid #FFF;
 }
 
 

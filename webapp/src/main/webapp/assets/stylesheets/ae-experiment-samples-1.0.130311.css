@@ -35,8 +35,8 @@
 
 #ae-results th.col_pager {
     font-size: 100%;
-    padding: 2px 0;
-    border-bottom: 1px solid #CCC;
+    padding: 3px;
+    border-bottom: 2px solid #FFF;
 }
 
 #ae-results .ae-stats {
@@ -263,8 +263,6 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    border-left: 1px solid #CCC;
-    border-right: 1px solid #CCC;
 }
 
 #ae-results .attr_table {
