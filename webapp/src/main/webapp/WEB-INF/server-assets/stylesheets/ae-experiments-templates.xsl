@@ -503,44 +503,47 @@
     <xsl:template name="exp-files-section">
         <xsl:param name="pBasePath"/>
         <xsl:param name="pFiles"/>
-        <tr>
-            <td class="name"><div>Files</div></td>
-            <td class="value">
-                <xsl:if test="$pFiles/file[@kind='raw' or @kind='processed' or @kind='idf' or @kind='sdrf' or @kind='biosamples' or @kind='r-object']">
-                    <div>
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                                <xsl:call-template name="exp-magetab-files">
-                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                    <xsl:with-param name="pFiles" select="$pFiles"/>
-                                </xsl:call-template>
-                                <xsl:call-template name="exp-data-files">
-                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                    <xsl:with-param name="pFiles" select="$pFiles"/>
-                                </xsl:call-template>
-                                <xsl:call-template name="exp-image-files">
-                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                    <xsl:with-param name="pFiles" select="$pFiles"/>
-                                </xsl:call-template>
-                                <xsl:call-template name="exp-magetab-files-array">
-                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                </xsl:call-template>
-                                <xsl:call-template name="exp-misc-files">
-                                    <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                    <xsl:with-param name="pFiles" select="$pFiles"/>
-                                </xsl:call-template>
-                            </tbody>
-                        </table>
-                    </div>
-                </xsl:if>
-                <div>
-                    <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{accession}/files/">
-                        <xsl:text>Click to browse all available files</xsl:text>
-                    </a>
-                </div>
 
-            </td>
-        </tr>
+        <xsl:if test="fn:exists($pFiles/file)">
+            <tr>
+                <td class="name"><div>Files</div></td>
+                <td class="value">
+                    <xsl:if test="fn:exists($pFiles/file[@kind > ''])"> <!-- TODO: iterate over kinds dynamically -->
+                        <div>
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                    <xsl:call-template name="exp-magetab-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                        <xsl:with-param name="pFiles" select="$pFiles"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="exp-data-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                        <xsl:with-param name="pFiles" select="$pFiles"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="exp-image-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                        <xsl:with-param name="pFiles" select="$pFiles"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="exp-magetab-files-array">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="exp-misc-files">
+                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                        <xsl:with-param name="pFiles" select="$pFiles"/>
+                                    </xsl:call-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </xsl:if>
+                    <div>
+                        <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{accession}/files/">
+                            <xsl:text>Click to browse all available files</xsl:text>
+                        </a>
+                    </div>
+
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template name="exp-links-section">
