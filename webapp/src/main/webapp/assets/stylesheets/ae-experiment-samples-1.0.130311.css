@@ -37,12 +37,12 @@
     font-size: 100%;
     padding: 3px 5px;
     border-bottom: 2px solid #FFF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     background-color: #f5f5f5 !important;
 }
 
@@ -229,6 +229,7 @@
 }
 
 #ae-results .links_table th
+, #ae-results .links_table th.odd
 , #ae-results .links_table td {
     text-align: center;
 }
@@ -239,7 +240,6 @@
 
 #ae-results .attr_table_shadow_container {
     position: relative;
-    /* display: inline-block; */
     width: 100%;
     overflow: hidden;
 }
