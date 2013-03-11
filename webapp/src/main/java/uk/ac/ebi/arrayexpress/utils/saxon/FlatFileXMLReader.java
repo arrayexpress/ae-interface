@@ -123,10 +123,12 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         // verify that sort by column is with in range of columns
         // if not then sort will not be performed
         // else - switch from 1-based to 0-based index
-        if (null != sortBy && (sortBy < 1 || sortBy > cols)) {
-            sortBy = null;
-        } else {
-            sortBy = sortBy - 1;
+        if (null != sortBy) {
+            if (sortBy < 1 || sortBy > cols) {
+                sortBy = null;
+            } else {
+                sortBy = sortBy - 1;
+            }
         }
 
         // 1. removes all dodgy rows (that have less columns than the first one)
