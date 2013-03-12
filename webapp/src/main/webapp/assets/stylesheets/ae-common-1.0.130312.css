@@ -368,39 +368,7 @@ div#local-masthead ul li a:active {
 
 #ae-infotext {
     font-size: 108%;
-}
-
-.ae-info-area,
-.ae-warn-area,
-.ae-protected-area,
-.ae-error-area {
-    background-repeat: no-repeat;
-    background-position: 10px 50%;
-/*
-    text-align: left;
-    font-size: 108%;
-    line-height: 1.5em;
-    padding: 25px 15px 25px 90px;
-    margin: 60px 20px 0 20px;
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
-*/
-}
-
-.ae-info-area {
-    background-image: url(../images/basic_info_64.gif);
-}
-
-.ae-warn-area {
-    background-image: url(../images/basic_warning_64.gif);
-}
-
-.ae-protected-area {
-    background-image: url(../images/basic_lock_64.gif);
-}
-
-.ae-error-area {
-    background-image: url(../images/basic_block_64.gif);
+    text-align: center;
 }
 
 .text-hit {
@@ -649,7 +617,6 @@ p.justify {
     -webkit-border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: #f5f5f5 !important;
 }
 
 #ae-browse .ae-stats {

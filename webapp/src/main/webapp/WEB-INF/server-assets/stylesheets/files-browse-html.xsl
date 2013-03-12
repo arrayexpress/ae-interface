@@ -248,7 +248,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <div id="ae-infotext">
-                    <div>There are no files matching your search criteria found in ArrayExpress.</div>
+                    <span class="alert">There are no files matching your search criteria found in ArrayExpress.</span>
                 </div>
             </xsl:otherwise>
         </xsl:choose>
@@ -392,8 +392,6 @@
     <xsl:template name="list-files">
         <xsl:param name="pFolder"/>
         <xsl:param name="pComment"/>
-
-        <xsl:variable name="vAccession" select="$pFolder/@accession"/>
 
         <div class="ae-files">
             <table border="0" cellpadding="0" cellspacing="0">

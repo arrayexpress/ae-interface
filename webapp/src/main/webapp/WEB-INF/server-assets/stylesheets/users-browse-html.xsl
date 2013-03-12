@@ -205,7 +205,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <div id="ae-infotext">
-                    <div>There are no users matching your search criteria found in ArrayExpress.</div>
+                    <span class="alert">There are no users matching your search criteria found in ArrayExpress.</span>
                 </div>
             </xsl:otherwise>
         </xsl:choose>
