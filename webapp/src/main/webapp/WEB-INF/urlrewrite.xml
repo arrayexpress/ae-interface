@@ -763,6 +763,12 @@
         <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
     </rule>
 
+    <!-- test page -->
+    <rule>
+        <from>^/test[.]html?$</from>
+        <to type="forward" last="true">/servlets/query/-/test/html</to>
+    </rule>
+
     <!-- ArrayExpress old link redirects  -->
     <!-- TODO: remove or update
     <rule>
