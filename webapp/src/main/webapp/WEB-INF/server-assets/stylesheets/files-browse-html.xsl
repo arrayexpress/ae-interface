@@ -53,7 +53,7 @@
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsFixedWidth" select="fn:false()"/>
-            <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
+            <xsl:with-param name="pIsSearchVisible" select="fn:not($vBrowseMode)"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pTitleTrail">
                 <xsl:value-of select="if ((fn:not($vBrowseMode) and fn:not($vExperimentMode) and fn:not($vArrayMode)) or $vExperimentArrayMode) then fn:concat($vAccession, ' &lt; ') else ''"/>
@@ -156,17 +156,17 @@
 
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'accession'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
-        <!--
-        <div id="ae_query_box">
-            <form id="ae_query_form" method="get" action="browse.html">
-                <fieldset id="ae_keywords_fset">
-                    <label for="ae_keywords_field">Filter by folder, name, kind, or extension [<a href="javascript:aeClearField('#ae_keywords_field')">clear</a>]</label>
-                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
+
+        <div id="ae-query">
+            <form method="get" action="browse.html">
+                <fieldset>
+                    <label for="ae-query-keywords">Accessions, kinds, names and extensions</label>
+                    <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
+                    <div><input type="submit" value="Query"/></div>
                 </fieldset>
-                <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
             </form>
         </div>
-        -->
+
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
                 <div id="ae-browse" class="persist-area">

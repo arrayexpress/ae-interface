@@ -47,7 +47,7 @@
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsFixedWidth" select="fn:false()"/>
-            <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
+            <xsl:with-param name="pIsSearchVisible" select="fn:not($vBrowseMode)"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pTitleTrail">
                 <xsl:text>Users</xsl:text>
@@ -123,17 +123,17 @@
 
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'id'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
-        <!--
-        <div id="ae_query_box">
-            <form id="ae_query_form" method="get" action="browse.html">
-                <fieldset id="ae_keywords_fset">
-                    <label for="ae_keywords_field">Filter by user identifier, source, name, email and even password</label>
-                    <input id="ae_keywords_field" type="text" name="keywords" value="{$keywords}" maxlength="255" class="ae_assign_font"/>
+
+        <div id="ae-query">
+            <form method="get" action="browse.html">
+                <fieldset>
+                    <label for="ae-query-keywords">Names, emails, sources</label>
+                    <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
+                    <div><input type="submit" value="Query"/></div>
                 </fieldset>
-                <div id="ae_submit_box"><input id="ae_query_submit" type="submit" value="Query"/></div>
             </form>
         </div>
-        -->
+
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
                 <div id="ae-browse" class="persist-area">
