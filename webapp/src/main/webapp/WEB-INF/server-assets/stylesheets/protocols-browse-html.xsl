@@ -154,9 +154,9 @@
         <div id="ae-query">
             <form method="get" action="browse.html">
                 <fieldset>
-                    <label for="ae-query-keywords">Accessions, names, and description</label>
+                    <label for="ae-query-keywords">Search protocols by accessions, names, or descriptions</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div><input type="submit" value="Query"/></div>
+                    <div><input type="submit" value="Search"/></div>
                 </fieldset>
             </form>
         </div>

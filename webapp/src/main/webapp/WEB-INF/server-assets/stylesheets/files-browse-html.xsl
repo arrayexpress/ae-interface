@@ -160,9 +160,9 @@
         <div id="ae-query">
             <form method="get" action="browse.html">
                 <fieldset>
-                    <label for="ae-query-keywords">Accessions, kinds, names and extensions</label>
+                    <label for="ae-query-keywords">Search files by experiment/array accessions, kinds, names, or extensions</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div><input type="submit" value="Query"/></div>
+                    <div><input type="submit" value="Search"/></div>
                 </fieldset>
             </form>
         </div>

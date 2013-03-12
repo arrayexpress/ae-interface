@@ -127,9 +127,9 @@
         <div id="ae-query">
             <form method="get" action="browse.html">
                 <fieldset>
-                    <label for="ae-query-keywords">Names, emails, sources</label>
+                    <label for="ae-query-keywords">Search users by names, emails, or sources (ae1/ae2)</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div><input type="submit" value="Query"/></div>
+                    <div><input type="submit" value="Search"/></div>
                 </fieldset>
             </form>
         </div>

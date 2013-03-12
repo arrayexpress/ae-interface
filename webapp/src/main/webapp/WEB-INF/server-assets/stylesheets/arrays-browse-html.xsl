@@ -157,7 +157,7 @@
         <div id="ae-query">
             <form method="get" action="browse.html">
                 <fieldset>
-                    <label for="ae-keywords-field">Accessions, names, descriptions and providers</label>
+                    <label for="ae-keywords-field">Search arrays by accessions, names, descriptions, or providers</label>
                     <input id="ae-keywords-field" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
                     <div class="option">
                         <input id="ae-directsub-field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
@@ -167,7 +167,7 @@
                         </input>
                         <label for="ae-directsub-field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
                     </div>
-                    <div><input type="submit" value="Query"/></div>
+                    <div><input type="submit" value="Search"/></div>
                 </fieldset>
             </form>
         </div>
