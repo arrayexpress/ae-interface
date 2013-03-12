@@ -199,7 +199,7 @@
             doCloseWindow();
         });
 
-        $form.find("input").keydown(function (e) {
+        $form.find("input,textarea").keydown(function (e) {
             if (27 == e.keyCode) {
                 doCloseWindow();
             }
@@ -330,9 +330,10 @@
         ).focus(autoCompleteFixSet).blur(autoCompleteFixUnset).removeAttr('autocomplete');
 
         // attach titles to highlight classes
-        $("#ae-browse").find(".text-hit").attr("title", "This is exact string matched for input query terms");
-        $("#ae-browse").find(".text-syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
-        $("#ae-browse").find(".text-efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
+        var $browse_data = $("#ae-browse").find("td");
+        $browse_data.find(".text-hit").attr("title", "This is exact string matched for input query terms");
+        $browse_data.find(".text-syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
+        $browse_data.find(".text-efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
 
     });
 

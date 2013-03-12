@@ -359,7 +359,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130306.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130312.js"/>
             <script type="text/javascript">
                 <xsl:text>var contextPath = "</xsl:text>
                 <xsl:value-of select="$context-path"/>
