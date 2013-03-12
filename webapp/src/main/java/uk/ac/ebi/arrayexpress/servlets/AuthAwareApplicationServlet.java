@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 
 public abstract class AuthAwareApplicationServlet extends ApplicationServlet
@@ -70,9 +69,8 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             invalidateAuthCookies(response);
         }
         String authUserName = getAuthUserName(request);
-        String host = request.getHeader("host");
-        String xHttps = request.getHeader("X-HTTPS");
 
+        /* TODO: relocate id somewhere
         if (logger.isDebugEnabled()) {
             Enumeration headerNames = request.getHeaderNames();
             while (headerNames.hasMoreElements()) {
@@ -80,15 +78,17 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
                logger.debug("Header [{}], value [{}]", headerName, request.getHeader(headerName));
             }
         }
-        /*
-        if (null != authUserName
-                && (!"1".equals(xHttps))
-                && null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
-            String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
-            logger.info("Redirecting authenticated request to [{}]", redirectUrl);
-            response.sendRedirect(redirectUrl);
-        }
         */
+        if (null != authUserName) {
+            String host = request.getHeader("host");
+            if (null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
+                if (!"1".equals(request.getHeader("x-https"))) {
+                    String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
+                    logger.info("Redirecting authenticated request to [{}]", redirectUrl);
+                    response.sendRedirect(redirectUrl);
+                }
+            }
+        }
         doAuthenticatedRequest(request, response, requestType, authUserName);
     }
 
