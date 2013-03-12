@@ -259,8 +259,8 @@
                                         </xsl:call-template>
                                         <tr>
                                             <td colspan="9" class="col_footer">
-                                                <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-fileformats" data-icon="t">Export table in Tab-delimited format</a>
-                                                <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon icon-fileformats" data-icon="x">Export meta-data in XML format</a>
+                                                <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format</a>
+                                                <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon  icon-functional" data-icon="S">Export meta-data in XML format</a>
                                                 <a href="{$context-path}/rss/v2/experiments{$vQueryString}" class="icon icon-socialmedia" data-icon="R">Subscribe to RSS feed matching your search query</a>
                                             </td>
                                         </tr>
