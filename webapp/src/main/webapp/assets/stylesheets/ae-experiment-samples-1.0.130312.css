@@ -165,7 +165,7 @@
 }
 
 #ae-results .ae_samples_table th {
-    background-color: #EEEEEE
+    background-color: #EEE
 }
 
 #ae-results .ae_samples_table th.sa {
@@ -218,14 +218,13 @@
 
 #ae-results .src_name_table th
 , #ae-results .links_table th {
-    background-color: #EEEEEE;
+    background-color: #EEE;
 }
 
 #ae-results .src_name_table td,
 #ae-results .attr_table td,
 #ae-results .links_table td {
     font-size: 93%;
-    border-bottom: 1px solid #EEEEEE;
 }
 
 #ae-results .links_table th

@@ -566,7 +566,6 @@ p.justify {
     font-weight: normal;
     vertical-align: bottom;
     white-space: nowrap;
-    padding: 3px;
     background-color: #EEEEEE;
     border-bottom: 2px solid #5E8CC0;
 }
@@ -602,8 +601,11 @@ p.justify {
 #ae-browse td {
     vertical-align: bottom;
     font-size: 93%;
-    padding: 3px;
-    border-bottom: 1px solid #EEEEEE;
+}
+
+#ae-browse th
+, #ae-browse td {
+    padding: 3px 5px
 }
 
 #ae-browse .experiments td {
