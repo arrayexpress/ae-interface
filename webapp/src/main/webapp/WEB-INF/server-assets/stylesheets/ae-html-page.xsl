@@ -200,32 +200,32 @@
                                 </li>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/experiments/" title="Experiments">Experiments</a>
+                                    <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
                                 </li>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/arrays/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/arrays/" title="Arrays">Arrays</a>
+                                    <a href="{$context-path}/arrays/browse.html?directsub=on" title="Arrays">Arrays</a>
                                 </li>
                                 <xsl:if test="not($userid)">
                                     <li>
                                         <xsl:if test="fn:starts-with($relative-uri, '/protocols/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/protocols/" title="Protocols">Protocols</a>
+                                        <a href="{$context-path}/protocols/browse.html" title="Protocols">Protocols</a>
                                     </li>
                                     <li>
                                         <xsl:if test="fn:starts-with($relative-uri, '/files/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/files/" title="Files">Files</a>
+                                        <a href="{$context-path}/files/browse.html" title="Files">Files</a>
                                     </li>
                                     <li>
                                         <xsl:if test="fn:starts-with($relative-uri, '/users/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/users/" title="Users">Users</a>
+                                        <a href="{$context-path}/users/browse.html" title="Users">Users</a>
                                     </li>
                                 </xsl:if>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/submit/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/submit/" title="Submit">Submit</a></li>
+                                    <a href="{$context-path}/submit/overview.html" title="Submit">Submit</a></li>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/help/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/help/" title="Help">Help</a>
+                                    <a href="{$context-path}/help/index.html" title="Help">Help</a>
                                 </li>
                                 <li class="last">
                                     <xsl:if test="$relative-uri = '/about.html'"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
