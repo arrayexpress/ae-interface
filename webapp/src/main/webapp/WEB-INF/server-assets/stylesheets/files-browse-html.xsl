@@ -242,6 +242,9 @@
                                 <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                 <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                             </xsl:call-template>
+                            <tr>
+                                <td colspan="5" class="col_footer">&#160;</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

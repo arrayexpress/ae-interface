@@ -107,6 +107,19 @@
     color: #FFF;
 }
 
+#ae-results .col_footer {
+    font-size: 93%;
+    text-align: center;
+    padding: 0 5px 3px 5px;
+    border-top: 2px solid #FFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    background-color: #EEE;
+}
 /***********************/
 
 #ae-results th,

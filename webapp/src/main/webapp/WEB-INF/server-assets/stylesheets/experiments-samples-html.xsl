@@ -223,6 +223,9 @@
                         <td class="bottom_filler"/>
                         <td class="bottom_filler"/>
                     </tr>
+                    <tr>
+                        <td colspan="3" class="col_footer">&#160;</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
