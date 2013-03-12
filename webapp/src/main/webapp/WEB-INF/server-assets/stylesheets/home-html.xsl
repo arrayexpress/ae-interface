@@ -91,7 +91,7 @@
                 </div>
                 <div class="grid_8 omega">
                     <h3 class="icon icon-generic" data-icon="L">Related Projects</h3>
-                    <p>Discover up and down regulated genes in numerous experimental conditions in the <a href="/gxa">Expression Atlas</a>.</p>
+                    <p>Discover up and down regulated genes in numerous experimental conditions in the <a href="${interface.application.link.atlas.base.url}">Expression Atlas</a>.</p>
                     <p>Explore the <a href="/efo">Experimental Factor Ontology</a> used to support queries and annotation of ArrayExpress data.</p>
                 </div>
             </section>

@@ -609,30 +609,7 @@
         <to type="forward" last="true">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
     </rule>
 
-    <!-- redirects to some pages at www.ebi.ac.uk (via proxy servlet) -->
-    <!-- TODO: remove or update
-    <rule>
-        <from>^/ae-news.xml</from>
-        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/microarray-srv/ae/ae-main-news.xml</to>
-    </rule>
-    <rule>
-        <from>^/ae-links.xml</from>
-        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/microarray-srv/ae/ae-main-links.xml</to>
-    </rule>
-    <rule>
-        <from>^/atlas_list-species.html</from>
-        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/list-species.jsp</to>
-    </rule>
-    <rule>
-        <from>^/atlas_stats.txt</from>
-        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/gxa/stats.jsp</to>
-    </rule>
-    <rule>
-        <from>^/www-inc/(.+)</from>
-        <to type="forward">/servlets/proxy/http://www.ebi.ac.uk/inc/$1</to>
-    </rule>
-    -->
-
+    <!-- helpers -->
     <rule>
         <from>^/species-list[.]html</from>
         <to type="forward" last="true">/servlets/lookup/species</to>

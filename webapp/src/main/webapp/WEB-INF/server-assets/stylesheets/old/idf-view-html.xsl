@@ -34,7 +34,7 @@
                     <script src="{$context-path}/assets/scripts/jquery-1.4.2.min.js" type="text/javascript"/>
                     <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js" type="text/javascript"/>
                     <script src="{$context-path}/assets/scripts/ae_common_20.js" type="text/javascript"/>
-                    <script src="{$context-path}/assets/scripts/_old_ae_idf_view_20.js" type="text/javascript"/>
+                    <script src="{$context-path}/assets/scripts/ae_idf_view_20.js" type="text/javascript"/>
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="page-body"/>
