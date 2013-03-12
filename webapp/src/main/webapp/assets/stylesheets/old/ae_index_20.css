@@ -16,15 +16,15 @@
  */
 
 body.aepub1 {
-	background: #e6fff6 url(../images/_old_/aepub1.gif) no-repeat fixed 0 97%;
+	background: #e6fff6 url(../../images/_old_/aepub1.gif) no-repeat fixed 0 97%;
 }
 
 body.ae2_perftest {
-	background: #ffffdb url(../images/_old_/ae2_peftest.gif) no-repeat fixed 0 97%;
+	background: #ffffdb url(../../images/_old_/ae2_peftest.gif) no-repeat fixed 0 97%;
 }
 
 body.ae2_curator {
-	background: #ffe6f5 url(../images/_old_/ae2_curator.gif) no-repeat fixed 0 97%;
+	background: #ffe6f5 url(../../images/_old_/ae2_curator.gif) no-repeat fixed 0 97%;
 }
 
 #ae_contents_container {

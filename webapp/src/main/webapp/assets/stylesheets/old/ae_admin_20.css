@@ -95,7 +95,7 @@
 
 .ae_adm_table_box
 , .ae_adm_last_updated_box {
-    background: url("../images/_old_/trbg.gif") 0 0 repeat;
+    background: url("../../images/_old_/trbg.gif") 0 0 repeat;
     border: 1px solid #bdd7d7;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);

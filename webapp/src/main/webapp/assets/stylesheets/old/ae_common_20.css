@@ -38,12 +38,12 @@ table td.contentsarea {
 
 /* hack for position:fixed for stooped EBI footer */
 body {
-	background: #ffffff url(../images/empty.gif) fixed top;
+	background: #ffffff url(../../images/empty.gif) fixed top;
     overflow: hidden;
 }
 
 body.dev_preview {
-	background: #ffffff url(../images/_old_/ae_dev_bg.gif) repeat fixed top;
+	background: #ffffff url(../../images/_old_/ae_dev_bg.gif) repeat fixed top;
 }
 
 body.aepub1 {
@@ -195,19 +195,19 @@ body.ae2_curator {
 }
 
 .ae_info_area {
-    background-image: url(../images/basic_info_64.gif);
+    background-image: url(../../images/basic_info_64.gif);
 }
 
 .ae_warn_area {
-    background-image: url(../images/basic_warning_64.gif);
+    background-image: url(../../images/basic_warning_64.gif);
 }
 
 .ae_protected_area {
-    background-image: url(../images/basic_lock_64.gif);
+    background-image: url(../../images/basic_lock_64.gif);
 }
 
 .ae_error_area {
-    background-image: url(../images/basic_block_64.gif);
+    background-image: url(../../images/basic_block_64.gif);
 }
 
 .ae_warn_area div,
@@ -219,39 +219,39 @@ body.ae2_curator {
 }
 
 .lite_form_outer {
-    background: url(../images/_old_/trbg.gif) 0 0 repeat;
+    background: url(../../images/_old_/trbg.gif) 0 0 repeat;
 }
 
 .lite_form_top {
-    background: url(../images/_old_/lft.gif) 0 0 repeat-x;
+    background: url(../../images/_old_/lft.gif) 0 0 repeat-x;
 }
 
 .lite_form_top_left {
-    background: url(../images/_old_/lftl.gif) 0 0 no-repeat;
+    background: url(../../images/_old_/lftl.gif) 0 0 no-repeat;
 }
 
 .lite_form_top_right {
-    background: url(../images/_old_/lftr.gif) 100% 0 no-repeat;
+    background: url(../../images/_old_/lftr.gif) 100% 0 no-repeat;
 }
 
 .lite_form_left {
-    background: url(../images/_old_/lfl.gif) 0 0 repeat-y;
+    background: url(../../images/_old_/lfl.gif) 0 0 repeat-y;
 }
 
 .lite_form_right {
-    background: url(../images/_old_/lfr.gif) 100% 0 repeat-y;
+    background: url(../../images/_old_/lfr.gif) 100% 0 repeat-y;
 }
 
 .lite_form_bottom {
-    background: url(../images/_old_/lfb.gif) 0 100% repeat-x;
+    background: url(../../images/_old_/lfb.gif) 0 100% repeat-x;
 }
 
 .lite_form_bottom_left {
-    background: url(../images/_old_/lfbl.gif) 0 100% no-repeat;
+    background: url(../../images/_old_/lfbl.gif) 0 100% no-repeat;
 }
 
 .lite_form_bottom_right {
-    background: url(../images/_old_/lfbr.gif) 100% 100% no-repeat;
+    background: url(../../images/_old_/lfbr.gif) 100% 100% no-repeat;
 }
 
 .lite_form_inner {
@@ -263,35 +263,35 @@ body.ae2_curator {
 }
 
 .form_top {
-    background: url(../images/_old_/fft.gif) 0 0 repeat-x;
+    background: url(../../images/_old_/fft.gif) 0 0 repeat-x;
 }
 
 .form_top_left {
-    background: url(../images/_old_/fftl.gif) 0 0 no-repeat;
+    background: url(../../images/_old_/fftl.gif) 0 0 no-repeat;
 }
 
 .form_top_right {
-    background: url(../images/_old_/fftr.gif) 100% 0 no-repeat;
+    background: url(../../images/_old_/fftr.gif) 100% 0 no-repeat;
 }
 
 .form_left {
-    background: url(../images/_old_/ffl.gif) 0 0 repeat-y;
+    background: url(../../images/_old_/ffl.gif) 0 0 repeat-y;
 }
 
 .form_right {
-    background: url(../images/_old_/ffr.gif) 100% 0 repeat-y;
+    background: url(../../images/_old_/ffr.gif) 100% 0 repeat-y;
 }
 
 .form_bottom {
-    background: url(../images/_old_/ffb.gif) 0 100% repeat-x;
+    background: url(../../images/_old_/ffb.gif) 0 100% repeat-x;
 }
 
 .form_bottom_left {
-    background: url(../images/_old_/ffbl.gif) 0 100% no-repeat;
+    background: url(../../images/_old_/ffbl.gif) 0 100% no-repeat;
 }
 
 .form_bottom_right {
-    background: url(../images/_old_/ffbr.gif) 100% 100% no-repeat;
+    background: url(../../images/_old_/ffbr.gif) 100% 100% no-repeat;
 }
 
 .form_inner {
@@ -299,39 +299,39 @@ body.ae2_curator {
 }
 
 .login_inner {
-    background: url(../images/_old_/lwbg.gif) 0 0 repeat;
+    background: url(../../images/_old_/lwbg.gif) 0 0 repeat;
 }
 
 .login_top {
-    background: url(../images/_old_/lwtb.gif) 0 0 repeat-x;
+    background: url(../../images/_old_/lwtb.gif) 0 0 repeat-x;
 }
 
 .login_top_left {
-    background: url(../images/_old_/lwtl.gif) 0 0 no-repeat;
+    background: url(../../images/_old_/lwtl.gif) 0 0 no-repeat;
 }
 
 .login_top_right {
-    background: url(../images/_old_/lwtr.gif) 100% 0 no-repeat;
+    background: url(../../images/_old_/lwtr.gif) 100% 0 no-repeat;
 }
 
 .login_left {
-    background: url(../images/_old_/lwlr.gif) 0 0 repeat-y;
+    background: url(../../images/_old_/lwlr.gif) 0 0 repeat-y;
 }
 
 .login_right {
-    background: url(../images/_old_/lwlr.gif) 100% 0 repeat-y;
+    background: url(../../images/_old_/lwlr.gif) 100% 0 repeat-y;
 }
 
 .login_bottom {
-    background: url(../images/_old_/lwtb.gif) 0 100% repeat-x;
+    background: url(../../images/_old_/lwtb.gif) 0 100% repeat-x;
 }
 
 .login_bottom_left {
-    background: url(../images/_old_/lwbl.gif) 0 100% no-repeat;
+    background: url(../../images/_old_/lwbl.gif) 0 100% no-repeat;
 }
 
 .login_bottom_right {
-    background: url(../images/_old_/lwbr.gif) 100% 100% no-repeat;
+    background: url(../../images/_old_/lwbr.gif) 100% 100% no-repeat;
     padding: 6px;    
 }
 
@@ -412,15 +412,15 @@ body.ae2_curator {
 }
 
 .ac_tree_collapsed .ac_tree_control div {
-    background: url(../images/_old_/tminmax.gif) 0 0 no-repeat;
+    background: url(../../images/_old_/tminmax.gif) 0 0 no-repeat;
 }
 
 .ac_tree_expanded .ac_tree_control div {
-    background: url(../images/_old_/tminmax.gif) 0 -9px no-repeat;
+    background: url(../../images/_old_/tminmax.gif) 0 -9px no-repeat;
 }
 
 .ac_loading {
-	background: white url('../images/busy.gif') right center no-repeat;
+	background: white url('../../images/busy.gif') right center no-repeat;
 }
 
 .ac_over {
@@ -434,35 +434,35 @@ body.ae2_curator {
 }
 
 .ac_top {
-    background: url(../images/_old_/fft.gif) 0 0 repeat-x;
+    background: url(../../images/_old_/fft.gif) 0 0 repeat-x;
 }
 
 .ac_top_left {
-    background: url(../images/_old_/fftl.gif) 0 0 no-repeat;
+    background: url(../../images/_old_/fftl.gif) 0 0 no-repeat;
 }
 
 .ac_top_right {
-    background: url(../images/_old_/fftr.gif) 100% 0 no-repeat;
+    background: url(../../images/_old_/fftr.gif) 100% 0 no-repeat;
 }
 
 .ac_left {
-    background: url(../images/_old_/ffl.gif) 0 0 repeat-y;
+    background: url(../../images/_old_/ffl.gif) 0 0 repeat-y;
 }
 
 .ac_right {
-    background: url(../images/_old_/ffr.gif) 100% 0 repeat-y;
+    background: url(../../images/_old_/ffr.gif) 100% 0 repeat-y;
 }
 
 .ac_bottom {
-    background: url(../images/_old_/ffb.gif) 0 100% repeat-x;
+    background: url(../../images/_old_/ffb.gif) 0 100% repeat-x;
 }
 
 .ac_bottom_left {
-    background: url(../images/_old_/ffbl.gif) 0 100% no-repeat;
+    background: url(../../images/_old_/ffbl.gif) 0 100% no-repeat;
 }
 
 .ac_bottom_right {
-    background: url(../images/_old_/ffbr.gif) 100% 100% no-repeat;
+    background: url(../../images/_old_/ffbr.gif) 100% 100% no-repeat;
 }
 
 .ac_inner {
