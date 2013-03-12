@@ -32,6 +32,8 @@
 
     <xsl:param name="queryid"/>
     <xsl:param name="keywords"/>
+    <xsl:param name="directsub"/>
+    <xsl:param name="private"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-sort-experiments.xsl"/>
@@ -120,12 +122,20 @@
                                         <div>
                                             <xsl:if test="not($userid = '1')">
                                                 <div class="option">
-                                                    <input id="ae-private" name="private" type="checkbox" title="Select the 'My private data only' check box to query private data only."/>
+                                                    <input id="ae-private" name="private" type="checkbox" title="Select the 'My private data only' check box to query private data only.">
+                                                        <xsl:if test="$private = 'on'">
+                                                            <xsl:attribute name="checked"/>
+                                                        </xsl:if>
+                                                    </input>
                                                     <label for="ae-private" title="Select the 'My private data only' check box to query private data only.">My private data only</label>
                                                 </div>
                                             </xsl:if>
                                             <div class="option">
-                                                <input id="ae-directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations."/>
+                                                <input id="ae-directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">
+                                                    <xsl:if test="$directsub = 'on'">
+                                                        <xsl:attribute name="checked"/>
+                                                    </xsl:if>
+                                                </input>
                                                 <label for="ae-directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                             </div>
                                             <div id="ae-submit-box"><input id="ae-query-submit" type="submit" value="Filter"/></div>
