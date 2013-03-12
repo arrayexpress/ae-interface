@@ -108,6 +108,10 @@
     color: white;
 }
 
+#ae-results .ae-stats span {
+    background-color: #597390;
+}
+
 /***********************/
 
 #ae-results th,

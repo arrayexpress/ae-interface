@@ -93,7 +93,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130311.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130312.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
