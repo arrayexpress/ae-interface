@@ -712,6 +712,10 @@ p.justify {
     color: white;
 }
 
+#ae-browse .ae-stats span {
+    background-color: #597390;
+}
+
 /* help pages stuff */
 
 #ae-help table {
