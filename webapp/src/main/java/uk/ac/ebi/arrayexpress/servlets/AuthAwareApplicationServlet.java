@@ -17,6 +17,8 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.CookieMap;
@@ -34,6 +36,8 @@ import java.util.List;
 public abstract class AuthAwareApplicationServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -82727624065665432L;
+
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final static String AE_LOGIN_USER_COOKIE = "AeLoggedUser";
     private final static String AE_LOGIN_TOKEN_COOKIE = "AeLoginToken";
@@ -64,7 +68,16 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         if (!checkAuthCookies(request)) {
             invalidateAuthCookies(response);
         }
-        doAuthenticatedRequest(request, response, requestType, getAuthUserName(request));
+        String authUserName = getAuthUserName(request);
+        String host = request.getHeader("host");
+        if (null != authUserName
+                && "http".equals(request.getScheme())
+                && null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
+            String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
+            logger.info("Redirecting authenticated request to [{}]", redirectUrl);
+            response.sendRedirect(redirectUrl);
+        }
+        doAuthenticatedRequest(request, response, requestType, authUserName);
     }
 
     private boolean checkAuthCookies( HttpServletRequest request ) throws ServletException
