@@ -589,11 +589,6 @@
 
     <!-- global search dump export -->
     <rule>
-        <from>^/export/AER2EBeye[.]xml$</from>
-        <set type="parameter" name="version">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/ebeye/xml</to>
-    </rule>
-    <rule>
         <from>^/export/ebeye_export[.]xml$</from>
         <set type="parameter" name="version">2</set>
         <to type="forward" last="true">/servlets/query/experiments/ebeye/xml</to>

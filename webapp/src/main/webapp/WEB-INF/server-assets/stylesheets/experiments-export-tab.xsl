@@ -92,9 +92,12 @@
             <xsl:with-param name="pAccession" select="accession"/>
         </xsl:call-template>
         <xsl:text>&#9;</xsl:text>
-            <xsl:if test="@loadedinatlas">Yes</xsl:if>
+        <xsl:if test="@loadedinatlas">Yes</xsl:if>
         <xsl:text>&#9;</xsl:text>
-        <xsl:value-of select="$vBaseUrl"/>/experiments/<xsl:value-of select="accession"/>
+        <xsl:value-of select="$vBaseUrl"/>
+        <xsl:text>/experiments/</xsl:text>
+        <xsl:value-of select="accession"/>
+        <xsl:text>/</xsl:text>
         <xsl:text>&#10;</xsl:text>
     </xsl:template>
 
@@ -104,13 +107,23 @@
         <xsl:variable name="vFilesOfAKind" select="ae:getMappedValue('ftp-folder', $pAccession)/file[@kind = $pKind]"/>
         <xsl:choose>
             <xsl:when test="count($vFilesOfAKind) > 1">
-                <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>?kind=<xsl:value-of select="$pKind"/>
+                <xsl:value-of select="$vBaseUrl"/>
+                <xsl:text>/files/</xsl:text>
+                <xsl:value-of select="$pAccession"/>
+                <xsl:text>/</xsl:text>
+                <xsl:value-of select="$pKind"/>
+                <xsl:text>/</xsl:text>
             </xsl:when>
             <xsl:when test="count($vFilesOfAKind) = 1">
-                <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="$pAccession"/>/<xsl:value-of
-                    select="$vFilesOfAKind/@name"/>
+                <xsl:value-of select="$vBaseUrl"/>
+                <xsl:text>/files/</xsl:text>
+                <xsl:value-of select="$pAccession"/>
+                <xsl:text>/</xsl:text>
+                <xsl:value-of select="$vFilesOfAKind/@name"/>
             </xsl:when>
-            <xsl:otherwise><xsl:text>Data is not available</xsl:text></xsl:otherwise>
+            <xsl:otherwise>
+                <xsl:text>Data is not available</xsl:text>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

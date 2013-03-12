@@ -59,7 +59,7 @@
             <channel>
                 <xsl:variable name="vCurrentDate" select="ae:dateTimeToRfc822(fn:current-dateTime())"/>
                 <title>
-                    <xsl:text>ArrayExpress Archive - Experiments</xsl:text>
+                    <xsl:text>ArrayExpress - Experiments</xsl:text>
                     <xsl:if test="$vPageSize &lt; $vTotal">
                         <xsl:text> (first </xsl:text>
                         <xsl:value-of select="$vPageSize"/>
@@ -73,7 +73,7 @@
                     <xsl:text>/browse.html?</xsl:text>
                     <xsl:value-of select="$querystring"/>
                </link>
-                <description><xsl:text>The ArrayExpress Archive is a database of functional genomics experiments including gene expression where you can query and download data collected to MIAME and MINSEQE standards</xsl:text></description>
+                <description><xsl:text>The ArrayExpress is a database of functional genomics experiments including gene expression where you can query and download data collected to MIAME and MINSEQE standards</xsl:text></description>
                 <language><xsl:text>en</xsl:text></language>
                 <pubDate><xsl:value-of select="$vCurrentDate"/></pubDate>
                 <lastBuildDate><xsl:value-of select="$vCurrentDate"/></lastBuildDate>
@@ -113,11 +113,17 @@
                     </xsl:choose>
                 </title>
                 <link>
-                    <xsl:value-of select="$vBaseUrl"/>/experiments/<xsl:value-of select="accession"/>
+                    <xsl:value-of select="$vBaseUrl"/>
+                    <xsl:text>/experiments/</xsl:text>
+                    <xsl:value-of select="accession"/>
+                    <xsl:text>/</xsl:text>
                 </link>
                 <guid>
                     <xsl:attribute name="isPermaLink">true</xsl:attribute>
-                    <xsl:value-of select="$vBaseUrl"/>/experiments/<xsl:value-of select="accession"/>
+                    <xsl:value-of select="$vBaseUrl"/>
+                    <xsl:text>/experiments/</xsl:text>
+                    <xsl:value-of select="accession"/>
+                    <xsl:text>/</xsl:text>
                 </guid>
 
                 <description>

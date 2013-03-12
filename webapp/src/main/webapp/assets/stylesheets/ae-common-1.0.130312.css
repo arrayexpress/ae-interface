@@ -586,16 +586,16 @@ p.justify {
     visibility: hidden;
 }
 
-#ae-browse th.col_pager {
+#ae-browse .col_pager {
     font-size: 100%;
     padding: 3px 5px;
     border-bottom: 2px solid #FFF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 
 #ae-browse .ae-stats {
@@ -658,6 +658,29 @@ p.justify {
 #ae-browse .col_pager span {
     background-color: #68798D;
     color: #FFF;
+}
+
+#ae-browse .col_footer {
+    font-size: 93%;
+    text-align: center;
+    padding: 0 5px 3px 5px;
+    border-top: 2px solid #FFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    background-color: #EEE;
+}
+
+#ae-browse .col_footer a {
+    padding: 0;
+    margin: 0 0 0 20px;
+}
+
+#ae-browse .col_footer a:first-child {
+    margin: 0;
 }
 
 /* help pages stuff */

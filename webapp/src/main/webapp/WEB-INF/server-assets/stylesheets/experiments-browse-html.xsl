@@ -41,6 +41,7 @@
     <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:variable name="vSearchMode" select="fn:ends-with($relative-uri, 'search.html')"/>
+    <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
 
     <xsl:template match="/">
         <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Search results for &quot;', $keywords, '&quot;') else 'Experiments'"/>
@@ -256,6 +257,13 @@
                                             <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                             <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                         </xsl:call-template>
+                                        <tr>
+                                            <td colspan="9" class="col_footer">
+                                                <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-fileformats" data-icon="t">Export table in Tab-delimited format</a>
+                                                <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon icon-fileformats" data-icon="x">Export meta-data in XML format</a>
+                                                <a href="{$context-path}/rss/v2/experiments{$vQueryString}" class="icon icon-socialmedia" data-icon="R">Subscribe to RSS feed matching your search query</a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -273,7 +281,7 @@
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
 
-        <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
+
 
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <xsl:variable name="vAccession" select="accession"/>
