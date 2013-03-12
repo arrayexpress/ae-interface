@@ -312,7 +312,7 @@
                                     <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
                                     <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
 
-                                    <a href="{$pBasePath}/arrays/{accession}?ref={$vExpAccession}">
+                                    <a href="{$pBasePath}/arrays/{accession}/?ref={$vExpAccession}">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="fn:concat(accession, ' - ', name)"/>
