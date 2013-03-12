@@ -25,8 +25,8 @@
                 version="2.0">
     
     <xsl:template match="*" mode="highlight">
-        <xsl:param name="pQueryId" as="xs:string" select="''"/>
-        <xsl:param name="pFieldName" as="xs:string" select="''"/>
+        <xsl:param name="pQueryId" as="xs:string?" select="''"/>
+        <xsl:param name="pFieldName" as="xs:string?" select="''"/>
         <xsl:element name="{if (fn:name() = 'text') then 'div' else name()}">
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates mode="highlight">
@@ -37,8 +37,8 @@
     </xsl:template>
 
     <xsl:template match="text()" mode="highlight">
-        <xsl:param name="pQueryId" as="xs:string" select="''"/>
-        <xsl:param name="pFieldName" as="xs:string" select="''"/>
+        <xsl:param name="pQueryId" as="xs:string?" select="''"/>
+        <xsl:param name="pFieldName" as="xs:string?" select="''"/>
         <xsl:call-template name="highlight">
             <xsl:with-param name="pQueryId" select="$pQueryId"/>
             <xsl:with-param name="pText" select="."/>
@@ -47,9 +47,9 @@
     </xsl:template>
 
     <xsl:template name="highlight">
-        <xsl:param name="pQueryId" as="xs:string" select="''"/>
-        <xsl:param name="pText" as="xs:string"/>
-        <xsl:param name="pFieldName" as="xs:string" select="''"/>
+        <xsl:param name="pQueryId" as="xs:string?" select="''"/>
+        <xsl:param name="pText" as="xs:string?" select="''"/>
+        <xsl:param name="pFieldName" as="xs:string?" select="''"/>
         <xsl:choose>
             <xsl:when test="fn:string-length($pQueryId) = 0 and fn:string-length($pText) != 0">
                 <xsl:value-of select="$pText"/>
