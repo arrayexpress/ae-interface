@@ -48,9 +48,11 @@
         <xsl:text>&#9;</xsl:text>
         <xsl:text>Title</xsl:text>
         <xsl:text>&#9;</xsl:text>
-        <xsl:text>Assays</xsl:text>
+        <xsl:text>Type</xsl:text>
         <xsl:text>&#9;</xsl:text>
-        <xsl:text>Species</xsl:text>
+        <xsl:text>Organism</xsl:text>
+        <xsl:text>&#9;</xsl:text>
+        <xsl:text>Assays</xsl:text>
         <xsl:text>&#9;</xsl:text>
         <xsl:text>Release Date</xsl:text>
         <xsl:text>&#9;</xsl:text>
@@ -74,11 +76,13 @@
     <xsl:template match="experiment">
         <xsl:value-of select="accession"/>
         <xsl:text>&#9;</xsl:text>
-        <xsl:value-of select="name"/>
+        <xsl:value-of select="fn:string-join(name, ', ')"/>
         <xsl:text>&#9;</xsl:text>
-        <xsl:value-of select="assays"/>
+        <xsl:value-of select="fn:string-join(experimenttype, ', ')"/>
         <xsl:text>&#9;</xsl:text>
         <xsl:value-of select="fn:string-join(organism, ', ')"/>
+        <xsl:text>&#9;</xsl:text>
+        <xsl:value-of select="assays"/>
         <xsl:text>&#9;</xsl:text>
         <xsl:value-of select="releasedate" />
         <xsl:text>&#9;</xsl:text>
