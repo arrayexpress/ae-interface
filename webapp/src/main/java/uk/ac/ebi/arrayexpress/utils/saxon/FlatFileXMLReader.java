@@ -53,7 +53,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     private static final String OPTION_SORT_BY = "sortby";
     private static final String OPTION_SORT_ORDER = "sortorder";
 
-    private enum ColDataType { STRING, INTEGER, DECIMAL }
+    private enum ColDataType    { STRING, INTEGER, DECIMAL }
 
     private char columnDelimiter;
     private char columnQuoteChar;
@@ -168,7 +168,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
 
         for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext() && headerRows > 0; headerRows--) {
             String[] row = iterator.next();
-            outputRow(ch, "header", null, row);
+            outputRow(ch, true, null, row);
             iterator.remove();
         }
 
@@ -179,7 +179,7 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         int rowSeq = 1;
         for (String[] row : ff) {
             if (rowSeq > (pageSize * (page - 1)) && rowSeq <= (pageSize * page)) {
-                outputRow(ch, "row", String.valueOf(rowSeq), row);
+                outputRow(ch, false, String.valueOf(rowSeq), row);
             }
             ++rowSeq;
         }
@@ -188,8 +188,10 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         ch.endDocument();
     }
 
-    private void outputRow( ContentHandler ch, String rowElement, String seqValue, String[] rowData ) throws SAXException
+    private void outputRow( ContentHandler ch, boolean isHeader, String seqValue, String[] rowData ) throws SAXException
     {
+        String rowElement = isHeader ? "header" : "row";
+
         AttributesImpl rowAttrs = new AttributesImpl();
         if (null !=seqValue) {
             rowAttrs.addAttribute(EMPTY_NAMESPACE, "seq", "seq", CDATA_TYPE, seqValue);
@@ -198,6 +200,9 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
         ch.startElement(EMPTY_NAMESPACE, rowElement, rowElement, rowAttrs);
 
         for (String col : rowData) {
+            if (isHeader) {
+                col = StringUtils.trimToEmpty(col);
+            }
             ch.startElement(EMPTY_NAMESPACE, "col", "col", EMPTY_ATTR);
             ch.characters(col.toCharArray(), 0, col.length());
             ch.endElement(EMPTY_NAMESPACE, "col", "col");
