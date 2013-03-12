@@ -111,7 +111,7 @@
         </similarity>
 
         <atlasexperiments>
-            <source><location>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;experimentInfoOnly=yes&amp;format=xml</location></source>
+            <source><location>${interface.application.link.atlas.exp_xml.url}</location></source>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</persistence-location>
             <reload>
                 <atstart>true</atstart>
@@ -190,7 +190,7 @@
                 <field name="pmid" title="by PubMed ID" type="string" path="bibliography/accession" analyze="false" store="false" escape="false" expand="false"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false" expand="false"/>
                 <!-- boolean fields -->
-                <field name="gxa" title="only experiments loaded in Gene Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
+                <field name="gxa" title="only those present in Expression Atlas" type="boolean" path="@loadedinatlas = 'true'"/>
                 <field name="directsub" title="only ArrayExpress direct submissions" type="boolean" path="not(contains(accession, '-GEOD-'))"/>
                 <field name="private" type="boolean" path="not(user/@id = '1')"/>
                 <field name="raw" title="experiments with raw data available" type="boolean" path="(rawdatafiles/@available = 'true' or exists(seqdatauri))" />
