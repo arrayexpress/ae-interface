@@ -704,16 +704,12 @@ p.justify {
     -webkit-border-radius: 3px;
     border-bottom: 0 none;
     background-color: #A67325;
-    color: white;
+    color: #FFF;
 }
 
 #ae-browse .col_pager span {
-    background-color: black;
-    color: white;
-}
-
-#ae-browse .ae-stats span {
     background-color: #597390;
+    color: #FFF;
 }
 
 /* help pages stuff */

@@ -100,16 +100,12 @@
     -webkit-border-radius: 3px;
     border-bottom: 0 none;
     background-color: #A67325;
-    color: white;
+    color: #FFF;
 }
 
 #ae-results .col_pager span {
-    background-color: black;
-    color: white;
-}
-
-#ae-results .ae-stats span {
     background-color: #597390;
+    color: #FFF;
 }
 
 /***********************/
@@ -121,7 +117,7 @@
 
 #ae-results .ae_samples_table_border {
     width: 100%;
-    background-color: #FFFFFF
+    background-color: #FFF
 }
 
 #ae-results .ae_samples_table {
