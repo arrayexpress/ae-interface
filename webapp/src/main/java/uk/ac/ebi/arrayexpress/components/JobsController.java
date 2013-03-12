@@ -213,14 +213,16 @@ public class JobsController extends ApplicationComponent implements IJobsControl
 
     private void terminateJobs() throws SchedulerException
     {
-        getScheduler().pauseAll();
+        if (null != getScheduler()) {
+            getScheduler().pauseAll();
 
-        List runningJobs = getScheduler().getCurrentlyExecutingJobs();
-        for (Object jec : runningJobs) {
-            JobDetail j = ((JobExecutionContext) jec).getJobDetail();
-            getScheduler().interrupt(j.getKey());
+            List runningJobs = getScheduler().getCurrentlyExecutingJobs();
+            for (Object jec : runningJobs) {
+                JobDetail j = ((JobExecutionContext) jec).getJobDetail();
+                getScheduler().interrupt(j.getKey());
+            }
+
+            getScheduler().shutdown(true);
         }
-
-        getScheduler().shutdown(true);
     }
 }
