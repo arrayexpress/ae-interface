@@ -35,7 +35,7 @@
 
     <!-- accession shortcuts -->
     <rule>
-        <from>^/(E-\w{4}-\d+)$</from>
+        <from>^/(E-\w{4}-\d+)/?$</from>
         <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/</to>
     </rule>
     <rule>
@@ -50,7 +50,7 @@
     </rule>
 
     <rule>
-        <from>^/(A-\w{4}-\d+)$</from>
+        <from>^/(A-\w{4}-\d+)/?$</from>
         <to type="redirect" last="true">%{context-path}/arrays/${upper:$1}/</to>
     </rule>
     <rule>
@@ -70,7 +70,7 @@
     </rule>
 
     <rule>
-        <from>^/(P-\w{4}-\d+)$</from>
+        <from>^/(P-\w{4}-\d+)/?$</from>
         <to type="redirect" last="true">%{context-path}/protocols/${upper:$1}/</to>
     </rule>
     <rule>
