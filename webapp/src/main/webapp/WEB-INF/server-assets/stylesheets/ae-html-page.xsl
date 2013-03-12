@@ -297,7 +297,7 @@
                                 </fieldset>
                                 <input type="hidden" name="p" value="{$context-path}{$relative-uri}?{$query-string}"/>
                                 <input type="hidden" name="r" value="{$context-path}{$relative-referer}"/>
-                                <input id="ae-login-submit" type="submit" name="s" value="Send!"/>
+                                <input id="ae-login-submit" type="submit" name="s" value="Send"/>
                             </form>
                         </div>
                     </section>
