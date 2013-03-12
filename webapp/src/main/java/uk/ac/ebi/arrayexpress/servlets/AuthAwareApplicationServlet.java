@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 public abstract class AuthAwareApplicationServlet extends ApplicationServlet
@@ -71,6 +72,15 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         String authUserName = getAuthUserName(request);
         String host = request.getHeader("host");
         String xHttps = request.getHeader("X-HTTPS");
+
+        if (logger.isDebugEnabled()) {
+            Enumeration headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+               String headerName = (String)headerNames.nextElement();
+               logger.debug("Header [{}], value [{}]", headerName, request.getHeader(headerName));
+            }
+        }
+        /*
         if (null != authUserName
                 && (!"1".equals(xHttps))
                 && null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
@@ -78,7 +88,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             logger.info("Redirecting authenticated request to [{}]", redirectUrl);
             response.sendRedirect(redirectUrl);
         }
-
+        */
         doAuthenticatedRequest(request, response, requestType, authUserName);
     }
 
