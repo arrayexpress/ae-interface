@@ -195,19 +195,19 @@ div#local-masthead ul li a:active {
 
 /* --------------------------------- */
 
-#ae-login-window *,
-#ae-feedback-window * {
+#ae-login-window *
+, #ae-feedback-window * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
 
-#ae-login-window,
-#ae-feedback-window {
+#ae-login-window
+, #ae-feedback-window {
     position: absolute;
     top: 2px;
     right: 5px;
-    background-color: #EEEEEE;
-    color: #000000;
+    background-color: #EEE;
+    color: #000;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -223,11 +223,11 @@ div#local-masthead ul li a:active {
     background-color: #FFE0B1;
 }
 
-#ae-login-window > h3,
-#ae-feedback-window > h3 {
+#ae-login-window > h3
+, #ae-feedback-window > h3 {
     font-size: 123.1%;
     color: black;
-    background-color: #DDDDDD;
+    background-color: #DDD;
     margin: 0;
     padding: 7px 9px 3px;
     border-top-left-radius: 5px;
@@ -241,34 +241,30 @@ div#local-masthead ul li a:active {
 #ae-feedback-window > h3 {
     background-color: #FFD595;
 }
-#ae-login-window > h3 a,
-#ae-feedback-window > h3 a {
+
+#ae-login-window > h3 a
+, #ae-feedback-window > h3 a {
     float: right;
     border-bottom-style: none;
 }
 
-#ae-login-window .icon-functional:before,
-#ae-feedback-window .icon-functional:before {
+#ae-login-window .icon-functional:before
+, #ae-feedback-window .icon-functional:before {
     margin: 0;
 }
 
-#ae-login-window form,
-#ae-feedback-window form {
+#ae-login-window form
+, #ae-feedback-window form {
     margin: 0;
     padding: 10px;
     width: 100%;
     overflow: auto;
 }
 
-#ae-login-window form,
-#ae-login-window form * {
-    font-family: inherit;
-}
-
-#ae-login-window form,
-#ae-login-window form *,
-#ae-feedback-window form,
-#ae-feedback-window form * {
+#ae-login-window form
+, #ae-login-window form *
+, #ae-feedback-window form
+, #ae-feedback-window form * {
     font-size: 100%;
 }
 
@@ -287,20 +283,20 @@ div#local-masthead ul li a:active {
     width: 100%;
 }
 
-#ae-login-window span {
-    font-size: 80%;
+#ae-login-window input[type = 'checkbox'] {
+    vertical-align: baseline;
+    margin: 0 3px
 }
 
-#ae-login-window span label,
-#ae-feedback-window span label {
-    vertical-align: bottom;
-    margin: 0 0 0 3px;
+#ae-login-window input[type = 'checkbox'] + label {
+    font-size: 93%;
+    vertical-align: middle
 }
 
-#ae-login-window fieldset,
-#ae-login-window span,
-#ae-feedback-window fieldset,
-#ae-feedback-window span {
+#ae-login-window fieldset
+, #ae-login-window span
+, #ae-feedback-window fieldset
+, #ae-feedback-window span {
     background-color: transparent;
     color: inherit;
 }
@@ -314,16 +310,16 @@ div#local-masthead ul li a:active {
     margin-bottom: 10px;
 }
 
-#ae-login-window fieldset label,
-#ae-feedback-window fieldset label {
+#ae-login-window fieldset label
+, #ae-feedback-window fieldset label {
     width: 100%;
     margin: 0;
     padding: 0;
     font-size: 100%;
 }
 
-#ae-login-window fieldset input,
-#ae-feedback-window fieldset input {
+#ae-login-window fieldset input
+, #ae-feedback-window fieldset input {
     width: 100%;
     margin: 3px 0 8px;
     padding: 0;
@@ -338,8 +334,8 @@ div#local-masthead ul li a:active {
     height: 10em;
 }
 
-#ae-login-submit,
-#ae-feedback-submit {
+#ae-login-submit
+, #ae-feedback-submit {
     float: right;
 }
 
@@ -355,7 +351,7 @@ div#local-masthead ul li a:active {
 }
 
 #ae-content h4 {
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCC;
     margin-bottom: 10px;
 }
 
@@ -372,15 +368,15 @@ div#local-masthead ul li a:active {
 }
 
 .text-hit {
-    background-color: #ffff00;
+    background-color: #FFFF00;
 }
 
 .text-syn {
-    background-color: #ccffaa;
+    background-color: #CCFFAA;
 }
 
 .text-efo {
-    background-color: #ffccaa;
+    background-color: #FFCCAA;
 }
 
 /* home page stuff */
@@ -401,71 +397,79 @@ p.justify {
 
 /* browse page stuff */
 
-#ae-filters {
-}
-
-#ae-filters * {
+#ae-filters *
+, #ae-query * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-#ae-filters form {
+#ae-filters form
+, #ae-query form {
+    margin: 0;
     padding: 0
 }
 
 #ae-filters form fieldset {
-    padding: 0.5em 1em;
+    padding: 10px;
+    margin: 0 0 9px;
     border: 0 none;
-    background-color: #EEEEEE !important;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #E3E1F2 !important
 }
 
-#ae-filters form legend {
+#ae-filters legend {
     padding: 0.25em 0.5em;
+    background-color: #C7C4D7;
     border: 0 none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px
 }
 
-#ae-filters form input[type='checkbox'] {
+#ae-filters label,
+#ae-filters input[type='text'],
+#ae-filters select {
+    margin: 3px 0
+}
+
+#ae-filters label,
+#ae-query label {
+    font-size: 100%;
+    display: inline-block
+}
+
+#ae-filters input[type = 'checkbox']
+, #ae-query input[type = 'checkbox'] {
     vertical-align: baseline;
-    margin: 0 0.25em
+    margin: 0 3px
 }
 
-#ae-filters form label {
-    display: inline-block;
-    font-size: 93%
+#ae-filters input[type = 'checkbox'] + label
+, #ae-query input[type = 'checkbox'] + label {
+    font-size: 93%;
+    vertical-align: middle
 }
 
-#ae-filters form select {
+/*
+#ae-filters select {
     font-family: Verdana,sans-serif;
     font-size: 12px;
 }
+*/
 
-#ae-filters form label,
-#ae-filters form input[type='text'],
-#ae-filters form select {
-    margin: 0.25em 0
-}
-
-#ae-filters form label.block {
-    display: inline-block;
-}
-
-#ae-filters form div.option {
+#ae-filters .option
+, #ae-query .option {
     float: left;
     margin-right: 10px;
     font-size: 100%
 }
 
-#ae-filters form input[type='submit'] {
+#ae-filters input[type='submit']
+, #ae-query input[type='submit'] {
     float: right
-}
-
-/* browse query box stuff */
-
-#ae-query * {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
 }
 
 #ae-query {
@@ -473,18 +477,8 @@ p.justify {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     background-color: #E3E1F2;
-    /* border: 1px solid #ADA7E3; */
     padding: 10px;
-    margin: 0 9px 10px;
-}
-
-#ae-query form {
-    padding: 0;
-    margin: 0;
-}
-
-#ae-query label {
-    font-size: 100%;
+    margin: 0 9px 9px
 }
 
 #ae-query fieldset {
@@ -495,24 +489,9 @@ p.justify {
 }
 
 #ae-query input[type='text'] {
-    /* border: 1px solid #ADA7E3; */
     width: 100%;
     font-size: 100%;
     margin: 3px 0 8px 0;
-}
-
-#ae-query input[type='checkbox'] {
-    vertical-align: baseline;
-    margin: 0 0.25em
-}
-
-#ae-query div.option {
-    float: left;
-    margin-right: 10px
-}
-
-#ae-query input[type='submit'] {
-    float: right
 }
 
 /* browse table stuff */
