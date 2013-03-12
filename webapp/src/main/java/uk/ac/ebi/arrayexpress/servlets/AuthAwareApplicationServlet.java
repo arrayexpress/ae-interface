@@ -69,16 +69,16 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             invalidateAuthCookies(response);
         }
         String authUserName = getAuthUserName(request);
-        /* TODO: fix this when our load balancer gives us a clue about whether we're under https or not
         String host = request.getHeader("host");
+        String xHttps = request.getHeader("X-HTTPS");
         if (null != authUserName
-                && "http".equals(request.getScheme())
+                && (!"1".equals(xHttps))
                 && null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
             String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
             logger.info("Redirecting authenticated request to [{}]", redirectUrl);
             response.sendRedirect(redirectUrl);
         }
-        */
+
         doAuthenticatedRequest(request, response, requestType, authUserName);
     }
 
