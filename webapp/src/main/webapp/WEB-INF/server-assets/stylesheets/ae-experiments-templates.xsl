@@ -292,8 +292,9 @@
     <xsl:template name="exp-arrays-section">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
+        <xsl:param name="pAccession"/>
 
-        <xsl:variable name="vArrays" select="search:queryIndex('arrays', fn:concat('visible:true experiment:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))"/>
+        <xsl:variable name="vArrays" select="search:queryIndex('arrays', fn:concat('visible:true experiment:', $pAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))"/>
         <xsl:variable name="vArrayCount" select="fn:count($vArrays)"/>
 
         <xsl:if test="$vArrayCount > 0">

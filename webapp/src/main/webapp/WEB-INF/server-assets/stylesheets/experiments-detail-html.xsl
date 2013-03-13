@@ -111,6 +111,7 @@
                 <xsl:call-template name="exp-arrays-section">
                     <xsl:with-param name="pQueryId" select="$queryid"/>
                     <xsl:with-param name="pBasePath" select="$context-path"/>
+                    <xsl:with-param name="pAccession" select="$vAccession"/>
                 </xsl:call-template>
 
                 <xsl:call-template name="exp-protocols-section">
