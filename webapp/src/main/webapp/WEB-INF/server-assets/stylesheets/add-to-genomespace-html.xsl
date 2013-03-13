@@ -45,9 +45,9 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-add-to-gs-1.0.0.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/experiments">Experiments</a>
+                <a href="{$context-path}/experiments/browse.html">Experiments</a>
                 <xsl:text> > </xsl:text>
-                <a href="{$context-path}/experiments/{$vAccession}"><xsl:value-of select="$vAccession"/></a>
+                <a href="{$context-path}/experiments/{$vAccession}/"><xsl:value-of select="$vAccession"/></a>
                 <xsl:text> > Send to GenomeSpace</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">

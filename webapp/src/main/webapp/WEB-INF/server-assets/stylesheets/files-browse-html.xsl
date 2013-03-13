@@ -77,15 +77,15 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/experiments">Experiments</a>
+                        <a href="{$context-path}/experiments/browse.html">Experiments</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vRefAccession}"><xsl:value-of select="$vRefAccession"/></a>
+                        <a href="{$context-path}/experiments/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a>
                         <xsl:text> > </xsl:text>
                     </xsl:when>
                     <xsl:when test="$vArrayMode">
-                        <a href="{$context-path}/arrays">Arrays</a>
+                        <a href="{$context-path}/arrays/browse.html">Arrays</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/arrays/{$vRefAccession}"><xsl:value-of select="$vRefAccession"/></a>
+                        <a href="{$context-path}/arrays/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a>
                         <xsl:text> > </xsl:text>
                     </xsl:when>
                 </xsl:choose>

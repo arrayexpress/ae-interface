@@ -46,7 +46,7 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-detail-1.0.130313.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/experiments">Experiments</a> > <xsl:value-of select="$vAccession"/>
+                <a href="{$context-path}/experiments/browse.html">Experiments</a> > <xsl:value-of select="$vAccession"/>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
             </xsl:with-param>

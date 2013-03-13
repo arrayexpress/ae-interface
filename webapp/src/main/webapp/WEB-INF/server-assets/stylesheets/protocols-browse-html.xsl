@@ -41,7 +41,7 @@
     <xsl:variable name="vRef" select="fn:upper-case($ref)"/>
     <xsl:variable name="vExperimentMode" select="fn:starts-with($relative-uri, '/experiments/') or fn:starts-with($vRef, 'E')"/>
     <xsl:variable name="vExperiment" select="if ($ref) then $vRef else fn:upper-case($experiment)"/>
-    <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode) then fn:concat('?ref=', $vReference) else (if ($query-string) then fn:concat('?', $query-string) else '')"/>
+    <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode) then fn:concat('?ref=', $vExperiment) else (if ($query-string) then fn:concat('?', $query-string) else '')"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-experiments-templates.xsl"/>
@@ -298,7 +298,7 @@
                                 <xsl:value-of select="$vLabel"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/protocols/{id}{$vQueryString}">
+                                <a href="{$context-path}/protocols/{id}/{$vQueryString}">
                                     <xsl:value-of select="$vLabel"/>
                                 </a>
                             </xsl:otherwise>

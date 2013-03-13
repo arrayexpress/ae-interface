@@ -72,9 +72,9 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130312.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/experiments">Experiments</a>
+                <a href="{$context-path}/experiments/">Experiments</a>
                 <xsl:text> > </xsl:text>
-                <a href="{$context-path}/experiments/{$vAccession}">
+                <a href="{$context-path}/experiments/{$vAccession}/">
                     <xsl:value-of select="$vAccession"/>
                 </a>
                 <xsl:text> > Samples and Data</xsl:text>

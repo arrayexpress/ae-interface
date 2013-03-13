@@ -75,7 +75,7 @@
                     <xsl:when test="$vExperimentMode">
                         <a href="{$context-path}/experiments/browse.html">Experiments</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vExperiment}">
+                        <a href="{$context-path}/experiments/{$vExperiment}/">
                             <xsl:value-of select="$vExperiment"/>
                         </a>
                         <xsl:text> > </xsl:text>
@@ -155,23 +155,25 @@
 
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'accession'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
-        <div id="ae-query">
-            <form method="get" action="browse.html">
-                <fieldset>
-                    <label for="ae-keywords-field">Search arrays by accessions, names, descriptions, or providers</label>
-                    <input id="ae-keywords-field" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div class="option">
-                        <input id="ae-directsub-field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
-                            <xsl:if test="$directsub = 'on'">
-                                <xsl:attribute name="checked"/>
-                            </xsl:if>
-                        </input>
-                        <label for="ae-directsub-field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
-                    </div>
-                    <div><input type="submit" value="Search"/></div>
-                </fieldset>
-            </form>
-        </div>
+        <xsl:if test="fn:not($vExperimentMode)">
+            <div id="ae-query">
+                <form method="get" action="browse.html">
+                    <fieldset>
+                        <label for="ae-keywords-field">Search arrays by accessions, names, descriptions, or providers</label>
+                        <input id="ae-keywords-field" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
+                        <div class="option">
+                            <input id="ae-directsub-field" name="directsub" type="checkbox" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query.">
+                                <xsl:if test="$directsub = 'on'">
+                                    <xsl:attribute name="checked"/>
+                                </xsl:if>
+                            </input>
+                            <label for="ae-directsub-field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
+                        </div>
+                        <div><input type="submit" value="Search"/></div>
+                    </fieldset>
+                </form>
+            </div>
+        </xsl:if>
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
                 <div id="ae-browse" class="persist-area">
@@ -255,10 +257,7 @@
             <tr>
                 <td class="col_accession">
                     <div>
-                        <a>
-                            <xsl:attribute name="href">
-§                                <xsl:value-of select="fn:concat($context-path, '/arrays/', accession, '/', $vQueryString)"/>
-                            </xsl:attribute>
+                        <a href="{$context-path}/arrays/{accession}/{$vQueryString}">
                             <xsl:if test="not(user/@id = '1')">
                                 <xsl:attribute name="class" select="'icon icon-functional'"/>
                                 <xsl:attribute name="data-icon" select="'L'"/>
