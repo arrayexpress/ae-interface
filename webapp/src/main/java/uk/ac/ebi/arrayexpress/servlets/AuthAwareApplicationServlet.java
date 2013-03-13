@@ -86,6 +86,7 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
                     String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
                     logger.info("Redirecting authenticated request to [{}]", redirectUrl);
                     response.sendRedirect(redirectUrl);
+                    return;
                 }
             }
         }
