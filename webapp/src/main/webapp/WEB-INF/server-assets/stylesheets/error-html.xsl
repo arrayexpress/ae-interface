@@ -62,13 +62,13 @@
                 <xsl:when test="$error-code = '403'">
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">We’re sorry but you don’t have access to this page or file</xsl:with-param>
-                        <xsl:with-param name="pMessage">Please login to access <xsl:value-of select="fn:concat($host, $error-request-uri)"/>.</xsl:with-param>
+                        <xsl:with-param name="pMessage">Please login to access <xsl:value-of select="$error-request-uri"/>.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="$error-code = '404'">
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">We’re sorry but we can’t find the page or file you requested</xsl:with-param>
-                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="fn:concat($host, $error-request-uri)"/></span> may have been removed, had its name changed, or be temporarily unavailable.</xsl:with-param>
+                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or be temporarily unavailable.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
