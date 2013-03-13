@@ -286,23 +286,13 @@
                 -->
                 <td class="col_accession">
                     <div>
-                        <xsl:variable name="vLabel">
+                        <a href="{$context-path}/protocols/{id}/{$vQueryString}">
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>
                                 <xsl:with-param name="pText" select="accession"/>
                                 <xsl:with-param name="pFieldName" select="'accession'"/>
                             </xsl:call-template>
-                        </xsl:variable>
-                        <xsl:choose>
-                            <xsl:when test="$vExperimentMode">
-                                <xsl:value-of select="$vLabel"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <a href="{$context-path}/protocols/{id}/{$vQueryString}">
-                                    <xsl:value-of select="$vLabel"/>
-                                </a>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        </a>
                     </div>
                 </td>
                 <td class="col_name">
