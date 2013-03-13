@@ -152,16 +152,17 @@
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'id'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
 
-        <div id="ae-query">
-            <form method="get" action="browse.html">
-                <fieldset>
-                    <label for="ae-query-keywords">Search protocols by accessions, names, or descriptions</label>
-                    <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div><input type="submit" value="Search"/></div>
-                </fieldset>
-            </form>
-        </div>
-
+        <xsl:if test="fn:not($vExperimentMode)">
+            <div id="ae-query">
+                <form method="get" action="browse.html">
+                    <fieldset>
+                        <label for="ae-query-keywords">Search protocols by accessions, names, or descriptions</label>
+                        <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
+                        <div><input type="submit" value="Search"/></div>
+                    </fieldset>
+                </form>
+            </div>
+        </xsl:if>
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
                 <div id="ae-browse" class="persist-area">
