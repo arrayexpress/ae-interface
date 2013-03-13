@@ -41,6 +41,7 @@
     <xsl:variable name="vRef" select="fn:upper-case($ref)"/>
     <xsl:variable name="vExperimentMode" select="fn:starts-with($relative-uri, '/experiments/') or fn:starts-with($vRef, 'E')"/>
     <xsl:variable name="vExperiment" select="if ($ref) then $vRef else fn:upper-case($experiment)"/>
+    <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode) then fn:concat('?ref=', $vReference) else (if ($query-string) then fn:concat('?', $query-string) else '')"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-experiments-templates.xsl"/>
@@ -69,16 +70,16 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/experiments">Experiments</a>
+                        <a href="{$context-path}/experiments/browse.html">Experiments</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vExperiment}">
+                        <a href="{$context-path}/experiments/{$vExperiment}/">
                             <xsl:value-of select="$vExperiment"/>
                         </a>
                         <xsl:text> > </xsl:text>
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Protocols</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/experiments/{$vExperiment}/protocols.html">Protocols</a>
+                                <a href="{$context-path}/experiments/{$vExperiment}/protocols/">Protocols</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="fn:upper-case($id)"/>
                             </xsl:otherwise>
@@ -88,7 +89,7 @@
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Protocols</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/protocols">Protocols</a>
+                                <a href="{$context-path}/protocols/browse.html">Protocols</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="upper-case($id)"/>
                             </xsl:otherwise>
@@ -297,7 +298,7 @@
                                 <xsl:value-of select="$vLabel"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/protocols/{id}">
+                                <a href="{$context-path}/protocols/{id}{$vQueryString}">
                                     <xsl:value-of select="$vLabel"/>
                                 </a>
                             </xsl:otherwise>
@@ -351,26 +352,35 @@
             <table border="0" cellpadding="0" cellspacing="0">
                 <tbody>
                     <xsl:call-template name="detail-row">
+                        <xsl:with-param name="pName" select="'Type'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
+                        <xsl:with-param name="pFieldName" select="'type'"/>
+                        <xsl:with-param name="pNode" select="$pProtocol/type"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Description'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pProtocol/text"/>
+                        <xsl:with-param name="pNode" select="$pProtocol/text"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="if (count($pProtocol/parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue">
-                            <xsl:value-of select="fn:string-join($pProtocol/parameter, ', ')"/>
-                        </xsl:with-param>
+                        <xsl:with-param name="pString" select="fn:string-join($pProtocol/parameter, ', ')"/>
+                        <xsl:with-param name="pNode"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Hardware'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pProtocol/hardware"/>
+                        <xsl:with-param name="pNode" select="$pProtocol/hardware"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Software'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pProtocol/software"/>
+                        <xsl:with-param name="pNode" select="$pProtocol/software"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-section">
                         <xsl:with-param name="pName" select="'Links'"/>

@@ -1104,36 +1104,54 @@
     </xsl:template>
 
     <xsl:template name="detail-row">
-        <xsl:param name="pName"/>
-        <xsl:param name="pFieldName"/>
-        <xsl:param name="pValue"/>
-        <xsl:if test="$pValue/node()">
-            <xsl:call-template name="detail-section">
-                <xsl:with-param name="pName" select="$pName"/>
-                <xsl:with-param name="pContent">
-                    <xsl:for-each select="$pValue">
+        <xsl:param name="pName" as="xs:string" select="''"/>
+        <xsl:param name="pQueryId" as="xs:string" select="''"/>
+        <xsl:param name="pFieldName" as="xs:string" select="''"/>
+        <xsl:param name="pString" as="xs:string" select="''"/>
+        <xsl:param name="pNode"/>
+        <xsl:choose>
+            <xsl:when test="fn:string-length($pString) > 0">
+                <xsl:call-template name="detail-section">
+                    <xsl:with-param name="pName" select="$pName"/>
+                    <xsl:with-param name="pContent">
                         <div>
-                            <xsl:apply-templates select="." mode="highlight">
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="$pString"/>
                                 <xsl:with-param name="pFieldName" select="$pFieldName"/>
-                            </xsl:apply-templates>
+                            </xsl:call-template>
                         </div>
-                    </xsl:for-each>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$pNode">
+                <xsl:call-template name="detail-section">
+                    <xsl:with-param name="pName" select="$pName"/>
+                    <xsl:with-param name="pContent">
+                        <xsl:for-each select="$pNode/node()">
+                            <div>
+                                <xsl:apply-templates select="." mode="highlight">
+                                    <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                    <xsl:with-param name="pFieldName" select="$pFieldName"/>
+                                </xsl:apply-templates>
+                            </div>
+                        </xsl:for-each>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="detail-section">
-        <xsl:param name="pName"/>
+        <xsl:param name="pName" as="xs:string"/>
         <xsl:param name="pContent"/>
-
-        <xsl:if test="fn:normalize-space(fn:string-join($pContent/*, '')) != ''">
+        <xsl:if test="fn:not(fn:matches(fn:string-join($pContent//text(), ''), '^\s*$'))">
             <tr>
                 <td class="name">
                     <div><xsl:value-of select="$pName"/></div>
                 </td>
                 <td class="value">
-                    <div><xsl:copy-of select="$pContent"/></div>
+                    <xsl:copy-of select="$pContent"/>
                 </td>
             </tr>
         </xsl:if>

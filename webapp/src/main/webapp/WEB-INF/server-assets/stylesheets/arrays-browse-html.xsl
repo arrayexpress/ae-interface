@@ -44,6 +44,7 @@
     <xsl:variable name="vExperimentMode" select="fn:starts-with($relative-uri, '/experiments/') or fn:starts-with($vRef, 'E')"/>
     <xsl:variable name="vExperiment" select="if ($ref) then $vRef else fn:upper-case($experiment)"/>
     <xsl:variable name="vReference" select="if ($vExperimentMode) then $vExperiment else if (fn:not($vBrowseMode)) then $vAccession else ''"/>
+    <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode) then fn:concat('?ref=', $vReference) else (if ($query-string) then fn:concat('?', $query-string) else '')"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-experiments-templates.xsl"/>
@@ -72,7 +73,7 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/experiments">Experiments</a>
+                        <a href="{$context-path}/experiments/browse.html">Experiments</a>
                         <xsl:text> > </xsl:text>
                         <a href="{$context-path}/experiments/{$vExperiment}">
                             <xsl:value-of select="$vExperiment"/>
@@ -81,7 +82,7 @@
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Arrays</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/experiments/{$vExperiment}/arrays.html">Arrays</a>
+                                <a href="{$context-path}/experiments/{$vExperiment}/arrays/">Arrays</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="fn:upper-case($accession)"/>
                             </xsl:otherwise>
@@ -91,7 +92,7 @@
                         <xsl:choose>
                            <xsl:when test="$vBrowseMode">Arrays</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/arrays?directsub=on">Arrays</a>
+                                <a href="{$context-path}/arrays/browse.html?directsub=on">Arrays</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="upper-case($accession)"/>
                             </xsl:otherwise>
@@ -256,10 +257,7 @@
                     <div>
                         <a>
                             <xsl:attribute name="href">
-                                <xsl:value-of select="fn:concat($context-path, '/arrays/', accession, '/')"/>
-                                <xsl:if test="$vExperimentMode">
-                                    <xsl:value-of select="fn:concat('?ref=', $vReference)"/>
-                                </xsl:if>
+§                                <xsl:value-of select="fn:concat($context-path, '/arrays/', accession, '/', $vQueryString)"/>
                             </xsl:attribute>
                             <xsl:if test="not(user/@id = '1')">
                                 <xsl:attribute name="class" select="'icon icon-functional'"/>
@@ -342,23 +340,27 @@
                 <tbody>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Organism'"/>
-                        <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pArray/organism"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
+                        <xsl:with-param name="pFieldName" select="'organism'"/>
+                        <xsl:with-param name="pNode" select="$pArray/organism"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Description'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pArray/description"/>
+                        <xsl:with-param name="pNode" select="$pArray/description"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Version'"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
                         <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pArray/version"/>
+                        <xsl:with-param name="pNode" select="$pArray/version"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Provider'"/>
-                        <xsl:with-param name="pFieldName"/>
-                        <xsl:with-param name="pValue" select="$pArray/provider"/>
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
+                        <xsl:with-param name="pFieldName" select="'provider'"/>
+                        <xsl:with-param name="pNode" select="$pArray/provider"/>
                     </xsl:call-template>
                     <xsl:call-template name="detail-section">
                         <xsl:with-param name="pName" select="'Links'"/>
@@ -375,7 +377,7 @@
                                             <a href="{$context-path}/experiments/{accession}/">
                                                 <xsl:value-of select="accession"/>
                                             </a>
-                                            <xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
+                                            <xsl:if test="fn:position() != fn:last()"><xsl:text>, </xsl:text></xsl:if>
                                         </xsl:for-each>
                                     <xsl:text>)</xsl:text>
                                 </xsl:when>
@@ -388,12 +390,12 @@
                             </xsl:choose>
                         </xsl:with-param>
                     </xsl:call-template>
-                    <xsl:if test="count($vFiles/file) > 0">
+                    <xsl:if test="fn:count($vFiles/file) > 0">
                         <xsl:call-template name="detail-section">
                             <xsl:with-param name="pName" select="'Files'"/>
                             <xsl:with-param name="pContent">
                                 <xsl:variable name="vADFile" select="$vFiles/file[@kind = 'adf' and @extension = 'txt']"/>
-                                <xsl:if test="count($vADFile) > 0">
+                                <xsl:if test="fn:count($vADFile) > 0">
                                     <div>
                                         <table cellspacing="0" cellpadding="0" border="0">
                                             <tbody>
@@ -401,11 +403,11 @@
                                                     <td class="name">Array Design</td>
                                                     <td class="value">
                                                         <xsl:for-each select="$vADFile">
-                                                            <xsl:sort select="lower-case(@name)"/>
+                                                            <xsl:sort select="fn:lower-case(@name)"/>
                                                             <a href="{$context-path}/files/{$vAccession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="=">
                                                                 <xsl:value-of select="@name"/>
                                                             </a>
-                                                            <xsl:if test="position() != last()">
+                                                            <xsl:if test="fn:position() != fn:last()">
                                                                 <xsl:text>, </xsl:text>
                                                             </xsl:if>
                                                         </xsl:for-each>
