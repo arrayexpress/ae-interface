@@ -164,6 +164,10 @@
         <to type="redirect" last="true">%{context-path}/experiments/$1/arrays/</to>
     </rule>
     <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/arrays[.]html?$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/arrays/</to>
+    </rule>
+    <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays/index[.]html?$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/arrays/</to>
     </rule>
@@ -179,6 +183,10 @@
         <to type="redirect" last="true">%{context-path}/experiments/$1/protocols/</to>
     </rule>
     <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/protocols[.]html?$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/protocols/</to>
+    </rule>
+    <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols/index[.]html?$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/protocols/</to>
     </rule>
@@ -192,6 +200,10 @@
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files$</from>
         <to type="redirect" last="true">%{context-path}/experiments/$1/files/</to>
+    </rule>
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/files[.]html?$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/files/</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/index[.]html?$</from>
@@ -234,11 +246,11 @@
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
+        <to type="permanent-redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/sdrf[.]html?$</from>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
+        <to type="permanent-redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
     </rule>
 
     <!-- add to genomespace wizard -->
@@ -459,6 +471,10 @@
     <rule>
         <from>^/help/ae_help[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/help/how_to_search.html</to>
+    </rule>
+    <rule>
+        <from>^/help/spreadsheet_submissions[.]html?$</from>
+        <to type="redirect" last="true">%{context-path}/help/submissions_overview.html</to>
     </rule>
     <rule>
         <from>^/help/(.+)[.]html?$</from>
