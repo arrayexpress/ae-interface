@@ -1126,14 +1126,17 @@
     <xsl:template name="detail-section">
         <xsl:param name="pName"/>
         <xsl:param name="pContent"/>
-        <tr>
-            <td class="name">
-                <div><xsl:value-of select="$pName"/></div>
-            </td>
-            <td class="value">
-                <div><xsl:copy-of select="$pContent"/></div>
-            </td>
-        </tr>
+
+        <xsl:if test="fn:normalize-space(fn:string-join($pContent/*, '')) != ''">
+            <tr>
+                <td class="name">
+                    <div><xsl:value-of select="$pName"/></div>
+                </td>
+                <td class="value">
+                    <div><xsl:copy-of select="$pContent"/></div>
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>

@@ -355,15 +355,13 @@
                         <xsl:with-param name="pFieldName"/>
                         <xsl:with-param name="pValue" select="$pProtocol/text"/>
                     </xsl:call-template>
-                    <xsl:if test="$pProtocol/parameter">
-                        <xsl:call-template name="detail-row">
-                            <xsl:with-param name="pName" select="if (count($pProtocol/parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
-                            <xsl:with-param name="pFieldName"/>
-                            <xsl:with-param name="pValue">
-                                <xsl:value-of select="fn:string-join($pProtocol/parameter, ', ')"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:if>
+                    <xsl:call-template name="detail-row">
+                        <xsl:with-param name="pName" select="if (count($pProtocol/parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
+                        <xsl:with-param name="pFieldName"/>
+                        <xsl:with-param name="pValue">
+                            <xsl:value-of select="fn:string-join($pProtocol/parameter, ', ')"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
                     <xsl:call-template name="detail-row">
                         <xsl:with-param name="pName" select="'Hardware'"/>
                         <xsl:with-param name="pFieldName"/>
