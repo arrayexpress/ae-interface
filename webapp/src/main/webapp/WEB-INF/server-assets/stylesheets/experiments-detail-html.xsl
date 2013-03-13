@@ -43,7 +43,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-detail-1.0.130308.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-detail-1.0.130313.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments">Experiments</a> > <xsl:value-of select="$vAccession"/>
@@ -93,7 +93,7 @@
         <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
 
-        <div id="ae-experiment">
+        <div id="ae-detail">
             <table cellpadding="0" cellspacing="0" border="0">
                 <xsl:call-template name="exp-status-section"/>
 
@@ -133,13 +133,9 @@
                     <xsl:with-param name="pQueryId" select="$queryid"/>
                 </xsl:call-template>
 
-                <xsl:call-template name="exp-minseqe-section">
-                    <xsl:with-param name="pBasePath" select="$context-path"/>
-                </xsl:call-template>
+                <xsl:call-template name="exp-minseqe-section"/>
 
-                <xsl:call-template name="exp-miame-section">
-                    <xsl:with-param name="pBasePath" select="$context-path"/>
-                </xsl:call-template>
+                <xsl:call-template name="exp-miame-section"/>
 
                 <xsl:if test="not($userid)"> <!-- curator logged in -->
                     <xsl:call-template name="exp-experimental-factors-section">

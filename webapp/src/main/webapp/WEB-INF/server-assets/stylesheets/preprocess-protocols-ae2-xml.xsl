@@ -39,10 +39,6 @@
                 <user id="{text()}"/>
             </xsl:for-each>
             -->
-            <xsl:variable name="vExperimentsForProtocol" select="ae:getMappedValue('experiments-for-protocol', id)"/>
-            <xsl:for-each select="$vExperimentsForProtocol">
-                <experiment><xsl:value-of select="."/></experiment>
-            </xsl:for-each>
             <xsl:for-each-group select="parameter" group-by="name">
                 <xsl:sort select="name" order="ascending"/>
                 <parameter>

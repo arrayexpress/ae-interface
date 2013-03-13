@@ -27,7 +27,6 @@
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
-    <xsl:include href="ae-sort-experiments.xsl"/>
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page">

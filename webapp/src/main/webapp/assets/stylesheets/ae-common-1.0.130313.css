@@ -683,6 +683,107 @@ p.justify {
     margin: 0;
 }
 
+/* detailed entity */
+
+#ae-detail {
+    margin: 0 9px;
+}
+
+#ae-detail * {
+    font-style: inherit;
+}
+
+#ae-detail table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#ae-detail tr:nth-child(odd) {
+    background-color: #E8F1FC
+}
+
+#ae-detail tr:nth-child(even) {
+    background-color: #FFF
+}
+
+#ae-detail tr table
+, #ae-detail tr tr:nth-child(n) {
+    background-color: transparent
+}
+
+#ae-detail th
+, #ae-detail td {
+    font-size: 100%
+}
+
+#ae-detail td {
+    vertical-align: top
+}
+
+#ae-detail td.name {
+    white-space: nowrap;
+    font-size: 108%;
+    color: #666;
+    background-image: url(../images/bg-ltgray.gif);
+    text-align: right;
+    vertical-align: top;
+    padding: 5px 10px;
+    width: 150px;
+}
+
+#ae-detail td.value {
+    text-align: justify;
+    vertical-align: top;
+    padding: 7px 10px;
+}
+
+#ae-detail td.value > div {
+    padding: 0 0 0.5em 0;
+}
+
+#ae-detail td.value > div:last-child {
+    padding-bottom: 0;
+}
+
+#ae-detail td em {
+    font-style: italic
+}
+
+#ae-detail td th {
+    font-size: 100%;
+    font-weight: normal;
+    color: #666;
+    background-color: transparent
+}
+
+#ae-detail td th.name
+, #ae-detail td td.name {
+    font-size: 100%;
+    text-align: left;
+    background-image: none;
+    padding: 0 10px 0 0;
+    width: 30%
+}
+
+#ae-detail td td.name {
+    color: #000;
+}
+
+#ae-detail td th.value
+, #ae-detail td td.value {
+    text-align: left;
+    padding: 0;
+    width: 70%
+}
+
+#ae-detail td i {
+    padding: 0 3px
+}
+
+#ae-detail a img {
+    vertical-align: top
+}
+
 /* help pages stuff */
 
 #ae-help table {

@@ -24,7 +24,7 @@
     extension-element-prefixes="xs fn ae search html"
     exclude-result-prefixes="xs fn ae search html"
     version="2.0">
-    
+
     <xsl:include href="ae-highlight.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
 
@@ -256,7 +256,6 @@
     </xsl:template>
 
     <xsl:template name="exp-minseqe-section">
-        <xsl:param name="pBasePath"/>
 
         <xsl:if test="minseqescores">
             <tr>
@@ -264,7 +263,6 @@
                 <td class="value">
                     <div>
                         <xsl:call-template name="exp-score">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pScores" select="minseqescores"/>
                             <xsl:with-param name="pKind" select="'minseqe'"/>
                         </xsl:call-template>
@@ -275,15 +273,13 @@
     </xsl:template>
 
     <xsl:template name="exp-miame-section">
-        <xsl:param name="pBasePath"/>
-        
+
         <xsl:if test="miamescores">
             <tr>
                 <td class="name"><div>MIAME</div></td>
                 <td class="value">
                     <div>
                         <xsl:call-template name="exp-score">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pScores" select="miamescores"/>
                             <xsl:with-param name="pKind" select="'miame'"/>
                         </xsl:call-template>
@@ -828,7 +824,6 @@
     </xsl:template>
     
     <xsl:template name="exp-score">
-        <xsl:param name="pBasePath"/>
         <xsl:param name="pScores"/>
         <xsl:param name="pKind"/>
         
@@ -838,38 +833,32 @@
                     <td>
                         <xsl:if test="$pKind = 'miame'">
                             <xsl:call-template name="exp-score-item">
-                                <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                 <xsl:with-param name="pValue" select="$pScores/reportersequencescore"/>
                             </xsl:call-template>
                         </xsl:if>
                         <xsl:if test="$pKind = 'minseqe'">
                             <xsl:call-template name="exp-score-item">
-                                <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                 <xsl:with-param name="pValue" select="$pScores/experimentdesignscore"/>
                             </xsl:call-template>
                         </xsl:if>
                     </td>
                     <td>
                         <xsl:call-template name="exp-score-item">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pValue" select="$pScores/protocolscore"/>
                         </xsl:call-template>
                     </td>
                     <td>
                         <xsl:call-template name="exp-score-item">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pValue" select="$pScores/factorvaluescore"/>
                         </xsl:call-template>
                     </td>
                     <td>
                         <xsl:call-template name="exp-score-item">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pValue" select="$pScores/derivedbioassaydatascore"/>
                         </xsl:call-template>
                     </td>
                     <td>
                         <xsl:call-template name="exp-score-item">
-                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
                             <xsl:with-param name="pValue" select="$pScores/measuredbioassaydatascore"/>
                         </xsl:call-template>
                     </td>
@@ -896,7 +885,6 @@
     </xsl:template>
     
     <xsl:template name="exp-score-item">
-        <xsl:param name="pBasePath"/>
         <xsl:param name="pValue"/>
         
         <xsl:choose>
@@ -1113,4 +1101,38 @@
             <xsl:otherwise><img src="{$pBasePath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
+    <xsl:template name="detail-row">
+        <xsl:param name="pName"/>
+        <xsl:param name="pFieldName"/>
+        <xsl:param name="pValue"/>
+        <xsl:if test="$pValue/node()">
+            <xsl:call-template name="detail-section">
+                <xsl:with-param name="pName" select="$pName"/>
+                <xsl:with-param name="pContent">
+                    <xsl:for-each select="$pValue">
+                        <div>
+                            <xsl:apply-templates select="." mode="highlight">
+                                <xsl:with-param name="pFieldName" select="$pFieldName"/>
+                            </xsl:apply-templates>
+                        </div>
+                    </xsl:for-each>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="detail-section">
+        <xsl:param name="pName"/>
+        <xsl:param name="pContent"/>
+        <tr>
+            <td class="name">
+                <div><xsl:value-of select="$pName"/></div>
+            </td>
+            <td class="value">
+                <div><xsl:copy-of select="$pContent"/></div>
+            </td>
+        </tr>
+    </xsl:template>
+
 </xsl:stylesheet>

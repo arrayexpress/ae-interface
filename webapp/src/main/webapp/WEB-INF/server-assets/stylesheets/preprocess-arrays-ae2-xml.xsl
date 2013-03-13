@@ -43,10 +43,6 @@
                     <xsl:apply-templates mode="html" select="saxon:parse-html(fn:concat('&lt;body&gt;', fn:replace(fn:replace(fn:replace(fn:replace(text(), '&lt;', '&amp;lt;', 'i'), '&amp;lt;(/?)(a|ahref|b|br|i)([^a-z])', '&lt;$1$2$3', 'i'), '(^|[^&quot;])(https?|ftp)(:[/][/][a-zA-Z0-9_~\-\$&amp;\+,\./:;=\?@]+[a-zA-Z0-9_~\-\$&amp;\+,/:;=\?@])([^&quot;]|$)', '$1&lt;a href=&quot;$2$3&quot; target=&quot;_blank&quot;&gt;$2$3&lt;/a&gt;$4', 'i'), '&lt;ahref=', '&lt;a href=', 'i'), '&lt;/body&gt;'))" />
                 </description>
             </xsl:for-each>
-            <xsl:variable name="vExperimentsForArray" select="ae:getMappedValue('experiments-for-array', accession)"/>
-            <xsl:for-each select="$vExperimentsForArray">
-                <experiment><xsl:value-of select="."/></experiment>
-            </xsl:for-each>
             <xsl:for-each select="user[string-length(text()) > 0]">
                 <user id="{text()}"/>
             </xsl:for-each>

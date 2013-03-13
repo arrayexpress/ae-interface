@@ -43,8 +43,8 @@
     <xsl:variable name="vExperiment" select="if ($ref) then $vRef else fn:upper-case($experiment)"/>
 
     <xsl:include href="ae-html-page.xsl"/>
+    <xsl:include href="ae-experiments-templates.xsl"/>
     <xsl:include href="ae-sort-protocols.xsl"/>
-    <xsl:include href="ae-highlight.xsl"/>
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
@@ -64,7 +64,7 @@
                 </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-protocols-browse-1.0.0.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-protocols-browse-1.0.130313.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
@@ -180,7 +180,7 @@
                                 <xsl:with-param name="pPageSize" select="$vPageSize"/>
                             </xsl:call-template>
                             <tr>
-                                <!--
+                                <!-- TODO: remove or uncomment
                                 <th class="col_id sortable">
                                     <xsl:text>ID</xsl:text>
                                     <xsl:call-template name="add-table-sort">
@@ -225,7 +225,7 @@
                                 <xsl:when test="$vBrowseMode"> browse-mode</xsl:when>
                             </xsl:choose>
                         </xsl:attribute>
-                        <!--
+                        <!-- TODO: remove or uncomment
                         <col class="col_id"/>
                         -->
                         <col class="col_accession"/>
@@ -260,7 +260,7 @@
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <tr>
-                <!--
+                <!-- TODO: remove or uncomment
                 <td class="col_id">
                     <div>
                         <xsl:variable name="vIdText">
@@ -293,7 +293,7 @@
                             </xsl:call-template>
                         </xsl:variable>
                         <xsl:choose>
-                            <xsl:when test="$vExperimentMode or fn:true()"> <!-- TODO: remove this when we implement protocol detail view -->
+                            <xsl:when test="$vExperimentMode">
                                 <xsl:value-of select="$vLabel"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -340,104 +340,71 @@
 
     <xsl:template name="block-protocol">
         <xsl:param name="pProtocol"/>
-        <xsl:value-of select="ae:httpStatus(404)"/>
-    </xsl:template>
+        <xsl:variable name="vExpsWithProtocol" select="search:queryIndex('experiments', concat('visible:true protocol:', $pProtocol/id, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
 
-    <xsl:template name="detail-table">
-        <xsl:variable name="vExpsWithProtocol" select="search:queryIndex('experiments', concat('visible:true protocol:', id, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
-
-        <table border="0" cellpadding="0" cellspacing="0">
-            <tbody>
-                <xsl:if test="not($userid)">
-                    <xsl:call-template name="detail-section">
-                        <xsl:with-param name="pName" select="'Source'"/>
-                        <xsl:with-param name="pContent"><div>AE2</div></xsl:with-param>
+        <h4>
+            <xsl:value-of select="$pProtocol/accession"/>
+            <xsl:text> - </xsl:text>
+            <xsl:value-of select="$pProtocol/name"/>
+        </h4>
+        <div id="ae-detail">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <xsl:call-template name="detail-row">
+                        <xsl:with-param name="pName" select="'Description'"/>
+                        <xsl:with-param name="pFieldName"/>
+                        <xsl:with-param name="pValue" select="$pProtocol/text"/>
                     </xsl:call-template>
-                </xsl:if>
-                <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="'Description'"/>
-                    <xsl:with-param name="pFieldName"/>
-                    <xsl:with-param name="pValue" select="text"/>
-                </xsl:call-template>
-                <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="if (count(parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
-                    <xsl:with-param name="pFieldName"/>
-                    <xsl:with-param name="pValue"><xsl:value-of select="string-join(parameter, ', ')"/></xsl:with-param>
-                </xsl:call-template>
-                <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="'Hardware'"/>
-                    <xsl:with-param name="pFieldName"/>
-                    <xsl:with-param name="pValue" select="hardware"/>
-                </xsl:call-template>
-                <xsl:call-template name="detail-row">
-                    <xsl:with-param name="pName" select="'Software'"/>
-                    <xsl:with-param name="pFieldName"/>
-                    <xsl:with-param name="pValue" select="software"/>
-                </xsl:call-template>
-                <xsl:call-template name="detail-section">
-                    <xsl:with-param name="pName" select="'Links'"/>
-                    <xsl:with-param name="pContent">
-                        <xsl:choose>
-                            <xsl:when test="count($vExpsWithProtocol) > 10">
-                               <a href="{$context-path}/browse.html?keywords=protocol:{id}">All <xsl:value-of select="count($vExpsWithProtocol)"/> experiments using protocol <xsl:value-of select="accession"/></a>
-                            </xsl:when>
-                            <xsl:when test="count($vExpsWithProtocol) > 1">
-                                <a href="{$context-path}/browse.html?keywords=protocol:{id}">All experiments using protocol <xsl:value-of select="accession"/></a>
-                                <xsl:text>: (</xsl:text>
-                                    <xsl:for-each select="$vExpsWithProtocol">
-                                        <xsl:sort select="accession"/>
-                                        <a href="{$context-path}/experiments/{accession}">
-                                            <xsl:value-of select="accession"/>
-                                        </a>
-                                        <xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
-                                    </xsl:for-each>
-                                <xsl:text>)</xsl:text>
-                            </xsl:when>
-                            <xsl:when test="count($vExpsWithProtocol) = 1">
-                                <a href="{$context-path}/experiments/{$vExpsWithProtocol/accession}">
-                                    <xsl:text>Experiment </xsl:text><xsl:value-of select="$vExpsWithProtocol/accession"/>
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise/>
-                        </xsl:choose>
-                    </xsl:with-param>
-                </xsl:call-template>
-            </tbody>
-        </table>
-    </xsl:template>
-
-    <xsl:template name="detail-row">
-        <xsl:param name="pName"/>
-        <xsl:param name="pFieldName"/>
-        <xsl:param name="pValue"/>
-        <xsl:if test="$pValue/node() and fn:string($pValue) != ''">
-            <xsl:call-template name="detail-section">
-                <xsl:with-param name="pName" select="$pName"/>
-                <xsl:with-param name="pContent">
-                    <xsl:for-each select="$pValue">
-                        <xsl:apply-templates select="." mode="highlight">
-                            <xsl:with-param name="pFieldName" select="$pFieldName"/>
-                            <xsl:with-param name="pQueryId" select="$queryid"/>
-                        </xsl:apply-templates>
-                    </xsl:for-each>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
-    </xsl:template>
-
-    <xsl:template name="detail-section">
-        <xsl:param name="pName"/>
-        <xsl:param name="pContent"/>
-        <tr>
-            <td class="name">
-                <div>
-                    <xsl:value-of select="$pName"/>
-                </div>
-            </td>
-            <td class="value">
-                <xsl:copy-of select="$pContent"/>
-            </td>
-        </tr>
+                    <xsl:if test="$pProtocol/parameter">
+                        <xsl:call-template name="detail-row">
+                            <xsl:with-param name="pName" select="if (count($pProtocol/parameter) &gt; 1) then 'Parameters' else 'Parameter'"/>
+                            <xsl:with-param name="pFieldName"/>
+                            <xsl:with-param name="pValue">
+                                <xsl:value-of select="fn:string-join($pProtocol/parameter, ', ')"/>
+                            </xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:if>
+                    <xsl:call-template name="detail-row">
+                        <xsl:with-param name="pName" select="'Hardware'"/>
+                        <xsl:with-param name="pFieldName"/>
+                        <xsl:with-param name="pValue" select="$pProtocol/hardware"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="detail-row">
+                        <xsl:with-param name="pName" select="'Software'"/>
+                        <xsl:with-param name="pFieldName"/>
+                        <xsl:with-param name="pValue" select="$pProtocol/software"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="detail-section">
+                        <xsl:with-param name="pName" select="'Links'"/>
+                        <xsl:with-param name="pContent">
+                            <xsl:choose>
+                                <xsl:when test="count($vExpsWithProtocol) > 10">
+                                   <a href="{$context-path}/experiments/browse.html?protocol={$pProtocol/id}">All <xsl:value-of select="count($vExpsWithProtocol)"/> experiments using protocol <xsl:value-of select="$pProtocol/accession"/></a>
+                                </xsl:when>
+                                <xsl:when test="count($vExpsWithProtocol) > 1">
+                                    <a href="{$context-path}/experiments/browse.html?protocol={$pProtocol/id}">All experiments using protocol <xsl:value-of select="$pProtocol/accession"/></a>
+                                    <xsl:text>: (</xsl:text>
+                                        <xsl:for-each select="$vExpsWithProtocol">
+                                            <xsl:sort select="accession"/>
+                                            <a href="{$context-path}/experiments/{accession}/">
+                                                <xsl:value-of select="accession"/>
+                                            </a>
+                                            <xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
+                                        </xsl:for-each>
+                                    <xsl:text>)</xsl:text>
+                                </xsl:when>
+                                <xsl:when test="count($vExpsWithProtocol) = 1">
+                                    <a href="{$context-path}/experiments/{$vExpsWithProtocol/accession}/">
+                                        <xsl:text>Experiment </xsl:text><xsl:value-of select="$vExpsWithProtocol/accession"/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise/>
+                            </xsl:choose>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </tbody>
+            </table>
+        </div>
     </xsl:template>
 
 </xsl:stylesheet>

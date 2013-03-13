@@ -41,8 +41,8 @@
     <xsl:variable name="vBrowseMode" select="fn:true()"/>
 
     <xsl:include href="ae-html-page.xsl"/>
-    <xsl:include href="ae-sort-users.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
+    <xsl:include href="ae-sort-users.xsl"/>
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
@@ -323,29 +323,6 @@
             </tbody>
         </table>
 
-    </xsl:template>
-    <xsl:template name="detail-row">
-        <xsl:param name="pName"/>
-        <xsl:param name="pValue"/>
-        <xsl:if test="string-length($pValue) > 0">
-            <xsl:call-template name="detail-section">
-                <xsl:with-param name="pName" select="$pName"/>
-                <xsl:with-param name="pContent" select="$pValue"/>
-            </xsl:call-template>
-        </xsl:if>
-    </xsl:template>
-
-    <xsl:template name="detail-section">
-        <xsl:param name="pName"/>
-        <xsl:param name="pContent"/>
-        <tr>
-            <td class="detail_name">
-                <div class="outer"><xsl:value-of select="$pName"/></div>
-            </td>
-            <td class="detail_value">
-                <div class="outer"><xsl:copy-of select="$pContent"/></div>
-            </td>
-        </tr>
     </xsl:template>
     -->
 </xsl:stylesheet>

@@ -36,8 +36,8 @@
     <xsl:param name="private"/>
 
     <xsl:include href="ae-html-page.xsl"/>
-    <xsl:include href="ae-sort-experiments.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
+    <xsl:include href="ae-sort-experiments.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:variable name="vSearchMode" select="fn:ends-with($relative-uri, 'search.html')"/>
