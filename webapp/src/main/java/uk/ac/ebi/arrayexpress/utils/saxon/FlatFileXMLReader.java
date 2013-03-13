@@ -143,7 +143,12 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
                 if (null != sortBy && 0 == colTypeSkipRows && ColDataType.STRING != sortColDataType) {
                     ColDataType dataType = getColDataType(row[sortBy]);
 
+                    // downgrade from int to decimal or string
                     if (ColDataType.INTEGER == sortColDataType && ColDataType.INTEGER != dataType) {
+                        sortColDataType = dataType;
+                    }
+                    // downgrade from decimal to string only
+                    if (ColDataType.DECIMAL == sortColDataType && ColDataType.STRING == dataType) {
                         sortColDataType = dataType;
                     }
                 }
