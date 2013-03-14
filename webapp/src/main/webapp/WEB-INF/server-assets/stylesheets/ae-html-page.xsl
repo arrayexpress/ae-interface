@@ -93,7 +93,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130313.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130314.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -536,15 +536,15 @@
 
         <tr>
             <th colspan="{$pColumnsToSpan}" class="col_pager">
-                <xsl:call-template name="table-page-size">
-                    <xsl:with-param name="pCurrentPageSize" select="$pPageSize"/>
+                <xsl:call-template name="table-pager-pages">
+                    <xsl:with-param name="pPage" select="$pPage"/>
+                    <xsl:with-param name="pPageSize" select="$pPageSize"/>
                     <xsl:with-param name="pTotal" select="$pTotal"/>
                     <xsl:with-param name="pPageParam" select="$vPageParam"/>
                     <xsl:with-param name="pPageSizeParam" select="$vPageSizeParam"/>
                 </xsl:call-template>
-                <xsl:call-template name="table-pager-pages">
-                    <xsl:with-param name="pPage" select="$pPage"/>
-                    <xsl:with-param name="pPageSize" select="$pPageSize"/>
+                <xsl:call-template name="table-page-size">
+                    <xsl:with-param name="pCurrentPageSize" select="$pPageSize"/>
                     <xsl:with-param name="pTotal" select="$pTotal"/>
                     <xsl:with-param name="pPageParam" select="$vPageParam"/>
                     <xsl:with-param name="pPageSizeParam" select="$vPageSizeParam"/>

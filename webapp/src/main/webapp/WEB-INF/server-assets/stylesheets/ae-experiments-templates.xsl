@@ -1008,7 +1008,7 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = 'biosamples' and (@extension = 'png' or @extension = 'svg')]"/>
         <xsl:if test="$vFiles">
             <tr>
-                <td class="name">Experiment Design Images</td>
+                <td class="name">Experiment design</td>
                 <td class="value">
                     <xsl:for-each select="$vFiles">
                         <xsl:sort select="lower-case(@extension)"/>

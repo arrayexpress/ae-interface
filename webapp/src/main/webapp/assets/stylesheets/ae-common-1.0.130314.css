@@ -605,12 +605,12 @@ p.justify {
     margin: 0
 }
 
-#ae-browse .ae-page-size {
+#ae-browse .ae-pager {
     float: left;
     text-align: left
 }
 
-#ae-browse .ae-pager {
+#ae-browse .ae-page-size {
     float: right;
     text-align: right
 }
