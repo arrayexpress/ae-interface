@@ -265,9 +265,20 @@
                 </td>
                 <td class="col_experiments">
                     <div>
-                        <a href="{$context-path}/experiments/browse.html?userid={id}">
-                            <xsl:value-of select="@experiment-count"/>
-                        </a>
+                        <xsl:choose>
+                            <xsl:when test="@experiment-count > 1">
+                                <a href="{$context-path}/experiments/browse.html?userid={id}">
+                                    <xsl:value-of select="@experiment-count"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:when test="@experiment-count = 1">
+                                <a href="{$context-path}/experiments/{ae:getMappedValue('experiments-for-user', id)[1]}/">
+                                    <xsl:value-of select="@experiment-count"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>-</xsl:otherwise>
+                        </xsl:choose>
+
                     </div>
                 </td>
                 <td class="col_source">
