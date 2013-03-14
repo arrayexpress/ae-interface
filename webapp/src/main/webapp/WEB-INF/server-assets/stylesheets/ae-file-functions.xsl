@@ -38,9 +38,11 @@
             <xsl:when test="$pKind = 'sdrf'">
                 <xsl:text>Sample and data relationship</xsl:text>
             </xsl:when>
+            <xsl:when test="$pKind = 'adf'">
+                <xsl:text>Array design</xsl:text>
+            </xsl:when>
             <xsl:when test="$pKind != ''">
-                <xsl:value-of select="fn:upper-case(fn:substring($pKind, 1, 1))"/>
-                <xsl:value-of select="fn:substring($pKind, 2)"/>
+                <xsl:value-of select="fn:concat(fn:upper-case(fn:substring($pKind, 1, 1)), fn:substring($pKind, 2))"/>
             </xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
