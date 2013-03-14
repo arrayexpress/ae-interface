@@ -53,7 +53,7 @@
                 <xsl:text>Users</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-users-browse-1.0.0.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-users-browse-1.0.130314.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
@@ -71,7 +71,7 @@
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-users-browse-1.0.0.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-users-browse-1.0.130314.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -141,10 +141,11 @@
                         <col class="col_id"/>
                         <col class="col_name"/>
                         <col class="col_email"/>
+                        <col class="col_experiments"/>
                         <col class="col_source"/>
                         <thead>
                             <xsl:call-template name="table-pager">
-                                <xsl:with-param name="pColumnsToSpan" select="4"/>
+                                <xsl:with-param name="pColumnsToSpan" select="5"/>
                                 <xsl:with-param name="pName" select="'user'"/>
                                 <xsl:with-param name="pTotal" select="$vTotal"/>
                                 <xsl:with-param name="pPage" select="$vPage"/>
@@ -175,6 +176,14 @@
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                     </xsl:call-template>
                                 </th>
+                                <th class="col_experiments sortable">
+                                    <xsl:text>Experiments</xsl:text>
+                                    <xsl:call-template name="add-table-sort">
+                                        <xsl:with-param name="pKind" select="'experiments'"/>
+                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                    </xsl:call-template>
+                                </th>
                                 <th class="col_source sortable">
                                     <xsl:text>Source</xsl:text>
                                     <xsl:call-template name="add-table-sort">
@@ -190,6 +199,7 @@
                         <col class="col_id"/>
                         <col class="col_name"/>
                         <col class="col_email"/>
+                        <col class="col_experiments"/>
                         <col class="col_source"/>
                         <tbody>
                             <xsl:call-template name="ae-sort-users">
@@ -200,7 +210,7 @@
                                 <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                             </xsl:call-template>
                             <tr>
-                                <td colspan="4" class="col_footer">&#160;</td>
+                                <td colspan="5" class="col_footer">&#160;</td>
                             </tr>
                         </tbody>
                     </table>
@@ -251,6 +261,11 @@
                             <xsl:with-param name="pText" select="email"/>
                             <xsl:with-param name="pFieldName" select="'email'"/>
                         </xsl:call-template>
+                    </div>
+                </td>
+                <td class="col_experiments">
+                    <div>
+                        <xsl:value-of select="@experiment-count"/>
                     </div>
                 </td>
                 <td class="col_source">
