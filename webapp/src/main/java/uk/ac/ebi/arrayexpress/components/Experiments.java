@@ -53,6 +53,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     private final String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
     private final String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
     private final String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
+    private final String MAP_EXPERIMENTS_FOR_USER = "experiments-for-user";
 
     // todo: move this to similarity component
     // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";
@@ -327,11 +328,20 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                     maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
                     List<Object> userIds = saxon.evaluateXPath(exp, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
-                        Set<String> stringSet = new HashSet<>(userIds.size());
+                        Set<String> usersForExperiment = new HashSet<>(userIds.size());
                         for (Object userId : userIds) {
-                            stringSet.add(((Item)userId).getStringValue());
+                            String id = ((Item)userId).getStringValue();
+
+                            @SuppressWarnings("unchecked")
+                            Set<String> experimentsForUser = (Set<String>)maps.getMappedValue(MAP_EXPERIMENTS_FOR_USER, id);
+                            if (null == experimentsForUser) {
+                                experimentsForUser = new HashSet<>();
+                                maps.setMappedValue(MAP_EXPERIMENTS_FOR_PROTOCOL, id, experimentsForUser);
+                            }
+                            experimentsForUser.add(accession);
+                            usersForExperiment.add(id);
                         }
-                        users.setUserMapping(INDEX_ID, accession, stringSet);
+                        users.setUserMapping(INDEX_ID, accession, usersForExperiment);
                     }
 
                     List<Object> protocolIds = saxon.evaluateXPath(exp, "protocol/id");

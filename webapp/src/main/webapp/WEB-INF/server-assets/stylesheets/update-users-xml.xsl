@@ -54,7 +54,7 @@
                         </xsl:if>
                         <xsl:for-each select="current-group()">
                             <xsl:sort select="@source" order="ascending"/>
-                            <user>
+                            <user experiment-count="{fn:count(ae:getMappingValue('experiments-for-user', id))}">
                                 <xsl:attribute name="source" select="@source"/>
                                 <xsl:attribute name="migrated" select="$vMigrated"/>
                                 <xsl:copy-of select="*"/>
