@@ -267,7 +267,7 @@
                     <div>
                         <xsl:choose>
                             <xsl:when test="@experiment-count > 1">
-                                <a href="{$context-path}/experiments/browse.html?userid={id}">
+                                <a href="{$context-path}/experiments/browse.html?keywords=userid:{id}">
                                     <xsl:value-of select="@experiment-count"/>
                                 </a>
                             </xsl:when>
