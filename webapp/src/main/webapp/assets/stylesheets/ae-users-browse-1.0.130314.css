@@ -15,21 +15,27 @@
  *
  */
 
-(function($, undefined) {
+#ae-browse .col_id {
+    width: 100px;
+    text-align: left;
+}
 
-    if($ == undefined)
-        throw "jQuery not loaded";
+#ae-browse .col_name {
+    width: 50%;
+    text-align: left;
+}
 
-    $(function() {
-        $("th.sortable").aeBrowseSorting({
-            defaultField: "id"
-            , fields:
-                { id: { title: "ID", sort : "ascending" }
-                , source: { title: "source", sort: "ascending" }
-                , name: { title: "name", sort: "ascending" }
-                , email: { title: "e-mail address", sort: "ascending" }
-            }
-        });
-    });
+#ae-browse .col_email {
+    width: 50%;
+    text-align: left;
+}
 
-})(window.jQuery);
+#ae-browse .col_source {
+    width: 120px;
+    text-align: right;
+}
+
+#ae-browse .col_source {
+    width: 100px;
+    text-align: left;
+}
