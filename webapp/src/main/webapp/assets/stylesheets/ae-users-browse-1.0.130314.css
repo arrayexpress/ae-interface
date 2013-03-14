@@ -33,6 +33,7 @@
 #ae-browse .col_experiments {
     width: 120px;
     text-align: right;
+    padding-right: 20px;
 }
 
 #ae-browse .col_source {

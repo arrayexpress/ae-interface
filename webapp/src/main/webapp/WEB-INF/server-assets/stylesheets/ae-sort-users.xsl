@@ -64,6 +64,14 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$pSortBy='experiments'">
+                <xsl:apply-templates select="$pSequence">
+                    <xsl:sort select="@experiment-count" data-type="number" order="{$pSortOrder}"/>
+
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="$pSequence">
                     <xsl:sort select="*[name()=$pSortBy][1]" order="{$pSortOrder}"/>

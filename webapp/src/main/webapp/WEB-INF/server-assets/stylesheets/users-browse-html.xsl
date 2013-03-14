@@ -265,7 +265,9 @@
                 </td>
                 <td class="col_experiments">
                     <div>
-                        <xsl:value-of select="@experiment-count"/>
+                        <a href="{$context-path}/experiments/browse.html?userid={id}">
+                            <xsl:value-of select="@experiment-count"/>
+                        </a>
                     </div>
                 </td>
                 <td class="col_source">
