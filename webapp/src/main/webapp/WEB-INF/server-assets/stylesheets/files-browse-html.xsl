@@ -75,7 +75,7 @@
                 </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-files-browse-1.0.0.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-files-browse-1.0.130314.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
@@ -451,7 +451,7 @@
                             </xsl:for-each-group>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:if test="$pComment">
+                    <xsl:if test="$pComment/div">
                         <tr>
                             <td class="col_all comment" colspan="3">
                                 <xsl:copy-of select="$pComment"/>
