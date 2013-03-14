@@ -26,6 +26,7 @@
     version="2.0">
 
     <xsl:include href="ae-highlight.xsl"/>
+    <xsl:include href="ae-file-functions.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:template name="exp-organism-section">
@@ -905,17 +906,19 @@
         
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
         <xsl:variable name="vFiles" select="$pFiles/file[(@kind = 'raw' or @kind = 'processed') and @hidden != 'true']"/>
-        
+
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind" order="descending"/>
+                <xsl:variable name="vKindTitle" select="ae:getKindTitle(fn:current-grouping-key())"/>
+
                 <tr>
-                    <td class="name"><xsl:value-of select="fn:concat(fn:upper-case(fn:substring(fn:current-grouping-key(), 1, 1)), fn:substring(fn:current-grouping-key(), 2), ' Files (', fn:count(fn:current-group()), ')')"/></td>
+                    <td class="name"><xsl:value-of select="fn:concat($vKindTitle, ' (', fn:count(fn:current-group()), ')')"/></td>
                     <td class="value">
                         <xsl:choose>
                             <xsl:when test="fn:count(fn:current-group()) > 10">
                                 <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{$vAccession}/files/{fn:current-grouping-key()}/">
-                                    <xsl:text>Click to browse </xsl:text><xsl:value-of select="fn:current-grouping-key()"/><xsl:text> files</xsl:text>
+                                    <xsl:text>Click to browse </xsl:text><xsl:value-of select="$vKindTitle"/>
                                 </a>
                             </xsl:when>
                             <xsl:otherwise>
@@ -946,12 +949,11 @@
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind"/>
+                <xsl:variable name="vKindTitle" select="ae:getKindTitle(fn:current-grouping-key())"/>
+
                 <tr>
                     <td class="name">
-                        <xsl:choose>
-                            <xsl:when test="current-grouping-key() = 'idf'">Investigation Description</xsl:when>
-                            <xsl:when test="current-grouping-key() = 'sdrf'">Sample and Data Relationship</xsl:when>
-                        </xsl:choose>
+                        <xsl:value-of select="$vKindTitle"/>
                     </td>
                     <td class="value">
                         <xsl:for-each select="current-group()">
@@ -984,7 +986,7 @@
         </xsl:variable>
         <xsl:if test="$vFiles/file">
             <tr>
-                <td class="name">Array Design<xsl:if test="count($vFiles/file) > 1">s</xsl:if></td>
+                <td class="name">Array design<xsl:if test="count($vFiles/file) > 1">s</xsl:if></td>
                 <td class="value">
                     <xsl:for-each select="$vFiles/file">
                         <xsl:sort select="@name"/>

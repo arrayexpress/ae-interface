@@ -43,9 +43,11 @@
     <xsl:variable name="vArrayMode" select="fn:starts-with($vRef, 'A')"/>
     <xsl:variable name="vRefAccession" select="if ($ref) then $vRef else $vAccession"/>
     <xsl:variable name="vExperimentArrayMode" select="$vRefAccession != $vAccession"/>
+    <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode or $vArrayMode) then fn:concat('?ref=', $vRefAccession) else ''"/>
     <xsl:variable name="vBrowseMode" select="fn:not($accession)"/>
 
     <xsl:include href="ae-html-page.xsl"/>
+    <xsl:include href="ae-file-functions.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
     <xsl:include href="ae-sort-files.xsl"/>
@@ -93,7 +95,7 @@
                     <xsl:when test="$vBrowseMode or $vExperimentMode or $vArrayMode">
                         <xsl:choose>
                             <xsl:when test="$vExperimentArrayMode">
-                                <a href="{$context-path}/experiments/{$vRefAccession}/files.html">Files</a>
+                                <a href="{$context-path}/experiments/{$vRefAccession}/files/">Files</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="$vAccession"/>
                             </xsl:when>
@@ -101,11 +103,20 @@
                         </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
-                        <a href="{$context-path}/files">Files</a>
+                        <a href="{$context-path}/files/browse.html">Files</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/files/{$vAccession}">
-                            <xsl:value-of select="$vAccession"/>
-                        </a>
+                        <xsl:choose>
+                            <xsl:when test="fn:not($kind)">
+                                <xsl:value-of select="$vAccession"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <a href="{$context-path}/files/{$vAccession}/">
+                                    <xsl:value-of select="$vAccession"/>
+                                </a>
+                                <xsl:text> > </xsl:text>
+                                <xsl:value-of select="ae:getKindTitle($kind)"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>
@@ -380,13 +391,6 @@
                         <xsl:text>Due to the large amount of data there are multiple archive files for download.</xsl:text>
                     </div>
                 </xsl:if>
-                <xsl:if test="($pMetaData/user/@id = '1') and (count($pFolder/file[size>2048000000])>0)">
-                    <div class="icon icon-generic" data-icon="l">
-                        <xsl:text>Some files are larger that 2 GB, please use </xsl:text>
-                        <a href="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/{substring($pMetaData/accession, 3, 4)}/{$pMetaData/accession}">ArrayExpress FTP</a>
-                        <xsl:text> to download these.</xsl:text>
-                    </div>
-                </xsl:if>
             </xsl:with-param>
         </xsl:call-template>
 
@@ -423,7 +427,7 @@
                                     <xsl:when test="fn:count(fn:current-group()) > 9 and @kind != ''">
                                         <tr>
                                             <td colspan="3">
-                                                <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$context-path}{$relative-uri}{fn:current-grouping-key()}/"><xsl:value-of select="fn:concat(fn:current-grouping-key(), ' (', fn:count(fn:current-group()), ' files)')"/></a>
+                                                <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$context-path}{$relative-uri}{fn:current-grouping-key()}/{$vQueryString}"><xsl:value-of select="fn:concat(ae:getKindTitle(fn:current-grouping-key()), ' (', fn:count(fn:current-group()), ')')"/></a>
                                             </td>
                                         </tr>
                                     </xsl:when>
@@ -443,12 +447,10 @@
                             </td>
                         </tr>
                     </xsl:if>
-
                 </tbody>
             </table>
         </div>
     </xsl:template>
-
 
     <xsl:template name="list-files-kind">
         <xsl:param name="pFiles"/>
