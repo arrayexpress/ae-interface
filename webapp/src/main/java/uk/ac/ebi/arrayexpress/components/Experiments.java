@@ -187,6 +187,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_USER));
         users.registerUserMap(new MapEngine.SimpleValueMap(INDEX_ID));
 
         // todo: move this to similarity component
@@ -336,7 +337,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             Set<String> experimentsForUser = (Set<String>)maps.getMappedValue(MAP_EXPERIMENTS_FOR_USER, id);
                             if (null == experimentsForUser) {
                                 experimentsForUser = new HashSet<>();
-                                maps.setMappedValue(MAP_EXPERIMENTS_FOR_PROTOCOL, id, experimentsForUser);
+                                maps.setMappedValue(MAP_EXPERIMENTS_FOR_USER, id, experimentsForUser);
                             }
                             experimentsForUser.add(accession);
                             usersForExperiment.add(id);
