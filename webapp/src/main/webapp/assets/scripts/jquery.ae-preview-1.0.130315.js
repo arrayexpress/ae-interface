@@ -63,14 +63,16 @@
         var page = $.query.get("page") || "about.html";
 
         $.get(page, function(html) {
-            var title = html.match("<title>(.*?)</title>")[1];
-            document.title = title.replace(/&lt;/g, "<");
+            if (typeof html == "string") {
+                var title = html.match("<title>(.*?)</title>")[1];
+                document.title = title.replace(/&lt;/g, "<");
+            }
 
             var $content = $(html).find("section,aside");
             $content.appendTo("#content");
 
             fixImagesLinks();
-        }).fail(function() {
+        }, "text").fail(function() {
             $("#content").html('<div style="text-align:center; margin: 100px 0">Page <span class="alert">' + page + '</span> was not found.</div></div>');
             fixImagesLinks();
         });
