@@ -62,7 +62,7 @@
                 <xsl:when test="$error-code = '403'">
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">We’re sorry but you don’t have access to this page or file</xsl:with-param>
-                        <xsl:with-param name="pMessage">Please login to access <xsl:value-of select="$error-request-uri"/>.</xsl:with-param>
+                        <xsl:with-param name="pMessage">Please login to access <span class="alert"><xsl:value-of select="$error-request-uri"/></span>.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="$error-code = '404'">

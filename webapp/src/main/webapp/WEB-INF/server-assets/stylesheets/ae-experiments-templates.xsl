@@ -918,7 +918,7 @@
                         <xsl:choose>
                             <xsl:when test="fn:count(fn:current-group()) > 10">
                                 <a class="icon icon-awesome" data-icon="&#xf07b;" href="{$pBasePath}/experiments/{$vAccession}/files/{fn:current-grouping-key()}/">
-                                    <xsl:text>Click to browse </xsl:text><xsl:value-of select="$vKindTitle"/>
+                                    <xsl:text>Click to browse </xsl:text><xsl:value-of select="fn:lower-case($vKindTitle)"/>
                                 </a>
                             </xsl:when>
                             <xsl:otherwise>
