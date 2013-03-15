@@ -32,6 +32,8 @@ import java.io.PrintWriter;
 
 public class ErrorServlet extends AuthAwareApplicationServlet {
 
+    private static final long serialVersionUID = 2398894710133584526L;
+
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )

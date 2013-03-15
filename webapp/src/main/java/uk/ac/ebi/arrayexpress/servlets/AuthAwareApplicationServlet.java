@@ -79,14 +79,23 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             }
         }
         */
+
+        // TODO: this is so hacky, I cannot believe I'm commiting this
         if (null != authUserName) {
             String host = request.getHeader("host");
+
             if (null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
+
                 if (!"1".equals(request.getHeader("x-https"))) {
-                    String redirectUrl = "https://" + host + request.getParameter("original-request-uri");
-                    logger.info("Redirecting authenticated request to [{}]", redirectUrl);
-                    response.sendRedirect(redirectUrl);
-                    return;
+
+                    String requestUri =  request.getParameter("original-request-uri");
+
+                    if (null != requestUri) {
+                        String redirectUrl = "https://" + host + requestUri;
+                        logger.info("Redirecting authenticated request to [{}]", redirectUrl);
+                        response.sendRedirect(redirectUrl);
+                        return;
+                    }
                 }
             }
         }
