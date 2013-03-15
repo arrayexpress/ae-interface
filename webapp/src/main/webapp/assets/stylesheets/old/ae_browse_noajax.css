@@ -407,7 +407,7 @@ ae_results_body img {
 }
 
 .ae_results_tr_error td {
-    background: url(../../images/basic_warning_64.gif) 50% 50% no-repeat;
+    background: url(../../images/_old_/basic_warning_64.gif) 50% 50% no-repeat;
     text-align: center;
     color: black;
     font-size: 11px;

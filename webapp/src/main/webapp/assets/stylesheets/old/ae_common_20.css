@@ -195,19 +195,19 @@ body.ae2_curator {
 }
 
 .ae_info_area {
-    background-image: url(../../images/basic_info_64.gif);
+    background-image: url(../../images/_old_/basic_info_64.gif);
 }
 
 .ae_warn_area {
-    background-image: url(../../images/basic_warning_64.gif);
+    background-image: url(../../images/_old_/basic_warning_64.gif);
 }
 
 .ae_protected_area {
-    background-image: url(../../images/basic_lock_64.gif);
+    background-image: url(../../images/_old_/basic_lock_64.gif);
 }
 
 .ae_error_area {
-    background-image: url(../../images/basic_block_64.gif);
+    background-image: url(../../images/_old_/basic_block_64.gif);
 }
 
 .ae_warn_area div,
