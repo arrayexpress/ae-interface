@@ -93,7 +93,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130314.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130315.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -278,7 +278,7 @@
                                     <input id="ae-login-remember" name="r" type="checkbox"/>
                                     <label for="ae-login-remember">Remember me</label>
                                 </span>
-                                <input id="ae-login-submit" type="submit" name="s" value="Login"/>
+                                <input type="submit" name="s" value="Login"/>
                             </form>
                             <div id="ae-login-status"/>
                         </div>
@@ -297,7 +297,7 @@
                                 </fieldset>
                                 <input type="hidden" name="p" value="{$context-path}{$relative-uri}?{$query-string}"/>
                                 <input type="hidden" name="r" value="{$context-path}{$relative-referer}"/>
-                                <input id="ae-login-submit" type="submit" name="s" value="Send"/>
+                                <input type="submit" name="s" value="Send"/>
                             </form>
                         </div>
                     </section>

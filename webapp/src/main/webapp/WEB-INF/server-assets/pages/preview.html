@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>ArrayExpress &lt; EMBL-EBI</title>
+    <meta name="description" content="EMBL-EBI">
+    <meta name="keywords" content="bioinformatics, europe, institute">
+    <meta name="author" content="EMBL-EBI">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/arrayexpress/assets/stylesheets/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/arrayexpress/assets/stylesheets/ae-common-1.0.130314.css" type="text/css">
+    <script type="text/javascript" src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery.query-2.1.7m-ebi.js"></script>
+    <script type="text/javascript" src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/ae-preview.js"></script>
+    <script type="text/javascript" src="http://www.ebi.ac.uk/web_guidelines/js/libs/modernizr.custom.49274.js"></script>
+</head>
+<body class="level2 narrow">
+<div id="skip-to">
+    <ul>
+        <li><a href="#content" title="">Skip to main content</a></li>
+        <li><a href="#local-nav" title="">Skip to local navigation</a></li>
+        <li><a href="#global-nav" title="">Skip to EBI global navigation menu</a></li>
+        <li><a href="#global-nav-expanded" title="">Skip to expanded EBI global navigation menu (includes all
+            sub-sections)</a></li>
+    </ul>
+</div>
+<div id="wrapper" class="container_24">
+    <header>
+        <div id="global-masthead" class="masthead grid_24"><a href="//www.ebi.ac.uk/"
+                                                              title="Go to the EMBL-EBI homepage"><img
+                src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
+                alt="EMBL European Bioinformatics Institute"></a>
+            <nav>
+                <ul id="global-nav">
+                    <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+                    <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+                    <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+                    <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
+                    <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="local-masthead" class="masthead grid_24 nomenu">
+            <div id="local-title" class="grid_12 alpha"><h1><a href="/arrayexpress/"
+                                                               title="Back to ArrayExpress homepage">ArrayExpress</a>
+            </h1></div>
+            <div class="grid_12 omega">
+                <form id="local-search" name="local-search" action="/arrayexpress/search" method="get">
+                    <fieldset>
+                        <div class="left"><label><input type="text" name="query" id="local-searchbox"></label><span
+                                class="examples">Examples: <a href="/arrayexpress/search?query=E-MEXP-31">E-MEXP-31</a>, <a
+                                href="/arrayexpress/search?query=cancer">cancer</a>, <a
+                                href="/arrayexpress/search?query=p53">p53</a>, <a
+                                href="/arrayexpress/search?query=Geuvadis">Geuvadis</a></span></div>
+                        <div class="right"><input type="submit" value="Search" class="submit"><span class="adv"><a
+                                href="/arrayexpress/search" id="adv-search" title="Advanced">Advanced</a></span></div>
+                    </fieldset>
+                </form>
+            </div>
+            <nav>
+                <ul class="grid_24" id="local-nav">
+                    <li class="first"><a href="/arrayexpress/" title="ArrayExpress 2.0.r23189">Home</a></li>
+                    <li><a href="/arrayexpress/experiments/browse.html" title="Experiments">Experiments</a></li>
+                    <li><a href="/arrayexpress/arrays/browse.html?directsub=on" title="Arrays">Arrays</a></li>
+                    <li><a href="/arrayexpress/submit/overview.html" title="Submit">Submit</a></li>
+                    <li><a href="/arrayexpress/help/index.html" title="Help">Help</a></li>
+                    <li class="last"><a href="/arrayexpress/about.html">About ArrayExpress</a></li>
+                    <li class="functional last login"><a href="#" class="icon icon-functional" data-icon="l">Login</a>
+                    </li>
+                    <li class="functional feedback"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div id="content" role="main" class="grid_24 clearfix">
+        <section>
+            <div id="ae-login-window" style="display:none"><h3>ArrayExpress submitter/reviewer login<a
+                    id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"></a></h3>
+
+                <form id="ae-login" method="post" action="https://www.ebi.ac.uk/arrayexpress/auth">
+                    <fieldset><label for="ae-user-field">User name</label><input id="ae-user-field" name="u"
+                                                                                 maxlength="50"></fieldset>
+                    <fieldset><label for="ae-pass-field">Password</label><input id="ae-pass-field" type="password"
+                                                                                name="p" maxlength="50"></fieldset>
+                    <span><input id="ae-login-remember" name="r" type="checkbox"><label for="ae-login-remember">Remember
+                        me</label></span><input id="ae-login-submit" type="submit" name="s" value="Login"></form>
+                <div id="ae-login-status"></div>
+            </div>
+        </section>
+        <section>
+            <div id="ae-feedback-window" style="display:none"><h3>Have your say<a id="ae-feedback-close" href="#"
+                                                                                  class="icon icon-functional"
+                                                                                  data-icon="x"></a></h3>
+
+                <form id="ae-feedback" method="post" action="#" onsubmit="return false">
+                    <fieldset><label for="ae-feedback-message">We value your feedback. Please leave your comment
+                        below.</label><textarea id="ae-feedback-message" name="m"></textarea></fieldset>
+                    <fieldset><label for="ae-email-field">Optionally please enter your email address if you wish to get
+                        a response. We will never share this address with anyone else.</label><input id="ae-email-field"
+                                                                                                     name="e"
+                                                                                                     maxlength="50">
+                    </fieldset>
+                    <input type="hidden" name="p" value="/arrayexpress/test.html?"><input type="hidden" name="r"
+                                                                                          value="/arrayexpress"><input id="ae-feedback-submit"
+                        type="submit" name="s" value="Send"></form>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <div id="global-footer" class="grid_24">
+            <nav id="global-nav-expanded">
+                <div class="grid_4 alpha"><h3 class="embl-ebi"><a href="//www.ebi.ac.uk/" title="EMBL-EBI">EMBL-EBI</a>
+                </h3></div>
+                <div class="grid_4"><h3 class="services"><a href="//www.ebi.ac.uk/services">Services</a></h3></div>
+                <div class="grid_4"><h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3></div>
+                <div class="grid_4"><h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3></div>
+                <div class="grid_4"><h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3></div>
+                <div class="grid_4 omega"><h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3></div>
+            </nav>
+            <section id="ebi-footer-meta"><p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton,
+                Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p>
+
+                <p class="legal">Copyright © EMBL-EBI 2013 | EBI is an Outstation of the <a href="http://www.embl.org">European
+                    Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a>
+                    | <a href="/about/terms-of-use">Terms of use</a></p></section>
+        </div>
+    </footer>
+</div>
+<script defer src="http://www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
+<script defer src="http://www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
+<script src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery.cookie-1.0.js"></script>
+<script src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery.caret-range-1.0.js"></script>
+<script src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery.autocomplete-1.1.0.130305.js"></script>
+<script src="http://www.ebi.ac.uk/arrayexpress/assets/scripts/jquery.ae-common-1.0.130312.js"></script>
+<script type="text/javascript">var contextPath = "/arrayexpress";</script>
+</body>
+</html>

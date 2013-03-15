@@ -334,8 +334,8 @@ div#local-masthead ul li a:active {
     height: 10em;
 }
 
-#ae-login-submit
-, #ae-feedback-submit {
+#ae-login-window input[type='submit']
+, #ae-feedback-window  input[type='submit'] {
     float: right;
 }
 
