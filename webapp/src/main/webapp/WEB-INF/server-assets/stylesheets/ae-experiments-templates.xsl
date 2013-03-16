@@ -570,44 +570,58 @@
     </xsl:template>
 
     <xsl:template name="exp-status-section">
+        <xsl:param name="pIsGoogleBot" as="xs:boolean"/>
+
         <xsl:variable name="vDates" select="submissiondate | lastupdatedate | releasedate"/>
         <xsl:if test="$vDates">
             <tr>
-                <td class="name">
-                    <div>Status</div>
-                </td>
-                <td class="value">
-                    <div>
-                        <xsl:for-each select="$vDates">
-                            <xsl:sort select="fn:translate(text(),'-','')" data-type="number"/>
-                            <xsl:sort select="fn:translate(fn:substring(fn:name(), 1, 1), 'slr', 'abc')"/>
+                <xsl:choose>
+                <xsl:when test="$pIsGoogleBot">
+                    <td class="name">
+                        <div>Released on</div>
+                    </td>
+                    <td class="value">
+                        <div><xsl:value-of select="ae:formatDateGoogle(releasedate)"/></div>
+                    </td>
+                </xsl:when>
+                <xsl:otherwise>
+                        <td class="name">
+                            <div>Status</div>
+                        </td>
+                        <td class="value">
+                            <div>
+                                <xsl:for-each select="$vDates">
+                                    <xsl:sort select="fn:translate(text(),'-','')" data-type="number"/>
+                                    <xsl:sort select="fn:translate(fn:substring(fn:name(), 1, 1), 'slr', 'abc')"/>
 
-                            <xsl:variable name="vLabel">
-                                <xsl:if test="ae:isFutureDate(text())">will be </xsl:if>
-                                <xsl:choose>
-                                    <xsl:when test="fn:name() = 'submissiondate'">submitted</xsl:when>
-                                    <xsl:when test="fn:name() = 'lastupdatedate'">
-                                        <xsl:if test="not(ae:isFutureDate(text()))">last </xsl:if>
-                                        <xsl:text>updated</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>released</xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:variable>
-                            <xsl:choose>
-                                <xsl:when test="fn:position() = 1">
-                                    <xsl:value-of select="fn:upper-case(fn:substring($vLabel, 1, 1))"/>
-                                    <xsl:value-of select="fn:substring($vLabel, 2)"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>, </xsl:text>
-                                    <xsl:value-of select="$vLabel"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="ae:formatDate(text())"/>
-                        </xsl:for-each>
-                    </div>
-                </td>
+                                    <xsl:variable name="vLabel">
+                                        <xsl:if test="ae:isFutureDate(text())">will be </xsl:if>
+                                        <xsl:choose>
+                                            <xsl:when test="fn:name() = 'submissiondate'">submitted</xsl:when>
+                                            <xsl:when test="fn:name() = 'lastupdatedate'">
+                                                <xsl:if test="not(ae:isFutureDate(text()))">last </xsl:if>
+                                                <xsl:text>updated</xsl:text>
+                                            </xsl:when>
+                                            <xsl:otherwise>released</xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:variable>
+                                    <xsl:choose>
+                                        <xsl:when test="fn:position() = 1">
+                                            <xsl:value-of select="fn:upper-case(fn:substring($vLabel, 1, 1))"/>
+                                            <xsl:value-of select="fn:substring($vLabel, 2)"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>, </xsl:text>
+                                            <xsl:value-of select="$vLabel"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text> </xsl:text>
+                                    <xsl:value-of select="ae:formatDate(text())"/>
+                                </xsl:for-each>
+                            </div>
+                        </td>
+                    </xsl:otherwise>
+                </xsl:choose>
             </tr>
         </xsl:if>
     </xsl:template>

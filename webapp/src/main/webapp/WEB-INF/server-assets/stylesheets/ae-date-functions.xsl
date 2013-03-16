@@ -106,6 +106,12 @@
         </xsl:choose>
     </xsl:function>
 
+    <xsl:function name="ae:formatDateGoogle" as="xs:string">
+        <xsl:param name="pDate"/>
+
+        <xsl:value-of select="fn:format-date(xs:date($pDate), '[D1] [MNn] [Y0001]', 'en', (), ())"/>
+    </xsl:function>
+
     <xsl:function name="ae:formatDateShort" as="xs:string">
         <xsl:param name="pDate"/>
         <xsl:variable name="vTodaysDate" as="xs:date" select="fn:current-date()"/>

@@ -58,6 +58,7 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
             }
             // populating some extra parameters from the Request object
             String host = request.getScheme() + "://" + request.getHeader("host");
+            this.put("user-agent", request.getHeader("User-agent"));
             this.put("host", host);
             this.put("context-path", request.getContextPath());
             this.put("request-uri", request.getRequestURI());

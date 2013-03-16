@@ -274,6 +274,11 @@
                 <artifactId>jopt-simple</artifactId>
                 <version>4.4</version>
             </dependency>
+            <dependency>
+                <groupId>net.sf.uadetector</groupId>
+                <artifactId>uadetector-resources</artifactId>
+                <version>2013.02</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

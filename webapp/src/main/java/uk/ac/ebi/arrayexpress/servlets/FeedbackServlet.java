@@ -17,6 +17,9 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import net.sf.uadetector.UserAgent;
+import net.sf.uadetector.UserAgentStringParser;
+import net.sf.uadetector.service.UADetectorServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
@@ -51,17 +54,29 @@ public class FeedbackServlet extends ApplicationServlet
         String page = request.getParameter("p");
         String ref = request.getParameter("r");
 
+        UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
+        UserAgent agent = parser.parse(request.getHeader("User-Agent"));
+
+        String originator = getPreferences().getString("app.reports.originator");
+        if (null != email && email.matches("^[^\\s]*@[A-Za-z0-9-]+[.][A-Za-z0-9.-]+$")) {
+            originator = email;
+        }
         if (!"".equals(message)) {
             getApplication().sendEmail(
-                    "ArrayExpress User Feedback"
-                    , "Application [${variable.appname}]" + StringTools.EOL
-                    + "Host [${variable.hostname}]" + StringTools.EOL
-                    + StringTools.EOL
-                    + "From [" + ("".equals(email) ? "Unknown sender" : email) + "]" + StringTools.EOL
-                    + "Page [" + page + "]" + StringTools.EOL
-                    + "Referer [" + ref + "]" + StringTools.EOL
+                    originator
+                    , getPreferences().getStringArray("ae.feedback.recipients")
+                    , getPreferences().getString("ae.feedback.subject")
+                    , (!originator.equals(email) ? ("From: " + ("".equals(email) ? "unknown sender" : email) + StringTools.EOL) : "")
                     + StringTools.EOL
                     + message + StringTools.EOL
+                    + StringTools.EOL
+                    + "---" + StringTools.EOL
+                    + "Page " + page + StringTools.EOL
+                    + (!"".equals(ref) ? "Referrer " + ref + StringTools.EOL : "")
+                    + "Using " + agent.getName() + " " + agent.getVersionNumber().toVersionString()
+                    + " on " + agent.getOperatingSystem().getName() + StringTools.EOL
+                    + StringTools.EOL
+                    + "Sent by ${variable.appname} running on ${variable.hostname}" + StringTools.EOL
                     + StringTools.EOL
             );
         }

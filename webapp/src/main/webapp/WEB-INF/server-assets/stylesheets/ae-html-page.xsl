@@ -295,8 +295,8 @@
                                     <label for="ae-email-field">Optionally please enter your email address if you wish to get a response. We will never share this address with anyone else.</label>
                                     <input id="ae-email-field" name="e" maxlength="50"/>
                                 </fieldset>
-                                <input type="hidden" name="p" value="{$context-path}{$relative-uri}?{$query-string}"/>
-                                <input type="hidden" name="r" value="{$context-path}{$relative-referer}"/>
+                                <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
+                                <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
                                 <input class="submit" type="submit" name="s" value="Send"/>
                             </form>
                         </div>

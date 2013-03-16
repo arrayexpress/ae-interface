@@ -47,7 +47,7 @@ public abstract class Application
     public Application( String prefsName )
     {
         prefs = new ApplicationPreferences(prefsName);
-        components = new LinkedHashMap<String, ApplicationComponent>();
+        components = new LinkedHashMap<>();
         // setting application instance available to whoever wants it
         if (null == appInstance) {
             appInstance = this;
@@ -129,7 +129,7 @@ public abstract class Application
         }
     }
 
-    public void sendEmail( String subject, String message )
+    public void sendEmail( String originator, String[] recipients, String subject, String message )
     {
         try {
             Thread currentThread = Thread.currentThread();
@@ -141,16 +141,24 @@ public abstract class Application
                 logger.debug("Caught an exception:", xx);
             }
 
-            Map<String, String> params = new HashMap<String, String>();
+            if (null == recipients || 0 == recipients.length) {
+                recipients = getPreferences().getStringArray("app.reports.recipients");
+            }
+
+            if (null == originator || "".equals(originator)) {
+                originator = getPreferences().getString("app.reports.originator");
+            }
+
+            Map<String, String> params = new HashMap<>();
             params.put("variable.appname", getName());
             params.put("variable.thread", String.valueOf(currentThread));
             params.put("variable.hostname", hostName);
             StrSubstitutor sub = new StrSubstitutor(params);
-            
-            emailer.send(getPreferences().getStringArray("app.reports.recipients")
+
+            emailer.send(recipients
                     , subject
                     , sub.replace(message)
-                    , getPreferences().getString("app.reports.originator")
+                    , originator
             );
 
         } catch (Throwable x) {
@@ -160,7 +168,10 @@ public abstract class Application
 
     public void sendExceptionReport( String message, Throwable x )
     {
-        sendEmail( getPreferences().getString("app.reports.subject")
+        sendEmail(
+                null
+                , null
+                , getPreferences().getString("app.reports.subject")
                 , message + ": " + x.getMessage() + StringTools.EOL
                     + "Application [${variable.appname}]" + StringTools.EOL
                     + "Host [${variable.hostname}]" + StringTools.EOL

@@ -2,8 +2,8 @@
 <configuration>
     <app>
         <reports>
-            <originator>"ArrayExpress Archive" &lt;ae-mgmt@ebi.ac.uk&gt;</originator>
-            <recipients>${interface.application.pref.reports.recipients}</recipients>
+            <originator>"ArrayExpress" &lt;ae-mgmt@ebi.ac.uk&gt;</originator>
+            <recipients>ae-mgmt@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
             <subject>Runtime exception report</subject>
             <smtp>
                 <host>smtp.ebi.ac.uk</host>
@@ -12,7 +12,10 @@
         </reports>
     </app>
     <ae>
-
+        <feedback>
+            <recipients>nkolesnikov@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
+            <subject>ArrayExpress user feedback</subject>
+        </feedback>
         <db>
             <connections>
                 <connection>

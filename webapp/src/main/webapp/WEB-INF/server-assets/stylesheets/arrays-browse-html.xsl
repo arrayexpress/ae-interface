@@ -169,7 +169,7 @@
                             </input>
                             <label for="ae-directsub-field" title="Select the 'ArrayExpress data only' check box to query for platform designs submitted directly to ArrayExpress. If you want to query GEO data only include AND A-GEOD* in your query">ArrayExpress data only</label>
                         </div>
-                        <div><input type="submit" value="Search"/></div>
+                        <div><input class="submit" type="submit" value="Search"/></div>
                     </fieldset>
                 </form>
             </div>

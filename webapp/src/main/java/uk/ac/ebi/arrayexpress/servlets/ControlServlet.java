@@ -76,7 +76,9 @@ public class ControlServlet extends ApplicationServlet
                 ((JobsController) getComponent("JobsController")).executeJob(command);
             } else if ("test-email".equals(command)) {
                 getApplication().sendEmail(
-                        "Test message"
+                        null
+                        , null
+                        , "Test message"
                         , "This test message was sent from [${variable.appname}] running on [${variable.hostname}], please ignore."
                             + StringTools.EOL
                 );

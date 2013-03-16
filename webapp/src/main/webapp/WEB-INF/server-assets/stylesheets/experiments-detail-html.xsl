@@ -27,8 +27,10 @@
 
     <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
+    <xsl:param name="user-agent"/>
 
-    <xsl:variable name="vAccession" select="upper-case($accession)"/>
+    <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
+    <xsl:variable name="vIsGoogleBot" select="fn:matches($user-agent, '.*Googlebot.*')"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-experiments-templates.xsl"/>
@@ -95,7 +97,9 @@
 
         <div id="ae-detail">
             <table cellpadding="0" cellspacing="0" border="0">
-                <xsl:call-template name="exp-status-section"/>
+                <xsl:call-template name="exp-status-section">
+                    <xsl:with-param name="pIsGoogleBot" select="$vIsGoogleBot"/>
+                </xsl:call-template>
 
                 <xsl:call-template name="exp-organism-section">
                     <xsl:with-param name="pQueryId" select="$queryid"/>
