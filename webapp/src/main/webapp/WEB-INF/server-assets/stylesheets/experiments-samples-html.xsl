@@ -69,7 +69,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130312.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130316.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a>
@@ -475,7 +475,7 @@
                                                     </xsl:otherwise>
                                                 </xsl:choose>
                                             </xsl:when>
-                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run'">
+                                            <xsl:when test="(fn:lower-case($vColInfo/@name) = 'ena_run') and ($vColText != '')">
                                                 <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
 
                                                 <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
@@ -486,13 +486,16 @@
                                                     <xsl:with-param name="pBAMFile" select="$vBAMFile"/>
                                                 </xsl:call-template>
                                             </xsl:when>
-                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri'">
+                                            <xsl:when test="(fn:lower-case($vColInfo/@name) = 'fastq_uri') and ($vColText != '')">
                                                 <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
                                                 <a href="{$vColText}" title="Click to download {$vFileName}">
                                                     <span class="icon icon-functional" data-icon="="/>
                                                     <!-- <img src="{$context-path}/assets/images/ena_data_save.gif" width="16" height="16"/> -->
                                                 </a>
                                             </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="'-'"/>
+                                            </xsl:otherwise>
                                         </xsl:choose>
                                     </xsl:when>
 

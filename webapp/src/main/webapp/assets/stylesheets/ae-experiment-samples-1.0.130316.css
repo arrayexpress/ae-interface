@@ -52,12 +52,12 @@
     margin: 0
 }
 
-#ae-results .ae-page-size {
+#ae-results .ae-pager {
     float: left;
     text-align: left
 }
 
-#ae-results .ae-pager {
+#ae-results .ae-page-size {
     float: right;
     text-align: right
 }
