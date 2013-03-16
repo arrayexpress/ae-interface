@@ -31,7 +31,8 @@
         <interface.application.link.atlas.exp_xml.url>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;amp;experimentInfoOnly=yes&amp;amp;format=xml</interface.application.link.atlas.exp_xml.url>
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiment/</interface.application.link.atlas.exp_query.url>
 
-        <interface.application.pref.reports.recipients>kolais@ebi.ac.uk</interface.application.pref.reports.recipients>
+        <interface.application.pref.reports.recipients>ae-mgmt@ebi.ac.uk</interface.application.pref.reports.recipients>
+        <interface.application.pref.feedback.recipients>arrayexpress@ebi.ac.uk, kolais@ebi.ac.uk</interface.application.pref.feedback.recipients>
 
         <interface.application.pref.atlasexperiments.reload.schedule>0 0 1 * * ?</interface.application.pref.atlasexperiments.reload.schedule>
         <interface.application.pref.atlasexperiments.reload.retry>60</interface.application.pref.atlasexperiments.reload.retry>
@@ -61,6 +62,7 @@
             <id>debug</id>
             <properties>
                 <interface.application.pref.reports.recipients>kolais@ebi.ac.uk</interface.application.pref.reports.recipients>
+                <interface.application.pref.feedback.recipients>kolais@ebi.ac.uk</interface.application.pref.feedback.recipients>
                 <interface.application.log.default.priority>ALL</interface.application.log.default.priority>
             </properties>
         </profile>

@@ -3,7 +3,7 @@
     <app>
         <reports>
             <originator>"ArrayExpress" &lt;ae-mgmt@ebi.ac.uk&gt;</originator>
-            <recipients>ae-mgmt@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
+            <recipients>${interface.application.pref.reports.recipients}</recipients>
             <subject>Runtime exception report</subject>
             <smtp>
                 <host>smtp.ebi.ac.uk</host>
@@ -13,7 +13,7 @@
     </app>
     <ae>
         <feedback>
-            <recipients>arrayexpress@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
+            <recipients>${interface.application.pref.feedback.recipients}</recipients>
             <subject>ArrayExpress user feedback</subject>
         </feedback>
         <password-remind>
