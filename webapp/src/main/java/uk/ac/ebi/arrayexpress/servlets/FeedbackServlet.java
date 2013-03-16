@@ -70,12 +70,12 @@ public class FeedbackServlet extends ApplicationServlet
                     + message + StringTools.EOL
                     + StringTools.EOL
                     + "---" + StringTools.EOL
-                    + "Page " + page + StringTools.EOL
-                    + (!"".equals(ref) ? "Referrer " + ref + StringTools.EOL : "")
-                    + "Using " + agent.getName() + " " + agent.getVersionNumber().toVersionString()
-                    + " on " + agent.getOperatingSystem().getName() + StringTools.EOL
+                    + "Page [" + page + "]" + StringTools.EOL
+                    + (!"".equals(ref) ? "Referrer [" + ref + "]" + StringTools.EOL : "")
+                    + "Using [" + agent.getName() + " " + agent.getVersionNumber().toVersionString()
+                    + " on " + agent.getOperatingSystem().getName() + "]" + StringTools.EOL
                     + StringTools.EOL
-                    + "Sent by ${variable.appname} running on ${variable.hostname}" + StringTools.EOL
+                    + "Sent by [${variable.appname}] running on [${variable.hostname}]" + StringTools.EOL
                     + StringTools.EOL
             );
         }
