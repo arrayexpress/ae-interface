@@ -13,9 +13,11 @@
     </app>
     <ae>
         <feedback>
-            <recipients>nkolesnikov@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
+            <recipients>arrayexpress@ebi.ac.uk, kolais@ebi.ac.uk</recipients>
             <subject>ArrayExpress user feedback</subject>
         </feedback>
+        <password-remind>
+        </password-remind>
         <db>
             <connections>
                 <connection>

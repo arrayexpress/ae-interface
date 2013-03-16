@@ -66,8 +66,7 @@ public class FeedbackServlet extends ApplicationServlet
                     originator
                     , getPreferences().getStringArray("ae.feedback.recipients")
                     , getPreferences().getString("ae.feedback.subject")
-                    , (!originator.equals(email) ? ("From: " + ("".equals(email) ? "unknown sender" : email) + StringTools.EOL) : "")
-                    + StringTools.EOL
+                    , (!originator.equals(email) ? ("From: " + ("".equals(email) ? "unknown sender" : email) + StringTools.EOL + StringTools.EOL) : "")
                     + message + StringTools.EOL
                     + StringTools.EOL
                     + "---" + StringTools.EOL
