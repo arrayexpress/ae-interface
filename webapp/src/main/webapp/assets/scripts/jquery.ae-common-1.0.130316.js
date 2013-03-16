@@ -15,15 +15,16 @@
  *
  */
 
-(function($, undefined) {
-    if($ == undefined)
+(function ($, undefined) {
+    if ($ == undefined) {
         throw "jQuery not loaded";
+    }
 
     $.fn.extend({
 
         aeLoginForm: function(options) {
             return this.each(function() {
-			new $.AELoginForm(this, options);
+			    new $.AELoginForm(this, options);
             });
         }
     });
@@ -41,9 +42,10 @@
         var $status = $(options.status).first();
 
         function verifyLoginValues() {
-            $submit.attr("disabled", "true");
             var user = $user.val();
             var pass = $pass.val();
+
+            $submit.attr("disabled", "true");
 
             if ("" == user) {
                 $status.text("User name should not be empty.");
@@ -79,7 +81,7 @@
         }
 
         function doReload() {
-            window.location.href = decodeURI(window.location.pathname);
+            window.location.href = window.location.href;
         }
 
         function doOpenWindow() {
@@ -132,7 +134,7 @@
             var username = $.cookie("AeLoggedUser");
             clearCookies();
             $user.val(username);
-            $status.text(message.replace(/^"?(.+[^"])"?$/g, "$1"));
+            $status.html(message.replace(/^"?(.+[^"])"?$/g, "$1"));
             doOpenWindow();
         }
     };
@@ -216,8 +218,9 @@
     });
 
     $.AEBrowseSorting =  function(column, options) {
-        if ($.query == undefined)
+        if ($.query == undefined) {
             throw "jQuery.query not loaded";
+        }
 
         var $column = $(column);
 
@@ -236,7 +239,7 @@
         $column.wrapInner("<a href=\"" + pageName + queryString + "\" title=\"Click to sort by " + options.fields[colname].title + "\"/>");
     };
 
-    function UpdateTableHeaders() {
+    function updateTableHeaders() {
         $(".persist-area").each(function() {
 
             var el             = $(this),
@@ -259,7 +262,7 @@
         });
     }
 
-    function ResizeTableHeaders() {
+    function resizeTableHeaders() {
         $(".persist-area").each(function() {
 
             var floatingHeader = $(".floating-header", this),
@@ -275,7 +278,7 @@
         });
     }
 
-    function InitPersistentHeaders()
+    function initPersistentHeaders()
     {
         var clonedHeaderRow;
 
@@ -288,8 +291,8 @@
         });
 
         $(window)
-            .scroll(UpdateTableHeaders)
-            .resize(ResizeTableHeaders)
+            .scroll(updateTableHeaders)
+            .resize(resizeTableHeaders)
             .trigger("scroll");
     }
 
@@ -301,7 +304,7 @@
     };
 
     $(function() {
-        InitPersistentHeaders();
+        initPersistentHeaders();
         $("#ae-login-window").aeLoginForm({
             open: "li.login a",
             close: "#ae-login-close",

@@ -93,7 +93,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130315.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130316.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -274,13 +274,13 @@
                                     <label for="ae-pass-field">Password</label>
                                     <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
                                 </fieldset>
-                                <span>
+                                <span id="ae-login-remember-option">
                                     <input id="ae-login-remember" name="r" type="checkbox"/>
                                     <label for="ae-login-remember">Remember me</label>
                                 </span>
                                 <input class="submit" type="submit" name="s" value="Login"/>
+                                <span id="ae-login-status" class="alert"/>
                             </form>
-                            <div id="ae-login-status"/>
                         </div>
                     </section>
                     <section>
@@ -292,7 +292,7 @@
                                     <textarea id="ae-feedback-message" name="m"/>
                                 </fieldset>
                                 <fieldset>
-                                    <label for="ae-email-field">Optionally please enter your email address if you wish to get a response. We will never share this address with anyone else.</label>
+                                    <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
                                     <input id="ae-email-field" name="e" maxlength="50"/>
                                 </fieldset>
                                 <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
