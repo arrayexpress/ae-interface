@@ -18,12 +18,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                xmlns:saxon="http://saxon.sf.net/"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                extension-element-prefixes="ae fn saxon"
-                exclude-result-prefixes="ae fn saxon html"
+                extension-element-prefixes="ae fn"
+                exclude-result-prefixes="ae fn"
                 version="2.0">
     <xsl:output method="xml" encoding="UTF-8" indent="no"/>
+
+    <xsl:include href="ae-parse-html-function.xsl"/>
 
     <xsl:template match="/experiments">
         <experiments
@@ -181,9 +181,7 @@
     </xsl:template>
 
     <xsl:template match="name" mode="copy">
-        <name>
-            <xsl:apply-templates mode="html" select="saxon:parse-html(fn:concat('&lt;body&gt;', ., '&lt;/body&gt;'))" />
-        </name>
+        <name><xsl:value-of select="." /></name>
     </xsl:template>
 
     <xsl:template match="secondaryaccession" mode="copy">
@@ -231,7 +229,7 @@
         <description>
             <id><xsl:value-of select="@id"/></id>
             <text>
-                <xsl:apply-templates mode="html" select="saxon:parse-html(fn:concat('&lt;body&gt;', fn:replace(fn:replace(fn:replace(fn:replace(., '&lt;', '&amp;lt;', 'i'), '&amp;lt;(/?)(a|ahref|br)', '&lt;$1$2', 'i'), '(^|[^&quot;])(https?|ftp)(:[/][/][a-zA-Z0-9_~\-\$&amp;\+,\./:;=\?@]+[a-zA-Z0-9_~\-\$&amp;\+,/:;=\?@])([^&quot;]|$)', '$1&lt;a href=&quot;$2$3&quot; target=&quot;_blank&quot;&gt;$2$3&lt;/a&gt;$4', 'i'), '&lt;ahref=', '&lt;a href=', 'i'), '&lt;/body&gt;'))" />
+                <xsl:copy-of select="ae:parseHtml(.)"/>
             </text>
         </description>
     </xsl:template>
@@ -247,21 +245,6 @@
             </xsl:if>
             <xsl:apply-templates mode="copy" />
         </xsl:copy>
-    </xsl:template>
-
-    <xsl:template match="html:html | html:body" mode="html">
-        <xsl:apply-templates mode="html"/>
-    </xsl:template>
-
-    <xsl:template match="html:*" mode="html">
-        <xsl:element name="{fn:local-name()}">
-            <xsl:for-each select="@*">
-                <xsl:attribute name="{fn:local-name()}">
-                    <xsl:value-of select="."/>
-                </xsl:attribute>
-            </xsl:for-each>
-            <xsl:apply-templates mode="html"/>
-        </xsl:element>
     </xsl:template>
 
     <xsl:function name="ae:fixRetrievedDateTimeFormat">
