@@ -83,7 +83,8 @@ public class Indexer
                             Thread.sleep(0);
                         }
                     } catch (XPathException x) {
-                        logger.error("Caught an exception while indexing expression [" + field.path + "] for document [" + ((NodeInfo)node).getStringValue().substring(0, 20) + "...]", x);
+                        String expression = ((NodeInfo)node).getStringValue();
+                        logger.error("Caught an exception while indexing expression [" + field.path + "] for document [" + expression.substring(0, expression.length() > 20 ? 20 : expression.length()) + "...]", x);
                         throw x;
                     }
                 }

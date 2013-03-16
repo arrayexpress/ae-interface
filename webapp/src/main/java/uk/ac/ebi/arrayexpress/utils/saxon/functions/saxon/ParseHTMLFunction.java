@@ -90,7 +90,7 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
         public SequenceIterator<? extends Item> call(SequenceIterator[] arguments, XPathContext context) throws XPathException
         {
             Controller controller = context.getController();
-            baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
+            baseURI = (null != context.getContextItem()) ? ((NodeInfo)context.getContextItem()).getBaseURI() : "";
 
             AtomicValue content = (AtomicValue) arguments[0].next();
             StringReader sr = new StringReader(content.getStringValue());
