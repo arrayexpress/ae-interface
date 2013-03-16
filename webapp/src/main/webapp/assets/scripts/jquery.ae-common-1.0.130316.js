@@ -333,10 +333,10 @@
         ).focus(autoCompleteFixSet).blur(autoCompleteFixUnset).removeAttr('autocomplete');
 
         // attach titles to highlight classes
-        var $browse_data = $("#ae-browse").find("td");
-        $browse_data.find(".text-hit").attr("title", "This is exact string matched for input query terms");
-        $browse_data.find(".text-syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
-        $browse_data.find(".text-efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
+        var $data = $("#ae-content");
+        $data.find(".text-hit").attr("title", "This is exact string matched for input query terms");
+        $data.find(".text-syn").attr("title", "This is synonym matched from Experimental Factor Ontology e.g. neoplasia for cancer");
+        $data.find(".text-efo").attr("title", "This is matched child term from Experimental Factor Ontology e.g. brain and subparts of brain");
 
     });
 
