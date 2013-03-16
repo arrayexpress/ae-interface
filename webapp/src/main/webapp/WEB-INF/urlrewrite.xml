@@ -16,12 +16,6 @@
         <to last="true">$1</to>
     </rule>
 
-    <!-- rewrite all requests to .htm pages -->
-    <rule>
-        <from>^(.+)[.]htm$</from>
-        <to type="permanent-redirect">%{context-path}$1.html</to>
-    </rule>
-
     <!-- home page -->
     <rule>
         <from>^/index[.]html?$</from>
