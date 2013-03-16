@@ -355,16 +355,16 @@
 
             <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"/>
             <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"/>
-            <script src="{$context-path}/assets/scripts/jquery-1.8.2.min.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130312.js"/>
             <script type="text/javascript">
                 <xsl:text>var contextPath = "</xsl:text>
                 <xsl:value-of select="$context-path"/>
                 <xsl:text>";</xsl:text>
             </script>
+            <script src="{$context-path}/assets/scripts/jquery-1.8.2.min.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130316.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

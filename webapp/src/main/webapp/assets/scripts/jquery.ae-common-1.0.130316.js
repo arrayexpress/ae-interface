@@ -224,7 +224,7 @@
         var sortby = $.query.get("sortby") || options.defaultField;
         var sortorder = $.query.get("sortorder") || options.fields[options.defaultField].sort;
 
-        var pageName = /\/?([^\/]+)$/.exec(decodeURI(window.location.pathname))[1];
+        var pageName = /\/?([^\/]*)$/.exec(decodeURI(window.location.pathname))[1];
 
         var colname = /col_(\w+)/.exec($column.attr("class"))[1];
 
