@@ -158,7 +158,7 @@
                     <fieldset>
                         <label for="ae-query-keywords">Search protocols by accessions, names, or descriptions</label>
                         <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                        <div><input type="submit" value="Search"/></div>
+                        <div><input class="submit" type="submit" value="Search"/></div>
                     </fieldset>
                 </form>
             </div>

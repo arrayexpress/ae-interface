@@ -278,7 +278,7 @@
                                     <input id="ae-login-remember" name="r" type="checkbox"/>
                                     <label for="ae-login-remember">Remember me</label>
                                 </span>
-                                <input type="submit" name="s" value="Login"/>
+                                <input class="submit" type="submit" name="s" value="Login"/>
                             </form>
                             <div id="ae-login-status"/>
                         </div>
@@ -297,7 +297,7 @@
                                 </fieldset>
                                 <input type="hidden" name="p" value="{$context-path}{$relative-uri}?{$query-string}"/>
                                 <input type="hidden" name="r" value="{$context-path}{$relative-referer}"/>
-                                <input type="submit" name="s" value="Send"/>
+                                <input class="submit" type="submit" name="s" value="Send"/>
                             </form>
                         </div>
                     </section>

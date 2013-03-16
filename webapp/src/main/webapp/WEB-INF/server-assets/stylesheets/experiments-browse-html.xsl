@@ -139,7 +139,7 @@
                                                 </input>
                                                 <label for="ae-directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                                             </div>
-                                            <div id="ae-submit-box"><input id="ae-query-submit" type="submit" value="Filter"/></div>
+                                            <div id="ae-submit-box"><input id="ae-query-submit" class="submit" type="submit" value="Filter"/></div>
                                         </div>
                                     </fieldset>
                                 </form>
