@@ -43,13 +43,14 @@ public class AuthServlet extends ApplicationServlet
     private static final String AE_TOKEN_COOKIE = "AeLoginToken";
     private static final String AE_USERNAME_COOKIE = "AeLoggedUser";
     private static final String AE_AUTH_MESSAGE_COOKIE = "AeAuthMessage";
+    private static final String AE_AUTH_USERNAME_COOKIE = "AeAuthUser";
 
     private static final String REFERER_HEADER = "Referer";
 
     @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
-        return (requestType == RequestType.GET || requestType == RequestType.POST);
+        return requestType == RequestType.GET || requestType == RequestType.POST;
     }
 
     @Override
@@ -80,7 +81,7 @@ public class AuthServlet extends ApplicationServlet
             setCookie(response, AE_USERNAME_COOKIE, username, maxAge);
             setCookie(response, AE_TOKEN_COOKIE, token, maxAge);
         } else {
-            setCookie(response, AE_USERNAME_COOKIE, username, null);
+            setCookie(response, AE_AUTH_USERNAME_COOKIE, username, null);
             setCookie(response, AE_AUTH_MESSAGE_COOKIE, "Incorrect user name or password.", null);
         }
 

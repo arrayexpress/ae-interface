@@ -195,14 +195,14 @@ div#local-masthead ul li a:active {
 
 /* --------------------------------- */
 
-#ae-login-window *
-, #ae-feedback-window * {
+#ae-login *
+, #ae-feedback * {
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    -moz-box-sizing: border-box
 }
 
-#ae-login-window
-, #ae-feedback-window {
+#ae-login
+, #ae-feedback {
     position: absolute;
     top: 2px;
     right: 5px;
@@ -215,19 +215,23 @@ div#local-masthead ul li a:active {
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     padding: 0;
+    z-index: 40001
+}
+
+#ae-login {
+    left: 65%
+}
+
+#ae-feedback {
     left: 50%;
-    z-index: 40001;
+    background-color: #FFE0B1
 }
 
-#ae-feedback-window {
-    background-color: #FFE0B1;
-}
-
-#ae-login-window > h3
-, #ae-feedback-window > h3 {
+#ae-login > h3
+, #ae-feedback > h3 {
     font-size: 123.1%;
     color: black;
-    background-color: #DDD;
+    background-color: rgba(0, 0, 0, 0.1);
     margin: 0;
     padding: 7px 9px 3px;
     border-top-left-radius: 5px;
@@ -235,97 +239,91 @@ div#local-masthead ul li a:active {
     -moz-border-radius-topleft: 5px;
     border-top-right-radius: 5px;
     -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topright: 5px;
+    -moz-border-radius-topright: 5px
 }
 
-#ae-feedback-window > h3 {
-    background-color: #FFD595;
-}
-
-#ae-login-window > h3 a
-, #ae-feedback-window > h3 a {
+#ae-login > h3 a
+, #ae-feedback > h3 a {
     float: right;
-    border-bottom-style: none;
+    border-bottom-style: none
 }
 
-#ae-login-window .icon-functional:before
-, #ae-feedback-window .icon-functional:before {
-    margin: 0;
+#ae-login .icon-functional:before
+, #ae-feedback .icon-functional:before {
+    margin: 0
 }
 
-#ae-login-window form
-, #ae-feedback-window form {
+#ae-login form
+, #ae-feedback form {
     margin: 0;
     padding: 10px;
     width: 100%;
-    overflow: auto;
+    overflow: auto
 }
 
-#ae-login-window form
-, #ae-login-window form *
-, #ae-feedback-window form
-, #ae-feedback-window form * {
-    font-size: 100%;
+#ae-login form {
+    padding: 10px 30px
 }
 
-#ae-login-window fieldset {
-    float: left;
+#ae-login form
+, #ae-login form *
+, #ae-feedback form
+, #ae-feedback form * {
+    font-size: 100%
+}
+
+#ae-login fieldset
+, #ae-feedback fieldset {
     padding: 0;
     margin: 0;
     border: 0 none;
-    width: 50%;
+    width: 100%
 }
 
-#ae-feedback-window fieldset {
-    padding: 0;
-    margin: 0;
-    border: 0 none;
-    width: 100%;
-}
-
-#ae-login-window input[type = 'checkbox'] {
+#ae-login input[type = 'checkbox'] {
     vertical-align: baseline;
     margin: 0 3px
 }
 
-#ae-login-window input[type = 'checkbox'] + label {
+#ae-login input[type = 'checkbox'] + label {
     font-size: 93%;
     vertical-align: middle
 }
 
-#ae-login-window fieldset
-, #ae-feedback-window fieldset
-, #ae-feedback-window span {
+#ae-login fieldset
+, #ae-feedback fieldset
+, #ae-feedback span {
     background-color: transparent;
-    color: inherit;
+    color: inherit
 }
 
-#ae-login-window fieldset:first-child {
-    padding: 0 10px 0 0;
-}
-
-#ae-feedback-window fieldset:first-child {
+#ae-login fieldset:first-child
+, #ae-feedback fieldset:first-child {
     padding: 0;
-    margin-bottom: 10px;
+    margin-bottom: 10px
 }
 
-#ae-login-window fieldset label
-, #ae-feedback-window fieldset label {
+#ae-login fieldset label
+, #ae-feedback fieldset label {
     width: 100%;
     margin: 0;
     padding: 0;
-    font-size: 100%;
+    font-size: 100%
 }
 
-#ae-login-window fieldset input
-, #ae-feedback-window fieldset input {
+#ae-login fieldset label a.forgot {
+    font-style: italic
+}
+
+#ae-login fieldset input
+, #ae-feedback fieldset input {
     width: 100%;
     margin: 0 0 5px 0;
     padding: 0;
     font-size: 100%
 }
 
-#ae-feedback-window fieldset textarea {
+#ae-feedback fieldset textarea {
     width: 100%;
     margin: 0 0 5px 0;
     padding: 0;
@@ -333,8 +331,8 @@ div#local-masthead ul li a:active {
     height: 10em
 }
 
-#ae-login-window input[type='submit']
-, #ae-feedback-window  input[type='submit'] {
+#ae-login input[type='submit']
+, #ae-feedback input[type='submit'] {
     float: right
 }
 
@@ -343,10 +341,15 @@ div#local-masthead ul li a:active {
     margin: 8px 0 0
 }
 
+#ae-login-forgot {
+    clear: both;
+    text-align: center
+}
+
 #ae-login-status {
-    float: right;
-    display: inline-block;
-    margin: 8px 10px 0
+    clear: both;
+    padding: 5px 0;
+    text-align: center
 }
 
 /* --------------------------------- */

@@ -40,6 +40,7 @@
         var $open = $(options.open).first();
         var $close = $(options.close).first();
         var $status = $(options.status).first();
+        var $status_text = $("<span class='alert'/>").appendTo($status);
 
         function verifyLoginValues() {
             var user = $user.val();
@@ -48,14 +49,14 @@
             $submit.attr("disabled", "true");
 
             if ("" == user) {
-                $status.text("User name should not be empty.");
+                showStatus("User name should not be empty.");
                 $user.focus();
                 $submit.removeAttr("disabled");
                 return false;
             }
 
             if ("" == pass) {
-                $status.text("Password should not be empty.");
+                showStatus("Password should not be empty.");
                 $pass.focus();
                 $submit.removeAttr("disabled");
                 return false;
@@ -71,6 +72,7 @@
 
         function clearCookies() {
             $.cookie("AeAuthMessage", null, {path: '/' });
+            $.cookie("AeAuthUser", null, {path: '/' });
             $.cookie("AeLoggedUser", null, {path: '/' });
             $.cookie("AeLoginToken", null, {path: '/' });
         }
@@ -90,18 +92,27 @@
 
             $submit.removeAttr("disabled");
             $window.show();
-            $user.focus();
         }
 
         function doCloseWindow() {
             $window.unbind("click", onWindowClick);
             $body.unbind("click", doCloseWindow);
             $window.hide();
-            $status.text("");
+            hideStatus();
         }
 
         function onWindowClick(e) {
             e.stopPropagation();
+        }
+
+        function showStatus(text) {
+            $status_text.text(text);
+            $status.show();
+        }
+
+        function hideStatus() {
+            $status.hide();
+            $status_text.text();
         }
 
         $form.submit(function() {
@@ -115,6 +126,7 @@
                 doLogout();
             } else {
                 doOpenWindow();
+                $user.focus();
             }
         });
 
@@ -131,11 +143,12 @@
 
         var message = $.cookie("AeAuthMessage");
         if (undefined != message) {
-            var username = $.cookie("AeLoggedUser");
+            var username = $.cookie("AeAuthUser");
             clearCookies();
             $user.val(username);
-            $status.html(message.replace(/^"?(.+[^"])"?$/g, "$1"));
+            showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1"));
             doOpenWindow();
+            $pass.focus();
         }
     };
 
@@ -305,12 +318,12 @@
 
     $(function() {
         initPersistentHeaders();
-        $("#ae-login-window").aeLoginForm({
+        $("#ae-login").aeLoginForm({
             open: "li.login a",
             close: "#ae-login-close",
             status: "#ae-login-status"
         });
-        $("#ae-feedback-window").aeFeedbackForm({
+        $("#ae-feedback").aeFeedbackForm({
             open: "li.feedback a",
             close: "#ae-feedback-close"
         });

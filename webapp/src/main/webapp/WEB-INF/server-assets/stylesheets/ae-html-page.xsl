@@ -262,44 +262,41 @@
                         </nav>
                     </xsl:if>
 
-                    <section>
-                        <div id="ae-login-window" style="display:none">
-                            <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
-                            <form id="ae-login" method="post" action="{$secure-host}{$context-path}/auth">
-                                <fieldset>
-                                    <label for="ae-user-field">User name</label>
-                                    <input id="ae-user-field" name="u" maxlength="50"/>
-                                </fieldset>
-                                <fieldset>
-                                    <label for="ae-pass-field">Password</label>
-                                    <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
-                                </fieldset>
-                                <span id="ae-login-remember-option">
-                                    <input id="ae-login-remember" name="r" type="checkbox"/>
-                                    <label for="ae-login-remember">Remember me</label>
-                                </span>
-                                <input class="submit" type="submit" name="s" value="Login"/>
-                                <span id="ae-login-status" class="alert"/>
-                            </form>
-                        </div>
+                    <section id="ae-login" style="display:none">
+                        <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
+                        <form method="post" action="{$secure-host}{$context-path}/auth">
+                            <fieldset>
+                                <label for="ae-user-field">User name</label>
+                                <input id="ae-user-field" name="u" maxlength="50"/>
+                            </fieldset>
+                            <fieldset>
+                                <label for="ae-pass-field">Password</label>
+                                <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
+                            </fieldset>
+                            <span id="ae-login-remember-option">
+                                <input id="ae-login-remember" name="r" type="checkbox"/>
+                                <label for="ae-login-remember">Remember me</label>
+                            </span>
+                            <input class="submit" type="submit" name="s" value="Login"/>
+                            <div id="ae-login-status" style="display:none"/>
+                            <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
+                        </form>
                     </section>
-                    <section>
-                        <div id="ae-feedback-window" style="display:none">
-                            <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
-                            <form id="ae-feedback" method="post" action="#" onsubmit="return false">
-                                <fieldset>
-                                    <label for="ae-feedback-message">We value your feedback. Please leave your comment below.</label>
-                                    <textarea id="ae-feedback-message" name="m"/>
-                                </fieldset>
-                                <fieldset>
-                                    <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
-                                    <input id="ae-email-field" name="e" maxlength="50"/>
-                                </fieldset>
-                                <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
-                                <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
-                                <input class="submit" type="submit" name="s" value="Send"/>
-                            </form>
-                        </div>
+                    <section id="ae-feedback" style="display:none">
+                        <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
+                        <form method="post" action="#" onsubmit="return false">
+                            <fieldset>
+                                <label for="ae-feedback-message">We value your feedback. Please leave your comment below.</label>
+                                <textarea id="ae-feedback-message" name="m"/>
+                            </fieldset>
+                            <fieldset>
+                                <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
+                                <input id="ae-email-field" name="e" maxlength="50"/>
+                            </fieldset>
+                            <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
+                            <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
+                            <input class="submit" type="submit" name="s" value="Send"/>
+                        </form>
                     </section>
                     <xsl:call-template name="ae-content-section"/>
                     <!-- Suggested layout containers -->
