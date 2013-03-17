@@ -33,6 +33,7 @@
 
         <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
         <interface.application.pref.feedback.recipients>arrayexpress&#64;ebi.ac.uk, kolais&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
+        <interface.application.pref.remind.recipients>kolais&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
 
         <interface.application.pref.atlasexperiments.reload.schedule>0 0 1 * * ?</interface.application.pref.atlasexperiments.reload.schedule>
         <interface.application.pref.atlasexperiments.reload.retry>60</interface.application.pref.atlasexperiments.reload.retry>

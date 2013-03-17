@@ -19,10 +19,13 @@ package uk.ac.ebi.arrayexpress.components;
 
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
@@ -34,6 +37,7 @@ import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -182,34 +186,37 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     public boolean isPrivilegedByName( String name ) throws IOException
     {
+        name = StringEscapeUtils.escapeXml(name);
         try {
             return  (Boolean)saxon.evaluateXPathSingle(
                     getDocument()
-                    , "(/users/user[name = \"" + name.replaceAll("\"", "&quot;") + "\"]/is_privileged = true())"
+                    , "(/users/user[name = '" + name + "']/is_privileged = true())"
             );
         } catch (XPathException x) {
-        throw new RuntimeException(x);
+            throw new RuntimeException(x);
+        }
     }
-}
 
     public boolean isPrivilegedByID( String id ) throws IOException
     {
+        id = StringEscapeUtils.escapeXml(id);
         try {
             return (Boolean)saxon.evaluateXPathSingle(
                 getDocument()
-                , "(/users/user[id = \"" + id + "\"]/is_privileged = true())"
+                , "(/users/user[id = '" + id + "']/is_privileged = true())"
         );
         } catch (XPathException x) {
             throw new RuntimeException(x);
         }
     }
 
-    public List<String> getUserIDs( String username ) throws IOException
+    public List<String> getUserIDs( String name ) throws IOException
     {
+        name = StringEscapeUtils.escapeXml(name);
         try {
             List idNodes = this.saxon.evaluateXPath(
                             getDocument()
-                            , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/id"
+                            , "/users/user[name = '" + name + "']/id"
                     );
 
             ArrayList<String> ids = new ArrayList<>(idNodes.size());
@@ -223,12 +230,13 @@ public class Users extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private List<String> getUserPasswords( String username ) throws IOException
+    private List<String> getUserPasswords( String name ) throws IOException
     {
+        name = StringEscapeUtils.escapeXml(name);
         try {
             List passwordNodes = this.saxon.evaluateXPath(
                     getDocument()
-                    , "/users/user[name = \"" + username.replaceAll("\"", "&quot;") + "\"]/password"
+                    , "/users/user[name = '" + name + "']/password"
             );
 
             ArrayList<String> passwords = new ArrayList<>(passwordNodes.size());
@@ -265,4 +273,70 @@ public class Users extends ApplicationComponent implements IDocumentSource
         }
         return false;
     }
+
+    public String remindPassword( String nameOrEmail ) throws IOException
+    {
+        nameOrEmail = StringEscapeUtils.escapeXml(nameOrEmail);
+        try {
+            List users = this.saxon.evaluateXPath(
+                    getDocument()
+                    , "/users/user[name|email = '" + nameOrEmail + "']"
+            );
+
+            String reportMessage;
+            String result = "Unable to find matching user information.";
+            if (null != users) {
+                if (1 == users.size()) {
+                    String username = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)");
+                    String email = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(email)");
+                    String password = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(password)");
+
+                    List<String> recipients = new ArrayList<>();
+                    recipients.add(email);
+                    recipients.addAll(Arrays.asList(getPreferences().getStringArray("ae.password-remind.recipients")));
+                    getApplication().sendEmail(
+                            getPreferences().getString("ae.password-remind.originator")
+                            , recipients.toArray(new String[recipients.size()])
+                            , getPreferences().getString("ae.password-remind.subject")
+                            , "Dear " + username + "," + StringTools.EOL
+                            + StringTools.EOL
+                            + "Your ArrayExpress account information is:" + StringTools.EOL
+                            + StringTools.EOL
+                            + "    User name: " + username + StringTools.EOL
+                            + "    Password: " + password + StringTools.EOL
+                            + StringTools.EOL
+                            + "Regards," + StringTools.EOL
+                            + "ArrayExpress." + StringTools.EOL
+                            + StringTools.EOL
+                    );
+
+
+                    reportMessage = "Sent account information to the user [" + username + "], email [" + email + "]";
+                    result = "Account information has been sent.";
+                } else {
+                    // multiple results, report this to administrators
+                    reportMessage = "Request failed: found multiple users for name/email [" + nameOrEmail + "].";
+                }
+            } else {
+                // no results, report this to administrators
+                reportMessage = "Request failed: found no users for name/email [" + nameOrEmail + "].";
+            }
+
+            getApplication().sendEmail(
+                    getPreferences().getString("app.reports.originator")
+                    , getPreferences().getStringArray("app.reports.recipients")
+                    , "ArrayExpress account information request"
+                    , reportMessage + StringTools.EOL
+                    + StringTools.EOL
+                    + "Sent by [${variable.appname}] running on [${variable.hostname}]" + StringTools.EOL
+                    + StringTools.EOL
+            );
+            return result;
+
+        } catch (XPathException x) {
+            throw new RuntimeException(x);
+        }
+
+    }
+
 }

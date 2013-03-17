@@ -99,7 +99,7 @@ public abstract class ApplicationServlet extends HttpServlet
                     , x
             );
             if (!response.isCommitted()) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "runtime server error");
             }
 
         }

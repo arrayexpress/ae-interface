@@ -38,7 +38,7 @@ public class AuthServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -4788567497622259711L;
 
-    private transient final Logger logger = LoggerFactory.getLogger(getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String AE_TOKEN_COOKIE = "AeLoginToken";
     private static final String AE_USERNAME_COOKIE = "AeLoggedUser";
@@ -64,29 +64,40 @@ public class AuthServlet extends ApplicationServlet
         String username = request.getParameter("u");
         String password = request.getParameter("p");
         String remember = request.getParameter("r");
+        String email = request.getParameter("e");
         String userAgent = request.getHeader("User-Agent");
 
-        String token = ((Users) getComponent("Users")).hashLogin(
-                username
-                , password
-                , request.getRemoteAddr().concat(null != userAgent ? userAgent : "unknown")
-        );
-
-        // 31,557,600 is a standard year in seconds
-        Integer maxAge = "on".equals(remember) ? 31557600 : null;
-        Boolean success = !"".equals(token);
-
-        if (success) {
-            logger.debug("Successfully authenticated user [{}]", username);
-            setCookie(response, AE_USERNAME_COOKIE, username, maxAge);
-            setCookie(response, AE_TOKEN_COOKIE, token, maxAge);
+        Users users = ((Users) getComponent("Users"));
+        String token = "";
+        boolean isLoginSuccessful = false;
+        if (!"".equals(email)) {
+            String message = users.remindPassword(email);
+            if (null != message) {
+                setCookie(response, AE_AUTH_MESSAGE_COOKIE, message, null);
+            }
         } else {
-            setCookie(response, AE_AUTH_USERNAME_COOKIE, username, null);
-            setCookie(response, AE_AUTH_MESSAGE_COOKIE, "Incorrect user name or password.", null);
+            token = users.hashLogin(
+                    username
+                    , password
+                    , request.getRemoteAddr().concat(null != userAgent ? userAgent : "unknown")
+            );
+
+            // 31,557,600 is a standard year in seconds
+            Integer maxAge = "on".equals(remember) ? 31557600 : null;
+            isLoginSuccessful = !"".equals(token);
+
+            if (isLoginSuccessful) {
+                logger.debug("Successfully authenticated user [{}]", username);
+                setCookie(response, AE_USERNAME_COOKIE, username, maxAge);
+                setCookie(response, AE_TOKEN_COOKIE, token, maxAge);
+            } else {
+                setCookie(response, AE_AUTH_USERNAME_COOKIE, username, null);
+                setCookie(response, AE_AUTH_MESSAGE_COOKIE, "Incorrect user name or password.", null);
+            }
         }
 
         if (null != returnURL) {
-            if (success && returnURL.matches("^http[:]//www(dev)?[.]ebi[.]ac[.]uk/.+")) {
+            if (isLoginSuccessful && returnURL.matches("^http[:]//www(dev)?[.]ebi[.]ac[.]uk/.+")) {
                 returnURL = returnURL.replaceFirst("^http[:]//", "https://");
             }
             logger.debug("Will redirect to [{}]", returnURL);

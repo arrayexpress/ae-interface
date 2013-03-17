@@ -166,10 +166,16 @@
         if (undefined != message) {
             var username = $.cookie("AeAuthUser");
             clearCookies();
-            $user.val(username);
+            if (undefined != username) {
+                $user.val(username);
+            }
             showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1"));
             doOpenWindow();
-            $pass.focus();
+            if (undefined != username) {
+                $pass.focus();
+            } else {
+                $user.focus();
+            }
         }
     };
 

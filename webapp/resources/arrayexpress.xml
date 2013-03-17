@@ -17,6 +17,9 @@
             <subject>ArrayExpress user feedback</subject>
         </feedback>
         <password-remind>
+            <originator>"ArrayExpress" &lt;arrayexpress@ebi.ac.uk&gt;</originator>
+            <recipients>${interface.application.pref.remind.recipients}</recipients>
+            <subject>ArrayExpress account information</subject>
         </password-remind>
         <db>
             <connections>
