@@ -122,6 +122,7 @@
         function showForgotPanel() {
             $login_form.hide();
             $forgot_form.show();
+            $forgot_form.find("input").first().focus();
         }
 
         function hideForgotPanel() {
