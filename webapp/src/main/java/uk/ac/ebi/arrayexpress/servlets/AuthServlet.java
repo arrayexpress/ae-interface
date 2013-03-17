@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationServlet;
@@ -70,8 +71,8 @@ public class AuthServlet extends ApplicationServlet
         Users users = ((Users) getComponent("Users"));
         String token = "";
         boolean isLoginSuccessful = false;
-        if (!"".equals(email)) {
-            String message = users.remindPassword(email);
+        if (null != email) {
+            String message = users.remindPassword(StringUtils.trimToEmpty(email));
             if (null != message) {
                 setCookie(response, AE_AUTH_MESSAGE_COOKIE, message, null);
             }
