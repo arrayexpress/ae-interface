@@ -277,9 +277,17 @@
                                 <input id="ae-login-remember" name="r" type="checkbox"/>
                                 <label for="ae-login-remember">Remember me</label>
                             </span>
-                            <input class="submit" type="submit" name="s" value="Login"/>
+                            <input class="submit" type="submit" value="Login"/>
                             <div id="ae-login-status" style="display:none"/>
                             <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
+                        </form>
+                        <form style="display:none" method="post" action="{$secure-host}{$context-path}/auth">
+                            <fieldset>
+                                <label for="ae-name-email-field">Please enter your user name or email address</label>
+                                <input id="ae-name-email-field" name="e" maxlength="50"/>
+                            </fieldset>
+                            <span><input class="submit" type="submit" value="Send"/>We will respond with your account information</span>
+
                         </form>
                     </section>
                     <section id="ae-feedback" style="display:none">
@@ -295,7 +303,7 @@
                             </fieldset>
                             <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
                             <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
-                            <input class="submit" type="submit" name="s" value="Send"/>
+                            <input class="submit" type="submit" value="Send"/>
                         </form>
                     </section>
                     <xsl:call-template name="ae-content-section"/>

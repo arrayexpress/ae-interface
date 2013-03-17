@@ -33,14 +33,16 @@
 
         var $body = $("body");
         var $window = $(loginWindow);
-        var $form = $window.find("form").first();
-        var $user = $form.find("input[name='u']").first();
-        var $pass = $form.find("input[name='p']").first();
-        var $submit = $form.find("input[type='submit']").first();
+        var $login_form = $window.find("form").first();
+        var $user = $login_form.find("input[name='u']").first();
+        var $pass = $login_form.find("input[name='p']").first();
+        var $submit = $login_form.find("input[type='submit']").first();
         var $open = $(options.open).first();
         var $close = $(options.close).first();
         var $status = $(options.status).first();
         var $status_text = $("<span class='alert'/>").appendTo($status);
+        var $forgot = $(options.forgot).first();
+        var $forgot_form = $window.find("form").last();
 
         function verifyLoginValues() {
             var user = $user.val();
@@ -90,6 +92,8 @@
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
 
+            hideForgotPanel();
+
             $submit.removeAttr("disabled");
             $window.show();
         }
@@ -115,7 +119,18 @@
             $status_text.text();
         }
 
-        $form.submit(function() {
+        function showForgotPanel() {
+            $login_form.hide();
+            $forgot_form.show();
+        }
+
+        function hideForgotPanel() {
+            $forgot_form.hide();
+            $login_form.show();
+
+        }
+
+        $login_form.submit(function() {
             return verifyLoginValues();
         });
 
@@ -135,7 +150,12 @@
             doCloseWindow();
         });
 
-        $form.find("input").keydown(function (e) {
+        $forgot.find("a").click(function (e) {
+            e.preventDefault();
+            showForgotPanel();
+        });
+
+        $login_form.find("input").keydown(function (e) {
             if (27 == e.keyCode) {
                 doCloseWindow();
             }
@@ -321,7 +341,8 @@
         $("#ae-login").aeLoginForm({
             open: "li.login a",
             close: "#ae-login-close",
-            status: "#ae-login-status"
+            status: "#ae-login-status",
+            forgot: "#ae-login-forgot"
         });
         $("#ae-feedback").aeFeedbackForm({
             open: "li.feedback a",
