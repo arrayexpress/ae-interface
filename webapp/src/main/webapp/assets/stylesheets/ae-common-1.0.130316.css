@@ -233,7 +233,7 @@ div#local-masthead ul li a:active {
     color: black;
     background-color: rgba(0, 0, 0, 0.1);
     margin: 0;
-    padding: 7px 9px 3px;
+    padding: 7px 9px 2px;
     border-top-left-radius: 5px;
     -webkit-border-top-left-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -245,6 +245,7 @@ div#local-masthead ul li a:active {
 #ae-login > h3 a
 , #ae-feedback > h3 a {
     float: right;
+    font-size: 87%;
     border-bottom-style: none
 }
 
