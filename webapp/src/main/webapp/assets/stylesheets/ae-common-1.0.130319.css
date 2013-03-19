@@ -257,13 +257,13 @@ div#local-masthead ul li a:active {
 #ae-login form
 , #ae-feedback form {
     margin: 0;
-    padding: 10px;
+    padding: 20px 20px 10px;
     width: 100%;
     overflow: auto
 }
 
 #ae-login form {
-    padding: 20px 10px 10px
+    padding: 20px 20px 10px
 }
 
 #ae-login form
@@ -273,8 +273,8 @@ div#local-masthead ul li a:active {
     font-size: 100%
 }
 
-#ae-login-panel fieldset
-, #ae-remind-panel fieldset
+#ae-login-form fieldset
+, #ae-forgot-form fieldset
 , #ae-feedback fieldset {
     padding: 0;
     margin: 0;
@@ -282,7 +282,7 @@ div#local-masthead ul li a:active {
     width: 100%
 }
 
-#ae-login-panel fieldset {
+#ae-login-form fieldset {
     float: left;
     width: 50%
 }
@@ -304,7 +304,7 @@ div#local-masthead ul li a:active {
     color: inherit
 }
 
-#ae-login-panel fieldset:first-child {
+#ae-login-form fieldset:first-child {
     padding: 0 10px 0 0
 }
 

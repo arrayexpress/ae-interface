@@ -71,7 +71,7 @@ public class AuthServlet extends ApplicationServlet
         Users users = ((Users) getComponent("Users"));
         String token = "";
         boolean isLoginSuccessful = false;
-        if (null != email && !"".equals(email)) {
+        if (null != email) {
             String message = users.remindPassword(StringUtils.trimToEmpty(email));
             if (null != message) {
                 setCookie(response, AE_AUTH_MESSAGE_COOKIE, message, null);

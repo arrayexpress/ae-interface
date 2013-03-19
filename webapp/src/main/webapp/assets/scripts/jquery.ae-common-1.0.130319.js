@@ -33,17 +33,16 @@
 
         var $body = $("body");
         var $window = $(loginWindow);
-        var $form = $window.find("form").first();
-        var $user = $form.find("input[name='u']").first();
-        var $pass = $form.find("input[name='p']").first();
-        var $submit = $form.find("input[type='submit']").first();
+        var $login_form = $window.find("form").first();
+        var $user = $login_form.find("input[name='u']").first();
+        var $pass = $login_form.find("input[name='p']").first();
+        var $submit = $login_form.find("input[type='submit']").first();
         var $open = $(options.open).first();
         var $close = $(options.close).first();
         var $status = $(options.status).first();
         var $status_text = $("<span class='alert'/>").appendTo($status);
         var $forgot = $(options.forgot).first();
-        var $login_panel = $form.find("> div").first();
-        var $forgot_panel = $form.find("> div").last();
+        var $forgot_form = $window.find("form").last();
 
         function verifyLoginValues() {
             var user = $user.val();
@@ -65,7 +64,7 @@
                 return false;
             }
 
-            $status.text();
+            hideStatus();
             return true;
         }
 
@@ -121,18 +120,18 @@
         }
 
         function showForgotPanel() {
-            $login_panel.hide();
-            $forgot_panel.show();
-            $forgot_panel.find("input").first().focus();
+            $login_form.hide();
+            $forgot_form.show();
+            $forgot_form.find("input").first().focus();
         }
 
         function hideForgotPanel() {
-            $forgot_panel.hide();
-            $forgot_panel.find("input").first().val("");
-            $login_panel.show();
+            $forgot_form.hide();
+            $forgot_form.find("input").first().val("");
+            $login_form.show();
         }
 
-        $form.submit(function() {
+        $login_form.submit(function() {
             return verifyLoginValues();
         });
 
@@ -157,7 +156,7 @@
             showForgotPanel();
         });
 
-        $form.find("input").keydown(function (e) {
+        $window.find("input[type='text']").keydown(function (e) {
             if (27 == e.keyCode) {
                 doCloseWindow();
             }

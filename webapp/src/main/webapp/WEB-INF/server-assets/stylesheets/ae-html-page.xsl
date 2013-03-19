@@ -264,32 +264,30 @@
 
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
-                        <form method="post" action="{$secure-host}{$context-path}/auth">
-                            <div id="ae-login-panel">
-                                <fieldset>
-                                    <label for="ae-user-field">User name</label>
-                                    <input id="ae-user-field" name="u" maxlength="50"/>
-                                </fieldset>
-                                <fieldset>
-                                    <label for="ae-pass-field">Password</label>
-                                    <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
-                                </fieldset>
-                                <span id="ae-login-remember-option">
-                                    <input id="ae-login-remember" name="r" type="checkbox"/>
-                                    <label for="ae-login-remember">Remember me</label>
-                                </span>
-                                <input class="submit" type="submit" value="Login"/>
-                                <div id="ae-login-status" style="display:none"/>
-                                <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
-                            </div>
-                            <div id="ae-remind-panel" style="display:none">
-                                <fieldset>
-                                    <label for="ae-name-email-field">Please enter your user name or email address</label>
-                                    <input id="ae-name-email-field" name="e" maxlength="50"/>
-                                </fieldset>
-                                <span><input class="submit" type="submit" value="Send"/>We will send you a reminder with your<br/>account information</span>
-                            </div>
+                        <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
+                            <fieldset>
+                                <label for="ae-user-field">User name</label>
+                                <input id="ae-user-field" name="u" maxlength="50"/>
+                            </fieldset>
+                            <fieldset>
+                                <label for="ae-pass-field">Password</label>
+                                <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
+                            </fieldset>
+                            <span id="ae-login-remember-option">
+                                <input id="ae-login-remember" name="r" type="checkbox"/>
+                                <label for="ae-login-remember">Remember me</label>
+                            </span>
+                            <input class="submit" type="submit" value="Login"/>
+                            <div id="ae-login-status" style="display:none"/>
+                            <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
                         </form>
+                         <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
+                            <fieldset>
+                                <label for="ae-name-email-field">Please enter your user name or email address</label>
+                                <input id="ae-name-email-field" name="e" maxlength="50"/>
+                            </fieldset>
+                            <span><input class="submit" type="submit" value="Send"/>We will send you a reminder with your<br/>account information</span>
+                         </form>
                     </section>
                     <section id="ae-feedback" style="display:none">
                         <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
