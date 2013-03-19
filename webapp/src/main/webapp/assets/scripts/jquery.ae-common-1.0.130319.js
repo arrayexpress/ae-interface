@@ -128,6 +128,7 @@
 
         function hideForgotPanel() {
             $forgot_panel.hide();
+            $forgot_panel.find("input").first().val("");
             $login_panel.show();
         }
 
