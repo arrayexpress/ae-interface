@@ -47,7 +47,6 @@
         <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Search results for &quot;', $keywords, '&quot;') else 'Experiments'"/>
 
         <xsl:call-template name="ae-page">
-            <xsl:with-param name="pIsFixedWidth" select="fn:false()"/>
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pSearchInputValue" select="if (fn:true()) then $keywords else ''"/>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>

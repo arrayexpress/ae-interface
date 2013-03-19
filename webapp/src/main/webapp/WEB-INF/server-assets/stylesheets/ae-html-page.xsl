@@ -40,7 +40,6 @@
     <xsl:variable name="secure-host" select="if (fn:matches($host, '^http[:]//www(dev)?[.]ebi[.]ac[.]uk$')) then fn:replace($host, '^http[:]//', 'https://') else ''"/>
 
     <xsl:template name="ae-page">
-        <xsl:param name="pIsFixedWidth" as="xs:boolean"/>
         <xsl:param name="pIsSearchVisible" as="xs:boolean"/>
         <xsl:param name="pSearchInputValue" as="xs:string"/>
         <xsl:param name="pTitleTrail" as="xs:string"/>
@@ -61,7 +60,6 @@
                 <xsl:with-param name="pExtraCode" select="$pExtraCSS"/>
             </xsl:call-template>
             <xsl:call-template name="ae-page-body">
-                <xsl:with-param name="pIsFixedWidth" select="$pIsFixedWidth"/>
                 <xsl:with-param name="pIsSearchVisible" select="$pIsSearchVisible"/>
                 <xsl:with-param name="pSearchInputValue" select="$pSearchInputValue"/>
                 <xsl:with-param name="pBreadcrumbTrail" select="$pBreadcrumbTrail"/>
@@ -110,17 +108,14 @@
     </xsl:template>
 
     <xsl:template name="ae-page-body">
-        <xsl:param name="pIsFixedWidth"/>
         <xsl:param name="pIsSearchVisible"/>
         <xsl:param name="pSearchInputValue"/>
         <xsl:param name="pBreadcrumbTrail"/>
         <xsl:param name="pExtraCode"/>
+
         <body>   <!-- add any of your classes or IDs -->
             <xsl:attribute name="class">
                 <xsl:text>level2</xsl:text>
-                <xsl:if test="$pIsFixedWidth">
-                    <xsl:text> narrow</xsl:text>
-                </xsl:if>
             </xsl:attribute>
 
             <div id="skip-to">

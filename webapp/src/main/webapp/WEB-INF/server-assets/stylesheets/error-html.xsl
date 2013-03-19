@@ -40,7 +40,6 @@
     </xsl:variable>
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
-            <xsl:with-param name="pIsFixedWidth" select="fn:true()"/>
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pTitleTrail" select="$vErrorTitle"/>
