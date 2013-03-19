@@ -93,7 +93,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130316.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130319.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -265,29 +265,30 @@
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset>
-                                <label for="ae-user-field">User name</label>
-                                <input id="ae-user-field" name="u" maxlength="50"/>
-                            </fieldset>
-                            <fieldset>
-                                <label for="ae-pass-field">Password</label>
-                                <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
-                            </fieldset>
-                            <span id="ae-login-remember-option">
-                                <input id="ae-login-remember" name="r" type="checkbox"/>
-                                <label for="ae-login-remember">Remember me</label>
-                            </span>
-                            <input class="submit" type="submit" value="Login"/>
-                            <div id="ae-login-status" style="display:none"/>
-                            <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
-                        </form>
-                        <form style="display:none" method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset>
-                                <label for="ae-name-email-field">Please enter your user name or email address</label>
-                                <input id="ae-name-email-field" name="e" maxlength="50"/>
-                            </fieldset>
-                            <span><input class="submit" type="submit" value="Send"/>We will respond with your account information</span>
-
+                            <div id="ae-login-panel">
+                                <fieldset>
+                                    <label for="ae-user-field">User name</label>
+                                    <input id="ae-user-field" name="u" maxlength="50"/>
+                                </fieldset>
+                                <fieldset>
+                                    <label for="ae-pass-field">Password</label>
+                                    <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
+                                </fieldset>
+                                <span id="ae-login-remember-option">
+                                    <input id="ae-login-remember" name="r" type="checkbox"/>
+                                    <label for="ae-login-remember">Remember me</label>
+                                </span>
+                                <input class="submit" type="submit" value="Login"/>
+                                <div id="ae-login-status" style="display:none"/>
+                                <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
+                            </div>
+                            <div id="ae-remind-panel" style="display:none">
+                                <fieldset>
+                                    <label for="ae-name-email-field">Please enter your user name or email address</label>
+                                    <input id="ae-name-email-field" name="e" maxlength="50"/>
+                                </fieldset>
+                                <span><input class="submit" type="submit" value="Send"/>We will send you a reminder with your<br/>account information</span>
+                            </div>
                         </form>
                     </section>
                     <section id="ae-feedback" style="display:none">
@@ -369,7 +370,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130316.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130319.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

@@ -33,16 +33,17 @@
 
         var $body = $("body");
         var $window = $(loginWindow);
-        var $login_form = $window.find("form").first();
-        var $user = $login_form.find("input[name='u']").first();
-        var $pass = $login_form.find("input[name='p']").first();
-        var $submit = $login_form.find("input[type='submit']").first();
+        var $form = $window.find("form").first();
+        var $user = $form.find("input[name='u']").first();
+        var $pass = $form.find("input[name='p']").first();
+        var $submit = $form.find("input[type='submit']").first();
         var $open = $(options.open).first();
         var $close = $(options.close).first();
         var $status = $(options.status).first();
         var $status_text = $("<span class='alert'/>").appendTo($status);
         var $forgot = $(options.forgot).first();
-        var $forgot_form = $window.find("form").last();
+        var $login_panel = $form.find("> div").first();
+        var $forgot_panel = $form.find("> div").last();
 
         function verifyLoginValues() {
             var user = $user.val();
@@ -120,18 +121,17 @@
         }
 
         function showForgotPanel() {
-            $login_form.hide();
-            $forgot_form.show();
-            $forgot_form.find("input").first().focus();
+            $login_panel.hide();
+            $forgot_panel.show();
+            $forgot_panel.find("input").first().focus();
         }
 
         function hideForgotPanel() {
-            $forgot_form.hide();
-            $login_form.show();
-
+            $forgot_panel.hide();
+            $login_panel.show();
         }
 
-        $login_form.submit(function() {
+        $form.submit(function() {
             return verifyLoginValues();
         });
 
@@ -156,7 +156,7 @@
             showForgotPanel();
         });
 
-        $login_form.find("input").keydown(function (e) {
+        $form.find("input").keydown(function (e) {
             if (27 == e.keyCode) {
                 doCloseWindow();
             }

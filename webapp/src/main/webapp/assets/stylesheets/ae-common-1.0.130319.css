@@ -263,7 +263,7 @@ div#local-masthead ul li a:active {
 }
 
 #ae-login form {
-    padding: 30px 30px 20px
+    padding: 20px 10px 10px
 }
 
 #ae-login form
@@ -273,12 +273,18 @@ div#local-masthead ul li a:active {
     font-size: 100%
 }
 
-#ae-login fieldset
+#ae-login-panel fieldset
+, #ae-remind-panel fieldset
 , #ae-feedback fieldset {
     padding: 0;
     margin: 0;
     border: 0 none;
     width: 100%
+}
+
+#ae-login-panel fieldset {
+    float: left;
+    width: 50%
 }
 
 #ae-login input[type = 'checkbox'] {
@@ -298,8 +304,11 @@ div#local-masthead ul li a:active {
     color: inherit
 }
 
-#ae-login fieldset:first-child
-, #ae-feedback fieldset:first-child {
+#ae-login-panel fieldset:first-child {
+    padding: 0 10px 0 0
+}
+
+#ae-feedback fieldset:first-child {
     padding: 0;
     margin-bottom: 10px
 }
