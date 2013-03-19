@@ -51,14 +51,14 @@
             $submit.attr("disabled", "true");
 
             if ("" == user) {
-                showStatus("User name should not be empty.");
+                showStatus("User name should not be empty");
                 $user.focus();
                 $submit.removeAttr("disabled");
                 return false;
             }
 
             if ("" == pass) {
-                showStatus("Password should not be empty.");
+                showStatus("Password should not be empty");
                 $pass.focus();
                 $submit.removeAttr("disabled");
                 return false;

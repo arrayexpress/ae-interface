@@ -284,7 +284,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
             );
 
             String reportMessage;
-            String result = "Unable to find matching user information.";
+            String result = "Unable to find matching account information";
             if (null != users) {
                 if (1 == users.size()) {
                     String username = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)");
@@ -312,7 +312,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
 
                     reportMessage = "Sent account information to the user [" + username + "], email [" + email + "]";
-                    result = "Account information has been sent.";
+                    result = "Account information sent, please check your email";
                 } else {
                     // multiple results, report this to administrators
                     reportMessage = "Request failed: found multiple users for name/email [" + nameOrEmail + "].";

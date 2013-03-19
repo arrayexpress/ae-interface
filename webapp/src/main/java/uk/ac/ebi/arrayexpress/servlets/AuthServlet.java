@@ -93,7 +93,7 @@ public class AuthServlet extends ApplicationServlet
                 setCookie(response, AE_TOKEN_COOKIE, token, maxAge);
             } else {
                 setCookie(response, AE_AUTH_USERNAME_COOKIE, username, null);
-                setCookie(response, AE_AUTH_MESSAGE_COOKIE, "Incorrect user name or password.", null);
+                setCookie(response, AE_AUTH_MESSAGE_COOKIE, "Incorrect user name or password", null);
             }
         }
 
