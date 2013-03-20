@@ -73,7 +73,7 @@
                 <h3 class="icon icon-generic" data-icon="N">Latest News</h3>
                 <p class="news">5 Mar 2013 - <strong>New ArrayExpress interface</strong><br/>
                     ArrayExpress, along with the EBI website, has a new look and feel. Click the <a href="http://www.ebi.ac.uk/arrayexpress/experiments/browse.html">experiment tab</a> to see our new layout or <a href="http://www.ebi.ac.uk/about/news/press-releases/website-relaunch">read about the new design</a>. We have preserved the previous functionality to maintain a consistent query experience and we would love to hear what you think.
-                    Please use the <a href="#" onclick="$.aeFeedback(event)">Feedback</a> functionality to provide comments.</p>
+                    Please use our <a href="#" onclick="$.aeFeedback(event)">Feedback</a> to provide comments.</p>
             </section>
             <section>
                 <div class="grid_8 alpha">
