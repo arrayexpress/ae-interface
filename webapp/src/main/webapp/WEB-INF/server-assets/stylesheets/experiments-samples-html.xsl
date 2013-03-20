@@ -83,7 +83,7 @@
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130311.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130320.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>

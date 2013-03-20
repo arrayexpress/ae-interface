@@ -87,11 +87,15 @@
     };
 
     function
-    tableAdjustColWidth( tdClassName )
+    tableAdjustColWidth( tableSelector, tdClassName )
     {
-        $("td." + tdClassName).each(function() {
-            var col = $("col.col_" + tdClassName);
-            col.width($(this).children().first().width())
+        $(tableSelector).each(function() {
+            var $table = $(this);
+            $table.find("td." + tdClassName).each(function() {
+                var $td = $(this);
+                var $col = $table.find("col.col_" + tdClassName);
+                $col.width($td.children().first().width())
+            });
         });
     }
 
@@ -99,22 +103,23 @@
     tableAdjustFillerHeight( tableSelector, srcEltSelector, dstEltSelector )
     {
         $(tableSelector).each(function() {
-            var me = $(this);
-            var srcElt = me.find(srcEltSelector).first();
-            var dstElt = me.find(dstEltSelector).first();
-            dstElt.height(srcElt.height() - srcElt.children().first().height());
+            var $table = $(this);
+            var $src = $table.find(srcEltSelector).first();
+            var $dst = $table.find(dstEltSelector).first();
+            $dst.height($src.height() - $src.children().first().height());
         });
     }
 
     function
     tableAdjust()
     {
-        tableAdjustColWidth("left_fixed");
-        tableAdjustColWidth("right_fixed");
         tableAdjustFillerHeight("table.ae_samples_table", "div.attr_table_scroll", "td.bottom_filler");
     }
 
     $(function() {
+
+        tableAdjustColWidth("table.ae_samples_table", "left_fixed");
+        tableAdjustColWidth("table.ae_samples_table", "right_fixed");
 
         $(window).resize(tableAdjust).trigger("resize");
 
