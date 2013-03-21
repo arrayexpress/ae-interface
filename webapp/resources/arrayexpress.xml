@@ -272,6 +272,7 @@
                 <field name="name" title="" type="string" path="name" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="email" title="" type="string" path="email"  analyze="true" store="false" escape="false" expand="false"/>
                 <field name="admin" title="" type="boolean" path="is_privileged/text() = 'true'"/>
+                <field name="experiment" title="" type="string" path="ae:getMappedValue('experiments-for-user', id)" analyze="true" store="false" escape="false" expand="false"/>
                 <!-- multiple-source filters for curators -->
                 <field name="source" type="string" path="@source" analyze="false" store="false" escape="false" expand="false"/>
                 <field name="migrated" type="boolean" path="@migrated = 'true'"/>
