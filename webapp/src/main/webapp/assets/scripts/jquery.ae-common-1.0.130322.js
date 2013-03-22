@@ -177,7 +177,7 @@
             showForgotPanel();
         });
 
-        $window.find("input[type='text']").keydown(function (e) {
+        $window.find("input").keydown(function (e) {
             if (27 == e.keyCode) {
                 doCloseWindow();
             }
