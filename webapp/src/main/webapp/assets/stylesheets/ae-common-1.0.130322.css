@@ -249,6 +249,11 @@ div#local-masthead ul li a:active {
     border-bottom-style: none
 }
 
+#ae-login .icon-functional:hover:before
+, #ae-feedback .icon-functional:hover:before {
+    color: #444
+}
+
 #ae-login .icon-functional:before
 , #ae-feedback .icon-functional:before {
     margin: 0
