@@ -36,31 +36,49 @@
         var $login_form = $window.find("form").first();
         var $user = $login_form.find("input[name='u']").first();
         var $pass = $login_form.find("input[name='p']").first();
-        var $submit = $login_form.find("input[type='submit']").first();
         var $open = $(options.open).first();
         var $close = $(options.close).first();
-        var $status = $(options.status).first();
+        var $status = $(options.status);
         var $status_text = $("<span class='alert'/>").appendTo($status);
         var $forgot = $(options.forgot).first();
         var $forgot_form = $window.find("form").last();
+        var $email = $forgot_form.find("input[name='e']").first();
+        var $accession = $forgot_form.find("input[name='a']").first();
 
         function verifyLoginValues() {
-            var user = $user.val();
-            var pass = $pass.val();
-
-            $submit.attr("disabled", "true");
-
-            if ("" == user) {
+            if ("" == $user.val()) {
                 showStatus("User name should not be empty");
                 $user.focus();
-                $submit.removeAttr("disabled");
                 return false;
             }
 
-            if ("" == pass) {
+            if ("" == $pass.val()) {
                 showStatus("Password should not be empty");
                 $pass.focus();
-                $submit.removeAttr("disabled");
+                return false;
+            }
+
+            hideStatus();
+            return true;
+        }
+
+        function verifyForgotValues() {
+
+            if ("" == $email.val()) {
+                showStatus("User name or email should not be empty");
+                $email.focus();
+                return false;
+            }
+
+            if ("" == $accession.val()) {
+                showStatus("Accession should not be empty");
+                $accession.focus();
+                return false;
+            }
+
+            if (-1 == ("=" + $accession.val() + "=").search(new RegExp("=[ae]-[a-z]{4}-[0-9]+=", "i"))) {
+                showStatus("Incorrect accession format (should be E-xxxx-nnnn)");
+                $accession.focus();
                 return false;
             }
 
@@ -91,10 +109,7 @@
         function doOpenWindow() {
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
-
             hideForgotPanel();
-
-            $submit.removeAttr("disabled");
             $window.show();
         }
 
@@ -126,6 +141,7 @@
         }
 
         function hideForgotPanel() {
+
             $forgot_form.hide();
             $forgot_form.find("input").first().val("");
             $login_form.show();
@@ -133,6 +149,10 @@
 
         $login_form.submit(function() {
             return verifyLoginValues();
+        });
+
+        $forgot_form.submit(function() {
+            return verifyForgotValues();
         });
 
         $open.click(function (e) {
@@ -153,6 +173,7 @@
 
         $forgot.find("a").click(function (e) {
             e.preventDefault();
+            hideStatus();
             showForgotPanel();
         });
 
@@ -348,7 +369,7 @@
         $("#ae-login").aeLoginForm({
             open: "li.login a",
             close: "#ae-login-close",
-            status: "#ae-login-status",
+            status: ".ae-login-status",
             forgot: "#ae-login-forgot"
         });
         $("#ae-feedback").aeFeedbackForm({

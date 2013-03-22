@@ -66,13 +66,14 @@ public class AuthServlet extends ApplicationServlet
         String password = request.getParameter("p");
         String remember = request.getParameter("r");
         String email = request.getParameter("e");
+        String accession = request.getParameter("a");
         String userAgent = request.getHeader("User-Agent");
 
         Users users = ((Users) getComponent("Users"));
         String token = "";
         boolean isLoginSuccessful = false;
         if (null != email) {
-            String message = users.remindPassword(StringUtils.trimToEmpty(email));
+            String message = users.remindPassword(StringUtils.trimToEmpty(email), StringUtils.trimToEmpty(accession));
             if (null != message) {
                 setCookie(response, AE_AUTH_MESSAGE_COOKIE, message, null);
             }

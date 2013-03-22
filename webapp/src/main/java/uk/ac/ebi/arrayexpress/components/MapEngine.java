@@ -47,7 +47,7 @@ public class MapEngine extends ApplicationComponent
     public void registerMap( IValueMap map )
     {
         if (mapRegistry.containsKey(map.getName())) {
-            logger.error("Unable to register map [{}] - already registered");
+            logger.error("Unable to register map [{}] - already registered", map.getName());
         } else {
             mapRegistry.put(map.getName(), map);
         }

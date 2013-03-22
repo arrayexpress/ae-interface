@@ -49,11 +49,11 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
-    private final String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
-    private final String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
-    private final String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
-    private final String MAP_EXPERIMENTS_FOR_USER = "experiments-for-user";
+    public final static String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
+    public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
+    public final static String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
+    public final static String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
+    public final static String MAP_EXPERIMENTS_FOR_USER = "experiments-for-user";
 
     // todo: move this to similarity component
     // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";

@@ -91,7 +91,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130319.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130322.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -273,16 +273,22 @@
                                 <label for="ae-login-remember">Remember me</label>
                             </span>
                             <input class="submit" type="submit" value="Login"/>
-                            <div id="ae-login-status" style="display:none"/>
+                            <div class="ae-login-status" style="display:none"/>
                             <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
                         </form>
-                         <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
+                        <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
                             <fieldset>
-                                <label for="ae-name-email-field">Please enter your user name or email address</label>
+                                <label for="ae-name-email-field">User name or email address</label>
                                 <input id="ae-name-email-field" name="e" maxlength="50"/>
                             </fieldset>
-                            <span><input class="submit" type="submit" value="Send"/>We will send you a reminder with your<br/>account information</span>
-                         </form>
+                            <fieldset>
+                                <label for="ae-accession-field">Experiment accession associated with the account</label>
+                                <input id="ae-accession-field" name="a" maxlength="14"/>
+                            </fieldset>
+                            <div>We will send you a reminder with your account information</div>
+                            <div class="ae-login-status" style="display:none"/>
+                            <input class="submit" type="submit" value="Send"/>
+                        </form>
                     </section>
                     <section id="ae-feedback" style="display:none">
                         <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
@@ -363,7 +369,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130319.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130322.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

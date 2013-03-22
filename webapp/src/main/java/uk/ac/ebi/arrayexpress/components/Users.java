@@ -85,11 +85,14 @@ public class Users extends ApplicationComponent implements IDocumentSource
                 , new File(getPreferences().getString("ae.users.persistence-location"))
         );
 
-
         this.userMap = new MapEngine.JointValueMap(MAP_USERS_FOR_ACCESSION);
-        ((MapEngine) getComponent("MapEngine")).registerMap(this.userMap);
+
+        MapEngine maps = ((MapEngine) getComponent("MapEngine"));
+        maps.registerMap(this.userMap);
+        maps.registerMap(new MapEngine.SimpleValueMap(Experiments.MAP_EXPERIMENTS_FOR_USER));
 
         updateIndex();
+
         this.authHelper = new AuthenticationHelper();
         this.saxon.registerDocumentSource(this);
     }
@@ -274,18 +277,29 @@ public class Users extends ApplicationComponent implements IDocumentSource
         return false;
     }
 
-    public String remindPassword( String nameOrEmail ) throws IOException
+    @SuppressWarnings("unchecked")
+    public String remindPassword( String nameOrEmail, String accession ) throws IOException
     {
         nameOrEmail = StringEscapeUtils.escapeXml(nameOrEmail);
+        accession = null != accession ? accession.toUpperCase() : "";
+
         try {
-            List users = this.saxon.evaluateXPath(
-                    getDocument()
-                    , "/users/user[name|email = '" + nameOrEmail + "']"
-            );
+            List users = null;
+
+            Object userIds = this.userMap.getValue(accession);
+            if (userIds instanceof Set) {
+                Set<String> uids = (Set<String>)(userIds);
+                String ids = StringTools.arrayToString(uids.toArray(new String[uids.size()]), ",");
+
+                users = this.saxon.evaluateXPath(
+                        getDocument()
+                        , "/users/user[(name|email = '" + nameOrEmail + "') and id = (" + ids + ")]"
+                );
+            }
 
             String reportMessage;
             String result = "Unable to find matching account information";
-            if (null != users) {
+            if (null != users && users.size() > 0) {
                 if (1 == users.size()) {
                     String username = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)");
                     String email = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(email)");
@@ -311,15 +325,15 @@ public class Users extends ApplicationComponent implements IDocumentSource
                     );
 
 
-                    reportMessage = "Sent account information to the user [" + username + "], email [" + email + "]";
+                    reportMessage = "Sent account information to the user [" + username + "], email [" + email + "], accession [" + accession + "]";
                     result = "Account information sent, please check your email";
                 } else {
                     // multiple results, report this to administrators
-                    reportMessage = "Request failed: found multiple users for name/email [" + nameOrEmail + "].";
+                    reportMessage = "Request failed: found multiple users for name/email [" + nameOrEmail + "] accessing [" + accession + "].";
                 }
             } else {
                 // no results, report this to administrators
-                reportMessage = "Request failed: found no users for name/email [" + nameOrEmail + "].";
+                reportMessage = "Request failed: found no users for name/email [" + nameOrEmail + "] accessing [" + accession + "].";
             }
 
             getApplication().sendEmail(
