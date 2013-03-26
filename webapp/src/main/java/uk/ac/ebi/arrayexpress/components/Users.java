@@ -333,8 +333,8 @@ public class Users extends ApplicationComponent implements IDocumentSource
             }
 
             getApplication().sendEmail(
-                    getPreferences().getString("app.reports.originator")
-                    , getPreferences().getStringArray("app.reports.recipients")
+                    getPreferences().getString("ae.password-remind.originator")
+                    , getPreferences().getStringArray("ae.password-remind.recipients")
                     , "ArrayExpress account information request"
                     , reportMessage + StringTools.EOL
                     + StringTools.EOL

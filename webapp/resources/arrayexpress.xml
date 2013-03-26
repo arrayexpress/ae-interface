@@ -4,6 +4,7 @@
         <reports>
             <originator>"ArrayExpress" &lt;ae-mgmt@ebi.ac.uk&gt;</originator>
             <recipients>${interface.application.pref.reports.recipients}</recipients>
+            <hidden-recipients>${interface.application.pref.reports.hidden-recipients}</hidden-recipients>
             <subject>Runtime exception report</subject>
             <smtp>
                 <host>smtp.ebi.ac.uk</host>
