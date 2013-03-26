@@ -37,7 +37,6 @@ import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -305,12 +304,9 @@ public class Users extends ApplicationComponent implements IDocumentSource
                     String email = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(email)");
                     String password = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(password)");
 
-                    List<String> recipients = new ArrayList<>();
-                    recipients.add(email);
-                    recipients.addAll(Arrays.asList(getPreferences().getStringArray("ae.password-remind.recipients")));
                     getApplication().sendEmail(
                             getPreferences().getString("ae.password-remind.originator")
-                            , recipients.toArray(new String[recipients.size()])
+                            , new String[]{email}
                             , getPreferences().getString("ae.password-remind.subject")
                             , "Dear " + username + "," + StringTools.EOL
                             + StringTools.EOL
