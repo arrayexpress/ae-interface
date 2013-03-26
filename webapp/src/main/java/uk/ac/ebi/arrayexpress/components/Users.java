@@ -298,7 +298,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
             }
 
             String reportMessage;
-            String result = "Unable to find matching account information";
+            String result = "Unable to find matching account information, please contact us for assistance.";
             if (null != users && users.size() > 0) {
                 if (1 == users.size()) {
                     String username = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)");
