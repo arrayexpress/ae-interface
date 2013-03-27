@@ -10,6 +10,21 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-samples-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>sdrf-view-xml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-files-xml.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -2976,6 +2991,27 @@
                                             <field name="paramDescription">
                                                 <paramDescriptor>
                                                     <field name="localName">
+                                                        <String>accession</String>
+                                                    </field>
+                                                    <field name="prefix">
+                                                        <null/>
+                                                    </field>
+                                                    <field name="namespace">
+                                                        <null/>
+                                                    </field>
+                                                </paramDescriptor>
+                                            </field>
+                                            <field name="value">
+                                                <String>E-MEXP-31</String>
+                                            </field>
+                                            <field name="hasXPathValue">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                        </transformationParameter>
+                                        <transformationParameter>
+                                            <field name="paramDescription">
+                                                <paramDescriptor>
+                                                    <field name="localName">
                                                         <String>debug</String>
                                                     </field>
                                                     <field name="prefix">
@@ -3408,6 +3444,7 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-samples-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae2-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl"/>

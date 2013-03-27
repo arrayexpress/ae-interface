@@ -253,6 +253,11 @@
         <from>^/experiments/(E-\w{4}-\d+)/sdrf[.]html?$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/${upper:$1}/samples/</to>
     </rule>
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/samples.xml$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/experiments/samples/xml</to>
+    </rule>
 
     <!-- add to genomespace wizard -->
     <rule>

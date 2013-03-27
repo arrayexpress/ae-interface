@@ -24,7 +24,9 @@
                 extension-element-prefixes="ae search"
                 exclude-result-prefixes="ae search html fn xs"
                 version="2.0">
-
+    <!--
+    <xsl:include href="ae-extensions-stub.xsl"/>
+    -->
     <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
     <xsl:param name="sourcename"/>
@@ -47,8 +49,8 @@
     <xsl:variable name="vPage" select="if ($s_page) then $s_page cast as xs:integer else 1"/>
     <xsl:variable name="vPageSize" select="if ($s_pagesize) then $s_pagesize cast as xs:integer else 25"/>
 
-    <xsl:variable name="vPermittedColType" select="fn:tokenize('source name,sample_description,sample_source_name,characteristics,factorvalue,factor value,unit,array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,links', '\s*,\s*')"/>
-    <xsl:variable name="vLinksColName" select="fn:tokenize('array data file,derived array data file,array data matrix file,derived array data matrix file,ena_run,fastq_uri', '\s*,\s*')"/>
+    <xsl:variable name="vPermittedColType" select="('sourcename','sample_description','sample_source_name','characteristics','factorvalue','unit','links')"/>
+    <xsl:variable name="vLinksColName" select="('arraydatafile','derivedarraydatafile','arraydatamatrixfile','derivedarraydatamatrixfile','ena_run','fastq_uri')"/>
 
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
@@ -139,11 +141,12 @@
         <xsl:variable name="vIsColComplex" select="not($vFull) and fn:matches($pText, '.+\[.+\].*')"/>
         <xsl:variable name="vIsColComment" select="fn:matches(fn:lower-case($pText), 'comment\s*\[.+\].*')"/>
         <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
-        <xsl:variable name="vColType" select="if (fn:exists(fn:index-of($vLinksColName, lower-case($vColName)))) then 'Links' else (if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText)"/>
-        <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, lower-case($vColType))"/>
-        <xsl:variable name="vColClass" select="if (fn:lower-case($vColType) = 'characteristics') then 'sa' else (if (fn:matches(fn:lower-case($vColType), 'factor\s*value')) then 'ef' else '')"/>
+        <xsl:variable name="vColType" select="if (fn:exists(fn:index-of($vLinksColName, fn:lower-case(fn:replace($vColName, '\s+', ''))))) then 'Links' else (if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText)"/>
+        <xsl:variable name="vAdjustedColType" select="fn:lower-case(fn:replace($vColType, '\s+', ''))"/>
+        <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, $vAdjustedColType)"/>
+        <xsl:variable name="vColClass" select="if ($vAdjustedColType = 'characteristics') then 'sa' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'ef' else '')"/>
 
-        <col pos="{$pPos}" type="{$vColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}"/>
+        <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}"/>
     </xsl:template>
 
     <xsl:template match="table">
@@ -257,7 +260,7 @@
 
         <xsl:variable name="vTableChunkInfo">
             <header data-rows="{$pTableInfo/header/@data-rows}">
-                <xsl:copy-of select="$pTableInfo/header/col[@pos &gt; 1 and @type != 'Links']"/>
+                <xsl:copy-of select="$pTableInfo/header/col[@pos &gt; 1 and @type != 'links']"/>
             </header>
         </xsl:variable>
         <div class="attr_table_shadow_container">
@@ -284,7 +287,7 @@
 
         <xsl:variable name="vTableChunkInfo">
             <header data-rows="{$pTableInfo/header/@data-rows}">
-                <xsl:copy-of select="$pTableInfo/header/col[@type='Links']"/>
+                <xsl:copy-of select="$pTableInfo/header/col[@type='links']"/>
             </header>
         </xsl:variable>
 
@@ -337,7 +340,7 @@
                                     <xsl:when test="$vColClass = 'ef'">
                                         <xsl:text>Factor Values</xsl:text>
                                     </xsl:when>
-                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                    <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:text>Links to Data</xsl:text>
                                     </xsl:when>
                                     <xsl:otherwise>
@@ -441,7 +444,7 @@
                                     <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
                                 </xsl:if>
                                 <xsl:choose>
-                                    <xsl:when test="fn:lower-case($vColInfo/@type) = 'links'">
+                                    <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:choose>
                                             <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
                                                 <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name),'derived')) then 'processed' else 'raw'"/>
