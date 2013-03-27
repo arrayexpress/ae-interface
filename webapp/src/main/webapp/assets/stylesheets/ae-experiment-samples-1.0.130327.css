@@ -188,6 +188,10 @@
     background-color: #FDF0DB
 }
 
+#ae-results .ae_samples_table .right {
+    text-align: right !important
+}
+
 #ae-results .ae_samples_table td.selected {
     background-color: #FFE0B1
 }

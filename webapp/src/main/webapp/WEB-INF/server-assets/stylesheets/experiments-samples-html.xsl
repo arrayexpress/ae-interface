@@ -24,9 +24,7 @@
                 extension-element-prefixes="ae search"
                 exclude-result-prefixes="ae search html fn xs"
                 version="2.0">
-    <!--
-    <xsl:include href="ae-extensions-stub.xsl"/>
-    -->
+
     <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
     <xsl:param name="sourcename"/>
@@ -70,7 +68,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130316.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130327.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a>
@@ -138,10 +136,25 @@
         <xsl:param name="pPos"/>
         <xsl:param name="pText"/>
 
-        <xsl:variable name="vIsColComplex" select="not($vFull) and fn:matches($pText, '.+\[.+\].*')"/>
+        <xsl:variable name="vIsColComplex" select="fn:not($vFull) and fn:matches($pText, '.+\[.+\].*')"/>
         <xsl:variable name="vIsColComment" select="fn:matches(fn:lower-case($pText), 'comment\s*\[.+\].*')"/>
-        <xsl:variable name="vColName" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
-        <xsl:variable name="vColType" select="if (fn:exists(fn:index-of($vLinksColName, fn:lower-case(fn:replace($vColName, '\s+', ''))))) then 'Links' else (if ($vIsColComplex) then (if ($vIsColComment) then $vColName else fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')) else $pText)"/>
+        <xsl:variable name="vColName" as="xs:string" select="if ($vIsColComplex) then fn:replace($pText, '.+\[(.+)\].*', '$1') else $pText"/>
+        <xsl:variable name="vColType" as="xs:string">
+            <xsl:choose>
+                <xsl:when test="fn:exists(fn:index-of($vLinksColName, fn:lower-case(fn:replace($vColName, '\s+', ''))))">
+                    <xsl:text>Links</xsl:text>
+                </xsl:when>
+                <xsl:when test="$vIsColComplex and $vIsColComment">
+                    <xsl:value-of select="$vColName"/>
+                </xsl:when>
+                <xsl:when test="$vIsColComplex and fn:not($vIsColComment)">
+                    <xsl:value-of select="fn:replace($pText, '(.+[^\s])\s*\[.+\].*', '$1')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$pText"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="vAdjustedColType" select="fn:lower-case(fn:replace($vColType, '\s+', ''))"/>
         <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, $vAdjustedColType)"/>
         <xsl:variable name="vColClass" select="if ($vAdjustedColType = 'characteristics') then 'sa' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'ef' else '')"/>
@@ -165,14 +178,16 @@
 
             <xsl:variable name="vUnitFixedHeaderInfo">
                 <xsl:for-each select="$vHeaderInfo/col">
-                    <xsl:variable name="vNeedsFix" as="xs:boolean" select="not($vFull) and (lower-case(@type) = 'unit' or lower-case(@name) = 'timeunit')"/>
+                    <xsl:variable name="vHasUnit" as="xs:boolean" select="fn:not($vFull) and following-sibling::*[1]/@type = 'unit'"/>
+                    <xsl:variable name="vIsUnit" as="xs:boolean" select="fn:not($vFull) and @type = 'unit'"/>
 
-                    <xsl:variable name="vColType" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@type) else @type"/>
-                    <xsl:variable name="vColName" select="if ($vNeedsFix) then '(unit)' else @name"/>
-                    <xsl:variable name="vColGroup" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@group) else @group"/>
-                    <xsl:variable name="vColClass" select="if ($vNeedsFix) then (preceding-sibling::*[1]/@class) else @class"/>
-
-                    <col pos="{@pos}" type="{$vColType}" name="{$vColName}" group="{$vColGroup}" class="{$vColClass}"/>
+                    <xsl:if test="fn:not($vIsUnit)">
+                        <col pos="{@pos}" type="{@type}" name="{@name}" group="{@group}" class="{@class}">
+                            <xsl:if test="$vHasUnit">
+                                <xsl:attribute name="unit" select="following-sibling::*[1]/@pos"/>
+                            </xsl:if>
+                        </col>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:variable>
 
@@ -366,6 +381,9 @@
                                     <xsl:value-of select="$vColInfo/@class"/>
                                 </xsl:when>
                             </xsl:choose>
+                            <xsl:if test="$vColInfo/@unit">
+                                <xsl:text> right</xsl:text>
+                            </xsl:if>
                         </xsl:attribute>
                         <xsl:choose>
                             <xsl:when test="$vFull"><xsl:value-of select="$vColInfo/@name"/></xsl:when>
@@ -411,6 +429,7 @@
                         <xsl:variable name="vColInfo" select="."/>
                         <xsl:variable name="vCol" select="$vRow/col[$vColPos]"/>
                         <xsl:variable name="vColText" select="$vCol/text()"/>
+                        <xsl:variable name="vUnitText" select="if (@unit) then $vCol/following-sibling::*[1]/text() else ''"/>
                         <xsl:variable name="vPrevColText" select="$vRow/preceding-sibling::*[1]/col[$vColPos]/text()"/>
                         <xsl:variable name="vNextRows" select="$vRow/following-sibling::*"/>
                         <xsl:variable name="vNextColText" select="$vNextRows[1]/col[$vColPos]/text()"/>
@@ -436,6 +455,9 @@
                                             <xsl:value-of select="$vColInfo/@class"/>
                                         </xsl:when>
                                     </xsl:choose>
+                                    <xsl:if test="$vColInfo/@unit">
+                                        <xsl:text> right</xsl:text>
+                                    </xsl:if>
                                     <xsl:if test="$sourcename != '' and $vRow/col[1] = $sourcename">
                                         <xsl:text> selected</xsl:text>
                                     </xsl:if>
@@ -514,6 +536,10 @@
                                                 <xsl:value-of select="$vColText"/>
                                             </xsl:otherwise>
                                         </xsl:choose>
+                                        <xsl:if test="@unit">
+                                            <xsl:text>&#160;</xsl:text>
+                                            <xsl:value-of select="$vUnitText"/>
+                                        </xsl:if>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </td>
