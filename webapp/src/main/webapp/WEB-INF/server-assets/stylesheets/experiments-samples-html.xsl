@@ -537,8 +537,11 @@
                                             </xsl:otherwise>
                                         </xsl:choose>
                                         <xsl:if test="@unit">
-                                            <xsl:text>&#160;</xsl:text>
-                                            <xsl:value-of select="$vUnitText"/>
+                                            <em>
+                                                <xsl:text> (</xsl:text>
+                                                <xsl:value-of select="$vUnitText"/>
+                                                <xsl:text>)</xsl:text>
+                                            </em>
                                         </xsl:if>
                                     </xsl:otherwise>
                                 </xsl:choose>
