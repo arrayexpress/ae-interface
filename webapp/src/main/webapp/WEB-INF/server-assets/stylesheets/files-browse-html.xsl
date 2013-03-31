@@ -179,7 +179,7 @@
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
 
         <div id="ae-query">
-            <form method="get" action="browse.html">
+            <form method="get" action="{$context-path}/files/browse.html">
                 <fieldset>
                     <label for="ae-query-keywords">Search files by experiment/array accessions, kinds, names, or extensions</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>

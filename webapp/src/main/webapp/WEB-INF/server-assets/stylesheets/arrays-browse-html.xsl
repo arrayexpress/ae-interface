@@ -156,7 +156,7 @@
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
         <xsl:if test="fn:not($vExperimentMode)">
             <div id="ae-query">
-                <form method="get" action="browse.html">
+                <form method="get" action="{$context-path}/arrays/browse.html">
                     <fieldset>
                         <label for="ae-keywords-field">Search arrays by accessions, names, descriptions, or providers</label>
                         <input id="ae-keywords-field" type="text" name="keywords" value="{$keywords}" maxlength="255"/>

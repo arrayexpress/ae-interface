@@ -153,7 +153,7 @@
 
         <xsl:if test="fn:not($vExperimentMode)">
             <div id="ae-query">
-                <form method="get" action="browse.html">
+                <form method="get" action="{$context-path}/protocols/browse.html">
                     <fieldset>
                         <label for="ae-query-keywords">Search protocols by accessions, names, or descriptions</label>
                         <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>

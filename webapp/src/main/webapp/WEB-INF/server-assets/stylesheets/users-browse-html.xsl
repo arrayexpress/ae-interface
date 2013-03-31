@@ -124,7 +124,7 @@
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'ascending'"/>
 
         <div id="ae-query">
-            <form method="get" action="browse.html">
+            <form method="get" action="{$context-path}/users/browse.html">
                 <fieldset>
                     <label for="ae-query-keywords">Search users by name, email, or source (AE1/AE2)</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
