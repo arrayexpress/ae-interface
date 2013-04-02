@@ -93,7 +93,8 @@
             var $table = $(this);
             var $content = $table.find("td." + tdClassName).first().children().first();
             var $col = $table.find("col.col_" + tdClassName);
-            $col.width($content.width())
+            $col.width($content.width());
+            $content.addClass("w100pc");
         });
     }
 

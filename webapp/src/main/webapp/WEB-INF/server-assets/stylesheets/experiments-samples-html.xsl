@@ -68,7 +68,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130327.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130402.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a>

@@ -148,6 +148,9 @@
 #ae-results .ae_samples_table td.right_fixed {
     vertical-align: top;
 }
+#ae-results table.w100pc {
+    width: 100% !important
+}
 
 #ae-results th {
     font-size: 108%;
