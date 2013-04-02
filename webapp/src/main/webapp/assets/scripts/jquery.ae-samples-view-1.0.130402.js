@@ -98,16 +98,6 @@
     }
 
     function
-    tableSetColWidth( tableSelector, tdClassName, value )
-    {
-        $(tableSelector).each(function() {
-            var $table = $(this);
-            var $col = $table.find("col.col_" + tdClassName);
-            $col.width(value);
-        });
-    }
-
-    function
     tableReveal( tableSelector )
     {
         $(tableSelector).each(function() {
@@ -136,7 +126,6 @@
 
         tableAdjustColWidth("table.ae_samples_table", "left_fixed");
         tableAdjustColWidth("table.ae_samples_table", "right_fixed");
-        tableSetColWidth("table.ae_samples_table", "middle_scrollable", "100%");
         tableReveal("table.ae_samples_table");
 
         $(window).resize(tableAdjust).trigger("resize");

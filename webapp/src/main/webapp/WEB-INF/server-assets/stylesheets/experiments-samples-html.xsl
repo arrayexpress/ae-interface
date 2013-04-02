@@ -203,7 +203,7 @@
         <div class="ae_samples_table_border">
             <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0" style="visibility:hidden">
                 <col class="col_left_fixed" style=""/>
-                <col class="col_middle_scrollable" style=""/>
+                <col class="col_middle_scrollable" style="width:100%"/>
                 <col class="col_right_fixed" style=""/>
                 <thead>
                     <xsl:call-template name="table-pager">
