@@ -91,11 +91,27 @@
     {
         $(tableSelector).each(function() {
             var $table = $(this);
-            $table.find("td." + tdClassName).each(function() {
-                var $td = $(this);
-                var $col = $table.find("col.col_" + tdClassName);
-                $col.width($td.children().first().width())
-            });
+            var $content = $table.find("td." + tdClassName).first().children().first();
+            var $col = $table.find("col.col_" + tdClassName);
+            $col.width($content.width())
+        });
+    }
+
+    function
+    tableSetColWidth( tableSelector, tdClassName, value )
+    {
+        $(tableSelector).each(function() {
+            var $table = $(this);
+            var $col = $table.find("col.col_" + tdClassName);
+            $col.width(value);
+        });
+    }
+
+    function
+    tableReveal( tableSelector )
+    {
+        $(tableSelector).each(function() {
+            $(this).css("visibility", "visible");
         });
     }
 
@@ -120,6 +136,8 @@
 
         tableAdjustColWidth("table.ae_samples_table", "left_fixed");
         tableAdjustColWidth("table.ae_samples_table", "right_fixed");
+        tableSetColWidth("table.ae_samples_table", "middle_scrollable", "100%");
+        tableReveal("table.ae_samples_table");
 
         $(window).resize(tableAdjust).trigger("resize");
 

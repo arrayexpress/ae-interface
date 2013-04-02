@@ -83,7 +83,7 @@
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130320.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130402.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -201,10 +201,10 @@
         </xsl:variable>
 
         <div class="ae_samples_table_border">
-            <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0">
-                <col class="col_left_fixed"/>
-                <col class="col_middle_scrollable"/>
-                <col class="col_right_fixed"/>
+            <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0" style="visibility:hidden">
+                <col class="col_left_fixed" style=""/>
+                <col class="col_middle_scrollable" style=""/>
+                <col class="col_right_fixed" style=""/>
                 <thead>
                     <xsl:call-template name="table-pager">
                         <xsl:with-param name="pColumnsToSpan" select="3"/>
