@@ -458,33 +458,33 @@
                                     <xsl:if test="$vColInfo/@unit">
                                         <xsl:text> right</xsl:text>
                                     </xsl:if>
-                                    <xsl:if test="$sourcename != '' and $vRow/col[1] = $sourcename">
+                                    <xsl:if test="ae:isStringNotEmpty($sourcename) and $vRow/col[1] = $sourcename">
                                         <xsl:text> selected</xsl:text>
                                     </xsl:if>
                                 </xsl:attribute>
-                                <xsl:if test="($vColText = $vNextColText) and $vGrouping">
+                                <xsl:if test="$vColText = $vNextColText and $vGrouping">
                                     <xsl:attribute name="rowspan" select="$vNextGroupRowPos - $vRowPos"/>
                                 </xsl:if>
                                 <xsl:choose>
                                     <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:choose>
-                                            <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name),'file')">
-                                                <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name),'derived')) then 'processed' else 'raw'"/>
+                                            <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name), 'file')">
+                                                <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name), 'derived')) then 'processed' else 'raw'"/>
                                                 <xsl:variable name="vAvailArchives" select="$vData[@extension = 'zip' and @kind = $vDataKind]/@name"/>
                                                 <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                                 <xsl:choose>
-                                                    <xsl:when test="string-length($vColText) > 2 and (fn:index-of($vAvailArchives, $vArchive))">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:index-of($vAvailArchives, $vArchive)">
                                                         <a href="{$context-path}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
                                                     </xsl:when>
-                                                    <xsl:when test="string-length($vColText) > 2 and count($vAvailArchives) = 1">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:count($vAvailArchives) = 1">
                                                         <a href="{$context-path}/files/{$vAccession}/{$vAvailArchives}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
                                                     </xsl:when>
-                                                    <xsl:when test="string-length($vColText) > 2 and ($vColText = $vArchive)">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and $vColText = $vArchive">
                                                         <a href="{$context-path}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
@@ -499,7 +499,7 @@
                                                     </xsl:otherwise>
                                                 </xsl:choose>
                                             </xsl:when>
-                                            <xsl:when test="(fn:lower-case($vColInfo/@name) = 'ena_run') and ($vColText != '')">
+                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run' and ae:isStringNotEmpty($vColText)">
                                                 <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
 
                                                 <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
@@ -510,7 +510,7 @@
                                                     <xsl:with-param name="pBAMFile" select="$vBAMFile"/>
                                                 </xsl:call-template>
                                             </xsl:when>
-                                            <xsl:when test="(fn:lower-case($vColInfo/@name) = 'fastq_uri') and ($vColText != '')">
+                                            <xsl:when test="fn:lower-case($vColInfo/@name) = 'fastq_uri' and ae:isStringNotEmpty($vColText)">
                                                 <xsl:variable name="vFileName" select="fn:replace($vColText, '^.+/([^/]+)$', '$1')"/>
                                                 <a href="{$vColText}" title="Click to download {$vFileName}">
                                                     <span class="icon icon-functional" data-icon="="/>
@@ -536,7 +536,7 @@
                                                 <xsl:value-of select="$vColText"/>
                                             </xsl:otherwise>
                                         </xsl:choose>
-                                        <xsl:if test="@unit">
+                                        <xsl:if test="fn:exists(@unit) and ae:isStringNotEmpty($vUnitText)">
                                             <em>
                                                 <xsl:text> (</xsl:text>
                                                 <xsl:value-of select="$vUnitText"/>
@@ -563,7 +563,7 @@
 
         <xsl:if test="fn:index-of($vAvailBAMs, $pBAMFile) and fn:index-of($vAvailBAMProps, $vBAMPropFile)">
             <xsl:variable name="vBAMProps" select="ae:tabularDocument($vAccession, $vBAMPropFile)/table/row[2]"/>
-            <xsl:if test="count($vBAMProps/col) = 3">
+            <xsl:if test="fn:count($vBAMProps/col) = 3">
                 <xsl:text> </xsl:text>
                 <a href="http://www.ensembl.org/{fn:replace($vBAMProps/col[1], ' ', '_')}/Location/View?r={$vBAMProps/col[3]};contigviewbottom=url:{$host}{$context-path}/files/{$vAccession}/{$pBAMFile};format=Bam" title="Click to view {$pBAMFile} in Ensembl Genome Browser">
                     <img src="http://static.ensembl.org/i/search/ensembl.gif" width="16" height="16"/>
@@ -571,5 +571,11 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+
+    <xsl:function name="ae:isStringNotEmpty" as="xs:boolean">
+        <xsl:param name="pString" as="xs:string"/>
+
+        <xsl:value-of select="fn:not(fn:normalize-space($pString) = '')"/>
+    </xsl:function>
 
 </xsl:stylesheet>
