@@ -573,9 +573,9 @@
     </xsl:template>
 
     <xsl:function name="ae:isStringNotEmpty" as="xs:boolean">
-        <xsl:param name="pString" as="xs:string"/>
+        <xsl:param name="pString"/>
 
-        <xsl:value-of select="fn:not(fn:normalize-space($pString) = '')"/>
+        <xsl:value-of select="fn:exists($pString) and fn:not(fn:normalize-space($pString) = '')"/>
     </xsl:function>
 
 </xsl:stylesheet>
