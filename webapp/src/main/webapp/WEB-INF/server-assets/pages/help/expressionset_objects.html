@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head><title>ExpressionSet R Objects &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<body class="level2">
+<div id="content" role="main" class="grid_24 clearfix">
+    <section id="ae-help" class="grid_18 alpha">
+	
+
+
+	
+		<h2>ExpressionSet R Objects</h2>
+	   
+		<p>For many <a href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> experiments, an "ExpressionSet" object (e.g. <a href="https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-777/E-MTAB-777.eSet.r">E-MTAB-777.eSet.r</a>) is available to download for direct loading into <a href="http://www.r-project.org">R</a>.</p>
+
+		<p><img src="expression_set_link.png" alt="screenshot showing ExpressionSet download link"></p>
+		
+		<p>ExpressionSet is the <i>de facto</i> object defined in the <a href="http://www.bioconductor.org">Bioconductor</a> <a href="http://www.bioconductor.org/packages/release/bioc/html/Biobase.html">Biobase</a> package for loading and manipulating microarray data in <a href="http://www.r-project.org/">R</a>. These objects are created using the <a href="http://www.bioconductor.org/packages/release/bioc/html/ArrayExpress.html">ArrayExpress R package</a> using default parameters. For each experiment, raw (un-normalized) data files are stored in the object as well as other metadata from its MAGE-TAB files, such as study, sample and gene metadata. Please refer to the package ArrayExpress package <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/ArrayExpress/inst/doc/ArrayExpress.pdf">vignette</a> for more details.	
+
+		<h3>How to load ArrayExpress ExpressionSet objects in R</h3>
+
+		<p>To load the E-MTAB-777.eSet.R object, <a href="https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-777/E-MTAB-777.eSet.r">download it</a>, start R, and run the following command:</p>
+		<p><code>> load("path/to/E-MTAB-777.eSet.R")</code></p>
+		<p>This will create an ExpressionSet object named "study". If you plan to load multiple ExpressionSet objects, you should rename this object before loading the next one to prevent it from being overwritten. For example:</p>
+		<p><code>> mtab777eSet <- study</code></p>
+
+		<p>Not all ArrayExpress experiments have downloadable R objects. This is because some require running the ArrayExpress package R functions with user-set parameters. Instead, you can try creating the ExpressionSet yourself, by following the procedure outlined in Section 4 of the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/ArrayExpress/inst/doc/ArrayExpress.pdf">vignette</a>.
+
+		<h3>Any problems?</h3>
+		<p>Please report any problems with loading these files to <a href="mailto:iemam@ebi.ac.uk" class="icon icon-generic" data-icon="E">iemam@ebi.ac.uk</a>.
+
+	</section>
+
+
+
+
+    <aside class="grid_6 omega">
+        <h3>Help</h3>
+        <ul id="secondary-nav">
+            <li><a href="index.html">Help home</a></li>
+            <li><a href="quick_start.html">Quick Start guide</a></li>
+            <li><a href="how_to_search.html">How to search</a></li>
+            <li><a href="programmatic_access.html">Other ways to get data</a>
+                <ul>
+                    <li><a href="programmatic_access.html">Programmatic access</a></li>
+					<li><a href="FTP_archives.html">FTP archives</a></li>
+					<li class="active"><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+                </ul>
+            </li>
+            <li><a href="submissions_overview.html">How to submit</a>
+                <ul>
+                    <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                    <li><a href="third_party_tools.html">Third-party tools</a></li>
+                </ul>
+            </li>
+            <li><a href="FAQ.html">FAQ</a></li>
+            <li><a href="data_availability.html">Learn more about our data</a>
+                <ul>
+                    <li><a href="data_availability.html">Data access policy</a></li>
+                    <li><a href="accession_codes.html">Accession codes</a></li>
+                    <li><a href="GEO_data.html">GEO data</a></li>
+                </ul>
+            </li>
+            <li><a href="contact_us.html">Contact us</a></li>
+        </ul>
+    </aside>
+</div>
+</body>
+</html>
