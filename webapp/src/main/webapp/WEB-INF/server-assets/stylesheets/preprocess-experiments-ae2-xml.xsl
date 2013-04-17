@@ -55,7 +55,7 @@
                 <xsl:message>[WARN] More than one experiment title defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
             </xsl:if>
 
-            <xsl:for-each select="fn:distinct-values(sampleattribute[@category = 'Organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
+            <xsl:for-each select="fn:distinct-values(sampleattribute[fn:lower-case(@category) = 'organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
 
