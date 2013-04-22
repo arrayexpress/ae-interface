@@ -19,9 +19,9 @@
 		<h3>How to load ArrayExpress ExpressionSet objects in R</h3>
 
 		<p>To load the E-MTAB-777.eSet.r object, <a href="https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-777/E-MTAB-777.eSet.r">download it</a>, start R, and run the following command:</p>
-		<p><code>> load("path/to/E-MTAB-777.eSet.r")</code></p>
+		<p><code>&gt; load("path/to/E-MTAB-777.eSet.r")</code></p>
 		<p>This will create an ExpressionSet object named "study". If you plan to load multiple ExpressionSet objects, you should rename this object before loading the next one to prevent it from being overwritten. For example:</p>
-		<p><code>> mtab777eSet <- study</code></p>
+		<p><code>&gt; mtab777eSet &lt;- study</code></p>
 
 		<p>Not all ArrayExpress experiments have downloadable R objects. This is because some require running the ArrayExpress package R functions with user-set parameters. Instead, you can try creating the ExpressionSet yourself, by following the procedure outlined in the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/ArrayExpress/inst/doc/ArrayExpress.pdf">vignette</a>.
 
