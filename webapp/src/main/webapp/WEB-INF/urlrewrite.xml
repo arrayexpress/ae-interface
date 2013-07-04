@@ -456,6 +456,12 @@
         <to type="redirect" last="true">%{context-path}/help/$1.html</to>
     </rule>
 
+    <!-- news page -->
+    <rule>
+        <from>^/news[.]html?$</from>
+        <to type="forward" last="true">/servlets/query/-/news/html</to>
+    </rule>
+
     <!-- about arrayexpress page -->
     <rule>
         <from>^/about[.]html?$</from>
@@ -762,29 +768,4 @@
         <from>^/test[.]html?$</from>
         <to type="forward" last="true">/servlets/query/-/test/html</to>
     </rule>
-
-    <!-- ArrayExpress old link redirects  -->
-    <!-- TODO: remove or update
-    <rule>
-        <from>^/news_archive[.]html$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/general/news.html</to>
-    </rule>
-
-    <rule>
-        <from>^/Implementation/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
-    </rule>
-    <rule>
-        <from>^/Schema/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/software/ae_index.html</to>
-    </rule>
-    <rule>
-        <from>^/Standards/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/doc/standards.html</to>
-    </rule>
-    <rule>
-        <from>^/Submissions/?$</from>
-        <to type="permanent-redirect" last="true">http://www.ebi.ac.uk/fg/submissions_overview.html</to>
-    </rule>
-    -->
 </urlrewrite>

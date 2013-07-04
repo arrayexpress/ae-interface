@@ -146,6 +146,10 @@
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-events.xml</persistence-location>
         </events>
 
+        <news>
+            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-news.xml</persistence-location>
+        </news>
+
         <files>
             <root><location>${interface.application.pref.files.root.location}</location></root>
             <list-all-command>${interface.application.pref.files.list-all.command}</list-all-command>
@@ -156,7 +160,6 @@
                 <atstart>false</atstart>
                 <schedule>${interface.application.pref.files.check.schedule}</schedule>
             </check>
-
         </files>
 
         <species>

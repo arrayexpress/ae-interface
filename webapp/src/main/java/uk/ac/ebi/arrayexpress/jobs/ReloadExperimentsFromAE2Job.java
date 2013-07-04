@@ -4,11 +4,8 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.ArrayDesigns;
-import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.*;
 import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
-import uk.ac.ebi.arrayexpress.components.Protocols;
-import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.File;
@@ -43,6 +40,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         String arrayDesignsXml = null;
         String protocolsXml = null;
         String experimentsXml = null;
+        String newsXml = null;
 
         try {
             // check preferences and if source location is defined, use that
@@ -50,6 +48,10 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             Experiments.UpdateSourceInformation sourceInformation = null;
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
+                File newsFile = new File(sourceLocation, "news.xml");
+                if (newsFile.exists()) {
+                    newsXml = getXmlFromFile(newsFile);
+                }
                 usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
                 arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
                 protocolsXml = getXmlFromFile(new File(sourceLocation, "protocols.xml"));
@@ -71,6 +73,10 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                         )
                         , "UTF-8"
                 );
+            }
+
+            if (!"".equals(newsXml)) {
+                updateNews(newsXml);
             }
 
             if (!"".equals(usersXml)) {
@@ -106,6 +112,14 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         xml = StringTools.detectDecodeUTF8Sequences(xml);
         xml = StringTools.replaceIllegalHTMLCharacters(xml);
         return xml;
+    }
+
+    private void updateNews( String xmlString ) throws IOException, InterruptedException
+    {
+        ((News) getComponent("News")).update(xmlString);
+
+        logger.info("News reload completed");
+
     }
 
     private void updateUsers( String xmlString ) throws IOException, InterruptedException

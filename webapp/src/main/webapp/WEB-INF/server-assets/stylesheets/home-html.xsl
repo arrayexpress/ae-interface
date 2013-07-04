@@ -51,6 +51,7 @@
         <xsl:variable name="vTotal" select="fn:count($vExperiments)"/>
         <xsl:variable name="vRetrieved" select="$vExperiments[1]/../@retrieved"/>
         <xsl:variable name="vFiles" select="search:queryIndex('files', 'userid:1 (kind:raw OR kind:processed)')"/>
+        <xsl:variable name="vNews" select="doc('news.xml')"/>
 
         <xsl:if test="$vTotal > 0">
             <div class="grid_6 omega">
@@ -69,12 +70,22 @@
             </div>
         </xsl:if>
         <div class="grid_24 alpha">
-            <section id="ae-news">
-                <h3 class="icon icon-generic" data-icon="N">Latest News</h3>
-                <p class="news">5 Mar 2013 - <strong>New ArrayExpress interface</strong><br/>
-                    ArrayExpress, along with the EBI website, has a new look and feel. Click the <a href="http://www.ebi.ac.uk/arrayexpress/experiments/browse.html">experiment tab</a> to see our new layout or <a href="http://www.ebi.ac.uk/about/news/press-releases/website-relaunch">read about the new design</a>. We have preserved the previous functionality to maintain a consistent query experience and we would love to hear what you think.
-                    Please use our <a href="#" onclick="$.aeFeedback(event)">Feedback</a> to provide comments.</p>
-            </section>
+            <xsl:if test="fn:count($vNews/news/item) > 0">
+                <section id="ae-news">
+                    <h3 class="icon icon-generic" data-icon="N">Latest News</h3>
+                    <xsl:for-each select="$vNews/news/item">
+                        <xsl:if test="fn:position() &lt; 3">
+                            <p class="news"><xsl:value-of select="ae:formatDateGoogle(date)"/> - <strong><xsl:value-of select="title"/></strong><br/>
+                                <xsl:copy-of select="summary/node()"/>
+                                <xsl:if test="fn:string-length(text) > 0">
+                                    <br/>
+                                    <a href="news.html#{fn:position()}">Read more...</a>
+                                </xsl:if>
+                            </p>
+                        </xsl:if>
+                    </xsl:for-each>
+                </section>
+            </xsl:if>
             <section>
                 <div class="grid_8 alpha">
                     <h3 class="icon icon-generic" data-icon="L">Links</h3>
