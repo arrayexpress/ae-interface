@@ -68,7 +68,7 @@
                 <xsl:text> &lt; Experiments</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130402.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130704.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a>
@@ -112,7 +112,9 @@
                                         </xsl:if>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <xsl:apply-templates select="$vTable"/>
+                                        <xsl:apply-templates select="$vTable">
+                                            <xsl:with-param name="pFileName" select="@name"/>
+                                        </xsl:apply-templates>
                                         <xsl:if test="fn:position() != fn:last()">
                                             <div class="divider"/>
                                         </xsl:if>
@@ -163,6 +165,7 @@
     </xsl:template>
 
     <xsl:template match="table">
+        <xsl:param name="pFileName"/>
 
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="header"/>
@@ -241,7 +244,7 @@
                         <td class="bottom_filler"/>
                     </tr>
                     <tr>
-                        <td colspan="3" class="col_footer">&#160;</td>
+                        <td colspan="3" class="col_footer"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a></td>
                     </tr>
                 </tbody>
             </table>

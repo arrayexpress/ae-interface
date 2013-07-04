@@ -25,7 +25,7 @@
     -webkit-box-sizing: border-box;
 }
 
-#ae-results .icon-functional::before {
+#ae-results .links_table .icon-functional::before {
     margin: 0;
     font-size: 93%;
     color: inherit;
