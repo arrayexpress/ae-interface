@@ -56,6 +56,7 @@
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
         <interface.application.pref.files.rescan.interval>60</interface.application.pref.files.rescan.interval>
 
+        <interface.application.css.local-masthead-color>#A1BEDF</interface.application.css.local-masthead-color>
         <interface.application.pref.files.check.schedule/>
         <interface.application.google.analytics/>
     </properties>
@@ -140,6 +141,8 @@
                 <interface.application.pref.files.root.location>/ebi/microarray/home/arrayexpress/ae2_curator/data</interface.application.pref.files.root.location>
                 <interface.application.pref.files.prefix>ae2-curator</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>30</interface.application.pref.files.rescan.interval>
+
+                <interface.application.css.local-masthead-color>pink</interface.application.css.local-masthead-color>
             </properties>
         </profile>
         <profile>
@@ -285,6 +288,7 @@
                         <resource>
                             <directory>${basedir}/src/main/webapp</directory>
                             <includes>
+                                <include>assets/stylesheets/ae-common*.css</include>
                                 <include>WEB-INF/web.xml</include>
                                 <include>WEB-INF/urlrewrite.xml</include>
                                 <include>WEB-INF/server-assets/stylesheets/*.xsl</include>

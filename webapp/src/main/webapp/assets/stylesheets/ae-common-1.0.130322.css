@@ -165,7 +165,7 @@ form input.submit {
 }
 
 /* Define the basic colour your local masthead */
-div#local-masthead { background-color: #A1BEDF; }
+div#local-masthead { background-color: ${interface.application.css.local-masthead-color}; }
 
 /* Colour the faux-underline for local menu items */
 div#local-masthead ul li a:hover,
