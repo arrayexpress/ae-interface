@@ -28,7 +28,7 @@
         <interface.application.log.appender.ref>ROLLINGFILE</interface.application.log.appender.ref>
 
         <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
-        <interface.application.link.atlas.exp_xml.url>http://www.ebi.ac.uk/gxa/api?experiment=listAll&amp;amp;experimentInfoOnly=yes&amp;amp;format=xml</interface.application.link.atlas.exp_xml.url>
+        <interface.application.link.atlas.exp_xml.url>http://www.ebi.ac.uk/gxa/api/deprecated?experiment=listAll&amp;amp;experimentInfoOnly=yes&amp;amp;format=xml</interface.application.link.atlas.exp_xml.url>
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiment/</interface.application.link.atlas.exp_query.url>
 
         <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
