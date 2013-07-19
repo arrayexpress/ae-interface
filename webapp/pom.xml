@@ -122,7 +122,8 @@
                 <interface.application.pref.files.root.location>/ebi/microarray/home/arrayexpress/ae2_perftest/data</interface.application.pref.files.root.location>
                 <interface.application.pref.files.prefix>ae2-perftest</interface.application.pref.files.prefix>
                 <interface.application.pref.files.rescan.interval>30</interface.application.pref.files.rescan.interval>
-                <interface.application.body.class>ae2_perftest</interface.application.body.class>
+
+                <interface.application.css.local-masthead-color>moccasin</interface.application.css.local-masthead-color>
             </properties>
         </profile>
         <profile>
