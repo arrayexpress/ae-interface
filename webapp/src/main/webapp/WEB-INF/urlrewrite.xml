@@ -225,6 +225,12 @@
         <to type="permanent-redirect" last="true">%{context-path}/experiments/$1/files/$2/</to>
     </rule>
 
+    <!-- this hack is to fix incorrect path for direct file access -->
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/files/([^/]+)$</from>
+        <to type="redirect" last="true">%{context-path}/files/$1/$2</to>
+    </rule>
+
     <!-- experiment samples -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/$</from>
