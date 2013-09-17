@@ -6,13 +6,14 @@
         <section id="ae-help" class="grid_18 alpha">
             <h2>How to search</h2>
             <ol>
-                <li><a href="#SearchExperiment">Search for experiments</a></li>
+                <li><a href="#BasicSearchExperiment">Search for experiments (basic)</a></li>
+                <li><a href="#AdvancedSearchExperiment">Search for experiments (advanced)</a></li>
                 <li><a href="#SearchADF">Search for array designs</a></li>
                 <li><a href="#Login">Search for private experiments</a></li>
             </ol>
             <br>
-            <h3><a id="SearchExperiment">1. Search for experiments</a></h3>
-            <h4>Search by accession or keyword</h4>
+            <h3><a id="SearchExperiment">1. Search for experiments (basic) </a></h3>
+            <h4>1.1 Search by accession or keyword</h4>
             <p>Enter an experiment <strong>accession number</strong> (e.g. E-MEXP-568) or <strong>keyword</strong> (e.g. RNAi, "breast cancer", "p53 knockout") in the query box at the top of the <a href="/arrayexpress/experiments/browse.html">ArrayExpress Experiments page</a>.</p>
             <ul>
                 <li>Put quotes around multiple keywords if you want to find experiments where these words are found next to each other e.g. "breast cancer".</li>
@@ -22,7 +23,7 @@
             <p>You can search for <strong>multiple accession numbers at a time</strong>. All you need to do is to separate the accession numbers with a space, a comma, a semi-colon or a tab character:<br>
                 <img src="ae_help_multi_accession_search.png" alt="ArrayExpress experiment search box with multi accession example"></p>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            <h4>Filtering results</h4>
+            <h4>1.2 Filtering results  </h4>
             <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"></p>
             <p>Experiments can be filtered using the drop down menus at the top of the results table. They can be filtered by </p>
             <ul>
@@ -34,7 +35,187 @@
             </ul>
             <p> After selecting a filter, click on the <strong>'Filter' button </strong>on the right hand side to filter experiments. To remove a filter, re-select the top option from the list and then click on the 'Filter' button again to requery ArrayExpress.</p>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            <h3><a id="SearchADF">2. Search for array designs</a></h3>
+            
+
+            <h3><a id="SearchExperiment">2. Search for experiments (advanced) </a></h3>
+            <h4>2.1 Combining search terms with "AND", "OR", "NOT"</h4>
+            <p>Enter two or more keywords in the search box with the operators AND, OR or NOT. AND is the default in searches, so for example, a search for prostate breast will return hits with a match to 'prostate' AND 'breast'.</p>
+            <p>Search terms of more than one word must be entered inside quotes otherwise only the first word will be searched for. For example, transcription AND Rattus norvegicus will effectively be a search for "transcription" AND "Rattus".</p>
+            <p><strong>Note:</strong>If a field is not specified (see 2.2 below), then the term is search in every experiment fields, which include the experiment description, sample annotation, publication paper title, submitter's email address, protocol description, etc).</p>
+            <p>Some use cases are listed below:</p>
+            <table>
+        <tbody><tr>
+            <th></th>
+            <th>Search terms</th>
+            <th>How the terms are interpreted</th>            
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><strong>heart brain</strong></td>
+            <td>Search for experiments which mention both "heart" and "brain". The "AND" relationship between search terms is implicit.</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><strong>heart, brain</strong></td>
+            <td>The same as (1).</td>
+        </tr>        
+        <tr>
+            <td>3</td>
+            <td><strong>heart AND brain</strong></td>
+            <td>The explicit way of writing the same query as in (1) and (2).</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><strong>"heart brain"</strong></td>
+            <td>Search for experiments which mention both "heart brain" (two terms adjacnet to each other).</td>
+        </tr>        
+        <tr>
+            <td>5</td>
+            <td><strong>"heart and brain"</strong></td>
+            <td>Search for experiments which mention both "heart and brain" (three words strung together as such).</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><strong>heart OR brain</strong></td>
+            <td>Search for experiments which mention either "heart" or "brain".
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><strong>heart NOT brain</strong></td>
+            <td>Search for experiments which mention "heart" but not "brain".</td>
+        </tr>                   
+        </tbody></table>
+        <p>&nbsp;</p>
+        <h4>2.2 Restrict search by specifying the search "fields"</h4>
+        <p>You can limit the search space to a certain field by writing the query in the format of fieldname:value.  The search box would detect the "fieldname:" entered and give you search hints.</p>
+        <p>Restricting the search space is useful when, for example, you would like to search for experiments which are performed on human samples. By writing "organism:Homo sapiens", this would avoid matching experiments which merely mentioned "Homo sapiens" or "human" in the experiment description but perhaps performed with samples from another organism.</p>
+        <p>Again, phrases of more than one word must be entered in quotes, otherwise only the first word will be searched for. The fields that can be searched are shown in the table below:<p>
+    <table>
+        <tbody><tr>
+            <th>Field name</th>
+            <th>Search scope</th>
+            <th>Example use case</th>
+        </tr>
+        <tr>
+            <td><strong>accession</strong></td>
+            <td>Experiment primary or secondary accession</td>
+            <td>accession:E-MTAB-1234</td>
+        </tr>
+        <tr>
+            <td><strong>array</strong></td>
+            <td>Array design accession or name</td>
+            <td>array:A-AFFY-33</td>
+        </tr>
+        <tr>
+            <td><strong>ef</strong></td>
+            <td>Experimental factor, the name of the main variable under study in an experiment. </td>
+            <td>ef:genotype</td>
+        </tr>
+        <tr>
+            <td><strong>efv</strong></td>
+            <td>The value of an experimental factor. E.g. The values for "genotype" factor can be "wild type", "p53-/-". Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</td>
+            <td>efv:"wild type"</td>
+        </tr>
+        <tr>
+            <td><strong>expdesign</strong></td>
+            <td>Experiment design type, e.g. </td>
+            <td>expdesign:dose+response</td>
+        </tr>
+        <tr>
+            <td><strong>exptype</strong></td>
+            <td>Experiment type (related to the technology used).  Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</td>
+            <td>exptype="RNA-seq"</td>
+        </tr>
+        <tr>
+            <td><strong>gxa</strong></td>
+            <td>Presence in the <a href='http://www.ebi.ac.uk/gxa>Expression Atlas</a>. Only value allowed is gxa=true. </td>
+            <td>gxa:true</td>
+        </tr>
+        <tr>
+            <td><strong>pmid</strong></td>
+            <td>PubMed identifier for a publication.</td>
+            <td>pmid=16553887</td>
+        </tr>
+        <tr>
+            <td><strong>sa</strong></td>
+            <td><p>Sample attribute values. Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</p></td>
+            <td>sa:fibroblast</td>
+        </tr>
+        <tr>
+            <td><strong>organism</strong></td>
+            <td>Species of the samples. Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion. </td>
+            <td><p>organism:"homo sapiens"</p>
+            </td>
+        </tr>
+        </tbody>
+     </table>
+        <p>&nbsp;</p>
+        <h4>2.3 Filtering results by counts</h4>
+
+    <p>Experiments fulfilling certain count critera can also be searched for e.g. having more than 10
+        assays (hybridizations). Here are some examples: </p>
+
+    <table>
+        <tbody><tr>
+            <th>Filter</th>
+            <th> What is filtered </th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>assaycount:[x TO y]</td>
+            <td>filter on the number of of assays where x &lt;= y and both values are between 0 and 99,999 (<strong>inclusive</strong>) . To count <strong>excluding</strong>
+                the values given use curly brackets e.g. assaycount:{1 TO 5} will find
+                experiments with 2-4 assays. Single numbers may also be given e.g.
+                assaycount:10 will find experiments with 10 assays.</td>
+            <td>assaycount:[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>efcount:[x TO y]</td>
+            <td>filter on the number of experimental factors </td>
+            <td>efcount:[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>samplecount:[x TO y] </td>
+            <td> filter on the number of samples</td>
+            <td>samplecount:[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>sacount:[x TO y] </td>
+            <td>filter on the number of sample attribute categories</td>
+            <td>sacount:[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>raw:true/faslse</td>
+            <td>filter on the presence/absence of raw data files<br>
+            </td>
+            <td>raw:true</td>
+        </tr>
+        <tr>
+            <td>processed:true/false</td>
+            <td>filter on the presence/absence of processed data files<br>
+            </td>
+            <td>processed:true</td>
+        </tr>
+        <tr>
+            <td>miamescore:[x TO y] </td>
+            <td>filter on the MIAME compliance score (maximum score is 5) </td>
+            <td>miamescore:[1 TO 5]</td>
+        </tr>
+        <tr>
+            <td>date:yyyy-mm-dd</td>
+            <td><p>filter by release date</p>
+                <ul>
+                    <li>date:2009-12-01 - will search for experiments released on 1st of Dec 2009 </li>
+                    <li>date:2009* - will search for experiments released in 2009</li>
+                    <li>date:[2008-01-01 2008-05-31] - will search for experiments released between 1st of Jan and end of May 2008 </li>
+                </ul></td>
+            <td>date:[2008-01-01 2008-05-31]</td>
+        </tr>
+        </tbody></table>
+        <p>&nbsp;</p>
+            
+            
+            <h3><a id="SearchADF">3. Search for array designs</a></h3>
             <p>Array designs, also known as platform designs, can be searched on the <a href="/arrayexpress/arrays/browse.html">Arrays page</a></p>
             <p><img src="ae_help_array_design_search.png" alt="array design search"></p>
             <p>You can search array designs using the following:<br>
@@ -49,7 +230,7 @@
             <p>ArrayExpress contains array designs submitted directly to us and those imported from NCBI Gene Expression Omnibus (see the
                 <a href="GEO_data.html">GEO data help page</a> for more details). You can toggle the check box "ArrayExpress data only" to search for direct submission only or all array designs.</p>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            <h3><a id="Login">3. Search for private experiments</a></h3>
+            <h3><a id="Login">4. Search for private experiments</a></h3>
             <p>Data can be kept private in ArrayExpress until an associated paper is published. After an experiment or custom array design is loaded into ArrayExpress the submitter is sent details of login accounts for themselves, and for journal editors and reviewers so that they can view the data before it
                 is publicly available.</p>
             <p>To login click on the "Login" link at the right hand side of the top menu bar.</p>
