@@ -12,7 +12,7 @@
                 <li><a href="#Login">Search for private experiments</a></li>
             </ol>
             <br>
-            <h3><a id="SearchExperiment">1. Search for experiments (basic) </a></h3>
+            <h3><a id="BasicSearchExperiment">1. Search for experiments (basic) </a></h3>
             <h4>1.1 Search by accession or keyword</h4>
             <p>Enter an experiment <strong>accession number</strong> (e.g. E-MEXP-568) or <strong>keyword</strong> (e.g. RNAi, "breast cancer", "p53 knockout") in the query box at the top of the <a href="/arrayexpress/experiments/browse.html">ArrayExpress Experiments page</a>.</p>
             <ul>
@@ -22,6 +22,9 @@
             <p><img src="ae_help_search_box.png" alt="ArrayExpress experiment search box"></p>
             <p>You can search for <strong>multiple accession numbers at a time</strong>. All you need to do is to separate the accession numbers with a space, a comma, a semi-colon or a tab character:<br>
                 <img src="ae_help_multi_accession_search.png" alt="ArrayExpress experiment search box with multi accession example"></p>
+            <p>ArrayExpress search uses the <a href='http://www.ebi.ac.uk/efo'>Experimental Factor Ontology (EFO)</a> to extend your query to synonyms (e.g. "cerebral cortex" and "adult brain cortex") and EFO child-terms (e.g. "rib" and "vertebra" as child-terms for "bone").  In the search results, matched search terms are highlighted depending on the nature of the match.</p>
+            <p> For example, when using search term "leukemia":</p>
+            <p><img src="ae_help_search_results_highlighting.png" alt="Search results highlighting"></p>   
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <h4>1.2 Filtering results  </h4>
             <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"></p>
@@ -37,12 +40,12 @@
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             
 
-            <h3><a id="SearchExperiment">2. Search for experiments (advanced) </a></h3>
+            <h3><a id="AdvancedSearchExperiment">2. Search for experiments (advanced) </a></h3>
             <h4>2.1 Combining search terms with "AND", "OR", "NOT"</h4>
             <p>Enter two or more keywords in the search box with the operators AND, OR or NOT. AND is the default in searches, so for example, a search for prostate breast will return hits with a match to 'prostate' AND 'breast'.</p>
             <p>Search terms of more than one word must be entered inside quotes otherwise only the first word will be searched for. For example, transcription AND Rattus norvegicus will effectively be a search for "transcription" AND "Rattus".</p>
-            <p><strong>Note:</strong>If a field is not specified (see 2.2 below), then the term is search in every experiment fields, which include the experiment description, sample annotation, publication paper title, submitter's email address, protocol description, etc).</p>
-            <p>Some use cases are listed below:</p>
+            <p><strong>Note:</strong> If a field is not specified (see 2.2 below), then the term is searchrf in every experiment fields, which include the experiment description, sample annotation, publication paper title, submitter's email address, protocol description, etc.</p>
+            <p>Here are some use cases:</p>
             <table>
         <tbody><tr>
             <th></th>
@@ -67,12 +70,12 @@
         <tr>
             <td>4</td>
             <td><strong>"heart brain"</strong></td>
-            <td>Search for experiments which mention both "heart brain" (two terms adjacnet to each other).</td>
+            <td>Search for experiments which mention "heart brain" (two terms adjacnet to each other).</td>
         </tr>        
         <tr>
             <td>5</td>
             <td><strong>"heart and brain"</strong></td>
-            <td>Search for experiments which mention both "heart and brain" (three words strung together as such).</td>
+            <td>Search for experiments which mention "heart and brain" (three words strung together as such).</td>
         </tr>
         <tr>
             <td>6</td>
@@ -86,10 +89,14 @@
         </tr>                   
         </tbody></table>
         <p>&nbsp;</p>
-        <h4>2.2 Restrict search by specifying the search "fields"</h4>
-        <p>You can limit the search space to a certain field by writing the query in the format of fieldname:value.  The search box would detect the "fieldname:" entered and give you search hints.</p>
-        <p>Restricting the search space is useful when, for example, you would like to search for experiments which are performed on human samples. By writing "organism:Homo sapiens", this would avoid matching experiments which merely mentioned "Homo sapiens" or "human" in the experiment description but perhaps performed with samples from another organism.</p>
-        <p>Again, phrases of more than one word must be entered in quotes, otherwise only the first word will be searched for. The fields that can be searched are shown in the table below:<p>
+        <h4>2.2 Restrict search by specifying the search space</h4>
+        <p>You can limit the search space to a certain "field" by writing the query in the format of fieldname:value.  A "field" can be, for example, the organism under study, the experimental factor, the assay technology used. Restricting the search space is useful when, for example, you would like to search for experiments which are performed on human samples.  By writing "organism:Homo sapiens", this would avoid matching experiments which merely mentioned "Homo sapiens" or "human" in the experiment description but perhaps performed with samples from another organism.</p>
+        <p>The search box would try to detect "fieldname:" entered and give you search hints:</p>
+        <p><img src="ae_help_organism_search.png" alt="organism_search"></p>
+        <p><img src="ae_help_exptype_search.png" alt="exptype_search"></p>
+        
+        <p>Again, phrases of more than one word must be entered in quotes, otherwise only the first word will be searched for. <a href='http://www.ebi.ac.uk/efo'>Experimental Factor Ontology (EFO)</a> expansion of search terms also applies where possible (see section 1.1 above for more details.)</p>
+        <p> The fields that can be searched are:</p>
     <table>
         <tbody><tr>
             <th>Field name</th>
@@ -108,7 +115,7 @@
         </tr>
         <tr>
             <td><strong>ef</strong></td>
-            <td>Experimental factor, the name of the main variable under study in an experiment. </td>
+            <td>Experimental factor, the name of the main variable under study in an experiment. E.g. if the factor is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have.</td>
             <td>ef:genotype</td>
         </tr>
         <tr>
@@ -118,90 +125,98 @@
         </tr>
         <tr>
             <td><strong>expdesign</strong></td>
-            <td>Experiment design type, e.g. </td>
-            <td>expdesign:dose+response</td>
+            <td>Experiment design type, related to the questions being addressed by the study, e.g. "time series design", "stimulus or stress design", "genetic modification design".</td>
+            <td>expdesign:"time series"</td>
         </tr>
         <tr>
             <td><strong>exptype</strong></td>
-            <td>Experiment type (related to the technology used).  Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</td>
-            <td>exptype="RNA-seq"</td>
+            <td>Experiment type, related to the assay technology used.  Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</td>
+            <td>exptype:"RNA-seq of coding RNA"</td>
         </tr>
         <tr>
             <td><strong>gxa</strong></td>
-            <td>Presence in the <a href='http://www.ebi.ac.uk/gxa>Expression Atlas</a>. Only value allowed is gxa=true. </td>
+            <td>Presence in the <a href='http://www.ebi.ac.uk/gxa'>Expression Atlas</a>. Only value allowed is gxa=true. </td>
             <td>gxa:true</td>
         </tr>
         <tr>
             <td><strong>pmid</strong></td>
             <td>PubMed identifier for a publication.</td>
-            <td>pmid=16553887</td>
+            <td>pmid:16553887</td>
         </tr>
         <tr>
             <td><strong>sa</strong></td>
-            <td><p>Sample attribute values. Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</p></td>
+            <td>Sample attribute values. Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion.</td>
             <td>sa:fibroblast</td>
         </tr>
         <tr>
             <td><strong>organism</strong></td>
             <td>Species of the samples. Has <a href='http://www.ebi.ac.uk/efo'>EFO</a> expansion. </td>
-            <td><p>organism:"homo sapiens"</p>
-            </td>
+            <td>organism:"homo sapiens"</td>
         </tr>
         </tbody>
      </table>
         <p>&nbsp;</p>
         <h4>2.3 Filtering results by counts</h4>
 
-    <p>Experiments fulfilling certain count critera can also be searched for e.g. having more than 10
+    <p>Experiments fulfilling certain count critera can also be searched for. E.g. Those having more than 10
         assays (hybridizations). Here are some examples: </p>
 
     <table>
         <tbody><tr>
             <th>Filter</th>
-            <th> What is filtered </th>
+            <th>Query format</th>
+            <th>What is filtered </th>
             <th>Example</th>
         </tr>
         <tr>
+            <td>Number of assays</td>
             <td>assaycount:[x TO y]</td>
-            <td>filter on the number of of assays where x &lt;= y and both values are between 0 and 99,999 (<strong>inclusive</strong>) . To count <strong>excluding</strong>
-                the values given use curly brackets e.g. assaycount:{1 TO 5} will find
+            <td>Filter on the number of of assays where x &lt;= y and both values are between 0 and 99,999 (<strong>inclusive</strong>) . To count <strong>excluding</strong>
+                the values given, use curly brackets e.g. assaycount:{1 TO 5} will find
                 experiments with 2-4 assays. Single numbers may also be given e.g.
-                assaycount:10 will find experiments with 10 assays.</td>
+                assaycount:10 will find experiments with exactly 10 assays.</td>
             <td>assaycount:[1 TO 5]</td>
         </tr>
         <tr>
+            <td>Number of experimental factors</td>
             <td>efcount:[x TO y]</td>
-            <td>filter on the number of experimental factors </td>
+            <td>Filter on the number of experimental factors (the main variables under study in an experiment, e.g. "sex", "genotype", "strain".) </td>
             <td>efcount:[1 TO 5]</td>
         </tr>
         <tr>
+            <td>Number of samples</td>
             <td>samplecount:[x TO y] </td>
             <td> filter on the number of samples</td>
             <td>samplecount:[1 TO 5]</td>
         </tr>
         <tr>
+            <td>Number of sample attribute categories</td>
             <td>sacount:[x TO y] </td>
-            <td>filter on the number of sample attribute categories</td>
+            <td>filter on the number of sample attribute categories. A category can be "patient ID", "treatment", "sex", "diet".</td>
             <td>sacount:[1 TO 5]</td>
         </tr>
         <tr>
+            <td>Raw data files</td>
             <td>raw:true/faslse</td>
-            <td>filter on the presence/absence of raw data files<br>
+            <td>filter on the presence/absence of raw data files (native files obtained directly from microarray scanner or sequencing machine)<br>
             </td>
             <td>raw:true</td>
         </tr>
         <tr>
+            <td>Processed data files</td>
             <td>processed:true/false</td>
-            <td>filter on the presence/absence of processed data files<br>
+            <td>filter on the presence/absence of processed data files (e.g. normalised/transformed data)<br>
             </td>
             <td>processed:true</td>
         </tr>
         <tr>
+            <td>Presence of adequate meta-data (MIAME score)</td>
             <td>miamescore:[x TO y] </td>
-            <td>filter on the MIAME compliance score (maximum score is 5) </td>
+            <td>filter on the <a href ="http://www.mged.org/Workgroups/MIAME/miame_2.0.html">MIAME</a> compliance score (maximum score is 5) </td>
             <td>miamescore:[1 TO 5]</td>
         </tr>
         <tr>
+            <td>Release date</td>
             <td>date:yyyy-mm-dd</td>
             <td><p>filter by release date</p>
                 <ul>
