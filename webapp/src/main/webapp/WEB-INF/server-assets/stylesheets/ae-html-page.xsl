@@ -179,7 +179,7 @@
                                             <input type="submit" value="Search" class="submit"/>
                                             <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
                                            with whatever features you want available -->
-                                            <span class="adv"><a href="{$context-path}/search" id="adv-search" title="Advanced">Advanced</a></span>
+                                            <span class="adv"><a href="{$context-path}/help/how_to_search.html#AdvancedSearchExperiment" id="adv-search" title="Advanced">Advanced</a></span>
                                         </div>
                                     </fieldset>
                                 </form>
