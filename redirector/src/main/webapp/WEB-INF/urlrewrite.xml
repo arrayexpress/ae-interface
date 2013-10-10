@@ -4,64 +4,81 @@
         "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
 
 <urlrewrite>
+    <!-- /microarray/ redirection -->
+    <rule>
+        <from>^/microarray/submissions_overview[.]html?$</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/submit/overview.html</to>
+    </rule>
+    <rule>
+        <from>^/microarray/doc/help/(.*)$</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/help/$1</to>
+    </rule>
+    <rule>
+        <from>^/microarray/doc/(.*)$</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/help/index.html</to>
+    </rule>
+    <rule>
+        <from>^/microarray/about[.]html?$</from>
+        <to type="permanent-redirect" last="true">/about/people/alvis-brazma</to>
+    </rule>
 
     <!-- /microarray-as/ae redirection -->
     <rule>
         <from>^/microarray-as/ae/(.*)$</from>
         <condition type="query-string">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/$1?%{query-string}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/$1?%{query-string}</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/ae/(.*)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/$1</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/$1</to>
     </rule>
 
     <!-- /microarray-as/aer redirection -->
     <rule>
         <from>^/microarray-as/aer/?$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/index.html$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <from>^/microarray-as/aer/index[.]html?$</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/entry$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/login</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/download/([^/]+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/download/$1</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/download/mageml/([^/]+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/download/$1</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/rss/experiments/?$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/rss/experiments</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/jsp/ae-rss\.jsp</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+        <from>^/microarray-as/aer/jsp/ae-rss[.]jsp</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/rss/experiments</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/jsp/ae-view-experiment\.jsp</from>
+        <from>^/microarray-as/aer/jsp/ae-view-experiment[.]jsp</from>
         <condition type="parameter" name="accnum">E-[^-]{4}-.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
     </rule>
 
     <!-- /microarray-as/aer specific queries redirection -->
@@ -69,87 +86,87 @@
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
         <condition type="parameter" name="aAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
     </rule>
 
     <rule>
         <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/browse.html</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/browse.html</to>
     </rule>
 
     <!-- /microarray-as/aer misc resources redirection -->
     <rule>
-        <from>^/microarray-as/aer/include/aelogo.png</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/assets/images/ae_logo_20.png</to>
+        <from>^/microarray-as/aer/include/aelogo[.]png</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/assets/images/ae_logo_20.png</to>
     </rule>
 
     <!-- /microarray-as/aer fallback rule -->
     <rule>
         <from>/microarray-as/aer/(.+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <!-- /aerep redirection -->
     <rule>
         <from>^/aerep/?$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
-        <from>^/aerep/index.html$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <from>^/aerep/index[.]html?$</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
         <from>^/aerep/login</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <rule>
         <from>^/aerep/download/([^/]+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/download/$1</to>
     </rule>
 
     <rule>
         <from>^/aerep/download/mageml/([^/]+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/download/$1</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/download/$1</to>
     </rule>
 
     <rule>
         <from>^/aerep/rss/experiments/?$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/rss/experiments</to>
     </rule>
 
     <rule>
-        <from>^/aerep/jsp/ae-rss\.jsp</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/rss/experiments</to>
+        <from>^/aerep/jsp/ae-rss[.]jsp</from>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/rss/experiments</to>
     </rule>
 
     <rule>
-        <from>^/aerep/jsp/ae-view-experiment\.jsp</from>
+        <from>^/aerep/jsp/ae-view-experiment[.]jsp</from>
         <condition type="parameter" name="accnum">E-[^-]{4}-.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
     </rule>
 
     <!-- /aerep specific queries redirection -->
@@ -157,44 +174,44 @@
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/experiments/browse.html</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html</to>
     </rule>
 
     <rule>
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
         <condition type="parameter" name="aAccession">.+</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
     </rule>
 
     <rule>
         <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
-        <to type="permanent-redirect">${redirector.interface.base.path}/arrays/browse.html</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/browse.html</to>
     </rule>
 
     <!-- /aerep fallback rule -->
     <rule>
         <from>^/aerep/(.+)$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 
     <!-- default fallback rule -->
     <rule>
         <from>^/.*$</from>
-        <to type="permanent-redirect">${redirector.interface.base.path}/</to>
+        <to type="permanent-redirect" last="true">${redirector.interface.base.path}/</to>
     </rule>
 </urlrewrite>
