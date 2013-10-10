@@ -14,6 +14,11 @@
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/help/$1</to>
     </rule>
     <rule>
+        <from>^/microarray/doc/atlas/(.*)$</from>
+        <to type="permanent-redirect" last="true">/gxa/help/</to>
+    </rule>
+
+    <rule>
         <from>^/microarray/doc/(.*)$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/help/index.html</to>
     </rule>
