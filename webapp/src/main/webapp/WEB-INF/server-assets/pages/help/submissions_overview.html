@@ -5,30 +5,22 @@
     <div id="content" role="main" class="grid_24 clearfix">
         <section id="ae-help" class="grid_18 alpha">
             <h2>How to submit</h2>
-            <div class="grid_12">
+            <div class="grid_24">
                 <div class="calloutbox" style="padding: 20px; position: relative; background-color: rgb(238, 249, 243);">
                     <h3 class="icon icon-functional" data-icon="_"><a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet tool</a></h3>
                     <br>
                     <ul>
-                        <li>All sequencing and microarray submissions</li>
+                        <li>All sequencing and microarray experiment submissions</li>
                         <li><a href="/fgpt/magetab/help">MAGE-TAB submission help</a></li>
-                        <li><a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">MAGE-TAB submission interactive tutorial</a></li>
+                        <li><a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">MAGE-TAB submission interactive tutorial</a></li>                       
                     </ul>
                 </div>
             </div>
-            <div class="grid_12">
-                <div class="calloutbox" style="padding: 20px;  position: relative; background-color: rgb(238, 249, 243);">
-                    <h3 class="icon icon-functional" data-icon="_"><a href="/miamexpress/login.html">MIAMExpress web interface tool</a></h3>
-                    <br>
-                    <ul>   
-                        <li><strong>This tool is no longer maintained.  For new submissions, please use the MAGE-TAB spreadsheet tool.</strong></li>                     
-                        <li><a href="/miamexpress/help/index.html">MIAMExpress help</a></li>
 
-                    </ul>
-                </div>
-            </div>
             <p>&nbsp;</p>
+            <p><strong>MIAMExpress users:</strong> (16 October 2013) The MIAMExpress submission tool is no longer maintained for experiment submissions. If you're starting a new experiment submission, please use the MAGE-TAB spreadsheet tool (see above). Array design submissions are still accepted via MIAMExpress.</p>
             <p>&nbsp;</p>
+
             
             <h3>More information about submissions</h3>
             <p>
@@ -50,7 +42,7 @@
                 <p>Microarray experiment submitters: Please make sure the format of your raw data files matches one of the <a href="/fgpt/magetab/help/data_format.html#raw">accepted formats</a>.  If your experiment was performed with the Illumina BeadChip platform, make sure you generated raw data files using the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software) with the 'ArrayExpress Data Submission Report Plug-in'. The plug-in is available from the <a href="http://www.illumina.com/software/illumina_connect.ilmn#gene_expression_plug_ins">Illumina connect website</a>. The raw data files should be formatted as in this <a href="/fgpt/magetab/help/data_format.html#illumina">BeadChip raw data example</a>.</p>
                 <p>Sequencing experiment submitters: Please make sure your raw sequence read files are formatted and prepared according to <a href="/ena/about/sra_data_format">specifications by the European Nucleotide Archive (ENA)</a>.  Please refer to this <a href = "UHTS_submissions.html">specific help page on sequencing submissions</a> for more details.</p>
                 <p><strong>Processed data files</strong>: These are data files generated from the raw data files, often involving normalisation, filtering, background-subtraction. In sequencing expermient, the processing can also involve alignment of sequencing reads to a reference genome, calculation of RPKM/FPKM values, etc.</p>
-                <p>Microarray experiment submitters: <strong>*NEW 22 Jul 2013*</strong> If you have one processed data file for each hybridisation assay, we recommend that the file to be formatted as described on this <a href="/fgpt/magetab/help/data_format.html#normalized">per-hybridisation normalised file example</a>. If you are submitting a single processed file containing data from multiple hybridisation assays, depending on the submission tool used, we recommend the <a href="http://tab2mage.sourceforge.net/docs/datafiles.html#final_data_matrix">data matrix format (MIAMExpress tool)</a> or <a href="/fgpt/magetab/help/data_format.html#data_matrix">data matrix format (MAGE-TAB submission tool)</a>. We no longer enforce strict formatting requirements for processed data files but you are encouraged to use the recommended formats. Regardless of the type and format of processed data you are sending us, please make sure you have provided a detailed normalisation/data transformation protocol in your meta-data, as that will allow your data to be interpreted properly.</p>
+                <p>Microarray experiment submitters: If you have one processed data file for each hybridisation assay, we recommend that the file to be formatted as described on this <a href="/fgpt/magetab/help/data_format.html#normalized">per-hybridisation normalised file example</a>. If you are submitting a single processed file containing data from multiple hybridisation assays, depending on the submission tool used, we recommend the <a href="http://tab2mage.sourceforge.net/docs/datafiles.html#final_data_matrix">data matrix format (MIAMExpress tool)</a> or <a href="/fgpt/magetab/help/data_format.html#data_matrix">data matrix format (MAGE-TAB submission tool)</a>. We no longer enforce strict formatting requirements for processed data files but you are encouraged to use the recommended formats. Regardless of the type and format of processed data you are sending us, please make sure you have provided a detailed normalisation/data transformation protocol in your meta-data, as that will allow your data to be interpreted properly.</p>
                 <p>Sequencing experiment submitters: We do not enforce strict formatting requirements on processed files, except for bam (alignment) files, which should follow <a href="http://www.ebi.ac.uk/ena/about/sra_data_format#bam_format">bam file specification from the European Nucleotide Archive</a>. The alignments should also be generated against a reference genome which has been deposited in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>). See this <a href = "UHTS_submissions.html#HowToSubmit">sequencing submissions help page</a> for more details.</p>
             </div>
 
@@ -90,7 +82,7 @@
                     </td>
                     <td>&lt; 15 hybs</td>
                     <td>
-                    <strong>If you're starting a new submission, please use the MAGE-TAB spreadsheet tool (see above).</strong><br>Non-sequencing, non-Illumina microarray experiments with 1 raw data file per hybridization, no dye-swaps<p></p></td>
+                    <strong>If you're starting a new experiment submission, please use the MAGE-TAB spreadsheet tool (see above).</strong><br>Non-sequencing, non-Illumina microarray experiments with 1 raw data file per hybridization, no dye-swaps<p></p></td>
                     <td><ul>
                         <li><a href="/miamexpress/help/index.html">overview</a></li>
                         <li><a href="/miamexpress/help/web_ui.html">webform help</a></li>
@@ -111,14 +103,14 @@
            <p>When you're ready to submit, login to the MAGE-TAB submission tool again and upload the spreadsheet along with your data files. If you are new to MAGE-TAB submissions, please have a look at this <a href="/fgpt/magetab/help/quick_start.html">quick start guide</a>.</p>
 
             <h4>MIAMExpress</h4>
-            <p><strong>This tool is no longer maintained. Please use MAGE-TAB spreadsheet tool if you're starting a new submission.</strong></p><p>You will be filling in meta-data information on the <a href="/miamexpress/login.html">MIAMExpress web interface tool</a>. There are two ways to use the tool: batchloader mode (recommended) or web-form mode. Links to both methods are found within the 'experiment submission' section of the MIAMExpress tool.  In both the pages are ordered in a way to reflect the chronological flow of your experiment, e.g. you will first be asked about the source materials, then the RNA/DNA extracts, the labelled extracts and hybridisations. The form will ask you to upload raw/processed data files only <em>after</em> you have described the "hybridisations" sufficiently in your experiment (e.g. which microarray design/platform was used for the hybridisation, which labelled extract went into the hybridisation, etc).</p>
+            <p><strong>This tool is no longer maintained for experiment submissions. Please use MAGE-TAB spreadsheet tool if you're submitting a new experiment.</strong></p><p>You will be filling in meta-data information on the <a href="/miamexpress/login.html">MIAMExpress web interface tool</a>. There are two ways to use the tool: batchloader mode (recommended) or web-form mode. Links to both methods are found within the 'experiment submission' section of the MIAMExpress tool.  In both the pages are ordered in a way to reflect the chronological flow of your experiment, e.g. you will first be asked about the source materials, then the RNA/DNA extracts, the labelled extracts and hybridisations. The form will ask you to upload raw/processed data files only <em>after</em> you have described the "hybridisations" sufficiently in your experiment (e.g. which microarray design/platform was used for the hybridisation, which labelled extract went into the hybridisation, etc).</p>
 
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
             <h3><a id="CommonQuestions"></a>4. Common questions</h3>
             <ul>
                 <li><strong>General submission questions</strong> (MAGE-TAB and MIAMExpress): <a href="faq.html#submit_faq_general">Submission FAQ</a></li>
-                <li><strong>MIAMExpress-specific</strong> submission questions: <a href="faq.html#Submitter_FAQ_mx">MIAMExpress FAQ</a> (Please note that MIAMExpress is no longer maintained for new experiment submissions.)</li>
+                <li><strong>MIAMExpress-specific</strong> submission questions: <a href="faq.html#Submitter_FAQ_mx">MIAMExpress FAQ</a> (Please note that MIAMExpress is no longer maintained for new experiment submissions. Array design sbumissions are still accepted via MIAMExpress.)</li>
                 <li>Getting ArrayExpress <strong>accession number</strong> for your experiment: <a href="faq.html#need_acc_num_urgent">Accession number</a></li>
                 <li>How to set/change <strong>release dates</strong> for your data: <a href="data_availability.html">ArrayExpress data access policy</a></li>
                 <li>All other questions: please try <a href="faq.html">General FAQ</a> or email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a></li>
@@ -139,7 +131,7 @@
             <p>If you use a commercially available microarray which is not accessioned in ArrayExpress, please write to us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>. In your email, please tell us which microarray was used and where the annotation/support files can be downloaded. An ArrayExpress curator should then be able to create the ADF and get it accessioned in ArrayExpress. </p>
 
             <h4>How do I submit custom array designs?</h4>
-            <p>If you have a custom microarray which is not accessioned in ArrayExpress and is not commercially available, you will have to generate the array design format (ADF) file following <a href="/miamexpress/help/array_designs.html">these ADF construction guidelines</a>. Submit the ADF using the <a href="/miamexpress/login.html">MIAMExpress web interface tool</a>.</p>
+            <p>If you have a custom microarray which is not accessioned in ArrayExpress and is not commercially available, you will have to generate the array design format (ADF) file following <a href="/miamexpress/help/array_designs.html">these ADF construction guidelines</a>. Submit the ADF using the <a href="/miamexpress/login.html">MIAMExpress web interface tool</a>. (The tool is still maintained for ADF submissions.)</p>
 
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
         </section>
