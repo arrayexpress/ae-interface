@@ -91,7 +91,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.130322.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.131017.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -148,8 +148,11 @@
                     <div id="local-masthead" class="masthead grid_24 nomenu">
                         <!-- local-title -->
                         <div id="local-title">
-                            <xsl:if test="$pIsSearchVisible"><xsl:attribute name="class">grid_12 alpha</xsl:attribute></xsl:if>
-                            <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
+                            <xsl:attribute name="class">logo-title<xsl:if test="$pIsSearchVisible"> grid_12 alpha</xsl:if></xsl:attribute>
+                            <img src="{$context-path}/assets/images/ae-logo-64.png" width="64" height="64" alt="AE"/>
+                            <span>
+                                <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
+                            </span>
                         </div>
                         <!--
                         <div class="grid_12 alpha" id="local-title-logo">

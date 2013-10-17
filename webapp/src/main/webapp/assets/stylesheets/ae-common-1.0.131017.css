@@ -39,6 +39,10 @@
     min-width: 984px;
 }
 
+.logo-title {
+    display: inline-block;
+}
+
 .icon-awesome:before {
     font-family: 'FontAwesome';
     font-size: 100%;
