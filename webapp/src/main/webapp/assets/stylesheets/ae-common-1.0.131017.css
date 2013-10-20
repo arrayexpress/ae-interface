@@ -4,43 +4,47 @@
 
 * {
     text-align: inherit;
-    font-weight: inherit;
+    font-weight: inherit
 }
 
 
 #content section img {
-    margin: 0;
+    margin: 0
 }
 
 #content form {
-    font-size: 100%;
+    font-size: 100%
 }
 
 #content form input
 , #content form textarea {
-    font-family: inherit;
+    font-family: inherit
 }
 
 #content table {
     width: auto;
     margin: 0;
     padding: 0;
-    border: 0 none;
+    border: 0 none
 }
 
 #content th, #content td {
     padding: 0;
     border:  0 none;
     border-collapse: collapse;
-    vertical-align: middle;
+    vertical-align: middle
 }
 
 .container_24 {
-    min-width: 984px;
+    min-width: 984px
 }
 
 .logo-title {
-    display: inline-block;
+    display: inline-block
+}
+
+span.searchterm {
+    padding: 0.1em 0.4em 0.1em 0.2em
 }
 
 .icon-awesome:before {

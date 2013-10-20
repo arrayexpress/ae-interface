@@ -42,6 +42,7 @@
     <xsl:template name="ae-page">
         <xsl:param name="pIsSearchVisible" as="xs:boolean"/>
         <xsl:param name="pSearchInputValue" as="xs:string"/>
+        <xsl:param name="pExtraSearchFields"/>
         <xsl:param name="pTitleTrail" as="xs:string"/>
         <xsl:param name="pBreadcrumbTrail"/>
         <xsl:param name="pExtraCSS"/>
@@ -62,6 +63,7 @@
             <xsl:call-template name="ae-page-body">
                 <xsl:with-param name="pIsSearchVisible" select="$pIsSearchVisible"/>
                 <xsl:with-param name="pSearchInputValue" select="$pSearchInputValue"/>
+                <xsl:with-param name="pExtraSearchFields" select="$pExtraSearchFields"/>
                 <xsl:with-param name="pBreadcrumbTrail" select="$pBreadcrumbTrail"/>
                 <xsl:with-param name="pExtraCode" select="$pExtraJS"/>
             </xsl:call-template>
@@ -110,6 +112,7 @@
     <xsl:template name="ae-page-body">
         <xsl:param name="pIsSearchVisible"/>
         <xsl:param name="pSearchInputValue"/>
+        <xsl:param name="pExtraSearchFields"/>
         <xsl:param name="pBreadcrumbTrail"/>
         <xsl:param name="pExtraCode"/>
 
@@ -154,12 +157,6 @@
                                 <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
                             </span>
                         </div>
-                        <!--
-                        <div class="grid_12 alpha" id="local-title-logo">
-                            <h1>ArrayExpress</h1>
-                            <p><img src="{$context-path}/assets/images/frontier/ae-header-lg.png" alt="ArrayExpress" width="440" height="68" class="logo" /></p>
-                        </div>
-                        -->
                         <!-- /local-title -->
                         <!-- local-search -->
                         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
@@ -185,6 +182,7 @@
                                             <span class="adv"><a href="{$context-path}/help/how_to_search.html#AdvancedSearchExperiment" id="adv-search" title="Advanced">Advanced</a></span>
                                         </div>
                                     </fieldset>
+                                    <xsl:copy-of select="$pExtraSearchFields"/>
                                 </form>
                             </div>
                         </xsl:if>

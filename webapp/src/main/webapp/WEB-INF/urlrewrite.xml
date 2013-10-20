@@ -89,7 +89,7 @@
     <rule>
         <from>^/experiments/search[.]html?$</from>
         <condition type="parameter" name="query">^\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/experiments/browse.html</to>
+        <to type="redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
     </rule>
 
     <!-- legacy browse.html redirection -->

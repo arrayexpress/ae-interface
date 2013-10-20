@@ -18,41 +18,6 @@
 (function($, undefined) {
     if($ == undefined)
         throw "jQuery not loaded";
-    /*
-    function
-    onExpDesignChange( value )
-    {
-        $.get(contextPath + "/exptech-list.html?q=" + String(value).replace(/ +/g, "+")).next( function(data) {
-            var selector = $("#ae_exptech");
-            var curValue = selector.val();
-            var newValue = curValue;
-            selector.html(data);
-            if (0 == selector.find("option[value='" + curValue + "']").length) {
-                newValue = selector.find("option")[0].val();
-            }
-            if (curValue != newValue) {
-                onExpTechChange(selector.val());
-            }
-        });
-    }
-
-    function
-    onExpTechChange( value )
-    {
-        $.get(contextPath + "/expdesign-list.html?q=" + String(value).replace(/ +/g, "+")).next( function(data) {
-            var selector = $("#ae_expdesign");
-            var curValue = selector.val();
-            var newValue = curValue;
-            selector.html(data);
-            if (0 == selector.find("option[value='" + curValue + "']").length) {
-                newValue = selector.find("option")[0].val();
-            }
-            if (curValue != newValue) {
-                onExpDesignChange(selector.val());
-            }
-        });
-    }
-    */
 
     var query = new Object();
 
@@ -113,6 +78,17 @@
                 , raw: { title: "number of assays in raw data", sort: "descending" }
                 , atlas: { title: "presence of experiment data in Gene Expression Atlas", sort: "descending" }
             }
+        });
+
+        $("#local-search").submit(function(event) {
+            $("#ls-organism").val($("#ae-organism").val());
+            $("#ls-array").val($("#ae-array").val());
+            $("#ls-expdesign").val($("#ae-expdesign").val());
+            $("#ls-exptech").val($("#ae-exptech").val());
+        });
+
+        $("#ae-filters > form").submit(function(event) {
+            $("#ae-keywords").val($("#local-searchbox").val());
         });
 
         if ($("#noresults").length > 0) {

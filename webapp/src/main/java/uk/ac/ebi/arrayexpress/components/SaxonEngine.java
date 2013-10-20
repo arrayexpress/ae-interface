@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
@@ -347,7 +346,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             // assign the parameters (if not null)
             if (null != params) {
                 for (Map.Entry<String, String[]> param : params.entrySet()) {
-                    xslt.setParameter(param.getKey(), StringTools.arrayToString(param.getValue(), " "));
+                    if (null != param.getValue()) {
+                        xslt.setParameter(param.getKey()
+                                , 1 == param.getValue().length ? param.getValue()[0] : param.getValue()
+                        );
+                    }
                 }
             }
 

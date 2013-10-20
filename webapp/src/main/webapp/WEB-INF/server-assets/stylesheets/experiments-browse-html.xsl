@@ -34,6 +34,9 @@
     <xsl:param name="keywords"/>
     <xsl:param name="directsub"/>
     <xsl:param name="private"/>
+    <xsl:param name="organism"/>
+    <xsl:param name="array"/>
+    <xsl:param name="exptype"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
@@ -49,18 +52,22 @@
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pSearchInputValue" select="if (fn:true()) then $keywords else ''"/>
+            <xsl:with-param name="pExtraSearchFields">
+                <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
+                <input id="ls-array" type="hidden" name="array" value="{$array}"/>
+                <input id="ls-expdesign" type="hidden" name="exptype[]" value="{$exptype[1]}"/>
+                <input id="ls-exptech" type="hidden" name="exptype[]" value="{$exptype[2]}"/>
+            </xsl:with-param>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.0.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraJS">
-                <xsl:if test="fn:true()">
-                    <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
-                    <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
-                </xsl:if>
+                <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
+                <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.0.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.131020.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
