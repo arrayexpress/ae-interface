@@ -20,6 +20,28 @@
         throw "jQuery not loaded";
     }
 
+    $.extend($.fn, {
+        aeSVGFallback: function () {
+            /*
+             * SVG test from Modernizr
+             * @see https://github.com/Modernizr/Modernizr/blob/master/feature-detects/svg-svg.js
+             */
+            if (!!document.createElementNS &&
+                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect)
+                return
+
+            var check_svg = new RegExp("(.+)(\\.svg)");
+            this.each(function (index, element) {
+                if (!$(element).attr('src') || !check_svg.test($(element).attr('src'))) return;
+                var png_src = $(element).attr('src').replace(/(\.svg)$/, ".png");
+                $.ajax({url:png_src, type:"HEAD", success:function () {
+                    $(element).attr('src', png_src);
+                }});
+            });
+            return this;
+        }
+    })
+
     $.fn.extend({
 
         aeLoginForm: function(options) {
@@ -365,6 +387,8 @@
     };
 
     $(function() {
+        $('.svg').aeSVGFallback();
+
         initPersistentHeaders();
         $("#ae-login").aeLoginForm({
             open: "li.login a",

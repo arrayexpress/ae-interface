@@ -152,7 +152,7 @@
                         <!-- local-title -->
                         <div id="local-title">
                             <xsl:attribute name="class">logo-title<xsl:if test="$pIsSearchVisible"> grid_12 alpha</xsl:if></xsl:attribute>
-                            <img src="{$context-path}/assets/images/ae-logo-64.png" width="64" height="64" alt="AE"/>
+                            <img class="svg" src="{$context-path}/assets/images/ae-logo-64.svg" width="64" height="64" alt="AE"/>
                             <span>
                                 <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
                             </span>
@@ -370,7 +370,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.130322.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.131028.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>
