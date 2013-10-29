@@ -654,7 +654,7 @@
                             </xsl:call-template>
                         </a>
                     </xsl:when>
-                    <xsl:when test="fn:substring(., 1, 3)='SRP' or fn:substring(., 1, 3)='ERP'">
+                    <xsl:when test="fn:substring(., 1, 3)='SRP' or fn:substring(., 1, 3)='ERP' or fn:substring(., 1, 3)='DRP'">
                         <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
                             <xsl:text>ENA - </xsl:text>
                             <xsl:call-template name="highlight">
