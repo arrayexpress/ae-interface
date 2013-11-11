@@ -471,7 +471,8 @@
     <!-- about arrayexpress page -->
     <rule>
         <from>^/about[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=about.html</to>
+        <set type="parameter" name="filename">about.html</set>
+        <to type="forward" last="true">/servlets/query/-/static-page/html</to>
     </rule>
     <rule>
         <from>^/acknowledgements[.]html?$</from>
@@ -496,7 +497,8 @@
     </rule>
     <rule>
         <from>^/help/(.+)[.]html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=help/${lower:$1}.html</to>
+        <set type="parameter" name="filename">help/${lower:$1}.html</set>
+        <to type="forward" last="true">/servlets/query/-/static-page/html</to>
     </rule>
 
 
