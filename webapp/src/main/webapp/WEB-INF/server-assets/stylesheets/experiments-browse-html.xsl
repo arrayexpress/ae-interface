@@ -416,27 +416,29 @@
                 <xsl:if test="fn:not($pKind = 'raw' and fn:exists(seqdatauri))"><xsl:text>-</xsl:text></xsl:if>
             </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="fn:exists($vFiles) and $pKind = 'raw' and fn:exists(seqdatauri)">
-            <xsl:text>, </xsl:text>
-        </xsl:if>
-        <xsl:for-each select="seqdatauri">
-            <xsl:choose>
-                <xsl:when test="$pKind = 'raw' and fn:contains(., '/ega/')">
-                    <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/data_link_ega.gif" width="16" height="16" alt="EGA"/></a>
-                </xsl:when>
-                <xsl:when test="$pKind = 'raw' and fn:contains(., '/ena/')">
-                    <a href="{.}" title="Click to go to ENA"><img src="{$context-path}/assets/images/data_link_ena.gif" width="16" height="16" alt="ENA"/></a>
-                </xsl:when>
-                <xsl:otherwise>
-                    <a href="{.}">
-                        <span class="icon icon-generic" data-icon="L"/>
-                    </a>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:if test="fn:position() != fn:last()">
+        <xsl:if test="$pKind = 'raw'">
+            <xsl:if test="fn:exists($vFiles) and fn:exists(seqdatauri)">
                 <xsl:text>, </xsl:text>
             </xsl:if>
-        </xsl:for-each>
+            <xsl:for-each select="seqdatauri">
+                <xsl:choose>
+                    <xsl:when test="$pKind = 'raw' and fn:contains(., '/ega/')">
+                        <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/data_link_ega.gif" width="16" height="16" alt="EGA"/></a>
+                    </xsl:when>
+                    <xsl:when test="$pKind = 'raw' and fn:contains(., '/ena/')">
+                        <a href="{.}" title="Click to go to ENA"><img src="{$context-path}/assets/images/data_link_ena.gif" width="16" height="16" alt="ENA"/></a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <a href="{.}">
+                            <span class="icon icon-generic" data-icon="L"/>
+                        </a>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="fn:position() != fn:last()">
+                    <xsl:text>, </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:if>
 
     </xsl:template>
 
