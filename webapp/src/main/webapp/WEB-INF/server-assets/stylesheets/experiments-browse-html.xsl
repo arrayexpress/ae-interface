@@ -423,10 +423,10 @@
             <xsl:for-each select="seqdatauri">
                 <xsl:choose>
                     <xsl:when test="$pKind = 'raw' and fn:contains(., '/ega/')">
-                        <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/data_link_ega.gif" width="16" height="16" alt="EGA"/></a>
+                        <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/ega-icon-16.png" width="16" height="16" alt="EGA"/></a>
                     </xsl:when>
                     <xsl:when test="$pKind = 'raw' and fn:contains(., '/ena/')">
-                        <a href="{.}" title="Click to go to ENA"><img src="{$context-path}/assets/images/data_link_ena.gif" width="16" height="16" alt="ENA"/></a>
+                        <a href="{.}" title="Click to go to ENA"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
                     </xsl:when>
                     <xsl:otherwise>
                         <a href="{.}">
