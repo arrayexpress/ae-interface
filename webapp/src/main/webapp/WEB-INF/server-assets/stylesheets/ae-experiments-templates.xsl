@@ -1058,66 +1058,6 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="exp-data-files-main">
-        <xsl:param name="pFiles"/>
-        <xsl:param name="pBasePath"/>
-        
-        <xsl:param name="pKind"/>
-        <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="$pFiles/file[@kind = $pKind]"/>
-        <xsl:variable name="vImg">
-            <xsl:choose>
-                <xsl:when test="$pKind = 'raw' and fn:contains(seqdatauri[1], '/ega/')">
-                    <img src="{$pBasePath}/assets/images/data_link_ega.gif" width="16" height="16" alt="Link to EGA study"/>
-                </xsl:when>
-                <xsl:when test="$pKind = 'raw' and fn:contains(seqdatauri[1], '/ena/')">
-                    <img src="{$pBasePath}/assets/images/data_link_ena.gif" width="23" height="16" alt="Link to sequence data"/>
-                </xsl:when>
-                <xsl:when test="$pKind = 'raw' and contains($vFiles[1]/@dataformat, 'CEL')">
-                    <img src="{$pBasePath}/assets/images/silk_data_save_affy.gif" width="16" height="16" alt="Click to download Affymetrix data"/>
-                </xsl:when>
-                <xsl:when test="$pKind = 'raw'">
-                    <img src="{$pBasePath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download raw data"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <img src="{$pBasePath}/assets/images/silk_data_save.gif" width="16" height="16" alt="Click to download processed data"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        
-        <xsl:variable name="vLinkUrl">
-            <xsl:choose>
-                <xsl:when test="$pKind = 'raw' and seqdatauri">
-                    <xsl:value-of select="seqdatauri"/>
-                </xsl:when>
-                <xsl:when test="($vAccession = 'E-GEUV-1' or $vAccession = 'E-GEUV-3') and $pKind = 'processed'">
-                    <xsl:value-of select="$pBasePath"/>
-                    <xsl:text>/files/</xsl:text>
-                    <xsl:value-of select="$vAccession"/>
-                    <xsl:text>/bam/</xsl:text>
-                </xsl:when>
-                <xsl:when test="count($vFiles) > 1">
-                    <xsl:value-of select="$pBasePath"/>
-                    <xsl:text>/files/</xsl:text>
-                    <xsl:value-of select="$vAccession"/>
-                    <xsl:text>/</xsl:text>
-                    <xsl:value-of select="$pKind"/>
-                    <xsl:text>/</xsl:text>
-                </xsl:when>
-                <xsl:when test="$vFiles">
-                    <xsl:value-of select="$pBasePath"/>
-                    <xsl:text>/files/</xsl:text>
-                    <xsl:value-of select="$vAccession"/>
-                    <xsl:text>/</xsl:text>
-                    <xsl:value-of select="$vFiles/@name"/>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="fn:string-length($vLinkUrl)>0"><a href="{$vLinkUrl}" title="{$vImg/img/@alt}"><xsl:copy-of select="$vImg"/></a></xsl:when>
-            <xsl:otherwise><img src="{$pBasePath}/assets/images/silk_data_unavail.gif" width="16" height="16" alt="-"/></xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
 
     <xsl:template name="detail-row">
         <xsl:param name="pName" as="xs:string" select="''"/>

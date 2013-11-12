@@ -100,33 +100,13 @@
                     <overallscore><xsl:value-of select="sum(miamescore[@name = 'ProtocolScore' or @name = 'FactorValueScore' or @name = 'DerivedBioAssayDataScore' or @name = 'MeasuredBioAssayDataScoreMINSEQE']/@value) + 1"/></overallscore>
                 </minseqescores>
             </xsl:if>
-            <xsl:if test="seqdatauri">
-                <seqdatauri>
-                    <xsl:choose>
-                        <xsl:when test="count(seqdatauri) > 1  and contains(seqdatauri[1], '/ena/')">
-                            <xsl:for-each select="seqdatauri">
-                                <xsl:choose>
-                                    <xsl:when test="fn:position() = 1">
-                                        <xsl:value-of select="text()"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="fn:replace(text(), '^.*/([^/]+)$', ',$1')"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="seqdatauri"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </seqdatauri>
-            </xsl:if>
+
             <xsl:apply-templates select="*" mode="copy" />
         </experiment>
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescore | seqdatauri" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
 
     <xsl:template match="arraydesign" mode="copy">
         <arraydesign>

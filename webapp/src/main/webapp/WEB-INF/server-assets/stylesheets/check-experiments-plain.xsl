@@ -48,18 +48,12 @@
                 <xsl:value-of select="releasedate"/>
                 <xsl:text>]&#10;</xsl:text>
             </xsl:if>
+
             <xsl:if test="user/@id = 1 and releasedate > fn:current-date()">
                 <xsl:text> * Public experiment </xsl:text>
                 <xsl:value-of select="accession"/>
                 <xsl:text> has a future release date: [</xsl:text>
                 <xsl:value-of select="releasedate"/>
-                <xsl:text>]&#10;</xsl:text>
-            </xsl:if>
-            <xsl:if test="count(seqdatauri) > 1">
-                <xsl:text> * Experiment </xsl:text>
-                <xsl:value-of select="accession"/>
-                <xsl:text> has more than one sequence data URI defined: [</xsl:text>
-                <xsl:value-of select="fn:string-join(seqdatauri, ', ')"/>
                 <xsl:text>]&#10;</xsl:text>
             </xsl:if>
 
