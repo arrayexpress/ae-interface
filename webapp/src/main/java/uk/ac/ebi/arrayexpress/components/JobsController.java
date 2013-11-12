@@ -51,6 +51,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         // add jobs
         addJob("rescan-files", RescanFilesJob.class);
         addJob("check-files", CheckFilesJob.class);
+        addJob("check-experiments", CheckExperimentsJob.class);
         addJob("reload-ae1-xml", ReloadExperimentsFromAE1Job.class);
         addJob("reload-ae2-xml", ReloadExperimentsFromAE2Job.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);

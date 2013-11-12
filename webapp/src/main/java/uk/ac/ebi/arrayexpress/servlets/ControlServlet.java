@@ -64,12 +64,13 @@ public class ControlServlet extends ApplicationServlet
                     || "reload-efo".equals(command)
                     || "update-efo".equals(command)
                     || "check-files".equals(command)
+                    || "check-experiments".equals(command)
                     || "reload-atlas-info".equals(command)
                     ) {
                 ((JobsController) getComponent("JobsController")).executeJob(command);
-            } else if (command.equals("reload-ae1-xml")) {
+            } else if ("reload-ae1-xml".equals(command)) {
                 ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "connections", params);
-            } else if (command.equals("rescan-files")) {
+            } else if ("rescan-files".equals(command)) {
                 if (0 < params.length()) {
                     ((Files) getComponent("Files")).setRootFolder(params);
                 }

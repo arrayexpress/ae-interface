@@ -712,6 +712,10 @@
         <to type="forward" last="true">/servlets/control/rescan-files/$1</to>
     </rule>
     <rule>
+        <from>^/consistency-check</from>
+        <to type="forward" last="true">/servlets/control/check-experiments</to>
+    </rule>
+    <rule>
         <from>^/check-ftp</from>
         <to type="forward" last="true">/servlets/control/check-files</to>
     </rule>

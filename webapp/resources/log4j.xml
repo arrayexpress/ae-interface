@@ -24,6 +24,11 @@
         </layout>
     </appender>
 
+    <logger name="org.apache.tomcat.util" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <logger name="org.apache.tomcat" additivity="false">
         <level value="${interface.application.log.default.priority}"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>

@@ -36,11 +36,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-        String usersXml = null;
-        String arrayDesignsXml = null;
-        String protocolsXml = null;
-        String experimentsXml = null;
-        String newsXml = null;
+
 
         try {
             // check preferences and if source location is defined, use that
@@ -48,53 +44,59 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
             Experiments.UpdateSourceInformation sourceInformation = null;
             if (!"".equals(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
+
                 File newsFile = new File(sourceLocation, "news.xml");
+                String newsXml = null;
                 if (newsFile.exists()) {
                     newsXml = getXmlFromFile(newsFile);
                 }
-                usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
-                arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
-                protocolsXml = getXmlFromFile(new File(sourceLocation, "protocols.xml"));
+
+                String usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
+                String arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
+                String protocolsXml = getXmlFromFile(new File(sourceLocation, "protocols.xml"));
                 File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
-                experimentsXml = getXmlFromFile(experimentsSourceFile);
+                String experimentsXml = getXmlFromFile(experimentsSourceFile);
                 sourceInformation = new UpdateSourceInformation(
                         Experiments.ExperimentSource.AE2
                         , experimentsSourceFile)
                 ;
+
+                // export to temp directory anyway (only if debug is enabled)
+                if (logger.isDebugEnabled()) {
+                    StringTools.stringToFile(
+                            experimentsXml
+                            , new File(
+                                    System.getProperty("java.io.tmpdir")
+                                    , "ae2-src-experiments.xml"
+                            )
+                            , "UTF-8"
+                    );
+                }
+
+                if (null != newsXml && !"".equals(newsXml)) {
+                    updateNews(newsXml);
+                }
+
+                if (null != usersXml && !"".equals(usersXml)) {
+                    updateUsers(usersXml);
+                }
+
+                // update experiments first so protocols and arrays can access experiment information when updating
+                if (null != experimentsXml && !"".equals(experimentsXml)) {
+                    updateExperiments(experimentsXml, sourceInformation);
+                }
+
+                if (null != arrayDesignsXml && !"".equals(arrayDesignsXml)) {
+                    updateArrayDesigns(arrayDesignsXml);
+                }
+
+                if (null != protocolsXml && !"".equals(protocolsXml)) {
+                    updateProtocols(protocolsXml);
+                }
+
+                logger.info("Reload of experiment data from [{}] completed", sourceLocation);
             }
 
-            // export to temp directory anyway (only if debug is enabled)
-            if (logger.isDebugEnabled()) {
-                StringTools.stringToFile(
-                        experimentsXml
-                        , new File(
-                                System.getProperty("java.io.tmpdir")
-                                , "ae2-src-experiments.xml"
-                        )
-                        , "UTF-8"
-                );
-            }
-
-            if (null != newsXml && !"".equals(newsXml)) {
-                updateNews(newsXml);
-            }
-
-            if (null != usersXml && !"".equals(usersXml)) {
-                updateUsers(usersXml);
-            }
-
-            // update experiments first so protocols and arrays can access experiment information when updating
-            if (null != experimentsXml && !"".equals(experimentsXml)) {
-                updateExperiments(experimentsXml, sourceInformation);
-            }
-
-            if (null != arrayDesignsXml && !"".equals(arrayDesignsXml)) {
-                updateArrayDesigns(arrayDesignsXml);
-            }
-
-            if (null != protocolsXml && !"".equals(protocolsXml)) {
-                updateProtocols(protocolsXml);
-            }
         } catch (Exception x) {
             throw new RuntimeException(x);
         }

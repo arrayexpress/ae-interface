@@ -47,14 +47,6 @@
 
             <source id="ae2"/>
 
-            <xsl:if test="count(seqdatauri) > 1">
-                <xsl:message>[WARN] More than one sequence data URI defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-            </xsl:if>
-
-            <xsl:if test="count(name) > 1">
-                <xsl:message>[WARN] More than one experiment title defined for experiment [<xsl:value-of select="$vAccession"/>]</xsl:message>
-            </xsl:if>
-
             <xsl:for-each select="fn:distinct-values(sampleattribute[fn:lower-case(@category) = 'organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
                 <species><xsl:value-of select="."/></species>
             </xsl:for-each>
