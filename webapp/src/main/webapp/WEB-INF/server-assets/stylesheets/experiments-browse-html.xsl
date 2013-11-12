@@ -363,6 +363,7 @@
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pAccession" select="$vAccession"/>
+                            <xsl:with-param name="pEnaAccession" select="secondaryaccession[fn:matches(text(), '^(DRP|ERP|SRP)\d+$')]"/>
                             <xsl:with-param name="pFiles" select="$vFiles"/>
                             <xsl:with-param name="pKind" select="'processed'"/>
                         </xsl:call-template>
@@ -372,6 +373,7 @@
                     <div>
                         <xsl:call-template name="data-files-main">
                             <xsl:with-param name="pAccession" select="$vAccession"/>
+                            <xsl:with-param name="pEnaAccession" select="secondaryaccession[fn:matches(text(), '^(DRP|ERP|SRP)\d+$')]"/>
                             <xsl:with-param name="pFiles" select="$vFiles"/>
                             <xsl:with-param name="pKind" select="'raw'"/>
                         </xsl:call-template>
@@ -397,6 +399,7 @@
 
     <xsl:template name="data-files-main">
         <xsl:param name="pAccession"/>
+        <xsl:param name="pEnaAccession"/>
         <xsl:param name="pFiles"/>
         <xsl:param name="pKind"/>
 
@@ -420,24 +423,43 @@
             <xsl:if test="fn:exists($vFiles) and fn:exists(seqdatauri)">
                 <xsl:text>, </xsl:text>
             </xsl:if>
-            <xsl:for-each select="seqdatauri">
+            <xsl:for-each-group select="seqdatauri" group-by="fn:contains(., '/ena/')">
                 <xsl:choose>
-                    <xsl:when test="$pKind = 'raw' and fn:contains(., '/ega/')">
-                        <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/ega-icon-16.png" width="16" height="16" alt="EGA"/></a>
-                    </xsl:when>
-                    <xsl:when test="$pKind = 'raw' and fn:contains(., '/ena/')">
-                        <a href="{.}" title="Click to go to ENA"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
+                    <xsl:when test="fn:current-grouping-key()">
+                        <xsl:choose>
+                            <xsl:when test="fn:count(fn:current-group()) = 1
+                                            and fn:matches(fn:current-group()[1], '/[DES]RR\d+$')">
+                                <a href="{fn:current-group()[1]}" title="Click to go to ENA run"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="$pEnaAccession">
+                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Click to go to ENA study"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
+                                    <xsl:if test="fn:position() != fn:last()">
+                                        <xsl:text>, </xsl:text>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
-                        <a href="{.}">
-                            <span class="icon icon-generic" data-icon="L"/>
-                        </a>
+                        <xsl:for-each select="fn:current-group()">
+                            <xsl:choose>
+                                <xsl:when test="fn:contains(., '/ega/')">
+                                    <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/ega-icon-16.png" width="16" height="16" alt="EGA"/></a>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <a href="{.}">
+                                        <span class="icon icon-generic" data-icon="L"/>
+                                    </a>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:if test="fn:position() != fn:last()">
+                                <xsl:text>, </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="fn:position() != fn:last()">
-                    <xsl:text>, </xsl:text>
-                </xsl:if>
-            </xsl:for-each>
+            </xsl:for-each-group>
         </xsl:if>
 
     </xsl:template>

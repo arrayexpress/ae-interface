@@ -634,7 +634,7 @@
             <xsl:for-each select="secondaryaccession">
                 <xsl:choose>
                     <xsl:when test="fn:string-length(.) = 0"/>
-                    <xsl:when test="fn:substring(., 1, 3)='GSE' or fn:substring(., 1, 3)='GDS'">
+                    <xsl:when test="fn:matches(., '^(GSE|GDS)\d+$')">
                         <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={.}">
                             <xsl:text>GEO - </xsl:text>
                             <xsl:call-template name="highlight">
@@ -654,7 +654,7 @@
                             </xsl:call-template>
                         </a>
                     </xsl:when>
-                    <xsl:when test="fn:substring(., 1, 3)='SRP' or fn:substring(., 1, 3)='ERP' or fn:substring(., 1, 3)='DRP'">
+                    <xsl:when test="fn:matches(., '^(DRP|ERP|SRP)\d+$')">
                         <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
                             <xsl:text>ENA - </xsl:text>
                             <xsl:call-template name="highlight">

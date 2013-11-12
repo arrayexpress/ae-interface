@@ -41,6 +41,8 @@
             <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
             <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
 
+            <xsl:variable name="vExperiment" select="."/>
+
             <xsl:if test="fn:not(fn:exists(releasedate)) or fn:not(fn:matches(releasedate, '\d{4}-\d{2}-\d{2}'))">
                 <xsl:text> * Experiment </xsl:text>
                 <xsl:value-of select="accession"/>
@@ -57,13 +59,44 @@
                 <xsl:text>]&#10;</xsl:text>
             </xsl:if>
 
-            <xsl:if test="count(name) > 1">
+            <xsl:if test="fn:count(name) > 1">
                 <xsl:text> * Experiment </xsl:text>
                 <xsl:value-of select="accession"/>
                 <xsl:text> has more than one experiment title defined: ["</xsl:text>
                 <xsl:value-of select="fn:string-join(name, '&#34;, &#34;')"/>
                 <xsl:text>"]&#10;</xsl:text>
             </xsl:if>
+
+            <xsl:if test="fn:matches(accession, '^E-GEOD-\d+$')
+                            and fn:not(fn:exists(secondaryaccession[fn:matches(text(), '^(GSE|GDS)\d+$')]))">
+                <xsl:text> * GEO experiment </xsl:text>
+                <xsl:value-of select="accession"/>
+                <xsl:text> does not have a GEO secondary accession defined&#10;</xsl:text>
+            </xsl:if>
+
+            <xsl:for-each select="secondaryaccession">
+                <xsl:if test="fn:matches(., '^(DRP|ERP|SRP)\d+$')
+                                and fn:not(fn:matches($vExperiment/accession, '^E-GEOD-\d+$'))
+                                and ae:getMappedValue('raw-files', $vExperiment/accession) = 0
+                                and fn:not(fn:exists($vExperiment/seqdatauri))">
+                    <xsl:text> * Experiment </xsl:text>
+                    <xsl:value-of select="$vExperiment/accession"/>
+                    <xsl:text> has ENA secondary accession: [</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>] but no raw data available or SequenceDataURI defined&#10;</xsl:text>
+                </xsl:if>
+
+                <xsl:if test="fn:matches(., '^(EGAS)\d+$')
+                                and ae:getMappedValue('raw-files', $vExperiment/accession) = 0
+                                and fn:not(fn:exists($vExperiment/seqdatauri))">
+                    <xsl:text> * Experiment </xsl:text>
+                    <xsl:value-of select="$vExperiment/accession"/>
+                    <xsl:text> has EGA secondary accession: [</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>] but no raw data available or SequenceDataURI defined&#10;</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+
         </xsl:for-each>
 
 

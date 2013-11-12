@@ -106,7 +106,7 @@
     </xsl:template>
 
     <!-- this template prohibits default copying of these elements -->
-    <xsl:template match="sampleattribute | experimentalfactor | miamescore" mode="copy"/>
+    <xsl:template match="sampleattribute | experimentalfactor | miamescore | seqdatauri" mode="copy"/>
 
     <xsl:template match="arraydesign" mode="copy">
         <arraydesign>
