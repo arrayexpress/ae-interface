@@ -429,11 +429,11 @@
                         <xsl:choose>
                             <xsl:when test="fn:count(fn:current-group()) = 1
                                             and fn:matches(fn:current-group()[1], '/[DES]RR\d+$')">
-                                <a href="{fn:current-group()[1]}" title="Click to go to ENA run"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
+                                <a href="{fn:current-group()[1]}" title="Click to go to ENA run"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:for-each select="$pEnaAccession">
-                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Click to go to ENA study"><img src="{$context-path}/assets/images/ena-icon-16.png" width="24" height="16" alt="ENA"/></a>
+                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Click to go to ENA study"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
                                     <xsl:if test="fn:position() != fn:last()">
                                         <xsl:text>, </xsl:text>
                                     </xsl:if>
