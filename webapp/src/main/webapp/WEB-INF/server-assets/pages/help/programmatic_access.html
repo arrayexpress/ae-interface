@@ -127,7 +127,7 @@
         </tr>
         <tr>
             <td><strong>gxa</strong></td>
-            <td>Presence in the Gene Expression Atlas. Only value is gxa=true. </td>
+            <td>Presence ("true") /absence ("false") of an ArrayExpress experiment in the Expression Atlas.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?gxa=true</td>
         </tr>
         <tr>
@@ -230,7 +230,7 @@
             <th>Example</th>
         </tr>
         <tr>
-            <td><p>assaycount:[x TO y]</p></td>
+            <td>assaycount:[x TO y]</td>
             <td>filter on the number of of assays where x &lt;= y and both values are between 0 and 99,999 (<strong>inclusive</strong>) . To count <strong>excluding</strong>
                 the values given use curly brackets e.g. assaycount:{1 TO 5} will find
                 experiments with 2-4 assays. Single numbers may also be given e.g.
@@ -253,7 +253,7 @@
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?sacount=[1 TO 5]</td>
         </tr>
         <tr>
-            <td>raw:true/faslse</td>
+            <td>raw:true/false</td>
             <td>filter on the presence/absence of raw data files<br>
             </td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?raw=true</td>
