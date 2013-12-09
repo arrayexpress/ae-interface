@@ -478,7 +478,7 @@ economise,economize
 economised,economized
 economises,economizes
 economising,economizing
-edoema,edemaÊ
+edoema,edemaï¿½
 editorialise,editorialize
 editorialised,editorialized
 editorialises,editorializes
@@ -595,9 +595,9 @@ fictionalised,fictionalized
 fictionalises,fictionalizes
 fictionalising,fictionalizing
 fillet,filet
-filletedÊ,filetedÊ
+filletedï¿½,filetedï¿½
 filleting,fileting
-filletsÊ,filetsÊ
+filletsï¿½,filetsï¿½
 finalisation,finalization
 finalise,finalize
 finalised,finalized
@@ -678,7 +678,7 @@ globalise,globalize
 globalised,globalized
 globalises,globalizes
 globalising,globalizing
-glueingÊ,gluingÊ
+glueingï¿½,gluingï¿½
 goitre,goiter
 goitres,goiters
 gonorrhoea,gonorrhea
@@ -694,7 +694,7 @@ greys,grays
 grovelled,groveled
 grovelling,groveling
 groyne,groin
-groynesÊ,groins
+groynesï¿½,groins
 gruelling,grueling
 gruellingly,gruelingly
 gryphon,griffin
@@ -854,7 +854,7 @@ jewelled,jeweled
 jeweller,jeweler
 jewellers,jewelers
 jewellery,jewelry
-judgementÊ,judgment
+judgementï¿½,judgment
 kilogramme,kilogram
 kilogrammes,kilograms
 kilometre,kilometer
@@ -913,7 +913,7 @@ localises,localizes
 localising,localizing
 louvre,louver
 louvred,louvered
-louvres,louversÊ
+louvres,louversï¿½
 lustre,luster
 magnetise,magnetize
 magnetised,magnetized
@@ -989,7 +989,7 @@ miniaturise,miniaturize
 miniaturised,miniaturized
 miniaturises,miniaturizes
 miniaturising,miniaturizing
-minibuses,minibussesÊ
+minibuses,minibussesï¿½
 minimise,minimize
 minimised,minimized
 minimises,minimizes
@@ -1222,9 +1222,9 @@ pouffes,poufs
 practise,practice
 practised,practiced
 practises,practices
-practisingÊ,practicingÊ
+practisingï¿½,practicingï¿½
 praesidium,presidium
-praesidiumsÊ,presidiumsÊ
+praesidiumsï¿½,presidiumsï¿½
 pressurisation,pressurization
 pressurise,pressurize
 pressurised,pressurized
@@ -1417,7 +1417,7 @@ sentimentalised,sentimentalized
 sentimentalises,sentimentalizes
 sentimentalising,sentimentalizing
 sepulchre,sepulcher
-sepulchres,sepulchersÊ
+sepulchres,sepulchersï¿½
 serialisation,serialization
 serialisations,serializations
 serialise,serialize
@@ -1614,7 +1614,7 @@ traveller,traveler
 travellers,travelers
 travelling,traveling
 travelogue,travelog
-traveloguesÊ,travelogsÊ
+travelogues,travelogs
 trialled,trialed
 trialling,trialing
 tricolour,tricolor

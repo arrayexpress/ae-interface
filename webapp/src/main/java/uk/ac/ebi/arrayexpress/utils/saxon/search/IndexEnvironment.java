@@ -105,7 +105,6 @@ public class IndexEnvironment
 
             String indexAnalyzer = this.indexConfig.getString("[@defaultAnalyzer]");
             Analyzer a = (Analyzer)Class.forName(indexAnalyzer).newInstance();
-            this.indexAnalyzer = new PerFieldAnalyzerWrapper(a);
 
             this.indexDocumentPath = indexConfig.getString("document[@path]");
 
@@ -113,15 +112,19 @@ public class IndexEnvironment
 
             List fieldsConfig = indexConfig.configurationsAt("document.field");
 
-            this.fields = new HashMap<String, FieldInfo>();
+            this.fields = new HashMap<>();
+            Map<String,Analyzer> fieldAnalyzers = new HashMap<>();
+
             for (Object fieldConfig : fieldsConfig) {
                 FieldInfo fieldInfo = new FieldInfo((HierarchicalConfiguration)fieldConfig);
                 fields.put(fieldInfo.name, fieldInfo);
                 if (null != fieldInfo.analyzer) {
                     Analyzer fa = (Analyzer)Class.forName(fieldInfo.analyzer).newInstance();
-                    this.indexAnalyzer.addAnalyzer(fieldInfo.name, fa);
+                    fieldAnalyzers.put(fieldInfo.name, fa);
                 }
             }
+
+            this.indexAnalyzer = new PerFieldAnalyzerWrapper(a, fieldAnalyzers);
 
         } catch (Exception x) {
             logger.error("Caught an exception:", x);

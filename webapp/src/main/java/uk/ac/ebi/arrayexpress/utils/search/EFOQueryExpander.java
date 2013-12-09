@@ -93,7 +93,7 @@ public final class EFOQueryExpander implements IQueryExpander
         String field = getQueryField(query);
         if (null != field) {
 
-            if (env.fields.containsKey(field) && env.fields.get(field).shouldExpand) {
+            if (env.fields.containsKey(field) && "string".equalsIgnoreCase(env.fields.get(field).type) && env.fields.get(field).shouldExpand) {
                 EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
 
                 if (0 != expansionTerms.efo.size() || 0 != expansionTerms.synonyms.size()) {
