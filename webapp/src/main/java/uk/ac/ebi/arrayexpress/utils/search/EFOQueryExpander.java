@@ -93,30 +93,30 @@ public final class EFOQueryExpander implements IQueryExpander
         String field = getQueryField(query);
         if (null != field) {
 
-            boolean shouldExpandEfo = (env.fields.containsKey(field) && env.fields.get(field).shouldExpand);
+            if (env.fields.containsKey(field) && env.fields.get(field).shouldExpand) {
+                EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
 
-            EFOExpansionTerms expansionTerms = lookup.getExpansionTerms(query);
-            if ((shouldExpandEfo && (0 != expansionTerms.efo.size())) || 0 != expansionTerms.synonyms.size()) {
-                BooleanQuery boolQuery = new BooleanQuery();
+                if (0 != expansionTerms.efo.size() || 0 != expansionTerms.synonyms.size()) {
+                    BooleanQuery boolQuery = new BooleanQuery();
 
-                boolQuery.add(query, BooleanClause.Occur.SHOULD);
+                    boolQuery.add(query, BooleanClause.Occur.SHOULD);
 
-                for (String term : expansionTerms.synonyms) {
-                    Query synonymPart = newQueryFromString(term.trim(), field);
-                    if (!queryPartIsRedundant(query, synonymPart)) {
-                        boolQuery.add(synonymPart, BooleanClause.Occur.SHOULD);
-                        queryInfo.addToSynonymPartQuery(synonymPart);
+                    for (String term : expansionTerms.synonyms) {
+                        Query synonymPart = newQueryFromString(term.trim(), field);
+                        if (!queryPartIsRedundant(query, synonymPart)) {
+                            boolQuery.add(synonymPart, BooleanClause.Occur.SHOULD);
+                            queryInfo.addToSynonymPartQuery(synonymPart);
+                        }
                     }
-                }
 
-                if (shouldExpandEfo) {
                     for (String term : expansionTerms.efo) {
                         Query expansionPart = newQueryFromString(term.trim(), field);
                         boolQuery.add(expansionPart, BooleanClause.Occur.SHOULD);
                         queryInfo.addToEfoExpansionPartQuery(expansionPart);
                     }
+
+                    return boolQuery;
                 }
-                return boolQuery;
             }
         }
         return query;

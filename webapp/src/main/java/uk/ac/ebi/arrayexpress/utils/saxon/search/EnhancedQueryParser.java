@@ -35,6 +35,7 @@ public class EnhancedQueryParser extends QueryParser
     {
         super(Version.LUCENE_30, f, a);
         this.env = env;
+        this.setAllowLeadingWildcard(true);
     }
 
     protected Query getRangeQuery( String field,
