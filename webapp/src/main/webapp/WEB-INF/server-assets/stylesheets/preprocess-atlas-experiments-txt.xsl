@@ -20,12 +20,12 @@
 
     <xsl:output method="text" indent="no" encoding="UTF-8"/>
 
-    <xsl:template match="atlasResponse">
-        <xsl:apply-templates select="results/result/experimentInfo/accession"/>
+    <xsl:template match="/">
+        <xsl:apply-templates select="database/entries/entry"/>
     </xsl:template>
 
-    <xsl:template match="accession">
-        <xsl:value-of select="."/>
+    <xsl:template match="entry">
+        <xsl:value-of select="@id"/>
         <xsl:text>&#10;</xsl:text>
     </xsl:template>
 
