@@ -98,6 +98,7 @@
             <table cellpadding="0" cellspacing="0" border="0">
                 <xsl:call-template name="exp-status-section">
                     <xsl:with-param name="pIsGoogleBot" select="$vIsGoogleBot"/>
+                    <xsl:with-param name="pIsPrivate" select="not(user/@id = '1') and ($userid != '')"/>
                 </xsl:call-template>
 
                 <xsl:call-template name="exp-organism-section">
