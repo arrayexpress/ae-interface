@@ -50,7 +50,6 @@ public class CheckExperimentsJob extends ApplicationJob
                     + "Application [${variable.appname}]" + StringTools.EOL
                     + "Host [${variable.hostname}]" + StringTools.EOL
                     + StringTools.EOL
-                    + "The following issues found:" + StringTools.EOL
                     + StringTools.EOL
                     + report
             );
