@@ -31,12 +31,26 @@
         <!--
             This report will only have output if there are problems; otherwise the output should be empty
             Checks:
-                1. Experiments with missing or malformed release date
-                2. Public experiments with future release date
+
+                1. (*CRITICAL*) Public experiments with future release date
+                2. Experiments with missing or malformed release date
                 3. Experiments with more than one sequence data URI defined
                 4. Experiments with more than one title defined
         -->
+        <xsl:text>--- ISSUES ----------------------------------------------------------------&#10;</xsl:text>
+        <xsl:for-each select="experiment[source/@visible = 'true']">
+            <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
+            <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
 
+            <xsl:if test="user/@id = 1 and releasedate > fn:current-date()">
+                <xsl:text> *** CRITICAL *** Public experiment </xsl:text>
+                <xsl:value-of select="accession"/>
+                <xsl:text> has a future release date: [</xsl:text>
+                <xsl:value-of select="releasedate"/>
+                <xsl:text>]&#10;</xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:text>&#10;&#10;--- WARNINGS ----------------------------------------------------------------&#10;</xsl:text>
         <xsl:for-each select="experiment[source/@visible = 'true']">
             <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
             <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
@@ -47,14 +61,6 @@
                 <xsl:text> * Experiment </xsl:text>
                 <xsl:value-of select="accession"/>
                 <xsl:text> has a missing or poorly formatted release date: [</xsl:text>
-                <xsl:value-of select="releasedate"/>
-                <xsl:text>]&#10;</xsl:text>
-            </xsl:if>
-
-            <xsl:if test="user/@id = 1 and releasedate > fn:current-date()">
-                <xsl:text> * Public experiment </xsl:text>
-                <xsl:value-of select="accession"/>
-                <xsl:text> has a future release date: [</xsl:text>
                 <xsl:value-of select="releasedate"/>
                 <xsl:text>]&#10;</xsl:text>
             </xsl:if>
