@@ -762,19 +762,6 @@
         <to type="permanent-redirect" last="true">%{context-path}/</to>
     </rule>
 
-    <rule>
-        <from>^/genes/uniprot/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
-    </rule>
-    <rule>
-        <from>^/genes/ensembl/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
-    </rule>
-    <rule>
-        <from>^/genes/any/(.*)$</from>
-        <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}/gene?gid=$1</to>
-    </rule>
-
     <!-- test page -->
     <rule>
         <from>^/test[.]html?$</from>

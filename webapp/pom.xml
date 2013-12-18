@@ -166,7 +166,7 @@
             <properties>
                 <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_xml.url>http://wwwdev.ebi.ac.uk/gxa/api/experiments.xml</interface.application.link.atlas.exp_xml.url>
-                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}/experiments/</interface.application.link.atlas.exp_query.url>
+                <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
