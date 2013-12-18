@@ -49,3 +49,7 @@
 #ae-detail span.new {
     color: #FFC771
 }
+
+#ae-detail u {
+    display: none;
+}
