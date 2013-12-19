@@ -19,25 +19,25 @@
                 <li>Put quotes around multiple keywords if you want to find experiments where these words are found next to each other e.g. "breast cancer".</li>
                 <li>Entering multiple words without quotes will retrieve experiments where both keywords are found but they are not necessarily adjacent e.g. mouse leukemia.</li>
             </ul>
-            <p><img src="ae_help_search_box.png" alt="ArrayExpress experiment search box"></p>
+            <p><img src="ae_help_search_box.png" alt="ArrayExpress experiment search box"  style='border:2px solid #385930'></p>
             <p>You can search for <strong>multiple accession numbers at a time</strong>. All you need to do is to separate the accession numbers with a space, a comma, a semi-colon or a tab character:<br>
-                <img src="ae_help_multi_accession_search.png" alt="ArrayExpress experiment search box with multi accession example"></p>                
+                <img src="ae_help_multi_accession_search.png" alt="ArrayExpress experiment search box with multi accession example"  style='border:2px solid #385930'></p>                
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <p>&nbsp;</p>                
 
             <h4><a id="EFO_expansion">1.2 Search term expansion by Experimental Factor Ontology (EFO)</a></h4>
             <p>ArrayExpress search uses the <a href='http://www.ebi.ac.uk/efo'>Experimental Factor Ontology (EFO)</a> to extend your query to synonyms (e.g. "cerebral cortex" and "adult brain cortex") and EFO child-terms (e.g. "rib" and "vertebra" as child-terms for "bone").  You will notice term suggestions (where possible) when you start typing the first few letters. EFO terms are marked by "EFO" at the right hand side.  You can reveal some child-terms by clicking the "+" sign and select a more specific term for your search:</p>
             
-            <p><img src="ae_help_efo_expansion_hea.png" alt="EFO expansion with hea"></p>
-            <p><img src="ae_help_efo_expansion_rnas.png" alt="EFO expansoin with rna-s"></p>
+            <p><img src="ae_help_efo_expansion_hea.png" alt="EFO expansion with hea"  style='border:2px solid #385930'></p>
+            <p><img src="ae_help_efo_expansion_rnas.png" alt="EFO expansoin with rna-s"  style='border:2px solid #385930'></p>
             
             <p>In the search results, matched search terms are highlighted depending on the nature of the match. For example, when using search term "leukemia":</p>
-            <p><img src="ae_help_search_results_highlighting.png" alt="Search results highlighting"></p>   
+            <p><img src="ae_help_search_results_highlighting.png" alt="Search results highlighting"  style='border:2px solid #385930'></p>   
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <p>&nbsp;</p>            
             
             <h4>1.3 Filtering results  </h4>
-            <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"></p>
+            <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"  style='border:2px solid #385930'></p>
             <p>Experiments can be filtered using the drop down menus at the top of the results table. They can be filtered by: </p>
             <ul>
                 <li><strong>organism</strong></li>
@@ -104,8 +104,8 @@
         <h4><a id="RestrictSearchSpace">2.2 Restrict search by specifying the search space</a></h4>
         <p>You can limit the search space to a certain "field" by writing the query in the format of fieldname:value.  A "field" can be, for example, the organism under study, the experimental factor, the assay technology used. Restricting the search space is useful when, for example, you would like to search for experiments which are performed on human samples.  By writing "organism:Homo sapiens", this would avoid matching experiments which merely mentioned "Homo sapiens" or "human" in the experiment description but perhaps performed with samples from another organism.</p>
         <p>The search box would try to detect "fieldname:" entered and give you search hints:</p>
-        <p><img src="ae_help_organism_search.png" alt="organism_search"></p>
-        <p><img src="ae_help_exptype_search.png" alt="exptype_search"></p>
+        <p><img src="ae_help_organism_search.png" alt="organism_search"  style='border:2px solid #385930'></p>
+        <p><img src="ae_help_exptype_search.png" alt="exptype_search"  style='border:2px solid #385930'></p>
         
         <p>Again, phrases of more than one word must be entered in quotes, otherwise only the first word will be searched for. <a href="#EFO_expansion">Experimental Factor Ontology (EFO) expansion </a> of search terms also applies where possible.</p>
         <p> The fields that can be searched are:</p>
@@ -244,37 +244,48 @@
             
             
             <h3><a id="SearchADF">3. Search for array designs</a></h3>
-            <p>Array designs, also known as platform designs, can be searched on the <a href="/arrayexpress/arrays/browse.html">Arrays page</a></p>
-            <p><img src="ae_help_array_design_search.png" alt="array design search"></p>
-            <p>You can search array designs using the following:<br>
+            <p>Array designs, also known as platform designs, can be searched on the <a href="/arrayexpress/arrays/browse.html">Arrays page</a>.  <p>Toggle the check box "ArrayExpress data only" to search for array designs submitted directly to ArrayExpress, or those imported from <a href="http://www.ncbi.nlm.nih.gov/geo/browse/?view=platforms">NCBI Gene Expression Omnibus</a> (see the <a href="GEO_data.html">GEO data help page</a> for more details on the import process).</p>
+            <p> You can search by the array design's accession, species, name/description and the submitter's contact details:</p>
+
             <ul>
-                <li><strong>ArrayExpress accession</strong>: It has a format of A-xxxx-n, where xxxx represents a four letter code and n is a number e.g. "A-MEXP-1234", "A-AFFY-44".</li>
-                <li><strong>Organism</strong>: The scientific (Latin) name of an organism, e.g. "Homo sapiens", "Saccharomyces cerevisiae" represented on the array design.</li>
-                <li><strong>Array name</strong>: For commerically-available arrays, this will be the official name provided by the manufacturer, e.g. Agilent "SurePrint G3 Rat CGH Microarray". Parts of names can also be searched, e.g. "Rat SurePrint" if you are not sure of the precise name.</li>
-                <li><strong>Array description</strong>: Examples are the array's catalogue number, Design ID/Grid name (for Agilent arrays), the purpose of the array (e.g. "CGH", "expression").</li>
-                <li><strong>Array manufacturer name</strong>: Examples are "Affymetrix", "Agilent", "NimbleGen" and "Illumina". This can also be the name of the laboratory which printed the microarray.</li>
-                <li><strong>Array provider name</strong>: The name or email address of the person who submitted the array design to ArrayExpress.</li>
+                <li><strong>ArrayExpress accession</strong>: It has a format of A-xxxx-n, where xxxx represents a four letter code and n is a number e.g. "A-MEXP-1234", "A-AFFY-44".
+                <p><img src="adf_acc_search_example.png" alt="adf_acc_search_example" style='border:2px solid #385930'></p>                
+                </li>
+                <li><strong>Organism</strong>: The name of the organism for which the microarray probes were designed. You can use either common name or Latin name. E.g. "Homo sapiens", "Saccharomyces cerevisiae", "dog" because <a href="#EFO_expansion">search term expansion by Experimental Factor Ontology</a> will match common names automatically with Latin names as synonyms (highlighted green in search results).
+                <p><img src="adf_organism_search_example.png" alt="adf_organism_search_example"  style='border:2px solid #385930'></p>
+                </li>
+                <li><strong>Array name and description</strong>: You can search for terms in the array's name (title) and description, e.g. the array's manufacturer, name of the lab which printed the microarray, catalogue number, Design ID/Grid name (for Agilent arrays), the purpose of the array (e.g. "CGH", "expression"). Exact and synonym matches to search terms will be highlighted yellow and green respectively:
+                <p><img src="adf_name_search_example.png" alt="adf_name_search_example"  style='border:2px solid #385930'></p>
+                <p>If you are not sure about the terms to use, you can do "wild card" search, i.e. expand the search space by including asterisks (*). In the following example, both "CGH" and "aCGH" (in A-MEXP-1849) are matched because of "*CGH":</p>
+                <p><img src="adf_name_search_wildcard_example.png" alt="adf_name_search_wildcard_example"  style='border:2px solid #385930'></p>
+                <p>Here is another example of searching with asterisks. Both "Human HT-12" and "HumanHT-12" are matched:</p>
+                <p><img src="adf_name_search_wildcard_2_example.png" alt="adf_name_search_wildcard_2_example"  style='border:2px solid #385930'></p>
+                </li>
+                <li><strong>Array submitter's name</strong>: The name or email address of the person who submitted the array design to ArrayExpress.
+                <p><img src="adf_submitter_search_example.png" alt="adf_submitter_search_example"  style='border:2px solid #385930'></p>
+                </li>
             </ul>
-            <p>ArrayExpress contains array designs submitted directly to us and those imported from NCBI Gene Expression Omnibus (see the
-                <a href="GEO_data.html">GEO data help page</a> for more details). You can toggle the check box "ArrayExpress data only" to search for direct submission only or all array designs.</p>
+
+
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <h3><a id="Login">4. Search for private experiments</a></h3>
             <p>Data can be kept private in ArrayExpress until an associated paper is published. After an experiment or custom array design is loaded into ArrayExpress the submitter is sent details of login accounts for themselves, and for journal editors and reviewers so that they can view the data before it
                 is publicly available.</p>
             <p>To login click on the "Login" link at the right hand side of the top menu bar.</p>
-            <p><img src="ae_help_login_link.png" alt="Login link"></p>
+            <p><img src="ae_help_login_link.png" alt="Login link"  style='border:2px solid #385930'></p>
             <p>A pop up box will appear for you to enter the username and password you have been sent.</p>
-            <p><img src="ae_help_login_box.png" alt="login box"></p>
+            <p><img src="ae_help_login_box.png" alt="login box"  style='border:2px solid #385930'></p>
             <p>If the <strong>'Remember me' box </strong>is checked, the login details will be remembered by your web browser, even if you close the browser and shut down your
                 computer.</p>
             <p>Once you've logged in, <strong>search for the experiment you would like to view by entering its accession number</strong> in the search box and click "Search"</p>
-            <p><img src="ae_help_logged_in_view.png" alt="logged in view"></p>
+            <p><img src="ae_help_logged_in_view.png" alt="logged in view"  style='border:2px solid #385930'></p>
             <p>&nbsp;</p>
             <h5>Forgotten passwords and reviewers with no password</h5>
             <p> <strong>Submitters:</strong>If you're trying to view a private, curated experiment that you submitted to ArrayExpress, but have forgotten your ArrayExpress data access account login and/or password, use the "Forgot user name or password?" link on the login box:</p>
-            <p><img src="ae_help_forgotten_password_link.png" alt="forgotten_password_link"></p>
+            <p>(Note: This is the account for viewing curated data only, and not for submitting new experiments to us.)</p>
+            <p><img src="ae_help_forgotten_password_link.png" alt="forgotten_password_link"  style='border:2px solid #385930'></p>
             <p>A new form would appear where you'll fill in the email address you used for the experiment submission, and the experiment's accession number:</p>
-            <p><img src="ae_help_forgotten_password_form.png" alt="forgotten_password_form"></p>
+            <p><img src="ae_help_forgotten_password_form.png" alt="forgotten_password_form"  style='border:2px solid #385930'></p>
             <p> <strong>Reviewers:</strong> If you are a reviewer and have not been provided with an ArrayExpress login to access private data connected to a publication, please contact
                 the data submitter, via the journal, to request this information. We cannot provide access to private data without first getting authorization from the submitter or journal.</p>
             <h5>When do we make data public?</h5>
