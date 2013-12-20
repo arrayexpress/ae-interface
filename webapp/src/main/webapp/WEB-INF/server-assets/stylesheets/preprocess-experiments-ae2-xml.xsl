@@ -115,7 +115,9 @@
                     <xsl:value-of select="." />
                 </xsl:element>
             </xsl:for-each>
-            <xsl:copy-of select="ae:getMappedValue('array-legacy-ids', @accession)"/>
+            <xsl:for-each select="ae:getMappedValue('array-legacy-ids', @accession)">
+                <legacy_id><xsl:value-of select="."/> </legacy_id>
+            </xsl:for-each>
         </arraydesign>
     </xsl:template>
 

@@ -14,6 +14,36 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-api-v3-xml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>browse-experiments-html</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>preprocess-atlas-experiments</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-samples-html.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -514,21 +544,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>ae-saxon-extensions</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XML</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-atlas-experiments-txt.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>preprocess-atlas-experiments</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -3446,8 +3461,10 @@
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/build-species-list-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/check-files-plain.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/diff-experiment-xml.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-api-v3-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-ebeye-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-rss-xml.xsl"/>
+            <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-samples-api-v3-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/experiments-samples-html.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae1-xml.xsl"/>
             <file name="../../src/main/webapp/WEB-INF/server-assets/stylesheets/preprocess-arrays-ae2-xml.xsl"/>

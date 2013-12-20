@@ -270,14 +270,14 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>1673822003</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >(Generated description) Experiment with 2 hybridizations, using samples of species
+            <text xmlns="http://www.w3.org/1999/xhtml"
+                    >(Generated description) Experiment with 2 hybridizations, using samples of species
                 [Mycobacterium tuberculosis], using 1 arrays of array design [A-BUGS-1], producing
                 114 raw data files and 12 transformed and/or normalized data files.</text>
         </description>
         <description>
             <id>1673780808</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">We
+            <text xmlns="http://www.w3.org/1999/xhtml">We
                 describe an analysis, applicable to any spotted microarray dataset produced using
                 genomic DNA as a reference, which quantifies prokaryotic levels of mRNA on a
                 genome-wide scale. Applying this to Mycobacterium tuberculosis, we validate the
@@ -288,19 +288,19 @@
         </description>
         <description>
             <id>1673780816</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >Data is also available from <a shape="rect" href="http://bugs.sgul.ac.uk/E-BUGS-60"
+            <text xmlns="http://www.w3.org/1999/xhtml"
+                    >Data is also available from <a shape="rect" href="http://bugs.sgul.ac.uk/E-BUGS-60"
                     target="_blank">BuG@Sbase</a> or <a shape="rect"
                     href="http://bugs.sgul.ac.uk/E-BUGS-60" target="_blank"
                     >http://bugs.sgul.ac.uk/E-BUGS-60</a>.</text>
         </description>
         <description>
             <id>1751040287</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"/>
+            <text xmlns="http://www.w3.org/1999/xhtml"/>
         </description>
         <description>
             <id>1680985362</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"/>
+            <text xmlns="http://www.w3.org/1999/xhtml"/>
         </description>
     </experiment>
     <experiment loadedinatlas="true">
@@ -699,7 +699,7 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>366346723</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">The
+            <text xmlns="http://www.w3.org/1999/xhtml">The
                 tissue-specific pattern of mRNA expression can indicate important clues about gene
                 function. High-density oligonucleotide arrays offer the opportunity to examine
                 patterns of gene expression on a genome scale. Toward this end, we have designed
@@ -716,8 +716,8 @@
         </description>
         <description>
             <id>1342434336</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >(Generated description) Experiment with 316 hybridizations, using 160 samples of
+            <text xmlns="http://www.w3.org/1999/xhtml"
+                    >(Generated description) Experiment with 316 hybridizations, using 160 samples of
                 species [Homo sapiens], using 316 arrays of array design [Affymetrix Custom Array -
                 Novartis Human [gnGNF1Ba], Affymetrix GeneChip Human Genome HG-U133A [HG-U133A]],
                 producing 316 raw data files and 311 transformed and/or normalized data
@@ -917,8 +917,7 @@
         <experimenttype>transcription profiling</experimenttype>
         <description>
             <id>1342093112</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >(Generated description) Experiment with 141 hybridizations, using 141 samples of
+            <text>(Generated description) Experiment with 141 hybridizations, using 141 samples of
                 species [Homo sapiens, Pan troglodytes], using 141 arrays of array design
                 [Affymetrix GeneChip Human Genome U95Av2 [HG_U95Av2], Affymetrix GeneChip Human
                 Genome U95E [HG_U95E], Affymetrix GeneChip Human Genome U95B [HG_U95B], Affymetrix
@@ -928,7 +927,7 @@
         </description>
         <description>
             <id>352682123</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">We
+            <text>We
                 have analyzed gene expression in various brain regions of humans and chimpanzees.
                 Within both human and chimpanzee individuals, the transcriptomes of the cerebral
                 cortex are very similar to each other and differ more between individuals than among
@@ -945,76 +944,142 @@
                 are recently duplicated in humans</text>
         </description>
     </experiment>
-    <experiment loadedinatlas="true">
-        <source id="ae1" migrated="false" visible="true"/>
-        <id>13850163</id>
-        <accession>E-SNGR-9</accession>
-        <name>Transcription profiling of fission yeast cell cycle data (log normalised data from
-            E-SNGR-2-7)</name>
-        <species>Schizosaccharomyces pombe</species>
-        <miamescores>
-            <reportersequencescore>0</reportersequencescore>
-            <factorvaluescore>0</factorvaluescore>
-            <measuredbioassaydatascore>0</measuredbioassaydatascore>
-            <protocolscore>1</protocolscore>
-            <derivedbioassaydatascore>1</derivedbioassaydatascore>
-            <overallscore>2</overallscore>
-        </miamescores>
-        <assays>77</assays>
-        <samples>10</samples>
-        <rawdatafiles>0</rawdatafiles>
-        <fgemdatafiles>77</fgemdatafiles>
+    <experiment>
+        <species>Rattus norvegicus</species>
+        <rawdatafiles available="true"/>
+        <processeddatafiles available="true"/>
         <sampleattribute>
-            <category>Genotype</category>
-            <value>h+/h+ ade6-M210/ade6-M216</value>
-            <value>h+/h+ pat1-114/pat1-114 ade6-M210/ade6-M216</value>
-            <value>h+/h- ade6-M210/ade6-M216</value>
-            <value>h90</value>
-            <value>h90_atf21::kanR</value>
-            <value>h90_atf31::kanR</value>
+            <category>Age</category>
+            <value>20</value>
+            <value>9</value>
+            <value>90</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>BioSourceType</category>
+            <value>cells</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>DevelopmentalStage</category>
+            <value>adult</value>
+            <value>pre-puberty</value>
         </sampleattribute>
         <sampleattribute>
             <category>Organism</category>
-            <value>Schizosaccharomyces pombe</value>
+            <value>Rattus norvegicus</value>
         </sampleattribute>
-        <user>1</user>
+        <sampleattribute>
+            <category>OrganismPart</category>
+            <value>testis</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>Sex</category>
+            <value>male</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>StrainOrLine</category>
+            <value>Sprague Dawley</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>TargetedCellType</category>
+            <value>Sertoli cells</value>
+            <value>spermatides</value>
+            <value>spermatocytes</value>
+            <value>spermatogonia</value>
+            <value>total testis</value>
+        </sampleattribute>
+        <sampleattribute>
+            <category>TimeUnit</category>
+            <value>days</value>
+        </sampleattribute>
+        <miamescores>
+            <reportersequencescore>1</reportersequencescore>
+            <protocolscore>0</protocolscore>
+            <factorvaluescore>0</factorvaluescore>
+            <derivedbioassaydatascore>1</derivedbioassaydatascore>
+            <measuredbioassaydatascore>1</measuredbioassaydatascore>
+            <overallscore>3</overallscore>
+        </miamescores>
+        <id>81956</id>
+        <accession>E-MEXP-31</accession>
+        <name>Transcription profiling of mammalian male germ cells undergoing mitotic growth, meiosis and gametogenesis in highly enriched cell populations</name>
+        <experimenttype>transcription profiling by array</experimenttype>
+        <releasedate>2004-03-01</releasedate>
+        <lastupdatedate>2012-03-27</lastupdatedate>
+        <samples>10</samples>
+        <assays>20</assays>
+        <user id="1"/>
+        <user id="173816"/>
+        <user id="173815"/>
+        <arraydesign><id>10900</id><accession>A-AFFY-19</accession><name>Affymetrix GeneChip Rat Genome U34B [RG_U34B]</name><count>10</count>117287910</arraydesign>
+        <arraydesign><id>10984</id><accession>A-AFFY-18</accession><name>Affymetrix GeneChip Rat Genome U34A [RG_U34A]</name><count>10</count>114147931</arraydesign>
         <bioassaydatagroup>
-            <id>1341901624</id>
-            <name>DED:A-SNGR-1_composites</name>
-            <bioassaydatacubes>11</bioassaydatacubes>
-            <arraydesignprovider>SNGR</arraydesignprovider>
-            <dataformat>tab delimited</dataformat>
-            <bioassays>11</bioassays>
-            <isderived>1</isderived>
+            <id/>
+            <name>rawData</name>
+            <bioassaydatacubes>20</bioassaydatacubes>
+            <arraydesignprovider/>
+            <dataformat>rawData</dataformat>
+            <bioassays>20</bioassays>
+            <isderived>0</isderived>
         </bioassaydatagroup>
         <bioassaydatagroup>
-            <id>1341914572</id>
-            <name>DED:A-SNGR-1_composites</name>
-            <bioassaydatacubes>66</bioassaydatacubes>
-            <arraydesignprovider>SNGR</arraydesignprovider>
-            <dataformat>tab delimited</dataformat>
-            <bioassays>66</bioassays>
+            <id/>
+            <name>scan</name>
+            <bioassaydatacubes>20</bioassaydatacubes>
+            <arraydesignprovider/>
+            <dataformat>scan</dataformat>
+            <bioassays>20</bioassays>
+            <isderived>0</isderived>
+        </bioassaydatagroup>
+        <bioassaydatagroup>
+            <id/>
+            <name>processedDataMatrix</name>
+            <bioassaydatacubes>2</bioassaydatacubes>
+            <arraydesignprovider/>
+            <dataformat>processedDataMatrix</dataformat>
+            <bioassays>2</bioassays>
             <isderived>1</isderived>
         </bioassaydatagroup>
+        <bibliography>
+            <accession>14718556</accession>
+            <authors>Ulrich Schlecht, Philippe Demougin, Reinhold Koch, Leandro Hermida, Christa Wiederkehr, Patrick Descombes, Charles Pinneau, Bernard Jegou, Michael Primig</authors>
+            <title>Expression profiling of mammalian male meiosis and gamete development identifies novel candidate genes for roles in the regulation of fertility</title>
+        </bibliography>
         <provider>
-            <contact>Juan Mata</contact>
-            <email>jm6@sanger.ac.uk</email>
+            <contact>Michael Primig</contact>
             <role>submitter</role>
+            <email>michael.primig@rennes.inserm.fr</email>
         </provider>
-        <experimentdesign>time series</experimentdesign>
-        <experimenttype>transcription profiling</experimenttype>
+        <experimentdesign>cell type comparison</experimentdesign>
+        <experimentdesign>development or differentiation</experimentdesign>
         <description>
-            <id>13850164</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >This experiment contains the log normalized data for ArrayExpress experiments
-                E-SNGR-2 to E-SNGR-7</text>
+            <id/>
+            <text>We report a comprehensive large-scale expression profiling analysis of mammalian male germ cells undergoing mitotic growth, meiosis and gametogenesis using High Density Oligonucleotide Microarrays and highly enriched cell populations. Among 11955 rat loci investigated, 1268 were identified as differentially transcribed in germ cells at subsequent developmental stages as compared to total testis, somatic Sertoli cells as well as brain and skeletal muscle controls. The loci were organized into four expression clusters that correspond to somatic, mitotic, meiotic and post-meiotic cell types. This work provides information about expression patterns of approximately 200 genes known to be important during male germ cell development. Approximately 40 of those are included in a group of 121 transcripts for which we report germ cell expression and lack of transcription in three somatic control cell types. Moreover, we demonstrate the testicular expression and transcriptional induction in mitotic, meiotic and/or post-meiotic germ cells of 293 as yet uncharacterized transcripts some of which are likely to encode factors involved in spermatogenesis and fertility. This group also contains numerous potential germ cell specific targets for innovative contraceptives. A graphical display of the data is conveniently accessible through the GermOnline database at <a href="http://www.germonline.org" target="_blank">http://www.germonline.org</a>.</text>
         </description>
-        <description>
-            <id>1341914638</id>
-            <text xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"
-                >(Generated description) Experiment with 77 hybridizations, using 10 samples of
-                species [Schizosaccharomyces pombe], producing 0 raw data files and 77 transformed
-                and/or normalized data files.</text>
-        </description>
+        <protocol>
+            <id>230174</id>
+            <accession>P-MEXP-1358</accession>
+        </protocol>
+        <protocol>
+            <id>230175</id>
+            <accession>P-MEXP-1359</accession>
+        </protocol>
+        <protocol>
+            <id>79337</id>
+            <accession>Affymetrix:Protocol:Hybridization-EukGE-WS2v4[]</accession>
+        </protocol>
+        <protocol>
+            <id>230173</id>
+            <accession>P-MEXP-1360</accession>
+        </protocol>
+        <protocol>
+            <id>51</id>
+            <accession>P-AFFY-6</accession>
+        </protocol>
+        <protocol>
+            <id>63</id>
+            <accession>Affymetrix:Protocol:ExpressionStat</accession>
+        </protocol>
+        <organism>Rattus norvegicus</organism>
+        <source id="ae2" migrated="false" visible="true"/>
     </experiment>
 </experiments>

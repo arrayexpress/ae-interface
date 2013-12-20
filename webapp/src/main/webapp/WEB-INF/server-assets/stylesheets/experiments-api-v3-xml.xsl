@@ -42,7 +42,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="//experiment[accession = 'E-MEXP-31']"/> <!-- search:queryIndex($queryid)"/> -->
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <experiments version="3.0" revision="131220"
@@ -63,8 +63,22 @@
         <experiment>
             <xsl:apply-templates select="id" mode="copy"/>
             <xsl:apply-templates select="accession" mode="copy"/>
+            <xsl:apply-templates select="secondaryaccession" mode="copy"/>
             <xsl:apply-templates select="name" mode="copy"/>
             <xsl:apply-templates select="releasedate | lastupdatedate | submissiondate" mode="copy"/>
+            <xsl:apply-templates select="organism" mode="copy"/>
+            <xsl:apply-templates select="experimenttype" mode="copy"/>
+            <xsl:apply-templates select="experimentdesign" mode="copy"/>
+            <xsl:apply-templates select="description" mode="copy"/>
+            <xsl:apply-templates select="provider" mode="copy"/>
+            <xsl:apply-templates select="bibliography" mode="copy"/>
+            <xsl:apply-templates select="sampleattribute" mode="copy"/>
+            <xsl:apply-templates select="experimentalfactor" mode="copy"/>
+            <xsl:apply-templates select="arraydesign" mode="copy"/>
+            <xsl:apply-templates select="protocol" mode="copy"/>
+            <xsl:apply-templates select="bioassaydatagroup" mode="copy"/>
+
+            
         </experiment>
     </xsl:template>
 
