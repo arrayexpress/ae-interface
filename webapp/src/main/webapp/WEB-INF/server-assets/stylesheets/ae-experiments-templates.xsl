@@ -574,6 +574,7 @@
         <xsl:param name="pIsPrivate" as="xs:boolean"/>
 
         <xsl:variable name="vDates" select="submissiondate | lastupdatedate | releasedate"/>
+        <xsl:variable name="vAccession" select="accession"/>
         <xsl:if test="$vDates">
             <tr>
                 <xsl:choose>
@@ -618,7 +619,7 @@
                                     </xsl:choose>
                                     <xsl:text> </xsl:text>
                                     <xsl:value-of select="ae:formatDate(text())"/>
-                                    <xsl:if test="(fn:name() = 'releasedate') and $pIsPrivate"> (<a href="/fg/acext/{accession}">change release date</a>&#160;<span class="new">new!</span>)</xsl:if>
+                                    <xsl:if test="(fn:name() = 'releasedate') and $pIsPrivate"> (<a href="/fg/acext/{$vAccession}">change release date</a>&#160;<span class="new">new!</span>)</xsl:if>
                                 </xsl:for-each>
                             </div>
                         </td>
