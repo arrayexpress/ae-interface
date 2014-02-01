@@ -113,9 +113,11 @@ public class StringTools
     {
         Date date = null;
         try {
-            // hack for crazy mail.ru bot
-            rfc822.replaceFirst("^(\\w{3}, \\d{2} \\w{3}) \\d{5} (\\d{2}:\\d{2}:\\d{2} \\w{3})$", "$1 2999 $2");
-            date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").parse(rfc822);
+            if (null != rfc822) {
+                // hack for crazy mail.ru bot
+                rfc822.replaceFirst("^(\\w{3}, \\d{2} \\w{3}) \\d{5} (\\d{2}:\\d{2}:\\d{2} \\w{3})$", "$1 2999 $2");
+                date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").parse(rfc822);
+            }
         } catch (ParseException x) {
             // ignore
         }
