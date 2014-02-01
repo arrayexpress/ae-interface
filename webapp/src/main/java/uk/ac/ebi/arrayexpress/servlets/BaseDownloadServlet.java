@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
@@ -170,8 +172,8 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         // If-Modified-Since header should be greater than LastModified. If so, then return 304
         // This header is ignored if any If-None-Match header is specified
-        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
-        if (ifNoneMatch == null && ifModifiedSince != -1 && ifModifiedSince + 1000 > lastModified) {
+        Date ifModifiedSince = StringTools.rfc822StringToDate(request.getHeader("If-Modified-Since"));
+        if (null == ifNoneMatch && null != ifModifiedSince && ifModifiedSince.getTime() + 1000 > lastModified) {
             response.setHeader("ETag", eTag); // Required in 304.
             response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
             return;

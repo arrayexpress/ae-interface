@@ -1,6 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils;
 
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -106,6 +107,19 @@ public class StringTools
     public static String longDateTimeToXSDDateTime( long dateTime )
     {
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date(dateTime));
+    }
+
+    public static Date rfc822StringToDate( String rfc822 )
+    {
+        Date date = null;
+        try {
+            // hack for crazy mail.ru bot
+            rfc822.replaceFirst("^(\\w{3}, \\d{2} \\w{3}) \\d{5} (\\d{2}:\\d{2}:\\d{2} \\w{3})$", "$1 2999 $2");
+            date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").parse(rfc822);
+        } catch (ParseException x) {
+            // ignore
+        }
+        return date;
     }
 
     public static String safeToString( Object obj, String nullObjString )
