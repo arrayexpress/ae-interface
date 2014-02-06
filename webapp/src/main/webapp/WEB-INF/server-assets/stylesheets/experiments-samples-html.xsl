@@ -474,11 +474,11 @@
                                             <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name), 'file')">
                                                 <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name), 'derived')) then 'processed' else 'raw'"/>
                                                 <xsl:variable name="vAvailFiles" select="$vData[@kind = $vDataKind]/@name"/>
-                                                <xsl:variable name="vArchive" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
+                                                <xsl:variable name="vArchiveName" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                                 <xsl:choose>
-                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:index-of($vAvailFiles, $vArchive)">
-                                                        <a href="{$context-path}/files/{$vAccession}/{$vArchive}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:matches($vArchiveName, '.+[.]zip$') and fn:index-of($vAvailFiles, $vArchiveName)">
+                                                        <a href="{$context-path}/files/{$vAccession}/{$vArchiveName}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
                                                     </xsl:when>
