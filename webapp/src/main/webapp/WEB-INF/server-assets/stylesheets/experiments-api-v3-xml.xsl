@@ -37,6 +37,7 @@
     <xsl:variable name="vBaseUrl"><xsl:value-of select="$host"/><xsl:value-of select="$context-path"/></xsl:variable>
 
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
+    <xsl:strip-space elements="*"/>
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
@@ -45,7 +46,7 @@
         <xsl:variable name="vFilteredExperiments" select="//experiment[accession = 'E-MEXP-31']"/> <!-- search:queryIndex($queryid)"/> -->
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
-        <experiments version="3.0" revision="131220"
+        <experiments version="3.0" revision="140109"
                      total="{$vTotal}"
                      total-samples="{sum($vFilteredExperiments/samples) cast as xs:integer}"
                      total-assays="{sum($vFilteredExperiments/assays) cast as xs:integer}">
@@ -77,8 +78,6 @@
             <xsl:apply-templates select="arraydesign" mode="copy"/>
             <xsl:apply-templates select="protocol" mode="copy"/>
             <xsl:apply-templates select="bioassaydatagroup" mode="copy"/>
-
-            
         </experiment>
     </xsl:template>
 

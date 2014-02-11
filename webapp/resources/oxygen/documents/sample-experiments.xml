@@ -1010,7 +1010,7 @@
         <user id="1"/>
         <user id="173816"/>
         <user id="173815"/>
-        <arraydesign><id>10900</id><accession>A-AFFY-19</accession><name>Affymetrix GeneChip Rat Genome U34B [RG_U34B]</name><count>10</count>117287910</arraydesign>
+        <arraydesign><id>10900</id><accession>A-AFFY-19</accession><name>Affymetrix GeneChip Rat Genome U34B [RG_U34B]</name><count>10</count><legacy_id>117287910</legacy_id></arraydesign>
         <arraydesign><id>10984</id><accession>A-AFFY-18</accession><name>Affymetrix GeneChip Rat Genome U34A [RG_U34A]</name><count>10</count>114147931</arraydesign>
         <bioassaydatagroup>
             <id/>
