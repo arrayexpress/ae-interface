@@ -37,7 +37,7 @@
                 3. Experiments with more than one sequence data URI defined
                 4. Experiments with more than one title defined
         -->
-        <xsl:text>--- ISSUES ----------------------------------------------------------------&#10;</xsl:text>
+        <xsl:text>--- ISSUES --------------------------------------------------------------------&#10;</xsl:text>
         <xsl:for-each select="experiment[source/@visible = 'true']">
             <xsl:sort select="substring(accession, 3, 4)" order="ascending"/>
             <xsl:sort select="substring(accession, 8)" order="ascending" data-type="number"/>
