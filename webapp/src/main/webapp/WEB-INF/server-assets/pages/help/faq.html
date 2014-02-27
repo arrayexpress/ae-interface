@@ -6,15 +6,14 @@
 <div id="content" role="main" class="grid_24 clearfix">
 <section id="ae-help" class="grid_18 alpha">
 <h2>Frequently Asked Questions (FAQ)</h2>
-<p>If you cannot find the answer to your question in this FAQ or other <a href="index.html">ArrayExpress help pages</a> then please email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>.</p>
+<p>If you cannot find the answer to your question in this FAQ or other <a href="index.html">ArrayExpress help pages</a> then please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>.</p>
 
 <p>The FAQ is divided into 3 sections:</p>
 <ol>
     <li><a href="#use_ae_faq">Using ArrayExpress</a></li>
-    <li><a href="#submit_faq_general">Submitting data to ArrayExpress (general)</a></li>
-    <li><a href="#Submitter_FAQ_mx">Submitting data to ArrayExpress (MIAMExpress-specific questions)</a></li>
+    <li><a href="#submit_faq_general">Submitting data to ArrayExpress</a></li>
 </ol>
-<p><strong>Please note that the MIAMExpress tool is no longer maintained for experiment submissions. Please use the <a href="submissions_overview.html">MAGE-TAB spreadsheet tool</a> instead. Array Design submissions can still be submitted via MIAMExpress.</strong></p>
+<p><strong>Please note that the MIAMExpress tool is no longer maintained for experiment submissions. Please use the <a href="submissions_overview.html">MAGE-TAB spreadsheet tool</a> or <a href="/fg/annotare/login">Annotare webform tool</a> instead. Array Design submissions can still be submitted via MIAMExpress.</strong></p>
 
 <p>&nbsp;</p>
 <a id="use_ae_faq"></a>
@@ -55,7 +54,7 @@
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
     <a id="submit_faq_general"></a>
-<h3>2. Submitting data to ArrayExpress (general)</h3>
+<h3>2. Submitting data to ArrayExpress</h3>
 
 <h5>Accession numbers</h5>
 <ul>
@@ -80,7 +79,7 @@
 
 <h5>Which files to submit</h5>
 <ul>
-    <li><a href="#mtab_template">Is there any software I can use to create a template spreadsheet of my experiment data for submission?</a></li>
+    <li><a href="#mtab_template">Can I get a MAGE-TAB template spreadsheet for submitting experiment data?</a></li>
     <li><a href="#affy">Which files do I need to submit for an Affymetrix experiment?</a></li>
     <li><a href="#illumina">How do I submit an Illumina experiment?</a></li>
     <li><a href="#hts">How do I submit a high throughput sequencing (HTS) experiment?</a></li>
@@ -90,32 +89,17 @@
 
 <h5>Making changes to data already submitted to Arrayexpress</h5>
 <ul>
-    <li><a href="#hit_submit_too_soon">I hit "Submit" (MAGE-TAB route) / "Complete Submission" (MIAMExpress route) at the end of my submission but I haven't actually finished editing. I logged in to the submission tool but can't see my experiment anymore - what should I do?</a></li>
+    <li><a href="#hit_submit_too_soon">I hit "Submit" at the end of my submission but I haven't actually finished editing. I logged in to the submission tool but can't edit my experiment anymore. Help!</a></li>
     <li><a href="#data_already_in_AE_DB">My data has been loaded into ArrayExpress but I need to change/correct something - how do I do this?</a></li>
     <li><a href="#change_contact">My contact details have changed, how do I update them?</a></li>
 </ul>
-<p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
-    <a id="Submitter_FAQ_mx"></a>
-<h3>3. Submitting data to ArrayExpress (MIAMExpress-specific questions)</h3>
-<p><strong>Please note that the MIAMExpress experiment submission tool is no longer maintained. If you're starting a new submission, please use the <a href="submissions_overview.html">MAGE-TAB submission tool</a> instead.</strong></p>
-
-<ul>
-    <li><a href="#mx_login">I've logged in to MIAMExpress but I get an error that says "Unfortunately you can not continue working with this tool", what's
-        wrong?</a></li>
-    <li><a href="#new_adf">I've just submitted a custom array design to MIAMExpress but I can't see it on the list of array designs in my experiment submission - where is it?</a></li>
-    <li><a href="#expt_sub_after_prot_sub">I have submitted my protocols using MIAMExpress, where do I upload the data?</a></li>
-    <li><a href="#upload_data_with_batchuploader">I've described my experiment and my samples using the MIAMExpress webform
-        but I have many samples and would like to do batch upload of data files. How do I do that?</a></li>
-    <li><a href="#norm_file_error">My normalized data is in a single "Combined data file" but when I select my normalization protocol I get errors saying I have to upload separate normalized files for each hyb. Help!</a></li>
-    <li><a href="#where_upload_combined_file">Where do I upload my single "Combined data file" containing processed data from all hybs?</a></li>
-</ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 <h3>1. Using ArrayExpress</h3>
 <h5>Searching and understanding data</h5>
 <ul>
     <li><a id="search_help"></a><strong>How do I search the ArrayExpress database?</strong><br>
-        For simple keyword searches and browsing, please visit the <a href="/training/online/course/arrayexpress-exploring-functional-genomics-data-ar/how-search-archive">search help page</a>. For more complex search queries, e.g. "Find me all the microarray experiments on Agilent chip X studying diabetes in mouse", please refer to the <a href="how_to_search.html#AdvancedSearchesNewInterface">advanced search help</a>.</li>
+        For simple keyword searches and browsing, please visit the <a href="/training/online/course/arrayexpress-exploring-functional-genomics-data-ar/how-search-archive">search help page</a>. For more complex search queries, e.g. "Find me all the microarray experiments on Agilent chip X studying diabetes in mouse", please refer to the <a href="how_to_search.html#AdvancedSearchExperiment">advanced search help</a>.</li>
 </ul>
 
 <ul>
@@ -131,7 +115,7 @@
         Format). Sample, extract and hybridization information is in a file
         called the SDRF (Sample and Data Relationship Format) which also links
         to the protocol information in the IDF. The SDRF lists which data files
-        are associated with each hybridization or scan. For more information on
+        are associated with each hybridization or sequencing assay. For more information on
         the MAGE-TAB format, please visit the <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/introduction-mage-tab-format">MAGE-TAB
             help page.</a>. The IDF and SDRF components are described in
         greater detail on <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/creating-mage-tab-document">this
@@ -142,7 +126,7 @@
     <li><a id="expt_already_published"></a><strong>I read a
         paper that referred to data in ArrayExpress but when I searched for the data I got no hits. Why?</strong><br>
         It could be that the submitter of the data has not yet told us that the experiment should be made public. If you come across this problem
-        please email us at - tell us which paper you found the reference in and the ArrayExpress accession number quoted if any. We will make this data publicly available.</li>
+        please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> - tell us which paper you found the reference in and the ArrayExpress accession number quoted if any. We will make this data publicly available.</li>
 </ul>
 
 <ul>
@@ -260,35 +244,26 @@
     <li>
         <a id="need_acc_num_urgent"></a><strong>I
         urgently need an accession number to include in my publication - how can I get one?</strong><br>
-        Firstly, start your ArrayExpress submission if you have not already
-        done so! ArrayExpress does not provide accession numbers in advance of
+        Firstly, start your submission if you have not already done so! ArrayExpress does not provide accession numbers in advance of
         submission of data. This is in line with the <a href="http://www.ncbi.nlm.nih.gov/geo/info/faq.html#Whenaccessions">NCBI
-        Gene Expression Omnibus (GEO)'s policy</a> of provision of
-        accession numbers after deposition. If you have completed the
-        submission and are waiting for a response you can email us at
-        to let us know how urgently the accession number is required. To help
-        us find your submission tell us your username, the name of the
-        experiment or array and if you submitted via the <a href="/miamexpress/login.html"> MIAMExpress</a> or <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB</a>
-        submission route. We will reply to your email as quickly as possible
-        but please note that we often have several submissions requiring urgent
+        Gene Expression Omnibus (GEO)'s policy</a> of provision of accession numbers after deposition. If you have completed the
+        submission and are waiting for a response you can email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
+        to let us know how urgently the accession number is required. To help us find your submission tell us your username, the title of the
+        experiment or array. We will reply to your email as quickly as possible but please note that we often have several submissions requiring urgent
         attention. </li>
 </ul>
 <ul>
     <li>
         <a id="how_long_to_get_acc"></a><strong>How
         long will it take to get an accession number?<br>
-    </strong>After you complete a submission it is put in a
-        queue
-        awaiting initial review and checking. If there are no major problems
-        then your submission will be assigned to a curator who will look into
-        the details of your submission to make sure everything is indeed in
-        good order. If there are no problems at all, we will send you the
-        accession number, otherwise we will contact you to advise on how to
-        revise and resubmit before an accession number is assigned. It is
-        therefore important that you include as much meta data as possible in
-        your submission to speed up the curation process. We aim to respond
-        within a week upon receiving the submission, but response times do vary
-        depending on submission volume, so please bear with us.</li>
+    </strong>If you submit using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet tool</a>, after you complete a submission it is put in a
+        queue awaiting review and checking by a curator. If there are no major issues with your submission, the curator will send you the
+        accession number, otherwise he/she will contact you to advise on how to revise and resubmit before an accession number is assigned. We aim to respond
+        within a week upon receiving the submission, but response times do vary depending on submission volume.
+        <br><br>
+        <p>If you submit using <a href="/fg/annotare/login">Annotare</a>,
+        after you've filled in the webforms with experimental information and uploaded data files, all information will be validated. If there are no errors,
+        you can proceed to submit and will then receive an automatic confirmation email that contains the accession number.</p></li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
@@ -297,25 +272,23 @@
 <ul>
     <li><a id="keep_private"></a>
         <strong>Can my data be kept private after I submit it?</strong><br>
-        Yes, all submitted information will be kept
-        private
+        Yes, all submitted information will be kept private
         until the release date that you set at the time of submission, or until
         a publication is released that contains the ArrayExpress accession
-        number relating to your data. Please see our <a href="data_availability.html">data availability</a>
+        number relating to your data. You can also change the release date to suit the 
+        peer review progress of your paper.  Please see our <a href="data_availability.html">data availability</a>
         page for more information.</li>
 </ul>
 <ul>
     <li><a id="journal_private_access"></a>
-        <strong>The journal I am submitting to have requested private
-            access to my data - how do I get
+        <strong>The journal I am submitting to have requested private access to my data - how do I get
             an ArrayExpress login for them?</strong><br>
         Firstly, start your ArrayExpress submission if you have not already
-        done so! You will be sent login details for viewing your private data
+        done so! You will be sent login details for viewing your private experimental data
         on the <a href="/arrayexpress">ArrayExpress website</a>
-        only at the end of the curation process, i.e. after your data has been
-        loaded into the ArrayExpress database. If you are really pushed
+        only when curation is finshed and when your data is loaded into the ArrayExpress database. If you are really pushed
         for time, reply to the email thread sent to you by the ArrayExpress
-        curator in charge of your submission, or email us at
+        curator in charge of your submission, or email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         to let us know about your situation. We will try our best to fast-track
         your submission.</li>
 </ul>
@@ -324,19 +297,24 @@
         <strong>I tried to login to ArrayExpress to see some recently
             submitted private data but it said my
             username and password were invalid. Why?</strong><br>
-        Possibly you have tried to login with your <a href="/miamexpress/login.html"> MIAMExpress</a> or <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB</a>
-        submitter account. These "submitter" accounts can only be used for
+        Possibly you have tried to login with your submitter account with our submission tools (
+        <a href="/fg/annotare/login">Annotare</a>,
+        <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB</a>,
+        or <a href="/miamexpress/login.html"> MIAMExpress</a>)?
+        These "submitter" accounts can only be used for
         submitting data, not viewing it in ArrayExpress. We will provide you
         with an ArrayExpress data access login account after your submission has been
         curated and then loaded into ArrayExpress. If you are using an
         ArrayExpress login which you have just received, it might not be
         working yet because ArrayExpress is updated only once a day at about
-        06:00 GMT. Try again after this time.  If you've forgotten or lost
+        06:00 GMT. Try again after this time.
+        <br><br>
+        <p>If you've forgotten or lost
         your access account details, you can retrieve it using the 
         <a href="how_to_search.html#Login">forgotten password tool</a>. If it still does not work, contact
-        us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>
+        us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         and tell us what login details you are trying to use / which page you
-        tried those details on.</li>
+        tried those details on.</p></li>
 </ul>
 
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
@@ -345,8 +323,7 @@
 <ul>
     <li><a id="what_date"></a>
         <strong>I don't know when my paper will be published so what
-            should I put as the
-            release date?</strong><br>
+            should I put as the release date?</strong><br>
         Enter an estimated public release date up to 1
         year in the future from the day of submission. The release date can be changed during/after curation for multiple times to match the peer-review progress. Please see our <a href="data_availability.html#changes">release date change</a>
         page for more information.</li>
@@ -354,7 +331,7 @@
 <ul>
     <li><a id="make_public"></a>
         <strong>My paper is about to be published - how do I make the data public?</strong><br>
-        Email us at
+        Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> 
         with the experiment accession number and tell us when it should be made
         public. Please send us the citation information, including PubMed ID
         and Digital object identifier (DOI) too so we can add this to your
@@ -365,19 +342,17 @@
 <h5>What files to submit</h5>
 <ul>
     <li><a id="mtab_template"></a>
-        <strong>Is there any software I can use
-            to create a template spreadsheet of my experiment data for submission?</strong><br>
-        Yes. Using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB submission
+        <strong>Can I get a MAGE-TAB template spreadsheet for submitting experiment data?</strong><br>
+        Yes. Using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet submission
             tool</a>, you can generate a template spreadsheet specific to your experiment.
-        Upon logging in the tool, you will first create an experiment and then select
-        some terms (e.g. species, experiment design, sample attributes) which
-        are relevant to your experiment from a series of drop-down lists. Once
-        you've saved your selection, you will be given the "generate template"
-        option, which generates a spreadsheet pre-filled with some information
-        and column headings relevant to your experiment. Check out our <a href = "/fgpt/magetab/help/quick_start.html">
-        MAGE-TAB quick start submission guide</a> or <a href="http://youtu.be/Ixtd4JfBV8Q">YouTube video</a> to see how the submission
-        tool works.  Once you have the spreadsheet, you should fill in
-        the empty fields with specific information, e.g. sample names, raw data filenames, etc.<br>
+        Check out our <a href = "/fgpt/magetab/help/quick_start.html">
+        MAGE-TAB quick start submission guide</a> or <a href="http://youtu.be/Ixtd4JfBV8Q">YouTube video</a>
+        to see how the submission tool works.<br><br>
+        If you use the <a href="/fg/annotare/login">Annotare</a> webform submission tool, there is no need to
+        create any MAGE-TAB spreadsheet. Just fill in the webforms step-by-step, and a MAGE-TAB spreadsheet
+        will be constructed for you, based on what you've entered on the webforms. See this
+        <a href="/fgpt/annotare_help/">Annotare help page</a> for more information.
+        <br><br>
         There are also some third party data annoation tools that can generate MAGE-TAB spreadsheets for you
         for uploading through the MAGE-TAB spreadsheet submission tool. There
         is more information about them <a href="third_party_tools.html">here</a>.</li>
@@ -392,12 +367,8 @@
         data is preferably a matrix file generated by software such as as <a href="http://biostatistics.oxfordjournals.org/content/4/2/249.full.pdf">robust
             multi-array average (RMA)</a> or <a href="http://biosun1.harvard.edu/complab/dchip/">dChip</a>.
         A matrix file has the Affyemtrix probesets in the rows and processed
-        intensity values per hybridisation in the columns. If you do not have
-        such a matrix file, we also accept Affymetrix .CHP files if you have
-        them. For more information on how to format your processed matrix data
-        files see our <a href="/miamexpress/help/datafile_help.html">MIAMExpress
-            data file help page</a> if you are submitting using <a href="/miamexpress/login.html"> MIAMExpress</a>, or <a href="/fgpt/magetab/help/data_format.html#data_matrix">
-            MAGE-TAB data matrix example </a> if you are using <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB</a>.</li>
+        intensity values per hybridisation in the columns <a href="/fgpt/magetab/help/data_format.html#data_matrix">
+            (MAGE-TAB data matrix example)</a>.</li>
 </ul>
 <ul>
     <li><a id="illumina"></a>
@@ -414,28 +385,31 @@
             Illumina raw data file</a>. The unique identifiers in the raw
         data file should be taken from the "PROBE_ID" column of the
         GenomeStudio-generated file. (Note: the Illumina GenomeStudio-generated file would have column headings
-        "PROBE_ID" and "ProbeID", and they are not the same!) For the processed data, a data matrix is
-        preferred (PROBE_IDs in rows, processed measurements per hybridisation
+        "PROBE_ID" and "ProbeID", and they are not the same! The latter often corresponds to "array address ID" 
+        in the gene chip manifest file and it's the former that we're after.)
+        <br><br>
+        For processed data, a data matrix is preferred (PROBE_IDs in rows, processed measurements per hybridisation
         in columns), as in this <a href="/fgpt/magetab/help/data_format.html#data_matrix">MAGE-TAB matrix file example</a>. </li>
 </ul>
 <ul>
-    <li><strong><a id="hts"></a>How
-        do I submit a high throughput sequencing (HTS) experiment?</strong><br>
-        High throughput sequencing gene expression data should be submitted
-        using the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB
-            spreadsheet submissions</a> system. You will need to provide as
-        much information as possible about the starting materials (samples) and
-        protocols used, raw sequence data files for each sample and optionally
-        processed data files, e.g. expression values or SNP calls linked to
-        genome coordinates. Raw data files must be in a format <a href="/ena/about/sra_data_format">accepted
-            by the Sequence Read Archive (SRA)</a> at the European Nucleotide
-        Archive (ENA), otherwise we will not be able to process your submission.  We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing
-            submissions help page</a> as it explains the requirements in a lot more detail. </li>
+    <li><strong><a id="hts"></a>How do I submit a high throughput sequencing (HTS) experiment?</strong><br>
+        Whichever submission tool you may use (<a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a> or <a href="/fg/annotare/login">Annotare</a>), 
+        you will need to provide as much information as possible about the experiment's purpose, starting materials (samples),
+        sequencing libraries, wet- and dry-lab protocols used, raw sequence data files for each sequencing
+        assay, and optionally processed data files, e.g. BAM alignment files, RPFM/FPKM values for each gene/transcript.
+        ArrayExpress acts as a data broker and will transfer the raw read files to the <a href="/ena">European Nucleotide Archive (ENA)</a>
+        on your behalf, so you do not need to send the read files directly to the ENA.
+        <br><br>
+        Raw data files must be in a format <a href="/ena/about/read-file-formats">accepted by the Sequence Read Archive (SRA)</a> at the ENA,
+        otherwise we will not be able to process your submission.  We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing
+        submissions help page</a> as it explains the requirements in a lot more detail. </li>
 </ul>
 
 <ul>
     <li><strong><a id="large_files"></a>I have very large data files, do I need to upload them through the web interface?</strong><br>
-        Large data files can be submitted to us via <a href="/miamexpress/help/datafile_help.html#ftp"> FTP</a> instead of uploaded through the MAGE-TAB submission web form. One small size data file must also be uploaded through the web form to allow the submission to be completed. This file will be ignored if it is not listed in the MAGE-TAB spreadsheet.  Please email us at miamexpress@ebi.ac.uk to let us know if you have FTPed the files.  If you are submitting through MIAMExpress please email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a> about how to proceed with your submission.
+        Large (over 10Mb) data files can be sent to us via <a href="/miamexpress/help/datafile_help.html#ftp"> FTP</a> instead of uploaded through the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet</a>
+         or <a href="/fg/annotare/login">Annotare webform</a> tool. Please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> (MAGE-TAB submitters) or at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (Annotare submitters) to let us know if you have FTPed the files.<br><br>
+         Note: When using MAGE-TAB tool, one small size (dummy/toy) data file must also be uploaded to allow the submission to be completed. This dummy file will be ignored as long as it is not listed in the MAGE-TAB meta-data spreadsheet.
     </li>
 </ul>
 
@@ -445,35 +419,26 @@
         have MAGE-ML files generated from in-house pipelines. Does ArrayExpress
         still accept them?</strong><br>
         No. MAGE-ML files are no longer supported and accepted by ArrayExpress.
-        Please submit your array design files and/or experiment data using
-        MAGE-TAB. You can find out more about MAGE-TAB submissions in this <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">
-            MAGE-TAB submission tutorial</a>. If you would like to update
-        your pipeline to generate MAGE-TAB files, please write to us at
-        <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
+        Please submit your array design files and/or experiment data using <a href="/cgi-bin/microarray/magetab.cgi">
+        MAGE-TAB</a> or <a href="/fg/annotare/login">Annotare</a>, which are described on this <a href="submissions_overview.html">submissions overview page</a>.
+        If you would like to update your pipeline to generate MAGE-TAB files, please write to us at
+        <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
     </li>
 </ul>
 
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
-<h4>Making
-    changes to
-    data already submitted to
-    ArrayExpress</h4>
+<h4>Making changes to data already submitted to ArrayExpress</h4>
 <ul>
-    <li><strong><a id="hit_submit_too_soon"></a>I
-        hit "Submit Experiment" (MAGE-TAB
-        route) / "Complete Submission" (MIAMExpress route) at the end of my
-        submission but I haven't actually finished editing. I logged in to the
-        submission tool but can't see my experiment anymore - what should I do?</strong><br>
-        Email us at <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>
-        as soon as possible and ask us to "reopen" the submission. (Your submission
-        is considered "closed" once it has reached the hands of
-        a curator, so as to avoid confusing, concurrent editing of the same submission by
-        the submitter and curator.) To help us
-        find your submission tell us your username, the experiment or array
-        name and if you used the <a href="/miamexpress/login.html">
-            MIAMExpress</a> or <a href="/cgi-bin/microarray/magetab.cgi">
-            MAGE-TAB</a> submission route.</li>
+    <li><strong><a id="hit_submit_too_soon"></a>I hit "Submit" at the end of my submission but I haven't actually finished editing.
+        I logged in to the submission tool but can't edit my experiment anymore. Help!</strong><br>
+        Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> (MAGE-TAB submitters) or
+        at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (Annotare submitters) 
+        as soon as possible and ask us to "reopen" the submission or to "assign" it back to you. (Once submitted, your submission
+        may already be worked on by a curator and is considered "closed", so as to avoid confusing,
+        concurrent editing of the same submission by you and the curator.) Remember to include your username 
+        and the experiment/array design title in your email so we can quickly find your submission. 
+        </li>
 </ul>
 <ul>
     <li><a id="data_already_in_AE_DB"></a><strong>My
@@ -481,124 +446,38 @@
         into ArrayExpress but I need to change/correct something - how do I do
         this?</strong><br>
         Email us at
-        <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>
+        <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         with the accession number and describe what corrections you would like
         to make. Minor corrections such as fixing typing errors can be made
-        easily. Major changes like adding or removing hybridizations usually
-        require the experiment to be unloaded from the ArrayExpress database, edited, re-curated and reprocessed, which can take some time.
-        Please see our <a href="data_availability.html">data
-            availability</a> information page for more information.</li>
+        easily. Major changes like adding or removing samples/assays usually
+        require the experiment to be unloaded from the ArrayExpress database, 
+        edited, re-curated and reprocessed, which can take a considerable amount
+        of time.<br><br>
+        <i>Note on editing public sequencing experiment:</i> Due to data mirroring agreement between all partners of
+        the International Nucleotide Sequence Database Collaboration (INSDC, involving 
+        <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and 
+        <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>), 
+        once a sequencing data set has been released to the public, it is INSDC's policy <i>not</i> 
+        to make any changes to the data set (e.g. turning it private again, adding/removing/changing
+        samples), unless there is an exceptional reason. As ArrayExpress <a href="uhts_submissions/#DataTypes">
+        brokers sequencing submission to the ENA</a>, to make sure experimental data remains consistent
+        across ENA and ArrayExpress, you will not be allowed to change/correct the ArrayExpress records 
+        for your public sequencing experiment either.
+        </li>
 </ul>
 <ul>
     <li><a id="change_contact"></a><strong>My
         contact details have
         changed, how do I update them?</strong><br>
         Send your new contact details to us at
-        <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>
+        <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         and we will change them in ArrayExpress.</li>
 </ul>
 
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
     <!--END OF GENERAL SUBMISSION FAQ ANSWERS-->
-    <!--START OF MX SUBMISSION FAQ ANSWERS-->
 
-<h3>3. Submitting data to ArrayExpress (MIAMExpress-specific
-    questions)</h3>
-    <p><strong> MIAMExpress tool is no longer maintained for experiment submissions. If you're starting a new submission, please use the <a href="/submissions_overview.html">MAGE-TAB submission tool</a> instead.</strong></p>
-<ul>
-    <li><a id="mx_login"></a><strong>I've logged in to MIAMExpress but I get an error that says
-        "Unfortunately you can not continue working with this tool", what's
-        wrong?</strong><br>
-        This error message appears if you have used the wrong casing in your
-        username or password when logging in. Both the username and password
-        are case sensitive. Email us at
-        <a href="mailto:miamexpress@ebi.ac.uk">miamexpress@ebi.ac.uk</a>
-        if you need a reminder of your login details.</li>
-</ul>
-<ul>
-    <li><a id="new_adf"></a><strong>I've
-        just submitted a custom array design to MIAMExpress but I can't see it
-        on the list of array designs in my experiment submission - where is it?</strong><br>
-        New array designs that have not yet been processed can be found at the
-        end of the list of array design names so start at the bottom and you
-        should see it.</li></ul>
-
-
-
-<ul>
-    <li><a id="expt_sub_after_prot_sub"></a><strong>I
-        have submitted my
-        protocols using MIAMExpress, where do I upload the data?</strong><br>
-        Go back to the 'Submission types' page using the link in the
-        navigation bar at the top of the protocol submission page.
-        Select 'Experiment submission' and submit your
-        data either by clicking the "Start or edit an experiment submission"
-        link to launch the batch upload tool, or by using the webform interface.
-        There is more information on the <a href="/miamexpress/help/miamexpress_batchloader.html">batch
-            loader help page</a> and <a href="/miamexpress/help/index.html#experiments">MIAMExpress
-            help page</a>.
-        <p><img src="faq_MX_link_to_submission_types.jpg" alt="Navigation link to submission types"></p>
-        <p><img src="faq_MX_experiment_submission.jpg" alt="Experiment submission choices"></p>
-    </li>
-</ul>
-
-
-<ul>
-    <li><a id="upload_data_with_batchuploader"></a><strong>I've
-        described
-        my experiment and my samples using the MIAMExpress webform but I have
-        many samples and would like to do batch upload of data files. How do I
-        do that?</strong><br>
-        You can do this by using the MIAMExpress batch upload tool. To use this
-        tool, first save the information you have already entered on the form
-        by clicking at the "Submit" button at the bottom of the form. (This
-        will not submit data for curation but will submit the information to be
-        stored in a database.) Next, return to the 'Experiment submissions'
-        page (there is a link to this on the navigation bar at the top of all
-        MIAMExpress web pages), and click the "Start or edit an experiment
-        submission" link (see screenshot in question above). When you login to this tool
-        you'll be able to see the experiment you've started and won't lose any
-        of the information you've already entered. See the <a href="/miamexpress/help/miamexpress_batchloader.html">batch
-            loader help page</a> for full instructions. (If you change your
-        mind and prefer the webform instead, please see the <a href="/miamexpress/help/web_ui.html#sample">web form
-            interface help page</a> for instructions on how to complete the
-        submission in the web interface).
-    </li></ul>
-
-
-
-<ul>
-    <li><a id="norm_file_error"></a><strong>My
-        normalized data is in a
-        single "Combined data file" but when I select my normalization protocol
-        I get errors saying I have to upload separate normalized files for each
-        hyb. Help!</strong><br>
-        Don't select a normalization protocol in your experiment submission.
-        You need to create a transformation protocol, instead of a
-        normalization protocol, to describe the single normalized data file. To
-        do this, after the hybridizations page, upload the single normalized
-        file, at which point you can link the single normalized file to a
-        transformation protocol.</li>
-</ul>
-<ul>
-    <li><a id="where_upload_combined_file"></a><strong>Where
-        do I upload
-        my single "Combined data file" containing processed data from all hybs ?</strong><br>
-        It happens at the very last stage of the submission process, after you
-        have created all hybridisations and uploaded raw data files. Therefore,
-        please upload all you raw data for the hybridizations first. If
-        MIAMExpress complains that you have not uploaded normalized data at
-        this stage it is because you have a normalization protocol selected so
-        unselect this protocol. To proceed to the very last stage of the
-        submission process, click the submit button on the hybridizations tab
-        in the batch upload tool (or, in the web forms, return to the 'create
-        hybridizations' page and click the continue button at the end of the
-        page). You will then be taken to a form where you can upload your
-        "Combined data file" and select the transformation protocol describing
-        how it was generated.</li>
-</ul>
-<p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
 </section>
 <aside class="grid_6 omega">
