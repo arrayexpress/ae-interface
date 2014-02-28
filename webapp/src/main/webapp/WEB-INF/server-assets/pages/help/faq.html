@@ -26,9 +26,8 @@
     <li><a href="#expt_already_published">I read a paper that referred to data in ArrayExpress but when I searched
         for the data I got no hits. Why?</a></li>
     <li><a href="#acc_num_prefix">I have seen ArrayExpress experiment accessions with prefixes such as
-        "E-MEXP", "E-MTAB", etc. What do the prefixes mean?</a></li>
+        "E-MTAB", "E-GEOD", etc. What do the prefixes mean?</a></li>
 </ul>
-<p>&nbsp;</p>
 
 <h5>Data access policy - permissions and restrictions</h5>
 <ul>
@@ -132,7 +131,7 @@
 <ul>
     <li>
         <a id="acc_num_prefix"></a><strong>I have seen ArrayExpress experiment accessions with prefixes such
-        as "E-MEXP", "E-MTAB", etc. What do the prefixes mean?<br>
+        as "E-MTAB", "E-GEOD", etc. What do the prefixes mean?<br>
     </strong>The prefixes indicate the source and/or submission route from which the data came from. The common ones are:
         <ul>
             <li>MEXP = data submitted via the <a href="/miamexpress/login.html">MIAMExpress</a> submission route </li>
@@ -242,8 +241,7 @@
 <h5>Accession numbers</h5>
 <ul>
     <li>
-        <a id="need_acc_num_urgent"></a><strong>I
-        urgently need an accession number to include in my publication - how can I get one?</strong><br>
+        <a id="need_acc_num_urgent"></a><strong>I urgently need an accession number to include in my publication - how can I get one?</strong><br>
         Firstly, start your submission if you have not already done so! ArrayExpress does not provide accession numbers in advance of
         submission of data. This is in line with the <a href="http://www.ncbi.nlm.nih.gov/geo/info/faq.html#Whenaccessions">NCBI
         Gene Expression Omnibus (GEO)'s policy</a> of provision of accession numbers after deposition. If you have completed the
@@ -254,16 +252,17 @@
 </ul>
 <ul>
     <li>
-        <a id="how_long_to_get_acc"></a><strong>How
-        long will it take to get an accession number?<br>
+        <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?<br>
     </strong>If you submit using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet tool</a>, after you complete a submission it is put in a
-        queue awaiting review and checking by a curator. If there are no major issues with your submission, the curator will send you the
-        accession number, otherwise he/she will contact you to advise on how to revise and resubmit before an accession number is assigned. We aim to respond
-        within a week upon receiving the submission, but response times do vary depending on submission volume.
+        queue awaiting review and checking by a curator. We aim to respond within a week upon receiving the submission, but response times do vary 
+        depending on submission volume. If there are no major issues with your submission (e.g. there is adequate meta-data in the 
+        MAGE-TAB spreadsheet describing your experiment and samples, all required data files are correctly formatted), the curator will send you the
+        accession number, otherwise he/she will contact you to advise on how to revise and resubmit before an accession number can be assigned. Therefore,
+         assignment of accession numbers also depends on how well the submitted files are prepared.
         <br><br>
         <p>If you submit using <a href="/fg/annotare/login">Annotare</a>,
-        after you've filled in the webforms with experimental information and uploaded data files, all information will be validated. If there are no errors,
-        you can proceed to submit and will then receive an automatic confirmation email that contains the accession number.</p></li>
+        after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
+        you can proceed to submit and will then receive an automatic confirmation email containing the accession number.</p></li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
@@ -373,9 +372,7 @@
 <ul>
     <li><a id="illumina"></a>
         <strong>How do I submit an Illumina experiment?</strong><br>
-        Illumina experiments must be submitted using our spreadsheet submission
-        route: <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a>.
-        For Illumina experiments you do not need to submit data for every spot
+        You do not need to submit data for every spot
         on the array. Please use the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina
             GenomeStudio software </a>(previously known as the "BeadStudio"
         software) with the 'ArrayExpress Data Submission Report Plug-in' to
