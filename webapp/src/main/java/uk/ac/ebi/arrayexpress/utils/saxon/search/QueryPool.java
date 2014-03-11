@@ -30,9 +30,11 @@ public class QueryPool
     // logging machinery
     //private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final static int MAX_NUMBER_OF_QUERIES = 500;
+
     private AtomicInteger queryId;
 
-    private Map<Integer, QueryInfo> queries = Collections.synchronizedMap(new LRUMap<Integer, QueryInfo>(50));
+    private Map<Integer, QueryInfo> queries = Collections.synchronizedMap(new LRUMap<Integer, QueryInfo>(MAX_NUMBER_OF_QUERIES));
 
     public QueryPool()
     {
