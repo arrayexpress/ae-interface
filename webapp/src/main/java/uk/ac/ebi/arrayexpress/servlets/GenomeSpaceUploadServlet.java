@@ -230,6 +230,8 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
         );
         get.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
         get.setRequestHeader("Cookie","gs-token=" + gsToken);
+        get.setRequestHeader("Accept", "application/json");
+        get.setRequestHeader("Content-Type", "application/json");
 
         JSONParser jsonParser = new JSONParser();
         Integer statusCode = null;
@@ -266,6 +268,8 @@ public class GenomeSpaceUploadServlet extends ApplicationServlet
         );
         put.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
         put.setRequestHeader("Cookie", "gs-token=" + gsToken);
+        put.setRequestHeader("Accept", "application/json");
+        put.setRequestHeader("Content-Type", "application/json");
         put.setRequestEntity(new StringRequestEntity("{\"isDirectory\":true}", JSON_MIME_TYPE, "US-ASCII"));
         JSONParser jsonParser = new JSONParser();
         Integer statusCode = null;
