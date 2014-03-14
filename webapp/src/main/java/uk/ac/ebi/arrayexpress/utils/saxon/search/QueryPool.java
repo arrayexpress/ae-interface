@@ -30,7 +30,7 @@ public class QueryPool
     // logging machinery
     //private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final static int MAX_NUMBER_OF_QUERIES = 500;
+    private final static int MAX_NUMBER_OF_QUERIES = 100;
 
     private AtomicInteger queryId;
 
