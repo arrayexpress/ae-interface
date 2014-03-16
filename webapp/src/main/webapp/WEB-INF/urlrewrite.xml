@@ -16,6 +16,14 @@
         <to last="true">$1</to>
     </rule>
 
+    <!-- filter out bots requests for samples view for now -->
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/samples/.*$</from>
+        <condition name="user-agent">.*Googlebot.*</condition>
+        <set type="status">404</set>
+        <to type="forward" last="true">/assets/404.html</to>
+    </rule>
+
     <!-- home page -->
     <rule>
         <from>^/index[.]html?$</from>
