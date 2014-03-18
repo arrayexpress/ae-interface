@@ -44,8 +44,8 @@
     <xsl:variable name="vSortBy" select="if ($s_sortby) then fn:replace($s_sortby, 'col_(\d+)', '$1') cast as xs:integer else 1" as="xs:integer"/>
     <xsl:variable name="vSortOrder" select="if (fn:starts-with($s_sortorder, 'd')) then 'd' else 'a'" as="xs:string"/>
 
-    <xsl:variable name="vPage" select="if ($s_page and $s_page castable as xs:integer) then $s_page cast as xs:integer else 1" as="xs:integer"/>
-    <xsl:variable name="vPageSize" select="if ($s_pagesize and $s_pagesize castable as xs:integer) then $s_pagesize cast as xs:integer else 25"  as="xs:integer"/>
+    <xsl:variable name="vPage" select="if ($s_page) then $s_page cast as xs:integer else 1"/>
+    <xsl:variable name="vPageSize" select="if ($s_pagesize) then $s_pagesize cast as xs:integer else 25"/>
 
     <xsl:variable name="vPermittedColType" select="('sourcename','sample_description','sample_source_name','characteristics','factorvalue','unit','links')"/>
     <xsl:variable name="vLinksColName" select="('arraydatafile','derivedarraydatafile','arraydatamatrixfile','derivedarraydatamatrixfile','ena_run','fastq_uri')"/>
@@ -62,7 +62,6 @@
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pSearchInputValue"/>
-            <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
                 <xsl:text>Samples and Data &lt; </xsl:text>
                 <xsl:value-of select="$vAccession"/>

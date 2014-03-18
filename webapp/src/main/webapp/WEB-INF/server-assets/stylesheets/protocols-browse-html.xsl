@@ -51,7 +51,6 @@
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:not($vBrowseMode)"/>
             <xsl:with-param name="pSearchInputValue"/>
-            <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
                 <xsl:if test="fn:not($vBrowseMode)">
                     <xsl:value-of select="$id"/>
@@ -132,8 +131,8 @@
         <xsl:variable name="vFilteredProtocols" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredProtocols)"/>
 
-        <xsl:variable name="vPage" select="if ($page and $page castable as xs:integer) then $page cast as xs:integer else 1" as="xs:integer"/>
-        <xsl:variable name="vPageSize" select="if ($pagesize and $pagesize castable as xs:integer) then $pagesize cast as xs:integer else 25" as="xs:integer"/>
+        <xsl:variable name="vPage" select="if ($page) then $page cast as xs:integer else 1"/>
+        <xsl:variable name="vPageSize" select="if ($pagesize) then $pagesize cast as xs:integer else 25"/>
 
         <xsl:variable name="vFrom" as="xs:integer">
             <xsl:choose>
