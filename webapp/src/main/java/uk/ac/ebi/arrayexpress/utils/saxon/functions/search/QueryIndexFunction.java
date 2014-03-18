@@ -20,15 +20,14 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions.search;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.tree.iter.ListIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.StringValue;
 import org.apache.lucene.queryParser.ParseException;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 
@@ -90,30 +89,24 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
             this.searchController = searchController;
         }
 
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            StringValue first = (StringValue) arguments[0].next();
-            StringValue second = (arguments.length > 1 && null != arguments[1])
-                    ? (StringValue) arguments[1].next()
-                    : null;
+            String first = SequenceTool.getStringValue(arguments[0]);
+            String second = arguments.length > 1 ? SequenceTool.getStringValue(arguments[1]) : null;
 
             List<NodeInfo> nodes;
             try {
                 if (null == second) {
-                    String queryId = first.getStringValue();
                     Integer intQueryId;
                     try {
-                        intQueryId = Integer.decode(queryId);
+                        intQueryId = Integer.decode(first);
                     } catch (NumberFormatException x) {
-                        throw new XPathException("queryId [" + String.valueOf(queryId) + "] must be integer");
+                        throw new XPathException("queryId [" + first + "] must be integer");
                     }
 
                     nodes = searchController.queryIndex(intQueryId);
                 } else {
-                    String indexId = first.getStringValue();
-                    String queryString = second.getStringValue();
-
-                    nodes = searchController.queryIndex(indexId, queryString);
+                    nodes = searchController.queryIndex(first, second);
                 }
             } catch (IOException x) {
                 throw new XPathException("Caught IOException while querying index", x);
@@ -121,11 +114,10 @@ public class QueryIndexFunction extends ExtensionFunctionDefinition
                 throw new XPathException("Caught ParseException while querying index", x);
 
             }
-            if (null != nodes) {
-                return new ListIterator<>(nodes);
-            } else {
-                return EmptyIterator.emptyIterator();
-            }
+            return null != nodes
+                    ? SequenceTool.toLazySequence(new ListIterator<>(nodes))
+                    : EmptySequence.getInstance();
         }
     }
 }
+

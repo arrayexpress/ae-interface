@@ -25,15 +25,13 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
-import net.sf.saxon.tree.iter.SingletonIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.StringValue;
 import net.sf.saxon.value.Whitespace;
 import nu.validator.htmlparser.sax.HtmlParser;
 import org.slf4j.Logger;
@@ -98,20 +96,20 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
 
 
         @SuppressWarnings("unchecked")
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             try {
                 Controller controller = context.getController();
                 String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
 
-                StringValue locationValue = (StringValue) arguments[0].next();
+                String location = SequenceTool.getStringValue(arguments[0]);
 
-                if (null != locationValue) {
+                if (null != location) {
                     StreamSource ss = null;
                     try {
-                        ss = (StreamSource)controller.getURIResolver().resolve(locationValue.getStringValue(), "");
+                        ss = (StreamSource)controller.getURIResolver().resolve(location, "");
                     } catch (TransformerException x ) {
-                        logger.error("Unable to open document [{}]", locationValue.getStringValue());
+                        logger.error("Unable to open document [{}]", location);
                     }
 
                     if (null != ss) {
@@ -141,7 +139,7 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
                             NodeInfo node = b.getCurrentRoot();
                             b.reset();
 
-                            return SingletonIterator.makeIterator(node);
+                            return node;
                         } catch ( IOException x ) {
                             throw new XPathException(x);
                         }
@@ -150,7 +148,7 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
             } catch ( TransformerException x ) {
                 throw new XPathException(x);
             }
-            return EmptyIterator.emptyIterator();
+            return EmptySequence.getInstance();
         }
         private HtmlParser getParser()
         {

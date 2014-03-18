@@ -29,6 +29,7 @@ public class StringTools
     }
 
     public final static String EOL = System.getProperty("line.separator");
+    public final static String EMPTY_STRING = "";
 
     public static String listToString( List<String> l, String separator )
     {
@@ -127,6 +128,10 @@ public class StringTools
     public static String safeToString( Object obj, String nullObjString )
     {
         return (null == obj) ? nullObjString : obj.toString();
+    }
+
+    public static String nullToEmpty( String str ) {
+        return (null == str) ? EMPTY_STRING : str;
     }
 
     public static Boolean stringToBoolean( String boolString )

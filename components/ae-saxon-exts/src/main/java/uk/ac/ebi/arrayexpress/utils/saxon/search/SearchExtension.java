@@ -19,7 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.om.Axis;
+import net.sf.saxon.om.AxisInfo;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 
@@ -28,12 +28,12 @@ public final class SearchExtension
 
     public static SequenceIterator queryIndex( XPathContext context, String queryId )
     {
-        return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
+        return ((NodeInfo)context.getContextItem()).iterateAxis(AxisInfo.CHILD);
     }
 
     public static SequenceIterator queryIndex( XPathContext context, String indexId, String queryString )
     {
-        return ((NodeInfo)context.getContextItem()).iterateAxis(Axis.CHILD);
+        return ((NodeInfo)context.getContextItem()).iterateAxis(AxisInfo.CHILD);
     }
 
     public static String highlightQuery( String queryId, String fieldName, String text )

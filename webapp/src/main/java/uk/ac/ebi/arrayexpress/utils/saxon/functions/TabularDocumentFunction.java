@@ -25,15 +25,13 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
-import net.sf.saxon.tree.iter.SingletonIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.StringValue;
 import net.sf.saxon.value.Whitespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,19 +103,17 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
         }
 
         @SuppressWarnings("unchecked")
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             try {
                 Controller controller = context.getController();
                 String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
 
-                StringValue accessionValue = (StringValue) arguments[0].next();
-                StringValue nameValue = (StringValue) arguments[1].next();
-                StringValue optionsValue = (arguments.length > 2 && null != arguments[2])
-                        ? (StringValue) arguments[2].next()
-                        : null;
+                String accession = SequenceTool.getStringValue(arguments[0]);
+                String name = SequenceTool.getStringValue(arguments[1]);
+                String options = (arguments.length > 2) ? SequenceTool.getStringValue(arguments[2]) : null;
 
-                String location = files.getLocation(accessionValue.getStringValue(), null, nameValue.getStringValue());
+                String location = files.getLocation(accession, null, name);
                 if (null != location) {
                     File flatFile = new File(files.getRootFolder(), location);
 
@@ -136,9 +132,7 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                             is.setSystemId(baseURI);
 
                             Source source = new SAXSource(
-                                    new FlatFileXMLReader(
-                                            null != optionsValue ? optionsValue.getStringValue() : null
-                                    )
+                                    new FlatFileXMLReader(options)
                                     , is
                             );
                             source.setSystemId(baseURI);
@@ -158,7 +152,7 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                             NodeInfo node = b.getCurrentRoot();
                             b.reset();
 
-                            return SingletonIterator.makeIterator(node);
+                            return node;
                         }
                     } else {
                         logger.error("Unable to open document [{}]", location);
@@ -166,14 +160,14 @@ public class TabularDocumentFunction extends ExtensionFunctionDefinition
                 } else {
                     logger.error(
                             "Unable to locate document [{}], accesion [{}]"
-                            , nameValue.getStringValue()
-                            , accessionValue.getStringValue())
+                            , name
+                            , accession)
                     ;
                 }
             } catch ( IOException x ) {
                 throw new XPathException(x);
             }
-            return EmptyIterator.emptyIterator();
+            return EmptySequence.getInstance();
         }
     }
 }

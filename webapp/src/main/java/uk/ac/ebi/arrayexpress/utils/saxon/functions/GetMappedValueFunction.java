@@ -21,14 +21,12 @@ import net.sf.saxon.expr.JPConverter;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.om.ValueRepresentation;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.Value;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.MapEngine;
 
@@ -73,27 +71,23 @@ public class GetMappedValueFunction extends ExtensionFunctionDefinition
     {
         private static final long serialVersionUID = -1342342397189997194L;
 
-        private MapEngine mapEngine;
+        private MapEngine mapEngine = (MapEngine) Application.getAppComponent("MapEngine");
 
-        public GetMappedValueCall()
-        {
-            mapEngine = (MapEngine) Application.getAppComponent("MapEngine");
-        }
-
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             if (null == mapEngine) {
-                return EmptyIterator.emptyIterator();
+                return EmptySequence.getInstance();
             }
 
-            String mapName = arguments[0].next().getStringValue();
-            String mapKey = arguments[1].next().getStringValue();
+            String mapName = SequenceTool.getStringValue(arguments[0]);
+            String mapKey = SequenceTool.getStringValue(arguments[1]);
             Object value = mapEngine.getMappedValue(mapName, mapKey);
+
             if (null == value) {
-                return EmptyIterator.emptyIterator();
+                return EmptySequence.getInstance();
             } else {
                 JPConverter converter = JPConverter.allocate(value.getClass(), context.getConfiguration());
-                return Value.asIterator((ValueRepresentation<? extends Item>)converter.convert(value, context));
+                return converter.convert(value, context);
             }
         }
     }

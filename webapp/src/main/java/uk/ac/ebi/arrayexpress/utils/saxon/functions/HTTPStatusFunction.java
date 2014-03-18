@@ -20,11 +20,11 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.IntegerValue;
 import net.sf.saxon.value.SequenceType;
 
@@ -70,15 +70,15 @@ public class HTTPStatusFunction extends ExtensionFunctionDefinition
     {
         private static final long serialVersionUID = -5713635829718999558L;
 
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            IntegerValue statusValue = (IntegerValue) arguments[0].next();
+            IntegerValue statusValue = (IntegerValue) SequenceTool.asItem(arguments[0]);
             Long statusCode = statusValue.longValue();
 
             if (null != statusCode) {
                 throw new HTTPStatusException(statusCode.intValue());
             }
-            return EmptyIterator.emptyIterator();
+            return EmptySequence.getInstance();
         }
     }
 }

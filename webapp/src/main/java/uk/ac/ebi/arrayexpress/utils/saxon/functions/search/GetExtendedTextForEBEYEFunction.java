@@ -20,14 +20,13 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions.search;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
-import net.sf.saxon.value.Value;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
@@ -97,22 +96,22 @@ public class GetExtendedTextForEBEYEFunction extends ExtensionFunctionDefinition
 
         @Override
         @SuppressWarnings("unchecked")
-		public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context )
+		public Sequence call( XPathContext context, Sequence[] arguments )
 				throws XPathException {
-			StringValue text = (StringValue) arguments[0].next();
+			String text = SequenceTool.getStringValue(arguments[0]);
 
             //TODO: get this from search engine
             try (IndexReader reader = IndexReader.open(searchController.getEnvironment("experiments").indexDirectory);
                  IndexSearcher searcher = new IndexSearcher(reader)) {
 
-				Term t = new Term("accession", text.getStringValue()
+				Term t = new Term("accession", text
 						.toLowerCase());
 				Query query = new TermQuery(t);
 
 				Ontologies ont = (Ontologies) Application
 						.getAppComponent("Ontologies");
 
-				logger.debug("Accession [{}]", text.getStringValue());
+				logger.debug("Accession [{}]", text);
 				TopDocs hits = searcher.search(query, 1);
 				System.out.println("hits ->" + hits.totalHits);
 				for (int i = 0; i < hits.scoreDocs.length; i++) {
@@ -121,13 +120,13 @@ public class GetExtendedTextForEBEYEFunction extends ExtensionFunctionDefinition
 					String keywords = doc.get("keywords");
 
                     Set<String> expansion = ont.getExpansionLookupIndex().getReverseExpansion(keywords);
-                    return Value.asIterator(StringValue.makeStringValue(StringUtils.join(expansion, ", ")));
+                    return StringValue.makeStringValue(StringUtils.join(expansion, ", "));
 				}
 			} catch ( IOException x ) {
                 throw new XPathException(x);
             }
 
-            return EmptyIterator.emptyIterator();
+            return EmptySequence.getInstance();
 		}
     }
 }

@@ -20,14 +20,13 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.EmptyIterator;
+import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
-import net.sf.saxon.value.Value;
 
 public class TrimTrailingDotFunction extends ExtensionFunctionDefinition
 {
@@ -70,20 +69,19 @@ public class TrimTrailingDotFunction extends ExtensionFunctionDefinition
     {
         private static final long serialVersionUID = 974920767172642082L;
 
-        public SequenceIterator<? extends Item> call( SequenceIterator[] arguments, XPathContext context ) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            StringValue stringValue = (StringValue) arguments[0].next();
+            String str = SequenceTool.getStringValue(arguments[0]);
 
-            if (null != stringValue) {
+            if (null != str) {
 
-                String str = stringValue.getStringValue();
                 if (str.endsWith(".")) {
                     str = str.substring(0, str.length() - 1);
                 }
 
-                return Value.asIterator(StringValue.makeStringValue(str));
+                return StringValue.makeStringValue(str);
             } else {
-                return EmptyIterator.emptyIterator();
+                return EmptySequence.getInstance();
             }
         }
     }

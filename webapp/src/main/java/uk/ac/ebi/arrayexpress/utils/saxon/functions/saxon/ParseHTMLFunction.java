@@ -26,13 +26,11 @@ import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.lib.NamespaceConstant;
-import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.SingletonIterator;
-import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Whitespace;
 import org.ccil.cowan.tagsoup.Parser;
@@ -87,13 +85,12 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
         private transient Parser parser;
 
         @SuppressWarnings("unchecked")
-        public SequenceIterator<? extends Item> call(SequenceIterator[] arguments, XPathContext context) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             Controller controller = context.getController();
             baseURI = (null != context.getContextItem()) ? ((NodeInfo)context.getContextItem()).getBaseURI() : "";
 
-            AtomicValue content = (AtomicValue) arguments[0].next();
-            StringReader sr = new StringReader(content.getStringValue());
+            StringReader sr = new StringReader(SequenceTool.getStringValue(arguments[0]));
 
             InputSource is = new InputSource(sr);
             is.setSystemId(baseURI);
@@ -110,7 +107,7 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
                 Sender.send(source, s, null);
                 NodeInfo node = b.getCurrentRoot();
                 b.reset();
-                return SingletonIterator.makeIterator(node);
+                return node;
             } catch (XPathException err) {
                 throw new XPathException(err);
             }

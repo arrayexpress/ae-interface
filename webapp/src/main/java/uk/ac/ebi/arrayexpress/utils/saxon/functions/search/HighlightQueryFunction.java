@@ -20,13 +20,13 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions.search;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
-import net.sf.saxon.value.Value;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.Controller;
 
 public class HighlightQueryFunction extends ExtensionFunctionDefinition
@@ -84,25 +84,26 @@ public class HighlightQueryFunction extends ExtensionFunctionDefinition
             this.searchController = searchController;
         }
 
-        public SequenceIterator<? extends Item> call(SequenceIterator[] arguments, XPathContext context) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            StringValue queryIdValue = (StringValue) arguments[0].next();
-            StringValue fieldNameValue = (StringValue) arguments[1].next();
-            StringValue textValue = (StringValue)arguments[2].next();
+            String queryId = SequenceTool.getStringValue(arguments[0]);
+            String fieldName = SequenceTool.getStringValue(arguments[1]);
+            String text = SequenceTool.getStringValue(arguments[2]);
 
-            String queryId = null != queryIdValue ? queryIdValue.getStringValue() : "";
             Integer intQueryId;
             try {
                 intQueryId = Integer.decode(queryId);
             } catch (NumberFormatException x) {
                 throw new XPathException("queryId [" + queryId + "] must be integer");
             }
-            String fieldName = null != fieldNameValue ? fieldNameValue.getStringValue() : "";
-            String text = null != textValue ? textValue.getStringValue() : "";
 
-            String result = searchController.highlightQuery(intQueryId, fieldName, text);
+            String result = searchController.highlightQuery(
+                    intQueryId,
+                    StringTools.nullToEmpty(fieldName),
+                    StringTools.nullToEmpty(text)
+            );
 
-            return Value.asIterator(StringValue.makeStringValue(result));
+            return StringValue.makeStringValue(result);
         }
     }
 }

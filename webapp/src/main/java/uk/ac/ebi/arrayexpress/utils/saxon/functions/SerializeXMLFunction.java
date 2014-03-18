@@ -25,16 +25,12 @@ import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.lib.ParseOptions;
 import net.sf.saxon.lib.SerializerFactory;
-import net.sf.saxon.lib.Validation;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.om.*;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
-import net.sf.saxon.value.Value;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.stream.StreamResult;
@@ -97,23 +93,21 @@ public class SerializeXMLFunction extends ExtensionFunctionDefinition
         }
 
         @Override
-        public SequenceIterator<? extends Item> call(SequenceIterator[] arguments, XPathContext context) throws XPathException
+        public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            NodeInfo node = (NodeInfo)arguments[0].next();
-            if (null == node) {
-                return Value.asIterator(StringValue.EMPTY_STRING);
+            Item node = SequenceTool.asItem(arguments[0]);
+            if (!(node instanceof NodeInfo)) {
+                return StringValue.EMPTY_STRING;
             }
 
-            StringValue encodingValue = (arguments.length > 1 && null != arguments[1])
-                    ? (StringValue) arguments[1].next()
-                    : null;
+            String encoding = arguments.length > 1 ? SequenceTool.getStringValue(arguments[1]) : null;
 
             Properties props = new Properties();
             props.put(OutputKeys.METHOD, "xml");
             props.put(OutputKeys.OMIT_XML_DECLARATION, "yes");
             props.put(OutputKeys.INDENT, "no");
-            if (null != encodingValue) {
-                props.put(OutputKeys.ENCODING, encodingValue.getStringValue());
+            if (null != encoding) {
+                props.put(OutputKeys.ENCODING, encoding);
             }
 
             try {
@@ -127,16 +121,13 @@ public class SerializeXMLFunction extends ExtensionFunctionDefinition
                         , props
                 );
 
-                c2.changeOutputDestination(
-                        r
-                        , Validation.PRESERVE
-                        , null);
+                c2.changeOutputDestination(r, new ParseOptions());
 
                 SequenceReceiver out = c2.getReceiver();
                 out.open();
-                node.copy(out, NodeInfo.ALL_NAMESPACES, locationId);
+                ((NodeInfo)node).copy(out, NodeInfo.ALL_NAMESPACES, locationId);
                 out.close();
-                return Value.asIterator(new StringValue(result.toString()));
+                return new StringValue(result.toString());
             } catch (XPathException err) {
                 throw new XPathException(err);
             }
