@@ -184,8 +184,8 @@
             </dependency>
             <dependency>
                 <groupId>net.sf.saxon</groupId>
-                <artifactId>Saxon-HE</artifactId>
-                <version>9.4.0-9</version>
+                <artifactId>saxon9he</artifactId>
+                <version>9.4.0.4</version>
             </dependency>
             <dependency>
                 <groupId>org.ccil.cowan.tagsoup</groupId>

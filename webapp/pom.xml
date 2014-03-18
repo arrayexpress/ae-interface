@@ -375,7 +375,7 @@
         </dependency>
         <dependency>
             <groupId>net.sf.saxon</groupId>
-            <artifactId>Saxon-HE</artifactId>
+            <artifactId>saxon9he</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ccil.cowan.tagsoup</groupId>
