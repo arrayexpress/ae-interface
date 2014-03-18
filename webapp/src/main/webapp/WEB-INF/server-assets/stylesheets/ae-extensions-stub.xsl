@@ -52,6 +52,14 @@
     </xsl:function>
     
     <xsl:function name="search:queryIndex">
+        <xsl:param name="pQueryId" as="xs:integer"/>
+        <file kind="sdrf" extension="txt" name="1"/>
+        <experiment>
+            <accession>E-MEXP-31</accession>
+        </experiment>
+    </xsl:function>
+ 
+    <xsl:function name="search:queryIndex">
         <xsl:param name="pIndex" as="xs:string"/>
         <xsl:param name="pQuery" as="xs:string"/>
         <file kind="sdrf" extension="txt" name="1"/>
@@ -64,7 +72,7 @@
         <xsl:param name="pQueryId" as="xs:string"/>
         <xsl:param name="pFieldName" as="xs:string"/>
         <xsl:param name="pText" as="xs:string"/>
-        <xsl:value-of select="$pText"/>>
+        <xsl:value-of select="$pText"/>
     </xsl:function>
     
 </xsl:stylesheet>
