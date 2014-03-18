@@ -27,9 +27,9 @@
 
     <xsl:param name="page"/>
     <xsl:param name="pagesize"/>
-    
-    <xsl:variable name="vPage" select="if ($page) then $page cast as xs:integer else 1"/>
-    <xsl:variable name="vPageSize" select="if ($pagesize) then $pagesize cast as xs:integer else 25"/>
+
+    <xsl:variable name="vPage" select="if ($page and $page castable as xs:integer) then $page cast as xs:integer else 1" as="xs:integer"/>
+    <xsl:variable name="vPageSize" select="if ($pagesize and $pagesize castable as xs:integer) then $pagesize cast as xs:integer else 25" as="xs:integer"/>
     
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
