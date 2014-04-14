@@ -705,6 +705,10 @@
         <to type="forward" last="true">/servlets/lookup/keywords</to>
     </rule>
     <rule>
+        <from>^/efowords[.]txt</from>
+        <to type="forward" last="true">/servlets/lookup/efowords</to>
+    </rule>
+    <rule>
         <from>^/efotree[.]txt</from>
         <to type="forward" last="true">/servlets/lookup/efotree</to>
     </rule>

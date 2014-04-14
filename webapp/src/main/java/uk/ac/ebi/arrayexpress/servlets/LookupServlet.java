@@ -92,6 +92,8 @@ public class LookupServlet extends ApplicationServlet
             } else if ("keywords".equals(type) && null != autocompletion) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(autocompletion.getKeywords(query, field, limit));
+            } else if ("efowords".equals(type) && null != autocompletion) {
+                out.print(autocompletion.getEfoWords(query, limit));
             } else if ("efotree".equals(type) && null != autocompletion) {
                 out.print(autocompletion.getEfoChildren(efoId));
             } else {

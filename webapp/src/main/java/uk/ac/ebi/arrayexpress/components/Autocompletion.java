@@ -73,6 +73,24 @@ public class Autocompletion extends ApplicationComponent
         return sb.toString();
     }
 
+    public String getEfoWords( String prefix, Integer limit )
+    {
+        StringBuilder sb = new StringBuilder("");
+        List<AutocompleteData> matches = getStore().findCompletions(prefix, "", 1000);
+        int counter = 0;
+        for (AutocompleteData match : matches) {
+            if (AutocompleteData.DATA_EFO_NODE == match.getDataType()) {
+                if (limit == null || counter < limit) {
+                    sb.append(match.getText()).append('|').append(match.getDataType()).append('|').append(match.getData()).append('\n');
+                    counter++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return sb.toString();
+    }
+
     public String getEfoChildren( String efoId )
     {
         StringBuilder sb = new StringBuilder();
