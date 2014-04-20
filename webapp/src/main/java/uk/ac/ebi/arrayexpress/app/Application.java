@@ -203,7 +203,7 @@ public abstract class Application
         if (StringTools.isNotEmpty(command)) {
             logger.info("Restart requested, performing [{}]", command);
             try {
-                executor.execute(command, false);
+                executor.execute(command, true);
                 sendEmail(
                         null
                         , null
