@@ -174,7 +174,7 @@
                 <interface.application.pref.experiments.ae2.reload.schedule>0 0/30 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
                 <interface.application.pref.files.rescan.interval>15</interface.application.pref.files.rescan.interval>
 
-                <interface.application.pref.restart.command>'/net/isilonP/public/rw/webadmin/tomcat/bases/fg/tc-fg-arrayexpress_test/restart &amp;amp;'</interface.application.pref.restart.command>
+                <interface.application.pref.restart.command>/net/isilonP/public/rw/webadmin/tomcat/bases/fg/tc-fg-arrayexpress_test/restart-nowait</interface.application.pref.restart.command>
             </properties>
         </profile>
         <profile>
@@ -207,7 +207,7 @@
 </script>
 ]]>
                 </interface.application.google.analytics>
-                <interface.application.pref.restart.command>/net/isilonP/public/rw/webadmin/tomcat/bases/fg/tc-fg-arrayexpress/restart</interface.application.pref.restart.command>
+                <interface.application.pref.restart.command>/net/isilonP/public/rw/webadmin/tomcat/bases/fg/tc-fg-arrayexpress/restart-nowait</interface.application.pref.restart.command>
             </properties>
         </profile>
         <profile>
