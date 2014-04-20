@@ -11,6 +11,7 @@
                 <port>25</port>
             </smtp>
         </reports>
+        <restart>${interface.application.pref.restart.command}</restart>
     </app>
     <ae>
         <feedback>
