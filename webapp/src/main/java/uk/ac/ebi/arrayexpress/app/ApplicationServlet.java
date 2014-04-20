@@ -94,7 +94,7 @@ public abstract class ApplicationServlet extends HttpServlet
             }
         } catch (Throwable x) {
             logger.error("[SEVERE] Runtime error while processing request:", x);
-            getApplication().sendExceptionReport(
+            getApplication().handleException(
                     "[SEVERE] Runtime error while processing " + requestToString(request, requestType)
                     , x
             );

@@ -50,7 +50,7 @@ public class RetrieveExperimentsXmlJob implements InterruptableJob
             logger.debug("Job [{}] was interrupted", jec.getJobDetail().getKey());
         } catch ( Error x ) {
             logger.error("[SEVERE] Runtime error while executing job [" + jec.getJobDetail().getKey() + "]:", x);
-            Application.getInstance().sendExceptionReport("[SEVERE] Runtime error while executing job [" + jec.getJobDetail().getKey() + "]", x);
+            Application.getInstance().handleException("[SEVERE] Runtime error while executing job [" + jec.getJobDetail().getKey() + "]", x);
             throw new JobExecutionException(x);
         }
         myThread = null;

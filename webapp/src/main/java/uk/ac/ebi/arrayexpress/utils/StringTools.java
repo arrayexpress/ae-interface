@@ -31,6 +31,11 @@ public class StringTools
     public final static String EOL = System.getProperty("line.separator");
     public final static String EMPTY_STRING = "";
 
+    public static boolean isNotEmpty( String s )
+    {
+        return null != s && !s.isEmpty();
+    }
+
     public static String listToString( List<String> l, String separator )
     {
         if (null == l) {

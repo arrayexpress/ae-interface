@@ -770,7 +770,10 @@
         <from>^/test-email</from>
         <to type="forward" last="true">/servlets/control/test-email</to>
     </rule>
-
+    <rule>
+        <from>^/restart-app</from>
+        <to type="forward" last="true">/servlets/control/restart</to>
+    </rule>
 
     <!-- legacy links -->
     <rule>

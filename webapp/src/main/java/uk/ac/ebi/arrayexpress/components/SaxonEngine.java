@@ -168,7 +168,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     public void error( TransformerException x ) throws TransformerException
     {
         logger.error("Caught XSLT transformation error:", x);
-        getApplication().sendExceptionReport("[PROBLEM] XSLT transformation error occurred", x);
+        getApplication().handleException("[PROBLEM] XSLT transformation error occurred", x);
         throw x;
     }
 
@@ -178,7 +178,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     {
         if (!(x instanceof HTTPStatusException)) {
             logger.error("Caught XSLT fatal transformation error:", x);
-            getApplication().sendExceptionReport("[SEVERE] XSLT fatal transformation error occurred", x);
+            getApplication().handleException("[SEVERE] XSLT fatal transformation error occurred", x);
         }
         throw x;
     }

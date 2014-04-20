@@ -83,6 +83,8 @@ public class ControlServlet extends ApplicationServlet
                         , "This test message was sent from [${variable.appname}] running on [${variable.hostname}], please ignore."
                             + StringTools.EOL
                 );
+            } else if ("restart".equals(command)) {
+                getApplication().requestRestart();
             }
         } catch (SchedulerException x) {
             logger.error("Jobs controller threw an exception", x);

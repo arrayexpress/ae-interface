@@ -156,6 +156,6 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
 
     public void sendExceptionReport( String message, Throwable x )
     {
-        super.getApplication().sendExceptionReport(message, x);
+        super.getApplication().handleException(message, x);
     }
 }

@@ -21,8 +21,10 @@ import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.EmailSender;
+import uk.ac.ebi.arrayexpress.utils.LinuxShellCommandExecutor;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -38,9 +40,10 @@ public abstract class Application
     // logging machinery
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    private ApplicationPreferences prefs;
+    private final ApplicationPreferences prefs;
     private Map<String, ApplicationComponent> components;
     private EmailSender emailer;
+    private LinuxShellCommandExecutor executor;
 
     private static Application appInstance = null;
 
@@ -89,16 +92,18 @@ public abstract class Application
                 , getPreferences().getInteger("app.reports.smtp.port")
         );
 
+        executor = new LinuxShellCommandExecutor();
+
         for (ApplicationComponent c : components.values()) {
             logger.info("Initializing component [{}]", c.getName());
             try {
                 c.initialize();
             } catch (RuntimeException x) {
                 logger.error("[SEVERE] Caught a runtime exception while initializing [" + c.getName() + "]:", x);
-                sendExceptionReport("[SEVERE] Caught a runtime exception while initializing [" + c.getName() + "]", x);
+                handleException("[SEVERE] Caught a runtime exception while initializing [" + c.getName() + "]", x);
             } catch (Error x) {
                 logger.error("[SEVERE] Caught an error while initializing [" + c.getName() + "]:", x);
-                sendExceptionReport("[SEVERE] Caught an error while initializing [" + c.getName() + "]", x);
+                handleException("[SEVERE] Caught an error while initializing [" + c.getName() + "]", x);
             } catch (Exception x) {
                 logger.error("Caught an exception while initializing [" + c.getName() + "]:", x);
             }
@@ -167,7 +172,7 @@ public abstract class Application
         }
     }
 
-    public void sendExceptionReport( String message, Throwable x )
+    public void handleException(String message, Throwable x)
     {
         sendEmail(
                 null
@@ -179,6 +184,10 @@ public abstract class Application
                     + "Thread [${variable.thread}]" + StringTools.EOL
                     + getStackTrace(x)
         );
+
+        if (x instanceof OutOfMemoryError) {
+            requestRestart();
+        }
     }
 
     private String getStackTrace( Throwable x )
@@ -187,6 +196,31 @@ public abstract class Application
         final PrintWriter printWriter = new PrintWriter(result);
         x.printStackTrace(printWriter);
         return result.toString();
+    }
+
+    public void requestRestart()
+    {
+        String command = getPreferences().getString("app.restart");
+        if (StringTools.isNotEmpty(command)) {
+            logger.info("Restart requested, performing [{}]", command);
+            try {
+                if (executor.execute(command)) {
+                    logger.info("Restart request succesfully completed");
+                    sendEmail(
+                            null
+                            , null
+                            , "Restart succesfully requested"
+                            , "Application [${variable.appname}]" + StringTools.EOL
+                                    + "Host [${variable.hostname}]" + StringTools.EOL
+                                    + "Thread [${variable.thread}]" + StringTools.EOL);
+                } else {
+                    logger.error("Restart request failed");
+                }
+
+            } catch (IOException x) {
+                //
+            }
+        }
     }
 
     public static Application getInstance()
