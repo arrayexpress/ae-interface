@@ -59,6 +59,10 @@ public class RescanFilesJob extends ApplicationJob
             commandParams.add(listAllFilesCommand);
             this.logger.debug("Executing [{}]", listAllFilesCommand);
             ProcessBuilder pb = new ProcessBuilder(commandParams);
+            Map<String, String> env = pb.environment();
+            env.put("LC_ALL", "en_US.UTF-8");
+            env.put("LANG", "en_US.UTF-8");
+            env.put("LANGUAGE", "en_US.UTF-8");
             Process process = pb.start();
 
             InputStream stdOut = process.getInputStream();

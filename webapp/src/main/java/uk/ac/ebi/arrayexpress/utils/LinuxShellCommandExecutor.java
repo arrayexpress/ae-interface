@@ -32,26 +32,28 @@ public class LinuxShellCommandExecutor {
     private String output;
     private String errors;
 
-    public LinuxShellCommandExecutor() {
+    public LinuxShellCommandExecutor()
+    {
         output = "";
         errors = "";
     }
 
-    public boolean execute(String command) throws IOException {
+    public boolean execute( String command, boolean waitForResult ) throws IOException, InterruptedException
+    {
         List<String> commandParams = new ArrayList<String>();
         commandParams.add("/bin/sh");
         commandParams.add("-c");
         commandParams.add(command);
 
-        try {
-            ProcessBuilder pb = new ProcessBuilder(commandParams);
-            Map<String, String> env = pb.environment();
-            env.put("LC_ALL", "en_US.UTF-8");
-            env.put("LANG", "en_US.UTF-8");
-            env.put("LANGUAGE", "en_US.UTF-8");
+        ProcessBuilder pb = new ProcessBuilder(commandParams);
+        Map<String, String> env = pb.environment();
+        env.put("LC_ALL", "en_US.UTF-8");
+        env.put("LANG", "en_US.UTF-8");
+        env.put("LANGUAGE", "en_US.UTF-8");
 
-            Process process = pb.start();
+        Process process = pb.start();
 
+        if (waitForResult) {
             InputStream stdOut = process.getInputStream();
             InputStream stdErr = process.getErrorStream();
 
@@ -61,8 +63,8 @@ public class LinuxShellCommandExecutor {
             errors = streamToString(stdErr, "UTF-8");
 
             return 0 == returnCode;
-        } catch (InterruptedException x) {
-            throw new IOException(x);
+        } else {
+            return true;
         }
     }
 

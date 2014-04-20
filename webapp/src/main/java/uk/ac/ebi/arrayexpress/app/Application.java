@@ -24,7 +24,6 @@ import uk.ac.ebi.arrayexpress.utils.EmailSender;
 import uk.ac.ebi.arrayexpress.utils.LinuxShellCommandExecutor;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -204,21 +203,17 @@ public abstract class Application
         if (StringTools.isNotEmpty(command)) {
             logger.info("Restart requested, performing [{}]", command);
             try {
-                if (executor.execute(command)) {
-                    logger.info("Restart request succesfully completed");
-                    sendEmail(
-                            null
-                            , null
-                            , "Restart succesfully requested"
-                            , "Application [${variable.appname}]" + StringTools.EOL
-                                    + "Host [${variable.hostname}]" + StringTools.EOL
-                                    + "Thread [${variable.thread}]" + StringTools.EOL);
-                } else {
-                    logger.error("Restart request failed");
-                }
+                executor.execute(command, false);
+                sendEmail(
+                        null
+                        , null
+                        , "Restart succesfully requested"
+                        , "Application [${variable.appname}]" + StringTools.EOL
+                                + "Host [${variable.hostname}]" + StringTools.EOL
+                                + "Thread [${variable.thread}]" + StringTools.EOL);
 
-            } catch (IOException x) {
-                //
+            } catch (Exception x) {
+                logger.error("Restart error", x);
             }
         }
     }
