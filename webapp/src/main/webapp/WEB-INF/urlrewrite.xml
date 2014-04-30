@@ -463,7 +463,8 @@
     </rule>
     <rule>
         <from>^/submit/overview.html?$</from>
-        <to type="forward" last="true">/servlets/query/-/static-page/html?filename=help/submissions_overview.html</to>
+        <set type="parameter" name="filename">help/submissions_overview.html</set>
+        <to type="forward" last="true">/servlets/query/-/static-page/html</to>
     </rule>
     <rule>
         <from>^/submit/(.+)[.]html?$</from>
