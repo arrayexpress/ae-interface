@@ -5,6 +5,12 @@
 <div id="content" role="main" class="grid_24 clearfix">
 <section id="ae-help" class="grid_18 alpha">
 <h2>Accession Codes</h2>
+
+<ul>
+    <li><a href="#four_letter_codes">Full list of four-letter codes</a></li>
+    <li><a href="#secondary_acc">Secondary accession numbers</a></li>
+</ul>
+
 <p>Experiments and array designs in ArrayExpress are given unique
     accession numbers in the format of</p>
 <ul>
@@ -14,12 +20,16 @@
 <p>XXXX represents a four letter code and n is a number.</p>
 <p>E.g.
     E-MEXP-568, A-UHNC-18. Some experiments also have <a
-            href="#secondary_acc_numbers">secondary accession numbers</a>. </p>
+            href="#secondary_acc">secondary accession numbers</a>. </p>
+            
+<p> Accessions numbers are generated when sufficient meta-data and data files are provided for a submission. Please refer to our <a href="/FAQ.html#need_acc_num_urgent">FAQ</a> for more details about obtaining accession number for your data set.</p>
+
+           
 <p>The four letter code in the accession number indicates the data
     source. The source can be:</p>
 <ul>
-    <li>ArrayExpress submission tools (MEXP for <a href="/miamexpress/">MIAMExpress</a>,
-        MTAB for <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a>
+    <li>ArrayExpress submission tools: MEXP for <a href="/miamexpress/">MIAMExpress</a>,
+        MTAB for <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a> or <a href="/fg/annotare/login">Annotare</a>,
         and TABM for Tab2MAGE (deprecated since January 2012).</li>
 
     <li>Data management tools / submisson pipelines from other research
@@ -31,7 +41,7 @@
 </p>
 
 
-<h3>Full list of four-letter codes</h3>
+<h3><a id="four_letter_codes">Full list of four-letter codes</a></h3>
 <table>
 <tbody>
 <tr>
@@ -331,17 +341,16 @@
 </tr>
 </tbody>
 </table>
-
-
-<h3><a id="secondary_acc_numbers"></a>Secondary accession numbers </h3>
+<p>&nbsp;</p>  
+<h3><a id="secondary_acc"></a>Secondary accession numbers </h3>
 <p>Some experiments or array designs have a secondary accession number which links
     to another ArrayExpress experiment/array design, or to an external data source. The
     secondary accession number is shown in the "Links" section on an experiment's page.
     For example, for experiment
     <a href="/arrayexpress/experiments/E-GEOD-42281">E-GEOD-42281</a>:<br>
 </p>
-<p><img src="acc_code_expt_sec_acc_example.png" alt="Expt Secondary Accession Numbers example"
-        height="350" width="831"><br>
+<p><img src="acc_code_expt_sec_acc_example.png" alt="Expt Secondary Accession Numbers example" style='border:2px solid #385930'
+        ><br>
 </p>
 
 <p>For array designs, the secondary accession number can be found in the header of the
@@ -349,10 +358,10 @@
     <a href="/arrayexpress/files/A-GEOD-9349/A-GEOD-9349.adf.txt">A-GEOD-9349</a>:<br>
 </p>
 <p><img src="acc_code_adf_sec_acc_example.png" alt="ADF Secondary Accession Numbers example"
-        height="350" width="831"><br>
+        style='border:2px solid #385930'><br>
 </p>
 
-<p>Common reasons for secondary accession numbers:</p>
+<h4>Common reasons for secondary accession numbers</h4>
 <ol>
     <li style="margin-left: 1em;"><em>Data re-analysis</em>: if the data provided is a re-analysis
         of another dataset, the
