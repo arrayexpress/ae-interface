@@ -36,14 +36,14 @@
         &nbsp;&nbsp;<a href="#Counts">1.6. Filtering by counts</a><br>
         &nbsp;&nbsp;<a href="#Sorting">1.7. Sorting</a><br>
         &nbsp;&nbsp;<a href="#Oldstyle_queries">1.8. Old-style queries</a><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_keyword">1.8.1. Keyword searches</a><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_species">1.8.2. Species searches</a><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_files">1.8.3. Retrieving files</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_keyword">1.8.1. Keyword searches</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_species">1.8.2. Species searches</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Oldstyle_files">1.8.3. Retrieving files</a><br>
         &nbsp;&nbsp;<a href="#Private_data">1.9. Accessing private data</a><br>
         &nbsp;&nbsp;<a href="#All_experiments">1.10. Retrieve information about all public experiments</a><br>
         &nbsp;&nbsp;<a href="#Format_XML_results">1.11. Format of XML results </a><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_experiments">1.11.1. Searches for experiments</a><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_files">1.11.2. Searches for files</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_experiments">1.11.1. Searches for experiments</a><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format_XML_files">1.11.2. Searches for files</a><br>
         <a href="#JSON">2. JSON web services format</a><br>
         <a href="#Updates">3. Changes to programmatic access since September 2010</a>
     </p>
@@ -72,7 +72,7 @@
     <p>A few points to note when using keyword search:</p>
     <ul>
         <li>Accession number and keyword searches are case <strong>insensitive</strong></li>
-        <li><strong>Phrases</strong> of more than one word must be entered in quotes e.g. keywords="breast cancer cells"</li>
+        <li><strong>Phrases</strong> of more than one word must be entered in quotes e.g. keywords="growth condition"</li>
         <li><strong>More than one keyword</strong>
             can by searched for using the '+' sign e.g. keywords=lung+cancer. The
             search treats these as 'AND' statements. See below for using <a href="#Complex_queries">OR and NOT</a>.</li>
@@ -107,27 +107,27 @@
         </tr>
         <tr>
             <td><strong>ef</strong></td>
-            <td>Experimental factor, the name of the main variables in an experiment. </td>
-            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?ef=CellType</td>
+            <td>Experimental factor, the name of the main variable under study in an experiment. E.g. if the factor is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have. Has EFO expansion.</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?ef="cell type"</td>
         </tr>
         <tr>
             <td><strong>efv</strong></td>
-            <td>Experimental factor value. Has EFO expansion.</td>
+            <td>The value of an experimental factor. E.g. The values for "genotype" factor can be "wild type genotype", "p53-/-".  Has EFO expansion.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?efv=HeLa</td>
         </tr>
         <tr>
             <td><strong>expdesign</strong></td>
-            <td>Experiment design type</td>
+            <td>Experiment design type, related to the questions being addressed by the study, e.g. "time series design", "stimulus or stress design", "genetic modification design". Has EFO expansion.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?expdesign=dose+response</td>
         </tr>
         <tr>
             <td><strong>exptype</strong></td>
-            <td>Experiment type.  Has EFO expansion.</td>
+            <td>Experiment type, related to the assay technology used.  Has EFO expansion.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?exptype="RNA-seq"</td>
         </tr>
         <tr>
             <td><strong>gxa</strong></td>
-            <td>Presence ("true") /absence ("false") of an ArrayExpress experiment in the Expression Atlas.</td>
+            <td>Presence ("true") /absence ("false") of an ArrayExpress experiment in the <a href='http://www.ebi.ac.uk/gxa'>Expression Atlas</a>.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?gxa=true</td>
         </tr>
         <tr>
@@ -137,14 +137,13 @@
         </tr>
         <tr>
             <td><strong>sa</strong></td>
-            <td><p>Sample attribute values. Has EFO expansion.</p></td>
+            <td>Sample attribute values. Has EFO expansion.</td>
             <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/files?sa=fibroblast</td>
         </tr>
         <tr>
             <td><strong>species</strong></td>
-            <td>Species of the samples.Has EFO expansion. </td>
-            <td><p>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?species="homo sapiens"</p>
-            </td>
+            <td>Species of the samples. Can use common name (e.g. "mouse") or binomial nomenclature/Latin names (e.g. "Mus musculus"). Has EFO expansion.</td>
+            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?species="homo sapiens"</td>
         </tr>
         </tbody></table>
     <p></p>
@@ -163,22 +162,26 @@
     <h4><a id="EFO"></a>1.3 Expanding searches using the Experimental Factor Ontology</h4>
     <p>The <a href="/efo/">Experimental Factor Ontology</a>
         is an application-focused ontology modelling the experimental factors
-        in ArrayExpress. If the term expandefo=true is included in the URL then
-        the search will be for occurrences of your term, and for synonyms and
-        child terms in the Experimental Factor Ontology. E.g. if 'cancer' is
-        entered the search will be for the term cancer, for synonyms of cancer
-        and sub types of cancer such as <span title="This is matched child term from Experimental Factor   Ontology e.g. brain and subparts of brain">lymphoma</span>. </p>
-    <table>
-        <tbody><tr>
-            <td>http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?keywords=heart&amp;expandefo=on </td>
-        </tr>
-        </tbody></table>
-    <p>Some specific fields have EFO expansion on always: experimental factor value, experiment type, sample attribute and species. </p>
+        in ArrayExpress. You can expand searches using EFO. For example, if 'cancer' is
+        entered, the search will be for the term "cancer", for synonyms of "cancer",
+        and sub types of cancer listed in EFO ("lymphoma", "breast adenocarcinoma", etc).</p>
+        
+    <p> Search terms are expanded using EFO by default for keyword-based searches and all relevant <a href="#Fields">fields</a>:</p>
+    <ul>
+        <li>organism</li>
+        <li>exptype (for "experiment type")</li>
+        <li>expdesign (for "experiment design")</li>
+        <li>ef (for "experimental factor")</li>
+        <li>efv (for "experimental factor value")</li>
+        <li>sa (for "sample attribute")</li>
+    </ul>
+
+    <p><em>8 May 2014 update: Please note that the parameter “expandefo” (which used to control whether EFO expansion is turned on or not) is no longer used.</em></p>
+
 
     <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
     <h4><a id="Complex_queries"></a>1.4 Construction of queries using AND, OR and NOT operators</h4>
-    <p>More complex queries can be constructed using the operators <strong>AND, OR </strong>or <strong>NOT</strong>.
-        AND is the default if no operator is specified. Again, either
+    <p>More complex queries can be constructed using the operators <strong>AND, OR </strong>or <strong>NOT</strong>. All operators must be entered in UPPERCASE.  AND is the default if no operator is specified. Again, either
         experiments or files can be searched for in all cases by using the
         'experiments' or 'files' term in the URL.</p>
     <table>
@@ -204,11 +207,11 @@
     <table>
         <tbody><tr>
             <th>Field</th>
-            <th> What is searched </th>
+            <th>What is searched </th>
             <th>Example</th>
         </tr>
         <tr>
-            <td><p>directsub</p></td>
+            <td>directsub</td>
             <td>
                 only experiments directly submitted to ArrayExpress (directsub=true),
                 or only experiments imported from the GEO database (directsub=false)</td>
@@ -226,7 +229,7 @@
     <table>
         <tbody><tr>
             <th>Filter</th>
-            <th> What is filtered </th>
+            <th>What is filtered </th>
             <th>Example</th>
         </tr>
         <tr>
