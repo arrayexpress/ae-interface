@@ -53,8 +53,8 @@
 
             <h3><a id="AdvancedSearchExperiment">2. Experiment advanced search </a></h3>
             <h4>2.1 Combining search terms with "AND", "OR", "NOT"</h4>
-            <p>Enter two or more keywords in the search box with the operators AND, OR or NOT. AND is the default in searches, so for example, a search for prostate breast will return hits with a match to 'prostate' AND 'breast'.</p>
-            <p>Search terms of more than one word must be entered inside quotes otherwise only the first word will be searched for. For example, transcription AND Rattus norvegicus will effectively be a search for "transcription" AND "Rattus".</p>
+            <p>Enter two or more keywords in the search box with the operators AND, OR or NOT.  These operators must be entered in UPPERCASE. <em>AND</em> is the default in searches, so for example, a search for prostate breast will return hits with a match to 'prostate' AND 'breast'.</p>
+            <p>Search terms of more than one word must be entered inside quotes otherwise only the first word will be searched for. For example, "transcription AND Rattus norvegicus" will effectively be a search for "transcription" AND "Rattus".</p>
             <p><strong>Note:</strong> If a field is not specified (see <a href ="#RestrictSearchSpace">section 2.2</a> below), then the term is searched in every experiment fields, which include the experiment description, sample annotation, publication paper title, submitter's email address, protocol description, etc.</p>
             <p>Here are some use cases:</p>
             <table>
@@ -127,7 +127,7 @@
         </tr>
         <tr>
             <td><strong>ef</strong></td>
-            <td>Experimental factor, the name of the main variable under study in an experiment. E.g. if the factor is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have.</td>
+            <td>Experimental factor, the name of the main variable under study in an experiment. E.g. if the factor is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have. Has <a href="#EFO_expansion">EFO expansion</a>.</td>
             <td>ef:genotype</td>
         </tr>
         <tr>
@@ -137,7 +137,7 @@
         </tr>
         <tr>
             <td><strong>expdesign</strong></td>
-            <td>Experiment design type, related to the questions being addressed by the study, e.g. "time series design", "stimulus or stress design", "genetic modification design".</td>
+            <td>Experiment design type, related to the questions being addressed by the study, e.g. "time series design", "stimulus or stress design", "genetic modification design". Has <a href="#EFO_expansion">EFO expansion</a>.</td>
             <td>expdesign:"time series"</td>
         </tr>
         <tr>
@@ -147,7 +147,7 @@
         </tr>
         <tr>
             <td><strong>gxa</strong></td>
-            <td>Presence/absence of an ArrayExpress experiment in the <a href='http://www.ebi.ac.uk/gxa'>Expression Atlas</a>. The Expression Atlas  allows users to ask questions about which genes are up- or down-regulated under different experimental conditions/factors. Use values "true" and "false" respectively.</td>
+            <td>Presence/absence of an ArrayExpress experiment in the <a href='http://www.ebi.ac.uk/gxa'>Expression Atlas</a>. Use values "true" and "false" respectively.</td>
             <td>gxa:true</td>
         </tr>
         <tr>
