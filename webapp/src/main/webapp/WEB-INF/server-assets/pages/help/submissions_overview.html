@@ -11,7 +11,7 @@
                     <h3 class="icon icon-functional" data-icon="_"><a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet tool</a></h3>
                     <br>
                     <ul>
-                        <li>All sequencing and microarray experiment submissions</li>
+                        <li>All sequencing and microarray experiments</li>
                         <li>Make sure you create your submission with a new MAGE-TAB spreadsheet template</li>
                         <li><a href="/fgpt/magetab/help">MAGE-TAB submission help</a></li>
                         <li><a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab">MAGE-TAB submission interactive tutorial</a></li>
@@ -24,9 +24,10 @@
                     <h3 class="icon icon-functional" data-icon="_"><a href="/fg/annotare/login">Annotare webform tool</a></h3>
                     <br>
                     <ul>
-                        <li>For sequencing and microarray experiment submissions with no complex design (e.g. one microarray
+                        <li>All sequencing and microarray experiments with no complex design (e.g. one microarray
                             design per experiment, no sample pooling).</li>
-                        <li>Accepts experiments with up to 1000 hybridisations or sequencing assays.</li>
+                        <li>For experiments with up to 1000 hybridisations or sequencing assays.</li>
+                        <li>Validate prior to submission to speed up downstream processing and loading into ArrayExpress.</li>
                         <li><a href="/fgpt/annotare_help">Annotare help</a></li>
                     </ul>
                 </div>
@@ -44,17 +45,17 @@
                 <a href="#ADFSub">5. Array Design submissions</a><br>
             </p>
             <h3><a id="WhatIsASub"></a>1. What do I need to submit?</h3>
-            <p>ArrayExpress accepts all functional genomics data, including microarray-based and <a href="UHTS_submissions.html">sequencing</a> data. Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href='http://www.mged.org/Workgroups/MIAME/miame_2.0.html'>MIAME</a>) guidelines, while sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href='http://www.mged.org/minseqe/'>MINSEQE</a>).  Following the guidelines, for experiment submissions, we ask submitters to provide the following:</p>
+            <p>ArrayExpress accepts all functional genomics data, including microarray-based and <a href="UHTS_submissions.html">sequencing</a> data. Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href='http://www.mged.org/Workgroups/MIAME/miame_2.0.html'>MIAME</a>) guidelines, while sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href='http://www.mged.org/minseqe/'>MINSEQE</a>).  Following the appropriate guidelines, we ask experiment submitters to provide:</p>
             <div class="grid_1 alpha">
                 <p>&nbsp;</p>
             </div>
 
             <div  class="grid_17 omega">
-                <p><strong>Meta-data</strong>: E.g. Background biology of your experiment, aim of the experiment, the biological materials/samples used and their characteristics, wet-lab and dry-lab procedures (protocols).</p>
+                <p><strong>Meta-data</strong>: E.g. Background biology of your experiment, aim of the experiment, biological materials/samples used and their characteristics, wet-lab and dry-lab procedures (protocols).</p>
                 <p><strong>Raw data files</strong>: These are unprocessed data files obtained from the microarray scanner (e.g. Affymetrix CEL files, Agilent feature extraction files) or from the sequencing machine (e.g. fastq files).</p>
                 <p><i>Microarray experiment submitters</i>: Please make sure the format of your raw data files matches one of the <a href="/fgpt/magetab/help/data_format.html#raw">accepted formats</a>.  For Illumina BeadChip microarray experiments, make sure you generated raw data files using the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software) with the 'ArrayExpress Data Submission Report Plug-in'. More about <a href="faq.html#illumina">Illumina BeadChip submission</a>.</p>
                 <p><i>Sequencing experiment submitters</i>: Please make sure your raw sequence read files are formatted and prepared according to <a href="/ena/about/read-file-formats">specifications by the European Nucleotide Archive (ENA)</a> and you've gathered all required information describing your samples/libraries/data files. The raw sequence read files must be sent to ArrayExpress via <a href="ftp_upload.html">FTP</a>. See this <a href = "UHTS_submissions.html">specific help page on sequencing submissions</a> for more information.</p>
-                <p><strong>Processed data files</strong>: These are data files generated from the raw data files, often involving e.g. normalisation or background-subtraction. In sequencing expermient, the processing can also involve alignment of sequencing reads to a reference genome, calculation of RPKM/FPKM values, etc.</p>
+                <p><strong>Processed data files</strong>: These are data files generated from the raw data files, often involving e.g. normalisation or background-subtraction. In sequencing experiments, the processing can also involve alignment of sequencing reads to a reference genome, calculation of RPKM/FPKM values, etc.</p>
                 <p><i>Microarray experiment submitters</i>: Please prepare files as in this <a href="/fgpt/magetab/help/data_format.html#normalized">per-hybridisation normalised file example</a> or the <a href="/fgpt/magetab/help/data_format.html#data_matrix">data matrix format</a>. We do not enforce strict formatting requirements for processed data files, but you're encouraged to use the recommended formats.  Please also make sure you have provided a detailed normalisation/data transformation protocol in your meta-data, as that will allow your files to be interpreted properly.</p>
                 <p><i>Sequencing experiment submitters</i>: We do not enforce strict formatting requirements on processed files, except for bam (alignment) files, which should follow <a href="/ena/about/read-file-formats#bam_format">bam file specification from the European Nucleotide Archive</a>. The alignments should also be generated against a reference genome which has been deposited in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>). See this <a href = "UHTS_submissions.html#HowToSubmit">sequencing submissions help page</a> for more details.</p>
             </div>
@@ -76,6 +77,28 @@
                 </tr>
                 <tr>
                     <td>
+                        <h5 class="icon icon-functional" data-icon="_"><a href="/fg/annotare/login">Annotare webform tool</a></h5>
+                    </td>
+                    <td><ul>
+                        <li>All experiments with no complex designs (e.g. one microarray design per experiment, no sample pooling)</li>
+                        <li>For experiments with up to 1000 hybridisations or sequencing assays</li>
+                    </ul>    
+                    </td>
+                    <td><ul>
+                        <li>Fill in a series of webforms</li>
+                        <li>Upload data files by <a href="ftp_upload.html">FTP</a>, or by HTML within the tool</li>
+                        <li>Validate prior to submission to speed up downstream processing and loading into ArrayExpress.</li>
+                    </ul>
+                    
+                    </td>
+                    
+                    <td><ul>
+                        <li><a href="/fgpt/annotare_help/">Annotare help</a></li>                        
+                    </ul>
+                    </td>
+                </tr>                
+                <tr>
+                    <td>
                         <h5 class="icon icon-functional" data-icon="_"><a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet tool</a></h5>
                     </td>
                     <td><ul>
@@ -83,8 +106,8 @@
                     </ul>    
                     </td>
                     <td><ul>
-                        <li>Meta-data spreadsheet template</li>
-                        <li>Upload filled spreadsheet</li>
+                        <li>Bespoke meta-data spreadsheet template for your experiment</li>
+                        <li>Upload filled spreadsheet <strong>(please always use a freshly-created template)</strong>.</li>
                         <li>Upload .zip or .gz data file bundles (for microarray experiments)</li>
                     </ul>
                     </td>
@@ -96,28 +119,6 @@
                     </td>
 
                 </tr>
-                <tr>
-                    <td>
-                        <h5 class="icon icon-functional" data-icon="_"><a href="/fg/annotare/login">Annotare webform tool</a></h5>
-                    </td>
-                    <td><ul>
-                        <li>Handles microarray or sequencing experiments with no complex design (e.g. one microarray design per experiment, no sample pooling)</li>
-                        <li>Accepts experiments with up to 1000 hybridisations or sequencing assays</li>
-                    </ul>    
-                    </td>
-                    <td><ul>
-                        <li>Fill in a series of webforms</li>
-                        <li>Upload data files by <a href="ftp_upload.html">FTP</a>, or by HTML within the tool</li>
-                        <li>Validate prior to submission</li>
-                    </ul>
-                    
-                    </td>
-                    
-                    <td><ul>
-                        <li><a href="/fgpt/annotare_help/">Annotare help</a></li>                        
-                    </ul>
-                    </td>
-                </tr>
             </table>
 
 
@@ -126,27 +127,31 @@
             <h3><a id="WhatToExpect"></a>3. What to expect from each experiment submission tool</h3>
 
 
+            <h4>Annotare</h4>
+            <p><a href="/fg/annotare/login">Annotare</a> offers:</p>
+            <ul>
+            <li><strong>webforms</strong> with text boxes to fill in;</li>
+            <li><strong>drop-down lists</strong> to select terms from;</li>
+            <li>(for microarray experiments) <strong>a HTML data-file upload functionality</strong> inside the tool which allows you to upload microarray files and then assign each of them to specific hybridisation assay.</li>
+            <li>(for sequencing experiments, after uploading raw data files <a href="ftp_upload.html">via FTP</a>) <strong>a file name and MD5 checksum form</strong> to fill in. You can then assign files listed in the form to specific sequencing assays. The MD5 checksums will be used to validate file integrity.</li>
+            </ul>
+            <p>Before you submit the experiment to ArrayExpress, the information you've provided will be validated by Annotare.  Any validation errors (e.g. missing information) will be highlighted. Please fix the issues and validate again because only experiments which pass validation can be submitted. If the errors persist, please refer to this <a href="/fgpt/annotare_help/">Annotare help page</a> or contact the Annotare team at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a>.</p>
+
             <h4>MAGE-TAB</h4>
             <p>New submitters: please check out this <a href="/fgpt/magetab/help/quick_start.html">quick start guide</a>.</p>
-            <p>You will be sending us a meta-data spreadsheet and data files. Microarray data files should be bundled in data archives (.zip or .gz files) and uploaded within the tool. (Other archive formats, e.g. .rar, are not supported.) Sequencing raw data files (e.g. fastq.gz or bam) must be uploaded to ArrayExpress via <a href="ftp_upload.html">FTP</a>.</p>
-            <p>Don't create the spreadsheet from scratch but use the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB submission tool</a> to generate a template tailored for your experiment. <strong>Always use a freshly-created template for a new submission, even if you're a regular submitter,</strong> because the template-generation system is updated regularly. Since the templates have changed quite a lot over the years, we are unable to accept spreadsheets created from older templates. We are sorry for any inconvenience this may cause.</p>
+            <p>You will be sending us a meta-data spreadsheet and data files. Microarray data files should be bundled in data archives. Supported archive formats are .zip or .gz only. Sequencing raw data files (e.g. fastq.gz or bam) must be uploaded to ArrayExpress via <a href="ftp_upload.html">FTP</a>.</p>
+            <p>Do not create the spreadsheet from scratch but use the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB submission tool</a> to generate a template tailored for your experiment. <strong>Always use a freshly-created template for a new submission, even if you're a regular submitter,</strong> because the template-generation system is updated regularly. Since the templates have changed quite a lot over the years, we are unable to accept spreadsheets created from older templates.</p>
             <p>Download the template spreadsheet file (which is a tab-delimited text file) to fill it in offline.  The file will open in any spreadsheet program, e.g. <a href="https://wiki.openoffice.org/wiki/Documentation/FAQ/Calc/Files/How_do_I_open_a_tab-delimited_file_in_OpenOffice.org_Spreadsheet%3F_What_if_I_have_a_different_type_of_delimiter%3F">OpenOffice Calc</a> or <a href="http://office.microsoft.com/en-gb/excel-help/import-or-export-text-txt-or-csv-files-HP010342598.aspx">Microsoft Excel</a>. Most of the row/column headings in the template are mandatory, so please DO NOT remove or edit them. Refer to this <a href="fgpt/magetab/help/">MAGE-TAB help page</a> for help with constructing the MAGE-TAB spreadsheet and data files.</p>
-            <p>Save the filled template as a tab-delimited text file for submission. <em>We are unable to process any unfilled template spreadsheets or spreadsheets in Excel format (*.xls or *.xlsx files).</em></p>
+            <p>Save the filled template as a <strong>tab-delimited text file</strong> for submission. <em>We are unable to process any unfilled template spreadsheets or spreadsheets in Excel format (*.xls or *.xlsx files).</em></p>
            <p>To submit, login to the submission tool again and upload the spreadsheet along with your microarray data file bundles (if any). Make sure you click "Submit Experiment" at the very end, after which you should receive an automatic confirmation email.</p>
-
-            <h4>Annotare</h4>
-            <p>With <a href="/fg/annotare/login">Annotare</a>, there will be a series of webforms with text boxes to fill, drop-down lists to select terms from, and also a HTML data-file upload functionality inside the tool which allows you to upload microarray files and then assign each of them to specific hybridisation assay. For sequencing experiments, first upload the raw data files <a href="ftp_upload.html">via FTP</a>.  Annotare provides a form where you fill in the file names and MD5 checksum for each file for verifying file integrity. Files listed in the form can then be assigned to specific sequencing assays.</p>
-            
-            <p>For submitters of microarray experiments with multiple array designs/platforms (e.g. some samples hybridised on an expression-profiling array and some on a SNP-typing one), please create separate Annotare experiment submissions for each design/platform.</p>
-            <p>Before you submit the experiment to ArrayExpress, the information you've provided will be validated by Annotare.  Any validation errors (e.g. missing information) will be highlighted. Please fix the issues and validate again because only experiments which pass validation can be submitted. If the errors persist, please refer to this <a href="/fgpt/annotare_help/">Annotare help page</a> or contact the Annotare team at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a>.</p>
 
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
             <h3><a id="CommonQuestions"></a>4. Common questions</h3>
             <ul>
                 <li><strong>General submission questions</strong> (MAGE-TAB and MIAMExpress): <a href="faq.html#submit_faq_general">Submission FAQ</a></li>
-                <li>How to <strong>prepare MAGE-TAB submission</strong>: <a href="/fgpt/magetab/help">MAGE-TAB help</a></li>
                 <li>How to <strong>use Annotare</strong> for submission: <a href="/fgpt/annotare_help/">Annotare help</a></li>
+                <li>How to <strong>prepare MAGE-TAB submission</strong>: <a href="/fgpt/magetab/help">MAGE-TAB help</a></li>                
                 <li>How to <strong>upload data files via FTP</strong> for submission: <a href="ftp_upload.html">FTP upload instructions</a></li>
                 <li>Getting ArrayExpress <strong>accession number</strong> for your experiment: <a href="faq.html#need_acc_num_urgent">Accession number</a></li>
                 <li>How to change <strong>release dates</strong> for your unpublished data: <a href="data_availability.html#changes">Release date changes</a></li>
@@ -158,7 +163,7 @@
 
             <h4>What is an array design?</h4>
 
-            <p>For each microarray experiment submission, the submission tool will ask you for the array design (i.e. microarray chip/platform) used for each hybridisation. Many of these designs, especially commercially available ones, are already accessioned in ArrayExpress as array design format (ADF) files.  (One ADF is for one microarray chip.) The ADF file is a tabulated (spreadsheet-like) tab-delimited text file that contains information about all the probes on the microarray chip, e.g. how the probes were designed, the probe sequences, probe coordinate location (on spotted arrays), cross-references to other database, where the probes map to in the genome, etc.</p>
+            <p>For each microarray experiment submission, the submission tool will ask you for the array design (i.e. microarray chip/platform) used for each hybridisation. Many of these designs, especially commercially available ones, are already accessioned in ArrayExpress as array design format (ADF) files (one ADF for one microarray chip). The ADF file is a tabulated (spreadsheet-like) tab-delimited text file that contains information about all the probes on the microarray chip, e.g. how the probes were designed, the probe sequences, probe coordinate location (on spotted arrays), cross-references to other database, where the probes map to in the genome, etc.</p>
 
             <h4>Do I need to submit an array design?</h4>
             <p>If your ADF is already accessioned in ArrayExpress, you do <em>not</em> need to submit any ADF to us. All you need to do is to provide the ArrayExpress accession number of the ADF in the "Array Design REF" column of your MAGE-TAB meta-data spreadsheet.  To find out whether your array design is already in ArrayExpress and get its accession, please search by keywords (e.g. manufacturer name, species name) on the <a href="/arrayexpress/arrays/browse.html?directsub=on">ArrayExpress array design search page</a>. If the search does not return any results, please <a href="/arrayexpress/arrays/browse.html">broaden your search here</a> to include array designs we imported from <a href="http://www.ncbi.nlm.nih.gov/geo">NCBI Gene Expression Omnibus (GEO)</a> (accession numbers prefixed by "A-GEOD"). As a rule of thumb, a GEO platform accession can be converted to the ArrayExpress equivalent by replacing "GPL" with "A-GEOD", e.g. "GPL1234" will be "A-GEOD-1234". See this <a href="how_to_search.html#SearchADF">ADF search help page</a> for further details.</p>
