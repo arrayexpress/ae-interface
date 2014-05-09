@@ -5,12 +5,18 @@
     <div id="content" role="main" class="grid_24 clearfix">
         <section id="ae-help" class="grid_18 alpha">
             <h2>How to search</h2>
-            <ol>
-                <li><a href="#QuickSearchExperiment">Experiment quick search</a></li>
-                <li><a href="#AdvancedSearchExperiment">Experiment advanced search</a></li>
-                <li><a href="#SearchADF">Search for array designs</a></li>
-                <li><a href="#Login">Search for private experiments</a></li>
-            </ol>
+            <p>
+                <a href="#QuickSearchExperiment">1. Experiment quick search</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#acc_kw_search">1.1 Search by accession or keyword</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#EFO_expansion">1.2 Search term expansion by Experimental Factor Ontology (EFO)</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#simple_filter">1.3 Filtering results</a><br>
+                <a href="#AdvancedSearchExperiment">2. Experiment advanced search</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#and_or_not">2.1 Combining search terms with "AND", "OR", "NOT"</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#RestrictSearchSpace">2.2 Restrict search by specifying the search space</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#advanced_filter_counts">2.3 Filtering results by counts</a><br>
+                <a href="#SearchADF">3. Search for array designs</a><br>
+                <a href="#Login">4. Search for private experiments</a><br>
+            </p>
             <br>
             <h3><a id="QuickSearchExperiment">1. Experiment quick search </a></h3>
             <h4><a id="acc_kw_search">1.1 Search by accession or keyword</a></h4>
@@ -36,7 +42,7 @@
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <p>&nbsp;</p>            
             
-            <h4>1.3 Filtering results  </h4>
+            <h4><a id="simple_filter">1.3 Filtering results</a></h4>
             <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"  style='border:2px solid #385930'></p>
             <p>Experiments can be filtered using the drop down menus at the top of the results table. They can be filtered by: </p>
             <ul>
@@ -52,7 +58,7 @@
             
 
             <h3><a id="AdvancedSearchExperiment">2. Experiment advanced search </a></h3>
-            <h4>2.1 Combining search terms with "AND", "OR", "NOT"</h4>
+            <h4><a id="and_or_not">2.1 Combining search terms with "AND", "OR", "NOT"</a></h4>
             <p>Enter two or more keywords in the search box with the operators AND, OR or NOT.  These operators must be entered in UPPERCASE. <em>AND</em> is the default in searches, so for example, a search for prostate breast will return hits with a match to 'prostate' AND 'breast'.</p>
             <p>Search terms of more than one word must be entered inside quotes otherwise only the first word will be searched for. For example, "transcription AND Rattus norvegicus" will effectively be a search for "transcription" AND "Rattus".</p>
             <p><strong>Note:</strong> If a field is not specified (see <a href ="#RestrictSearchSpace">section 2.2</a> below), then the term is searched in every experiment fields, which include the experiment description, sample annotation, publication paper title, submitter's email address, protocol description, etc.</p>
@@ -169,7 +175,7 @@
      </table>
         <p>&nbsp;</p>
         <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-        <h4>2.3 Filtering results by counts</h4>
+        <h4><a id="advanced_filter_counts">2.3 Filtering results by counts</a></h4>
 
     <p>Experiments fulfilling certain count critera can also be searched for. E.g. Those having more than 10
         assays (hybridizations). Here are some examples: </p>
