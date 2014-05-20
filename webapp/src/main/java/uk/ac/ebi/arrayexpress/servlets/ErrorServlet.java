@@ -57,7 +57,7 @@ public class ErrorServlet extends AuthAwareApplicationServlet {
             String stylesheetName = "error-html.xsl";
 
             HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
-            params.put("original-request-uri", (String)request.getAttribute("javax.servlet.error.request_uri"));
+            //params.put("original-request-uri", (String)request.getAttribute("javax.servlet.error.request_uri"));
             params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
             params.put("username", authUserName);
 
