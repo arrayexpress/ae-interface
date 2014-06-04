@@ -70,35 +70,6 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
         }
         String authUserName = getAuthUserName(request);
 
-        /* TODO: relocate id somewhere
-        if (logger.isDebugEnabled()) {
-            Enumeration headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()) {
-               String headerName = (String)headerNames.nextElement();
-               logger.debug("Header [{}], value [{}]", headerName, request.getHeader(headerName));
-            }
-        }
-        */
-
-        // TODO: this is so hacky, I cannot believe I'm commiting this
-        if (null != authUserName) {
-            String host = request.getHeader("host");
-
-            if (null != host && host.matches("www(dev)?[.]ebi[.]ac[.]uk")) {
-
-                if (!"1".equals(request.getHeader("x-https"))) {
-
-                    String requestUri =  request.getParameter("original-request-uri");
-
-                    if (null != requestUri) {
-                        String redirectUrl = "https://" + host + requestUri;
-                        logger.info("Redirecting authenticated request to [{}]", redirectUrl);
-                        response.sendRedirect(redirectUrl);
-                        return;
-                    }
-                }
-            }
-        }
         doAuthenticatedRequest(request, response, requestType, authUserName);
     }
 

@@ -26,6 +26,7 @@
     <properties>
         <interface.application.log.default.priority>INFO</interface.application.log.default.priority>
         <interface.application.log.appender.ref>ROLLINGFILE</interface.application.log.appender.ref>
+        <interface.application.webxml.security.transport.guarantee>NONE</interface.application.webxml.security.transport.guarantee>
 
         <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
         <interface.application.link.atlas.exp_xml.url>http://www.ebi.ac.uk/gxa/api/experiments.xml</interface.application.link.atlas.exp_xml.url>
@@ -164,6 +165,8 @@
         <profile>
             <id>preproduction</id>
             <properties>
+                <interface.application.webxml.security.transport.guarantee>CONFIDENTIAL</interface.application.webxml.security.transport.guarantee>
+
                 <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_xml.url>http://wwwdev.ebi.ac.uk/gxa/api/experiments.xml</interface.application.link.atlas.exp_xml.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>

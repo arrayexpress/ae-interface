@@ -156,6 +156,16 @@
         <listener-class>uk.ac.ebi.arrayexpress.AEInterfaceApplication</listener-class>
     </listener>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>secured</web-resource-name>
+            <url-pattern>/auth</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>${interface.application.webxml.security.transport.guarantee}</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
