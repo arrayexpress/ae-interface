@@ -169,17 +169,18 @@
 
             <p>For each microarray experiment submission, the submission tool will ask you for the array design (i.e. microarray chip/platform) used for each hybridisation. Many of these designs, especially commercially available ones, are already accessioned in ArrayExpress as array design format (ADF) files (one ADF for one microarray chip). The ADF file is a tabulated (spreadsheet-like) tab-delimited text file with a meta-data header followed by a multi-column table of probe information (here is <a href="/fgpt/magetab/help/creating_an_adf.html#WhatIsADF">an example</a>).</p>
 
-            <h4>Do I need to submit an array design?</h4>
-            <p>If your ADF is already accessioned in ArrayExpress, you do <em>not</em> need to submit any ADF to us. All you need to do is to provide the ArrayExpress accession number of the ADF in the "Array Design REF" column of your MAGE-TAB meta-data spreadsheet.  To find out whether your array design is already in ArrayExpress and get its accession, search by keywords (e.g. manufacturer name, species name) on the <a href="/arrayexpress/arrays/browse.html?directsub=on">ArrayExpress array design search page</a>. If the search does not return any results, <a href="/arrayexpress/arrays/browse.html">broaden your search here</a> to include array designs we imported from <a href="http://www.ncbi.nlm.nih.gov/geo">NCBI Gene Expression Omnibus (GEO)</a> (accession numbers prefixed by "A-GEOD"). As a rule of thumb, a GEO platform accession can be converted to the ArrayExpress equivalent by replacing "GPL" with "A-GEOD", e.g. "GPL1234" will be "A-GEOD-1234". See this <a href="how_to_search.html#SearchADF">ADF search help page</a> for further details.</p>
+            <h4>Do I need to submit an array design for my experiment?</h4>
+            <p>If your ADF is already accessioned in ArrayExpress, you do <em>not</em> need to submit any ADF to us. All you need to do is to specify the ADF by accession when asked by Annotare submission tool <a href="/fgpt/annotare_help/create_exp.html">"What array did you use?"</a>, or insert the ADF's accession number in the <code>Array Design REF</code> column of your spreadsheet (if using MAGE-TAB submission tool).</p>
+            <p> To find out whether your array design is already in ArrayExpress and get its accession, search by keywords (e.g. manufacturer name, species name) on the <a href="/arrayexpress/arrays/browse.html?directsub=on">ArrayExpress array design search page</a>. If the search does not return any results, <a href="/arrayexpress/arrays/browse.html">broaden your search here</a> to include array designs we imported from <a href="http://www.ncbi.nlm.nih.gov/geo">NCBI Gene Expression Omnibus (GEO)</a> (accession numbers prefixed by "A-GEOD"). As a rule of thumb, a GEO platform accession can be converted to the ArrayExpress equivalent by replacing "GPL" with "A-GEOD", e.g. "GPL1234" will be "A-GEOD-1234". See this <a href="how_to_search.html#SearchADF">ADF search help page</a> for further details.</p>
 
             <h4>How do I submit commercially available array designs?</h4>
             <p>If you use a commercially available microarray which is not accessioned in ArrayExpress, please do the following:</p>
-            <ul>
-            <li>1. Download this <a href="/fgpt/magetab/help/commercial_array_header_template.xls">meta-data template file</a>;</li>
-            <li>2. Fill in the template with as much background information about the array design as possible (here is a <a href="/fgpt/magetab/help/creating_an_adf.html#ADFHeader">guide</a>), save it as a tab-delimited text (*.txt) file when done;</li>
-            <li>3. Send us the filled template (*.txt file) and any annotation/support files for the array design <a href="ftp_upload.html">by FTP</a>;</li>
-            <li>4. Write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>, mentioning the files which have been uploaded.</li>
-            </ul>            
+            <ol>
+            <li>Download this <a href="/fgpt/magetab/help/commercial_array_header_template.xls">meta-data template file</a>;</li>
+            <li>Fill in the template with as much background information about the array design as possible (here is a <a href="/fgpt/magetab/help/creating_an_adf.html#ADFHeader">guide</a>), save it as a tab-delimited text (*.txt) file when done;</li>
+            <li>Send us the filled template (*.txt file) and any annotation/support files for the array design <a href="ftp_upload.html">by FTP</a>;</li>
+            <li>Write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>, mentioning the files which have been uploaded.</li>
+            </ol>            
             <p>An ArrayExpress curator will then create the ADF table from the annotation files on your behalf, and get the ADF accessioned in ArrayExpress. As the format of annotation files differ quite a lot from one manufacturer to another, please note that creation of ADFs often requires manual processing by the curator and can take up to five working days.</p>
 
             <h4>How do I submit custom array designs?</h4>
