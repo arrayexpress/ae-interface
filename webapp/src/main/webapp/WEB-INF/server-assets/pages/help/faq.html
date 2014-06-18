@@ -13,7 +13,7 @@
     <li><a href="#use_ae_faq">Using ArrayExpress</a></li>
     <li><a href="#submit_faq_general">Submitting data to ArrayExpress</a></li>
 </ol>
-<p><strong>Please note that from October 2013, the MIAMExpress tool is no longer maintained for experiment submissions. Please use the <a href="submissions_overview.html">MAGE-TAB spreadsheet tool</a> or <a href="/fg/annotare/login">Annotare webform tool</a> instead. Array Design submissions can still be submitted via MIAMExpress.</strong></p>
+<p><strong>Please note that from July 2014, the MIAMExpress tool is no longer maintained for experiment or array design submissions.  For experiment submissions, please use the <a href="submissions_overview.html">Annotare webform tool</a> instead.  For array design submissions, please follow the <a href='/fgpt/magetab/help/adf_quick_start.html'>instructions here</a>.</strong></p>
 
 <p>&nbsp;</p>
 <a id="use_ae_faq"></a>
@@ -80,7 +80,7 @@
 <ul>
     <li><a href="#mtab_template">Can I get a MAGE-TAB template spreadsheet for submitting experiment data?</a></li>
     <li><a href="#affy">Which files do I need to submit for an Affymetrix experiment?</a></li>
-    <li><a href="#illumina">How do I submit an Illumina experiment?</a></li>
+    <li><a href="#illumina">What files do I need to submit for an Illumina experiment?</a></li>
     <li><a href="#hts">How do I submit a high throughput sequencing (HTS) experiment?</a></li>
     <li><a href="#large_files">I have very large data files, do I need to upload them through the web interface?</a></li>
     <li><a href="#mageml">I have MAGE-ML files generated from in-house pipelines. Does ArrayExpress still accept them?</a></li>
@@ -252,17 +252,17 @@
 </ul>
 <ul>
     <li>
-        <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?<br>
-    </strong>If you submit using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet tool</a>, after you complete a submission it is put in a
+        <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?</strong>
+        <br>If you submit using <a href="/fg/annotare/login">Annotare</a>,
+        after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
+        you can proceed to submit and will then receive an automatic confirmation email containing the accession number.  The number will NOT change throughout data curation and processing, so you can quote it in your manuscript.       
+        <br><br>
+        <p>If you submit using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet tool</a>, after you complete a submission it is put in a
         queue awaiting review and checking by a curator. We aim to respond within a week upon receiving the submission, but response times do vary 
         depending on submission volume. If there are no major issues with your submission (e.g. there is adequate meta-data in the 
         MAGE-TAB spreadsheet describing your experiment and samples, all required data files are correctly formatted), the curator will send you the
         accession number, otherwise he/she will contact you to advise on how to revise and resubmit before an accession number can be assigned. Therefore,
-         assignment of accession numbers also depends on how well the submitted files are prepared.
-        <br><br>
-        <p>If you submit using <a href="/fg/annotare/login">Annotare</a>,
-        after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
-        you can proceed to submit and will then receive an automatic confirmation email containing the accession number.</p></li>
+         assignment of accession numbers also depends on how well the submitted files are prepared.</p></li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
@@ -275,7 +275,7 @@
         until the release date that you set at the time of submission, or until
         a publication is released that contains the ArrayExpress accession
         number relating to your data. You can also change the release date to suit the 
-        peer review progress of your paper.  Please see our <a href="data_availability.html">data availability</a>
+        peer review progress of your paper.  Please see our <a href="data_availability.html#changes">data availability</a>
         page for more information.</li>
 </ul>
 <ul>
@@ -330,12 +330,10 @@
 <ul>
     <li><a id="make_public"></a>
         <strong>My paper is about to be published - how do I make the data public?</strong><br>
-        Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> 
-        with the experiment accession number and tell us when it should be made
-        public. Please send us the citation information, including PubMed ID
-        and Digital object identifier (DOI) too so we can add this to your
-        experiment's record. Please see our <a href="data_availability.html">data
-            availability</a> page for more information.</li></ul>
+        For microarray data, you can <a href="data_availability.html#changes">change the release date</a> using a self-service tool. Your experiment will appear on the ArrayExpress website at about 06:00 UK time the following day, following an overnight website update.<br>
+        For sequencing data, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the experiment accession number and tell us when it should be made public.  We will change release date for you in both ArrayExpress and ENA (where the raw data files are stored) to make sure the records are in sync.<br><br>
+        Please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the citation information too (including PubMed ID and Digital object identifier [DOI]) so we can add this to your experiment's record.</li>
+</ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
 <h5>What files to submit</h5>
@@ -371,26 +369,16 @@
 </ul>
 <ul>
     <li><a id="illumina"></a>
-        <strong>How do I submit an Illumina experiment?</strong><br>
-        You do not need to submit data for every spot
-        on the array. Please use the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina
-            GenomeStudio software </a>(previously known as the "BeadStudio"
-        software) with the 'ArrayExpress Data Submission Report Plug-in' to
-        generate the raw data file for submission. The plug-in is available
-        from the <a href="http://www.illumina.com/software/illumina_connect.ilmn#gene_expression_plug_ins">Illumina
-            connect website</a>. Please take a look at this <a href="/fgpt/magetab/help/data_format.html#illumina">example
-            Illumina raw data file</a>. The unique identifiers in the raw
-        data file should be taken from the "PROBE_ID" column of the
-        GenomeStudio-generated file. (Note: the Illumina GenomeStudio-generated file would have column headings
-        "PROBE_ID" and "ProbeID", and they are not the same! The latter often corresponds to "array address ID" 
-        in the gene chip manifest file and it's the former that we're after.)
+        <strong>What files do I need to submit for an Illumina experiment?</strong><br>
+        Since 18 Jun 2014, we accept either files generated by <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software, using the <a href="http://www.illumina.com/software/illumina_connect.ilmn#gene_expression_plug_ins">ArrayExpress Data Submission Report Plug-in</a>), or binary IDAT files (typically created if you are using R/BioConductor packages such as <a href="http://www.bioconductor.org/packages/release/bioc/html/illuminaio.html">illuminaio</a>).<br><br>
+          If submitting a GenomeStudio file, please try to use unique identifiers from the "PROBE_ID" column of the GenomeStudio-generated file to identify each probe. (Note: the Illumina GenomeStudio-generated file would have column headings "PROBE_ID" and "ProbeID", and they are not the same. The latter often corresponds to "array address ID" in the gene chip manifest file and it's the former that we're after.)
         <br><br>
         For processed data, a data matrix is preferred (PROBE_IDs in rows, processed measurements per hybridisation
         in columns), as in this <a href="/fgpt/magetab/help/data_format.html#data_matrix">MAGE-TAB matrix file example</a>. </li>
 </ul>
 <ul>
     <li><strong><a id="hts"></a>How do I submit a high throughput sequencing (HTS) experiment?</strong><br>
-        Whichever submission tool you may use (<a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a> or <a href="/fg/annotare/login">Annotare</a>), 
+        Whichever submission tool you may use (<a href="/fg/annotare/login">Annotare</a> or <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a> ),
         you will need to provide as much information as possible about the experiment's purpose, starting materials (samples),
         sequencing libraries, wet- and dry-lab protocols used, raw sequence data files for each sequencing
         assay, and optionally processed data files, e.g. BAM alignment files, RPFM/FPKM values for each gene/transcript.
@@ -398,8 +386,7 @@
         on your behalf, so you do not need to send the read files directly to the ENA.
         <br><br>
         Raw data files must be in a format <a href="/ena/about/read-file-formats">accepted by the Sequence Read Archive (SRA)</a> at the ENA,
-        otherwise we will not be able to process your submission.  We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing
-        submissions help page</a> as it explains the requirements in a lot more detail. </li>
+        otherwise we will not be able to process your submission.  We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing submissions help page</a> as it explains the requirements in a lot more detail. </li>
 </ul>
 
 <ul>
@@ -428,8 +415,7 @@
 <ul>
     <li><strong><a id="hit_submit_too_soon"></a>I hit "Submit" at the end of my submission but I haven't actually finished editing.
         I logged in to the submission tool but can't edit my experiment anymore. Help!</strong><br>
-        Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> (MAGE-TAB submitters) or
-        at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (Annotare submitters) 
+        Email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (Annotare submitters) or <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> (MAGE-TAB submitters) 
         as soon as possible and ask us to "reopen" the submission or to "assign" it back to you. (Once submitted, your submission
         may already be worked on by a curator and is considered "closed", so as to avoid confusing,
         concurrent editing of the same submission by you and the curator.) Remember to include your username 
