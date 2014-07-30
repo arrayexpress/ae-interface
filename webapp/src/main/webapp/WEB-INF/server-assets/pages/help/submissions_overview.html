@@ -44,9 +44,11 @@
                 <a href="#WhatToExpect">3. What to expect from each experiment submisssion tool</a><br>
                 <a href="#CommonQuestions">4. Common questions</a><br>
                 <a href="#ADFSub">5. Array Design submissions</a><br>
+                <a href="#UpdateCompletedSub">6. Update/modify an experiment or array design which has been loaded into ArrayExpress</a><br>
             </p>
             <h3><a id="WhatIsASub"></a>1. What do I need to submit?</h3>
             <p>ArrayExpress accepts all functional genomics data, including microarray-based and <a href="UHTS_submissions.html">sequencing</a> data. Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href='http://www.mged.org/Workgroups/MIAME/miame_2.0.html'>MIAME</a>) guidelines, while sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href='http://www.mged.org/minseqe/'>MINSEQE</a>).</p>
+            <p><span style="color:red">Please try and get your submission in the best possible shape to avoid <a href='#UpdateCompletedSub'>retrospective fixes post-curation</a>, because such fixes could be tedious and lengthy (especially for <a href='UHTS_submissions.html#HTSDataReleasePolicy'>sequencing experiments</a>).</span></p>
             <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>. Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted to the <a href="/ega/">European Genome-phenome Archive (EGA)</a> (<a href="uhts_submissions.html#HumanIdentifiableData">more details here</a>).</p>             
             <p>Following the MIAME/MINSEQE guidelines, we ask experiment submitters to provide:</p>
             <div class="grid_1 alpha">
@@ -151,12 +153,11 @@
 
             <h3><a id="CommonQuestions"></a>4. Common questions</h3>
             <ul>
-                <li><strong>General submission questions</strong> (MAGE-TAB and MIAMExpress): <a href="faq.html#submit_faq_general">Submission FAQ</a></li>
+                <li><strong>General submission questions</strong>: <a href="faq.html#submit_faq_general">Submission FAQ</a></li>
                 <li>How to <strong>use Annotare</strong> for submission: <a href="/fgpt/annotare_help/">Annotare help</a></li>
-                <li>How to <strong>prepare MAGE-TAB submission</strong>: <a href="/fgpt/magetab/help">MAGE-TAB help</a></li>                
-                <li>How to <strong>upload data files via FTP</strong> for submission: <a href="ftp_upload.html">FTP upload instructions</a></li>
+                <li>How to <strong>upload data files via FTP</strong> for submission: <a href="ftp_upload.html">FTP upload instructions</a></li>                
                 <li>Getting ArrayExpress <strong>accession number</strong> for your experiment: <a href="faq.html#need_acc_num_urgent">Accession number</a></li>
-                <li>How to change <strong>release dates</strong> for your unpublished data: <a href="data_availability.html#changes">Release date changes</a></li>
+                <li>How to <strong>change release dates</strong> for your unpublished data: <a href="data_availability.html#changes">Release date changes</a></li>
             </ul>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
@@ -185,6 +186,13 @@
             <p>If you have a custom microarray which is not accessioned in ArrayExpress at all and is not commercially available, please download an array design format (ADF) template, fill it in, and submit it following <a href="/fgpt/magetab/help/adf_quick_start.html">these ADF submission guidelines</a>. Find more information in this <a href="/fgpt/magetab/help/creating_an_adf.html">step by step guide</a> on how to fill in the template.</p>
 
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+            
+            <h3><a id="UpdateCompletedSub"></a>6. Update/modify an experiment or array design which has been loaded into ArrayExpress</h3>
+            
+            <p>Once we have finished curating and processing your submission, we will load the experiment or array design into ArrayExpress database. Occassionally, the loaded record needs to be modified or updated, perhaps because a submission error needs to be fixed, or you need to add/remove samples or files in response to comments from peer reviewers of your pre-published paper.</p>
+            <p>To make any changes to an experiment or array design which has been loaded into ArrayExpress database, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the accession number and describe what corrections are needed.  A curator will unload your data from the database, and may be able to do minor corrections such as fixing a few typing errors, before re-loading the corrected version back into the database. Data sets which undergo major changes, such as addition/removal of samples/assays/data files for an experiment, would most likely require re-curation before they are fit for loading into ArrayExpress again, and hence could take a considerable amount of time to complete.</p>
+            <p><strong>Special rules apply to sequencing experiments</strong>, because the storage of meta-data and raw data files is split between ArrayExpress and <a href="/ena">ENA</a> respectively.  Please refer to our <a href="UHTS_submissions.html#HTSDataReleasePolicy">guide to updating a sequencing experiment</a> for further details.</p>         
+            
         </section>
         <aside class="grid_6 omega">
             <h3>Help</h3>
