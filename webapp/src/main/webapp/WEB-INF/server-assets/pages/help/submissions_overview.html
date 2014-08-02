@@ -58,7 +58,7 @@
             <div  class="grid_17 omega">
                 <p><strong>Meta-data</strong>: E.g. Background biology of your experiment, aim of the experiment, biological materials/samples used and their characteristics, wet-lab and dry-lab procedures (protocols).</p>
                 <p><strong>Raw data files</strong>: These are unprocessed data files obtained from the microarray scanner (e.g. Affymetrix CEL files, Agilent feature extraction files) or from the sequencing machine (e.g. fastq files).</p>
-                <p><i>Microarray experiment submitters</i>: Please make sure the format of your raw data files matches one of the <a href="/fgpt/magetab/help/data_format.html#raw">accepted formats</a>.  For Illumina BeadChip microarray experiments, make sure you generated raw data files using the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software) with the 'ArrayExpress Data Submission Report Plug-in'. More about <a href="faq.html#illumina">Illumina BeadChip submission</a>.</p>
+                <p><i>Microarray experiment submitters</i>: Please make sure the format of your raw data files matches one of the <a href="/fgpt/magetab/help/data_format.html#raw">accepted formats</a>.  For Illumina BeadChip microarray experiments, please see this <a href="faq.html#illumina">Illumina BeadChip submission FAQ page</a>.</p>
                 <p><i>Sequencing experiment submitters</i>: Please make sure your raw sequence read files are formatted and prepared according to <a href="/ena/about/read-file-formats">specifications by the European Nucleotide Archive (ENA)</a> and you've gathered all required information describing your samples/libraries/data files. The raw sequence read files must be sent to ArrayExpress via <a href="ftp_upload.html">FTP</a>. See this <a href = "UHTS_submissions.html">specific help page on sequencing submissions</a> for more information.</p>
                 <p><strong>Processed data files</strong>: These are data files generated from the raw data files, often involving e.g. normalisation or background-subtraction. In sequencing experiments, the processing can also involve alignment of sequencing reads to a reference genome, calculation of RPKM/FPKM values, etc.</p>
                 <p><i>Microarray experiment submitters</i>: Please prepare files as in this <a href="/fgpt/magetab/help/data_format.html#normalized">per-hybridisation normalised file example</a> or the <a href="/fgpt/magetab/help/data_format.html#data_matrix">data matrix format</a>. We do not enforce strict formatting requirements for processed data files, but you're encouraged to use the recommended formats.  Please also make sure you have provided a detailed normalisation/data transformation protocol in your meta-data, as that will allow your files to be interpreted properly.</p>
@@ -104,10 +104,10 @@
                 </tr>                
                 <tr>
                     <td>
-                        <h5 class="icon icon-functional" data-icon="_"><a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet tool</a></h5>
+                        <h5 class="icon icon-functional" data-icon="_"><a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet tool (to be retired by 31 August 2014)</a></h5>
                     </td>
                     <td><ul>
-                        <li>All experiments, including those with complex designs and very large number of samples/assays</li>
+                        <li>Only for existing (incomplete) submissions that need to be finished before the tool's retirement</li>
                     </ul>    
                     </td>
                     <td><ul>
@@ -176,7 +176,7 @@
             <p>If you use a commercially available microarray which is not accessioned in ArrayExpress, please do the following:</p>
             <ol>
             <li>Download this <a href="/fgpt/magetab/help/commercial_array_header_template.xls">meta-data template file</a>;</li>
-            <li>Fill in the template with as much background information about the array design as possible (here is a <a href="/fgpt/magetab/help/creating_an_adf.html#ADFHeader">guide</a>), save it as a tab-delimited text (*.txt) file when done;</li>
+            <li>Fill in the template with as much background information about the array design as possible (here is a <a href="/fgpt/magetab/help/creating_an_adf.html#ADFHeader">guide</a>), especially the mandatory fields. Save it as a tab-delimited text (*.txt) file when done;</li>
             <li>Send us the filled template (*.txt file) and any annotation/support files for the array design <a href="ftp_upload.html">by FTP</a>;</li>
             <li>Write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>, mentioning the files which have been uploaded.</li>
             </ol>            
