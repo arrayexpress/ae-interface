@@ -13,7 +13,7 @@
     <li><a href="#use_ae_faq">Using ArrayExpress</a></li>
     <li><a href="#submit_faq_general">Submitting data to ArrayExpress</a></li>
 </ol>
-<p><strong>Please note that from July 2014, the MIAMExpress tool is no longer maintained for experiment or array design submissions.  For experiment submissions, please use the <a href="submissions_overview.html">Annotare webform tool</a> instead.  For array design submissions, please follow the <a href='/fgpt/magetab/help/adf_quick_start.html'>instructions here</a>.</strong></p>
+<p><strong>Please note that from July 2014, the MIAMExpress tool is no longer maintained for experiment or array design submissions. MAGE-TAB tool was retired on 1 September 2014.  For experiment submissions, please use the <a href="submissions_overview.html">Annotare webform tool</a> instead.  For array design submissions, please follow the <a href='/fgpt/magetab/help/adf_quick_start.html'>instructions here</a>.</strong></p>
 
 <p>&nbsp;</p>
 <a id="use_ae_faq"></a>
@@ -253,16 +253,11 @@
 <ul>
     <li>
         <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?</strong>
-        <br>If you submit using <a href="/fg/annotare/login">Annotare</a>,
+        <br>When submitting via <a href="/fg/annotare/login">Annotare</a>,
         after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
-        you can proceed to submit and will then receive an automatic confirmation email containing the accession number.  The number will NOT change throughout data curation and processing, so you can quote it in your manuscript.       
-        <br><br>
-        <p>If you submit using the <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB spreadsheet tool</a>, after you complete a submission it is put in a
-        queue awaiting review and checking by a curator. We aim to respond within a week upon receiving the submission, but response times do vary 
-        depending on submission volume. If there are no major issues with your submission (e.g. there is adequate meta-data in the 
-        MAGE-TAB spreadsheet describing your experiment and samples, all required data files are correctly formatted), the curator will send you the
-        accession number, otherwise he/she will contact you to advise on how to revise and resubmit before an accession number can be assigned. Therefore,
-         assignment of accession numbers also depends on how well the submitted files are prepared.</p></li>
+        you can proceed to submit and will receive an automatic confirmation email containing the accession number usually within 24 hours. Sometimes we receive a high volume of submissions, which can cause delay in generating accession numbers, so please bear with us. The accession number will NOT change throughout data curation and processing, so you can quote it in your manuscript.<br><br>
+        If you still haven't received an accession number 5 working days post submission, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> citing your experiment's title, and we will investigate.
+        </li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
@@ -296,10 +291,7 @@
         <strong>I tried to login to ArrayExpress to see some recently
             submitted private data but it said my
             username and password were invalid. Why?</strong><br>
-        Possibly you have tried to login with your submitter account with our submission tools (
-        <a href="/fg/annotare/login">Annotare</a>,
-        <a href="/cgi-bin/microarray/magetab.cgi"> MAGE-TAB</a>,
-        or <a href="/miamexpress/login.html"> MIAMExpress</a>)?
+        Possibly you have tried to login with your submitter account with our submission tools, such as <a href="/fg/annotare/login">Annotare</a>?
         These "submitter" accounts can only be used for
         submitting data, not viewing it in ArrayExpress. We will provide you
         with an ArrayExpress data access login account after your submission has been
@@ -337,7 +329,7 @@
 <ul>
     <li><a id="add_publication"></a>
         <strong>My paper has been published - how do I add the citation details to my experiment?</strong><br>
-        You can add, remove or edit citation details for your experiment (microarray or sequencing alike) using this change the release date using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>.  Simply login with the data access account details which we emailed you when curation was completed, double-click at the experiment that you would like associate the publication with, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s).<br><br> Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. The changes you make will appear on the ArrayExpress website at about 06:00 UK time the following day, following an overnight website update.<br>
+        You can add, remove or edit citation details for your experiment (microarray or sequencing alike) using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>.  Simply login with the data access account details which we emailed you when curation was completed, double-click at the experiment that you would like associate the publication with, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s).<br><br> Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. The changes you make will appear on the ArrayExpress website at about 06:00 UK time the following day, following an overnight website update.<br>
     </li>
 </ul>
 
@@ -370,7 +362,7 @@
         You will need to provide as much information as possible about the experiment's purpose, starting materials (samples),
         sequencing libraries, wet- and dry-lab protocols used, raw sequence data files for each sequencing
         assay, and optionally processed data files, e.g. BAM alignment files, RPFM/FPKM values for each gene/transcript. The <a href="/fg/annotare/login">Annotare</a> 
-         submissiion tool will guide you step-by-step in the process.<br><br>
+         submission tool will guide you step-by-step in the process.<br><br>
         After you've submitted via Annotare, an ArrayExpress curator will check the meta-data and data files you provided. If 
         everything is fine, ArrayExpress will act as a data broker and transfer the raw read files to the <a href="/ena">European Nucleotide Archive (ENA)</a>
         on your behalf, so you do not need to send the read files directly to the ENA.
@@ -381,8 +373,7 @@
 
 <ul>
     <li><strong><a id="large_files"></a>I have very large data files, do I need to upload them through the web interface?</strong><br>
-        Large (over 10Mb) data files can be sent to us via <a href="ftp_upload.html"> FTP</a> instead of uploaded through the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB spreadsheet</a>
-         or <a href="/fg/annotare/login">Annotare webform</a> tool. If you're submitting using MAGE-TAB tool, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> to let us know if you have transferred the files. (Note: When using MAGE-TAB tool, one small size (dummy/toy) data file must also be uploaded to allow the submission to be completed. This dummy file will be ignored as long as it is not listed in the MAGE-TAB meta-data spreadsheet.)
+        Large (over 10Mb) data files can be sent to us via <a href="ftp_upload.html"> FTP</a> instead of uploaded through the <a href="/fg/annotare/login">Annotare webform</a> tool (more information on this <a href="/fgpt/annotare_help/describe_files.html">help page</a>).
     </li>
 </ul>
 
