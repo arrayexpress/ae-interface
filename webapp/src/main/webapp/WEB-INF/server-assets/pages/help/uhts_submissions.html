@@ -34,7 +34,15 @@
             <h3><a id="HowToSubmit"></a>2. What data files to submit, and how</h3>
             <p><a id="meta_data"></a><strong>Experiment meta-data</strong>: It should be submitted via the <a href="/fg/annotare/login">Annotare webform submission tool</a> (further described on this <a href="submissions_overview.html">submissions overview page</a>).</p>
             
-            <p><a id="raw_data_files"></a><strong>Raw data files</strong>: Please prepare them according to <a href='/ena/about/read-file-formats'>ENA specifications</a> (e.g. each individual fastq file should be compressed by gzip or bzip2). Data files which do not satisfy ENA's requirements will not be accepted. This is a developing field so please do check the specifications every time you submit a new experiment. If you are submitting BAM files as raw data files, please read this important documentation on <a href="#BamSpec">BAM file specification</a>.</p>
+            <p><a id="raw_data_files"></a><strong>Raw data files</strong>: Please prepare them according to <a href='/ena/about/read-file-formats'>ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
+            <p>For fastq files, each file must be individually compressed by gzip or bzip2. Do not bundle multiple fastq files into one archive.  For paired-end experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <code>_1.fq.gz</code> and <code>_2.fq.gz</code>. Examples of naming styles supported by the ENA:            </p>
+            <ul>
+            <li>sampleA_1.fq.gz / sampleA_2.fq.gz</li>
+            <li>sampleA_F.fq.gz / sampleA_R.fq.gz</li>
+            </ul>
+
+            
+            <p>If you are submitting BAM files as raw data files, please read this important documentation on <a href="#BamSpec">BAM file specification</a>.</p>
             
             <p><a id="MD5"></a><strong>MD5 checksum of raw files</strong>: As sequence files tend to be very large, we implement a file integrity validation step before sending them to the ENA on your behalf. For each raw file, please calculate its MD5 checksum. The checksum is hexadecimal and expressed as a long string of letters and numbers, which looks something like this: <code>eef75461035fb66d9173799d4e26ea97</code>. MD5 checksums are like the files' digital "fingerprints" and it is very unlikely that two non-identical files would generate the same "fingerprint", thus allowing us to verify that each file has not been corrupted during FTP transfer. Remember to calculate the checksum from the actual compressed file (e.g. fastq.gz or fastq.bz2) that is sent to us, not from the uncompressed fastq file or a re-compressed version created at a later time.</p>
 
