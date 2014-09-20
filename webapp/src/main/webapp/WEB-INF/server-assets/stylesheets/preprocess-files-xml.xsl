@@ -67,7 +67,7 @@
     <xsl:function name="ae:getExtension" as="xs:string">
         <xsl:param name="pRow"/>
         <xsl:choose>
-            <xsl:when test="ends-with($pRow/col[8], '.tar.gz')">
+            <xsl:when test="fn:ends-with($pRow/col[8], '.tar.gz')">
                 <xsl:text>tar.gz</xsl:text>    
             </xsl:when>
             <xsl:when test="fn:not(fn:contains($pRow/col[8], '.'))">
@@ -208,12 +208,6 @@
                                 size="{ae:getSize(.)}"
                                 lastmodified="{ae:getModifyDate(.)}"
                                 hidden="{ae:isFileHidden(.)}">
-                                <xsl:if test="$vFileKind = 'raw' or $vFileKind = 'processed'">
-                                    <xsl:call-template name="add-dataformat-attribute">
-                                        <xsl:with-param name="pAccession" select="$vAccession"/>
-                                        <xsl:with-param name="pKind" select="@kind"/>
-                                    </xsl:call-template>
-                                </xsl:if>
                             </file>
                         </xsl:for-each>
                     </folder>
@@ -221,30 +215,4 @@
             </xsl:for-each-group>
         </files>    
     </xsl:template>
-    
-    <xsl:function name="ae:getDataFormat">
-        <xsl:param name="pBDG"/>
-        <xsl:param name="pKind"/>
-        <xsl:variable name="vIsDerived">
-            <xsl:choose>
-                <xsl:when test="$pKind = 'processed'">
-                    <xsl:text>1</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>0</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:value-of select="fn:string-join(fn:distinct-values($pBDG[isderived = $vIsDerived]/dataformat), ', ')"/>
-    </xsl:function>
-    
-    
-    <xsl:template name="add-dataformat-attribute">
-        <xsl:param name="pAccession"/>
-        <xsl:param name="pKind"/>
-        <!--
-        <xsl:variable name="vExperiment" select="ae:getMappedValue('visible-experiments', $pAccession)"/>
-        <xsl:attribute name="dataformat" select="ae:getDataFormat($vExperiment/bioassaydatagroup, $pKind)"/>
-        -->
-    </xsl:template>
-</xsl:stylesheet>
+ </xsl:stylesheet>
