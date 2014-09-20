@@ -57,7 +57,7 @@
             <div class="grid_6 omega">
                 <section>
                     <h3 class="icon icon-generic" data-icon="g">Data Content</h3>
-                    <xsl:if test="fn:exists($vRetrieved)">
+                    <xsl:if test="fn:string-length($vRetrieved) > 1">
                         <h5>Updated <xsl:value-of select="ae:formatDateTime2($vRetrieved)"/></h5>
                     </xsl:if>
                     <!-- <p>ArrayExpress statistics:</p> -->
