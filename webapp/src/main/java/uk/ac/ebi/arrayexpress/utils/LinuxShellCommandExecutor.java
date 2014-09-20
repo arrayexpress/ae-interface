@@ -57,10 +57,10 @@ public class LinuxShellCommandExecutor {
             InputStream stdOut = process.getInputStream();
             InputStream stdErr = process.getErrorStream();
 
-            int returnCode = process.waitFor();
-
             output = streamToString(stdOut, "UTF-8");
             errors = streamToString(stdErr, "UTF-8");
+
+            int returnCode = process.waitFor();
 
             return 0 == returnCode;
         } else {
