@@ -29,7 +29,6 @@ import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
-import uk.ac.ebi.arrayexpress.utils.persistence.PersistableStringList;
 import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
@@ -38,8 +37,6 @@ import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +56,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";
 
     private FilePersistence<PersistableDocumentContainer> document;
-    private FilePersistence<PersistableStringList> experimentsInAtlas;
+    //private FilePersistence<PersistableStringList> experimentsInAtlas;
     private FilePersistence<PersistableString> species;
     private FilePersistence<PersistableString> arrays;
 
@@ -167,10 +164,12 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
 
+        /*
         this.experimentsInAtlas = new FilePersistence<>(
                 new PersistableStringList()
                 , new File(getPreferences().getString("ae.atlasexperiments.persistence-location"))
         );
+        */
 
         this.species = new FilePersistence<>(
                 new PersistableString()
@@ -262,6 +261,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
+    /*
     public void reloadExperimentsInAtlas( String sourceLocation ) throws IOException
     {
         try {
@@ -281,6 +281,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             throw new RuntimeException(x);
         }
     }
+    */
 
     private void updateIndex() throws IOException, InterruptedException
     {
@@ -293,19 +294,19 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
+    /*
     private void updateAtlasMap() throws IOException
     {
         maps.clearMap(MAP_EXPERIMENTS_IN_ATLAS);
         for (String accession : experimentsInAtlas.getObject()) {
             maps.setMappedValue(MAP_EXPERIMENTS_IN_ATLAS, accession, "1");
         }
-
     }
+    */
+
     private void updateMaps() throws IOException
     {
         this.logger.debug("Updating maps for experiments");
-
-        updateAtlasMap();
 
         maps.clearMap(MAP_VISIBLE_EXPERIMENTS);
         maps.clearMap(MAP_EXPERIMENTS_FOR_PROTOCOL);

@@ -1,16 +1,3 @@
-package uk.ac.ebi.arrayexpress.jobs;
-
-import org.quartz.JobExecutionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.*;
-import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
-
-import java.io.File;
-import java.io.IOException;
-
 /*
  * Copyright 2009-2014 European Molecular Biology Laboratory
  *
@@ -28,6 +15,21 @@ import java.io.IOException;
  *
  */
 
+package uk.ac.ebi.arrayexpress.jobs;
+
+import org.quartz.JobExecutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.app.ApplicationJob;
+import uk.ac.ebi.arrayexpress.components.*;
+import uk.ac.ebi.arrayexpress.components.Experiments.UpdateSourceInformation;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
+
+import java.io.File;
+import java.io.IOException;
+
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 public class ReloadExperimentsFromAE2Job extends ApplicationJob
 {
     // logging machinery
@@ -36,73 +38,26 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
     @Override
     public void doExecute( JobExecutionContext jec ) throws Exception
     {
-
-
         try {
             // check preferences and if source location is defined, use that
             String sourceLocation = getPreferences().getString("ae.experiments.ae2.source-location");
-            Experiments.UpdateSourceInformation sourceInformation = null;
-            if (!"".equals(sourceLocation)) {
+            if (isNotBlank(sourceLocation)) {
                 logger.info("Reload of experiment data from [{}] requested", sourceLocation);
 
-                File newsFile = new File(sourceLocation, "news.xml");
-                String newsXml = null;
-                if (newsFile.exists()) {
-                    newsXml = getXmlFromFile(newsFile);
-                }
-
-                String usersXml = getXmlFromFile(new File(sourceLocation, "users.xml"));
-                String arrayDesignsXml = getXmlFromFile(new File(sourceLocation, "arrays.xml"));
-                String protocolsXml = getXmlFromFile(new File(sourceLocation, "protocols.xml"));
-                File experimentsSourceFile = new File(sourceLocation, "experiments.xml");
-                String experimentsXml = getXmlFromFile(experimentsSourceFile);
-                sourceInformation = new UpdateSourceInformation(
-                        Experiments.ExperimentSource.AE2
-                        , experimentsSourceFile)
-                ;
-
-                // export to temp directory anyway (only if debug is enabled)
-                if (logger.isDebugEnabled()) {
-                    StringTools.stringToFile(
-                            experimentsXml
-                            , new File(
-                                    System.getProperty("java.io.tmpdir")
-                                    , "ae2-src-experiments.xml"
-                            )
-                            , "UTF-8"
-                    );
-                }
-
-                if (null != newsXml && !"".equals(newsXml)) {
-                    updateNews(newsXml);
-                }
-
-                if (null != usersXml && !"".equals(usersXml)) {
-                    updateUsers(usersXml);
-                }
-
-                // update experiments first so protocols and arrays can access experiment information when updating
-                if (null != experimentsXml && !"".equals(experimentsXml)) {
-                    updateExperiments(experimentsXml, sourceInformation);
-                }
-
-                if (null != arrayDesignsXml && !"".equals(arrayDesignsXml)) {
-                    updateArrayDesigns(arrayDesignsXml);
-                }
-
-                if (null != protocolsXml && !"".equals(protocolsXml)) {
-                    updateProtocols(protocolsXml);
-                }
+                updateNews(new File(sourceLocation, "news.xml"));
+                updateUsers(new File(sourceLocation, "users.xml"));
+                updateExperiments(new File(sourceLocation, "experiments.xml"));
+                updateArrayDesigns(new File(sourceLocation, "arrays.xml"));
+                updateProtocols(new File(sourceLocation, "protocols.xml"));
 
                 logger.info("Reload of experiment data from [{}] completed", sourceLocation);
             }
-
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
     }
 
-    private String getXmlFromFile(File xmlFile) throws IOException
+    private String getXmlFromFile( File xmlFile ) throws IOException
     {
         logger.info("Getting XML from file [{}]", xmlFile);
         String xml =  StringTools.fileToString(
@@ -116,47 +71,115 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         return xml;
     }
 
-    private void updateNews( String xmlString ) throws IOException, InterruptedException
+    private void loadMapFromFile( String mapName, File mapFile ) throws IOException
     {
-        ((News) getComponent("News")).update(xmlString);
-
-        logger.info("News reload completed");
-
+        if (null != mapFile && mapFile.exists()) {
+            ((MapEngine) getComponent("MapEngine")).loadMap(mapName, mapFile);
+        }
     }
 
-    private void updateUsers( String xmlString ) throws IOException, InterruptedException
+    private void clearMap( String mapName )
     {
-        ((Users) getComponent("Users")).update(xmlString, Users.UserSource.AE2);
-
-        logger.info("User information reload completed");
-
+        ((MapEngine) getComponent("MapEngine")).clearMap(mapName);
     }
 
-    private void updateArrayDesigns( String xmlString ) throws IOException, InterruptedException
+    private void updateNews( File xmlFile ) throws IOException, InterruptedException
     {
-        ((ArrayDesigns) getComponent("ArrayDesigns")).update(xmlString, ArrayDesigns.ArrayDesignSource.AE2);
-
-        logger.info("Platform design information reload completed");
-
+        if (null != xmlFile && xmlFile.exists()) {
+            String xmlString = getXmlFromFile(xmlFile);
+            if (isNotBlank(xmlString)) {
+                ((News) getComponent("News")).update(xmlString);
+                logger.info("News reload completed");
+            }
+        }
     }
 
-    private void updateProtocols( String xmlString ) throws IOException, InterruptedException
+    private void updateUsers( File xmlFile ) throws IOException, InterruptedException
     {
-        ((Protocols) getComponent("Protocols")).update(xmlString, Protocols.ProtocolsSource.AE2);
-
-        logger.info("Protocols information reload completed");
-
+        if (null != xmlFile && xmlFile.exists()) {
+            String xmlString = getXmlFromFile(xmlFile);
+            if (isNotBlank(xmlString)) {
+                ((Users) getComponent("Users")).update(xmlString, Users.UserSource.AE2);
+                logger.info("User information reload completed");
+            } else {
+                throw new IOException("[" + xmlFile.getPath() + "] is null or empty");
+            }
+        } else {
+            throw new IOException("Unable to locate [" + (null != xmlFile ? xmlFile.getPath() : "null") + "]");
+        }
     }
 
-    private void updateExperiments( String xmlString, UpdateSourceInformation sourceInformation ) throws IOException, InterruptedException
+    private void updateExperiments( File experimentsFile ) throws IOException, InterruptedException
     {
-        ((Experiments) getComponent("Experiments")).update(
-                xmlString
-                , sourceInformation
-        );
+        if (null != experimentsFile && experimentsFile.exists()) {
+            String experimentsXml = getXmlFromFile(experimentsFile);
 
-        logger.info("Experiment information reload completed");
+            if (isNotBlank(experimentsXml)) {
+                // export to temp directory anyway (only if debug is enabled)
+                if (logger.isDebugEnabled()) {
+                    StringTools.stringToFile(
+                            experimentsXml
+                            , new File(
+                                    System.getProperty("java.io.tmpdir")
+                                    , "ae2-src-experiments.xml"
+                            )
+                            , "UTF-8"
+                    );
+                }
 
+                UpdateSourceInformation sourceInformation = new UpdateSourceInformation(
+                        Experiments.ExperimentSource.AE2
+                        , experimentsFile
+                );
+
+                loadMapFromFile(
+                        Experiments.MAP_EXPERIMENTS_IN_ATLAS
+                        , new File(experimentsFile.getParentFile(), "atlas-experiments.txt")
+                );
+
+                ((Experiments) getComponent("Experiments")).update(
+                        experimentsXml
+                        , sourceInformation
+                );
+
+                clearMap(Experiments.MAP_EXPERIMENTS_IN_ATLAS);
+
+                logger.info("Experiment information reload completed");
+            } else {
+                throw new IOException("[" + experimentsFile.getPath() + "] is null or empty");
+            }
+        } else {
+            throw new IOException("Unable to locate [" + (null != experimentsFile ? experimentsFile.getPath() : "null") + "]");
+        }
     }
 
+    private void updateArrayDesigns( File xmlFile ) throws IOException, InterruptedException
+    {
+        if (null != xmlFile && xmlFile.exists()) {
+            String xmlString = getXmlFromFile(xmlFile);
+            if (isNotBlank(xmlString)) {
+                ((ArrayDesigns) getComponent("ArrayDesigns")).update(xmlString, ArrayDesigns.ArrayDesignSource.AE2);
+                logger.info("Array design information reload completed");
+            } else {
+                throw new IOException("[" + xmlFile.getPath() + "] is null or empty");
+            }
+        } else {
+            throw new IOException("Unable to locate [" + (null != xmlFile ? xmlFile.getPath() : "null") + "]");
+        }
+    }
+
+    private void updateProtocols( File xmlFile ) throws IOException, InterruptedException
+    {
+        if (null != xmlFile && xmlFile.exists()) {
+            String xmlString = getXmlFromFile(xmlFile);
+            if (isNotBlank(xmlString)) {
+                ((Protocols) getComponent("Protocols")).update(xmlString, Protocols.ProtocolsSource.AE2);
+                logger.info("Protocols information reload completed");
+            } else {
+                throw new IOException("[" + xmlFile.getPath() + "] is null or empty");
+            }
+        } else {
+            throw new IOException("Unable to locate [" + (null != xmlFile ? xmlFile.getPath() : "null") + "]");
+        }
+    }
 }

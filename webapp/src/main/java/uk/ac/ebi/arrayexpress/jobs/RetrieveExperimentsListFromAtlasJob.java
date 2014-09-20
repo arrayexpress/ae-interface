@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.Experiments;
 
 public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
 {
@@ -38,7 +37,7 @@ public class RetrieveExperimentsListFromAtlasJob extends ApplicationJob
 
         if (null != srcLocation && srcLocation.length() > 0) {
             try {
-                ((Experiments) app.getComponent("Experiments")).reloadExperimentsInAtlas(srcLocation);
+                //((Experiments) app.getComponent("Experiments")).reloadExperimentsInAtlas(srcLocation);
             } catch (Exception x) {
                 // update didn't happen - reschedule
                 getController().scheduleJobInFuture(

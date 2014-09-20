@@ -18,10 +18,16 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
+import au.com.bytecode.opencsv.CSVReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +63,29 @@ public class MapEngine extends ApplicationComponent
     {
         if (mapRegistry.containsKey(mapName)) {
             mapRegistry.get(mapName).clearValues();
+        } else {
+            logger.error("Map [{}] is not registered", mapName);
+        }
+    }
+
+    public synchronized void loadMap( String mapName, File tsvFile ) throws IOException
+    {
+        if (mapRegistry.containsKey(mapName)) {
+            clearMap(mapName);
+            CSVReader tsvReader = new CSVReader(
+                    new BufferedReader(
+                            new FileReader(tsvFile)
+                    )
+                    , '\t'
+            );
+
+            for (String[] keyValue : tsvReader.readAll()) {
+                if (null != keyValue && 2 == keyValue.length) {
+                    setMappedValue(mapName, keyValue[0], keyValue[1]);
+                } else {
+                    throw new IOException("File [" + tsvFile.getPath() + "] contains invalid entry [" + StringTools.arrayToString(keyValue, "|") + "]");
+                }
+            }
         } else {
             logger.error("Map [{}] is not registered", mapName);
         }
