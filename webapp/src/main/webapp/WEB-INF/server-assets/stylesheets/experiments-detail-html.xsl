@@ -98,7 +98,7 @@
             <table cellpadding="0" cellspacing="0" border="0">
                 <xsl:call-template name="exp-status-section">
                     <xsl:with-param name="pIsGoogleBot" select="$vIsGoogleBot"/>
-                    <xsl:with-param name="pIsPrivate" select="not(user/@id = '1') and ($userid != '')"/>
+                    <xsl:with-param name="pIsPrivate" select="fn:not(user/@id = '1') and ($userid)"/>
                 </xsl:call-template>
 
                 <xsl:call-template name="exp-organism-section">
@@ -142,7 +142,7 @@
 
                 <xsl:call-template name="exp-miame-section"/>
 
-                <xsl:if test="not($userid)"> <!-- curator logged in -->
+                <xsl:if test="fn:not($userid)"> <!-- curator logged in -->
                     <xsl:call-template name="exp-experimental-factors-section">
                         <xsl:with-param name="pQueryId" select="$queryid"/>
                     </xsl:call-template>
@@ -161,6 +161,10 @@
                     <xsl:with-param name="pQueryId" select="$queryid"/>
                     <xsl:with-param name="pBasePath" select="$context-path"/>
                 </xsl:call-template>
+
+                <xsl:if test="fn:not($userid) or (fn:not($userid = 1) and (user/@id = $userid))">
+                    <xsl:call-template name="exp-stats-section"/>
+                </xsl:if>
             </table>
         </div>
     </xsl:template>

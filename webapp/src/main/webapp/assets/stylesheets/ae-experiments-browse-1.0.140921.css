@@ -88,3 +88,23 @@
     width: 60px;
     text-align: center;
 }
+
+#ae-browse .col_views {
+    width: 70px;
+    text-align: left;
+}
+
+#ae-browse td.col_views {
+    text-align: right;
+    padding-right: 20px;
+}
+
+#ae-browse .col_downloads {
+    width: 70px;
+    text-align: left;
+}
+
+#ae-browse td.col_downloads {
+    text-align: right;
+    padding-right: 20px;
+}

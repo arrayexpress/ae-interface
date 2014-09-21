@@ -1061,6 +1061,19 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template name="exp-stats-section">
+        <xsl:if test="@views or @downloads">
+            <tr>
+                <td class="name"><div>Stats</div></td>
+                <td class="value">
+                    <div>
+                        <xsl:if test="@views"><xsl:value-of select="@views"/> views<xsl:if test="@downloads">, </xsl:if></xsl:if>
+                        <xsl:if test="@downloads"><xsl:value-of select="@downloads"/> downloads</xsl:if>
+                    </div>
+                </td>
+            </tr>
+        </xsl:if>
+    </xsl:template>
 
     <xsl:template name="detail-row">
         <xsl:param name="pName" as="xs:string" select="''"/>

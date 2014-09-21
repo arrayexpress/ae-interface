@@ -45,6 +45,7 @@
 
     <xsl:variable name="vSearchMode" select="fn:ends-with($relative-uri, 'search.html')"/>
     <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
+    <xsl:variable name="vUnrestrictedAccess" select="fn:not($userid)"/>
 
     <xsl:template match="/">
         <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Search results for &quot;', $keywords, '&quot;') else 'Experiments'"/>
@@ -60,14 +61,14 @@
             </xsl:with-param>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.0.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.140921.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraJS">
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.131020.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.140921.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -161,9 +162,13 @@
                                     <col class="col_processed"/>
                                     <col class="col_raw"/>
                                     <col class="col_atlas"/>
+                                    <xsl:if test="$vUnrestrictedAccess">
+                                        <col class="col_views"/>
+                                        <col class="col_downloads"/>
+                                    </xsl:if>
                                     <thead>
                                         <xsl:call-template name="table-pager">
-                                            <xsl:with-param name="pColumnsToSpan" select="9"/>
+                                            <xsl:with-param name="pColumnsToSpan" select="if ($vUnrestrictedAccess) then 11 else 9"/>
                                             <xsl:with-param name="pName" select="'experiment'"/>
                                             <xsl:with-param name="pTotal" select="$vTotal"/>
                                             <xsl:with-param name="pPage" select="$vPage"/>
@@ -242,6 +247,25 @@
                                                     <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                                 </xsl:call-template>
                                             </th>
+                                            <xsl:if test="$vUnrestrictedAccess">
+                                                <th class="col_views sortable">
+                                                    <xsl:text>Views</xsl:text>
+                                                    <xsl:call-template name="add-table-sort">
+                                                        <xsl:with-param name="pKind" select="'views'"/>
+                                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                                <th class="col_downloads sortable">
+                                                    <xsl:text>DLs</xsl:text>
+                                                    <xsl:call-template name="add-table-sort">
+                                                        <xsl:with-param name="pKind" select="'downloads'"/>
+                                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                            </xsl:if>
+
                                         </tr>
                                     </thead>
                                 </table>
@@ -255,6 +279,10 @@
                                     <col class="col_processed"/>
                                     <col class="col_raw"/>
                                     <col class="col_atlas"/>
+                                    <xsl:if test="$vUnrestrictedAccess">
+                                        <col class="col_views"/>
+                                        <col class="col_downloads"/>
+                                    </xsl:if>
                                     <tbody>
                                         <xsl:call-template name="ae-sort-experiments">
                                             <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
@@ -264,7 +292,7 @@
                                             <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                         </xsl:call-template>
                                         <tr>
-                                            <td colspan="9" class="col_footer">
+                                            <td colspan="{if ($vUnrestrictedAccess) then '11' else '9'}" class="col_footer">
                                                 <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format</a>
                                                 <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon  icon-functional" data-icon="S">Export matching metadata in XML format</a>
                                                 <a href="{$context-path}/rss/v2/experiments{$vQueryString}" class="icon icon-socialmedia" data-icon="R">Subscribe to RSS feed matching this search</a>
@@ -393,6 +421,18 @@
                         </xsl:choose>
                     </div>
                 </td>
+                <xsl:if test="$vUnrestrictedAccess">
+                    <td class="col_views">
+                        <div>
+                            <xsl:value-of select="@views"/>
+                        </div>
+                    </td>
+                    <td class="col_downloads">
+                        <div>
+                            <xsl:value-of select="@downloads"/>
+                        </div>
+                    </td>
+                </xsl:if>
             </tr>
         </xsl:if>
     </xsl:template>
