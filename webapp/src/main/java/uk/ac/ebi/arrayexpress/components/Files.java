@@ -135,6 +135,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         maps.clearMap(MAP_FOLDER);
         maps.clearMap(MAP_RAW_FILES);
         maps.clearMap(MAP_PROCESSED_FILES);
+        maps.clearMap(MAP_FILES_TOTAL);
 
          try {
             DocumentInfo doc = getDocument();
