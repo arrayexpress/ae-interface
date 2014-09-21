@@ -46,6 +46,8 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    public final static String MAP_EXPERIMENTS_VIEWS = "experiments-views";
+    public final static String MAP_EXPERIMENTS_DOWNLOADS = "experiments-downloads";
     public final static String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
     public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
     public final static String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
@@ -183,6 +185,8 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         );
 
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_IN_ATLAS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_VIEWS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_DOWNLOADS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));

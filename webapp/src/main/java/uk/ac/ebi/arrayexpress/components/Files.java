@@ -42,6 +42,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
     private final String MAP_FOLDER = "ftp-folder";
     private final String MAP_RAW_FILES = "raw-files";
     private final String MAP_PROCESSED_FILES = "processed-files";
+    private final String MAP_FILES_TOTAL = "files-total";
 
     private String rootFolder;
     private FilePersistence<PersistableDocumentContainer> document;
@@ -72,6 +73,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_FOLDER));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_RAW_FILES));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_PROCESSED_FILES));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_FILES_TOTAL));
 
         updateIndex();
         updateAccelerators();
@@ -148,6 +150,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 if ("experiment".equals(folderKind)) {
                     maps.setMappedValue(MAP_RAW_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'raw'])"));
                     maps.setMappedValue(MAP_PROCESSED_FILES, accession, saxon.evaluateXPathSingle((NodeInfo)node, "count(file[@kind = 'processed'])"));
+                    maps.setMappedValue(MAP_FILES_TOTAL, accession, saxon.evaluateXPathSingle((NodeInfo)node, "sum(file/@size)"));
                 }
             }
             this.logger.debug("Maps updated");

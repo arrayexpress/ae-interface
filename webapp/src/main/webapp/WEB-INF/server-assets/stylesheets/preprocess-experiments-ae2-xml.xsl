@@ -45,6 +45,20 @@
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
+            <xsl:if test="ae:getMappedValue('experiments-views', $vAccession)">
+                <xsl:attribute name="views">
+                    <xsl:value-of select="ae:getMappedValue('experiments-views', $vAccession)"/>
+                </xsl:attribute>
+            </xsl:if>
+
+            <xsl:if test="ae:getMappedValue('experiments-downloads', $vAccession)">
+                <xsl:if test="ae:getMappedValue('files-total', $vAccession)">
+                    <xsl:attribute name="downloads">
+                        <xsl:value-of select="fn:ceiling(fn:number(ae:getMappedValue('experiments-downloads', $vAccession)) div ae:getMappedValue('files-total', $vAccession))"/>
+                    </xsl:attribute>
+                </xsl:if>
+            </xsl:if>
+
             <source id="ae2"/>
 
             <xsl:for-each select="fn:distinct-values(sampleattribute[fn:lower-case(@category) = 'organism']/@value, 'http://saxon.sf.net/collation?ignore-case=yes')">
