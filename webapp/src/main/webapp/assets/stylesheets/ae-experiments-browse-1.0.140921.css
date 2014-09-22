@@ -91,7 +91,7 @@
 
 #ae-browse .col_views {
     width: 80px;
-    text-align: left;
+    text-align: center;
 }
 
 #ae-browse td.col_views {
@@ -101,7 +101,7 @@
 
 #ae-browse .col_downloads {
     width: 80px;
-    text-align: left;
+    text-align: center;
 }
 
 #ae-browse td.col_downloads {
