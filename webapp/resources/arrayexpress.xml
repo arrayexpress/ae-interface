@@ -7,8 +7,8 @@
             <hidden-recipients>${interface.application.pref.reports.hidden-recipients}</hidden-recipients>
             <subject>Runtime exception report</subject>
             <smtp>
-                <host>smtp.ebi.ac.uk</host>
-                <port>25</port>
+                <host>localhost</host>
+                <port>25025</port>
             </smtp>
         </reports>
         <restart>${interface.application.pref.restart.command}</restart>
