@@ -18,6 +18,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                xmlns:xal="http://www.w3.org/1999/XSL/Transform"
                 extension-element-prefixes="ae fn"
                 exclude-result-prefixes="ae fn"
                 version="2.0">
@@ -52,11 +53,18 @@
             </xsl:if>
 
             <xsl:if test="ae:getMappedValue('experiments-downloads', $vAccession)">
+                <!--
                 <xsl:if test="ae:getMappedValue('files-total', $vAccession)">
+                -->
                     <xsl:attribute name="downloads">
+                        <xal:value-of select="ae:getMappedValue('experiments-downloads', $vAccession)"/>
+                        <!--
                         <xsl:value-of select="fn:ceiling(fn:number(ae:getMappedValue('experiments-downloads', $vAccession)) div ae:getMappedValue('files-total', $vAccession))"/>
+                        -->
                     </xsl:attribute>
+               <!--
                 </xsl:if>
+                -->
             </xsl:if>
 
             <source id="ae2"/>
