@@ -424,12 +424,26 @@
                 <xsl:if test="$vUnrestrictedAccess">
                     <td class="col_views">
                         <div>
-                            <xsl:value-of select="@views"/>
+                            <xsl:choose>
+                                <xsl:when test="@views">
+                                    <xsl:value-of select="@views"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>-</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </div>
                     </td>
                     <td class="col_downloads">
                         <div>
-                            <xsl:value-of select="@downloads"/>
+                            <xsl:choose>
+                                <xsl:when test="@downloads">
+                                    <xsl:value-of select="@downloads"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>-</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </div>
                     </td>
                 </xsl:if>
