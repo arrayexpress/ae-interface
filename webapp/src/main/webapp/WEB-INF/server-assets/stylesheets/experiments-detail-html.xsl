@@ -162,7 +162,7 @@
                     <xsl:with-param name="pBasePath" select="$context-path"/>
                 </xsl:call-template>
 
-                <xsl:if test="fn:not($userid) or (fn:not($userid = 1) and (user/@id = $userid))">
+                <xsl:if test="fn:not($userid) or (fn:not(fn:not($userid)) and fn:not($userid = '1') and (user/@id = 1))">
                     <xsl:call-template name="exp-stats-section"/>
                 </xsl:if>
             </table>
