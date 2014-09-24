@@ -53,18 +53,15 @@
             </xsl:if>
 
             <xsl:if test="ae:getMappedValue('experiments-downloads', $vAccession)">
-                <!--
-                <xsl:if test="ae:getMappedValue('files-total', $vAccession)">
-                -->
                     <xsl:attribute name="downloads">
                         <xal:value-of select="ae:getMappedValue('experiments-downloads', $vAccession)"/>
-                        <!--
-                        <xsl:value-of select="fn:ceiling(fn:number(ae:getMappedValue('experiments-downloads', $vAccession)) div ae:getMappedValue('files-total', $vAccession))"/>
-                        -->
                     </xsl:attribute>
-               <!--
-                </xsl:if>
-                -->
+            </xsl:if>
+
+            <xsl:if test="ae:getMappedValue('experiments-complete-downloads', $vAccession)">
+                <xsl:attribute name="completedownloads">
+                    <xal:value-of select="ae:getMappedValue('experiments-complete-downloads', $vAccession)"/>
+                </xsl:attribute>
             </xsl:if>
 
             <source id="ae2"/>

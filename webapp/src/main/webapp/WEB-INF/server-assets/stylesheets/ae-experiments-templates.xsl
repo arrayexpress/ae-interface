@@ -1068,7 +1068,7 @@
                 <td class="value">
                     <div>
                         <xsl:if test="@views"><xsl:value-of select="@views"/> views<xsl:if test="@downloads">, </xsl:if></xsl:if>
-                        <xsl:if test="@downloads"><xsl:value-of select="@downloads"/> downloads</xsl:if>
+                        <xsl:if test="@completedownloads"><xsl:value-of select="@completedownloads"/> downloads</xsl:if>
                     </div>
                 </td>
             </tr>

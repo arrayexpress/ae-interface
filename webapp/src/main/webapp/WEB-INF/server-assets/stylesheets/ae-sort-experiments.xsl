@@ -69,6 +69,18 @@
                     <xsl:with-param name="pTo" select="$pTo"/>
                 </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$pSortBy='complete_downloads'">
+                <xsl:apply-templates select="$pExperiments">
+                    <xsl:sort select="@completedownloads" order="{$pSortOrder}" data-type="number"/>
+                    <!-- then sort by accession -->
+                    <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
+                    <!-- sort by experiment 4-letter code -->
+                    <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
+
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
             <xsl:when test="$pSortBy='accession'">
                 <xsl:apply-templates select="$pExperiments">
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>

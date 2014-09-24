@@ -48,6 +48,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     public final static String MAP_EXPERIMENTS_VIEWS = "experiments-views";
     public final static String MAP_EXPERIMENTS_DOWNLOADS = "experiments-downloads";
+    public final static String MAP_EXPERIMENTS_COMPLETE_DOWNLOADS = "experiments-complete-downloads";
     public final static String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
     public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
     public final static String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
@@ -58,7 +59,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";
 
     private FilePersistence<PersistableDocumentContainer> document;
-    //private FilePersistence<PersistableStringList> experimentsInAtlas;
     private FilePersistence<PersistableString> species;
     private FilePersistence<PersistableString> arrays;
 
@@ -166,13 +166,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                 , new File(getPreferences().getString("ae.experiments.persistence-location"))
         );
 
-        /*
-        this.experimentsInAtlas = new FilePersistence<>(
-                new PersistableStringList()
-                , new File(getPreferences().getString("ae.atlasexperiments.persistence-location"))
-        );
-        */
-
         this.species = new FilePersistence<>(
                 new PersistableString()
                 , new File(getPreferences().getString("ae.species.dropdown-html-location"))
@@ -187,6 +180,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_IN_ATLAS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_VIEWS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_DOWNLOADS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_COMPLETE_DOWNLOADS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));
@@ -265,28 +259,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    /*
-    public void reloadExperimentsInAtlas( String sourceLocation ) throws IOException
-    {
-        try {
-            URL source = new URL(sourceLocation);
-            String result = this.saxon.transformToString(source, "preprocess-atlas-experiments-txt.xsl", null);
-            if (null != result) {
-                String[] exps = result.split("\n");
-                if (exps.length > 0) {
-                    this.experimentsInAtlas.setObject(new PersistableStringList(Arrays.asList(exps)));
-                    updateAtlasMap();
-                    this.logger.info("Stored GXA info, [{}] experiments listed", exps.length);
-                } else {
-                    this.logger.warn("Atlas returned [0] experiments listed, will NOT update our info");
-                }
-            }
-        } catch (SaxonException x) {
-            throw new RuntimeException(x);
-        }
-    }
-    */
-
     private void updateIndex() throws IOException, InterruptedException
     {
         Thread.sleep(0);
@@ -297,16 +269,6 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             throw new RuntimeException(x);
         }
     }
-
-    /*
-    private void updateAtlasMap() throws IOException
-    {
-        maps.clearMap(MAP_EXPERIMENTS_IN_ATLAS);
-        for (String accession : experimentsInAtlas.getObject()) {
-            maps.setMappedValue(MAP_EXPERIMENTS_IN_ATLAS, accession, "1");
-        }
-    }
-    */
 
     private void updateMaps() throws IOException
     {

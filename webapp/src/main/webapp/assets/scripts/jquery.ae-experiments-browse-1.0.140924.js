@@ -78,7 +78,8 @@
                 , raw: { title: "number of assays in raw data", sort: "descending" }
                 , atlas: { title: "presence of experiment data in Gene Expression Atlas", sort: "descending" }
                 , views: { title: "number of views", sort: "descending" }
-                , downloads: { title: "number of downloads", sort: "descending" }
+                , downloads: { title: "number of download attempts", sort: "descending" }
+                , complete_downloads: { title: "number of complete downloads", sort: "descending" }
             }
         });
 

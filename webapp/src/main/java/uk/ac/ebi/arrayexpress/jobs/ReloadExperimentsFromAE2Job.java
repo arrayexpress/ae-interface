@@ -147,6 +147,11 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                         , new File(experimentsFile.getParentFile(), "experiments-downloads.txt")
                 );
 
+                loadMapFromFile(
+                        Experiments.MAP_EXPERIMENTS_DOWNLOADS
+                        , new File(experimentsFile.getParentFile(), "experiments-complete-downloads.txt")
+                );
+
                 ((Experiments) getComponent("Experiments")).update(
                         experimentsXml
                         , sourceInformation
@@ -155,6 +160,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                 clearMap(Experiments.MAP_EXPERIMENTS_IN_ATLAS);
                 clearMap(Experiments.MAP_EXPERIMENTS_VIEWS);
                 clearMap(Experiments.MAP_EXPERIMENTS_DOWNLOADS);
+                clearMap(Experiments.MAP_EXPERIMENTS_COMPLETE_DOWNLOADS);
 
                 logger.info("Experiment information reload completed");
             } else {

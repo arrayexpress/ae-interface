@@ -55,7 +55,6 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         addJob("reload-ae1-xml", ReloadExperimentsFromAE1Job.class);
         addJob("reload-ae2-xml", ReloadExperimentsFromAE2Job.class);
         addJob("retrieve-xml", RetrieveExperimentsXmlJob.class);
-        addJob("reload-atlas-info", RetrieveExperimentsListFromAtlasJob.class);
         addJob("reload-efo", ReloadOntologyJob.class);
         addJob("update-efo", UpdateOntologyJob.class);
 
@@ -64,7 +63,6 @@ public class JobsController extends ApplicationComponent implements IJobsControl
         scheduleJob("check-files", "ae.files.check");
         scheduleJob("reload-ae1-xml", "ae.experiments.ae1.reload");
         scheduleJob("reload-ae2-xml", "ae.experiments.ae2.reload");
-        scheduleJob("reload-atlas-info", "ae.atlasexperiments.reload");
         scheduleJob("update-efo", "ae.efo.update");
 
         startScheduler();

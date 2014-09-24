@@ -120,16 +120,6 @@
             </properties>
         </similarity>
 
-        <atlasexperiments>
-            <source><location>${interface.application.link.atlas.exp_xml.url}</location></source>
-            <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-atlas-experiments.txt</persistence-location>
-            <reload>
-                <atstart>true</atstart>
-                <schedule>${interface.application.pref.atlasexperiments.reload.schedule}</schedule>
-                <retry>${interface.application.pref.atlasexperiments.reload.retry}</retry>
-            </reload>
-        </atlasexperiments>
-
         <arrays>
             <persistence-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays.xml</persistence-location>
             <dropdown-html-location>${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-arrays-dropdown-html.txt</dropdown-html-location>

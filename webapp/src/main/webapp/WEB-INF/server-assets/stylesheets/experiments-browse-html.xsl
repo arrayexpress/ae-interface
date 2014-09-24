@@ -61,14 +61,14 @@
             </xsl:with-param>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.140921.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.140924.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraJS">
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.140921.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.140924.js" type="text/javascript"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -165,10 +165,11 @@
                                     <xsl:if test="$vUnrestrictedAccess">
                                         <col class="col_views"/>
                                         <col class="col_downloads"/>
+                                        <col class="col_complete_downloads"/>
                                     </xsl:if>
                                     <thead>
                                         <xsl:call-template name="table-pager">
-                                            <xsl:with-param name="pColumnsToSpan" select="if ($vUnrestrictedAccess) then 11 else 9"/>
+                                            <xsl:with-param name="pColumnsToSpan" select="if ($vUnrestrictedAccess) then 12 else 9"/>
                                             <xsl:with-param name="pName" select="'experiment'"/>
                                             <xsl:with-param name="pTotal" select="$vTotal"/>
                                             <xsl:with-param name="pPage" select="$vPage"/>
@@ -257,9 +258,17 @@
                                                     </xsl:call-template>
                                                 </th>
                                                 <th class="col_downloads sortable">
-                                                    <xsl:text>DLs</xsl:text>
+                                                    <xsl:text>Dls</xsl:text>
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'downloads'"/>
+                                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                                    </xsl:call-template>
+                                                </th>
+                                                <th class="col_complete_downloads sortable">
+                                                    <xsl:text>Complete Dls</xsl:text>
+                                                    <xsl:call-template name="add-table-sort">
+                                                        <xsl:with-param name="pKind" select="'complete_downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                                     </xsl:call-template>
@@ -282,6 +291,7 @@
                                     <xsl:if test="$vUnrestrictedAccess">
                                         <col class="col_views"/>
                                         <col class="col_downloads"/>
+                                        <col class="col_complete_downloads"/>
                                     </xsl:if>
                                     <tbody>
                                         <xsl:call-template name="ae-sort-experiments">
@@ -292,7 +302,7 @@
                                             <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                         </xsl:call-template>
                                         <tr>
-                                            <td colspan="{if ($vUnrestrictedAccess) then '11' else '9'}" class="col_footer">
+                                            <td colspan="{if ($vUnrestrictedAccess) then '12' else '9'}" class="col_footer">
                                                 <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format</a>
                                                 <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon  icon-functional" data-icon="S">Export matching metadata in XML format</a>
                                                 <a href="{$context-path}/rss/v2/experiments{$vQueryString}" class="icon icon-socialmedia" data-icon="R">Subscribe to RSS feed matching this search</a>
@@ -439,6 +449,18 @@
                             <xsl:choose>
                                 <xsl:when test="@downloads">
                                     <xsl:value-of select="@downloads"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>-</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </div>
+                    </td>
+                    <td class="col_complete_downloads">
+                        <div>
+                            <xsl:choose>
+                                <xsl:when test="@completedownloads">
+                                    <xsl:value-of select="@completedownloads"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:text>-</xsl:text>

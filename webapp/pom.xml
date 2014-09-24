@@ -29,16 +29,12 @@
         <interface.application.webxml.security.transport.guarantee>NONE</interface.application.webxml.security.transport.guarantee>
 
         <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
-        <interface.application.link.atlas.exp_xml.url>http://www.ebi.ac.uk/gxa/api/experiments.xml</interface.application.link.atlas.exp_xml.url>
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
         <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
         <interface.application.pref.reports.hidden-recipients>kolais&#64;ebi.ac.uk</interface.application.pref.reports.hidden-recipients>
         <interface.application.pref.feedback.recipients>arrayexpress&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
         <interface.application.pref.remind.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
-
-        <interface.application.pref.atlasexperiments.reload.schedule>0 0 1 * * ?</interface.application.pref.atlasexperiments.reload.schedule>
-        <interface.application.pref.atlasexperiments.reload.retry>60</interface.application.pref.atlasexperiments.reload.retry>
 
         <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
         <interface.application.pref.experiments.ae1.connections/>
@@ -168,7 +164,6 @@
                 <interface.application.webxml.security.transport.guarantee>CONFIDENTIAL</interface.application.webxml.security.transport.guarantee>
 
                 <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
-                <interface.application.link.atlas.exp_xml.url>http://wwwdev.ebi.ac.uk/gxa/api/experiments.xml</interface.application.link.atlas.exp_xml.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.link.news_xml.url>ae-news.xml</interface.application.link.news_xml.url>
