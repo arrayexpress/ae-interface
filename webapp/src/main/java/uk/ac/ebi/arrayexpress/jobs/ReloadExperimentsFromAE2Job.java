@@ -148,7 +148,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
                 );
 
                 loadMapFromFile(
-                        Experiments.MAP_EXPERIMENTS_DOWNLOADS
+                        Experiments.MAP_EXPERIMENTS_COMPLETE_DOWNLOADS
                         , new File(experimentsFile.getParentFile(), "experiments-complete-downloads.txt")
                 );
 

@@ -258,7 +258,7 @@
                                                     </xsl:call-template>
                                                 </th>
                                                 <th class="col_downloads sortable">
-                                                    <xsl:text>Dls</xsl:text>
+                                                    <xsl:text>Total Dls</xsl:text>
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
@@ -266,7 +266,7 @@
                                                     </xsl:call-template>
                                                 </th>
                                                 <th class="col_complete_downloads sortable">
-                                                    <xsl:text>Comp. dls</xsl:text>
+                                                    <xsl:text>Complete Dls</xsl:text>
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'complete_downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
