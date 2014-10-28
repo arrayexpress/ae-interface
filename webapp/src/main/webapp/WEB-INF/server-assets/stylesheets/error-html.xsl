@@ -87,8 +87,8 @@
         <section>
             <h2 class="alert"><xsl:copy-of select="$pTitle"/></h2>
             <p><xsl:copy-of select="$pMessage"/></p>
-            <h3>ArrayExpress update</h3>
-            <p>We’ve just updated ArrayExpress, so things have moved around a bit. Please <a href="#" class="feedback">contact us</a> and we will look into it for you.</p>
+            <h3>Still confused?</h3>
+            <p>If you require further assistance locating missing page or file, please <a href="#" class="feedback">contact us</a> and we will look into it for you.</p>
         </section>
     </xsl:template>
 
