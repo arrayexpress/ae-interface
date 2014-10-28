@@ -40,7 +40,7 @@
             });
             return this;
         }
-    })
+    });
 
     $.fn.extend({
 
@@ -58,8 +58,8 @@
         var $login_form = $window.find("form").first();
         var $user = $login_form.find("input[name='u']").first();
         var $pass = $login_form.find("input[name='p']").first();
-        var $open = $(options.open).first();
-        var $close = $(options.close).first();
+        var $open = $(options.open);
+        var $close = $(options.close);
         var $status = $(options.status);
         var $status_text = $("<span class='alert'/>").appendTo($status);
         var $forgot = $(options.forgot).first();
@@ -241,8 +241,8 @@
         var $page = $form.find("input[name='p']").first();
         var $ref = $form.find("input[name='r']").first();
         var $submit = $form.find("input[type='submit']").first();
-        var $open = $(options.open).first();
-        var $close = $(options.close).first();
+        var $open = $(options.open);
+        var $close = $(options.close);
 
 
         function doOpenWindow() {
@@ -378,13 +378,6 @@
             .resize(resizeTableHeaders)
             .trigger("scroll");
     }
-
-
-    $.aeFeedback = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $("li.feedback a").click();
-    };
 
     $(function() {
         $('.svg').aeSVGFallback();
