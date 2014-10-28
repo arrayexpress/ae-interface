@@ -230,8 +230,8 @@
                                  add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
                                  whichever one will show up last...
                                  For example: -->
-                                <li class="functional last login">
-                                    <a href="#" class="icon icon-functional" data-icon="l">
+                                <li class="functional last">
+                                    <a href="#" class="icon icon-functional login" data-icon="l">
                                         <xsl:choose>
                                             <xsl:when test="$userid = '1'">Login</xsl:when>
                                             <xsl:when test="fn:exists($username)">Logout [<xsl:value-of select="$username"/>]</xsl:when>
@@ -239,7 +239,7 @@
                                         </xsl:choose>
                                     </a>
                                 </li>
-                                <li class="functional feedback"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>
+                                <li class="functional"><a href="#" class="icon icon-static feedback" data-icon="\">Feedback</a></li>
                                 <!--
                                 <li class="functional"><a href="#" class="icon icon-functional" data-icon="r">Share</a></li>
                                 -->
@@ -370,7 +370,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.131028.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.141028.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

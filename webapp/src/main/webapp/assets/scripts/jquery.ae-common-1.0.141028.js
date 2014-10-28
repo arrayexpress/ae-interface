@@ -391,13 +391,13 @@
 
         initPersistentHeaders();
         $("#ae-login").aeLoginForm({
-            open: "li.login a",
+            open: "a.login",
             close: "#ae-login-close",
             status: ".ae-login-status",
             forgot: "#ae-login-forgot"
         });
         $("#ae-feedback").aeFeedbackForm({
-            open: "li.feedback a",
+            open: "a.feedback",
             close: "#ae-feedback-close"
         });
 

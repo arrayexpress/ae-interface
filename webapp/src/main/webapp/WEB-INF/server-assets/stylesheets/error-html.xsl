@@ -61,13 +61,13 @@
                 <xsl:when test="$error-code = '403'">
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">We’re sorry that you don’t have access to this page or file</xsl:with-param>
-                        <xsl:with-param name="pMessage">Please log in to access <span class="alert"><xsl:value-of select="$error-request-uri"/></span>.</xsl:with-param>
+                        <xsl:with-param name="pMessage">Please <a href="#" class="login">log in</a> to access <span class="alert"><xsl:value-of select="$error-request-uri"/></span>.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="$error-code = '404'">
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">We’re sorry that the page or file you’ve requested is not publicly available</xsl:with-param>
-                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or has restricted access. If you have been granted access, please log in proceed.</xsl:with-param>
+                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or has restricted access. If you have been granted access, please <a href="#" class="login">log in</a> proceed.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
