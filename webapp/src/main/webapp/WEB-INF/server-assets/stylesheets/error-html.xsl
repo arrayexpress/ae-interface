@@ -54,20 +54,20 @@
             <xsl:choose>
                 <xsl:when test="$error-code = '400'">
                     <xsl:call-template name="block-warning">
-                        <xsl:with-param name="pTitle">We’re sorry but we cannot process your request</xsl:with-param>
+                        <xsl:with-param name="pTitle">We’re sorry that we cannot process your request</xsl:with-param>
                         <xsl:with-param name="pMessage">There was a query syntax error in <span class="alert"><xsl:value-of select="$error-message"/></span>. Please try a different query or check our <a href="{$context-path}/help/how_to_search.html">query syntax help</a>.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="$error-code = '403'">
                     <xsl:call-template name="block-warning">
-                        <xsl:with-param name="pTitle">We’re sorry but you don’t have access to this page or file</xsl:with-param>
+                        <xsl:with-param name="pTitle">We’re sorry that you don’t have access to this page or file</xsl:with-param>
                         <xsl:with-param name="pMessage">Please log in to access <span class="alert"><xsl:value-of select="$error-request-uri"/></span>.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="$error-code = '404'">
                     <xsl:call-template name="block-warning">
-                        <xsl:with-param name="pTitle">We’re sorry but we can’t find the page or file you requested</xsl:with-param>
-                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or be temporarily unavailable.</xsl:with-param>
+                        <xsl:with-param name="pTitle">We’re sorry that the page or file you’ve requested is not publicly available</xsl:with-param>
+                        <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or has restricted access. If you have been granted access, please log in proceed.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
