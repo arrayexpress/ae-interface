@@ -400,6 +400,10 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>ae-efo-loader</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>ae-similarity</artifactId>
         </dependency>
         <dependency>
