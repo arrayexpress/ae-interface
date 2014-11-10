@@ -19,6 +19,14 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>artifactory-local-repo</id>
+            <url>http://bar.ebi.ac.uk:8081/artifactory/local-repo/</url>
+        </repository>
+    </distributionManagement>
+
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
