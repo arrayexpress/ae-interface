@@ -40,7 +40,7 @@ public class EFOLoader
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final static IRI IRI_AE_LABEL = IRI.create("http://www.ebi.ac.uk/efo/ArrayExpress_label");
-    private final static IRI IRI_EFO_URI = IRI.create("http://www.ebi.ac.uk/efo/ArrayExpress_label");
+    private final static IRI IRI_EFO_URI = IRI.create("http://www.ebi.ac.uk/efo/EFO_URI");
     private final static IRI IRI_ALT_TERM = IRI.create("http://www.ebi.ac.uk/efo/alternative_term");
     private final static IRI IRI_ORG_CLASS = IRI.create("http://www.ebi.ac.uk/efo/organizational_class");
     private final static IRI IRI_PART_OF = IRI.create("http://www.obofoundry.org/ro/ro.owl#part_of");
