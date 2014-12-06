@@ -1,6 +1,6 @@
 package uk.ac.ebi.arrayexpress.components;
 
-import com.jolbox.bonecp.BoneCPConfig;
+import com.zaxxer.hikari.HikariConfig;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class DbConnectionPool extends ApplicationComponent
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private Map<String, BoneCPConfig> configs = new HashMap<String, BoneCPConfig>();
+    private Map<String, HikariConfig> configs = new HashMap<>();
 
     @Override
     public void initialize() throws Exception
@@ -53,14 +53,12 @@ public class DbConnectionPool extends ApplicationComponent
                     logger.error("Unable to load driver [{}] for connection [{}]", connConf.getString("driver"), connName);
                 }
 
-                BoneCPConfig cpConf = new BoneCPConfig();
+                HikariConfig cpConf = new HikariConfig();
                 cpConf.setJdbcUrl(connConf.getString("url"));
                 cpConf.setUsername(connConf.getString("username"));
                 cpConf.setPassword(connConf.getString("password"));
-                cpConf.setConnectionTestStatement(connConf.getString("testStatement"));
-                cpConf.setMinConnectionsPerPartition(connConf.getInt("minConnections"));
-                cpConf.setMaxConnectionsPerPartition(connConf.getInt("maxConnections"));
-                cpConf.setPartitionCount(1);
+                cpConf.setConnectionTestQuery(connConf.getString("testStatement"));
+                cpConf.setMaximumPoolSize(connConf.getInt("maxConnections"));
                 this.configs.put(connName, cpConf);
             }
         }

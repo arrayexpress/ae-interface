@@ -166,5 +166,4 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
             return parser;
         }
     }
-
 }

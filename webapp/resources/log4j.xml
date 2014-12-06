@@ -65,6 +65,11 @@
         <appender-ref ref="${interface.application.log.appender.ref}"/>
     </logger>
 
+    <logger name="Triple processor" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="${interface.application.log.appender.ref}"/>
+    </logger>
+
     <logger name="org.coode.owl.rdfxml.parser.OWLRDFConsumer" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="${interface.application.log.appender.ref}"/>

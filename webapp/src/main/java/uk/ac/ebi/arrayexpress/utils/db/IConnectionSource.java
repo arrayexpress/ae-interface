@@ -26,5 +26,5 @@ public interface IConnectionSource
 
     public Connection getConnection() throws SQLException;
 
-    public void close();
+    public void close() throws InterruptedException;
 }

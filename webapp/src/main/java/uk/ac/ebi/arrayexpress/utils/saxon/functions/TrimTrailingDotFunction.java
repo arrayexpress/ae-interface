@@ -24,7 +24,6 @@ import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
 
@@ -73,16 +72,11 @@ public class TrimTrailingDotFunction extends ExtensionFunctionDefinition
         {
             String str = SequenceTool.getStringValue(arguments[0]);
 
-            if (null != str) {
-
-                if (str.endsWith(".")) {
-                    str = str.substring(0, str.length() - 1);
-                }
-
-                return StringValue.makeStringValue(str);
-            } else {
-                return EmptySequence.getInstance();
+            if (str.endsWith(".")) {
+                str = str.substring(0, str.length() - 1);
             }
+
+            return new StringValue(str);
         }
     }
 }

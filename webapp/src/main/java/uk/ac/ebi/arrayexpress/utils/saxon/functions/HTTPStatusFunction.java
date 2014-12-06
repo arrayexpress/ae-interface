@@ -24,7 +24,6 @@ import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.IntegerValue;
 import net.sf.saxon.value.SequenceType;
 
@@ -73,12 +72,8 @@ public class HTTPStatusFunction extends ExtensionFunctionDefinition
         public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             IntegerValue statusValue = (IntegerValue) SequenceTool.asItem(arguments[0]);
-            Long statusCode = statusValue.longValue();
 
-            if (null != statusCode) {
-                throw new HTTPStatusException(statusCode.intValue());
-            }
-            return EmptySequence.getInstance();
+            throw new HTTPStatusException((int)statusValue.longValue());
         }
     }
 }

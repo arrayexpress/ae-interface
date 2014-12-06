@@ -3,7 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>uk.ac.ebi.fg</groupId>
     <artifactId>ae-interface-webapp</artifactId>
     <name>ArrayExpress Interface Web Application</name>
     <version>2.0</version>
@@ -335,8 +334,8 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -415,8 +414,9 @@
             <artifactId>commons-lang</artifactId>
         </dependency>
         <dependency>
-			<groupId>com.jolbox</groupId>
-			<artifactId>bonecp</artifactId>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP-java6</artifactId>
+            <scope>compile</scope>
 		</dependency>
         <dependency>
 			<groupId>net.sf.opencsv</groupId>

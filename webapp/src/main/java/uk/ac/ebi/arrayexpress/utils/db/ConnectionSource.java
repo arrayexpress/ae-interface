@@ -1,7 +1,7 @@
 package uk.ac.ebi.arrayexpress.utils.db;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.pool.HikariPool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,20 +25,22 @@ import java.sql.SQLException;
 
 public class ConnectionSource implements IConnectionSource
 {
-    private BoneCP connectionPool;
+    private HikariPool connectionPool;
     private String name;
 
-    public ConnectionSource( String name, BoneCPConfig cpConfig ) throws SQLException
+    public ConnectionSource( String name, HikariConfig cpConfig ) throws SQLException
     {
         this.name = name;
-        this.connectionPool = new BoneCP(cpConfig);
+        this.connectionPool = new HikariPool(cpConfig);
     }
 
+    @Override
     public String getName()
     {
         return this.name;
     }
 
+    @Override
     public Connection getConnection() throws SQLException
     {
         if (null != this.connectionPool) {
@@ -48,7 +50,8 @@ public class ConnectionSource implements IConnectionSource
         }
     }
 
-    public void close()
+    @Override
+    public void close() throws InterruptedException
     {
         this.connectionPool.shutdown();
         this.connectionPool = null;
