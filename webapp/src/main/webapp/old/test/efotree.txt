@@ -1,6 +1,0 @@
-sarcoma|o|EFO_0000691|
-chordoma|o|
-lymphoid neoplasm|o|EFO_0001642|
-central nervous system cancer|o|EFO_0000326|
-carcinoma|o|EFO_0000313|
-mesothelioma|o|EFO_0000588|
