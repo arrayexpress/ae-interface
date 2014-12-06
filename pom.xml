@@ -8,12 +8,13 @@
     <version>2.0</version>
     <packaging>pom</packaging>
 
+    <!--
     <scm>
         <connection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</connection>
         <developerConnection>scm:svn:svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</developerConnection>
         <url>svn://dukkha.ebi.ac.uk/trunk/arrayexpress-interface</url>
     </scm>
-
+    -->
     <developers>
         <developer>
             <id>kolais</id>
@@ -100,7 +101,11 @@
         </plugins>
     </build>
     <modules>
-        <module>components</module>
+        <module>components/ae-interface-auth</module>
+        <module>components/ae-saxon-exts</module>
+        <module>components/ae-efo-loader</module>
+        <module>components/ae-jobs-controller</module>
+        <module>components/ae-similarity</module>
         <module>webapp</module>
         <module>redirector</module>
     </modules>
@@ -237,17 +242,16 @@
                 <artifactId>openid4java-consumer</artifactId>
                 <version>0.9.6</version>
                 <type>pom</type>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.guice</groupId>
-                        <artifactId>guice</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
-                <version>2.0</version>
+                <version>3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>3.0</version>
             </dependency>
             <dependency>
                 <groupId>com.googlecode.json-simple</groupId>
