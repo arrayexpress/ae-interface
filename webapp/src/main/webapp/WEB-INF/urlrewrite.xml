@@ -400,8 +400,7 @@
     <rule>
         <condition name="user-agent">.*(Googlebot|Java).*</condition>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <set type="status">404</set>
-        <to type="forward" last="true">/servlets/error/404</to>
+        <to type="forward" last="true">/servlets/xxx</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
