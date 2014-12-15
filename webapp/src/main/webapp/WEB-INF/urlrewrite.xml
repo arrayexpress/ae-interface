@@ -18,8 +18,8 @@
 
     <!-- filter out bots requests for samples view for now -->
     <rule>
+        <condition name="user-agent">.*(Googlebot|Java).*</condition>
         <from>^/experiments/(E-\w{4}-\d+)/samples/.*$</from>
-        <condition name="user-agent">.*Googlebot.*</condition>
         <set type="status">404</set>
         <to type="forward" last="true">/assets/404.html</to>
     </rule>
@@ -41,18 +41,18 @@
         <to type="redirect" last="true">%{context-path}/experiments/${upper:$1}/</to>
     </rule>
     <rule>
-        <from>^/experiments/browse[.]html?$</from>
         <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
-        <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
-    </rule>
-    <rule>
         <from>^/experiments/browse[.]html?$</from>
-        <condition type="parameter" name="accession">^\s*(E-\w{4}-\d+)\s*$</condition>
         <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
     </rule>
     <rule>
-        <from>^/experiments/search[.]html?$</from>
+        <condition type="parameter" name="accession">^\s*(E-\w{4}-\d+)\s*$</condition>
+        <from>^/experiments/browse[.]html?$</from>
+        <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
+    </rule>
+    <rule>
         <condition type="parameter" name="query">^\s*(E-\w{4}-\d+)\s*$</condition>
+        <from>^/experiments/search[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/experiments/${upper:%1}/</to>
     </rule>
 
@@ -62,18 +62,18 @@
         <to type="redirect" last="true">%{context-path}/arrays/${upper:$1}/</to>
     </rule>
     <rule>
+        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
         <from>^/arrays/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
         <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
     </rule>
     <rule>
+        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
         <from>^/experiments/browse[.]html?$</from>
-        <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
         <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
     </rule>
     <rule>
-        <from>^/experiments/search[.]html?$</from>
         <condition type="parameter" name="query">^\s*(A-\w{4}-\d+)\s*$</condition>
+        <from>^/experiments/search[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/arrays/${upper:%1}/</to>
     </rule>
 
@@ -83,27 +83,27 @@
         <to type="redirect" last="true">%{context-path}/protocols/${upper:$1}/</to>
     </rule>
     <rule>
-        <from>^/experiments/browse[.]html?$</from>
         <condition type="parameter" name="keywords">^\s*(P-\w{4}-\d+)\s*$</condition>
+        <from>^/experiments/browse[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/protocols/${upper:%1}/</to>
     </rule>
     <rule>
-        <from>^/experiments/search[.]html?$</from>
         <condition type="parameter" name="query">^\s*(P-\w{4}-\d+)\s*$</condition>
+        <from>^/experiments/search[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/protocols/${upper:%1}/</to>
     </rule>
 
     <!-- empty search shortcut -->
     <rule>
-        <from>^/experiments/search[.]html?$</from>
         <condition type="parameter" name="query">^\s*$</condition>
+        <from>^/experiments/search[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
     </rule>
 
     <!-- legacy browse.html redirection -->
     <rule>
-        <from>^/browse[.]html?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/browse[.]html?$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -113,8 +113,8 @@
 
     <!-- search page -->
     <rule>
-        <from>^/search/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/search/?$</from>
         <to type="redirect" last="true">%{context-path}/experiments/search.html?%{query-string}</to>
     </rule>
     <rule>
@@ -124,8 +124,8 @@
 
     <!-- experiments section -->
     <rule>
-        <from>^/experiments/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/experiments/?$</from>
         <to type="redirect" last="true">%{context-path}/experiments/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -291,8 +291,8 @@
 
     <!-- arrays -->
     <rule>
-        <from>^/arrays/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/arrays/?$</from>
         <to type="redirect" last="true">%{context-path}/arrays/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -325,8 +325,8 @@
 
     <!-- protocols -->
     <rule>
-        <from>^/protocols/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/protocols/?$</from>
         <to type="redirect" last="true">%{context-path}/protocols/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -362,8 +362,8 @@
 
     <!-- files -->
     <rule>
-        <from>^/files/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/files/?$</from>
         <to type="redirect" last="true">%{context-path}/files/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -426,8 +426,8 @@
 
     <!-- users -->
     <rule>
-        <from>^/users/?$</from>
         <condition type="query-string" operator="greater"/>
+        <from>^/users/?$</from>
         <to type="redirect" last="true">%{context-path}/users/browse.html?%{query-string}</to>
     </rule>
     <rule>
@@ -778,28 +778,28 @@
 
     <!-- legacy links -->
     <rule>
-        <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
+        <from>^/query/result$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/%{parameter:eAccession}/</to>
     </rule>
     
     <rule>
-        <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <from>^/query/result$</from>
         <to type="permanent-redirect" last="true">%{context-path}/experiments/browse.html</to>
     </rule>
 
     <rule>
-        <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
         <condition type="parameter" name="aAccession">.+</condition>
+        <from>^/query/result$</from>
         <to type="permanent-redirect" last="true">%{context-path}/arrays/%{parameter:aAccession}/</to>
     </rule>
 
     <rule>
-        <from>^/query/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <from>^/query/result$</from>
         <to type="permanent-redirect" last="true">%{context-path}/arrays/browse.html</to>
     </rule>
 
