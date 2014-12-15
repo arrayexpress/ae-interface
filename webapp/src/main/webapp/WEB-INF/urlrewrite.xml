@@ -16,14 +16,6 @@
         <to last="true">$1</to>
     </rule>
 
-    <!-- filter out bots requests for samples view for now -->
-    <rule>
-        <condition name="user-agent">.*(Googlebot|Java).*</condition>
-        <from>^/experiments/(E-\w{4}-\d+)/samples/.*$</from>
-        <set type="status">404</set>
-        <to type="forward" last="true">/assets/404.html</to>
-    </rule>
-
     <!-- home page -->
     <rule>
         <from>^/index[.]html?$</from>
@@ -404,6 +396,12 @@
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/index[.]html?$</from>
         <to type="permanent-redirect" last="true">%{context-path}/files/$1/$2/</to>
+    </rule>
+    <rule>
+        <condition name="user-agent">.*(Googlebot|Java).*</condition>
+        <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
+        <set type="status">404</set>
+        <to type="forward" last="true">/servlets/error/404</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
