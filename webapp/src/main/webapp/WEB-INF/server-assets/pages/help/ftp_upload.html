@@ -23,11 +23,13 @@
         <h3>Transferring files with Windows Explorer (drag and drop)</h3>
         
         <p>Make sure you've opened a Windows Explorer window and <em>not</em> an internet browser window as the latter is not designed for FTP file uploads. You can open an Explorer window by going to <code>Start</code>, followed by <code>Computer</code> or <code>My Computer</code> (if using Windows XP). If you need further help, here is a <a href="http://www.wikihow.com/Open-Windows-Explorer">short tutorial with screenshots</a>.</p>
-        <p>In the Windows Explorer window, enter <code><strong>ftp://ftp-private.ebi.ac.uk/</strong></code> in the address bar. You will be asked to login. The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>:</p>
-        
-        <p><img src="ftp_upload_windows_explorer_FTP.PNG" alt="Windows Explorer FTP login image" style='border:2px solid #385930'></p>
+        <p>In the Windows Explorer window, enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in the address bar. This URL already contains the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
 
-        <p>After logging in, you can drag files from your computer's file system and drop them onto the logged-on Windows Explorer window.</p> 
+        <p>If there are no error messages from Windows, that means connection is successful. (Unfortunately, Windows does not provide notification confirming successful connection to an FTP server.)  When connected, you will see an almost "blank" Windows Explorer window which is similar to this:</p>
+        
+        <p><img src="ftp_upload_windows_explorer_FTP.PNG" alt="Windows Explorer FTP login image" style='border:2px solid #385930; width: 75%; height: 75%'></p>
+
+        <p>You can start dragging files from your computer's file system and dropping them onto the logged-on Windows Explorer window.</p> 
         <p>Note: you will not be able to see any files or directories on the FTP site, including the files that you have uploaded. This is because we don't allow submitters to see each others' data files.</p>
         
         <p>&nbsp;</p>
