@@ -120,15 +120,11 @@
 
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
-                <section>
-                    <xsl:if test="$vSearchMode">
-                        <xsl:attribute name="class" select="'grid_24 alpha omega'"/>
-                    </xsl:if>
+                <section class="grid_24 alpha omega">
                     <div id="ae-content">
                         <div id="ae-browse">
+                            <!--
                             <div id="ae-filters">
-                                <span class="icon icon-functional legend" data-icon="u"> Add a new filter</span>
-                                <!--
                                 <form method="get" action="{$context-path}/experiments/browse.html">
                                     <fieldset>
                                         <legend>Filter experiments</legend>
@@ -163,8 +159,8 @@
                                         </div>
                                     </fieldset>
                                 </form>
-                                -->
                             </div>
+                            -->
                             <div class="persist-area">
                                 <table class="persist-header" border="0" cellpadding="0" cellspacing="0">
                                     <col class="col_accession"/>
