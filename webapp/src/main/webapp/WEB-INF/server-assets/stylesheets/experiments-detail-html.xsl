@@ -38,7 +38,6 @@
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
-            <xsl:with-param name="pIsEBISearchWidgetVisible" select="fn:false()"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
@@ -51,6 +50,7 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a> > <xsl:value-of select="$vAccession"/>
             </xsl:with-param>
+            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS">
             </xsl:with-param>
         </xsl:call-template>

@@ -53,7 +53,6 @@
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:not($vBrowseMode)"/>
-            <xsl:with-param name="pIsEBISearchWidgetVisible" select="fn:false()"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
@@ -101,6 +100,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>
+            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.ae-arrays-browse-1.0.0.js" type="text/javascript"/>
