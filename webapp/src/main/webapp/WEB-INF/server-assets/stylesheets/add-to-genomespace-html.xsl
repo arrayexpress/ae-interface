@@ -54,6 +54,7 @@
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.ae-add-to-gs-1.0.0.js" type="text/javascript"/>
             </xsl:with-param>
+            <xsl:with-param name="pExtraBodyClasses"/>
         </xsl:call-template>
     </xsl:template>
 

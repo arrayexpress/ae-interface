@@ -93,6 +93,7 @@
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.140924.js" type="text/javascript"/>
             </xsl:with-param>
+            <xsl:with-param name="pExtraBodyClasses" select="if ($vTotal = 0) then 'noresults' else ''"/>
         </xsl:call-template>
     </xsl:template>
 

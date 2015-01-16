@@ -38,6 +38,7 @@
             <xsl:with-param name="pBreadcrumbTrail"/>
             <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS"/>
+            <xsl:with-param name="pExtraBodyClasses"/>
         </xsl:call-template>
     </xsl:template>
 

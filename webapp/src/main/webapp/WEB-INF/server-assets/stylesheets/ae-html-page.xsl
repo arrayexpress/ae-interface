@@ -48,6 +48,7 @@
         <xsl:param name="pEBISearchWidget"/>
         <xsl:param name="pExtraCSS"/>
         <xsl:param name="pExtraJS"/>
+        <xsl:param name="pExtraBodyClasses" as="xs:string"/>
 
         <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
         <!-- http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -68,6 +69,7 @@
                 <xsl:with-param name="pBreadcrumbTrail" select="$pBreadcrumbTrail"/>
                 <xsl:with-param name="pEBISearchWidget" select="$pEBISearchWidget"/>
                 <xsl:with-param name="pExtraCode" select="$pExtraJS"/>
+                <xsl:with-param name="pExtraBodyClasses" select="$pExtraBodyClasses"/>
             </xsl:call-template>
         </html>
     </xsl:template>
@@ -118,10 +120,14 @@
         <xsl:param name="pBreadcrumbTrail"/>
         <xsl:param name="pEBISearchWidget"/>
         <xsl:param name="pExtraCode"/>
+        <xsl:param name="pExtraBodyClasses"/>
 
         <body>   <!-- add any of your classes or IDs -->
             <xsl:attribute name="class">
                 <xsl:text>level2</xsl:text>
+                <xsl:if test="$pExtraBodyClasses != ''">
+                    <xsl:text> </xsl:text><xsl:value-of select="$pExtraBodyClasses"/>
+                </xsl:if>
             </xsl:attribute>
 
             <div id="skip-to">

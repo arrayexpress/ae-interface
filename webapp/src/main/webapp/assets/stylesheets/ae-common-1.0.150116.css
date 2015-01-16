@@ -75,7 +75,9 @@ ul#secondary-nav li.active > a {
     margin-right: 9px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    width: 100%;
 }
+
 /*
  Palette color codes
 

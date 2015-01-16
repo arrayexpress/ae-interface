@@ -105,6 +105,7 @@
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.ae-arrays-browse-1.0.0.js" type="text/javascript"/>
             </xsl:with-param>
+            <xsl:with-param name="pExtraBodyClasses"/>
         </xsl:call-template>
     </xsl:template>
 

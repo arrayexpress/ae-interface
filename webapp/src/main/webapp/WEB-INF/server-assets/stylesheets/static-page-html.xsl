@@ -43,6 +43,7 @@
                     <xsl:with-param name="pEBISearchWidget"/>
                     <xsl:with-param name="pExtraCSS"/>
                     <xsl:with-param name="pExtraJS"/>
+                    <xsl:with-param name="pExtraBodyClasses"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
