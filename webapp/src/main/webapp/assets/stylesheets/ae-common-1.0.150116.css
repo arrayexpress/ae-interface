@@ -63,6 +63,10 @@ ul#secondary-nav li.active > a {
     font-weight: bold !important
 }
 
+#search-extras.expander {
+    height: 3.6em;
+}
+
 #search-extras.expander #ebi_search_results {
     right: 0;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
