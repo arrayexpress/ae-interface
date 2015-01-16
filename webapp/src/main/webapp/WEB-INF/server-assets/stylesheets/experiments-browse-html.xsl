@@ -43,16 +43,39 @@
     <xsl:include href="ae-sort-experiments.xsl"/>
     <xsl:include href="ae-date-functions.xsl"/>
 
-    <xsl:variable name="vSearchMode" select="fn:ends-with($relative-uri, 'search.html')"/>
+    <xsl:variable name="vSearchMode" select="$keywords != ''"/>
     <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
     <xsl:variable name="vUnrestrictedAccess" select="fn:not($userid)"/>
 
+    <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+    <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
+
     <xsl:template match="/">
-        <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Search results for &quot;', $keywords, '&quot;') else 'Experiments'"/>
+        <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Experiments matching &quot;', $keywords, '&quot;') else 'Experiments'"/>
 
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
-            <xsl:with-param name="pSearchInputValue" select="if (fn:true()) then $keywords else ''"/>
+            <xsl:with-param name="pEBISearchWidget">
+                <xsl:if test="$vSearchMode">
+                    <xsl:choose>
+                        <xsl:when test="$vTotal > 0">
+                            <aside class="grid_8 omega shortcuts expander" id="search-extras">
+                                <div id="ebi_search_results">
+                                    <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
+                                </div>
+                            </aside>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <aside class="grid_8 omega shortcuts" id="search-extras">
+                                <div id="ebi_search_results">
+                                    <h3>More data from EMBL-EBI</h3>
+                                </div>
+                            </aside>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </xsl:with-param>
+            <xsl:with-param name="pSearchInputValue" select="$keywords"/>
             <xsl:with-param name="pExtraSearchFields">
                 <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
                 <input id="ls-array" type="hidden" name="array" value="{$array}"/>
@@ -74,9 +97,6 @@
     </xsl:template>
 
     <xsl:template name="ae-content-section">
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
-        <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
-
         <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
         <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
@@ -100,15 +120,6 @@
 
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
-                <xsl:if test="$vSearchMode">
-                    <section class="grid_18 alpha">
-                        <h2>ArrayExpress results for <span class="searchterm"><xsl:value-of select="$keywords"/></span></h2>
-                    </section>
-                    <aside class="grid_6 omega shortcuts expander" id="search-extras">
-                        <div id="ebi_search_results"><h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
-                        </div>
-                    </aside>
-                </xsl:if>
                 <section>
                     <xsl:if test="$vSearchMode">
                         <xsl:attribute name="class" select="'grid_24 alpha omega'"/>
@@ -116,6 +127,8 @@
                     <div id="ae-content">
                         <div id="ae-browse">
                             <div id="ae-filters">
+                                <span class="icon icon-functional legend" data-icon="u"> Add a new filter</span>
+                                <!--
                                 <form method="get" action="{$context-path}/experiments/browse.html">
                                     <fieldset>
                                         <legend>Filter experiments</legend>
@@ -150,6 +163,7 @@
                                         </div>
                                     </fieldset>
                                 </form>
+                                -->
                             </div>
                             <div class="persist-area">
                                 <table class="persist-header" border="0" cellpadding="0" cellspacing="0">
@@ -541,10 +555,11 @@
     </xsl:template>
 
     <xsl:template name="browse-no-results">
-        <h2 id="noresults">No ArrayExpress results found</h2>
-        <p class="alert">We're sorry but we couldn't find anything that matched your search for "<xsl:value-of select="$keywords"/>"</p>
 
         <section class="grid_16 alpha">
+            <!-- <h2 id="noresults">No ArrayExpress results found</h2> -->
+            <p class="alert">We're sorry but we couldn't find anything that matched your search for "<xsl:value-of select="$keywords"/>"</p>
+
             <!-- TODO:
             <h3>Did you mean...</h3>
             <ul>
@@ -553,19 +568,17 @@
                 <li>Suggestion 3</li>
             </ul>
             -->
+            <!--
             <p>&#160;</p>
             <xsl:if test="$vSearchMode">
                 <h3>Try Experiments Browser</h3>
                 <p>You can browse available experiments and create a more complex query using our <a href="{$context-path}/experiments/browse.html" title="Click to go to Experiments Browser">Experiments Browser</a>.</p>
             </xsl:if>
+            -->
             <!-- TODO:
             <h4>Still can't find what you're looking for?</h4>
             <p>Please <a href="#" title="">contact our support service</a> for help if you still get no results.</p>
             -->
         </section>
-
-        <aside class="grid_8 omega shortcuts" id="search-extras">
-            <div id="ebi_search_results"><h3>More data from EMBL-EBI</h3></div>
-        </aside>
     </xsl:template>
 </xsl:stylesheet>

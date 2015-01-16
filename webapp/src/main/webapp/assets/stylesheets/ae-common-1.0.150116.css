@@ -63,6 +63,19 @@ ul#secondary-nav li.active > a {
     font-weight: bold !important
 }
 
+#search-extras.expander #ebi_search_results {
+    right: 0;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+#ebi_search_results {
+    margin-right: 9px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
 /*
  Palette color codes
 
@@ -467,19 +480,22 @@ p.justify {
     background-color: #E3E1F2 !important
 }
 
-#ae-filters legend {
+#ae-filters .legend {
     padding: 0.25em 0.5em;
-    background-color: #C7C4D7;
+    background-color: #E3E1F2;
+    /*background-color: #C7C4D7;*/
     border: 0 none;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px
 }
 
-#ae-filters label,
-#ae-filters input[type='text'],
-#ae-filters select {
-    margin: 3px 0
+#ae-filters .legend:hover,
+#ae-filters .legend:focus,
+#ae-filters .legend:active {
+    background-color: #7f7d8a;
+    color: white;
+    cursor: pointer;
 }
 
 #ae-filters label,
@@ -545,6 +561,10 @@ p.justify {
 
 #ae-browse {
     margin: 0 9px;
+}
+
+#ae-browse div.persist-area {
+    margin-top: 10px;
 }
 
 #ae-browse table {
