@@ -66,7 +66,7 @@
                             </aside>
                         </xsl:when>
                         <xsl:otherwise>
-                            <aside class="grid_8 omega shortcuts" id="search-extras">
+                            <aside class="grid_8 omega shortcuts expander" id="search-extras">
                                 <div id="ebi_search_results">
                                     <h3>More data from EMBL-EBI</h3>
                                 </div>
