@@ -72,7 +72,6 @@ ul#secondary-nav li.active > a {
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
 }
 
 #ebi_search_results {
