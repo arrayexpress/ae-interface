@@ -63,8 +63,8 @@ ul#secondary-nav li.active > a {
     font-weight: bold !important
 }
 
-#search-extras.expander {
-    height: 3.6em;
+#search-extras.omega {
+    right: 9px;
 }
 
 #search-extras.expander #ebi_search_results {
@@ -76,10 +76,8 @@ ul#secondary-nav li.active > a {
 }
 
 #ebi_search_results {
-    margin-right: 9px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    width: 100%;
 }
 
 /*

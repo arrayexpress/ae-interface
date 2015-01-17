@@ -56,23 +56,12 @@
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pEBISearchWidget">
-                <xsl:if test="$vSearchMode">
-                    <xsl:choose>
-                        <xsl:when test="$vTotal > 0">
-                            <aside class="grid_8 omega shortcuts expander" id="search-extras">
-                                <div id="ebi_search_results">
-                                    <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
-                                </div>
-                            </aside>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <aside class="grid_8 omega shortcuts expander" id="search-extras">
-                                <div id="ebi_search_results">
-                                    <h3>More data from EMBL-EBI</h3>
-                                </div>
-                            </aside>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                <xsl:if test="$vSearchMode and $vTotal > 0">
+                    <aside class="grid_8 omega shortcuts expander" id="search-extras">
+                        <div id="ebi_search_results">
+                            <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
+                        </div>
+                    </aside>
                 </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pSearchInputValue" select="$keywords"/>
@@ -86,7 +75,7 @@
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.140924.css" type="text/css"/>
             </xsl:with-param>
-            <xsl:with-param name="pBreadcrumbTrail" select="$vTitle"/>
+            <xsl:with-param name="pBreadcrumbTrail"><xsl:if test="$vTotal > 0"><xsl:value-of select="$vTitle"/></xsl:if></xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
@@ -554,9 +543,8 @@
     <xsl:template name="browse-no-results">
 
         <section class="grid_16 alpha">
-            <!-- <h2 id="noresults">No ArrayExpress results found</h2> -->
-            <h2 id="noresults" class="alert">We're sorry but we couldn't find anything that matched your search for "<xsl:value-of select="$keywords"/>"</h2>
-
+            <h2 class="alert">We’re sorry that we couldn’t find any matching experiments</h2>
+            <p>Your search for <span class="alert"><xsl:value-of select="$keywords"/></span> returned no results.</p>
             <!-- TODO:
             <h3>Did you mean...</h3>
             <ul>
@@ -577,5 +565,11 @@
             <p>Please <a href="#" title="">contact our support service</a> for help if you still get no results.</p>
             -->
         </section>
+        <aside class="grid_8 omega shortcuts" id="search-extras">
+            <div id="ebi_search_results">
+                <h3>More data from EMBL-EBI</h3>
+            </div>
+        </aside>
+
     </xsl:template>
 </xsl:stylesheet>

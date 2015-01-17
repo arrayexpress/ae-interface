@@ -259,20 +259,6 @@
                 </header>
 
                 <div id="content" role="main" class="grid_24 clearfix">
-                    <!-- If you require a breadcrumb trail, its root should be your service.
-     	                 You don't need a breadcrumb trail on the homepage of your service... -->
-                    <xsl:if test="fn:boolean($pBreadcrumbTrail)">
-                        <section>
-                            <xsl:if test="$pEBISearchWidget">
-                                <xsl:attribute name="class" select="'grid_16 alpha'"/>
-                            </xsl:if>
-                            <nav id="breadcrumb">
-                                <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
-                            </nav>
-                        </section>
-                        <xsl:copy-of select="$pEBISearchWidget"/>
-                    </xsl:if>
-
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
@@ -322,6 +308,20 @@
                             <input class="submit" type="submit" value="Send"/>
                         </form>
                     </section>
+                    <!-- If you require a breadcrumb trail, its root should be your service.
+     	                 You don't need a breadcrumb trail on the homepage of your service... -->
+                    <xsl:if test="$pBreadcrumbTrail != ''">
+                        <section>
+                            <xsl:if test="$pEBISearchWidget">
+                                <xsl:attribute name="class" select="'grid_16 alpha'"/>
+                            </xsl:if>
+                            <nav id="breadcrumb">
+                                <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
+                            </nav>
+                        </section>
+                        <xsl:copy-of select="$pEBISearchWidget"/>
+                    </xsl:if>
+
                     <xsl:call-template name="ae-content-section"/>
                     <!-- Suggested layout containers -->
                     <!--
