@@ -555,7 +555,7 @@
 
         <section class="grid_16 alpha">
             <!-- <h2 id="noresults">No ArrayExpress results found</h2> -->
-            <p class="alert">We're sorry but we couldn't find anything that matched your search for "<xsl:value-of select="$keywords"/>"</p>
+            <h2 id="noresults" class="alert">We're sorry but we couldn't find anything that matched your search for "<xsl:value-of select="$keywords"/>"</h2>
 
             <!-- TODO:
             <h3>Did you mean...</h3>
