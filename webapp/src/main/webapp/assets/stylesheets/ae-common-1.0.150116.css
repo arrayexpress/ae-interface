@@ -650,6 +650,7 @@ p.justify {
 
 #ae-browse .floating-header {
     position: fixed;
+    z-index: 9999;
     top: 0;
     box-shadow: 0 3px 5px #CCC;
     -moz-box-shadow: 0 3px 5px #CCC;
