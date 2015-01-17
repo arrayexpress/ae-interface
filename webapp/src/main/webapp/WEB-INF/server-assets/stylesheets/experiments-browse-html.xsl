@@ -57,7 +57,7 @@
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
             <xsl:with-param name="pEBISearchWidget">
                 <xsl:if test="$vSearchMode and $vTotal > 0">
-                    <aside class="grid_8 omega shortcuts expander" id="search-extras">
+                    <aside class="grid_6 omega shortcuts expander" id="search-extras">
                         <div id="ebi_search_results">
                             <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
                         </div>
@@ -542,7 +542,7 @@
 
     <xsl:template name="browse-no-results">
 
-        <section class="grid_16 alpha">
+        <section class="grid_18 alpha">
             <h2 class="alert">We’re sorry that we couldn’t find any matching experiments</h2>
             <p>Your search for <span class="alert"><xsl:value-of select="$keywords"/></span> returned no results.</p>
             <!-- TODO:
@@ -565,7 +565,7 @@
             <p>Please <a href="#" title="">contact our support service</a> for help if you still get no results.</p>
             -->
         </section>
-        <aside class="grid_8 omega shortcuts" id="search-extras">
+        <aside class="grid_6 omega shortcuts" id="search-extras">
             <div id="ebi_search_results">
                 <h3>More data from EMBL-EBI</h3>
             </div>

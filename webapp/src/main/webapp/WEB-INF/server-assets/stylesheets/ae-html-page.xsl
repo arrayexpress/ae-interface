@@ -313,7 +313,7 @@
                     <xsl:if test="$pBreadcrumbTrail != ''">
                         <section>
                             <xsl:if test="$pEBISearchWidget">
-                                <xsl:attribute name="class" select="'grid_16 alpha'"/>
+                                <xsl:attribute name="class" select="'grid_18 alpha'"/>
                             </xsl:if>
                             <nav id="breadcrumb">
                                 <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
