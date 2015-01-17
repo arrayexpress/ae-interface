@@ -67,6 +67,10 @@ ul#secondary-nav li.active > a {
     right: 9px;
 }
 
+#search-extras.expander {
+    height: 3.7em;
+}
+
 #search-extras.expander #ebi_search_results {
     right: 0;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -75,6 +79,7 @@ ul#secondary-nav li.active > a {
 }
 
 #ebi_search_results {
+    width: 100%;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
