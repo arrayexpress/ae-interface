@@ -17,12 +17,13 @@ package uk.ac.ebi.arrayexpress.utils.efo;
  *
  */
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Internal EFO class representation structure.
  */
-public class EFONode
+public class EFONode implements Serializable
 {
     private String id;
     private String efoUri;
