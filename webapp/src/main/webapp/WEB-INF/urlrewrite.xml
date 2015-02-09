@@ -830,7 +830,15 @@
     
     <!-- jobs hiring campaign -->
     <rule>
-        <from>^/jobs/EBI_00451/assignment[.]pdf$</from>
+        <from>^/send-assignment/(.*)$</from>
+        <to type="forward" last="true">/servlets/control/assignment/arrayexpress/jobs/$1</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00451$</from>
+        <to type="redirect" last="true">%{context-path}/jobs/EBI_00451/</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00451/EBI_00451_assignment[.]pdf$</from>
         <to type="forward" last="true">/assets/misc/EBI_00451_assignment.pdf</to>
     </rule>
     <rule>

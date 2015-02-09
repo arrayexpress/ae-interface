@@ -35,6 +35,8 @@ public class ControlServlet extends ApplicationServlet
 {
     private static final long serialVersionUID = -4509580274404536983L;
 
+    private static final String REFERER_HEADER = "Referer";
+    
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
     
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
@@ -71,7 +73,7 @@ public class ControlServlet extends ApplicationServlet
             } else if ("reload-ae1-xml".equals(command)) {
                 ((JobsController) getComponent("JobsController")).executeJobWithParam(command, "connections", params);
             } else if ("rescan-files".equals(command)) {
-                if (0 < params.length()) {
+                if (!params.isEmpty()) {
                     ((Files) getComponent("Files")).setRootFolder(params);
                 }
                 ((JobsController) getComponent("JobsController")).executeJob(command);
@@ -85,7 +87,20 @@ public class ControlServlet extends ApplicationServlet
                 );
             } else if ("restart".equals(command)) {
                 getApplication().requestRestart();
+            } else if ("assignment".equals(command)) {
+                getApplication().sendEmail(
+                        null
+                        , null
+                        , "Assignment requested"
+                        , "An assignment has just been downloaded, the code was [" + request.getParameter("code") + "]"
+                                + StringTools.EOL
+                );
+                if (!params.isEmpty()) {
+                    logger.debug("Will redirect to [{}]", params);
+                    response.sendRedirect("/" + params);
+                }
             }
+
         } catch (SchedulerException x) {
             logger.error("Jobs controller threw an exception", x);
         }

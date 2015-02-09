@@ -64,9 +64,9 @@
 %>
 <h3>Instructions</h3>
 <p>The assignment describes several problems - please provide us snippets of code (in a language of your choice) via email to arrayexpress@ebi.ac.uk. We’d expect you to spend around 2 hours in total writing solutions for these.</p>
-<p><strong>Please note - time spend between downloading the assignment and sending us the results will be measured; please proceed only when you're ready to complete the assignment</strong>.</p>
+<p><strong>Please note - time spent between downloading the assignment and sending us the results will be measured; please proceed only when you're ready to complete the assignment</strong>.</p>
 <p>In you have any questions please don't hesitate to email us at arrayexpress@ebi.ac.uk. Thanks and good luck!</p>
-<form id="accept" method="get" action="assignment.pdf">
+<form id="accept" method="get" action="${pageContext.request.contextPath}/send-assignment/EBI_00451/EBI_00451_assignment.pdf">
     <input type="hidden" name="code" value="${param.code}">
     <input type="submit" value="I understand - please provide me with the assignment">
 </form>
