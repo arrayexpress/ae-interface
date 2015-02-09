@@ -50,7 +50,7 @@
 }
 
 #gs_warning {
-    background: #fffec9 url(../images/_old_/silk_warn.gif) no-repeat scroll 10px 50%;
+    background: #fffec9 url(../images/send-to-gs-warn.gif) no-repeat scroll 10px 50%;
     font-style: italic;
     padding: 5px 0 5px 35px;
     line-height: 1.5em;
@@ -97,9 +97,9 @@
 }
 
 .ok {
-    background: url(../images/_old_/basic_tick.gif) 0 0 no-repeat;
+    background: url(../images/send-to-gs-tick.gif) 0 0 no-repeat;
 }
 
 .failed {
-    background: url(../images/_old_/basic_x.gif) 0 0 no-repeat;
+    background: url(../images/send-to-gs-x.gif) 0 0 no-repeat;
 }

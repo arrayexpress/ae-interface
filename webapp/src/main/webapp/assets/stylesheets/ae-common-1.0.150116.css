@@ -1,7 +1,3 @@
-/*
- Mitigating ugliness of ebi-visual.css
- */
-
 * {
     text-align: inherit;
     font-weight: inherit
@@ -941,11 +937,11 @@ p.justify {
 }
 
 .ac_tree_collapsed .ac_tree_control div {
-    background: url(../images/_old_/tminmax.gif) 0 0 no-repeat;
+    background: url(../images/ac_minmax.gif) 0 0 no-repeat;
 }
 
 .ac_tree_expanded .ac_tree_control div {
-    background: url(../images/_old_/tminmax.gif) 0 -9px no-repeat;
+    background: url(../images/ac_minmax.gif) 0 -9px no-repeat;
 }
 
 .ac_loading {

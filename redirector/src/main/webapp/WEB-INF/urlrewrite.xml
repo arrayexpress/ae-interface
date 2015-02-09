@@ -15,7 +15,7 @@
     </rule>
     <rule>
         <from>^/microarray/doc/atlas/(.*)$</from>
-        <to type="permanent-redirect" last="true">/gxa/help/</to>
+        <to type="permanent-redirect" last="true">/gxa/help/index.html</to>
     </rule>
     <rule>
         <from>^/microarray/doc/(.*)$</from>
@@ -28,8 +28,8 @@
 
     <!-- /microarray-as/ae redirection -->
     <rule>
-        <from>^/microarray-as/ae/(.*)$</from>
         <condition type="query-string">.+</condition>
+        <from>^/microarray-as/ae/(.*)$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/$1?%{query-string}</to>
     </rule>
 
@@ -87,35 +87,35 @@
 
     <!-- /microarray-as/aer specific queries redirection -->
     <rule>
-        <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
+        <from>^/microarray-as/aer/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
+        <from>^/microarray-as/aer/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <from>^/microarray-as/aer/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
         <condition type="parameter" name="aAccession">.+</condition>
+        <from>^/microarray-as/aer/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/%{parameter:aAccession}</to>
     </rule>
 
     <rule>
-        <from>^/microarray-as/aer/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">PhysicalArrayDesign</condition>
+        <from>^/microarray-as/aer/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/arrays/browse.html</to>
     </rule>
 
@@ -168,29 +168,29 @@
     </rule>
 
     <rule>
-        <from>^/aerep/jsp/ae-view-experiment[.]jsp</from>
         <condition type="parameter" name="accnum">E-[^-]{4}-.+</condition>
+        <from>^/aerep/jsp/ae-view-experiment[.]jsp</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:accnum}</to>
     </rule>
 
     <!-- /aerep specific queries redirection -->
     <rule>
-        <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">E-[^-]{4}-.+</condition>
+        <from>^/aerep/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/%{parameter:eAccession}</to>
     </rule>
 
     <rule>
-        <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
         <condition type="parameter" name="eAccession">.+</condition>
+        <from>^/aerep/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html?keywords=%{parameter:eAccession}</to>
     </rule>
 
     <rule>
-        <from>^/aerep/result$</from>
         <condition type="parameter" name="queryFor" operator="equal">Experiment</condition>
+        <from>^/aerep/result$</from>
         <to type="permanent-redirect" last="true">${redirector.interface.base.path}/experiments/browse.html</to>
     </rule>
 
