@@ -827,4 +827,14 @@
         <from>^/test[.]html?$</from>
         <to type="forward" last="true">/servlets/query/-/test/html</to>
     </rule>
+    
+    <!-- jobs hiring campaign -->
+    <rule>
+        <from>^/jobs/EBI_00451/assignment[.]pdf$</from>
+        <to type="forward" last="true">/assets/misc/EBI_00451_assignment.pdf</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00451(|/.*)$</from>
+        <to type="forward" last="true">/assets/misc/jobs_EBI_00451.jsp</to>
+    </rule>
 </urlrewrite>
