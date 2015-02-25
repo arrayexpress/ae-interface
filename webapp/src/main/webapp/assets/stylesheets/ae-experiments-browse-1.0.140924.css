@@ -16,28 +16,20 @@
  */
 
 #ae-organism-label {
-    width: 25%
+    width: 40%
 }
 
 #ae-organism {
-    width: 25%
-}
-
-#ae-array-label {
-    width: 50%
-}
-
-#ae-array {
-    width: 50%
+    width: 40%
 }
 
 #ae-exptype-label {
-    width: 25%
+    width: 60%
 }
 
 #ae-expdesign,
 #ae-exptech {
-    width: 12.5%
+    width: 30%
 }
 
 #ae-browse .col_accession {
