@@ -73,7 +73,7 @@
             </xsl:with-param>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.140924.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.150225.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail"><xsl:if test="$vTotal > 0"><xsl:value-of select="$vTitle"/></xsl:if></xsl:with-param>
             <xsl:with-param name="pExtraJS">
