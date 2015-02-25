@@ -207,11 +207,11 @@
                                     <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
                                     <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
                                 </li>
-                                <li>
-                                    <xsl:if test="fn:starts-with($relative-uri, '/arrays/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/arrays/browse.html?directsub=on" title="Arrays">Arrays</a>
-                                </li>
                                 <xsl:if test="not($userid)">
+                                    <li>
+                                        <xsl:if test="fn:starts-with($relative-uri, '/arrays/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                        <a href="{$context-path}/arrays/browse.html?directsub=on" title="Arrays">Arrays</a>
+                                    </li>
                                     <li>
                                         <xsl:if test="fn:starts-with($relative-uri, '/protocols/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
                                         <a href="{$context-path}/protocols/browse.html" title="Protocols">Protocols</a>

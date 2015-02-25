@@ -119,10 +119,8 @@
                                         <legend>Filter experiments</legend>
                                         <input id="ae-keywords" type="hidden" name="keywords" value="{$keywords}" maxlength="255"/>
                                         <label id="ae-organism-label" for="ae-organism">By organism</label>
-                                        <label  id="ae-array-label" for="ae-array">By array</label>
                                         <label  id="ae-exptype-label" for="ae-expdesign">By experiment type</label>
                                         <select id="ae-organism" name="organism" disabled="on"><option value="">All organisms (loading options)</option></select>
-                                        <select id="ae-array" name="array" disabled="on"><option value="">All arrays (loading options)</option></select>
                                         <select id="ae-expdesign" name="exptype[]" disabled="on"><option value="">All assays by molecule (loading options)</option></select>
                                         <select id="ae-exptech" name="exptype[]" disabled="on"><option value="">All technologies (loading options)</option></select>
                                         <div>
@@ -159,15 +157,15 @@
                                     <col class="col_releasedate"/>
                                     <col class="col_processed"/>
                                     <col class="col_raw"/>
-                                    <col class="col_atlas"/>
+                                    <col class="col_views"/>
                                     <xsl:if test="$vUnrestrictedAccess">
-                                        <col class="col_views"/>
                                         <col class="col_downloads"/>
                                         <col class="col_complete_downloads"/>
                                     </xsl:if>
+                                    <col class="col_atlas"/>
                                     <thead>
                                         <xsl:call-template name="table-pager">
-                                            <xsl:with-param name="pColumnsToSpan" select="if ($vUnrestrictedAccess) then 12 else 9"/>
+                                            <xsl:with-param name="pColumnsToSpan" select="if ($vUnrestrictedAccess) then 12 else 10"/>
                                             <xsl:with-param name="pName" select="'experiment'"/>
                                             <xsl:with-param name="pTotal" select="$vTotal"/>
                                             <xsl:with-param name="pPage" select="$vPage"/>
@@ -238,23 +236,15 @@
                                                     <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                                 </xsl:call-template>
                                             </th>
-                                            <th class="col_atlas sortable">
-                                                <xsl:text>Atlas</xsl:text>
+                                            <th class="col_views sortable">
+                                                <xsl:text>Views</xsl:text>
                                                 <xsl:call-template name="add-table-sort">
-                                                    <xsl:with-param name="pKind" select="'atlas'"/>
+                                                    <xsl:with-param name="pKind" select="'views'"/>
                                                     <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                                     <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                                 </xsl:call-template>
                                             </th>
                                             <xsl:if test="$vUnrestrictedAccess">
-                                                <th class="col_views sortable">
-                                                    <xsl:text>Views</xsl:text>
-                                                    <xsl:call-template name="add-table-sort">
-                                                        <xsl:with-param name="pKind" select="'views'"/>
-                                                        <xsl:with-param name="pSortBy" select="$vSortBy"/>
-                                                        <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
-                                                    </xsl:call-template>
-                                                </th>
                                                 <th class="col_downloads sortable">
                                                     <xsl:text>DL Attempts</xsl:text>
                                                     <xsl:call-template name="add-table-sort">
@@ -272,7 +262,14 @@
                                                     </xsl:call-template>
                                                 </th>
                                             </xsl:if>
-
+                                            <th class="col_atlas sortable">
+                                                <xsl:text>Atlas</xsl:text>
+                                                <xsl:call-template name="add-table-sort">
+                                                    <xsl:with-param name="pKind" select="'atlas'"/>
+                                                    <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                                    <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                                </xsl:call-template>
+                                            </th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -285,12 +282,12 @@
                                     <col class="col_releasedate"/>
                                     <col class="col_processed"/>
                                     <col class="col_raw"/>
-                                    <col class="col_atlas"/>
+                                    <col class="col_views"/>
                                     <xsl:if test="$vUnrestrictedAccess">
-                                        <col class="col_views"/>
                                         <col class="col_downloads"/>
                                         <col class="col_complete_downloads"/>
                                     </xsl:if>
+                                    <col class="col_atlas"/>
                                     <tbody>
                                         <xsl:call-template name="ae-sort-experiments">
                                             <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
@@ -300,7 +297,7 @@
                                             <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                         </xsl:call-template>
                                         <tr>
-                                            <td colspan="{if ($vUnrestrictedAccess) then '12' else '9'}" class="col_footer">
+                                            <td colspan="{if ($vUnrestrictedAccess) then '12' else '10'}" class="col_footer">
                                                 <a href="{$context-path}/ArrayExpress-Experiments.txt{$vQueryString}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format</a>
                                                 <a href="{$context-path}/xml/v2/experiments{$vQueryString}" class="icon  icon-functional" data-icon="S">Export matching metadata in XML format</a>
                                                 <a href="{$context-path}/rss/v2/experiments{$vQueryString}" class="icon icon-socialmedia" data-icon="R">Subscribe to RSS feed matching this search</a>
@@ -415,13 +412,11 @@
                         </xsl:call-template>
                     </div>
                 </td>
-                <td class="col_atlas">
+                <td class="col_views">
                     <div>
                         <xsl:choose>
-                            <xsl:when test="@loadedinatlas">
-                                <a href="${interface.application.link.atlas.exp_query.url}{accession}">
-                                    <span class="icon icon-generic" data-icon="L"/>
-                                </a>
+                            <xsl:when test="@views">
+                                <xsl:value-of select="@views"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:text>-</xsl:text>
@@ -430,18 +425,6 @@
                     </div>
                 </td>
                 <xsl:if test="$vUnrestrictedAccess">
-                    <td class="col_views">
-                        <div>
-                            <xsl:choose>
-                                <xsl:when test="@views">
-                                    <xsl:value-of select="@views"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text>-</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </div>
-                    </td>
                     <td class="col_downloads">
                         <div>
                             <xsl:choose>
@@ -467,6 +450,20 @@
                         </div>
                     </td>
                 </xsl:if>
+                <td class="col_atlas">
+                    <div>
+                        <xsl:choose>
+                            <xsl:when test="@loadedinatlas">
+                                <a href="${interface.application.link.atlas.exp_query.url}{accession}">
+                                    <span class="icon icon-generic" data-icon="L"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>-</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </div>
+                </td>
             </tr>
         </xsl:if>
     </xsl:template>

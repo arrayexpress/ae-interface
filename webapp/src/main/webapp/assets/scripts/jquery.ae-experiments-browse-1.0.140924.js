@@ -22,20 +22,6 @@
     var query = new Object();
 
     function
-    addHtmlToSelect( selectElt, html )
-    {
-        if ( $.browser.opera ) {
-            var htmlParsed = $.clean( new Array(html) );
-            var select = $( selectElt ).empty();
-            for ( var i = 0; i < htmlParsed.length; i++ ) {
-                select[0].appendChild(htmlParsed[i].cloneNode(true));
-            }
-        } else {
-            $( selectElt ).html(html);
-        }
-    }
-
-    function
     getQueryStringParam( paramName, defaultValue )
     {
         var param = $.query.get(paramName);
@@ -71,15 +57,15 @@
                 { accession: { title: "accession", sort : "ascending" }
                 , name: { title: "title", sort: "ascending" }
                 , type: { title: "experiment type", sort: "ascending" }
-                , assays: { title: "number of assays", sort: "descending" }
+                , assays: { title: "a number of assays", sort: "descending" }
                 , organism: { title: "organism", sort: "ascending" }
                 , releasedate: { title: "release date", sort: "descending" }
-                , processed: { title: "number of assays in processed data", sort: "descending" }
-                , raw: { title: "number of assays in raw data", sort: "descending" }
+                , processed: { title: "a number of assays in processed data", sort: "descending" }
+                , raw: { title: "a number of assays in raw data", sort: "descending" }
                 , atlas: { title: "presence of experiment data in Gene Expression Atlas", sort: "descending" }
-                , views: { title: "number of views", sort: "descending" }
-                , downloads: { title: "number of download attempts", sort: "descending" }
-                , complete_downloads: { title: "number of complete downloads", sort: "descending" }
+                , views: { title: "a number of views", sort: "descending" }
+                , downloads: { title: "a number of download attempts", sort: "descending" }
+                , complete_downloads: { title: "a number of complete downloads", sort: "descending" }
             }
         });
 
@@ -117,11 +103,6 @@
         $.get(contextPath + "/species-list.html").then( function(data) {
             $("#ae-organism").html(data).removeAttr("disabled").val(query.organism);
 
-        });
-
-        $.get(contextPath + "/arrays-list.html").then( function(data) {
-            addHtmlToSelect("#ae-array", data);
-            $("#ae-array").removeAttr("disabled").val(query.array);
         });
 
         $.get(contextPath + "/expdesign-list.html?q=").then( function(data) {
