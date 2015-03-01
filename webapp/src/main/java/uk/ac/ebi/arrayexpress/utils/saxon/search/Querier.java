@@ -18,6 +18,7 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.NodeInfo;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
 import org.apache.lucene.util.BytesRef;
@@ -107,7 +108,14 @@ public class Querier {
 
             result = new ArrayList<>(hits.totalHits);
             for (ScoreDoc d : hits.scoreDocs) {
-                result.add(this.env.documentNodes.get(d.doc));
+                Document doc = searcher.doc(d.doc);
+                result.add(
+                        this.env.documentNodes.get(
+                                doc.getField(Indexer.NAME_INDEX)
+                                        .numericValue()
+                                        .intValue()
+                        )
+                );
             }
         }
 

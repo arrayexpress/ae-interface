@@ -30,6 +30,7 @@ import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.util.NumericUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
@@ -66,14 +67,14 @@ public class Indexer {
                         List<Item> values = saxon.evaluateXPath((NodeInfo) node, field.path);
                         for (Item v : values) {
                             if ("integer".equals(field.type)) {
-                                addIntIndexField(d, field.name, v);
+                                addLongField(d, field.name, v);
                             } else if ("date".equals(field.type)) {
                                 // todo: addDateIndexField(d, field.name, v);
                                 logger.error("Date fields are not supported yet, field [{}] will not be created", field.name);
                             } else if ("boolean".equals(field.type)) {
                                 addBooleanIndexField(d, field.name, v);
                             } else {
-                                addIndexField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
+                                addStringField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
                             }
                             Thread.sleep(0);
                         }
@@ -83,7 +84,7 @@ public class Indexer {
                         throw x;
                     }
                 }
-
+                addIndexField(d, indexedNodes.size());
                 w.addDocument(d);
                 // append node to the list
                 indexedNodes.add((NodeInfo) node);
@@ -105,7 +106,7 @@ public class Indexer {
         return new IndexWriter(indexDirectory, config);
     }
 
-    private void addIndexField(Document document, String name, Item value, boolean shouldAnalyze, boolean shouldStore) {
+    private void addStringField(Document document, String name, Item value, boolean shouldAnalyze, boolean shouldStore) {
         String stringValue = value.getStringValue();
         FieldType fieldType = new FieldType();
         fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
@@ -126,7 +127,7 @@ public class Indexer {
         document.add(new StringField(name, null == boolValue ? "" : boolValue.toString(), Field.Store.NO));
     }
 
-    private void addIntIndexField(Document document, String name, Item value) {
+    private void addLongField(Document document, String name, Item value) {
         Long longValue;
         try {
             if (value instanceof Int64Value) {
@@ -140,5 +141,22 @@ public class Indexer {
         } catch (XPathException x) {
             logger.error("Unable to convert value [" + value.getStringValue() + "]", x);
         }
+    }
+
+    private void addIndexField(Document document, int index) {
+        document.add(new IntField(NAME_INDEX, index, TYPE_INDEX));
+    }
+
+    protected static final String NAME_INDEX = "_index_";
+
+    protected static final FieldType TYPE_INDEX = new FieldType();
+    static {
+        TYPE_INDEX.setTokenized(false);
+        TYPE_INDEX.setOmitNorms(false);
+        TYPE_INDEX.setIndexOptions(IndexOptions.NONE);
+        TYPE_INDEX.setNumericType(FieldType.NumericType.INT);
+        TYPE_INDEX.setNumericPrecisionStep(NumericUtils.PRECISION_STEP_DEFAULT_32);
+        TYPE_INDEX.setStored(true);
+        TYPE_INDEX.freeze();
     }
 }
