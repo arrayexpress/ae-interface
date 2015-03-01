@@ -41,7 +41,7 @@
         <interface.application.pref.experiments.ae1.export.location/>
 
         <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_production/software/browse/</interface.application.pref.experiments.ae2.source.location>
-        <interface.application.pref.experiments.ae2.reload.schedule>0 50 1-7 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+        <interface.application.pref.experiments.ae2.reload.schedule>0 50 0-7 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
         <interface.application.pref.experiments.ae2.export.location/>
 
         <interface.application.pref.efo.update.schedule>0 0 1 ? * SUN</interface.application.pref.efo.update.schedule>
