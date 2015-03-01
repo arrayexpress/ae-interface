@@ -86,7 +86,7 @@ public class GetMappedValueFunction extends ExtensionFunctionDefinition
             if (null == value) {
                 return EmptySequence.getInstance();
             } else {
-                JPConverter converter = JPConverter.allocate(value.getClass(), context.getConfiguration());
+                JPConverter converter = JPConverter.allocate(value.getClass(), null, context.getConfiguration());
                 return converter.convert(value, context);
             }
         }

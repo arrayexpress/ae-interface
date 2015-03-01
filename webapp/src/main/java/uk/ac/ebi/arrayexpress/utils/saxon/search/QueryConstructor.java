@@ -1,7 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.search;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +15,25 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+package uk.ac.ebi.arrayexpress.utils.saxon.search;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 
 import java.util.Map;
 
-public class QueryConstructor implements IQueryConstructor
-{
+public class QueryConstructor implements IQueryConstructor {
     @Override
-    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, Map<String, String[]> querySource) throws ParseException {
         BooleanQuery result = new BooleanQuery();
         for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
             if (env.fields.containsKey(queryItem.getKey()) && queryItem.getValue().length > 0) {
                 QueryParser parser = new EnhancedQueryParser(env, queryItem.getKey(), env.indexAnalyzer);
                 parser.setDefaultOperator(QueryParser.Operator.AND);
-                for ( String value : queryItem.getValue() ) {
+                for (String value : queryItem.getValue()) {
                     if (!"".equals(value)) {
                         if (env.fields.get(queryItem.getKey()).shouldEscape) {
                             value = value.replaceAll("([+\"!()\\[\\]{}^~*?:\\\\-]|&&|\\|\\|)", "\\\\$1");
@@ -50,8 +48,7 @@ public class QueryConstructor implements IQueryConstructor
     }
 
     @Override
-    public Query construct( IndexEnvironment env, String queryString ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, String queryString) throws ParseException {
         QueryParser parser = new EnhancedQueryParser(env, env.defaultField, env.indexAnalyzer);
         parser.setDefaultOperator(QueryParser.Operator.AND);
         return parser.parse(queryString);

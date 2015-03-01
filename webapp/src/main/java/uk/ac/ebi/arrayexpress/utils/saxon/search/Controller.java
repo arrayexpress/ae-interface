@@ -1,7 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.search;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +15,12 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
+package uk.ac.ebi.arrayexpress.utils.saxon.search;
+
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.slf4j.Logger;
@@ -31,9 +31,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class Controller
-{
-    // logging machinery
+public class Controller {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private Configuration config;
@@ -46,47 +44,39 @@ public class Controller
     private Map<String, IndexEnvironment> environment = new HashMap<>();
 
     @SuppressWarnings("unused")
-    public Controller( URL configFile )
-    {
+    public Controller(URL configFile) {
         this.config = new Configuration(configFile);
         this.queryPool = new QueryPool();
         BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
     }
 
-    public Controller( HierarchicalConfiguration config )
-    {
+    public Controller(HierarchicalConfiguration config) {
         this.config = new Configuration(config);
         this.queryPool = new QueryPool();
         BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
     }
 
-    public void setQueryConstructor( IQueryConstructor queryConstructor )
-    {
+    public void setQueryConstructor(IQueryConstructor queryConstructor) {
         this.queryConstructor = queryConstructor;
     }
 
-    public void setQueryExpander( IQueryExpander queryExpander )
-    {
+    public void setQueryExpander(IQueryExpander queryExpander) {
         this.queryExpander = queryExpander;
     }
 
-    public void setQueryHighlighter( IQueryHighlighter queryHighlighter )
-    {
+    public void setQueryHighlighter(IQueryHighlighter queryHighlighter) {
         this.queryHighlighter = queryHighlighter;
     }
 
-    public void setXPathEngine( SaxonEngine saxon )
-    {
+    public void setXPathEngine(SaxonEngine saxon) {
         this.saxon = saxon;
     }
 
-    public boolean hasIndexDefined( String indexId )
-    {
+    public boolean hasIndexDefined(String indexId) {
         return this.environment.containsKey(indexId);
     }
 
-    public IndexEnvironment getEnvironment( String indexId )
-    {
+    public IndexEnvironment getEnvironment(String indexId) {
         if (!this.environment.containsKey(indexId)) {
             this.environment.put(indexId, new IndexEnvironment(config.getIndexConfig(indexId)));
         }
@@ -94,8 +84,7 @@ public class Controller
         return this.environment.get(indexId);
     }
 
-    public void index( String indexId, DocumentInfo document ) throws IndexerException, InterruptedException
-    {
+    public void index(String indexId, DocumentInfo document) throws IndexerException, InterruptedException {
         this.logger.info("Started indexing for index id [{}]", indexId);
         getEnvironment(indexId).putDocumentInfo(
                 document.hashCode()
@@ -104,8 +93,7 @@ public class Controller
         this.logger.info("Indexing for index id [{}] completed", indexId);
     }
 
-    public List<String> getTerms( String indexId, String fieldName, int minFreq ) throws IOException
-    {
+    public List<String> getTerms(String indexId, String fieldName, int minFreq) throws IOException {
         IndexEnvironment env = getEnvironment(indexId);
         if (!env.doesFieldExist(fieldName)) {
             this.logger.error("Field [{}] for index id [{}] does not exist, returning empty list");
@@ -116,8 +104,7 @@ public class Controller
     }
 
     @SuppressWarnings("unused")
-    public Integer getDocCount( String indexId, Map<String, String[]> queryParams ) throws IOException, ParseException
-    {
+    public Integer getDocCount(String indexId, Map<String, String[]> queryParams) throws IOException, ParseException {
         IndexEnvironment env = getEnvironment(indexId);
 
         Query query = queryConstructor.construct(env, queryParams);
@@ -126,35 +113,30 @@ public class Controller
     }
 
     @SuppressWarnings("unused")
-    public void dumpTerms( String indexId, String fieldName ) throws IOException
-    {
+    public void dumpTerms(String indexId, String fieldName) throws IOException {
         IndexEnvironment env = getEnvironment(indexId);
         if (env.doesFieldExist(fieldName)) {
             new Querier(env).dumpTerms(fieldName);
         }
     }
 
-    public Set<String> getFieldNames( String indexId )
-    {
+    public Set<String> getFieldNames(String indexId) {
         IndexEnvironment env = getEnvironment(indexId);
         return (null != env ? env.fields.keySet() : null);
     }
 
-    public String getFieldTitle( String indexId, String fieldName )
-    {
+    public String getFieldTitle(String indexId, String fieldName) {
         IndexEnvironment env = getEnvironment(indexId);
-        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).title : null);        
+        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).title : null);
     }
 
-    public String getFieldType( String indexId, String fieldName )
-    {
+    public String getFieldType(String indexId, String fieldName) {
         IndexEnvironment env = getEnvironment(indexId);
-        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);        
+        return (null != env && env.doesFieldExist(fieldName) ? env.fields.get(fieldName).type : null);
     }
 
-    public Integer addQuery( String indexId, Map<String, String[]> queryParams )
-            throws ParseException, IOException
-    {
+    public Integer addQuery(String indexId, Map<String, String[]> queryParams)
+            throws ParseException, IOException {
         if (null == this.queryConstructor) {
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryConstructor(new QueryConstructor());
@@ -168,19 +150,16 @@ public class Controller
         );
     }
 
-    public List<NodeInfo> queryIndex( Integer queryId ) throws IOException
-    {
+    public List<NodeInfo> queryIndex(Integer queryId) throws IOException {
         QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
         return new Querier(getEnvironment(queryInfo.getIndexId())).query(queryInfo);
     }
 
-    public List<NodeInfo> queryIndex( String indexId, String queryString ) throws ParseException, IOException
-    {
+    public List<NodeInfo> queryIndex(String indexId, String queryString) throws ParseException, IOException {
         return new Querier(getEnvironment(indexId)).query(this.queryConstructor.construct(getEnvironment(indexId), queryString));  // should use "queryIndex( Integer queryId )" instead
     }
 
-    public String highlightQuery( Integer queryId, String fieldName, String text )
-    {
+    public String highlightQuery(Integer queryId, String fieldName, String text) {
         if (null == this.queryHighlighter) {
             // sort of lazy init if we forgot to specify more advanced highlighter
             this.setQueryHighlighter(new QueryHighlighter());

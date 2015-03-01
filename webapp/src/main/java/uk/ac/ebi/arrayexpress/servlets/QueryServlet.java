@@ -18,7 +18,7 @@ package uk.ac.ebi.arrayexpress.servlets;
  */
 
 import net.sf.saxon.om.DocumentInfo;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;

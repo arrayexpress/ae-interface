@@ -17,21 +17,21 @@ package uk.ac.ebi.fg.utils.lucene;
  *
  */
 
-import org.apache.lucene.analysis.KeywordAnalyzer;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
@@ -114,7 +114,7 @@ public class IndexedDocumentController
     private IndexWriter getWriter() throws IOException
     {
         return new IndexWriter(ramDirectory,
-                new IndexWriterConfig(Version.LUCENE_35, new KeywordAnalyzer())
+                new IndexWriterConfig(new KeywordAnalyzer())
         );
     }
 
@@ -192,9 +192,9 @@ public class IndexedDocumentController
         TopDocs topDocs = null;
 
         if (cleanTerm != null) {
-            IndexReader reader = IndexReader.open(ramDirectory);
+            IndexReader reader = DirectoryReader.open(ramDirectory);
             IndexSearcher searcher = new IndexSearcher(reader);
-            QueryParser parser = new QueryParser(Version.LUCENE_35, className, new KeywordAnalyzer());
+            QueryParser parser = new QueryParser(className, new KeywordAnalyzer());
             Query query = parser.parse(cleanTerm);
             topDocs = searcher.search(query, 10);
 
@@ -202,12 +202,11 @@ public class IndexedDocumentController
             if (topDocs.totalHits == 0) {
                 // logger.debug("0 matches for: " + term);
 
-                parser = new QueryParser(Version.LUCENE_35, classNameAlternatives, new KeywordAnalyzer());
+                parser = new QueryParser(classNameAlternatives, new KeywordAnalyzer());
                 query = parser.parse(cleanTerm);
                 topDocs = searcher.search(query, 10);
                 // logger.debug("Number of alternative term matches: " + topDocs.totalHits);
             }
-            searcher.close();
             reader.close();
         }
 
@@ -223,14 +222,9 @@ public class IndexedDocumentController
      */
     public Document getDoc( int index ) throws IOException
     {
-        IndexReader reader = IndexReader.open(ramDirectory);
+        IndexReader reader = DirectoryReader.open(ramDirectory);
         IndexSearcher searcher = new IndexSearcher(reader);
-
-        Document doc = searcher.doc(index);
-
-        searcher.close();
-
-        return doc;
+        return searcher.doc(index);
     }
 
     /**

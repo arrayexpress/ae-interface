@@ -20,7 +20,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
@@ -101,7 +101,7 @@ public class IndexEnvironment
             this.indexId = this.indexConfig.getString("[@id]");
 
             String indexBaseLocation = this.indexConfig.getString("[@location]");
-            this.indexDirectory = FSDirectory.open(new File(indexBaseLocation, this.indexId));
+            this.indexDirectory = FSDirectory.open(new File(indexBaseLocation, this.indexId).toPath());
 
             String indexAnalyzer = this.indexConfig.getString("[@defaultAnalyzer]");
             Analyzer a = (Analyzer)Class.forName(indexAnalyzer).newInstance();

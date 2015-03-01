@@ -1,17 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.search;
-
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.*;
-import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryConstructor;
-
-import java.util.Map;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +15,23 @@ import java.util.Map;
  *
  */
 
-public class BackwardsCompatibleQueryConstructor extends QueryConstructor
-{
+package uk.ac.ebi.arrayexpress.utils.search;
+
+import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.*;
+import uk.ac.ebi.arrayexpress.utils.RegexHelper;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
+import uk.ac.ebi.arrayexpress.utils.saxon.search.QueryConstructor;
+
+import java.util.Map;
+
+public class BackwardsCompatibleQueryConstructor extends QueryConstructor {
     private final static RegexHelper ACCESSION_REGEX = new RegexHelper("^[ae]-\\w{4}-\\d+$", "i");
 
     @Override
-    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, Map<String, String[]> querySource) throws ParseException {
         if ("1".equals(StringTools.arrayToString(querySource.get("queryversion"), ""))) {
             // preserving old stuff:
             // 1. all lucene special chars to be quoted
@@ -44,7 +42,7 @@ public class BackwardsCompatibleQueryConstructor extends QueryConstructor
             for (Map.Entry<String, String[]> queryItem : querySource.entrySet()) {
                 String field = queryItem.getKey();
                 if (env.fields.containsKey(field) && queryItem.getValue().length > 0) {
-                    for ( String value : queryItem.getValue() ) {
+                    for (String value : queryItem.getValue()) {
                         if (null != value) {
                             value = value.trim().toLowerCase();
                             if (0 != value.length()) {
@@ -63,7 +61,7 @@ public class BackwardsCompatibleQueryConstructor extends QueryConstructor
                                     for (String token : tokens) {
                                         // we use wildcards for keywords depending on "wholewords" switch,
                                         // *ALWAYS* for other fields, *NEVER* for user id and accession or boolean fields
-                                        Query q = !"boolean".equals(env.fields.get(field).type) &&  !" userid  accession ".contains(" " + field + " ") && (useWildcards || (!" keywords ".contains(" " + field + " ")))
+                                        Query q = !"boolean".equals(env.fields.get(field).type) && !" userid  accession ".contains(" " + field + " ") && (useWildcards || (!" keywords ".contains(" " + field + " ")))
                                                 ? new WildcardQuery(new Term(field, "*" + token + "*"))
                                                 : new TermQuery(new Term(field, token));
                                         result.add(q, BooleanClause.Occur.MUST);
@@ -82,8 +80,7 @@ public class BackwardsCompatibleQueryConstructor extends QueryConstructor
     }
 
     @Override
-    public Query construct( IndexEnvironment env, String queryString ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, String queryString) throws ParseException {
         return super.construct(env, queryString);
     }
 }

@@ -149,8 +149,8 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         users.clearUserMap(INDEX_ID);
 
         try {
-            List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
-            for (Object node : documentNodes) {
+            List<Item> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
+            for (Item node : documentNodes) {
 
                 try {
                     NodeInfo array = (NodeInfo)node;
@@ -161,7 +161,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
                     if (null != legacyId) {
                         maps.setMappedValue(MAP_ARRAY_LEGACY_ID, accession, legacyId);
                     }
-                    List<Object> userIds = saxon.evaluateXPath(array, "user/@id");
+                    List<Item> userIds = saxon.evaluateXPath(array, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> stringSet = new HashSet<>(userIds.size());
                         for (Object userId : userIds) {

@@ -1,6 +1,6 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.Query;
 
 import java.util.Map;

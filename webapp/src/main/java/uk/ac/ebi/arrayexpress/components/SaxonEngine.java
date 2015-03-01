@@ -1,5 +1,3 @@
-package uk.ac.ebi.arrayexpress.components;
-
 /*
  * Copyright 2009-2014 European Molecular Biology Laboratory
  *
@@ -17,11 +15,13 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
+package uk.ac.ebi.arrayexpress.components;
+
 import net.sf.saxon.Configuration;
-import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
 import net.sf.saxon.event.SequenceWriter;
 import net.sf.saxon.expr.instruct.TerminationException;
+import net.sf.saxon.jaxp.TransformerImpl;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
@@ -101,7 +101,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         xPathEvaluator = new XPathEvaluator(trFactory.getConfiguration());
         IndependentContext namespaces = new IndependentContext(trFactory.getConfiguration());
         namespaces.declareNamespace("ae", NamespaceConstant.AE_EXT);
-        xPathEvaluator.setNamespaceResolver(namespaces);
+        xPathEvaluator.setStaticContext(namespaces);
     }
 
     @Override
@@ -242,31 +242,22 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public List<Object> evaluateXPath( NodeInfo node, String xpath ) throws XPathException
-    {
+    public List<Item> evaluateXPath(NodeInfo node, String xpath) throws XPathException {
         XPathExpression xpe = getXPathExpression(xpath);
-
-        return xpe.evaluate(node);
+        return xpe.evaluate(xpe.createDynamicContext(node));
     }
 
-    public Object evaluateXPathSingle( NodeInfo node, String xpath ) throws XPathException
-    {
+    public Item evaluateXPathSingle(NodeInfo node, String xpath) throws XPathException {
         XPathExpression xpe = getXPathExpression(xpath);
-
-        return xpe.evaluateSingle(node);
+        return xpe.evaluateSingle(xpe.createDynamicContext(node));
     }
 
-    public String evaluateXPathSingleAsString(NodeInfo node, String xpath) throws XPathException
-    {
-        Object e = evaluateXPathSingle(node, xpath);
+    public String evaluateXPathSingleAsString(NodeInfo node, String xpath) throws XPathException {
+        Item e = evaluateXPathSingle(node, xpath);
         if (null == e) {
             return null;
-        } else if (e instanceof Item) {
-            return ((Item)e).getStringValue();
-        } else if (e instanceof String ) {
-            return (String)e;
         } else {
-            throw new XPathException("Conversion from [" + e.getClass() + "] to String was not implemented");
+            return e.getStringValue();
         }
     }
 
@@ -281,6 +272,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         return transform(srcDocument, stylesheet, params, new StreamResult(dstFile));
     }
 
+    @SuppressWarnings("unused")
     public String transformToString( URL src, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
     {
         try (InputStream inStream = src.openStream(); ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
@@ -341,7 +333,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             Transformer xslt = templates.newTransformer();
 
             // redirect all messages to logger
-            ((Controller) xslt).setMessageEmitter(new LoggerWriter(logger));
+            ((TransformerImpl) xslt).getUnderlyingController()
+                    .setMessageEmitter(new LoggerWriter(logger));
 
             // assign the parameters (if not null)
             if (null != params) {

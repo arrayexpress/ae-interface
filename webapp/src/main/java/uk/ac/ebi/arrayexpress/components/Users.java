@@ -21,6 +21,7 @@ import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.BooleanValue;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -190,10 +191,10 @@ public class Users extends ApplicationComponent implements IDocumentSource
     {
         name = StringEscapeUtils.escapeXml(name);
         try {
-            return  (Boolean)saxon.evaluateXPathSingle(
+            return  ((BooleanValue)saxon.evaluateXPathSingle(
                     getDocument()
                     , "(/users/user[name = '" + name + "']/is_privileged = true())"
-            );
+            )).effectiveBooleanValue();
         } catch (XPathException x) {
             throw new RuntimeException(x);
         }
@@ -203,10 +204,10 @@ public class Users extends ApplicationComponent implements IDocumentSource
     {
         id = StringEscapeUtils.escapeXml(id);
         try {
-            return (Boolean)saxon.evaluateXPathSingle(
+            return ((BooleanValue)saxon.evaluateXPathSingle(
                 getDocument()
                 , "(/users/user[id = '" + id + "']/is_privileged = true())"
-        );
+        )).effectiveBooleanValue();
         } catch (XPathException x) {
             throw new RuntimeException(x);
         }
@@ -300,9 +301,9 @@ public class Users extends ApplicationComponent implements IDocumentSource
             String result = "Unable to find matching account information, please contact us for assistance.";
             if (null != users && users.size() > 0) {
                 if (1 == users.size()) {
-                    String username = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)");
-                    String email = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(email)");
-                    String password = (String)this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(password)");
+                    String username = this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(name)").getStringValue();
+                    String email = this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(email)").getStringValue();
+                    String password = this.saxon.evaluateXPathSingle((NodeInfo)users.get(0), "string(password)").getStringValue();
 
                     getApplication().sendEmail(
                             getPreferences().getString("ae.password-remind.originator")

@@ -1,7 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.saxon.search;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,41 +15,40 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
  *
  */
 
+package uk.ac.ebi.arrayexpress.utils.saxon.search;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.util.Version;
 
-public class EnhancedQueryParser extends QueryParser
-{
+public class EnhancedQueryParser extends QueryParser {
     private IndexEnvironment env;
 
-    public EnhancedQueryParser( IndexEnvironment env, String f, Analyzer a )
-    {
-        super(Version.LUCENE_30, f, a);
+    public EnhancedQueryParser(IndexEnvironment env, String f, Analyzer a) {
+        super(f, a);
         this.env = env;
         this.setAllowLeadingWildcard(true);
     }
 
-    protected Query getRangeQuery( String field,
-                                   String part1,
-                                   String part2,
-                                   boolean inclusive )
-            throws ParseException
-    {
+    protected Query getRangeQuery(String field,
+                                  String part1,
+                                  String part2,
+                                  boolean startInclusive,
+                                  boolean endInclusive)
+            throws ParseException {
         TermRangeQuery query = (TermRangeQuery)
                 super.getRangeQuery(field, part1, part2,
-                        inclusive);
+                        startInclusive, endInclusive);
         if (env.fields.containsKey(field) && "integer".equals(env.fields.get(field).type)) {
             return NumericRangeQuery.newLongRange(
                     field,
-                    parseLong(query.getLowerTerm()),
-                    parseLong(query.getUpperTerm()),
+                    parseLong(query.getLowerTerm().utf8ToString()),
+                    parseLong(query.getUpperTerm().utf8ToString()),
                     query.includesLower(),
                     query.includesUpper());
         } else {
@@ -59,23 +56,19 @@ public class EnhancedQueryParser extends QueryParser
         }
     }
 
-    public Query parse(String queryText) throws ParseException
-    {
+    public Query parse(String queryText) throws ParseException {
         return super.parse(queryText);
     }
 
-    protected Query getFieldQuery( String field, String queryText, int slop ) throws ParseException
-    {
+    protected Query getFieldQuery(String field, String queryText, int slop) throws ParseException {
         return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText, slop), field, queryText);
     }
 
-    protected Query getFieldQuery( String field, String queryText ) throws ParseException
-    {
-        return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText), field, queryText);
+    protected Query getFieldQuery(String field, String queryText, boolean quoted) throws ParseException {
+        return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText, quoted), field, queryText);
     }
 
-    private Query rewriteNumericBooleanFieldQuery( Query query, String field, String queryText ) throws ParseException
-    {
+    private Query rewriteNumericBooleanFieldQuery(Query query, String field, String queryText) throws ParseException {
         if (env.fields.containsKey(field) && "integer".equals(env.fields.get(field).type)) {
             return NumericRangeQuery.newLongRange(
                     field,
@@ -96,8 +89,7 @@ public class EnhancedQueryParser extends QueryParser
         }
     }
 
-    private Long parseLong( String text ) throws ParseException
-    {
+    private Long parseLong(String text) throws ParseException {
         Long value;
 
         try {

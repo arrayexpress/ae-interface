@@ -282,19 +282,19 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         // todo: move this to similarity component
         // maps.clearMap(MAP_EXPERIMENTS_WITH_SIMILARITY);
         try {
-            List<Object> documentNodes = saxon.evaluateXPath(getDocument(), "/experiments/experiment[source/@visible = 'true']");
+            List<Item> documentNodes = saxon.evaluateXPath(getDocument(), "/experiments/experiment[source/@visible = 'true']");
 
             // todo: move this to similarity component
             // XPathExpression similarXpe = saxon.getXPathExpression("similarto");
             // XPathExpression simAccessionXpe = saxon.getXPathExpression("@accession cast as xs:string");
 
-            for (Object node : documentNodes) {
+            for (Item node : documentNodes) {
                 try {
                     NodeInfo exp = (NodeInfo)node;
 
                     String accession = saxon.evaluateXPathSingleAsString(exp, "accession");
                     maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
-                    List<Object> userIds = saxon.evaluateXPath(exp, "user/@id");
+                    List<Item> userIds = saxon.evaluateXPath(exp, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> usersForExperiment = new HashSet<>(userIds.size());
                         for (Object userId : userIds) {
@@ -312,7 +312,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                         users.setUserMapping(INDEX_ID, accession, usersForExperiment);
                     }
 
-                    List<Object> protocolIds = saxon.evaluateXPath(exp, "protocol/id");
+                    List<Item> protocolIds = saxon.evaluateXPath(exp, "protocol/id");
                     if (null != protocolIds) {
                         for (Object protocolId : protocolIds) {
                             String id = ((Item)protocolId).getStringValue();
@@ -325,7 +325,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             experimentsForProtocol.add(accession);
                         }
                     }
-                    List<Object> arrayAccessions = saxon.evaluateXPath(exp, "arraydesign/accession");
+                    List<Item> arrayAccessions = saxon.evaluateXPath(exp, "arraydesign/accession");
                     if (null != arrayAccessions) {
                         for (Object arrayAccession : arrayAccessions) {
                             String arrayAcc = ((Item)arrayAccession).getStringValue();

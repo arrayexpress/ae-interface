@@ -1,7 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.search;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +15,10 @@ package uk.ac.ebi.arrayexpress.utils.search;
  *
  */
 
+package uk.ac.ebi.arrayexpress.utils.search;
+
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.*;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexEnvironment;
@@ -27,8 +27,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
-{
+public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor {
     private final static String FIELD_KEYWORDS = "keywords";
     private final static String FIELD_ACCESSION = "accession";
 
@@ -36,8 +35,7 @@ public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
     private final static String RE_SPLIT_BATCH_OF_ACCESSIONS = "[\\s,;]+";
 
     @Override
-    public Query construct( IndexEnvironment env, Map<String, String[]> querySource ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, Map<String, String[]> querySource) throws ParseException {
         Query query = super.construct(env, querySource);
 
         if (querySource.containsKey(FIELD_KEYWORDS)) {
@@ -54,7 +52,7 @@ public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
 
                 BooleanQuery topQuery;
                 if (query instanceof BooleanQuery) {
-                    topQuery = (BooleanQuery)query;
+                    topQuery = (BooleanQuery) query;
                 } else {
                     topQuery = new BooleanQuery();
                     topQuery.add(query, BooleanClause.Occur.MUST);
@@ -68,13 +66,11 @@ public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
     }
 
     @Override
-    public Query construct( IndexEnvironment env, String queryString ) throws ParseException
-    {
+    public Query construct(IndexEnvironment env, String queryString) throws ParseException {
         return super.construct(env, queryString);
     }
 
-    private Query removeTermQueriesForField( Query query, String fieldName )
-    {
+    private Query removeTermQueriesForField(Query query, String fieldName) {
         Query q = removeTermQueryForField(query, fieldName);
         if (null == q) {
             q = new BooleanQuery();
@@ -84,11 +80,10 @@ public class BatchQueryConstructor extends BackwardsCompatibleQueryConstructor
     }
 
 
-    private Query removeTermQueryForField( Query query, String fieldName )
-    {
+    private Query removeTermQueryForField(Query query, String fieldName) {
         if (query instanceof BooleanQuery) {
             BooleanQuery boolQuery = new BooleanQuery();
-            for ( BooleanClause clause : ((BooleanQuery)query).clauses() ) {
+            for (BooleanClause clause : ((BooleanQuery) query).clauses()) {
                 Query q = removeTermQueryForField(clause.getQuery(), fieldName);
                 if (null != q) {
                     boolQuery.add(q, clause.getOccur());

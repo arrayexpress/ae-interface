@@ -1,7 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.search;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +15,17 @@ package uk.ac.ebi.arrayexpress.utils.search;
  *
  */
 
+package uk.ac.ebi.arrayexpress.utils.search;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
@@ -38,9 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class EFOExpansionLookupIndex implements IEFOExpansionLookup
-{
-    // logging machinery
+public class EFOExpansionLookupIndex implements IEFOExpansionLookup {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private FSDirectory indexDirectory;
@@ -52,34 +47,28 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
     // maximum number of index documents to be processed; in reality shouldn't be more than 2
     private static final int MAX_INDEX_HITS = 16;
 
-    public EFOExpansionLookupIndex( String indexLocation, Set<String> stopWords ) throws IOException
-    {
+    public EFOExpansionLookupIndex(String indexLocation, Set<String> stopWords) throws IOException {
         this.stopWords = stopWords;
-        this.indexDirectory = FSDirectory.open(new File(indexLocation));
+        this.indexDirectory = FSDirectory.open(new File(indexLocation).toPath());
     }
 
-    private IEFO getEfo()
-    {
+    private IEFO getEfo() {
         return this.efo;
     }
 
-    public void setEfo( IEFO efo )
-    {
+    public void setEfo(IEFO efo) {
         this.efo = efo;
     }
 
-    public void setCustomSynonyms( Map<String, Set<String>> synonyms )
-    {
+    public void setCustomSynonyms(Map<String, Set<String>> synonyms) {
         this.customSynonyms = synonyms;
     }
 
-    private Directory getIndexDirectory()
-    {
+    private Directory getIndexDirectory() {
         return this.indexDirectory;
     }
 
-    public void buildIndex() throws IOException, InterruptedException
-    {
+    public void buildIndex() throws IOException, InterruptedException {
         try (IndexWriter w = createIndex(this.indexDirectory, new LowercaseAnalyzer())) {
             this.logger.debug("Building expansion lookup index");
 
@@ -90,8 +79,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addCustomSynonyms( IndexWriter w ) throws IOException, InterruptedException
-    {
+    private void addCustomSynonyms(IndexWriter w) throws IOException, InterruptedException {
         // here we add all custom synonyms so those that weren't added during EFO processing
         //  get a chance to be included, too. don't worry about duplication, dupes will be removed during retrieval
         if (null != this.customSynonyms) {
@@ -112,8 +100,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeAndChildren( EFONode node, IndexWriter w ) throws IOException, InterruptedException
-    {
+    private void addNodeAndChildren(EFONode node, IndexWriter w) throws IOException, InterruptedException {
         Thread.sleep(0);
         if (null != node) {
             addNodeToIndex(node, w);
@@ -123,8 +110,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    private void addNodeToIndex( EFONode node, IndexWriter w ) throws IOException, InterruptedException
-    {
+    private void addNodeToIndex(EFONode node, IndexWriter w) throws IOException, InterruptedException {
         String term = node.getTerm();
 
         if (null != term && !isStopTerm(term)) {
@@ -133,8 +119,8 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
             // if the node represents organizational class, just include its synonyms, but not children
             Set<String> childTerms =
                     node.isOrganizationalClass()
-                    ? new HashSet<String>()
-                    : getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
+                            ? new HashSet<String>()
+                            : getEfo().getTerms(node.getId(), IEFO.INCLUDE_CHILDREN);
 
             // here we add custom synonyms to EFO synonyms/child terms and their synonyms
             if (null != this.customSynonyms) {
@@ -195,7 +181,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                     terms++;
                 }
 
-                if ( terms > 1 || ( 1 == terms && efoChildren > 0 )) {
+                if (terms > 1 || (1 == terms && efoChildren > 0)) {
                     w.addDocument(d);
                 } else {
                     // this.logger.debug("EFO term [{}] was not added due to insufficient mappings", term);
@@ -208,13 +194,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         }
     }
 
-    public EFOExpansionTerms getExpansionTerms( Query origQuery ) throws IOException
-    {
+    public EFOExpansionTerms getExpansionTerms(Query origQuery) throws IOException {
         EFOExpansionTerms expansion = new EFOExpansionTerms();
 
-        if (IndexReader.indexExists(getIndexDirectory())) {
+        if (DirectoryReader.indexExists(getIndexDirectory())) {
 
-            try (IndexReader reader = IndexReader.open(getIndexDirectory()); IndexSearcher searcher = new IndexSearcher(reader)) {
+            try (IndexReader reader = DirectoryReader.open(getIndexDirectory())) {
+                IndexSearcher searcher = new IndexSearcher(reader);
 
                 Query q = overrideQueryField(origQuery, "term");
 
@@ -240,13 +226,13 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         return expansion;
     }
 
-    public Set<String> getReverseExpansion( String text ) throws IOException
-    {
+    public Set<String> getReverseExpansion(String text) throws IOException {
         Set<String> reverseExpansion = new HashSet<>();
 
-        if (null != text && IndexReader.indexExists(getIndexDirectory())) {
+        if (null != text && DirectoryReader.indexExists(getIndexDirectory())) {
 
-            try (IndexReader reader = IndexReader.open(getIndexDirectory()); IndexSearcher searcher = new IndexSearcher(reader)) {
+            try (IndexReader reader = DirectoryReader.open(getIndexDirectory())) {
+                IndexSearcher searcher = new IndexSearcher(reader);
 
                 // step 1: split terms
                 String[] terms = text.split("\\s+");
@@ -254,7 +240,7 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
                 for (int termIndex = 0; termIndex < terms.length; ++termIndex) {
                     BooleanQuery q = new BooleanQuery();
 
-                    Term t = new Term("all",  terms[termIndex]);
+                    Term t = new Term("all", terms[termIndex]);
                     q.add(new TermQuery(t), BooleanClause.Occur.SHOULD);
 
                     for (int phraseLength = 4; phraseLength <= 2; --phraseLength) {
@@ -289,49 +275,42 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         return reverseExpansion;
     }
 
-    private IndexWriter createIndex( Directory indexDirectory, Analyzer analyzer ) throws IOException
-    {
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+    private IndexWriter createIndex(Directory indexDirectory, Analyzer analyzer) throws IOException {
+        IndexWriterConfig config = new IndexWriterConfig(analyzer);
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         return new IndexWriter(indexDirectory, config);
     }
 
-    private void addIndexField( Document document, String name, String value, boolean shouldAnalyze, boolean shouldStore )
-    {
+    private void addIndexField(Document document, String name, String value, boolean shouldAnalyze, boolean shouldStore) {
         value = value.replaceAll("[^\\d\\w-]", " ").toLowerCase();
-        document.add(
-                new Field(
-                        name
-                        , value
-                        , shouldStore ? Field.Store.YES : Field.Store.NO
-                        , shouldAnalyze ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED
-                        , Field.TermVector.NO
-                )
-        );
+        FieldType fieldType = new FieldType();
+        fieldType.setIndexOptions(IndexOptions.DOCS);
+        fieldType.setTokenized(shouldAnalyze);
+        fieldType.setStored(shouldStore);
+        document.add(new Field(name, value, fieldType));
     }
 
-    private Query overrideQueryField( Query origQuery, String fieldName )
-    {
+    private Query overrideQueryField(Query origQuery, String fieldName) {
         Query query = new TermQuery(new Term(""));
 
         try {
             if (origQuery instanceof PrefixQuery) {
-                Term term = ((PrefixQuery)origQuery).getPrefix();
+                Term term = ((PrefixQuery) origQuery).getPrefix();
                 query = new PrefixQuery(new Term(fieldName, term.text()));
             } else if (origQuery instanceof WildcardQuery) {
-                Term term = ((WildcardQuery)origQuery).getTerm();
+                Term term = ((WildcardQuery) origQuery).getTerm();
                 query = new WildcardQuery(new Term(fieldName, term.text()));
             } else if (origQuery instanceof TermRangeQuery) {
-                TermRangeQuery trq = (TermRangeQuery)origQuery;
+                TermRangeQuery trq = (TermRangeQuery) origQuery;
                 query = new TermRangeQuery(fieldName, trq.getLowerTerm(), trq.getUpperTerm(), trq.includesLower(), trq.includesUpper());
             } else if (origQuery instanceof FuzzyQuery) {
-                Term term = ((FuzzyQuery)origQuery).getTerm();
+                Term term = ((FuzzyQuery) origQuery).getTerm();
                 query = new FuzzyQuery(new Term(fieldName, term.text()));
             } else if (origQuery instanceof TermQuery) {
-                Term term = ((TermQuery)origQuery).getTerm();
+                Term term = ((TermQuery) origQuery).getTerm();
                 query = new TermQuery(new Term(fieldName, term.text()));
             } else if (origQuery instanceof PhraseQuery) {
-                Term[] terms = ((PhraseQuery)origQuery).getTerms();
+                Term[] terms = ((PhraseQuery) origQuery).getTerms();
                 StringBuilder text = new StringBuilder();
                 for (Term t : terms) {
                     text.append(t.text()).append(' ');
@@ -348,19 +327,16 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup
         return query;
     }
 
-    private boolean isStopTerm( String str )
-    {
+    private boolean isStopTerm(String str) {
         return null == str || stopWords.contains(str.toLowerCase());
     }
 
-    private boolean isStopExpansionTerm( String str )
-    {
+    private boolean isStopExpansionTerm(String str) {
         return isStopTerm(str) || str.length() < 3 || str.matches(".*(\\s\\(.+\\)|\\s\\[.+\\]|,\\s|\\s-\\s|/|NOS).*");
     }
 
     @SuppressWarnings("unused")
-    private boolean isLongTerm( String str )
-    {
+    private boolean isLongTerm(String str) {
         // returns true if number of words is over 5;
         return null != str && str.replaceAll("\\s+", " ").replaceAll("[^ ]+", "").length() >= 4;
     }

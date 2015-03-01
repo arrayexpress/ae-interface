@@ -18,7 +18,9 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.NumericValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
@@ -83,7 +85,8 @@ public class PersistableDocumentContainer extends DocumentContainer implements P
         Long total = null;
         try {
             SaxonEngine saxon = (SaxonEngine)Application.getAppComponent("SaxonEngine");
-            total = (Long)saxon.evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+            Item item = saxon.evaluateXPathSingle(getDocument(), "count(/" + this.rootElement + "/*)");
+            total = ((NumericValue) item).longValue();
         } catch (XPathException x)
         {
             logger.debug("Caught an exception:", x);
