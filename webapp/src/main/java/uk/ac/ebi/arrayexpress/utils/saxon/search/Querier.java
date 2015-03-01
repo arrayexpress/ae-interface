@@ -140,9 +140,15 @@ public class Querier {
             logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", queryInfo.getQuery().toString(), hits.totalHits);
 
             result = new ArrayList<>(hits.totalHits);
-            for (ScoreDoc d : hits.scoreDocs) {                       // are in descending order
-                result.add(this.env.documentNodes.get(d.doc));
-                //queryInfo.putScore(this.env.documentNodes.get(d.doc), d.score);  lucene score is not needed
+            for (ScoreDoc d : hits.scoreDocs) {
+                Document doc = searcher.doc(d.doc);
+                result.add(
+                        this.env.documentNodes.get(
+                                doc.getField(Indexer.NAME_INDEX)
+                                        .numericValue()
+                                        .intValue()
+                        )
+                );
             }
         }
 
