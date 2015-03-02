@@ -315,7 +315,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         if (transform(source, stylesheet, params, dstDocument)) {
             return new Document(
                     dstDocument.getCurrentRoot(),
-                    serializeDocument(dstDocument.getCurrentRoot()));
+                    DigestUtils.md5Hex(serializeDocument(dstDocument.getCurrentRoot())));
         }
         return null;
     }
