@@ -25,8 +25,12 @@ import net.sf.saxon.value.Int64Value;
 import net.sf.saxon.value.NumericValue;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.*;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexOptions;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.IndexOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
@@ -39,7 +43,6 @@ import java.util.List;
 
 public class Indexer {
     protected final static String DOCID_FIELD = "docId";
-    protected final static String HASH_FIELD = "hash";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -53,7 +56,8 @@ public class Indexer {
 
     public List<NodeInfo> index(uk.ac.ebi.arrayexpress.utils.saxon.Document document) throws IndexerException, InterruptedException {
         try {
-            if (getStoredDocumentHash().equals(document.getHash())) {
+            if (getDocumentHash().equals(document.getHash())) {
+                logger.debug("Existing index found, no need to refresh");
                 List documentNodes = saxon.evaluateXPath(document.getRootNode(), this.env.indexDocumentPath);
                 List<NodeInfo> indexedNodes = new ArrayList<>(documentNodes.size());
 
@@ -63,15 +67,13 @@ public class Indexer {
                 return indexedNodes;
             }
             try (IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer)) {
-                Document d = new Document();
-                addHashField(d, document.getHash());
-                w.addDocument(d);
+                setDocumentHash(document.getHash());
 
                 List documentNodes = saxon.evaluateXPath(document.getRootNode(), this.env.indexDocumentPath);
                 List<NodeInfo> indexedNodes = new ArrayList<>(documentNodes.size());
 
                 for (Object node : documentNodes) {
-                    d = new Document();
+                    Document d = new Document();
 
                     // get all the fields taken care of
                     for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
@@ -160,16 +162,24 @@ public class Indexer {
         document.add(new NumericDocValuesField(DOCID_FIELD, docId));
     }
 
-    private void addHashField(Document document, String hash) {
-        document.add(new StringField(HASH_FIELD, hash, Field.Store.YES));
+    private void setDocumentHash(String hash) throws IOException {
+        Directory dir = this.env.indexDirectory;
+        for (String f : dir.listAll()) {
+            if (f.endsWith(".hash")) {
+                dir.deleteFile(f);
+            }
+        }
+        try (IndexOutput o = dir.createOutput(hash + ".hash", null)) {
+            o.close();
+        }
     }
 
-    private String getStoredDocumentHash() throws IOException {
-        if (DirectoryReader.indexExists(this.env.indexDirectory)) {
-            try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
-                Terms terms = MultiFields.getTerms(reader, HASH_FIELD);
-                if (null != terms) {
-                    return terms.iterator(null).next().utf8ToString();
+    private String getDocumentHash() throws IOException {
+        Directory dir = this.env.indexDirectory;
+        if (DirectoryReader.indexExists(dir)) {
+            for (String f : dir.listAll()) {
+                if (f.endsWith(".hash")) {
+                    return f.substring(0, f.indexOf(".hash"));
                 }
             }
         }
