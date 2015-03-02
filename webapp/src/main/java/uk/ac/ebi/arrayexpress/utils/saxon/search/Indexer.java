@@ -30,7 +30,6 @@ import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.util.NumericUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
@@ -84,7 +83,7 @@ public class Indexer {
                         throw x;
                     }
                 }
-                addIndexField(d, indexedNodes.size());
+                addDocIdField(d, indexedNodes.size());
                 w.addDocument(d);
                 // append node to the list
                 indexedNodes.add((NodeInfo) node);
@@ -143,20 +142,7 @@ public class Indexer {
         }
     }
 
-    private void addIndexField(Document document, int index) {
-        document.add(new IntField(NAME_INDEX, index, TYPE_INDEX));
-    }
-
-    protected static final String NAME_INDEX = "_index_";
-
-    protected static final FieldType TYPE_INDEX = new FieldType();
-    static {
-        TYPE_INDEX.setTokenized(false);
-        TYPE_INDEX.setOmitNorms(false);
-        TYPE_INDEX.setIndexOptions(IndexOptions.NONE);
-        TYPE_INDEX.setNumericType(FieldType.NumericType.INT);
-        TYPE_INDEX.setNumericPrecisionStep(NumericUtils.PRECISION_STEP_DEFAULT_32);
-        TYPE_INDEX.setStored(true);
-        TYPE_INDEX.freeze();
+    private void addDocIdField(Document document, int docId) {
+        document.add(new NumericDocValuesField("docId", docId));
     }
 }

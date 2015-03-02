@@ -18,7 +18,6 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.NodeInfo;
-import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
 import org.apache.lucene.util.BytesRef;
@@ -91,8 +90,6 @@ public class Querier {
     }
 
     public List<NodeInfo> query(Query query) throws IOException {
-        List<NodeInfo> result;
-
         try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
             IndexSearcher searcher = new IndexSearcher(reader);
             // empty query returns everything
@@ -100,7 +97,39 @@ public class Querier {
                 logger.info("Empty search, returned all [{}] documents", this.env.documentNodes.size());
                 return this.env.documentNodes;
             }
+            logger.info("Search of index [{}] with query [{}] started", env.indexId, query.toString());
+            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
+            logger.info("Search reported [{}] matches", hits.totalHits);
+            final List<NodeInfo> matchingNodes = new ArrayList<>(hits.totalHits);
+            searcher.search(query, new Collector()
+            {
+                public LeafCollector getLeafCollector( LeafReaderContext context )
+                        throws IOException
+                {
+                    final LeafReader reader = context.reader();
+                    return new LeafCollector()
+                    {
 
+                        // ignore scorer
+                        public void setScorer( Scorer scorer ) throws IOException
+                        {
+                        }
+
+                        public void collect( int doc ) throws IOException
+                        {
+                            matchingNodes.add(
+                                    env.documentNodes.get(
+                                            (int) reader.getNumericDocValues("docId").get(doc)
+                                    )
+                            );
+                        }
+                    };
+                }
+            });
+            logger.info("Search completed, [{}] matches", matchingNodes.size());
+
+            return matchingNodes;
+            /*
             // to show _all_ available nodes
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
             TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
@@ -117,41 +146,11 @@ public class Querier {
                         )
                 );
             }
+            */
         }
-
-        return result;
     }
 
     public List<NodeInfo> query(QueryInfo queryInfo) throws IOException {
-        List<NodeInfo> result;
-
-        try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
-            IndexSearcher searcher = new IndexSearcher(reader);
-
-            // empty query returns everything
-            if (queryInfo.getQuery() instanceof BooleanQuery && ((BooleanQuery) queryInfo.getQuery()).clauses().isEmpty()) {
-                logger.info("Empty search, returned all [{}] documents", this.env.documentNodes.size());
-                return this.env.documentNodes;
-            }
-
-            // to show _all_ available nodes
-            // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = searcher.search(queryInfo.getQuery(), this.env.documentNodes.size() + 1);
-            logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", queryInfo.getQuery().toString(), hits.totalHits);
-
-            result = new ArrayList<>(hits.totalHits);
-            for (ScoreDoc d : hits.scoreDocs) {
-                Document doc = searcher.doc(d.doc);
-                result.add(
-                        this.env.documentNodes.get(
-                                doc.getField(Indexer.NAME_INDEX)
-                                        .numericValue()
-                                        .intValue()
-                        )
-                );
-            }
-        }
-
-        return result;
+        return query(queryInfo.getQuery());
     }
 }
