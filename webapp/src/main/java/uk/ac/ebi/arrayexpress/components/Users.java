@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -28,10 +27,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 import uk.ac.ebi.microarray.arrayexpress.shared.auth.AuthenticationHelper;
 
@@ -111,14 +107,14 @@ public class Users extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
+    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("users", doc));
@@ -168,7 +164,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
     public void update( String xmlString, UserSource source ) throws IOException, InterruptedException
     {
         try {
-            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            Document updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
             if (null != updateDoc) {
                 new DocumentUpdater(this, updateDoc).update();
             }
@@ -192,7 +188,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         name = StringEscapeUtils.escapeXml(name);
         try {
             return  ((BooleanValue)saxon.evaluateXPathSingle(
-                    getDocument()
+                    getDocument().getRootNode()
                     , "(/users/user[name = '" + name + "']/is_privileged = true())"
             )).effectiveBooleanValue();
         } catch (XPathException x) {
@@ -205,7 +201,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         id = StringEscapeUtils.escapeXml(id);
         try {
             return ((BooleanValue)saxon.evaluateXPathSingle(
-                getDocument()
+                getDocument().getRootNode()
                 , "(/users/user[id = '" + id + "']/is_privileged = true())"
         )).effectiveBooleanValue();
         } catch (XPathException x) {
@@ -218,7 +214,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         name = StringEscapeUtils.escapeXml(name);
         try {
             List idNodes = this.saxon.evaluateXPath(
-                            getDocument()
+                            getDocument().getRootNode()
                             , "/users/user[name = '" + name + "']/id"
                     );
 
@@ -238,7 +234,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
         name = StringEscapeUtils.escapeXml(name);
         try {
             List passwordNodes = this.saxon.evaluateXPath(
-                    getDocument()
+                    getDocument().getRootNode()
                     , "/users/user[name = '" + name + "']/password"
             );
 
@@ -292,7 +288,7 @@ public class Users extends ApplicationComponent implements IDocumentSource
                 String ids = StringTools.arrayToString(uids.toArray(new String[uids.size()]), ",");
 
                 users = this.saxon.evaluateXPath(
-                        getDocument()
+                        getDocument().getRootNode()
                         , "/users/user[(name|email = '" + nameOrEmail + "') and id = (" + ids + ")]"
                 );
             }

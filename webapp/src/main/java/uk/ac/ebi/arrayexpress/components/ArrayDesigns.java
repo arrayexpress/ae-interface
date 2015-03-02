@@ -1,6 +1,5 @@
 package uk.ac.ebi.arrayexpress.components;
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -8,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,13 +99,13 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    // implementation of IDocumentSource.setDocument(Document)
+    public synchronized void setDocument( Document doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
@@ -123,7 +119,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     public void update( String xmlString, ArrayDesignSource source ) throws IOException, InterruptedException
     {
         try {
-            DocumentInfo updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            Document updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
             if (null != updateDoc) {
                 new DocumentUpdater(this, updateDoc).update();
             }
@@ -149,7 +145,8 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         users.clearUserMap(INDEX_ID);
 
         try {
-            List<Item> documentNodes = saxon.evaluateXPath(getDocument(), "/array_designs/array_design[@visible = 'true']");
+            List<Item> documentNodes = saxon.evaluateXPath(getDocument().getRootNode(),
+                    "/array_designs/array_design[@visible = 'true']");
             for (Item node : documentNodes) {
 
                 try {

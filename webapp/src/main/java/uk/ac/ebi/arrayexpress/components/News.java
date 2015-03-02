@@ -17,16 +17,12 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,14 +68,14 @@ public class News extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     // implementation of IDocumentSource.setDocument(DocumentInfo)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
+    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer(DOCUMENT_ID, doc));
@@ -91,7 +87,7 @@ public class News extends ApplicationComponent implements IDocumentSource
     public void update( String xmlString) throws IOException, InterruptedException
     {
         try {
-            DocumentInfo updateDoc = this.saxon.buildDocument(xmlString);
+            Document updateDoc = this.saxon.buildDocument(xmlString);
             if (null != updateDoc) {
                 new DocumentUpdater(this, updateDoc).update();
             }

@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,7 @@ import uk.ac.ebi.arrayexpress.components.SearchEngine;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.HTTPStatusException;
 
@@ -124,7 +124,7 @@ public class QueryServlet extends AuthAwareApplicationServlet
             try {
                 SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
                 SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
-                DocumentInfo source = saxonEngine.getAppDocument();
+                Document source = saxonEngine.getAppDocument();
                 if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
                     source = saxonEngine.getRegisteredDocument(index + ".xml");
                     Integer queryId = search.getController().addQuery(index, params);

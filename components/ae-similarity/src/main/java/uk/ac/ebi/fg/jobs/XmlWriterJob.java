@@ -17,7 +17,6 @@ package uk.ac.ebi.fg.jobs;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -66,8 +65,9 @@ public class XmlWriterJob extends ApplicationJob
             xml.append(getSimilarity(accession));
         xml.append("</similarity>");
 
-        DocumentInfo similarityXml = saxonEngine.buildDocument(xml.toString());
-        StaticSimilarityComponent.getComponent().setDocument(similarityXml);
+        //TODO: reinstate this
+        //DocumentInfo similarityXml = saxonEngine.buildDocument(xml.toString());
+        //StaticSimilarityComponent.getComponent().setDocument(similarityXml);
 
         // release resources
         releaseResources(jobExecutionContext.getScheduler());

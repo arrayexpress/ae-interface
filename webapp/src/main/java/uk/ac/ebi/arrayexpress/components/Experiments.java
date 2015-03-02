@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -29,10 +28,7 @@ import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
@@ -129,7 +125,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
 
         @Override
-        public DocumentInfo getEventXML()
+        public Document getEventXML()
         {
             String xml = "<?xml version=\"1.0\"?><event><category>experiments-update-"
                             + this.source.toString().toLowerCase()
@@ -209,14 +205,14 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
+    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("experiments", doc));
@@ -241,7 +237,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         boolean success = false;
         try {
-            DocumentInfo updateDoc = this.saxon.transform(
+            Document updateDoc = this.saxon.transform(
                     xmlString
                     , sourceInformation.getSource().getStylesheetName()
                     , null
@@ -282,7 +278,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         // todo: move this to similarity component
         // maps.clearMap(MAP_EXPERIMENTS_WITH_SIMILARITY);
         try {
-            List<Item> documentNodes = saxon.evaluateXPath(getDocument(), "/experiments/experiment[source/@visible = 'true']");
+            List<Item> documentNodes = saxon.evaluateXPath(getDocument().getRootNode(), "/experiments/experiment[source/@visible = 'true']");
 
             // todo: move this to similarity component
             // XPathExpression similarXpe = saxon.getXPathExpression("similarto");

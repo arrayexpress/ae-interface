@@ -1,14 +1,10 @@
 package uk.ac.ebi.arrayexpress.components;
 
-import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
-import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
 
 import java.io.File;
@@ -43,7 +39,7 @@ public class Events extends ApplicationComponent implements IDocumentSource
 
     public static interface IEventInformation
     {
-        public abstract DocumentInfo getEventXML();
+        public abstract Document getEventXML();
     }
 
     public Events()
@@ -79,14 +75,14 @@ public class Events extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
+    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("events", doc));
@@ -99,7 +95,7 @@ public class Events extends ApplicationComponent implements IDocumentSource
     public void addEvent( IEventInformation event ) throws IOException, InterruptedException
     {
         try {
-            DocumentInfo eventDoc = event.getEventXML();
+            Document eventDoc = event.getEventXML();
             if (null != eventDoc) {
                 new DocumentUpdater(this, eventDoc).update();
             }

@@ -17,7 +17,6 @@
 
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -26,6 +25,7 @@ import org.apache.lucene.search.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,10 +84,10 @@ public class Controller {
         return this.environment.get(indexId);
     }
 
-    public void index(String indexId, DocumentInfo document) throws IndexerException, InterruptedException {
+    public void index(String indexId, Document document) throws IndexerException, InterruptedException {
         this.logger.info("Started indexing for index id [{}]", indexId);
         getEnvironment(indexId).putDocumentInfo(
-                document.hashCode()
+                document.getHash()
                 , new Indexer(getEnvironment(indexId), saxon).index(document)
         );
         this.logger.info("Indexing for index id [{}] completed", indexId);

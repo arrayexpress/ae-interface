@@ -17,10 +17,23 @@
 
 package uk.ac.ebi.arrayexpress.utils.saxon;
 
-import java.io.IOException;
+import net.sf.saxon.om.NodeInfo;
 
-public interface IDocumentSource {
-    public String getDocumentURI();
-    public Document getDocument() throws IOException;
-    public void setDocument(Document doc) throws IOException, InterruptedException;
+public class Document {
+
+    private final NodeInfo rootNode;
+    private final String hash;
+
+    public Document(NodeInfo rootNode, String hash) {
+        this.rootNode = rootNode;
+        this.hash = hash;
+    }
+
+    public NodeInfo getRootNode() {
+        return rootNode;
+    }
+
+    public String getHash() {
+        return hash;
+    }
 }

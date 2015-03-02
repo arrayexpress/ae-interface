@@ -17,12 +17,12 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.HttpServletRequestParameterMap;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +62,7 @@ public class ErrorServlet extends AuthAwareApplicationServlet {
             params.put("username", authUserName);
 
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
-            DocumentInfo source = saxonEngine.getAppDocument();
+            Document source = saxonEngine.getAppDocument();
 
             if (!saxonEngine.transformToWriter(
                     source

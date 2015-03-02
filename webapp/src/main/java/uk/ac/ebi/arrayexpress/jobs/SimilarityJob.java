@@ -17,18 +17,18 @@ package uk.ac.ebi.arrayexpress.jobs;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.xpath.XPathEvaluator;
 import org.apache.commons.configuration.Configuration;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
-import uk.ac.ebi.arrayexpress.components.*;
+import uk.ac.ebi.arrayexpress.components.Experiments;
+import uk.ac.ebi.arrayexpress.components.JobsController;
+import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
-import uk.ac.ebi.fg.jobs.JobController;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.fg.utils.objects.EFO;
 
 import javax.xml.xpath.XPath;
@@ -64,15 +64,16 @@ public class SimilarityJob extends ApplicationJob
 
             // get experiments
             Experiments exp = (Experiments) getComponent("Experiments");
-            DocumentInfo experimentDocument = exp.getDocument();
-            XPath xp = new XPathEvaluator(experimentDocument.getConfiguration());
+            Document experimentDocument = exp.getDocument();
+            XPath xp = new XPathEvaluator(experimentDocument.getRootNode().getConfiguration());
             XPathExpression xpe = xp.compile("/experiments/experiment[source/@visible = 'true']");
             List experiments = (List) xpe.evaluate(experimentDocument, XPathConstants.NODESET);
             logger.info("Got " + experiments.size() + " experiments.");
 
-            new JobController( ((Similarity) Application.getAppComponent("Similarity")),
-                    ((SaxonEngine) getComponent("SaxonEngine")), properties, experiments,
-                    xp, jobController, lowPriorityOntologyURIs);
+// TODO: reinstate this
+//            new JobController( ((Similarity) Application.getAppComponent("Similarity")),
+//                    ((SaxonEngine) getComponent("SaxonEngine")), properties, experiments,
+//                    xp, jobController, lowPriorityOntologyURIs);
         }
     }
 

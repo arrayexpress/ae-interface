@@ -17,7 +17,6 @@
 
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -51,10 +50,11 @@ public class Indexer {
         this.saxon = saxon;
     }
 
-    public List<NodeInfo> index(DocumentInfo document) throws IndexerException, InterruptedException {
+    public List<NodeInfo> index(uk.ac.ebi.arrayexpress.utils.saxon.Document document) throws IndexerException, InterruptedException {
+        // check if index corresponds to the same document
         try (IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer)) {
 
-            List documentNodes = saxon.evaluateXPath(document, this.env.indexDocumentPath);
+            List documentNodes = saxon.evaluateXPath(document.getRootNode(), this.env.indexDocumentPath);
             List<NodeInfo> indexedNodes = new ArrayList<>(documentNodes.size());
 
             for (Object node : documentNodes) {

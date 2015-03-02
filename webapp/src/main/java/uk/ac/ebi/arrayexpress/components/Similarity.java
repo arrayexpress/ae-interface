@@ -26,6 +26,7 @@ import uk.ac.ebi.arrayexpress.jobListeners.SimilarityJobListener;
 import uk.ac.ebi.arrayexpress.jobs.ReloadExperimentsAfterSimilarityJob;
 import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
 import uk.ac.ebi.fg.utils.ISimilarityComponent;
@@ -86,13 +87,13 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
     }
 
     // implementation of IDocumentSource.getDocument()
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    // implementation of IDocumentSource.setDocument(Document)
+    public synchronized void setDocument( Document doc ) throws IOException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("similarity", doc));

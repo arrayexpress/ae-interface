@@ -1,6 +1,5 @@
 package uk.ac.ebi.arrayexpress.utils.saxon;
 
-import net.sf.saxon.om.DocumentInfo;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 
@@ -27,9 +26,9 @@ public class DocumentUpdater implements IDocumentSource
 {
     private IDocumentSource source;
     private SaxonEngine saxon;
-    private DocumentInfo update;
+    private Document update;
 
-    public DocumentUpdater( IDocumentSource source, DocumentInfo update )
+    public DocumentUpdater( IDocumentSource source, Document update )
     {
         this.source = source;
         this.saxon = (SaxonEngine) Application.getAppComponent("SaxonEngine");
@@ -45,14 +44,14 @@ public class DocumentUpdater implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.update;
     }
 
-    // implementation of IDocumentSource.setDocument(DocumentInfo)
+    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException
+    public synchronized void setDocument( Document doc ) throws IOException
     {
         // nothing
     }

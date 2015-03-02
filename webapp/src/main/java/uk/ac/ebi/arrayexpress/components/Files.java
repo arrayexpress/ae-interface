@@ -17,7 +17,6 @@ package uk.ac.ebi.arrayexpress.components;
  *
  */
 
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -28,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
+import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
 import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
@@ -38,7 +38,6 @@ import java.util.List;
 
 public class Files extends ApplicationComponent implements IDocumentSource
 {
-    // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final String MAP_FOLDER = "ftp-folder";
@@ -96,13 +95,13 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
     // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized DocumentInfo getDocument() throws IOException
+    public synchronized Document getDocument() throws IOException
     {
         return this.document.getObject().getDocument();
     }
 
     @Override
-    public synchronized void setDocument( DocumentInfo doc ) throws IOException, InterruptedException
+    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
     {
         if (null != doc) {
             this.document.setObject(new PersistableDocumentContainer("files", doc));
@@ -113,7 +112,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    public void reload( DocumentInfo doc, String message ) throws IOException, InterruptedException
+    public void reload( Document doc, String message ) throws IOException, InterruptedException
     {
         setDocument(doc);
         this.lastReloadMessage = message;
@@ -140,8 +139,8 @@ public class Files extends ApplicationComponent implements IDocumentSource
         maps.clearMap(MAP_FILES_TOTAL);
 
          try {
-            DocumentInfo doc = getDocument();
-            List<Item> documentNodes = saxon.evaluateXPath(doc, "/files/folder");
+            Document doc = getDocument();
+            List<Item> documentNodes = saxon.evaluateXPath(doc.getRootNode(), "/files/folder");
 
             for (Item node : documentNodes) {
 
@@ -209,7 +208,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
 
             try {
                 result = ((BooleanValue) this.saxon.evaluateXPathSingle(
-                        getDocument()
+                        getDocument().getRootNode()
                         , "exists(" + getFileLocatingXPQuery(accession, kind, name) + ")"
                 )).effectiveBooleanValue();
             } catch (XPathException x) {
@@ -229,7 +228,7 @@ public class Files extends ApplicationComponent implements IDocumentSource
                 String fileXPQuery = getFileLocatingXPQuery(accession, kind, name);
                 String xPathQuery = "concat(" + fileXPQuery + "/../@location, '/', " + fileXPQuery + "/@location)";
                 location = this.saxon.evaluateXPathSingleAsString(
-                        getDocument()
+                        getDocument().getRootNode()
                         , xPathQuery
                 );
             } catch ( XPathException x ) {
