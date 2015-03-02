@@ -91,6 +91,7 @@ public class Querier {
 
     public List<NodeInfo> query(Query query) throws IOException {
         try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
+            LeafReader leafReader = SlowCompositeReaderWrapper.wrap(reader);
             IndexSearcher searcher = new IndexSearcher(reader);
             // empty query returns everything
             if (query instanceof BooleanQuery && ((BooleanQuery) query).clauses().isEmpty()) {
@@ -101,6 +102,15 @@ public class Querier {
             TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
             logger.info("Search reported [{}] matches", hits.totalHits);
             final List<NodeInfo> matchingNodes = new ArrayList<>(hits.totalHits);
+            NumericDocValues ids = leafReader.getNumericDocValues("docId");
+            for (ScoreDoc d : hits.scoreDocs) {
+                matchingNodes.add(
+                        this.env.documentNodes.get(
+                                (int)ids.get(d.doc)
+                        )
+                );
+            }
+            /*
             searcher.search(query, new Collector()
             {
                 public LeafCollector getLeafCollector( LeafReaderContext context )
@@ -126,7 +136,8 @@ public class Querier {
                     };
                 }
             });
-            logger.info("Search completed, [{}] matches", matchingNodes.size());
+            */
+            logger.info("Search completed", matchingNodes.size());
 
             return matchingNodes;
             /*
