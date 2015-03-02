@@ -251,7 +251,9 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
             throw new RuntimeException(x);
         } finally {
             sourceInformation.setOutcome(success);
-            events.addEvent(sourceInformation);
+            if (null != events) {
+                events.addEvent(sourceInformation);
+            }
         }
     }
 

@@ -47,7 +47,8 @@ public class AEInterfaceApplication extends Application implements ServletContex
         addComponent(new Autocompletion());
         addComponent(new GenomeSpace());
         addComponent(new News());
-        addComponent(new Events());
+        // disabled until we know why we need to capture events
+        // addComponent(new Events());
         addComponent(new Users());
         addComponent(new Experiments());
         addComponent(new ArrayDesigns());

@@ -105,7 +105,7 @@ public class Querier {
             );
             logger.info("Search reported [{}] matches", hits.totalHits);
             final List<NodeInfo> matchingNodes = new ArrayList<>(hits.totalHits);
-            final NumericDocValues ids = leafReader.getNumericDocValues("docId");
+            final NumericDocValues ids = leafReader.getNumericDocValues(Indexer.DOCID_FIELD);
             for (ScoreDoc d : hits.scoreDocs) {
                 matchingNodes.add(
                         this.env.documentNodes.get(
@@ -113,46 +113,9 @@ public class Querier {
                         )
                 );
             }
-//            searcher.search(query, new Collector() {
-//                public LeafCollector getLeafCollector(LeafReaderContext context)
-//                        throws IOException {
-//                    return new LeafCollector() {
-//
-//                        // ignore scorer
-//                        public void setScorer(Scorer scorer) throws IOException {
-//                        }
-//
-//                        public void collect(int doc) throws IOException {
-//                            matchingNodes.add(
-//                                    env.documentNodes.get(
-//                                            (int)ids.get(doc)
-//                                    )
-//                            );
-//                        }
-//                    };
-//                }
-//            });
             logger.info("Search completed", matchingNodes.size());
 
             return matchingNodes;
-            /*
-            // to show _all_ available nodes
-            // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
-            logger.info("Search of index [" + this.env.indexId + "] with query [{}] returned [{}] hits", query.toString(), hits.totalHits);
-
-            result = new ArrayList<>(hits.totalHits);
-            for (ScoreDoc d : hits.scoreDocs) {
-                Document doc = searcher.doc(d.doc);
-                result.add(
-                        this.env.documentNodes.get(
-                                doc.getField(Indexer.NAME_INDEX)
-                                        .numericValue()
-                                        .intValue()
-                        )
-                );
-            }
-            */
         }
     }
 
