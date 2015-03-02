@@ -99,10 +99,13 @@ public class Querier {
                 return this.env.documentNodes;
             }
             logger.info("Search of index [{}] with query [{}] started", env.indexId, query.toString());
-            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
+            TopDocs hits = searcher.search(
+                    new ConstantScoreQuery(query),
+                    this.env.documentNodes.size() + 1
+            );
             logger.info("Search reported [{}] matches", hits.totalHits);
             final List<NodeInfo> matchingNodes = new ArrayList<>(hits.totalHits);
-            NumericDocValues ids = leafReader.getNumericDocValues("docId");
+            final NumericDocValues ids = leafReader.getNumericDocValues("docId");
             for (ScoreDoc d : hits.scoreDocs) {
                 matchingNodes.add(
                         this.env.documentNodes.get(
@@ -110,33 +113,25 @@ public class Querier {
                         )
                 );
             }
-            /*
-            searcher.search(query, new Collector()
-            {
-                public LeafCollector getLeafCollector( LeafReaderContext context )
-                        throws IOException
-                {
-                    final LeafReader reader = context.reader();
-                    return new LeafCollector()
-                    {
-
-                        // ignore scorer
-                        public void setScorer( Scorer scorer ) throws IOException
-                        {
-                        }
-
-                        public void collect( int doc ) throws IOException
-                        {
-                            matchingNodes.add(
-                                    env.documentNodes.get(
-                                            (int) reader.getNumericDocValues("docId").get(doc)
-                                    )
-                            );
-                        }
-                    };
-                }
-            });
-            */
+//            searcher.search(query, new Collector() {
+//                public LeafCollector getLeafCollector(LeafReaderContext context)
+//                        throws IOException {
+//                    return new LeafCollector() {
+//
+//                        // ignore scorer
+//                        public void setScorer(Scorer scorer) throws IOException {
+//                        }
+//
+//                        public void collect(int doc) throws IOException {
+//                            matchingNodes.add(
+//                                    env.documentNodes.get(
+//                                            (int)ids.get(doc)
+//                                    )
+//                            );
+//                        }
+//                    };
+//                }
+//            });
             logger.info("Search completed", matchingNodes.size());
 
             return matchingNodes;
