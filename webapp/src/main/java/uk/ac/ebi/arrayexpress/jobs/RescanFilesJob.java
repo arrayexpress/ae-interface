@@ -27,6 +27,7 @@ import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
+import uk.ac.ebi.arrayexpress.utils.io.InterruptableReader;
 import uk.ac.ebi.arrayexpress.utils.io.RemovingMultipleSpacesReader;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
@@ -73,8 +74,10 @@ public class RescanFilesJob extends ApplicationJob
                     new InputSource(
                             new FilteringIllegalHTMLCharactersReader(
                                     new RemovingMultipleSpacesReader(
-                                            new InputStreamReader(
-                                                    stdOut
+                                            new InterruptableReader(
+                                                    new InputStreamReader(
+                                                            stdOut
+                                                    )
                                             )
                                     )
                             )

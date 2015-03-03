@@ -83,8 +83,6 @@ public class Querier {
 
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
             TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
-
-
             return hits.totalHits;
         }
     }

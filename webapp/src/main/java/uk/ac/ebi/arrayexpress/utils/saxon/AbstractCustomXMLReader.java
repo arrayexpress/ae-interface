@@ -25,8 +25,8 @@ import java.util.Map;
 
 public abstract class AbstractCustomXMLReader implements XMLReader
 {
-    private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
-    private Map<String, Object> propertyMap = new HashMap<String, Object>();
+    private Map<String, Boolean> featureMap = new HashMap<>();
+    private Map<String, Object> propertyMap = new HashMap<>();
     private EntityResolver entityResolver;
     private DTDHandler dtdHandler;
     private ContentHandler contentHandler;

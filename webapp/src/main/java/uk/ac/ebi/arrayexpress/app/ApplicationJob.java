@@ -60,8 +60,12 @@ abstract public class ApplicationJob implements InterruptableJob
         } catch ( InterruptedException x ) {
             this.logger.debug("Job [{}] was interrupted", getMyName());
         } catch ( RuntimeException x ) {
-            this.logger.error("[SEVERE] Runtime exception while executing job [" + getMyName() + "]:", x);
-            getApplication().handleException("[SEVERE] Runtime exception while executing job [" + getMyName() + "]", x);
+            if (x.getCause() instanceof InterruptedException) {
+                this.logger.debug("Job [{}] was interrupted", getMyName());    
+            } else {
+                this.logger.error("[SEVERE] Runtime exception while executing job [" + getMyName() + "]:", x);
+                getApplication().handleException("[SEVERE] Runtime exception while executing job [" + getMyName() + "]", x);
+            }
         } catch ( Error x ) {
             this.logger.error("[SEVERE] Runtime error while executing job [" + getMyName() + "]:", x);
             getApplication().handleException("[SEVERE] Runtime error while executing job [" + getMyName() + "]", x);

@@ -88,109 +88,119 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
     
     public void parse( InputSource input ) throws IOException, SAXException
     {
-        int headerRows = getIntOptionValue(OPTION_HEADER_ROWS, 0);
-        int page = getIntOptionValue(OPTION_PAGE, 0);
-        int pageSize = getIntOptionValue(OPTION_PAGE_SIZE, -1);
-        Integer sortBy = getIntOptionValue(OPTION_SORT_BY, null);
-        String sortOrder = getStringOptionValue(OPTION_SORT_ORDER, "a");
+        try {
+            int headerRows = getIntOptionValue(OPTION_HEADER_ROWS, 0);
+            int page = getIntOptionValue(OPTION_PAGE, 0);
+            int pageSize = getIntOptionValue(OPTION_PAGE_SIZE, -1);
+            Integer sortBy = getIntOptionValue(OPTION_SORT_BY, null);
+            String sortOrder = getStringOptionValue(OPTION_SORT_ORDER, "a");
 
-        ContentHandler ch = getContentHandler();
-        if (null == ch) {
-            return;
-        }
-
-        Reader inStream;
-        if (input.getCharacterStream() != null) {
-            inStream = input.getCharacterStream();
-        } else if (input.getByteStream() != null) {
-            inStream =  new InputStreamReader(input.getByteStream());
-        } else if (input.getSystemId() != null) {
-            URL url = new URL(input.getSystemId());
-            inStream = new InputStreamReader(url.openStream());
-        } else {
-            throw new SAXException("Invalid InputSource object");
-        }
-
-        CSVReader ffReader = new CSVReader(
-                new BufferedReader(inStream)
-                , this.columnDelimiter
-                , this.columnQuoteChar
-        );
-
-        List<String[]> ff = ffReader.readAll();
-        int cols = ff.size() > 0 ? ff.get(0).length : 0;
-
-        // verify that sort by column is with in range of columns
-        // if not then sort will not be performed
-        // else - switch from 1-based to 0-based index
-        if (null != sortBy) {
-            if (sortBy < 1 || sortBy > cols) {
-                sortBy = null;
-            } else {
-                sortBy = sortBy - 1;
+            ContentHandler ch = getContentHandler();
+            if (null == ch) {
+                return;
             }
-        }
 
-        // 1. removes all dodgy rows (that have less columns than the first one)
-        // 2. determines if column to be sorted is numeric
-        ColDataType sortColDataType = ColDataType.INTEGER;
-        int colTypeSkipRows = headerRows;
-        for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext();) {
-            String[] row = iterator.next();
-            if (row.length != cols || isRowBlank(row)) {
+            Reader inStream;
+            if (input.getCharacterStream() != null) {
+                inStream = input.getCharacterStream();
+            } else if (input.getByteStream() != null) {
+                inStream = new InputStreamReader(input.getByteStream());
+            } else if (input.getSystemId() != null) {
+                URL url = new URL(input.getSystemId());
+                inStream = new InputStreamReader(url.openStream());
+            } else {
+                throw new SAXException("Invalid InputSource object");
+            }
+
+            CSVReader ffReader = new CSVReader(
+                    new BufferedReader(inStream)
+                    , this.columnDelimiter
+                    , this.columnQuoteChar
+            );
+            
+            Thread.sleep(0);
+            List<String[]> ff = ffReader.readAll();
+            Thread.sleep(0);
+            
+            int cols = ff.size() > 0 ? ff.get(0).length : 0;
+
+            // verify that sort by column is with in range of columns
+            // if not then sort will not be performed
+            // else - switch from 1-based to 0-based index
+            if (null != sortBy) {
+                if (sortBy < 1 || sortBy > cols) {
+                    sortBy = null;
+                } else {
+                    sortBy = sortBy - 1;
+                }
+            }
+
+            // 1. removes all dodgy rows (that have less columns than the first one)
+            // 2. determines if column to be sorted is numeric
+            ColDataType sortColDataType = ColDataType.INTEGER;
+            int colTypeSkipRows = headerRows;
+            for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext(); ) {
+                Thread.sleep(0);
+                String[] row = iterator.next();
+                if (row.length != cols || isRowBlank(row)) {
+                    iterator.remove();
+                } else {
+                    if (null != sortBy && 0 == colTypeSkipRows && ColDataType.STRING != sortColDataType) {
+                        ColDataType dataType = getColDataType(row[sortBy]);
+
+                        // downgrade from int to decimal or string
+                        if (ColDataType.INTEGER == sortColDataType && ColDataType.INTEGER != dataType) {
+                            sortColDataType = dataType;
+                        }
+                        // downgrade from decimal to string only
+                        if (ColDataType.DECIMAL == sortColDataType && ColDataType.STRING == dataType) {
+                            sortColDataType = dataType;
+                        }
+                    }
+                    if (colTypeSkipRows > 0) {
+                        colTypeSkipRows--;
+                    }
+                }
+            }
+
+            int rows = ff.size() > 0 ? ff.size() - headerRows : 0;
+
+            if (-1 == pageSize) {
+                page = 1;
+                pageSize = rows;
+            }
+
+            ch.startDocument();
+
+            AttributesImpl tableAttrs = new AttributesImpl();
+            tableAttrs.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, String.valueOf(rows));
+            ch.startElement(EMPTY_NAMESPACE, "table", "table", tableAttrs);
+
+            for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext() && headerRows > 0; headerRows--) {
+                Thread.sleep(0);
+                String[] row = iterator.next();
+                outputRow(ch, true, null, row);
                 iterator.remove();
-            } else {
-                if (null != sortBy && 0 == colTypeSkipRows && ColDataType.STRING != sortColDataType) {
-                    ColDataType dataType = getColDataType(row[sortBy]);
-
-                    // downgrade from int to decimal or string
-                    if (ColDataType.INTEGER == sortColDataType && ColDataType.INTEGER != dataType) {
-                        sortColDataType = dataType;
-                    }
-                    // downgrade from decimal to string only
-                    if (ColDataType.DECIMAL == sortColDataType && ColDataType.STRING == dataType) {
-                        sortColDataType = dataType;
-                    }
-                }
-                if (colTypeSkipRows > 0) {
-                    colTypeSkipRows--;
-                }
             }
-        }
 
-        int rows = ff.size() > 0 ? ff.size() - headerRows : 0;
-
-        if (-1 == pageSize) {
-            page = 1;
-            pageSize = rows;
-        }
-
-        ch.startDocument();
-
-        AttributesImpl tableAttrs = new AttributesImpl();
-        tableAttrs.addAttribute(EMPTY_NAMESPACE, "rows", "rows", CDATA_TYPE, String.valueOf(rows));
-        ch.startElement(EMPTY_NAMESPACE, "table", "table", tableAttrs);
-
-        for (Iterator<String[]> iterator = ff.iterator(); iterator.hasNext() && headerRows > 0; headerRows--) {
-            String[] row = iterator.next();
-            outputRow(ch, true, null, row);
-            iterator.remove();
-        }
-
-        if (null != sortBy) {
-            Collections.sort(ff, new SortColumnComparator(sortBy, sortOrder, sortColDataType));
-        }
-
-        int rowSeq = 1;
-        for (String[] row : ff) {
-            if (rowSeq > (pageSize * (page - 1)) && rowSeq <= (pageSize * page)) {
-                outputRow(ch, false, String.valueOf(rowSeq), row);
+            if (null != sortBy) {
+                Collections.sort(ff, new SortColumnComparator(sortBy, sortOrder, sortColDataType));
             }
-            ++rowSeq;
-        }
 
-        ch.endElement(EMPTY_NAMESPACE, "table", "table");
-        ch.endDocument();
+            int rowSeq = 1;
+            for (String[] row : ff) {
+                Thread.sleep(0);
+                if (rowSeq > (pageSize * (page - 1)) && rowSeq <= (pageSize * page)) {
+                    outputRow(ch, false, String.valueOf(rowSeq), row);
+                }
+                ++rowSeq;
+            }
+
+            ch.endElement(EMPTY_NAMESPACE, "table", "table");
+            ch.endDocument();
+        } catch (InterruptedException x) {
+            throw new RuntimeException("Execution interrupted", x);
+        }
     }
 
     private void outputRow( ContentHandler ch, boolean isHeader, String seqValue, String[] rowData ) throws SAXException

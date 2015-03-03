@@ -53,7 +53,7 @@ public class EFOLoader
     {
     }
 
-    public IEFO load( InputStream ontologyStream )
+    public IEFO load( InputStream ontologyStream ) throws InterruptedException
     {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology;
@@ -66,7 +66,8 @@ public class EFOLoader
             // with SAXParseException: The parser has encountered more than "64,000" entity expansions
             System.setProperty("entityExpansionLimit", "100000000");
             ontology = manager.loadOntologyFromOntologyDocument(ontologyStream);
-
+            Thread.sleep(0);
+            
             String version = "unknown";
             for (OWLAnnotation annotation : ontology.getAnnotations()) {
                 if (IRI_VERSION_INFO.equals(annotation.getProperty().getIRI())) {
@@ -76,20 +77,25 @@ public class EFOLoader
             }
             logger.info("Using EFO version [{}]", version);
             efo = new EFOImpl(version);
-
+            Thread.sleep(0);
+            
             OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
             reasoner = reasonerFactory.createReasoner(ontology);
 
             reasoner.precomputeInferences();
+            Thread.sleep(0);
+
             if (reasoner.isConsistent()) {
 
                 Set<OWLClass> classes = ontology.getClassesInSignature();
                 for (OWLClass cls : classes) {
+                    Thread.sleep(0);
                     loadClass(ontology, reasoner, cls, efo);
                 }
 
                 // now, complete missing bits in parent-children relationships
                 for (String id : reverseSubClassOfMap.keySet()) {
+                    Thread.sleep(0);
                     EFONode node = efo.getMap().get(id);
                     if (null != node) {
                         if (reverseSubClassOfMap.containsKey(id)) {
@@ -112,7 +118,11 @@ public class EFOLoader
 
                 // and finally work out part_of relationships
                 for (String partOfId : reversePartOfMap.keySet()) {
+                    Thread.sleep(0);
+
                     for (String id : reversePartOfMap.get(partOfId)) {
+                        Thread.sleep(0);
+
                         if (!efo.getPartOfIdMap().containsKey(id)) {
                             efo.getPartOfIdMap().put(id, new HashSet<String>());
                         }
