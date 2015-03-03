@@ -34,6 +34,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
@@ -128,12 +129,7 @@ public class FlatFileTransformationServlet extends AuthAwareApplicationServlet
                 // Output goes to the response PrintWriter.
                 out = response.getWriter();
 
-                if (!saxonEngine.transformToWriter(
-                        source
-                        , stylesheetName
-                        , params
-                        , out
-                )) {                     // where to dump resulting text
+                if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
                         throw new Exception("Transformation returned an error");
                 }
             }

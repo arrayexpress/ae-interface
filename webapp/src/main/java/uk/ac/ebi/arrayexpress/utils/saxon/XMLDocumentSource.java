@@ -17,10 +17,12 @@
 
 package uk.ac.ebi.arrayexpress.utils.saxon;
 
+import net.sf.saxon.om.NodeInfo;
+
 import java.io.IOException;
 
-public interface IDocumentSource {
-    public String getDocumentURI();
-    public Document getDocument() throws IOException;
-    public void setDocument(Document doc) throws IOException, InterruptedException;
+public interface XMLDocumentSource {
+    public String getURI();
+    public NodeInfo getRootNode() throws IOException;
+    public void setRootNode(NodeInfo rootNode) throws IOException, SaxonException;
 }

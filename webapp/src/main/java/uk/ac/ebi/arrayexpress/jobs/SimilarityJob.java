@@ -28,7 +28,6 @@ import uk.ac.ebi.arrayexpress.components.JobsController;
 import uk.ac.ebi.arrayexpress.components.Ontologies;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
-import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.fg.utils.objects.EFO;
 
 import javax.xml.xpath.XPath;
@@ -64,10 +63,9 @@ public class SimilarityJob extends ApplicationJob
 
             // get experiments
             Experiments exp = (Experiments) getComponent("Experiments");
-            Document experimentDocument = exp.getDocument();
-            XPath xp = new XPathEvaluator(experimentDocument.getRootNode().getConfiguration());
+            XPath xp = new XPathEvaluator(exp.getRootNode().getConfiguration());
             XPathExpression xpe = xp.compile("/experiments/experiment[source/@visible = 'true']");
-            List experiments = (List) xpe.evaluate(experimentDocument, XPathConstants.NODESET);
+            List experiments = (List) xpe.evaluate(exp.getRootNode(), XPathConstants.NODESET);
             logger.info("Got " + experiments.size() + " experiments.");
 
 // TODO: reinstate this

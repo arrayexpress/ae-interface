@@ -42,7 +42,7 @@ public class CheckFilesJob extends ApplicationJob
         Map<String, String[]> transformParams = new HashMap<String, String[]>();
         transformParams.put("rescanMessage", new String[] { files.getLastReloadMessage() });
 
-        String report = saxon.transformToString(files.getDocument(), "check-files-plain.xsl", transformParams);
+        String report = saxon.transformToString(files.getRootNode(), "check-files-plain.xsl", transformParams);
 
         getApplication().sendEmail(
                 null

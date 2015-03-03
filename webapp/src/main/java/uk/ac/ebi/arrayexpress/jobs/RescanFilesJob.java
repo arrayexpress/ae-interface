@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.jobs;
  *
  */
 
+import net.sf.saxon.om.NodeInfo;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,6 @@ import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.FilteringIllegalHTMLCharactersReader;
 import uk.ac.ebi.arrayexpress.utils.io.RemovingMultipleSpacesReader;
-import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 import uk.ac.ebi.arrayexpress.utils.saxon.FlatFileXMLReader;
 
 import javax.xml.transform.sax.SAXSource;
@@ -95,7 +95,7 @@ public class RescanFilesJob extends ApplicationJob
                     , "UTF-8"
             );
             */
-            Document result = saxonEngine.transform(
+            NodeInfo result = saxonEngine.transform(
                     source
                     , "preprocess-files-xml.xsl"
                     , transformParams

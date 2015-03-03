@@ -18,6 +18,7 @@ package uk.ac.ebi.arrayexpress.components;
  */
 
 import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.om.NodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
@@ -25,21 +26,20 @@ import uk.ac.ebi.arrayexpress.jobListeners.AE2ExperimentReloadJobListener;
 import uk.ac.ebi.arrayexpress.jobListeners.SimilarityJobListener;
 import uk.ac.ebi.arrayexpress.jobs.ReloadExperimentsAfterSimilarityJob;
 import uk.ac.ebi.arrayexpress.jobs.SimilarityJob;
-import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
-import uk.ac.ebi.arrayexpress.utils.saxon.Document;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
-import uk.ac.ebi.arrayexpress.utils.saxon.PersistableDocumentContainer;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.StoredDocument;
+import uk.ac.ebi.arrayexpress.utils.saxon.XMLDocumentSource;
 import uk.ac.ebi.fg.utils.ISimilarityComponent;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Similarity extends ApplicationComponent implements IDocumentSource, ISimilarityComponent
+public class Similarity extends ApplicationComponent implements XMLDocumentSource, ISimilarityComponent
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private FilePersistence<PersistableDocumentContainer> document;
+    private StoredDocument document;
     private SaxonEngine saxon;
     private SearchEngine search;
 
@@ -59,9 +59,9 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
         this.saxon = (SaxonEngine) getComponent("SaxonEngine");
         this.search = (SearchEngine) getComponent("SearchEngine");
 
-        this.document = new FilePersistence<PersistableDocumentContainer>(
-                new PersistableDocumentContainer("similarity")
-                , new File(getPreferences().getString("ae.similarity.persistence-location"))
+        this.document = new StoredDocument(
+                new File(getPreferences().getString("ae.similarity.persistence-location")),
+                "similarity"
         );
 
         updateAccelerators();
@@ -80,23 +80,22 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
     {
     }
 
-    // implementation of IDocumentSource.getDocumentURI()
-    public String getDocumentURI()
+    public String getURI()
     {
         return "similarity.xml";
     }
 
-    // implementation of IDocumentSource.getDocument()
-    public synchronized Document getDocument() throws IOException
+    public synchronized NodeInfo getRootNode() throws IOException
     {
-        return this.document.getObject().getDocument();
+        return document.getRootNode();
     }
 
-    // implementation of IDocumentSource.setDocument(Document)
-    public synchronized void setDocument( Document doc ) throws IOException
+    public synchronized void setRootNode( NodeInfo rootNode ) throws IOException, SaxonException
     {
-        if (null != doc) {
-            this.document.setObject(new PersistableDocumentContainer("similarity", doc));
+        if (null != rootNode) {
+            document = new StoredDocument(rootNode,
+                    new File(getPreferences().getString("ae.similarity.persistence-location")));
+
             updateAccelerators();
         } else {
             this.logger.error("Similarity NOT updated, NULL document passed");
@@ -106,7 +105,7 @@ public class Similarity extends ApplicationComponent implements IDocumentSource,
     private void updateIndex()
     {
         try {
-            this.search.getController().index(INDEX_ID, this.getDocument());
+            this.search.getController().index(INDEX_ID, document);
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }

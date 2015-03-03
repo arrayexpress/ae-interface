@@ -1,12 +1,5 @@
-package uk.ac.ebi.arrayexpress.utils.saxon;
-
-import uk.ac.ebi.arrayexpress.app.Application;
-import uk.ac.ebi.arrayexpress.components.SaxonEngine;
-
-import java.io.IOException;
-
 /*
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,45 +15,46 @@ import java.io.IOException;
  *
  */
 
-public class DocumentUpdater implements IDocumentSource
-{
-    private IDocumentSource source;
-    private SaxonEngine saxon;
-    private Document update;
+package uk.ac.ebi.arrayexpress.utils.saxon;
 
-    public DocumentUpdater( IDocumentSource source, Document update )
-    {
+import net.sf.saxon.om.NodeInfo;
+import uk.ac.ebi.arrayexpress.app.Application;
+import uk.ac.ebi.arrayexpress.components.SaxonEngine;
+
+import java.io.IOException;
+
+public class DocumentUpdater implements XMLDocumentSource {
+    private final XMLDocumentSource source;
+    private final SaxonEngine saxon;
+    private final NodeInfo update;
+
+    public DocumentUpdater(XMLDocumentSource source, NodeInfo update) {
         this.source = source;
-        this.saxon = (SaxonEngine) Application.getAppComponent("SaxonEngine");
+        this.saxon = (SaxonEngine)Application.getAppComponent("SaxonEngine");
         this.update = update;
     }
 
-    // implementation of IDocumentSource.getDocumentURI()
     @Override
-    public String getDocumentURI()
-    {
-        return "update-" + source.getDocumentURI();
+    public String getURI() {
+        return "update-" + source.getURI();
     }
 
-    // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized Document getDocument() throws IOException
-    {
+    public synchronized NodeInfo getRootNode() throws IOException {
         return this.update;
     }
 
-    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( Document doc ) throws IOException
-    {
+    public synchronized void setRootNode(NodeInfo rootNode) throws IOException {
         // nothing
     }
 
-    public void update() throws SaxonException, IOException, InterruptedException
-    {
-        synchronized(getClass()) {
+    public void update() throws SaxonException, IOException, InterruptedException {
+        synchronized (getClass()) {
             saxon.registerDocumentSource(this);
-            source.setDocument(saxon.transform(source.getDocument(), getDocumentURI().replace(".xml", "-xml.xsl"), null));
+            source.setRootNode(
+                    saxon.transform(source.getRootNode(), getURI().replace(".xml", "-xml.xsl"), null)
+            );
             saxon.unregisterDocumentSource(this);
         }
     }

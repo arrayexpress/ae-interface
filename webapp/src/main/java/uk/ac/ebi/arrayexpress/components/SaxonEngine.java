@@ -30,22 +30,25 @@ import net.sf.saxon.sxpath.XPathEvaluator;
 import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.tiny.TinyBuilder;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
 import uk.ac.ebi.arrayexpress.utils.LRUMap;
 import uk.ac.ebi.arrayexpress.utils.saxon.Document;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.StoredDocument;
+import uk.ac.ebi.arrayexpress.utils.saxon.XMLDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon.ParseHTMLFunction;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -59,12 +62,12 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     private TransformerFactoryImpl trFactory;
     private XPathEvaluator xPathEvaluator;
     private Map<String, Templates> templatesCache = new Hashtable<>();
-    private Map<String, IDocumentSource> documentSources = new Hashtable<>();
+    private Map<String, XMLDocumentSource> documentSources = new Hashtable<>();
     private Map<String, XPathExpression> xPathExpMap = Collections.synchronizedMap(new LRUMap<String, XPathExpression>(100));
 
     private Document appDocument;
 
-    private static final String XML_STRING_ENCODING = "UTF-8";
+    public static final String XML_STRING_ENCODING = "UTF-8";
 
     public SaxonEngine()
     {
@@ -82,10 +85,11 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         //trFactory.getConfiguration().setTreeModel(Builder.TINY_TREE_CONDENSED);
 
         // create application document
-        appDocument = buildDocument(
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><application name=\""
+        appDocument = new StoredDocument(
+                "<?xml version=\"1.0\" encoding=\"" + XML_STRING_ENCODING +"\"?><application name=\""
                         + getApplication().getName()
-                        + "\"/>"
+                        + "\"/>",
+                null
         );
 
         registerExtensionFunction(new ParseHTMLFunction());
@@ -108,22 +112,22 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
     {
     }
 
-    public void registerDocumentSource( IDocumentSource documentSource )
+    public void registerDocumentSource( XMLDocumentSource documentSource )
     {
-        logger.debug("Registering source [{}]", documentSource.getDocumentURI());
-        this.documentSources.put(documentSource.getDocumentURI(), documentSource);
+        logger.debug("Registering source [{}]", documentSource.getURI());
+        this.documentSources.put(documentSource.getURI(), documentSource);
     }
 
-    public void unregisterDocumentSource( IDocumentSource documentSource )
+    public void unregisterDocumentSource( XMLDocumentSource documentSource )
     {
-        logger.debug("Removing source [{}]", documentSource.getDocumentURI());
-        this.documentSources.remove(documentSource.getDocumentURI());
+        logger.debug("Removing source [{}]", documentSource.getURI());
+        this.documentSources.remove(documentSource.getURI());
     }
 
-    public Document getRegisteredDocument( String documentURI ) throws IOException
+    public NodeInfo getRegisteredDocument( String documentURI ) throws IOException
     {
         if (this.documentSources.containsKey(documentURI)) {
-            return this.documentSources.get(documentURI).getDocument();
+            return this.documentSources.get(documentURI).getRootNode();
         } else {
             return null;
         }
@@ -137,7 +141,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         try {
             // try document sources first
             if (documentSources.containsKey(href)) {
-                return documentSources.get(href).getDocument().getRootNode();
+                return documentSources.get(href).getRootNode();
             } else {
                 if (null != href && !href.startsWith("/")) {
                     href = "/WEB-INF/server-assets/stylesheets/" + href;
@@ -207,7 +211,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.setOutputProperty(OutputKeys.INDENT, "no");
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "US-ASCII");
+            transformer.setOutputProperty(OutputKeys.ENCODING, XML_STRING_ENCODING);
 
             transformer.transform(source, new StreamResult(outStream));
             return outStream.toString(XML_STRING_ENCODING);
@@ -216,11 +220,15 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public Document buildDocument( String xml ) throws XPathException
+    public NodeInfo buildDocument( String xml ) throws SaxonException
     {
-        StringReader reader = new StringReader(xml);
-        Configuration config = trFactory.getConfiguration();
-        return new Document(config.buildDocument(new StreamSource(reader)), DigestUtils.md5Hex(xml));
+        try {
+            StringReader reader = new StringReader(xml);
+            Configuration config = trFactory.getConfiguration();
+            return config.buildDocument(new StreamSource(reader));
+        } catch (XPathException x) {
+            throw new SaxonException(x);
+        }
     }
 
     private XPathExpression getXPathExpression( String xpath ) throws XPathException
@@ -253,26 +261,10 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public boolean transformToWriter( Source source, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws SaxonException
+    public String transformToString(URL sourceUrl, String stylesheet, Map<String, String[]> params)
+            throws SaxonException, IOException
     {
-        return transform(source, stylesheet, params, new StreamResult(dstWriter));
-    }
-
-    public boolean transformToWriter( Document document, String stylesheet, Map<String, String[]> params, Writer dstWriter ) throws SaxonException
-    {
-        return transform(document, stylesheet, params, new StreamResult(dstWriter));
-    }
-
-    @SuppressWarnings("unused")
-    public boolean transformToFile( Document srcDocument, String stylesheet, Map<String, String[]> params, File dstFile ) throws SaxonException
-    {
-        return transform(srcDocument.getRootNode(), stylesheet, params, new StreamResult(dstFile));
-    }
-
-    @SuppressWarnings("unused")
-    public String transformToString( URL src, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
-    {
-        try (InputStream inStream = src.openStream(); ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
+        try (InputStream inStream = sourceUrl.openStream(); ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             if (transform(new StreamSource(inStream), stylesheet, params, new StreamResult(outStream))) {
                 return outStream.toString(XML_STRING_ENCODING);
             } else {
@@ -281,13 +273,8 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public String transformToString( Document source, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
-    {
-        return transformToString(source.getRootNode(), stylesheet, params);
-    }
-
-    public String transformToString( Source source, String stylesheet, Map<String, String[]> params ) throws SaxonException, IOException
-    {
+    public String transformToString(Source source, String stylesheet, Map<String, String[]> params)
+            throws SaxonException, IOException {
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             if (transform(source, stylesheet, params, new StreamResult(outStream))) {
                 return outStream.toString(XML_STRING_ENCODING);
@@ -297,40 +284,24 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
         }
     }
 
-    public Document transform( String srcXmlString, String stylesheet, Map<String, String[]> params ) throws SaxonException
+    public NodeInfo transform(String sourceString, String stylesheet, Map<String, String[]> params)
+            throws SaxonException
     {
-        Source src = new StreamSource(new StringReader(srcXmlString));
-        TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
-        if (transform(src, stylesheet, params, dstDocument)) {
-            return new Document(
-                    dstDocument.getCurrentRoot(),
-                    serializeDocument(dstDocument.getCurrentRoot()));
-        }
-        return null;
+        return transform(new StreamSource(new StringReader(sourceString)), stylesheet, params);
     }
 
-    public Document transform( Source source, String stylesheet, Map<String, String[]> params ) throws SaxonException
+    public NodeInfo transform(Source source, String stylesheet, Map<String, String[]> params)
+            throws SaxonException
     {
         TinyBuilder dstDocument = new TinyBuilder(trFactory.getConfiguration().makePipelineConfiguration());
         if (transform(source, stylesheet, params, dstDocument)) {
-            return new Document(
-                    dstDocument.getCurrentRoot(),
-                    DigestUtils.md5Hex(serializeDocument(dstDocument.getCurrentRoot())));
+            return dstDocument.getCurrentRoot();
         }
         return null;
     }
 
-    public Document transform( Document document, String stylesheet, Map<String, String[]> params ) throws SaxonException
-    {
-        return transform(document.getRootNode(), stylesheet, params);
-    }
-
-    private boolean transform( Document src, String stylesheet, Map<String, String[]> params, Result dst ) throws SaxonException
-    {
-        return transform(src.getRootNode(), stylesheet, params, dst);
-    }
-
-    private boolean transform( Source src, String stylesheet, Map<String, String[]> params, Result dst ) throws SaxonException
+    public boolean transform( Source src, String stylesheet, Map<String, String[]> params, Result dst )
+            throws SaxonException
     {
         boolean result = false;
         try {

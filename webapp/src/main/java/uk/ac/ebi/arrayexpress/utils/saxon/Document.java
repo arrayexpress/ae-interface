@@ -19,21 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon;
 
 import net.sf.saxon.om.NodeInfo;
 
-public class Document {
-
-    private final NodeInfo rootNode;
-    private final String hash;
-
-    public Document(NodeInfo rootNode, String hash) {
-        this.rootNode = rootNode;
-        this.hash = hash;
-    }
-
-    public NodeInfo getRootNode() {
-        return rootNode;
-    }
-
-    public String getHash() {
-        return hash;
-    }
+public interface Document {
+    public NodeInfo getRootNode();
+    public String getHash();
 }

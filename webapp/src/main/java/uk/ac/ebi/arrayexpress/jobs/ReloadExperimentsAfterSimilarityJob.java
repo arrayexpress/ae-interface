@@ -17,13 +17,13 @@ package uk.ac.ebi.arrayexpress.jobs;
  *
  */
 
+import net.sf.saxon.om.NodeInfo;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
-import uk.ac.ebi.arrayexpress.utils.saxon.Document;
 
 public class ReloadExperimentsAfterSimilarityJob extends ApplicationJob
 {
@@ -36,12 +36,12 @@ public class ReloadExperimentsAfterSimilarityJob extends ApplicationJob
         SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
         Experiments experiments = (Experiments) getComponent("Experiments");
 
-        Document result = saxonEngine.transform(
-                    experiments.getDocument()
+        NodeInfo result = saxonEngine.transform(
+                    experiments.getRootNode()
                     , "add-similarity-experiments-xml.xsl"
                     , null
                     );
 
-        experiments.setDocument(result);
+        experiments.setRootNode(result);
     }
 }

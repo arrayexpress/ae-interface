@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationJob;
 import uk.ac.ebi.arrayexpress.components.SaxonEngine;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
-import uk.ac.ebi.arrayexpress.utils.saxon.IDocumentSource;
+import uk.ac.ebi.arrayexpress.utils.saxon.XMLDocumentSource;
 
 public class CheckExperimentsJob extends ApplicationJob
 {
@@ -36,7 +36,7 @@ public class CheckExperimentsJob extends ApplicationJob
         SaxonEngine saxon = (SaxonEngine)getComponent("SaxonEngine");
 
         String report = saxon.transformToString(
-                ((IDocumentSource)getComponent("Experiments")).getDocument()
+                ((XMLDocumentSource)getComponent("Experiments")).getRootNode()
                 , "check-experiments-plain.xsl"
                 , null);
 

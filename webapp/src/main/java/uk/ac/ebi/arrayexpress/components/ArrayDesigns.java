@@ -6,7 +6,6 @@ import net.sf.saxon.trans.XPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.ApplicationComponent;
-import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.saxon.*;
 
 import java.io.File;
@@ -32,14 +31,14 @@ import java.util.Set;
  *
  */
 
-public class ArrayDesigns extends ApplicationComponent implements IDocumentSource
+public class ArrayDesigns extends ApplicationComponent implements XMLDocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final String MAP_ARRAY_LEGACY_ID = "array-legacy-ids";
 
-    private FilePersistence<PersistableDocumentContainer> document;
+    private Document document;
 
     private MapEngine maps;
     private SaxonEngine saxon;
@@ -74,9 +73,9 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         this.search = (SearchEngine) getComponent("SearchEngine");
         this.users = (Users) getComponent("Users");
         
-        this.document = new FilePersistence<>(
-                new PersistableDocumentContainer("array_designs")
-                , new File(getPreferences().getString("ae.arrays.persistence-location"))
+        this.document = new StoredDocument(
+                new File(getPreferences().getString("ae.arrays.persistence-location")),
+                "array_designs"
         );
 
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_ARRAY_LEGACY_ID));
@@ -92,23 +91,21 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     {
     }
 
-    // implementation of IDocumentSource.getDocumentURI()
-    public String getDocumentURI()
+    public String getURI()
     {
         return "arrays.xml";
     }
 
-    // implementation of IDocumentSource.getDocument()
-    public synchronized Document getDocument() throws IOException
+    public synchronized NodeInfo getRootNode()
     {
-        return this.document.getObject().getDocument();
+        return document.getRootNode();
     }
 
-    // implementation of IDocumentSource.setDocument(Document)
-    public synchronized void setDocument( Document doc ) throws IOException
+    public synchronized void setRootNode( NodeInfo rootNode ) throws IOException, SaxonException
     {
-        if (null != doc) {
-            this.document.setObject(new PersistableDocumentContainer("array_designs", doc));
+        if (null != rootNode) {
+            document = new StoredDocument(rootNode,
+                    new File(getPreferences().getString("ae.arrays.persistence-location")));
             updateIndex();
             updateMaps();
         } else {
@@ -119,9 +116,9 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     public void update( String xmlString, ArrayDesignSource source ) throws IOException, InterruptedException
     {
         try {
-            Document updateDoc = this.saxon.transform(xmlString, source.getStylesheetName(), null);
-            if (null != updateDoc) {
-                new DocumentUpdater(this, updateDoc).update();
+            NodeInfo update = this.saxon.transform(xmlString, source.getStylesheetName(), null);
+            if (null != update) {
+                new DocumentUpdater(this, update).update();
             }
         } catch (SaxonException x) {
             throw new RuntimeException(x);
@@ -131,7 +128,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
     private void updateIndex()
     {
         try {
-            this.search.getController().index(INDEX_ID, this.getDocument());
+            this.search.getController().index(INDEX_ID, document);
         } catch (Exception x) {
             this.logger.error("Caught an exception:", x);
         }
@@ -145,7 +142,7 @@ public class ArrayDesigns extends ApplicationComponent implements IDocumentSourc
         users.clearUserMap(INDEX_ID);
 
         try {
-            List<Item> documentNodes = saxon.evaluateXPath(getDocument().getRootNode(),
+            List<Item> documentNodes = saxon.evaluateXPath(getRootNode(),
                     "/array_designs/array_design[@visible = 'true']");
             for (Item node : documentNodes) {
 

@@ -28,8 +28,10 @@ import uk.ac.ebi.arrayexpress.components.Events.IEventInformation;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.persistence.FilePersistence;
 import uk.ac.ebi.arrayexpress.utils.persistence.PersistableString;
-import uk.ac.ebi.arrayexpress.utils.saxon.*;
-import uk.ac.ebi.arrayexpress.utils.saxon.search.IndexerException;
+import uk.ac.ebi.arrayexpress.utils.saxon.DocumentUpdater;
+import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
+import uk.ac.ebi.arrayexpress.utils.saxon.StoredDocument;
+import uk.ac.ebi.arrayexpress.utils.saxon.XMLDocumentSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Experiments extends ApplicationComponent implements IDocumentSource
+public class Experiments extends ApplicationComponent implements XMLDocumentSource
 {
     // logging machinery
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -54,7 +56,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     // todo: move this to similarity component
     // private final String MAP_EXPERIMENTS_WITH_SIMILARITY = "experiments-with-similarity";
 
-    private FilePersistence<PersistableDocumentContainer> document;
+    private StoredDocument document;
     private FilePersistence<PersistableString> species;
     private FilePersistence<PersistableString> arrays;
 
@@ -125,7 +127,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
 
         @Override
-        public Document getEventXML()
+        public NodeInfo getEventXML()
         {
             String xml = "<?xml version=\"1.0\"?><event><category>experiments-update-"
                             + this.source.toString().toLowerCase()
@@ -137,7 +139,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
                             + "</successful></event>";
             try {
                 return ((SaxonEngine) Application.getAppComponent("SaxonEngine")).buildDocument(xml);
-            } catch (XPathException x) {
+            } catch (SaxonException x) {
                 throw new RuntimeException(x);
             }
         }
@@ -157,9 +159,9 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         this.events = (Events) getComponent("Events");
         this.autocompletion = (Autocompletion) getComponent("Autocompletion");
 
-        this.document = new FilePersistence<>(
-                new PersistableDocumentContainer("experiments")
-                , new File(getPreferences().getString("ae.experiments.persistence-location"))
+        this.document = new StoredDocument(
+                new File(getPreferences().getString("ae.experiments.persistence-location")),
+                "experiments"
         );
 
         this.species = new FilePersistence<>(
@@ -196,26 +198,24 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
     }
 
-    // implementation of IDocumentSource.getDocumentURI()
     @Override
-    public String getDocumentURI()
+    public String getURI()
     {
         return "experiments.xml";
     }
 
-    // implementation of IDocumentSource.getDocument()
     @Override
-    public synchronized Document getDocument() throws IOException
+    public synchronized NodeInfo getRootNode() throws IOException
     {
-        return this.document.getObject().getDocument();
+        return document.getRootNode();
     }
 
-    // implementation of IDocumentSource.setDocument(Document)
     @Override
-    public synchronized void setDocument( Document doc ) throws IOException, InterruptedException
+    public synchronized void setRootNode( NodeInfo rootNode ) throws IOException, SaxonException
     {
-        if (null != doc) {
-            this.document.setObject(new PersistableDocumentContainer("experiments", doc));
+        if (null != rootNode) {
+            document = new StoredDocument(rootNode,
+                    new File(getPreferences().getString("ae.experiments.persistence-location")));
             updateIndex();
             updateMaps();
         } else {
@@ -237,13 +237,13 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         boolean success = false;
         try {
-            Document updateDoc = this.saxon.transform(
+            NodeInfo update = this.saxon.transform(
                     xmlString
                     , sourceInformation.getSource().getStylesheetName()
                     , null
             );
-            if (null != updateDoc) {
-                new DocumentUpdater(this, updateDoc).update();
+            if (null != update) {
+                new DocumentUpdater(this, update).update();
                 buildSpeciesArrays();
                 success = true;
             }
@@ -257,13 +257,13 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         }
     }
 
-    private void updateIndex() throws IOException, InterruptedException
+    private void updateIndex() throws IOException, SaxonException
     {
-        Thread.sleep(0);
         try {
-            this.search.getController().index(INDEX_ID, this.getDocument());
+            Thread.sleep(0);
+            this.search.getController().index(INDEX_ID, document);
             this.autocompletion.rebuild();
-        } catch (IndexerException x) {
+        } catch (Exception x) {
             throw new RuntimeException(x);
         }
     }
@@ -280,7 +280,7 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
         // todo: move this to similarity component
         // maps.clearMap(MAP_EXPERIMENTS_WITH_SIMILARITY);
         try {
-            List<Item> documentNodes = saxon.evaluateXPath(getDocument().getRootNode(), "/experiments/experiment[source/@visible = 'true']");
+            List<Item> documentNodes = saxon.evaluateXPath(getRootNode(), "/experiments/experiment[source/@visible = 'true']");
 
             // todo: move this to similarity component
             // XPathExpression similarXpe = saxon.getXPathExpression("similarto");
@@ -365,10 +365,10 @@ public class Experiments extends ApplicationComponent implements IDocumentSource
     {
         // todo: move this to a separate component (autocompletion?)
         try {
-            String speciesString = saxon.transformToString(this.getDocument(), "build-species-list-html.xsl", null);
+            String speciesString = saxon.transformToString(getRootNode(), "build-species-list-html.xsl", null);
             this.species.setObject(new PersistableString(speciesString));
 
-            String arraysString = saxon.transformToString(this.getDocument(), "build-arrays-list-html.xsl", null);
+            String arraysString = saxon.transformToString(getRootNode(), "build-arrays-list-html.xsl", null);
             this.arrays.setObject(new PersistableString(arraysString));
         } catch (SaxonException x) {
             throw new RuntimeException(x);
