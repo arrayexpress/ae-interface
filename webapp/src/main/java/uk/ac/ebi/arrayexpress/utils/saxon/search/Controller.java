@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.NodeInfo;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
@@ -156,7 +157,14 @@ public class Controller {
     }
 
     public List<NodeInfo> queryIndex(String indexId, String queryString) throws ParseException, IOException {
-        return new Querier(getEnvironment(indexId)).query(this.queryConstructor.construct(getEnvironment(indexId), queryString));  // should use "queryIndex( Integer queryId )" instead
+        return new Querier(getEnvironment(indexId)).query(
+                this.queryConstructor.construct(getEnvironment(indexId), queryString));
+    }
+
+    public List<FacetResult> queryFacets(String indexId, String queryString, int topCount)
+            throws ParseException, IOException {
+        return new Querier(getEnvironment(indexId)).queryFacets(
+                this.queryConstructor.construct(getEnvironment(indexId), queryString), topCount);
     }
 
     public String highlightQuery(Integer queryId, String fieldName, String text) {

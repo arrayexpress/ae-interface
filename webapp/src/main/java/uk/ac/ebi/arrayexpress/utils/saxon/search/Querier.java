@@ -18,8 +18,16 @@
 package uk.ac.ebi.arrayexpress.utils.saxon.search;
 
 import net.sf.saxon.om.NodeInfo;
+import org.apache.lucene.facet.FacetResult;
+import org.apache.lucene.facet.Facets;
+import org.apache.lucene.facet.FacetsCollector;
+import org.apache.lucene.facet.FacetsConfig;
+import org.apache.lucene.facet.taxonomy.FastTaxonomyFacetCounts;
+import org.apache.lucene.facet.taxonomy.TaxonomyReader;
+import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyReader;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +96,7 @@ public class Querier {
     }
 
     public List<NodeInfo> query(Query query) throws IOException {
-        try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
+        try (IndexReader reader = DirectoryReader.open(env.indexDirectory)) {
             LeafReader leafReader = SlowCompositeReaderWrapper.wrap(reader);
             IndexSearcher searcher = new IndexSearcher(reader);
             // empty query returns everything
@@ -117,7 +125,30 @@ public class Querier {
         }
     }
 
+    public List<FacetResult> queryFacets(Query query, int topCount) throws IOException {
+        try (IndexReader reader = DirectoryReader.open(env.indexDirectory);
+             TaxonomyReader taxoReader = openFacetReader(env.facetDirectory)) {
+            IndexSearcher searcher = new IndexSearcher(reader);
+ 
+            FacetsCollector fc = new FacetsCollector();
+            
+            logger.info("Facet collection of index [{}] with query [{}] started", env.indexId, query.toString());
+            searcher.search(query, null, fc);
+            FacetsConfig config = new FacetsConfig();
+            Facets facets = new FastTaxonomyFacetCounts(taxoReader, config, fc);
+            List<FacetResult> results = facets.getAllDims(topCount);
+            logger.info("Facet collection completed, [{}] facets collected", results.size());
+            return results;
+        }
+    }
     public List<NodeInfo> query(QueryInfo queryInfo) throws IOException {
         return query(queryInfo.getQuery());
+    }
+    
+    private TaxonomyReader openFacetReader(Directory directory) throws IOException {
+        if (null != directory) {
+            return new DirectoryTaxonomyReader(directory);
+        }
+        return null;
     }
 }
