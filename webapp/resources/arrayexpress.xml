@@ -179,10 +179,12 @@
         <index id="experiments" location="${sys:java.io.tmpdir}/${interface.application.pref.files.prefix}-index" defaultAnalyzer="uk.ac.ebi.arrayexpress.utils.search.AttributeFieldAnalyzer">
             <document path="/experiments/experiment" defaultField="keywords">
                 <field name="keywords" type="string" path="string-join(.//text(), ' ')" analyze="true" analyzer="uk.ac.ebi.arrayexpress.utils.search.ExperimentTextAnalyzer" store="true" escape="false" expand="true"/>
+                <!--
                 <field name="similarto" title="by Relevance" type="string" path="similarto/@accession" analyze="true" store="false" escape="false" expand="false"/>
+                -->
                 <field name="accession" title="by Accession" type="string" path="accession | secondaryaccession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="date" title="by Release Date" type="string" path="releasedate" analyze="true" store="false" escape="false" expand="false"/>
-                <field name="organism" title="by Organism" type="string" path="organism" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="organism" title="by Organism" type="string" path="organism" analyze="true" store="false" escape="false" expand="true" facet="organism" />
                 <field name="array" title="by Array" type="string" path="arraydesign/id | arraydesign/legacy_id | arraydesign/accession | arraydesign/name" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="protocol" title="by Protocol" type="string" path="protocol/id | protocol/accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false" expand="true"/>

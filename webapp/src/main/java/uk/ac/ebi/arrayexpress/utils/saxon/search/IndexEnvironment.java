@@ -22,7 +22,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.NIOFSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +42,7 @@ public class IndexEnvironment
     // index configuration, parsed
     public String indexId;
     public Directory indexDirectory;
+    public Directory facetDirectory;
     public PerFieldAnalyzerWrapper indexAnalyzer;
     public String defaultField;
 
@@ -54,6 +55,7 @@ public class IndexEnvironment
         public String name;
         public String title;
         public String type;
+        public String facet;
         public String path;
         public boolean shouldAnalyze;
         public String analyzer;
@@ -66,6 +68,7 @@ public class IndexEnvironment
             this.name = fieldConfig.getString("[@name]");
             this.title = fieldConfig.containsKey("[@title]") ? fieldConfig.getString("[@title]") : null;
             this.type = fieldConfig.getString("[@type]");
+            this.facet = fieldConfig.getString("[@facet]");
             this.path = fieldConfig.getString("[@path]");
             if ("string".equals(this.type)) {
                 this.shouldAnalyze = fieldConfig.getBoolean("[@analyze]");
@@ -101,8 +104,8 @@ public class IndexEnvironment
             this.indexId = this.indexConfig.getString("[@id]");
 
             String indexBaseLocation = this.indexConfig.getString("[@location]");
-            this.indexDirectory = FSDirectory.open(new File(indexBaseLocation, this.indexId).toPath());
-
+            this.indexDirectory = NIOFSDirectory.open(new File(indexBaseLocation, this.indexId).toPath());
+            
             String indexAnalyzer = this.indexConfig.getString("[@defaultAnalyzer]");
             Analyzer a = (Analyzer)Class.forName(indexAnalyzer).newInstance();
 
@@ -115,6 +118,7 @@ public class IndexEnvironment
             this.fields = new HashMap<>();
             Map<String,Analyzer> fieldAnalyzers = new HashMap<>();
 
+            boolean hasFacets = false;
             for (Object fieldConfig : fieldsConfig) {
                 FieldInfo fieldInfo = new FieldInfo((HierarchicalConfiguration)fieldConfig);
                 fields.put(fieldInfo.name, fieldInfo);
@@ -122,8 +126,13 @@ public class IndexEnvironment
                     Analyzer fa = (Analyzer)Class.forName(fieldInfo.analyzer).newInstance();
                     fieldAnalyzers.put(fieldInfo.name, fa);
                 }
+                if (!hasFacets && null != fieldInfo.facet && !fieldInfo.facet.isEmpty()) {
+                    hasFacets = true;
+                }
             }
-
+            if (hasFacets) {
+                this.facetDirectory = NIOFSDirectory.open(new File(indexBaseLocation, this.indexId + "_facet").toPath());
+            }
             this.indexAnalyzer = new PerFieldAnalyzerWrapper(a, fieldAnalyzers);
 
         } catch (Exception x) {

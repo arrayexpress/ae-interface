@@ -398,6 +398,10 @@
             <artifactId>lucene-queryparser</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-facet</artifactId>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ae-interface-auth</artifactId>
         </dependency>

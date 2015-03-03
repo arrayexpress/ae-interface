@@ -25,6 +25,10 @@ import net.sf.saxon.value.Int64Value;
 import net.sf.saxon.value.NumericValue;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.*;
+import org.apache.lucene.facet.FacetField;
+import org.apache.lucene.facet.FacetsConfig;
+import org.apache.lucene.facet.taxonomy.TaxonomyWriter;
+import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyWriter;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
@@ -66,7 +70,19 @@ public class Indexer {
                 }
                 return indexedNodes;
             }
-            try (IndexWriter w = createIndex(this.env.indexDirectory, this.env.indexAnalyzer)) {
+            try (IndexWriter w = createIndex(env.indexDirectory, env.indexAnalyzer);
+                 TaxonomyWriter tw = createFacets(env.facetDirectory)) {
+                
+                FacetsConfig config = new FacetsConfig();
+                for (IndexEnvironment.FieldInfo field : this.env.fields.values()) {
+                    if (null != tw && null != field.facet && !field.facet.isEmpty()) {
+                        config.setHierarchical(field.facet, false);
+                        config.setMultiValued(field.facet, true);
+                        //config.setIndexFieldName(field.facet, field.name);
+                        config.setRequireDimCount(field.facet, false);
+                    }
+                }
+                
                 setDocumentHash(document.getHash());
 
                 List documentNodes = saxon.evaluateXPath(document.getRootNode(), this.env.indexDocumentPath);
@@ -90,6 +106,9 @@ public class Indexer {
                                 } else {
                                     addStringField(d, field.name, v, field.shouldAnalyze, field.shouldStore);
                                 }
+                                if (null != tw && null != field.facet && !field.facet.isEmpty()) {
+                                    addFacetField(d, field.facet, v);
+                                }
                                 Thread.sleep(0);
                             }
                         } catch (XPathException x) {
@@ -99,13 +118,19 @@ public class Indexer {
                         }
                     }
                     addDocIdField(d, indexedNodes.size());
-                    w.addDocument(d);
+                    if (null != tw) {
+                        w.addDocument(config.build(tw, d));
+                    } else {
+                        w.addDocument(d);
+                    }
                     // append node to the list
                     indexedNodes.add((NodeInfo) node);
                 }
-
                 w.commit();
-
+                if (null != tw) {
+                    tw.commit();
+                }
+                
                 return indexedNodes;
             }
         } catch (IOException | XPathException x) {
@@ -121,6 +146,14 @@ public class Indexer {
         return new IndexWriter(indexDirectory, config);
     }
 
+    private TaxonomyWriter createFacets(Directory facetsDirectory) throws IOException {
+        if (null != facetsDirectory) {
+            return new DirectoryTaxonomyWriter(facetsDirectory, IndexWriterConfig.OpenMode.CREATE);
+        } else {
+            return null;
+        }
+    }
+
     private void addStringField(Document document, String name, Item value, boolean shouldAnalyze, boolean shouldStore) {
         String stringValue = value.getStringValue();
         FieldType fieldType = new FieldType();
@@ -130,6 +163,11 @@ public class Indexer {
         document.add(new Field(name, stringValue, fieldType));
     }
 
+    private void addFacetField(Document document, String name, Item value) {
+        String stringValue = value.getStringValue();
+        document.add(new FacetField(name, stringValue));
+    }
+    
     private void addBooleanIndexField(Document document, String name, Item value) {
         Boolean boolValue;
         if (value instanceof BooleanValue) {
