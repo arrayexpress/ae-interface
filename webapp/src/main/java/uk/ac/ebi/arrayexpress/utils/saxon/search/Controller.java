@@ -153,7 +153,7 @@ public class Controller {
 
     public List<NodeInfo> queryIndex(Integer queryId) throws IOException {
         QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
-        return new Querier(getEnvironment(queryInfo.getIndexId())).query(queryInfo);
+        return new Querier(getEnvironment(queryInfo.getIndexId())).query(queryInfo.getQuery());
     }
 
     public List<NodeInfo> queryIndex(String indexId, String queryString) throws ParseException, IOException {
@@ -161,6 +161,11 @@ public class Controller {
                 this.queryConstructor.construct(getEnvironment(indexId), queryString));
     }
 
+    public List<FacetResult> queryFacets(Integer queryId, int topCount) throws IOException {
+        QueryInfo queryInfo = this.queryPool.getQueryInfo(queryId);
+        return new Querier(getEnvironment(queryInfo.getIndexId())).queryFacets(queryInfo.getQuery(), topCount);
+    }
+    
     public List<FacetResult> queryFacets(String indexId, String queryString, int topCount)
             throws ParseException, IOException {
         return new Querier(getEnvironment(indexId)).queryFacets(

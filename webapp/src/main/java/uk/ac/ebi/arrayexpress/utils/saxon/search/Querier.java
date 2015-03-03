@@ -141,9 +141,6 @@ public class Querier {
             return results;
         }
     }
-    public List<NodeInfo> query(QueryInfo queryInfo) throws IOException {
-        return query(queryInfo.getQuery());
-    }
     
     private TaxonomyReader openFacetReader(Directory directory) throws IOException {
         if (null != directory) {
