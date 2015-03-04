@@ -24,6 +24,16 @@ import static org.junit.Assert.assertEquals;
 public class StringToolsTest
 {
     @Test
+    public void testUnescapeHTMLDecimalEntities()
+    {
+        assertEquals("hello world", StringTools.unescapeHTMLEntities("hello world"));
+        assertEquals("hello &xx; world", StringTools.unescapeHTMLEntities("hello &xx; world"));
+        assertEquals("hello &; world", StringTools.unescapeHTMLEntities("hello &; world"));
+        assertEquals("hello &apos world; '", StringTools.unescapeHTMLEntities("hello &apos world; &apos;"));
+        assertEquals("hello ø world &#48;", StringTools.unescapeHTMLEntities("hello &oslash; world &#48;"));
+    }
+
+    @Test
     public void testUnescapeXMLDecimalEntities()
     {
         assertEquals("hello world", StringTools.unescapeXMLDecimalEntities("hello world"));

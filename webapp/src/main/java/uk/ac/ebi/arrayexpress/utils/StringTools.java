@@ -148,6 +148,68 @@ public class StringTools
         }
     }
 
+    private static HashMap<String,String> htmlEntities;
+    static {
+        htmlEntities = new HashMap<>();
+        htmlEntities.put("lt","<")    ; htmlEntities.put("gt",">");
+        htmlEntities.put("amp","&")   ; htmlEntities.put("quot","\"");
+        htmlEntities.put("apos", "'") ;
+        htmlEntities.put("agrave","à"); htmlEntities.put("Agrave","À");
+        htmlEntities.put("acirc","â") ; htmlEntities.put("auml","ä");
+        htmlEntities.put("Auml","Ä")  ; htmlEntities.put("Acirc","Â");
+        htmlEntities.put("aring","å") ; htmlEntities.put("Aring","Å");
+        htmlEntities.put("aelig","æ") ; htmlEntities.put("AElig","Æ" );
+        htmlEntities.put("ccedil","ç"); htmlEntities.put("Ccedil","Ç");
+        htmlEntities.put("eacute","é"); htmlEntities.put("Eacute","É" );
+        htmlEntities.put("egrave","è"); htmlEntities.put("Egrave","È");
+        htmlEntities.put("ecirc","ê") ; htmlEntities.put("Ecirc","Ê");
+        htmlEntities.put("euml","ë")  ; htmlEntities.put("Euml","Ë");
+        htmlEntities.put("iuml","ï")  ; htmlEntities.put("Iuml","Ï");
+        htmlEntities.put("ocirc","ô") ; htmlEntities.put("Ocirc","Ô");
+        htmlEntities.put("ouml","ö")  ; htmlEntities.put("Ouml","Ö");
+        htmlEntities.put("oslash","ø"); htmlEntities.put("Oslash","Ø");
+        htmlEntities.put("szlig","ß") ; htmlEntities.put("ugrave","ù");
+        htmlEntities.put("Ugrave","Ù"); htmlEntities.put("ucirc","û");
+        htmlEntities.put("Ucirc","Û") ; htmlEntities.put("uuml","ü");
+        htmlEntities.put("Uuml","Ü")  ; htmlEntities.put("nbsp"," ");
+        htmlEntities.put("copy","\u00a9");
+        htmlEntities.put("reg","\u00ae");
+        htmlEntities.put("euro","\u20a0");
+    }
+
+    public static String unescapeHTMLEntities( String in )
+    {
+        if (null == in)
+            return null;
+
+        StringBuilder out = new StringBuilder(in.length());
+
+        int entityStart;
+        int entityEnd;
+        int currentIndex = 0;
+
+        while (currentIndex < in.length()) {
+            entityStart = in.indexOf("&", currentIndex);
+            if (-1 == entityStart) {
+                out.append(in.substring(currentIndex));
+                break;
+            }
+            out.append(in.substring(currentIndex, entityStart));
+            entityEnd = in.indexOf(";", entityStart);
+            if (-1 != entityEnd && entityEnd - entityStart < 8 && entityEnd - entityStart > 1) {
+                String entity = htmlEntities.get(in.substring(entityStart + 1, entityEnd));
+                if (null != entity) {
+                    out.append(entity);
+                    currentIndex = entityEnd + 1;
+                    continue;
+                }
+            }
+            out.append("&");
+            currentIndex = entityStart + 1;
+        }
+        return out.toString();
+    }
+
     public static String unescapeXMLDecimalEntities( String in )
     {
         if (null == in)
@@ -167,7 +229,7 @@ public class StringTools
             }
             out.append(in.substring(currentIndex, entityStart));
             entityEnd = in.indexOf(";", entityStart);
-            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d{1,}$")) {
+            if (-1 != entityEnd && in.substring(entityStart + 2, entityEnd).matches("^\\d+$")) {
                 // good stuff, we found decimal entity
                 out.append((char) Integer.parseInt(in.substring(entityStart + 2, entityEnd)));
                 currentIndex = entityEnd + 1;
@@ -198,7 +260,7 @@ public class StringTools
             return in;
         } else if (in >= 0x80 && in <= 0x9f) {
             return C1_CONTROL_TRANSCODE_MAP[in - 0x80];
-        } else if ((in >= 0xa0 && in <= 0xd7ff) || (in >= 0xe000 && in <= 0xfffd) || (in >= 0x10000 && in <= 0x10ffff)) {
+        } else if ((in >= 0xa0 && in <= 0xd7ff) || (in >= 0xe000 && in <= 0xfffd) || (in >= 0x10000)) {
             return in;
         } else if (in >= 0x80) {
             return ILLEGAL_CHAR_REPRESENATION;

@@ -68,6 +68,7 @@ public class ReloadExperimentsFromAE2Job extends ApplicationJob
         xml = StringTools.unescapeXMLDecimalEntities(xml);
         xml = StringTools.detectDecodeUTF8Sequences(xml);
         xml = StringTools.replaceIllegalHTMLCharacters(xml);
+        xml = StringTools.unescapeHTMLEntities(xml);
         return xml;
     }
 
