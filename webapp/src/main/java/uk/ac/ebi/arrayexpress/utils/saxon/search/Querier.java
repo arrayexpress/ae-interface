@@ -22,6 +22,7 @@ import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.Facets;
 import org.apache.lucene.facet.FacetsCollector;
 import org.apache.lucene.facet.FacetsConfig;
+import org.apache.lucene.facet.taxonomy.FacetLabel;
 import org.apache.lucene.facet.taxonomy.FastTaxonomyFacetCounts;
 import org.apache.lucene.facet.taxonomy.TaxonomyReader;
 import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyReader;
@@ -67,8 +68,37 @@ public class Querier {
         return termsList;
     }
 
+    public List<String> getFacetTerms(String fieldName, int minFreq) throws IOException {
+        List<String> termsList = new ArrayList<>();
+
+        if (null != env.facetDirectory) {
+            try (TaxonomyReader reader = openFacetReader(env.facetDirectory)) {
+                int ord = reader.getOrdinal(new FacetLabel(fieldName));
+                if (TaxonomyReader.INVALID_ORDINAL != ord) {
+                    TaxonomyReader.ChildrenIterator itor = reader.getChildren(ord);
+                    while ((ord = itor.next()) != TaxonomyReader.INVALID_ORDINAL) {
+                        logger.info(StringTools.arrayToString(reader.getPath(ord).components, "/"));
+                    }
+                }
+                /*
+                Terms terms = MultiFields.getTerms(reader, fieldName);
+                if (null != terms) {
+                    TermsEnum iterator = terms.iterator(null);
+                    BytesRef byteRef;
+                    while ((byteRef = iterator.next()) != null) {
+                        if (iterator.docFreq() >= minFreq) {
+                            termsList.add(byteRef.utf8ToString());
+                        }
+                    }
+                }
+                */
+            }
+        }
+        return termsList;
+    }
+
     public void dumpTerms(String fieldName) throws IOException {
-        try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
+        try (IndexReader reader = DirectoryReader.open(env.indexDirectory)) {
             Terms terms = MultiFields.getTerms(reader, fieldName);
             if (null != terms) {
                 File f = new File(System.getProperty("java.io.tmpdir"), fieldName + "_terms.txt");
@@ -86,11 +116,11 @@ public class Querier {
     }
 
     public Integer getDocCount(Query query) throws IOException {
-        try (IndexReader reader = DirectoryReader.open(this.env.indexDirectory)) {
+        try (IndexReader reader = DirectoryReader.open(env.indexDirectory)) {
             IndexSearcher searcher = new IndexSearcher(reader);
 
             // +1 is a trick to prevent from having an exception thrown if documentNodes.size() value is 0
-            TopDocs hits = searcher.search(query, this.env.documentNodes.size() + 1);
+            TopDocs hits = searcher.search(query, env.documentNodes.size() + 1);
             return hits.totalHits;
         }
     }
@@ -101,20 +131,20 @@ public class Querier {
             IndexSearcher searcher = new IndexSearcher(reader);
             // empty query returns everything
             if (query instanceof BooleanQuery && ((BooleanQuery) query).clauses().isEmpty()) {
-                logger.info("Empty search, returned all [{}] documents", this.env.documentNodes.size());
-                return this.env.documentNodes;
+                logger.info("Empty search, returned all [{}] documents", env.documentNodes.size());
+                return env.documentNodes;
             }
             logger.info("Search of index [{}] with query [{}] started", env.indexId, query.toString());
             TopDocs hits = searcher.search(
                     new ConstantScoreQuery(query),
-                    this.env.documentNodes.size() + 1
+                    env.documentNodes.size() + 1
             );
             logger.info("Search reported [{}] matches", hits.totalHits);
             final List<NodeInfo> matchingNodes = new ArrayList<>(hits.totalHits);
             final NumericDocValues ids = leafReader.getNumericDocValues(Indexer.DOCID_FIELD);
             for (ScoreDoc d : hits.scoreDocs) {
                 matchingNodes.add(
-                        this.env.documentNodes.get(
+                        env.documentNodes.get(
                                 (int)ids.get(d.doc)
                         )
                 );

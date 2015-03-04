@@ -104,6 +104,11 @@ public class Controller {
         }
     }
 
+    public List<String> getFacetTerms(String indexId, String fieldName, int minFreq) throws IOException {
+        IndexEnvironment env = getEnvironment(indexId);
+        return new Querier(env).getFacetTerms(fieldName, minFreq);
+    }
+
     @SuppressWarnings("unused")
     public Integer getDocCount(String indexId, Map<String, String[]> queryParams) throws IOException, ParseException {
         IndexEnvironment env = getEnvironment(indexId);

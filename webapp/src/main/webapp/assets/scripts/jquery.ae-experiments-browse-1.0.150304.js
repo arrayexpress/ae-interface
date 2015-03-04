@@ -99,7 +99,7 @@
             query.array = getQueryStringParam("array");
             query.exptype = getQueryArrayParam("exptype");
         }
-
+        /***
         $.get(contextPath + "/species-list.html").then( function(data) {
             $("#ae-organism").html(data).removeAttr("disabled").val(query.organism);
 
@@ -119,6 +119,7 @@
                     .removeAttr("disabled")
                     .val((jQuery.isArray(query.exptype) && query.exptype.length > 1) ? query.exptype[1] : "");
         });
+        ***/
     });
 
 })(window.jQuery);

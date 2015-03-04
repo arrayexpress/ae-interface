@@ -82,7 +82,6 @@
                     <sup><a href="{$context-path}/experiments/{$vAccession}/samples/?full=true" title="Some columns were omitted; please click here to get a full view of samples and data">*</a></sup>
                 </xsl:if>
             </xsl:with-param>
-            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.ae-samples-view-1.0.130402.js" type="text/javascript"/>

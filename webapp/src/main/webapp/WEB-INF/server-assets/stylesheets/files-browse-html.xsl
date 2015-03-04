@@ -131,7 +131,6 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>
-            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.ae-files-browse-1.0.0.js" type="text/javascript"/>

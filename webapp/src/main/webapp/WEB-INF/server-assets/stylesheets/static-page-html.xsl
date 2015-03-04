@@ -40,7 +40,6 @@
                     <xsl:with-param name="pExtraSearchFields"/>
                     <xsl:with-param name="pTitleTrail" select="fn:substring-before($vContent//html:title, '&lt; ArrayExpress')"/>
                     <xsl:with-param name="pBreadcrumbTrail"/>
-                    <xsl:with-param name="pEBISearchWidget"/>
                     <xsl:with-param name="pExtraCSS"/>
                     <xsl:with-param name="pExtraJS"/>
                     <xsl:with-param name="pExtraBodyClasses"/>

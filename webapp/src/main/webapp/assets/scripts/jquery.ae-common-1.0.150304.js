@@ -328,19 +328,30 @@
             var el             = $(this),
                 offset         = el.offset(),
                 scrollTop      = $(window).scrollTop(),
+                scrollLeft = $(window).scrollLeft(),
                 floatingHeader = $(".floating-header", this),
-                width          = floatingHeader.prev().width();
+                floatingPanel = $(".floating-panel"),
+                width = floatingHeader.prev().width(),
+                height = floatingHeader.prev().height();
 
 
             if ((scrollTop > offset.top) && (scrollTop < offset.top + el.height())) {
-                floatingHeader.css({
-                    "visibility": "visible",
-                    "width": width
-                });
-            } else {
-                floatingHeader.css({
-                    "visibility": "hidden"
-                });
+                if (!floatingHeader.hasClass("visible")) {
+                    floatingHeader.addClass("visible").css({
+                        "width": width + "px"
+                    });
+                    floatingPanel.addClass("visible").css({
+                        "height": height + "px"
+                    });
+                }
+                if (floatingHeader.prop("ae_ScrollLeft") != scrollLeft) {
+                    floatingHeader.prop("ae_ScrollLeft", scrollLeft).css({
+                        "margin-left": "-" + scrollLeft + "px"
+                    });
+                }
+            } else if (floatingHeader.hasClass("visible")) {
+                floatingPanel.removeClass("visible");
+                floatingHeader.removeClass("visible");
             }
         });
     }
@@ -352,10 +363,9 @@
                 width          = floatingHeader.prev().width();
 
 
-            if ("visible" == floatingHeader.css("visibility")) {
+            if (floatingHeader.hasClass("visible")) {
                 floatingHeader.css({
-                    "visibility": "visible",
-                    "width": width
+                    "width": width + "px"
                 });
             }
         });
@@ -365,12 +375,12 @@
     {
         var clonedHeaderRow;
 
+        $("body").append("<div class=\"floating-panel\"></div>");
         $(".persist-area").each(function() {
             clonedHeaderRow = $(".persist-header", this);
             clonedHeaderRow
                 .before(clonedHeaderRow.clone())
                 .addClass("floating-header");
-
         });
 
         $(window)

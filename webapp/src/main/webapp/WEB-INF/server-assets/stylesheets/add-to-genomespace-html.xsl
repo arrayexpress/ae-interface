@@ -50,7 +50,6 @@
                 <a href="{$context-path}/experiments/{$vAccession}/"><xsl:value-of select="$vAccession"/></a>
                 <xsl:text> > Send to GenomeSpace</xsl:text>
             </xsl:with-param>
-            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.ae-add-to-gs-1.0.0.js" type="text/javascript"/>
             </xsl:with-param>

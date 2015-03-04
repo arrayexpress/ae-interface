@@ -50,7 +50,6 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <a href="{$context-path}/experiments/browse.html">Experiments</a> > <xsl:value-of select="$vAccession"/>
             </xsl:with-param>
-            <xsl:with-param name="pEBISearchWidget"/>
             <xsl:with-param name="pExtraJS"/>
             <xsl:with-param name="pExtraBodyClasses"/>
         </xsl:call-template>

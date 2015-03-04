@@ -45,7 +45,6 @@
         <xsl:param name="pExtraSearchFields"/>
         <xsl:param name="pTitleTrail" as="xs:string"/>
         <xsl:param name="pBreadcrumbTrail"/>
-        <xsl:param name="pEBISearchWidget"/>
         <xsl:param name="pExtraCSS"/>
         <xsl:param name="pExtraJS"/>
         <xsl:param name="pExtraBodyClasses" as="xs:string"/>
@@ -67,7 +66,6 @@
                 <xsl:with-param name="pSearchInputValue" select="$pSearchInputValue"/>
                 <xsl:with-param name="pExtraSearchFields" select="$pExtraSearchFields"/>
                 <xsl:with-param name="pBreadcrumbTrail" select="$pBreadcrumbTrail"/>
-                <xsl:with-param name="pEBISearchWidget" select="$pEBISearchWidget"/>
                 <xsl:with-param name="pExtraCode" select="$pExtraJS"/>
                 <xsl:with-param name="pExtraBodyClasses" select="$pExtraBodyClasses"/>
             </xsl:call-template>
@@ -97,7 +95,7 @@
             <!-- CSS concatenated and minified via ant build script-->
             <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
-            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.150116.css" type="text/css"/>
+            <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.150304.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
             <!-- end CSS-->
 
@@ -118,7 +116,6 @@
         <xsl:param name="pSearchInputValue"/>
         <xsl:param name="pExtraSearchFields"/>
         <xsl:param name="pBreadcrumbTrail"/>
-        <xsl:param name="pEBISearchWidget"/>
         <xsl:param name="pExtraCode"/>
         <xsl:param name="pExtraBodyClasses"/>
 
@@ -204,12 +201,13 @@
                                     <a href="{$context-path}/" title="ArrayExpress ${project.version}.r${buildNumber}">Home</a>
                                 </li>
                                 <li>
-                                    <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
                                     <xsl:choose>
                                         <xsl:when test="not($userid)">
+                                            <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
                                             <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
                                         </xsl:when>
                                         <xsl:otherwise>
+                                            <xsl:if test="fn:starts-with($relative-uri, '/experiments/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
                                             <a href="{$context-path}/experiments/browse.html" title="Browse">Browse</a>
                                         </xsl:otherwise>
                                     </xsl:choose>
@@ -266,6 +264,15 @@
                 </header>
 
                 <div id="content" role="main" class="grid_24 clearfix">
+                    <!-- If you require a breadcrumb trail, its root should be your service.
+     	                 You don't need a breadcrumb trail on the homepage of your service... -->
+                    <xsl:if test="$pBreadcrumbTrail != ''">
+                        <nav id="breadcrumb">
+                            <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
+                        </nav>
+                    </xsl:if>
+
+                    <xsl:call-template name="ae-content-section"/>
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
@@ -315,34 +322,6 @@
                             <input class="submit" type="submit" value="Send"/>
                         </form>
                     </section>
-                    <!-- If you require a breadcrumb trail, its root should be your service.
-     	                 You don't need a breadcrumb trail on the homepage of your service... -->
-                    <xsl:if test="$pBreadcrumbTrail != ''">
-                        <section>
-                            <xsl:if test="$pEBISearchWidget">
-                                <xsl:attribute name="class" select="'grid_18 alpha'"/>
-                            </xsl:if>
-                            <nav id="breadcrumb">
-                                <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
-                            </nav>
-                        </section>
-                        <xsl:copy-of select="$pEBISearchWidget"/>
-                    </xsl:if>
-
-                    <xsl:call-template name="ae-content-section"/>
-                    <!-- Suggested layout containers -->
-                    <!--
-                    <section>
-                        <h2>[Page title]</h2>
-                        <p>Your content</p>
-                    </section>
-
-                    <section>
-                        <h3>[Another title]</h3>
-                        <p>More content in a full-width container.</p>
-                    </section>
-                    -->
-                    <!-- End suggested layout containers -->
                 </div>
                 <footer>
                     <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
@@ -392,7 +371,7 @@
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.141028.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.150304.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

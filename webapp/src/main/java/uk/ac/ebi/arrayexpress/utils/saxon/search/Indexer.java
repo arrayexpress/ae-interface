@@ -78,7 +78,7 @@ public class Indexer {
                     if (null != tw && null != field.facet && !field.facet.isEmpty()) {
                         config.setHierarchical(field.facet, false);
                         config.setMultiValued(field.facet, true);
-                        //config.setIndexFieldName(field.facet, field.name);
+                        config.setIndexFieldName(field.facet, field.name);
                         config.setRequireDimCount(field.facet, false);
                     }
                 }

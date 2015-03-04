@@ -18,8 +18,6 @@ package uk.ac.ebi.arrayexpress.servlets;
  */
 
 import net.sf.saxon.om.NodeInfo;
-import org.apache.lucene.facet.FacetResult;
-import org.apache.lucene.facet.LabelAndValue;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +37,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class QueryServlet extends AuthAwareApplicationServlet
 {
@@ -136,14 +133,19 @@ public class QueryServlet extends AuthAwareApplicationServlet
 
                     /***
                      this thing is simply to test facets
-                     ***/
-                    List<FacetResult> facets = search.getController().queryFacets(queryId, 10);
-                    for (FacetResult facet : facets) {
+
+                    List<String> facetTerms = search.getController().getFacetTerms("experiments", "organism", 1);
+                    for (String term : facetTerms) {
+                        logger.info("Facet term [{}]", term);
+                    }
+                    List<FacetResult> facetResults = search.getController().queryFacets(queryId, 10);
+                    for (FacetResult facet : facetResults) {
                         logger.info("Facet [{}], child count [{}]", facet.dim, facet.childCount);
                         for (LabelAndValue lv : facet.labelValues) {
                             logger.info(" - [{}] ({})", lv.label, lv.value.intValue());
                         }
                     }
+                    **/
                 }
 
                 if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {

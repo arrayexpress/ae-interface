@@ -51,10 +51,11 @@
     <xsl:variable name="vTotal" select="count($vFilteredExperiments)"/>
 
     <xsl:template match="/">
-        <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Experiments matching &quot;', $keywords, '&quot;') else 'Experiments'"/>
+        <xsl:variable name="vTitle" select="if ($vSearchMode) then fn:concat('Search results for &quot;', $keywords, '&quot;') else 'Browse'"/>
 
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
+            <!--
             <xsl:with-param name="pEBISearchWidget">
                 <xsl:if test="$vSearchMode and $vTotal > 0">
                     <aside class="grid_6 omega shortcuts expander" id="search-extras">
@@ -64,6 +65,7 @@
                     </aside>
                 </xsl:if>
             </xsl:with-param>
+            -->
             <xsl:with-param name="pSearchInputValue" select="$keywords"/>
             <xsl:with-param name="pExtraSearchFields">
                 <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
@@ -75,12 +77,15 @@
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.150225.css" type="text/css"/>
             </xsl:with-param>
-            <xsl:with-param name="pBreadcrumbTrail"><xsl:if test="$vTotal > 0"><xsl:value-of select="$vTitle"/></xsl:if></xsl:with-param>
+            <xsl:with-param name="pBreadcrumbTrail"/>
+            <!--
+            <xsl:if test="$vTotal > 0"><xsl:value-of select="$vTitle"/></xsl:if></xsl:with-param>
+            -->
             <xsl:with-param name="pExtraJS">
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.140924.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.150304.js" type="text/javascript"/>
             </xsl:with-param>
             <xsl:with-param name="pExtraBodyClasses" select="if ($vTotal = 0) then 'noresults' else ''"/>
         </xsl:call-template>
@@ -113,40 +118,6 @@
                 <section class="grid_24 alpha omega">
                     <div id="ae-content">
                         <div id="ae-browse">
-                            <div id="ae-filters">
-                                <form method="get" action="{$context-path}/experiments/browse.html">
-                                    <fieldset>
-                                        <legend>Filter experiments</legend>
-                                        <input id="ae-keywords" type="hidden" name="keywords" value="{$keywords}" maxlength="255"/>
-                                        <label id="ae-organism-label" for="ae-organism">By organism</label>
-                                        <label  id="ae-exptype-label" for="ae-expdesign">By experiment type</label>
-                                        <select id="ae-organism" name="organism" disabled="on"><option value="">All organisms (loading options)</option></select>
-                                        <select id="ae-expdesign" name="exptype[]" disabled="on"><option value="">All assays by molecule (loading options)</option></select>
-                                        <select id="ae-exptech" name="exptype[]" disabled="on"><option value="">All technologies (loading options)</option></select>
-                                        <div>
-                                            <xsl:if test="not($userid = '1')">
-                                                <div class="option">
-                                                    <input id="ae-private" name="private" type="checkbox" title="Select the 'My private data only' check box to query private data only.">
-                                                        <xsl:if test="$private = 'on'">
-                                                            <xsl:attribute name="checked"/>
-                                                        </xsl:if>
-                                                    </input>
-                                                    <label for="ae-private" title="Select the 'My private data only' check box to query private data only.">My private data only</label>
-                                                </div>
-                                            </xsl:if>
-                                            <div class="option">
-                                                <input id="ae-directsub" name="directsub" type="checkbox" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">
-                                                    <xsl:if test="$directsub = 'on'">
-                                                        <xsl:attribute name="checked"/>
-                                                    </xsl:if>
-                                                </input>
-                                                <label for="ae-directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
-                                            </div>
-                                            <div id="ae-submit-box"><input id="ae-query-submit" class="submit" type="submit" value="Filter"/></div>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </div>
                             <div class="persist-area">
                                 <table class="persist-header" border="0" cellpadding="0" cellspacing="0">
                                     <col class="col_accession"/>
