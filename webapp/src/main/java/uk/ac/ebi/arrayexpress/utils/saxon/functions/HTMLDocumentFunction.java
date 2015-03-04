@@ -25,10 +25,7 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.Sequence;
-import net.sf.saxon.om.SequenceTool;
-import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.om.*;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
@@ -95,7 +92,9 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
         {
             try {
                 Controller controller = context.getController();
-                String baseURI = ((NodeInfo)context.getContextItem()).getBaseURI();
+                Item contextItem = context.getContextItem();
+                String baseURI = null != contextItem && contextItem instanceof NodeInfo ?
+                        ((NodeInfo)context.getContextItem()).getBaseURI() : "";
 
                 String location = SequenceTool.getStringValue(arguments[0]);
 
