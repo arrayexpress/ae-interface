@@ -377,10 +377,12 @@
             <groupId>net.sf.saxon</groupId>
             <artifactId>Saxon-HE</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.ccil.cowan.tagsoup</groupId>
             <artifactId>tagsoup</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>

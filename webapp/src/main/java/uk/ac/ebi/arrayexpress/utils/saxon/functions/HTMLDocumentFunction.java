@@ -53,8 +53,6 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
     private static final StructuredQName qName =
             new StructuredQName("", NamespaceConstant.AE_EXT, "htmlDocument");
 
-    private static final long serialVersionUID = 2900492427992842625L;
-
     public StructuredQName getFunctionQName()
     {
         return qName;
@@ -90,10 +88,7 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
         // logging machinery
         private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-        private static final long serialVersionUID = -3423794707455948444L;
-
         private transient HtmlParser parser;
-
 
         @SuppressWarnings("unchecked")
         public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
@@ -104,45 +99,43 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
 
                 String location = SequenceTool.getStringValue(arguments[0]);
 
-                if (null != location) {
-                    StreamSource ss = null;
-                    try {
-                        ss = (StreamSource)controller.getURIResolver().resolve(location, "");
-                    } catch (TransformerException x ) {
-                        logger.error("Unable to open document [{}]", location);
-                    }
+                StreamSource ss = null;
+                try {
+                    ss = (StreamSource)controller.getURIResolver().resolve(location, "");
+                } catch (TransformerException x ) {
+                    logger.error("Unable to open document [{}]", location);
+                }
 
-                    if (null != ss) {
-                        try (InputStream is = ss.getInputStream()) {
+                if (null != ss) {
+                    try (InputStream is = ss.getInputStream()) {
 
-                            Reader isr = new InputStreamReader(is);
+                        Reader isr = new InputStreamReader(is);
 
-                            InputSource isc = new InputSource();
-                            isc.setCharacterStream(isr);
-                            isc.setSystemId(baseURI);
+                        InputSource isc = new InputSource();
+                        isc.setCharacterStream(isr);
+                        isc.setSystemId(baseURI);
 
-                            Source source = new SAXSource(getParser(), isc);
-                            source.setSystemId(baseURI);
+                        Source source = new SAXSource(getParser(), isc);
+                        source.setSystemId(baseURI);
 
-                            Builder b = controller.makeBuilder();
-                            Receiver s = b;
+                        Builder b = controller.makeBuilder();
+                        Receiver s = b;
 
-                            source = AugmentedSource.makeAugmentedSource(source);
-                            ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
+                        source = AugmentedSource.makeAugmentedSource(source);
+                        ((AugmentedSource) source).setStripSpace(Whitespace.XSLT);
 
-                            if (controller.getExecutable().stripsInputTypeAnnotations()) {
-                                s = controller.getConfiguration().getAnnotationStripper(s);
-                            }
-
-                            Sender.send(source, s, null);
-
-                            NodeInfo node = b.getCurrentRoot();
-                            b.reset();
-
-                            return node;
-                        } catch ( IOException x ) {
-                            throw new XPathException(x);
+                        if (controller.getExecutable().stripsInputTypeAnnotations()) {
+                            s = controller.getConfiguration().getAnnotationStripper(s);
                         }
+
+                        Sender.send(source, s, null);
+
+                        NodeInfo node = b.getCurrentRoot();
+                        b.reset();
+
+                        return node;
+                    } catch ( IOException x ) {
+                        throw new XPathException(x);
                     }
                 }
             } catch ( TransformerException x ) {

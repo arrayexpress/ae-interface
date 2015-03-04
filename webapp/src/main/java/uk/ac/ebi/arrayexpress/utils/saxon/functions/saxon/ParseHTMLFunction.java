@@ -17,33 +17,9 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon;
  *
  */
 
-import net.sf.saxon.Controller;
-import net.sf.saxon.event.Builder;
-import net.sf.saxon.event.Receiver;
-import net.sf.saxon.event.Sender;
-import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.lib.AugmentedSource;
-import net.sf.saxon.lib.ExtensionFunctionCall;
-import net.sf.saxon.lib.ExtensionFunctionDefinition;
-import net.sf.saxon.lib.NamespaceConstant;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.Sequence;
-import net.sf.saxon.om.SequenceTool;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.Whitespace;
-import org.ccil.cowan.tagsoup.Parser;
-import org.xml.sax.InputSource;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.sax.SAXSource;
-import java.io.StringReader;
-
-public class ParseHTMLFunction extends ExtensionFunctionDefinition
+public class ParseHTMLFunction //extends ExtensionFunctionDefinition
 {
-    private static final long serialVersionUID = 8579273476850096996L;
-
+    /*
     private static final StructuredQName qName =
             new StructuredQName("", NamespaceConstant.SAXON, "parse-html");
 
@@ -129,4 +105,5 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
             return parser;
         }
     }
+    */
 }
