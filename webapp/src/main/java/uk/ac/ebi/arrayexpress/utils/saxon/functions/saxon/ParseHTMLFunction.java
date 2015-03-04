@@ -112,7 +112,7 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
         {
             if (null == parser) {
                 parser = new HtmlParser();
-                parser.setDoctypeExpectation(DoctypeExpectation.HTML);
+                parser.setDoctypeExpectation(DoctypeExpectation.NO_DOCTYPE_ERRORS);
                 parser.setReportingDoctype(false);
             }
             return parser;
