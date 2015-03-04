@@ -205,7 +205,14 @@
                                 </li>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
+                                    <xsl:choose>
+                                        <xsl:when test="not($userid)">
+                                            <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <a href="{$context-path}/experiments/browse.html" title="Browse">Browse</a>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
                                 </li>
                                 <xsl:if test="not($userid)">
                                     <li>
