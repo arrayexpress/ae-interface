@@ -26,11 +26,10 @@ import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
+import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 public class TrimTrailingDotFunction extends ExtensionFunctionDefinition
 {
-    private static final long serialVersionUID = -7916816398895676395L;
-
     private static final StructuredQName qName =
             new StructuredQName("", NamespaceConstant.AE_EXT, "trimTrailingDot");
 
@@ -66,14 +65,12 @@ public class TrimTrailingDotFunction extends ExtensionFunctionDefinition
 
     private static class TrimTrailingDotCall extends ExtensionFunctionCall
     {
-        private static final long serialVersionUID = 974920767172642082L;
-
         public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
-            String str = SequenceTool.getStringValue(arguments[0]);
+            String str = SequenceTool.getStringValue(arguments[0]).trim();
 
             if (str.endsWith(".")) {
-                str = str.substring(0, str.length() - 1);
+                str = StringTools.unescapeHTMLEntities(str.substring(0, str.length() - 1));
             }
 
             return new StringValue(str);
