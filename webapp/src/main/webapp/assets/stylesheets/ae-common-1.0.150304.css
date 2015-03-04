@@ -346,7 +346,7 @@ div#local-masthead ul li a:active {
 #ae-login fieldset
 , #ae-feedback fieldset
 , #ae-feedback span {
-    background-color: transparent;
+    background: transparent;
     color: inherit
 }
 
@@ -447,15 +447,15 @@ div#local-masthead ul li a:active {
 }
 
 .text-hit {
-    background-color: #FFFF00;
+    background: #FFFF00;
 }
 
 .text-syn {
-    background-color: #CCFFAA;
+    background: #CCFFAA;
 }
 
 .text-efo {
-    background-color: #FFCCAA;
+    background: #FFCCAA;
 }
 
 /* home page stuff */
@@ -543,7 +543,7 @@ p.left, td.left {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    background-color: #e3e1f2;
+    background: #e3e1f2;
     padding: 10px;
     margin: 0 9px 9px
 }
@@ -552,7 +552,7 @@ p.left, td.left {
     padding: 0;
     margin: 0;
     border: 0 none;
-    background-color: inherit;
+    background: inherit;
 }
 
 #ae-query input[type='text'] {
@@ -701,20 +701,20 @@ p.left, td.left {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-bottom: 0 none;
-    background-color: #a67325;
+    background: #a67325;
     color: #fff;
 }
 
 #ae-browse .col_pager span {
-    background-color: #68798d;
+    background: #68798d;
     color: #fff;
 }
 
 #ae-browse .col_footer {
     font-size: 93%;
     text-align: center;
-    background: #fff;
-    border-top: 2px solid #eee;
+    background: rgba(191, 160, 112, 0.2);
+    padding: 5px
 }
 
 #ae-browse .col_footer a {
