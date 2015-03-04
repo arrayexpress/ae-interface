@@ -151,9 +151,9 @@ public class StringTools
     private static HashMap<String,String> htmlEntities;
     static {
         htmlEntities = new HashMap<>();
-        htmlEntities.put("lt","<")    ; htmlEntities.put("gt",">");
-        htmlEntities.put("amp","&")   ; htmlEntities.put("quot","\"");
-        htmlEntities.put("apos", "'") ;
+        //htmlEntities.put("lt","<")    ; htmlEntities.put("gt",">");
+        //htmlEntities.put("amp","&")   ;
+        htmlEntities.put("apos", "'") ; htmlEntities.put("quot","\"");
         htmlEntities.put("agrave","à"); htmlEntities.put("Agrave","À");
         htmlEntities.put("acirc","â") ; htmlEntities.put("auml","ä");
         htmlEntities.put("Auml","Ä")  ; htmlEntities.put("Acirc","Â");
