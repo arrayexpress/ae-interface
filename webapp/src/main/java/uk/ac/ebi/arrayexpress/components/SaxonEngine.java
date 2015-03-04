@@ -40,6 +40,7 @@ import uk.ac.ebi.arrayexpress.utils.saxon.SaxonException;
 import uk.ac.ebi.arrayexpress.utils.saxon.StoredDocument;
 import uk.ac.ebi.arrayexpress.utils.saxon.XMLDocumentSource;
 import uk.ac.ebi.arrayexpress.utils.saxon.functions.*;
+import uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon.ParseHTMLFunction;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
@@ -91,7 +92,7 @@ public class SaxonEngine extends ApplicationComponent implements URIResolver, Er
                 null
         );
 
-        //registerExtensionFunction(new ParseHTMLFunction());
+        registerExtensionFunction(new ParseHTMLFunction());
         registerExtensionFunction(new SerializeXMLFunction());
         registerExtensionFunction(new TabularDocumentFunction());
         registerExtensionFunction(new GetMappedValueFunction());

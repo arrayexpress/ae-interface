@@ -17,9 +17,28 @@ package uk.ac.ebi.arrayexpress.utils.saxon.functions.saxon;
  *
  */
 
-public class ParseHTMLFunction //extends ExtensionFunctionDefinition
+import net.sf.saxon.Controller;
+import net.sf.saxon.event.Builder;
+import net.sf.saxon.event.Receiver;
+import net.sf.saxon.event.Sender;
+import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.lib.AugmentedSource;
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.lib.NamespaceConstant;
+import net.sf.saxon.om.*;
+import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.SequenceType;
+import net.sf.saxon.value.Whitespace;
+import nu.validator.htmlparser.sax.HtmlParser;
+import org.xml.sax.InputSource;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.sax.SAXSource;
+import java.io.StringReader;
+
+public class ParseHTMLFunction extends ExtensionFunctionDefinition
 {
-    /*
     private static final StructuredQName qName =
             new StructuredQName("", NamespaceConstant.SAXON, "parse-html");
 
@@ -55,16 +74,15 @@ public class ParseHTMLFunction //extends ExtensionFunctionDefinition
 
     private static class ParseHTMLCall extends ExtensionFunctionCall
     {
-        private static final long serialVersionUID = 1907927904336872728L;
-
-        private String baseURI;
-        private transient Parser parser;
+        private transient HtmlParser parser;
 
         @SuppressWarnings("unchecked")
         public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             Controller controller = context.getController();
-            baseURI = (null != context.getContextItem()) ? ((NodeInfo)context.getContextItem()).getBaseURI() : "";
+            Item contextItem = context.getContextItem();
+            String baseURI = null != contextItem && contextItem instanceof NodeInfo ?
+                    ((NodeInfo)context.getContextItem()).getBaseURI() : "";
 
             StringReader sr = new StringReader(SequenceTool.getStringValue(arguments[0]));
 
@@ -89,21 +107,12 @@ public class ParseHTMLFunction //extends ExtensionFunctionDefinition
             }
         }
 
-        private Parser getParser()
+        private HtmlParser getParser()
         {
             if (null == parser) {
-                parser = new Parser();
-                // configure it the way we want
-                try {
-                    parser.setFeature(Parser.defaultAttributesFeature, false);
-                    parser.setFeature(Parser.ignoreBogonsFeature, true);
-                } catch (Exception x) {
-                    // do nothing
-                }
+                parser = new HtmlParser();
             }
-
             return parser;
         }
     }
-    */
 }

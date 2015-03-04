@@ -142,19 +142,12 @@ public class HTMLDocumentFunction extends ExtensionFunctionDefinition
             }
             return EmptySequence.getInstance();
         }
+
         private HtmlParser getParser()
         {
             if (null == parser) {
                 parser = new HtmlParser();
-                // configure it the way we want
-                //try {
-                    //parser.setFeature(Parser.defaultAttributesFeature, false);
-                    //parser.setFeature(Parser.ignoreBogonsFeature, false);
-                //} catch (Exception x) {
-                    // do nothing
-                //}
             }
-
             return parser;
         }
     }

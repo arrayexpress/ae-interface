@@ -19,14 +19,14 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-                exclude-result-prefixes="xs ae fn html"
+                exclude-result-prefixes="xs ae fn saxon html"
                 version="2.0">
 
     <xsl:function name="ae:parseHtml">
         <xsl:param name="pHtmlFragment" as="xs:string"/>
-
-        <xsl:apply-templates mode="html" select="ae:htmlDocument(fn:concat('&lt;body&gt;', fn:replace(fn:replace(fn:replace(fn:replace($pHtmlFragment, '&lt;', '&amp;lt;', 'i'), '&amp;lt;(/?)(a|ahref|br)', '&lt;$1$2', 'i'), '(^|[^&quot;])(https?|ftp)(:[/][/][a-zA-Z0-9_~\-\$&amp;\+,\./:;=\?@%#]+[a-zA-Z0-9_~\-\$&amp;\+,/:;=\?@])([^&quot;]|$)', '$1&lt;a href=&quot;$2$3&quot; target=&quot;_blank&quot;&gt;$2$3&lt;/a&gt;$4', 'i'), '&lt;ahref=', '&lt;a href=', 'i'), '&lt;/body&gt;'))"/>
+        <xsl:apply-templates mode="html" select="saxon:parse-html(fn:concat('&lt;body&gt;', fn:replace(fn:replace(fn:replace(fn:replace($pHtmlFragment, '&lt;', '&amp;lt;', 'i'), '&amp;lt;(/?)(a|ahref|br)', '&lt;$1$2', 'i'), '(^|[^&quot;])(https?|ftp)(:[/][/][a-zA-Z0-9_~\-\$&amp;\+,\./:;=\?@%#]+[a-zA-Z0-9_~\-\$&amp;\+,/:;=\?@])([^&quot;]|$)', '$1&lt;a href=&quot;$2$3&quot; target=&quot;_blank&quot;&gt;$2$3&lt;/a&gt;$4', 'i'), '&lt;ahref=', '&lt;a href=', 'i'), '&lt;/body&gt;'))"/>
     </xsl:function>
 
     <xsl:template match="html:html | html:body" mode="html">
