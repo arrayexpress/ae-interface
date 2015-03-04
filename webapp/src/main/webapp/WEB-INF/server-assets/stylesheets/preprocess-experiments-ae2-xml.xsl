@@ -174,7 +174,7 @@
     </xsl:template>
 
     <xsl:template match="name" mode="copy">
-        <name><xsl:value-of select="." /></name>
+        <name><xsl:value-of select="ae:trimTrailingDot(.)" /></name>
     </xsl:template>
 
     <xsl:template match="secondaryaccession" mode="copy">
@@ -225,12 +225,6 @@
                 <xsl:copy-of select="ae:parseHtml(.)"/>
             </text>
         </description>
-    </xsl:template>
-
-    <xsl:template match="name" mode="copy">
-        <name>
-            <xsl:value-of select="ae:trimTrailingDot(.)"/>
-        </name>
     </xsl:template>
 
     <xsl:template match="description" mode="copy">
