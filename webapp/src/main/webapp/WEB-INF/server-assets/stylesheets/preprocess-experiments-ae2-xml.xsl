@@ -227,15 +227,6 @@
         </description>
     </xsl:template>
 
-    <xsl:template match="description" mode="copy">
-        <description>
-            <id><xsl:value-of select="@id"/></id>
-            <text>
-                <xsl:copy-of select="ae:parseHtml(.)"/>
-            </text>
-        </description>
-    </xsl:template>
-
     <xsl:template match="*" mode="copy">
         <xsl:copy>
             <xsl:if test="@*">
