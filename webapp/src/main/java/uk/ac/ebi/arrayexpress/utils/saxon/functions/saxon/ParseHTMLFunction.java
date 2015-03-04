@@ -30,6 +30,7 @@ import net.sf.saxon.om.*;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Whitespace;
+import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.sax.HtmlParser;
 import org.xml.sax.InputSource;
 
@@ -111,6 +112,8 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
         {
             if (null == parser) {
                 parser = new HtmlParser();
+                parser.setDoctypeExpectation(DoctypeExpectation.HTML);
+                parser.setReportingDoctype(false);
             }
             return parser;
         }
