@@ -26,12 +26,14 @@ import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.lib.NamespaceConstant;
-import net.sf.saxon.om.*;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.Sequence;
+import net.sf.saxon.om.SequenceTool;
+import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Whitespace;
-import nu.validator.htmlparser.common.DoctypeExpectation;
-import nu.validator.htmlparser.sax.HtmlParser;
+import org.ccil.cowan.tagsoup.Parser;
 import org.xml.sax.InputSource;
 
 import javax.xml.transform.Source;
@@ -75,15 +77,14 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
 
     private static class ParseHTMLCall extends ExtensionFunctionCall
     {
-        private transient HtmlParser parser;
+        private String baseURI;
+        private transient Parser parser;
 
         @SuppressWarnings("unchecked")
         public Sequence call( XPathContext context, Sequence[] arguments ) throws XPathException
         {
             Controller controller = context.getController();
-            Item contextItem = context.getContextItem();
-            String baseURI = null != contextItem && contextItem instanceof NodeInfo ?
-                    ((NodeInfo)context.getContextItem()).getBaseURI() : "";
+            baseURI = (null != context.getContextItem()) ? ((NodeInfo)context.getContextItem()).getBaseURI() : "";
 
             StringReader sr = new StringReader(SequenceTool.getStringValue(arguments[0]));
 
@@ -108,13 +109,19 @@ public class ParseHTMLFunction extends ExtensionFunctionDefinition
             }
         }
 
-        private HtmlParser getParser()
+        private Parser getParser()
         {
             if (null == parser) {
-                parser = new HtmlParser();
-                parser.setDoctypeExpectation(DoctypeExpectation.NO_DOCTYPE_ERRORS);
-                parser.setReportingDoctype(false);
+                parser = new Parser();
+                // configure it the way we want
+                try {
+                    parser.setFeature(Parser.defaultAttributesFeature, false);
+                    parser.setFeature(Parser.ignoreBogonsFeature, true);
+                } catch (Exception x) {
+                    // do nothing
+                }
             }
+
             return parser;
         }
     }
