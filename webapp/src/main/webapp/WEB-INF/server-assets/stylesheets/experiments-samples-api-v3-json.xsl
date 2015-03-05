@@ -16,22 +16,23 @@
  *
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions"
-    xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-    xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-    extension-element-prefixes="ae search"
-    exclude-result-prefixes="xs fn ae search"
-    version="2.0">
-    
-    <xsl:import href="experiments-samples-api-v3.xsl"/>
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
+                xmlns:json="http://json.org/"
+                extension-element-prefixes="search json"
+                exclude-result-prefixes="search json"
+                version="2.0">
 
-    <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
-    <xsl:strip-space elements="*"/>
+    <xsl:import href="experiments-samples-api-v3-xml.xsl"/>
+    <xsl:import href="xml-to-json.xsl"/>
+    <xsl:param name="skip-root" as="xs:boolean" select="true()"/>
 
     <xsl:template match="/">
-        <xsl:call-template name="root">
-            <xsl:with-param name="pJson" select="false()"/>
-        </xsl:call-template>
+        <xsl:variable name="vXml">
+            <xsl:call-template name="root">
+                <xsl:with-param name="pJson" select="true()"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:value-of select="json:generate($vXml)"/>
     </xsl:template>
 </xsl:stylesheet>
