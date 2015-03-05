@@ -30,6 +30,7 @@
     <xsl:param name="accession"/>
 
     <xsl:variable name="vBaseUrl"><xsl:value-of select="$host"/><xsl:value-of select="$context-path"/></xsl:variable>
+    <xsl:variable name="vFileUrl" select="fn:concat($vBaseUrl, '/files/')"/>
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
     <xsl:variable name="vSampleFiles" select="$vData[@kind = 'sdrf' and @extension = 'txt']"/>
@@ -51,10 +52,9 @@
                         </xsl:if>
                         <xsl:for-each select="$vHeader/col">
                             <xsl:variable name="vPos" select="fn:position()"/>
-                            <xsl:variable name="vValue" select="$vRow/col[$vPos]"/>
                             <xsl:call-template name="sample-element">
-                                <xsl:with-param name="pName" select="."/>
-                                <xsl:with-param name="pValue" select="$vValue"/>
+                                <xsl:with-param name="pHeader" select="."/>
+                                <xsl:with-param name="pCell" select="$vRow/col[$vPos]"/>
                                 <xsl:with-param name="pJson" select="$pJson"/>
                             </xsl:call-template>
                         </xsl:for-each>
@@ -65,41 +65,63 @@
     </xsl:template>
 
     <xsl:template name="sample-element">
-        <xsl:param name="pName"/>
-        <xsl:param name="pValue"/>
+        <xsl:param name="pHeader"/>
+        <xsl:param name="pCell"/>
         <xsl:param name="pJson"/>
+        <xsl:variable name="vName" select="ae:normaliseHeader($pHeader)"/>
         <xsl:choose>
-            <xsl:when test="fn:lower-case($pName) = 'source name'">
-                <source><xsl:value-of select="$pValue"/></source>
+            <xsl:when test="$vName = 'sourcename'">
+                <source><xsl:value-of select="$pCell"/></source>
             </xsl:when>
-            <xsl:when test="fn:lower-case($pName) = 'sample name'">
-                <name><xsl:value-of select="$pValue"/></name>
+            <xsl:when test="$vName = 'samplename'">
+                <name><xsl:value-of select="$pCell"/></name>
             </xsl:when>
-            <xsl:when test="fn:starts-with(fn:lower-case($pName), 'characteristics')">
+            <xsl:when test="fn:starts-with($vName, 'characteristics')">
                 <characteristic>
                     <xsl:if test="$pJson">
                         <xsl:attribute name="json:force-array" namespace="http://json.org/" select="$pJson"/>
                     </xsl:if>
-                    <category><xsl:value-of select="fn:replace($pName, '^.+\[\s*(.+)\s*\]$', '$1')"/></category>
-                    <value><xsl:value-of select="$pValue"/></value>
-                    <xsl:if test="fn:starts-with(fn:lower-case($pName/following-sibling::col[1]), 'unit')">
-                        <unit><xsl:value-of select="$pValue/following-sibling::col[1]"/></unit>
+                    <category><xsl:value-of select="fn:replace($vName, '^.+\[\s*(.+)\s*\]$', '$1')"/></category>
+                    <value><xsl:value-of select="$pCell"/></value>
+                    <xsl:if test="fn:starts-with(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'unit')">
+                        <unit><xsl:value-of select="$pCell/following-sibling::col[1]"/></unit>
                     </xsl:if>
                 </characteristic>
             </xsl:when>
-            <xsl:when test="fn:matches(fn:lower-case($pName), '^factor\s{0,1}value')">
+            <xsl:when test="fn:starts-with($vName, 'factorvalue')">
                 <variable>
                     <xsl:if test="$pJson">
                         <xsl:attribute name="json:force-array" namespace="http://json.org/" select="$pJson"/>
                     </xsl:if>
-                    <name><xsl:value-of select="fn:replace($pName, '^.+\[\s*(.+)\s*\]$', '$1')"/></name>
-                    <value><xsl:value-of select="$pValue"/></value>
-                    <xsl:if test="fn:starts-with(fn:lower-case($pName/following-sibling::col[1]), 'unit')">
-                        <unit><xsl:value-of select="$pValue/following-sibling::col[1]"/></unit>
+                    <name><xsl:value-of select="fn:replace($vName, '^.+\[\s*(.+)\s*\]$', '$1')"/></name>
+                    <value><xsl:value-of select="$pCell"/></value>
+                    <xsl:if test="fn:starts-with(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'unit')">
+                        <unit><xsl:value-of select="$pCell/following-sibling::col[1]"/></unit>
                     </xsl:if>
                 </variable>
+            </xsl:when>
+            <xsl:when test="fn:matches($vName, '^(derived|)arraydata(matrix|)file$')">
+                <file>
+                    <xsl:if test="$pJson">
+                        <xsl:attribute name="json:force-array" namespace="http://json.org/" select="$pJson"/>
+                    </xsl:if>
+                    <type><xsl:value-of select="$vName"/></type>
+                    <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:if test="fn:matches(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'comment\[(Derived |)ArrayExpress FTP file\]')">
+                        <url><xsl:value-of select="fn:concat(fn:replace($pCell/following-sibling::col[1],'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/\w{4}/',$vFileUrl), '/', $pCell)"/></url>
+                    </xsl:if>
+                </file>
             </xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:template>
+
+    <xsl:function name="ae:normaliseHeader">
+        <xsl:param name="pHeader"/>
+        <xsl:if test="$pHeader">
+            <xsl:variable name="vName"
+                          select="fn:lower-case(fn:replace(fn:replace($pHeader, '^(.+)\[.+\].*', '$1'), '\s+', ''))"/>
+            <xsl:value-of select="if (fn:matches($pHeader,'\[.+\]')) then fn:concat($vName, fn:replace($pHeader, '.+(\[.+\]).*', '$1')) else $vName"/>
+        </xsl:if>
+    </xsl:function>
 </xsl:stylesheet>
