@@ -53,6 +53,7 @@
                         <xsl:for-each select="$vHeader/col">
                             <xsl:variable name="vPos" select="fn:position()"/>
                             <xsl:call-template name="sample-element">
+                                <xsl:with-param name="pPos" select="$vPos"/>
                                 <xsl:with-param name="pHeader" select="."/>
                                 <xsl:with-param name="pCell" select="$vRow/col[$vPos]"/>
                                 <xsl:with-param name="pJson" select="$pJson"/>
@@ -65,16 +66,34 @@
     </xsl:template>
 
     <xsl:template name="sample-element">
+        <xsl:param name="pPos"/>
         <xsl:param name="pHeader"/>
         <xsl:param name="pCell"/>
         <xsl:param name="pJson"/>
         <xsl:variable name="vName" select="ae:normaliseHeader($pHeader)"/>
         <xsl:choose>
             <xsl:when test="$vName = 'sourcename'">
-                <source><xsl:value-of select="$pCell"/></source>
+                <source>
+                    <name><xsl:value-of select="$pCell"/></name>
+                </source>
             </xsl:when>
-            <xsl:when test="$vName = 'samplename'">
-                <name><xsl:value-of select="$pCell"/></name>
+            <xsl:when test="$vName = 'labeledextractname'">
+                <labeled-extract>
+                    <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:for-each select="$pHeader/following-sibling::col">
+                        <xsl:if test="ae:normaliseHeader(.)='label'">
+                            <xsl:variable name="vLabelPos" select="fn:position()"/>
+                            <label>
+                                <xsl:value-of select="$pCell/following-sibling::col[$vLabelPos]"/>
+                            </label>
+                        </xsl:if>
+                    </xsl:for-each>
+                </labeled-extract>
+            </xsl:when>
+            <xsl:when test="$vName = 'assayname' or $vName = 'hybridizationname'">
+                <assay>
+                    <name><xsl:value-of select="$pCell"/></name>
+                </assay>
             </xsl:when>
             <xsl:when test="fn:starts-with($vName, 'characteristics')">
                 <characteristic>
@@ -105,7 +124,7 @@
                     <xsl:if test="$pJson">
                         <xsl:attribute name="json:force-array" namespace="http://json.org/" select="$pJson"/>
                     </xsl:if>
-                    <type><xsl:value-of select="fn:replace($vName,'^(derived|)array(data)(matrix|)file$', '$1 $2 $3')"/></type>
+                    <type><xsl:value-of select="fn:normalize-space(fn:replace($vName,'^(derived|)array(data)(matrix|)file$', '$1 $2 $3'))"/></type>
                     <name><xsl:value-of select="$pCell"/></name>
                     <xsl:if test="fn:matches(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'comment\[(Derived |)ArrayExpress FTP file\]')">
                         <url><xsl:value-of select="fn:concat(fn:replace($pCell/following-sibling::col[1],'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/\w{4}/',$vFileUrl), '/', $pCell)"/></url>
