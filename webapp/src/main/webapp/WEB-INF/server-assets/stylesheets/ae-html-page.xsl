@@ -207,8 +207,8 @@
                                             <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <xsl:if test="fn:starts-with($relative-uri, '/experiments/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                            <a href="{$context-path}/experiments/browse.html" title="Browse">Browse</a>
+                                            <xsl:if test="fn:starts-with($relative-uri, '/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                            <a href="{$context-path}/browse.html" title="Browse">Browse</a>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </li>
