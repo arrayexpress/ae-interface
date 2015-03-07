@@ -67,12 +67,14 @@
             </xsl:with-param>
             -->
             <xsl:with-param name="pSearchInputValue" select="$keywords"/>
-            <xsl:with-param name="pExtraSearchFields">
+            <xsl:with-param name="pExtraSearchFields"/>
+            <!--
                 <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
                 <input id="ls-array" type="hidden" name="array" value="{$array}"/>
                 <input id="ls-expdesign" type="hidden" name="exptype[]" value="{$exptype[1]}"/>
                 <input id="ls-exptech" type="hidden" name="exptype[]" value="{$exptype[2]}"/>
             </xsl:with-param>
+            -->
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.150225.css" type="text/css"/>
