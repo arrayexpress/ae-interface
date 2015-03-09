@@ -117,6 +117,20 @@
 
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
+                <section class="grid_6 alpha shortcuts expander" id="search-filters">
+                    <div id="ae-filters">
+                        <h3 class="slideToggle icon icon-functional" data-icon="f">Filter search results</h3>
+                    </div>
+                    <xsl:text>&#160;</xsl:text>
+                </section>
+                <section class="grid_12">&#160;</section>
+                <xsl:if test="$vSearchMode">
+                    <aside class="grid_6 omega shortcuts expander" id="search-extras">
+                        <div id="ebi_search_results">
+                            <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
+                        </div>
+                    </aside>
+                </xsl:if>
                 <section class="grid_24 alpha omega">
                     <div id="ae-content">
                         <div id="ae-browse">

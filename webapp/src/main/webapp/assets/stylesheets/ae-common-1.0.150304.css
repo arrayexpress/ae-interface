@@ -63,22 +63,61 @@ ul#secondary-nav li.active > a {
     font-weight: bold !important
 }
 
-#search-extras.omega {
-    right: 9px;
+#search-filters.alpha {
+    left: 5px;
 }
 
+#search-extras.omega {
+    right: 5px;
+}
+
+#search-filters.expander,
+#search-extras.expander {
+    height: 4em;
+}
+
+#search-filters.expander #ae-filters,
 #search-extras.expander #ebi_search_results {
-    right: 0;
+    position: absolute;
+    z-index: 500;
+    min-width: 275px;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
 
-#ebi_search_results {
+#search-filters.expander #ae-filters {
+    left: 0;
+    background: #ffe0b1
+}
+
+#search-extras.expander #ebi_search_results {
+    right: 0;
+    background: #eee
+}
+
+#search-filters #ae-filters,
+#search-extras #ebi_search_results {
     width: 100%;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+}
+
+#search-filters #ae-filters h3,
+#search-extras #ebi_search_results h3 {
+    font-size:123.1%;
+    cursor: pointer
+}
+
+#search-filters #ae-filters h3.slideToggle:hover,
+#search-extras #ebi_search_results h3.slideToggle:hover {
+    background-color: #333;
+    color: white
+}
+
+.shortcuts h3 {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 #global-footer ul {
@@ -246,7 +285,7 @@ div#local-masthead ul li a:active {
     position: absolute;
     top: 2px;
     right: 5px;
-    background-color: #EEE;
+    background: #eee;
     color: #000;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -264,7 +303,7 @@ div#local-masthead ul li a:active {
 
 #ae-feedback {
     left: 50%;
-    background-color: #FFE0B1
+    background: #b8d6f7
 }
 
 #ae-login > h3

@@ -273,6 +273,7 @@
                     </xsl:if>
 
                     <xsl:call-template name="ae-content-section"/>
+                    
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
