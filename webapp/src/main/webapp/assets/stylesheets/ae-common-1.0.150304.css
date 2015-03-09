@@ -117,11 +117,17 @@ ul#secondary-nav li.active > a {
 }
 
 .shortcuts h3 {
-    background-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
-.shortcuts h3.loading {
-    background: url('../images/busy.gif') right center no-repeat;
+.shortcuts h3 i {
+    float: right;
+    font-size: 123.1%;
+    display: none;
+}
+
+.shortcuts h3.loading i {
+    display: block;
 }
 
 #global-footer ul {
