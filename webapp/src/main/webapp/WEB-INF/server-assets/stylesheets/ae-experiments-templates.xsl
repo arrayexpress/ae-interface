@@ -406,7 +406,7 @@
 
         <xsl:if test="experimentalfactor/name">
             <tr>
-                <td class="name"><div>Variables</div></td>
+                <td class="name"><div>Experimental variables</div></td>
                 <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
