@@ -355,10 +355,10 @@
                                 </xsl:if>
                                 <xsl:choose>
                                     <xsl:when test="$vColClass = 'sa'">
-                                        <xsl:text>Sample Characteristics</xsl:text>
+                                        <xsl:text>Sample Attributes</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="$vColClass = 'ef'">
-                                        <xsl:text>Factor Values</xsl:text>
+                                        <xsl:text>Variables</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:text>Links to Data</xsl:text>

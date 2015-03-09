@@ -406,13 +406,13 @@
 
         <xsl:if test="experimentalfactor/name">
             <tr>
-                <td class="name"><div>Experimental factors</div></td>
+                <td class="name"><div>Variables</div></td>
                 <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr>
-                                <th class="name">Factor name</th>
-                                <th class="value">Factor values</th>
+                                <th class="name">Name</th>
+                                <th class="value">Values</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -451,8 +451,8 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                             <tr>
-                                <th class="name">Attribute name</th>
-                                <th class="value">Attribute values</th>
+                                <th class="name">Name</th>
+                                <th class="value">Values</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -890,7 +890,7 @@
                         <td>Exp.&#160;design</td>
                     </xsl:if>
                     <td>Protocols</td>
-                    <td>Factors</td>
+                    <td>Variables</td>
                     <td>Processed</td>
                     <xsl:if test="$pKind = 'miame'">
                         <td>Raw</td>
