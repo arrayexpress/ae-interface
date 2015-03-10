@@ -45,8 +45,8 @@
         <div class="grid_18 alpha">
             <section>
                 <h2>ArrayExpress – functional genomics data</h2>
-                <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.<br/>
-                    <a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
+                <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.</p>
+                <p class="intro center"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
             </section>
         </div>
 
