@@ -46,7 +46,7 @@
             <section>
                 <h2>ArrayExpress – functional genomics data</h2>
                 <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high throughput functional genomics experiments and provide these data for reuse to the research community.</p>
-                <h4><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse ArrayExpress</a></h4>
+                <p><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
             </section>
         </div>
 
