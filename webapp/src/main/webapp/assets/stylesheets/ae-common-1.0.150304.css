@@ -515,16 +515,15 @@ div#local-masthead ul li a:active {
     margin: 10px 0
 }
 
-p.intro {
+.intro {
     font-size: 108%;
     background: #eee;
 }
 
-p.browse {
+p.browse-link {
     font-size:123.1%;
     margin-top: -20px;
     padding: 5px;
-    background: #eee;
 }
 
 p.justify, td.justify {
