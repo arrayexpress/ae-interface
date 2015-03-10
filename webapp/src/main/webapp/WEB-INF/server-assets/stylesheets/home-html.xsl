@@ -45,7 +45,7 @@
         <section class="grid_18 alpha intro">
             <h2>ArrayExpress – functional genomics data</h2>
             <p class="justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.</p>
-            <p class="browse-link center"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
+            <p class="browse-link"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse ArrayExpress</a></p>
         </section>
 
         <xsl:variable name="vExperiments" select="search:queryIndex('experiments', 'visible:true public:true')"/>
