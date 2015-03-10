@@ -45,7 +45,8 @@
         <div class="grid_18 alpha">
             <section>
                 <h2>ArrayExpress – functional genomics data</h2>
-                <p class="intro justify">ArrayExpress is a database of functional genomics experiments that can be queried and the data downloaded. It includes gene expression data from microarray and high throughput sequencing studies.  Data is collected to <a href="http://www.mged.org/Workgroups/MIAME/miame.html">MIAME</a> and <a href="http://www.fged.org/projects/minseqe/">MINSEQE</a> standards. Experiments are submitted directly to ArrayExpress or are imported from the NCBI GEO database.</p>
+                <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high throughput functional genomics experiments and provide these data for reuse to the research community.</p>
+                <h4><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse ArrayExpress</a></h4>
             </section>
         </div>
 

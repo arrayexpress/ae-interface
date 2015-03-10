@@ -208,7 +208,7 @@
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:if test="fn:starts-with($relative-uri, '/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                            <a href="{$context-path}/browse.html" title="Browse">Browse</a>
+                                            <a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse</a>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </li>
@@ -232,14 +232,14 @@
                                 </xsl:if>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/submit/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/submit/overview.html" title="Submit">Submit</a></li>
+                                    <a href="{$context-path}/submit/overview.html" title="Submit to ArrayExpress">Submit</a></li>
                                 <li>
                                     <xsl:if test="fn:starts-with($relative-uri, '/help/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/help/index.html" title="Help">Help</a>
+                                    <a href="{$context-path}/help/index.html" title="ArrayExpress Help">Help</a>
                                 </li>
                                 <li class="last">
                                     <xsl:if test="$relative-uri = '/about.html'"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/about.html">About ArrayExpress</a></li>
+                                    <a href="{$context-path}/about.html" title="About ArrayExpress">About ArrayExpress</a></li>
                                 <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
                                  add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
                                  whichever one will show up last...
