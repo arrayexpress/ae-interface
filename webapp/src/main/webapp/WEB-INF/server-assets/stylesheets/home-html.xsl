@@ -42,13 +42,11 @@
     </xsl:template>
 
     <xsl:template name="ae-content-section">
-        <div class="grid_18 alpha">
-            <section>
-                <h2>ArrayExpress – functional genomics data</h2>
-                <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.</p>
-                <p class="intro center"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
-            </section>
-        </div>
+        <section class="grid_18 alpha">
+            <h2>ArrayExpress – functional genomics data</h2>
+            <p class="intro justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.</p>
+            <p class="browse center"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Click to browse ArrayExpress</a></p>
+        </section>
 
         <xsl:variable name="vExperiments" select="search:queryIndex('experiments', 'visible:true public:true')"/>
         <xsl:variable name="vTotal" select="fn:count($vExperiments)"/>
@@ -57,57 +55,51 @@
         <xsl:variable name="vNews" select="doc('news.xml')"/>
 
         <xsl:if test="$vTotal > 0">
-            <div class="grid_6 omega">
-                <section>
-                    <h3 class="icon icon-generic" data-icon="g">Data Content</h3>
-                    <xsl:if test="fn:string-length($vRetrieved) > 1">
-                        <h5>Updated <xsl:value-of select="ae:formatDateTime2($vRetrieved)"/></h5>
-                    </xsl:if>
-                    <!-- <p>ArrayExpress statistics:</p> -->
-                    <ul>
-                        <li><xsl:value-of select="$vTotal"/> experiment<xsl:if test="fn:count($vExperiments) > 1">s</xsl:if></li>
-                        <li><xsl:value-of select="fn:sum($vExperiments/assays) cast as xs:integer"/> assays</li>
-                        <li><xsl:value-of select="ae:formatFileSize(fn:sum($vFiles/@size) cast as xs:integer)"/> of archived data</li>
-                    </ul>
-                </section>
-            </div>
-        </xsl:if>
-        <div class="grid_24 alpha">
-            <xsl:if test="fn:count($vNews/news/item) > 0">
-                <section id="ae-news">
-                    <h3 class="icon icon-generic" data-icon="N">Latest News</h3>
-                    <xsl:for-each select="$vNews/news/item">
-                        <xsl:if test="fn:position() &lt; 3">
-                            <p class="news"><xsl:value-of select="ae:formatDateGoogle(date)"/> - <strong><xsl:value-of select="title"/></strong><br/>
-                                <xsl:copy-of select="summary/node()"/>
-                                <xsl:if test="fn:string-length(text) > 0">
-                                    <br/>
-                                    <a href="news.html#{fn:position()}">Read more...</a>
-                                </xsl:if>
-                            </p>
-                        </xsl:if>
-                    </xsl:for-each>
-                </section>
-            </xsl:if>
-            <section>
-                <div class="grid_8 alpha">
-                    <h3 class="icon icon-generic" data-icon="L">Links</h3>
-                    <p>Information about how to search ArrayExpress, understand search results, how to submit data and FAQ can be found in our <a href="{$context-path}/help/index.html">Help section</a>.</p>
-                    <p>Find out more about the <a href="/about/people/alvis-brazma">Functional Genomics group</a>.</p>
-                </div>
-                <div class="grid_8">
-                    <h3 class="icon icon-functional" data-icon="t">Tools and Access</h3>
-                    <p><a href="http://www.bioconductor.org/packages/release/bioc/html/ArrayExpress.html">ArrayExpress Bioconductor package</a>: an R package to access ArrayExpress and build data structures.</p>
-                    <p><a href="{$context-path}/help/programmatic_access.html">Programmatic access</a>: query and download data using web services or JSON.</p>
-                    <p><a href="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/">FTP access</a>: data can be downloaded directly from our FTP site.</p>
-                </div>
-                <div class="grid_8 omega">
-                    <h3 class="icon icon-generic" data-icon="L">Related Projects</h3>
-                    <p>Discover up and down regulated genes in numerous experimental conditions in the <a href="${interface.application.link.atlas.base.url}">Expression Atlas</a>.</p>
-                    <p>Explore the <a href="/efo">Experimental Factor Ontology</a> used to support queries and annotation of ArrayExpress data.</p>
-                </div>
+            <section class="grid_6 omega">
+                <h3 class="icon icon-generic" data-icon="g">Data Content</h3>
+                <xsl:if test="fn:string-length($vRetrieved) > 1">
+                    <h5>Updated <xsl:value-of select="ae:formatDateTime2($vRetrieved)"/></h5>
+                </xsl:if>
+                <!-- <p>ArrayExpress statistics:</p> -->
+                <ul>
+                    <li><xsl:value-of select="$vTotal"/> experiment<xsl:if test="fn:count($vExperiments) > 1">s</xsl:if></li>
+                    <li><xsl:value-of select="fn:sum($vExperiments/assays) cast as xs:integer"/> assays</li>
+                    <li><xsl:value-of select="ae:formatFileSize(fn:sum($vFiles/@size) cast as xs:integer)"/> of archived data</li>
+                </ul>
             </section>
-        </div>
-    </xsl:template>
+        </xsl:if>
+        <xsl:if test="fn:count($vNews/news/item) > 0">
+            <section class="grid_24 alpha omega" id="ae-news">
+                <h3 class="icon icon-generic" data-icon="N">Latest News</h3>
+                <xsl:for-each select="$vNews/news/item">
+                    <xsl:if test="fn:position() &lt; 3">
+                        <p class="news"><xsl:value-of select="ae:formatDateGoogle(date)"/> - <strong><xsl:value-of select="title"/></strong><br/>
+                            <xsl:copy-of select="summary/node()"/>
+                            <xsl:if test="fn:string-length(text) > 0">
+                                <br/>
+                                <a href="news.html#{fn:position()}">Read more...</a>
+                            </xsl:if>
+                        </p>
+                    </xsl:if>
+                </xsl:for-each>
+            </section>
+        </xsl:if>
 
+        <section class="grid_8 alpha">
+            <h3 class="icon icon-generic" data-icon="L">Links</h3>
+            <p>Information about how to search ArrayExpress, understand search results, how to submit data and FAQ can be found in our <a href="{$context-path}/help/index.html">Help section</a>.</p>
+            <p>Find out more about the <a href="/about/people/alvis-brazma">Functional Genomics group</a>.</p>
+        </section>
+        <section class="grid_8">
+            <h3 class="icon icon-functional" data-icon="t">Tools and Access</h3>
+            <p><a href="http://www.bioconductor.org/packages/release/bioc/html/ArrayExpress.html">ArrayExpress Bioconductor package</a>: an R package to access ArrayExpress and build data structures.</p>
+            <p><a href="{$context-path}/help/programmatic_access.html">Programmatic access</a>: query and download data using web services or JSON.</p>
+            <p><a href="ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/">FTP access</a>: data can be downloaded directly from our FTP site.</p>
+        </section>
+        <section class="grid_8 omega">
+            <h3 class="icon icon-generic" data-icon="L">Related Projects</h3>
+            <p>Discover up and down regulated genes in numerous experimental conditions in the <a href="${interface.application.link.atlas.base.url}">Expression Atlas</a>.</p>
+            <p>Explore the <a href="/efo">Experimental Factor Ontology</a> used to support queries and annotation of ArrayExpress data.</p>
+        </section>
+    </xsl:template>
 </xsl:stylesheet>
