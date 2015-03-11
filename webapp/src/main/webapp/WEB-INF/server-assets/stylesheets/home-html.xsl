@@ -42,7 +42,7 @@
     </xsl:template>
 
     <xsl:template name="ae-content-section">
-        <section class="grid_18 alpha intro">
+        <section class="grid_19 alpha intro">
             <h2>ArrayExpress – functional genomics data</h2>
             <p class="justify">ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments, and provides these data for reuse to the research community.</p>
             <p class="browse-link"><a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse ArrayExpress</a></p>
@@ -55,7 +55,7 @@
         <xsl:variable name="vNews" select="doc('news.xml')"/>
 
         <xsl:if test="$vTotal > 0">
-            <section class="grid_6 omega">
+            <aside class="grid_5 omega">
                 <h3 class="icon icon-generic" data-icon="g">Data Content</h3>
                 <xsl:if test="fn:string-length($vRetrieved) > 1">
                     <h5>Updated <xsl:value-of select="ae:formatDateTime2($vRetrieved)"/></h5>
@@ -66,7 +66,7 @@
                     <li><xsl:value-of select="fn:sum($vExperiments/assays) cast as xs:integer"/> assays</li>
                     <li><xsl:value-of select="ae:formatFileSize(fn:sum($vFiles/@size) cast as xs:integer)"/> of archived data</li>
                 </ul>
-            </section>
+            </aside>
         </xsl:if>
         <xsl:if test="fn:count($vNews/news/item) > 0">
             <section class="grid_24 alpha omega" id="ae-news">
