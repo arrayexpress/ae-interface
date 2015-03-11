@@ -680,7 +680,7 @@
 
                     <xsl:when test="fn:substring(., 1, 3)='PXD'">
                         <a href="http://www.ebi.ac.uk/pride/archive/projects/{.}/">
-                            <xsl:text>EGA - </xsl:text>
+                            <xsl:text>PRIDE - </xsl:text>
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                 <xsl:with-param name="pText" select="."/>
