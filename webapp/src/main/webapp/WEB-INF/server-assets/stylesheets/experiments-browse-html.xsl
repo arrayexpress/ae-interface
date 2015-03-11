@@ -582,14 +582,14 @@
                 <xsl:if test=". != ''">
                     <d>
                         <span class="ae_field"><xsl:value-of select="$pFields[$vPos]"/></span>
-                        <xsl:text>:</xsl:text>
+                        <xsl:text>&#160;</xsl:text>
                         <span class="ae_value"><xsl:value-of select="$pValues[$vPos]"/></span>
                     </d>
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
         <xsl:for-each select="$vDescs/d">
-            <xsl:copy-of select="*"/>
+            <xsl:copy-of select="*|text()"/>
             <xsl:if test="fn:position() != fn:last()">, </xsl:if>
         </xsl:for-each>
     </xsl:template>

@@ -574,7 +574,8 @@ p.center {
     color: #a67325;
 }
 
-.search-title span.ae_keywords {
+.search-title span.ae_keywords,
+.search-title span.ae_value {
     background: #68798d;
     color: #fff;
     padding: 3px 4px 0 4px;
