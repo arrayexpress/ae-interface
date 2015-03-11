@@ -125,13 +125,22 @@
                     <xsl:text>&#160;</xsl:text>
                 </section>
                 <section class="grid_12 search-title">
-                        <xsl:if test="$vSearchMode">
-                            <h3>
-                                <xsl:text>Search results for </xsl:text>
-                                <span class="ae_keywords"><xsl:value-of select="$keywords"/></span>
-                            </h3>
-                        </xsl:if>
-                        <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
+                    <xsl:if test="$vSearchMode">
+                        <h3>
+                            <xsl:text>Search results for </xsl:text>
+                            <span class="ae_keywords"><xsl:value-of select="$keywords"/></span>
+                        </h3>
+                    </xsl:if>
+                    <xsl:if test="$vFilterMode">
+                        <h5>
+                            <xsl:text>Filtered by </xsl:text>
+                            <xsl:call-template name="ae-filter-desc">
+                                <xsl:with-param name="pFields" select="('organism', 'exptype', 'exptype', 'array', 'directsub')"/>
+                                <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub))"/>
+                            </xsl:call-template>
+                        </h5>
+                    </xsl:if>
+                    <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
                 </section>
                 <xsl:if test="$vSearchMode">
                     <aside class="grid_6 omega shortcuts expander" id="search-extras">
@@ -562,5 +571,26 @@
             </div>
         </aside>
 
+    </xsl:template>
+
+    <xsl:template name="ae-filter-desc">
+        <xsl:param name="pFields" as="xs:string*"/>
+        <xsl:param name="pValues" as="xs:string*"/>
+        <xsl:variable name="vDescs">
+            <xsl:for-each select="$pValues">
+                <xsl:variable name="vPos" select="fn:position()"/>
+                <xsl:if test=". != ''">
+                    <d>
+                        <span class="ae_field"><xsl:value-of select="$pFields[$vPos]"/></span>
+                        <xsl:text>:</xsl:text>
+                        <span class="ae_value"><xsl:value-of select="$pValues[$vPos]"/></span>
+                    </d>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:for-each select="$vDescs/d">
+            <xsl:copy-of select="*"/>
+            <xsl:if test="fn:position() != fn:last()">, </xsl:if>
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>
