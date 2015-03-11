@@ -406,7 +406,7 @@
 
         <xsl:if test="experimentalfactor/name">
             <tr>
-                <td class="name"><div>Experimental variables</div></td>
+                <td class="name"><div>Experimental<br/>variables</div></td>
                 <td class="value"><div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
@@ -657,7 +657,7 @@
                             </xsl:call-template>
                         </a>
                     </xsl:when>
-                    <xsl:when test="fn:matches(., '^(DRP|ERP|SRP)\d+$')">
+                    <xsl:when test="fn:matches(., '^(DRP|ERP|SRP|PRJ\w{2})\d+$')">
                         <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
                             <xsl:text>ENA - </xsl:text>
                             <xsl:call-template name="highlight">
@@ -669,6 +669,17 @@
                     </xsl:when>
                     <xsl:when test="fn:substring(., 1, 4)='EGAS'">
                         <a href="https://www.ebi.ac.uk/ega/studies/{.}">
+                            <xsl:text>EGA - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
+
+                    <xsl:when test="fn:substring(., 1, 3)='PXD'">
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/{.}/">
                             <xsl:text>EGA - </xsl:text>
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$pQueryId"/>
