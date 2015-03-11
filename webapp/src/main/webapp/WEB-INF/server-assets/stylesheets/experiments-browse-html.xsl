@@ -44,6 +44,7 @@
     <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:variable name="vSearchMode" select="$keywords != ''"/>
+    <xsl:variable name="vFilterMode" select="$organism != '' or $exptype != '' or $array != '' or $directsub != ''"/>
     <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
     <xsl:variable name="vUnrestrictedAccess" select="fn:not($userid)"/>
 
@@ -123,7 +124,15 @@
                     </div>
                     <xsl:text>&#160;</xsl:text>
                 </section>
-                <section class="grid_12">&#160;</section>
+                <section class="grid_12 search-title">
+                        <xsl:if test="$vSearchMode">
+                            <h3>
+                                <xsl:text>Search results for </xsl:text>
+                                <span class="ae_keywords"><xsl:value-of select="$keywords"/></span>
+                            </h3>
+                        </xsl:if>
+                        <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
+                </section>
                 <xsl:if test="$vSearchMode">
                     <aside class="grid_6 omega shortcuts expander" id="search-extras">
                         <div id="ebi_search_results">
