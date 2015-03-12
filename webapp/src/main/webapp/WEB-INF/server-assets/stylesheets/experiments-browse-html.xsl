@@ -56,26 +56,21 @@
 
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
-            <!--
-            <xsl:with-param name="pEBISearchWidget">
-                <xsl:if test="$vSearchMode and $vTotal > 0">
-                    <aside class="grid_6 omega shortcuts expander" id="search-extras">
-                        <div id="ebi_search_results">
-                            <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI</h3>
-                        </div>
-                    </aside>
+            <xsl:with-param name="pSearchInputValue" select="$keywords"/>
+            <xsl:with-param name="pExtraSearchFields">
+                <xsl:if test="$organism != ''">
+                    <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
+                </xsl:if>
+                <xsl:if test="$array != ''">
+                    <input id="ls-array" type="hidden" name="array" value="{$array}"/>
+                </xsl:if>
+                <xsl:if test="$exptype[1] != ''">
+                    <input id="ls-expdesign" type="hidden" name="exptype[]" value="{$exptype[1]}"/>
+                </xsl:if>
+                <xsl:if test="$exptype[2] != ''">
+                    <input id="ls-exptech" type="hidden" name="exptype[]" value="{$exptype[2]}"/>
                 </xsl:if>
             </xsl:with-param>
-            -->
-            <xsl:with-param name="pSearchInputValue" select="$keywords"/>
-            <xsl:with-param name="pExtraSearchFields"/>
-            <!--
-                <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
-                <input id="ls-array" type="hidden" name="array" value="{$array}"/>
-                <input id="ls-expdesign" type="hidden" name="exptype[]" value="{$exptype[1]}"/>
-                <input id="ls-exptech" type="hidden" name="exptype[]" value="{$exptype[2]}"/>
-            </xsl:with-param>
-            -->
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiments-browse-1.0.150225.css" type="text/css"/>
@@ -88,7 +83,7 @@
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search-run.js" type="text/javascript"/>
                 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js" type="text/javascript"/>
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.150304.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-experiments-browse-1.0.150312.js" type="text/javascript"/>
             </xsl:with-param>
             <xsl:with-param name="pExtraBodyClasses" select="if ($vTotal = 0) then 'noresults' else ''"/>
         </xsl:call-template>
@@ -121,6 +116,25 @@
                 <section class="grid_6 alpha shortcuts expander" id="search-filters">
                     <div id="ae-filters">
                         <h3 class="slideToggle icon icon-functional" data-icon="f">Filter search results</h3>
+                        <form id="ae-filters-expanded" method="get" style="display:none">
+                            <input id="ae-keywords" type="hidden" name="keywords" value="{$keywords}" maxlength="255"/>
+                            <label for="ae-organism">By organism:</label>
+                            <select id="ae-organism" name="organism" disabled="on">
+                                <option value="">All organisms (loading options)</option>
+                            </select>
+                            <label for="ae-expdesign">By experiment type:</label>
+                            <select id="ae-expdesign" name="exptype[]" disabled="on">
+                                <option value="">All assays by molecule (loading options)</option>
+                            </select>
+                            <select id="ae-exptech" name="exptype[]" disabled="on">
+                                <option value="">All technologies (loading options)</option>
+                            </select>
+                            <label for="ae-array">By array:</label>
+                            <select id="ae-array" name="array" disabled="on">
+                                <option value="">All arrays (loading options)</option>
+                            </select>
+                            <input id="ae-filters-submit" class="submit" type="submit" value="Filter"/>
+                        </form>
                     </div>
                     <xsl:text>&#160;</xsl:text>
                 </section>

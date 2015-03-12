@@ -611,6 +611,26 @@ p.center {
 }
 */
 
+#ae-filters-expanded {
+    padding: 10px;
+}
+
+#ae-filters-expanded label {
+    width: 100%;
+    font: 108% 'HelveticaNeueLT Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin-bottom: 10px;
+}
+
+#ae-filters-expanded select {
+    width: 100%;
+    font: 123.1% Verdana, Arial, sans-serif;
+    margin-bottom: 10px;
+}
+
+#ae-filters-expanded input[type='submit'] {
+    float: right;
+}
+
 #ae-query * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -966,7 +986,7 @@ p.center {
     background-color: #fff;
     overflow: hidden;
     z-index: 99999;
-    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-family: Verdana, Arial, sans-serif;
     font-size: 11px;
 }
 

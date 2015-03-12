@@ -22,6 +22,20 @@
     var query = new Object();
 
     function
+    addHtmlToSelect( selectElt, html )
+    {
+        if ( $.browser.opera ) {
+            var htmlParsed = $.clean( new Array(html) );
+            var select = $( selectElt ).empty();
+            for ( var i = 0; i < htmlParsed.length; i++ ) {
+                select[0].appendChild(htmlParsed[i].cloneNode(true));
+            }
+        } else {
+            $( selectElt ).html(html);
+        }
+    }
+
+    function
     getQueryStringParam( paramName, defaultValue )
     {
         var param = $.query.get(paramName);
@@ -99,10 +113,15 @@
             query.array = getQueryStringParam("array");
             query.exptype = getQueryArrayParam("exptype");
         }
-        /***
+
         $.get(contextPath + "/species-list.html").then( function(data) {
             $("#ae-organism").html(data).removeAttr("disabled").val(query.organism);
 
+        });
+
+        $.get(contextPath + "/arrays-list.html").then( function(data) {
+            addHtmlToSelect("#ae-array", data);
+            $("#ae-array").removeAttr("disabled").val(query.array);
         });
 
         $.get(contextPath + "/expdesign-list.html?q=").then( function(data) {
@@ -119,7 +138,10 @@
                     .removeAttr("disabled")
                     .val((jQuery.isArray(query.exptype) && query.exptype.length > 1) ? query.exptype[1] : "");
         });
-        ***/
+
+        $("#ae-filters .slideToggle").click(function() {
+            $(this).next().slideToggle(300);
+        });
     });
 
 })(window.jQuery);
