@@ -155,6 +155,8 @@
             $("#ae-array").val("");
             $("#ae-expdesign").val("");
             $("#ae-exptech").val("");
+            $("#ae-directsub").prop("checked", false);
+            $("#ae-private").prop("checked", false);
         });
     });
 
