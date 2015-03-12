@@ -919,10 +919,10 @@
         
         <xsl:choose>
             <xsl:when test="$pValue='1'">
-                <i class="aw-icon-asterisk"/>
+                <i class="fa fa-asterisk"/>
             </xsl:when>
             <xsl:otherwise>
-                <i class="aw-icon-minus"/>
+                <i class="fa fa-minus"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

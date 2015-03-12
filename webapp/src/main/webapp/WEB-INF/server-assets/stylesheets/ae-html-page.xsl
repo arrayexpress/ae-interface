@@ -385,10 +385,10 @@
         <xsl:if test="$pKind = $pSortBy">
             <xsl:choose>
                 <xsl:when test="fn:starts-with($pSortOrder, 'a')">
-                    <i class="aw-icon-angle-up"/>
+                    <i class="fa fa-chevron-up"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <i class="aw-icon-angle-down"/>
+                    <i class="fa fa-chevron-down"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
