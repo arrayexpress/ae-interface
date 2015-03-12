@@ -168,7 +168,7 @@
                         <h5>
                             <xsl:text>Filtered by </xsl:text>
                             <xsl:call-template name="ae-filter-desc">
-                                <xsl:with-param name="pFields" select="('organism', 'exptype', 'exptype', 'array', 'directsub')"/>
+                                <xsl:with-param name="pFields" select="('organism', 'experiment type', 'experiment type', 'array', 'AE only')"/>
                                 <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub))"/>
                             </xsl:call-template>
                         </h5>

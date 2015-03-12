@@ -623,8 +623,9 @@ p.center {
 
 #ae-filters-expanded select {
     width: 100%;
-    font-size: 14px;
+    font-size: 108%;
     margin-bottom: 10px;
+    border: 1px solid #9c9c9c;
 }
 
 #ae-filters-expanded input[type='checkbox'] {
