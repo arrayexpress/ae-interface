@@ -44,7 +44,7 @@
     <xsl:include href="ae-date-functions.xsl"/>
 
     <xsl:variable name="vSearchMode" select="$keywords != ''"/>
-    <xsl:variable name="vFilterMode" select="$organism != '' or $exptype != '' or $array != '' or $directsub != ''"/>
+    <xsl:variable name="vFilterMode" select="$organism != '' or $exptype != '' or $array != '' or $directsub != '' or $private != ''"/>
     <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
     <xsl:variable name="vUnrestrictedAccess" select="fn:not($userid)"/>
 
@@ -59,16 +59,19 @@
             <xsl:with-param name="pSearchInputValue" select="$keywords"/>
             <xsl:with-param name="pExtraSearchFields">
                 <xsl:if test="$organism != ''">
-                    <input id="ls-organism" type="hidden" name="organism" value="{$organism}"/>
+                    <input type="hidden" name="organism" value="{$organism}"/>
                 </xsl:if>
                 <xsl:if test="$array != ''">
-                    <input id="ls-array" type="hidden" name="array" value="{$array}"/>
+                    <input type="hidden" name="array" value="{$array}"/>
                 </xsl:if>
                 <xsl:if test="$exptype[1] != ''">
-                    <input id="ls-expdesign" type="hidden" name="exptype[]" value="{$exptype[1]}"/>
+                    <input type="hidden" name="exptype[]" value="{$exptype[1]}"/>
                 </xsl:if>
                 <xsl:if test="$exptype[2] != ''">
-                    <input id="ls-exptech" type="hidden" name="exptype[]" value="{$exptype[2]}"/>
+                    <input type="hidden" name="exptype[]" value="{$exptype[2]}"/>
+                </xsl:if>
+                <xsl:if test="$private != ''">
+                    <input type="hidden" name="private" value="{$private}"/>
                 </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pTitleTrail" select="$vTitle"/>
@@ -168,8 +171,8 @@
                         <h5>
                             <xsl:text>Filtered by </xsl:text>
                             <xsl:call-template name="ae-filter-desc">
-                                <xsl:with-param name="pFields" select="('organism', 'experiment type', 'experiment type', 'array', 'AE only')"/>
-                                <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub))"/>
+                                <xsl:with-param name="pFields" select="('organism', 'experiment type', 'experiment type', 'array', 'AE only', 'private')"/>
+                                <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub), fn:string($private))"/>
                             </xsl:call-template>
                         </h5>
                     </xsl:if>
