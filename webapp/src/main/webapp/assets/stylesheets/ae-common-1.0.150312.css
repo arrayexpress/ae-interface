@@ -623,12 +623,25 @@ p.center {
 
 #ae-filters-expanded select {
     width: 100%;
-    font: 123.1% Verdana, Arial, sans-serif;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
+#ae-filters-expanded input[type='checkbox'] {
+    margin: 0.25em 0.4em 0 5px;
+    vertical-align: top;
+}
+
 #ae-filters-expanded input[type='submit'] {
+    display: inline;
+    margin: 0.3em 0.2em 0.1em;
     float: right;
+}
+
+#ae-filters-expanded a.reset {
+    float: left;
+    display: inline-block;
+    padding-top: 0.8em;
 }
 
 #ae-query * {

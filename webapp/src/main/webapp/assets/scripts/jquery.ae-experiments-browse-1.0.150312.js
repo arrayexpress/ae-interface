@@ -140,7 +140,21 @@
         });
 
         $("#ae-filters .slideToggle").click(function() {
-            $(this).next().slideToggle(300);
+            var $this = $(this);
+            $this.addClass("loading").next().slideToggle(300, function() {
+                $this.removeClass("loading");
+            });
+
+        });
+
+        $("#ae-filters a.reset").click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            $("#ae-organism").val("");
+            $("#ae-array").val("");
+            $("#ae-expdesign").val("");
+            $("#ae-exptech").val("");
         });
     });
 
