@@ -64,11 +64,11 @@ ul#secondary-nav li.active > a {
 }
 
 #search-filters.alpha {
-    left: 5px;
+    left: 9px;
 }
 
 #search-extras.omega {
-    right: 5px;
+    right: 9px;
 }
 
 #search-filters.expander,
