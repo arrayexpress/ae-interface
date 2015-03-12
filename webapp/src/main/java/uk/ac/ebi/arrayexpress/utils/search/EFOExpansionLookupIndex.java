@@ -284,9 +284,11 @@ public class EFOExpansionLookupIndex implements IEFOExpansionLookup {
     private void addIndexField(Document document, String name, String value, boolean shouldAnalyze, boolean shouldStore) {
         value = value.replaceAll("[^\\d\\w-]", " ").toLowerCase();
         FieldType fieldType = new FieldType();
-        fieldType.setIndexOptions(IndexOptions.DOCS);
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
         fieldType.setTokenized(shouldAnalyze);
         fieldType.setStored(shouldStore);
+        fieldType.setStoreTermVectors(true);
+        fieldType.setStoreTermVectorPositions(true);
         document.add(new Field(name, value, fieldType));
     }
 

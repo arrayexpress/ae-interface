@@ -160,6 +160,8 @@ public class Indexer {
         fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
         fieldType.setTokenized(shouldAnalyze);
         fieldType.setStored(shouldStore);
+        fieldType.setStoreTermVectors(true);
+        fieldType.setStoreTermVectorPositions(true);
         document.add(new Field(name, stringValue, fieldType));
     }
 
