@@ -70,6 +70,9 @@
                 <xsl:if test="$exptype[2] != ''">
                     <input type="hidden" name="exptype[]" value="{$exptype[2]}"/>
                 </xsl:if>
+                <xsl:if test="$directsub != ''">
+                    <input type="hidden" name="private" value="{$directsub}"/>
+                </xsl:if>
                 <xsl:if test="$private != ''">
                     <input type="hidden" name="private" value="{$private}"/>
                 </xsl:if>
