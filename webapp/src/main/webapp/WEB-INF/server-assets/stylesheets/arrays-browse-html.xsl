@@ -64,7 +64,7 @@
                 <xsl:if test="$vExperimentMode">
                     <xsl:text> &lt; </xsl:text>
                     <xsl:value-of select="$vExperiment"/>
-                    <xsl:text> &lt; Experiments</xsl:text>
+                    <xsl:text> &lt; Browse</xsl:text>
                 </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
@@ -73,7 +73,7 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/experiments/browse.html">Experiments</a>
+                        <a href="{$context-path}/browse.html">Browse</a>
                         <xsl:text> > </xsl:text>
                         <a href="{$context-path}/experiments/{$vExperiment}/">
                             <xsl:value-of select="$vExperiment"/>

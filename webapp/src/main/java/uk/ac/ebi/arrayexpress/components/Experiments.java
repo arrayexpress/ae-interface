@@ -48,7 +48,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
     public final static String MAP_EXPERIMENTS_DOWNLOADS = "experiments-downloads";
     public final static String MAP_EXPERIMENTS_COMPLETE_DOWNLOADS = "experiments-complete-downloads";
     public final static String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
-    public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
+    //public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
     public final static String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
     public final static String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
     public final static String MAP_EXPERIMENTS_FOR_USER = "experiments-for-user";
@@ -179,7 +179,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_VIEWS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_DOWNLOADS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_COMPLETE_DOWNLOADS));
-        maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
+        //maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_USER));
@@ -272,7 +272,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
     {
         this.logger.debug("Updating maps for experiments");
 
-        maps.clearMap(MAP_VISIBLE_EXPERIMENTS);
+        //maps.clearMap(MAP_VISIBLE_EXPERIMENTS);
         maps.clearMap(MAP_EXPERIMENTS_FOR_PROTOCOL);
         maps.clearMap(MAP_EXPERIMENTS_FOR_ARRAY);
         users.clearUserMap(INDEX_ID);
@@ -280,7 +280,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
         // todo: move this to similarity component
         // maps.clearMap(MAP_EXPERIMENTS_WITH_SIMILARITY);
         try {
-            List<Item> documentNodes = saxon.evaluateXPath(getRootNode(), "/experiments/experiment[source/@visible = 'true']");
+            List<Item> documentNodes = saxon.evaluateXPath(getRootNode(), "/experiments/experiment");
 
             // todo: move this to similarity component
             // XPathExpression similarXpe = saxon.getXPathExpression("similarto");
@@ -291,7 +291,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
                     NodeInfo exp = (NodeInfo)node;
 
                     String accession = saxon.evaluateXPathSingleAsString(exp, "accession");
-                    maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
+                    //maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
                     List<Item> userIds = saxon.evaluateXPath(exp, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> usersForExperiment = new HashSet<>(userIds.size());

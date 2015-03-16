@@ -38,8 +38,8 @@
                         <xsl:variable name="vMigrated" select="count(current-group()) = 2"/>
 
                         <xsl:for-each select="current-group()">
-                            <!-- will copy all from ae2 and those from ae1 that are not migrated -->
-                            <xsl:variable name="vVisible" select="source/@id = 'ae2' or not($vMigrated)"/>
+                            <xsl:variable name="vHasData" select="rawdatafiles/@available = 'true' or processeddatafiles/@available = 'true' or fn:exists(seqdatauri)"/>
+                            <xsl:variable name="vVisible" select="source/@id = 'ae2' and $vHasData"/>
 
                             <experiment>
                                 <xsl:copy-of select="*[name() != 'source']|@*"/>

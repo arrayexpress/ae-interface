@@ -65,7 +65,7 @@
                     <xsl:when test="$vExperimentMode">
                         <xsl:text> &lt; </xsl:text>
                         <xsl:value-of select="$vRefAccession"/>
-                        <xsl:text> &lt; Experiments</xsl:text>
+                        <xsl:text> &lt; Browse</xsl:text>
                     </xsl:when>
                     <xsl:when test="$vArrayMode">
                         <xsl:text> &lt; </xsl:text>
@@ -80,7 +80,7 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/experiments/browse.html">Experiments</a>
+                        <a href="{$context-path}/browse.html">Browse</a>
                         <xsl:text> > </xsl:text>
                         <a href="{$context-path}/experiments/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a>
                         <xsl:text> > </xsl:text>
@@ -341,7 +341,7 @@
 
         <xsl:variable name="vFolder" select="ae:getMappedValue('ftp-folder', $pAccession)"/>
         <xsl:variable name="vFolderKind" select="$vFolder/@kind"/>
-        <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('visible:true accession:', $pAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+        <xsl:variable name="vMetaData" select="search:queryIndex(concat($vFolderKind, 's'), concat('accession:', $pAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
         <xsl:choose>
             <xsl:when test="exists($vFolder) and exists($vMetaData)">
                 <section>

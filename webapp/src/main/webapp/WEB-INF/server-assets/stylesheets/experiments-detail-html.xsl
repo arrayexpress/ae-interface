@@ -43,10 +43,15 @@
             <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
                 <xsl:value-of select="$vAccession"/>
-                <xsl:text> &lt; Experiments</xsl:text>
-                <xsl:if test="$keywords != ''">
-                    <xsl:text> matching "</xsl:text><xsl:value-of select="$keywords"/><xsl:text>"</xsl:text>
-                </xsl:if>
+                <xsl:text> &lt; </xsl:text>
+                <xsl:choose>
+                    <xsl:when test="$keywords != ''">
+                        <xsl:text>Experiments matching "</xsl:text><xsl:value-of select="$keywords"/><xsl:text>"</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>Browse</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-detail-1.0.131218.css" type="text/css"/>
@@ -57,14 +62,7 @@
                         <a href="{$context-path}/search.html?query={$keywords}">Search results for "<xsl:value-of select="$keywords"/>"</a>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:choose>
-                            <xsl:when test="not($userid)">
-                                <a href="{$context-path}/experiments/browse.html">Experiments</a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <a href="{$context-path}/browse.html">Browse</a>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <a href="{$context-path}/browse.html">Browse</a>
                     </xsl:otherwise>
                 </xsl:choose>
                 >
@@ -76,7 +74,7 @@
     </xsl:template>
 
     <xsl:template name="ae-content-section">
-        <xsl:variable name="vExperiment" select="search:queryIndex($queryid)[accession = $vAccession]"/>
+        <xsl:variable name="vExperiment" select="search:queryIndex('experiments', fn:concat('accession:', $vAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]"/>
         <section>
             <div id="ae-content">
                 <xsl:choose>

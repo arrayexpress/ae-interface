@@ -39,13 +39,13 @@
             <xsl:with-param name="pTitleTrail">
                 <xsl:text>Send to GenomeSpace &lt; </xsl:text>
                 <xsl:value-of select="$vAccession"/>
-                <xsl:text> &lt; Experiments</xsl:text>
+                <xsl:text> &lt; Browse</xsl:text>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-add-to-gs-1.0.0.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/experiments/browse.html">Experiments</a>
+                <a href="{$context-path}/browse.html">Browse</a>
                 <xsl:text> > </xsl:text>
                 <a href="{$context-path}/experiments/{$vAccession}/"><xsl:value-of select="$vAccession"/></a>
                 <xsl:text> > Send to GenomeSpace</xsl:text>
@@ -59,7 +59,7 @@
 
     <xsl:template name="ae-content-section">
         <xsl:variable name="vFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
-        <xsl:variable name="vMetaData" select="search:queryIndex('experiments', concat('visible:true accession:', $accession, if ($userid) then concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+        <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('accession:', $vAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
         <section>
             <div id="ae-content">
                 <xsl:choose>
