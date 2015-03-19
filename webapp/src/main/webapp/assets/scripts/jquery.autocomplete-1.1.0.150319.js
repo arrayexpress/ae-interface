@@ -1,7 +1,7 @@
 /*
  * jQuery Autocomplete plugin 1.1-ma
  *
- * Copyright (c) 2009 Jšrn Zaefferer
+ * Copyright (c) 2009 Jï¿½rn Zaefferer
  * Portions written by European Molecular Biology Laboratory
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -214,9 +214,9 @@ $.Autocompleter = function(input, options) {
 	});
 
     function debugLog(text) {
-    //  if ($.browser.safari) {
-    //      window.console.log(text);
-    //  }
+        //if ($.browser.safari) {
+        //    window.console.log(text);
+        //}
     }
 
 	function selectCurrent() {
@@ -311,6 +311,7 @@ $.Autocompleter = function(input, options) {
 
     function getTermText(term)
     {
+        term = term.replace(/\s+$/, "");
         var quotePos = term.indexOf("\"");
         if (-1 != quotePos) {
             return substringBeforeFirst(term.substring(quotePos + 1), "\""); 
@@ -331,7 +332,7 @@ $.Autocompleter = function(input, options) {
                 + (isTextMultiWord ? "\"" : "") + text + (isTextMultiWord ? "\"" : "");
     }
 
-    function currentTerm(value, position)
+    function currentTerm(value)
     {
         var cursorPosition = $(input).caret().start;
         var beforeCursor = cursorPosition > 0 ? value.substring(0, cursorPosition) : "";
@@ -343,11 +344,6 @@ $.Autocompleter = function(input, options) {
 
         return value;
 	}
-
-    function stripQuotes(text)
-    {
-        return String(text).replace("\"", "");   
-    }
 
     function firstTerm(value)
     {
@@ -362,7 +358,7 @@ $.Autocompleter = function(input, options) {
                     + (-1 != afterQuote.indexOf("\"") ? "\"" : "");
             debugLog("[firstTerm] value(2): [" + value + "]");
         } else {
-            value = substringBeforeRegex(value, /AND|OR|NOT|\s\+|\s\-/g).replace(/\s*$/, "");
+            value = substringBeforeRegex(value, /AND|OR|NOT|\s\+|\s\-/g);
             debugLog("[firstTerm] value(3): [" + value + "]");
         }
         return value;

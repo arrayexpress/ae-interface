@@ -371,7 +371,7 @@
             <script src="{$context-path}/assets/scripts/jquery-1.8.2.min.js"/>
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
-            <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.130305.js"/>
+            <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.150319.js"/>
             <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.150304.js"/>
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
