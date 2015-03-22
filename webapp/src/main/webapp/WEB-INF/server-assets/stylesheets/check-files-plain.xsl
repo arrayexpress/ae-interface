@@ -28,7 +28,7 @@
 
     <xsl:output method="text" indent="no" encoding="US-ASCII"/>
 
-    <xsl:variable name="vExperiments" select="search:queryIndex('experiments', 'visible:true')"/>
+    <xsl:variable name="vExperiments" select="search:queryIndex('experiments', '')"/>
     <xsl:variable name="vArrays" select="search:queryIndex('arrays', 'visible:true')"/>
 
     <!--
