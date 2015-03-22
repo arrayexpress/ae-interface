@@ -21,10 +21,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.search.*;
 
 public class EnhancedQueryParser extends QueryParser {
     private IndexEnvironment env;
@@ -57,6 +54,9 @@ public class EnhancedQueryParser extends QueryParser {
     }
 
     public Query parse(String queryText) throws ParseException {
+        if (null == queryText || queryText.trim().isEmpty()) {
+            return new MatchAllDocsQuery();
+        }
         return super.parse(queryText);
     }
 
