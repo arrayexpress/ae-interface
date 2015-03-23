@@ -584,6 +584,8 @@
         <section class="grid_18 alpha">
             <h2 class="alert">We’re sorry that we couldn’t find any matching experiments</h2>
             <p>Your search for <span class="alert"><xsl:value-of select="$keywords"/></span> returned no results.</p>
+            <h3>Can’t find what you’re looking for?</h3>
+            <p>Please <a href="#" class="feedback">contact us</a> for help if you get no or unexpected results.</p>
             <!-- TODO:
             <h3>Did you mean...</h3>
             <ul>
@@ -591,17 +593,6 @@
                 <li>Suggestion 2</li>
                 <li>Suggestion 3</li>
             </ul>
-            -->
-            <!--
-            <p>&#160;</p>
-            <xsl:if test="$vSearchMode">
-                <h3>Try Experiments Browser</h3>
-                <p>You can browse available experiments and create a more complex query using our <a href="{$context-path}/experiments/browse.html" title="Click to go to Experiments Browser">Experiments Browser</a>.</p>
-            </xsl:if>
-            -->
-            <!-- TODO:
-            <h4>Still can't find what you're looking for?</h4>
-            <p>Please <a href="#" title="">contact our support service</a> for help if you still get no results.</p>
             -->
         </section>
         <aside class="grid_6 omega shortcuts" id="search-extras">
