@@ -468,6 +468,25 @@
         <from>^/acknowledgements[.]html?$</from>
         <to type="redirect" last="true">%{context-path}/about.html#acknowledgements</to>
     </rule>
+
+    <!-- jobs hiring campaign -->
+    <rule>
+        <from>^/send-assignment/(.*)$</from>
+        <to type="forward" last="true">/servlets/control/assignment/arrayexpress/jobs/$1</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00488$</from>
+        <to type="redirect" last="true">%{context-path}/jobs/EBI_00488/</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00488/EBI_00488_assignment[.]pdf$</from>
+        <to type="forward" last="true">/assets/misc/EBI_00488_assignment.pdf</to>
+    </rule>
+    <rule>
+        <from>^/jobs/EBI_00488(|/.*)$</from>
+        <to type="forward" last="true">/assets/misc/jobs_EBI_00488.jsp</to>
+    </rule>
+
     <!-- help pages -->
     <rule>
         <from>^/help/?$</from>
