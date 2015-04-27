@@ -474,18 +474,13 @@
                                     <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:choose>
                                             <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name), 'file')">
-                                                <xsl:variable name="vDataKind" select="if (fn:contains(fn:lower-case($vColInfo/@name), 'derived')) then 'processed' else 'raw'"/>
-                                                <xsl:variable name="vAvailFiles" select="$vData[@kind = $vDataKind]/@name"/>
+                                                <xsl:variable name="vAvailArchives" select="$vData[@extension = 'zip']/@name"/>
+                                                <xsl:variable name="vAvailFiles" select="$vData/@name"/>
                                                 <xsl:variable name="vArchiveName" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                                 <xsl:choose>
-                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:matches($vArchiveName, '.+[.]zip$') and fn:index-of($vAvailFiles, $vArchiveName)">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:matches($vArchiveName, '.+[.]zip$') and fn:index-of($vAvailArchives, $vArchiveName)">
                                                         <a href="{$context-path}/files/{$vAccession}/{$vArchiveName}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
-                                                            <span class="icon icon-functional" data-icon="="/>
-                                                        </a>
-                                                    </xsl:when>
-                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:count($vAvailFiles) = 1">
-                                                        <a href="{$context-path}/files/{$vAccession}/{$vAvailFiles}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
                                                     </xsl:when>

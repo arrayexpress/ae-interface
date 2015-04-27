@@ -1,2433 +1,307 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<table rows="53">
-	<header cols="43">
-		<col>Source Name</col>
-		<col>Material Type</col>
-		<col>Characteristics[Organism]</col>
-		<col>Characteristics[CellLine]</col>
-		<col>Characteristics[CellType]</col>
-		<col>Protocol REF</col>
-		<col>Sample Name</col>
-		<col>Material Type</col>
-		<col>Characteristics[InitialTimePoint]</col>
-		<col>Characteristics[Age]</col>
-		<col>Unit[TimeUnit]</col>
-		<col>Protocol REF</col>
-		<col>Protocol REF</col>
-		<col>Extract Name</col>
-		<col>Protocol REF</col>
-		<col>Labeled Extract Name</col>
-		<col>Label</col>
-		<col>Protocol REF</col>
-		<col>Hybridization Name</col>
-		<col>Array Design REF</col>
-		<col>Protocol REF</col>
-		<col>Scan Name</col>
-		<col>Array Data File</col>
-		<col>Comment [ArrayExpress FTP file]</col>
-		<col>Protocol REF</col>
-		<col>Protocol REF</col>
-		<col>Derived Array Data Matrix File</col>
-		<col>Comment [Derived ArrayExpress FTP file]</col>
-		<col>Factor Value[AGE]</col>
-		<col>Unit[TimeUnit]</col>
-		<col>Factor Value[COMPOUND1]</col>
-		<col>Factor Value[DOSE-SB]</col>
-		<col>Unit[ConcentrationUnit]</col>
-		<col>Factor Value [COMPOUND2]</col>
-		<col>Factor value [DOSE-SB1]</col>
-		<col>Unit[ConcentrationUnit]</col>
-		<col>Factor Value [COMPOUND3]</col>
-		<col>Factor Value [DOSE-SB3]</col>
-		<col>Unit[ConcentrationUnit]</col>
-		<col>FactorValue[COMPOUND4]</col>
-		<col>Factor Value[DOSE-LDN]</col>
-		<col>Unit[ConcentrationUnit]</col>
-		<col>Factor Value[BATCH]</col>
-	</header>
-	<row seq="1" cols="43">
-		<col>hESa_0d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_0d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>0</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>hESa_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>hESa_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>hESa</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>hESa_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>0</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="2" cols="43">
-		<col>hESb_0d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_0d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>0</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>hESb_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>hESb_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>hESb</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>hESb_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>0</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="3" cols="43">
-		<col>hESc_0d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_0d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>0</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>hESc_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>hESc_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>hESc</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>hESc_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>0</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="4" cols="43">
-		<col>hESa_2d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_2d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>2</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-0a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-0a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-0a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-0a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>2</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="5" cols="43">
-		<col>hESb_2d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_2d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>2</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-0b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-0b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-0b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-0b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>2</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="6" cols="43">
-		<col>hESa_3d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_3d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>3</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-1a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-1a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-1a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-1a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>3</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="7" cols="43">
-		<col>hESb_3d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_3d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>3</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-1b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-1b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-1b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-1b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>3</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="8" cols="43">
-		<col>hESc_3d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_3d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>3</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-1c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-1c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-1c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-1c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>3</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="9" cols="43">
-		<col>hESa_4d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_4d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>4</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-2a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-2a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-2a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-2a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>4</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="10" cols="43">
-		<col>hESb_4d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_4d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>4</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-2b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-2b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-2b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-2b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>4</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="11" cols="43">
-		<col>hESc_4d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_4d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>4</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-2c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-2c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-2c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-2c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>4</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="12" cols="43">
-		<col>hESa_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="13" cols="43">
-		<col>hESb_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="14" cols="43">
-		<col>hESc_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="15" cols="43">
-		<col>hESa_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3-Ua_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3-Ua_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3-Ua</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3-Ua_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="16" cols="43">
-		<col>hESb_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3-Ub_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3-Ub_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3-Ub</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3-Ub_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="17" cols="43">
-		<col>hESc_5d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_5d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>5</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-3-Uc_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-3-Uc_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-3-Uc</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-3-Uc_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>5</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="18" cols="43">
-		<col>hESa_6d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_6d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>6</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-4a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-4a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-4a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-4a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>6</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="19" cols="43">
-		<col>hESb_6d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_6d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>6</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-4b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-4b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-4b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-4b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>6</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="20" cols="43">
-		<col>hESc_6d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_6d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>6</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-4c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-4c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-4c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-4c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>6</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="21" cols="43">
-		<col>hESa_8d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_8d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>8</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-6a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-6a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-6a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-6a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>8</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="22" cols="43">
-		<col>hESb_8d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_8d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>8</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-6b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-6b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-6b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-6b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>8</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="23" cols="43">
-		<col>hESc_8d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_8d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>8</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-6c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-6c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-6c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-6c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>8</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="24" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="25" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="26" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="27" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Ua_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Ua_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Ua</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Ua_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="28" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Ub_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Ub_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Ub</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Ub_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="29" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Uc_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Uc_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Uc</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Uc_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="30" cols="43">
-		<col>hESa_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11a_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="31" cols="43">
-		<col>hESb_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11b_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="32" cols="43">
-		<col>hESc_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11c_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="33" cols="43">
-		<col>hESa_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11-LDNa_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11-LDNa_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11-LDNa</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11-LDNa_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="34" cols="43">
-		<col>hESb_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11-LDNb_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11-LDNb_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11-LDNb</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11-LDNb_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="35" cols="43">
-		<col>hESc_13d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_13d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>13</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-11-LDNc_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-11-LDNc_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-11-LDNc</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-11-LDNc_SCAN</col>
-		<col>sample_probe_profile1.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>13</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>1</col>
-	</row>
-	<row seq="36" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Ud_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Ud_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Ud</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Ud_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="37" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Ue_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Ue_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Ue</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Ue_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="38" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-Uf_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-Uf_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-Uf</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-Uf_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="39" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8d_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8d_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8d</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8d_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="40" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8e_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8e_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8e</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8e_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="41" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8f_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8f_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8f</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8f_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="42" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA1a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA1a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA1a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA1a_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="43" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA1b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA1b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA1b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA1b_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="44" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA1c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA1c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA1c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA1c_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="45" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA3a_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA3a_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA3a</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA3a_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="46" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA3b_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA3b_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA3b</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA3b_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="47" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8-ANA3c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8-ANA3c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8-ANA3c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8-ANA3c_SCAN</col>
-		<col>sample_probe_profile2.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>2</col>
-	</row>
-	<row seq="48" cols="43">
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8g_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8g_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8g</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8g_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-	<row seq="49" cols="43">
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8h_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8h_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8h</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8h_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-	<row seq="50" cols="43">
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_10d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>10</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-8i_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-8i_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-8i</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-8i_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>10</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>10</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>1</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-	<row seq="51" cols="43">
-		<col>hESa_2d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESa_2d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>2</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-0d_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-0d_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-0d</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-0d_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>2</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-	<row seq="52" cols="43">
-		<col>hESb_2d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESb_2d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>2</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-0e_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-0e_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-0e</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-0e_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>2</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-	<row seq="53" cols="43">
-		<col>hESc_2d</col>
-		<col>cell</col>
-		<col>Homo sapiens</col>
-		<col>Shef1.3</col>
-		<col>embryonic stem</col>
-		<col>P-MTAB-24040</col>
-		<col>hESc_2d</col>
-		<col>cell</col>
-		<col>differentiation</col>
-		<col>2</col>
-		<col>d</col>
-		<col>P-MTAB-24041</col>
-		<col>P-MTAB-24042</col>
-		<col>D2-0c_RNA</col>
-		<col>P-MTAB-24043</col>
-		<col>D2-0c_EXTRACT</col>
-		<col>Biotin</col>
-		<col>P-MTAB-24044</col>
-		<col>D2-0c</col>
-		<col>A-GEOD-10558</col>
-		<col>P-MTAB-24045</col>
-		<col>D2-0c_SCAN</col>
-		<col>sample_probe_profile3.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.raw.1.zip</col>
-		<col>P-MTAB-24046</col>
-		<col>P-MTAB-24047</col>
-		<col>directed_diff.txt</col>
-		<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-872/E-MTAB-872.processed.1.zip</col>
-		<col>2</col>
-		<col>d</col>
-		<col>SB321542</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 1</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>SB321542 analog 3</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>LDN193189</col>
-		<col>0</col>
-		<col>uM</col>
-		<col>3</col>
-	</row>
-</table>
+<tables>
+	<table rows="6">
+		<header cols="41">
+			<col>Source Name</col>
+			<col>Comment[ENA_SAMPLE]</col>
+			<col>Characteristics[organism]</col>
+			<col>Characteristics[cell line]</col>
+			<col>Description</col>
+			<col>Material Type</col>
+			<col>Protocol REF</col>
+			<col>Term Source REF</col>
+			<col>Performer</col>
+			<col>Extract Name</col>
+			<col>Comment[LIBRARY_LAYOUT]</col>
+			<col>Comment[LIBRARY_SELECTION]</col>
+			<col>Comment[LIBRARY_SOURCE]</col>
+			<col>Comment[LIBRARY_STRAND]</col>
+			<col>Comment[LIBRARY_STRATEGY]</col>
+			<col>Protocol REF</col>
+			<col>Term Source REF</col>
+			<col>Performer</col>
+			<col>Assay Name</col>
+			<col>Technology Type</col>
+			<col>Comment[ENA_EXPERIMENT]</col>
+			<col>Scan Name</col>
+			<col>Comment[SUBMITTED_FILE_NAME]</col>
+			<col>Comment[ENA_RUN]</col>
+			<col>Comment[FASTQ_URI]</col>
+			<col>Comment[SPOT_LENGTH]</col>
+			<col>Comment[READ_INDEX_1_BASE_COORD]</col>
+			<col>Protocol REF</col>
+			<col>Performer</col>
+			<col>Protocol REF</col>
+			<col>Performer</col>
+			<col>Derived Array Data File</col>
+			<col>Comment [Derived ArrayExpress FTP file]</col>
+			<col>Protocol REF</col>
+			<col>Performer</col>
+			<col>Protocol REF</col>
+			<col>Performer</col>
+			<col>Derived Array Data File</col>
+			<col>Comment [Derived ArrayExpress FTP file]</col>
+			<col>Factor Value[immunoprecipitate]</col>
+			<col>Factor Value[cell line]</col>
+		</header>
+		<row seq="1" cols="41">
+			<col>IMR90_GR_chip-seq</col>
+			<col>ERS554398</col>
+			<col>Homo sapiens</col>
+			<col>IMR-90</col>
+			<col> </col>
+			<col>DNA</col>
+			<col>P-MTAB-41333</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>IMR90_GR_chip-seq</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-41332</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>IMR90_GR_chip-seq</col>
+			<col>sequencing assay</col>
+			<col>ERX593132</col>
+			<col>IMR90_GR_chip-seq_rep1.fq.gz</col>
+			<col>IMR90_GR_chip-seq_rep1.fq.gz</col>
+			<col>ERR636572</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR636/ERR636572/ERR636572.fastq.gz</col>
+			<col>36</col>
+			<col>37</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>IMR90_GR_chip-seq_rep1.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/IMR90_GR_chip-seq_rep1.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>IMR90_GR_chip-seq_rep1_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>GR</col>
+			<col>IMR-90</col>
+		</row>
+		<row seq="2" cols="41">
+			<col>IMR90_input_chip-seq</col>
+			<col>ERS554396</col>
+			<col>Homo sapiens</col>
+			<col>IMR-90</col>
+			<col> </col>
+			<col>DNA</col>
+			<col>P-MTAB-41333</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>IMR90_input_chip-seq</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-41332</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>IMR90_input_chip-seq</col>
+			<col>sequencing assay</col>
+			<col>ERX593130</col>
+			<col>IMR90_Input_chip-seq_rep1.fq.gz</col>
+			<col>IMR90_Input_chip-seq_rep1.fq.gz</col>
+			<col>ERR636574</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR636/ERR636574/ERR636574.fastq.gz</col>
+			<col>36</col>
+			<col>37</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>IMR90_Input_chip-seq_rep1.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/IMR90_Input_chip-seq_rep1.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>IMR90_GR_chip-seq_rep1_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>input DNA</col>
+			<col>IMR-90</col>
+		</row>
+		<row seq="3" cols="41">
+			<col>K562_GR_chip-seq</col>
+			<col>ERS554397</col>
+			<col>Homo sapiens</col>
+			<col>K562</col>
+			<col> </col>
+			<col>DNA</col>
+			<col>P-MTAB-41333</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>K562_GR_chip-seq</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-41332</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>K562_GR_chip-seq</col>
+			<col>sequencing assay</col>
+			<col>ERX593131</col>
+			<col>K562_GR_chip-seq_rep1.fq.gz</col>
+			<col>K562_GR_chip-seq_rep1.fq.gz</col>
+			<col>ERR636571</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR636/ERR636571/ERR636571.fastq.gz</col>
+			<col>36</col>
+			<col>37</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>K562_GR_chip-seq_rep1.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/K562_GR_chip-seq_rep1.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>K562_GR_chip-seq_rep1_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>GR</col>
+			<col>K562</col>
+		</row>
+		<row seq="4" cols="41">
+			<col>K562_input_chip-seq</col>
+			<col>ERS554399</col>
+			<col>Homo sapiens</col>
+			<col>K562</col>
+			<col> </col>
+			<col>DNA</col>
+			<col>P-MTAB-41333</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>K562_input_chip-seq</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-41332</col>
+			<col> </col>
+			<col>Meijsing SH</col>
+			<col>K562_input_chip-seq</col>
+			<col>sequencing assay</col>
+			<col>ERX593133</col>
+			<col>K562_Input_chip-seq_rep1.fq.gz</col>
+			<col>K562_Input_chip-seq_rep1.fq.gz</col>
+			<col>ERR636573</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR636/ERR636573/ERR636573.fastq.gz</col>
+			<col>36</col>
+			<col>37</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>K562_Input_chip-seq_rep1.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/K562_Input_chip-seq_rep1.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>K562_GR_chip-seq_rep1_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>input DNA</col>
+			<col>K562</col>
+		</row>
+		<row seq="5" cols="41">
+			<col>GR_alpha</col>
+			<col>ERS500372</col>
+			<col>Homo sapiens</col>
+			<col>U2OS</col>
+			<col>ChIP-seq with N499 antibody targeting GR, in a cell line expressing only GR alpha
+				isoform, 1 micromolar dexamethasone for 90 minutes</col>
+			<col> </col>
+			<col>P-MTAB-40009</col>
+			<col>ArrayExpress</col>
+			<col>Samantha Cooper</col>
+			<col>GR_alpha</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-40008</col>
+			<col>ArrayExpress</col>
+			<col>Samantha Cooper</col>
+			<col>GR_alpha</col>
+			<col>sequencing assay</col>
+			<col>ERX519500</col>
+			<col>U2OS_alpha_GR.fq.gz</col>
+			<col>U2OS_alpha_GR.fq.gz</col>
+			<col>ERR560463</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR560/ERR560463/ERR560463.fastq.gz</col>
+			<col> </col>
+			<col> </col>
+			<col> </col>
+			<col> </col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>U2OS_GR_chip-seq.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/U2OS_GR_chip-seq.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>U2OS_GR_chip-seq_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>GR</col>
+			<col>U2OS</col>
+		</row>
+		<row seq="6" cols="41">
+			<col>Input</col>
+			<col>ERS500371</col>
+			<col>Homo sapiens</col>
+			<col>U2OS</col>
+			<col>Input, 1 micromolar dexamethasone for 90 minutes</col>
+			<col> </col>
+			<col>P-MTAB-40009</col>
+			<col>ArrayExpress</col>
+			<col>Samantha Cooper</col>
+			<col>Input</col>
+			<col>SINGLE</col>
+			<col>ChIP</col>
+			<col>GENOMIC</col>
+			<col>not applicable</col>
+			<col>ChIP-Seq</col>
+			<col>P-MTAB-40008</col>
+			<col>ArrayExpress</col>
+			<col>Samantha Cooper</col>
+			<col>Input</col>
+			<col>sequencing assay</col>
+			<col>ERX519499</col>
+			<col>U2OS_In.fq.gz</col>
+			<col>U2OS_In.fq.gz</col>
+			<col>ERR560462</col>
+			<col>ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR560/ERR560462/ERR560462.fastq.gz</col>
+			<col> </col>
+			<col> </col>
+			<col> </col>
+			<col> </col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>U2OS_Input_chip-seq.bam</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/U2OS_Input_chip-seq.bam</col>
+			<col>P-MTAB-41334</col>
+			<col>Thomas-Chollier M</col>
+			<col>P-MTAB-41335</col>
+			<col>Thomas-Chollier M</col>
+			<col>U2OS_GR_chip-seq_peaks.bed.gz</col>
+			<col>ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-2955/E-MTAB-2955.processed.1.zip</col>
+			<col>input DNA</col>
+			<col>U2OS</col>
+		</row>
+	</table>
+</tables>
