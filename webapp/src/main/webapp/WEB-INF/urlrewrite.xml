@@ -561,11 +561,17 @@
 
     <!-- rest api v2 support -->
     <rule>
+        <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
+        <from>^/xml/v2/experiments$</from>
+        <set type="parameter" name="accession">%1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+    </rule>
+    <rule>
         <from>^/xml/v2/experiments$</from>
         <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v2/experiments/([E]-\w{4}-\d+)$</from>
+        <from>^/xml/v2/experiments/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
     </rule>
@@ -591,12 +597,18 @@
 
     <!-- rest api in json -->
     <rule>
+        <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
+        <from>^/json/v2/experiments$</from>
+        <set type="parameter" name="accession">%1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
+    </rule>
+    <rule>
         <from>^/json/v2/experiments$</from>
         <set type="parameter" name="flusheaders">1</set>
         <to type="forward" last="true">/servlets/query/experiments/api/json</to>
     </rule>
     <rule>
-        <from>^/json/v2/experiments/([E]-\w{4}-\d+)$</from>
+        <from>^/json/v2/experiments/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/api/json</to>
     </rule>

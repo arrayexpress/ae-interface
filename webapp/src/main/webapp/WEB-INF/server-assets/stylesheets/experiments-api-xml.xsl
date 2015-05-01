@@ -17,10 +17,11 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-                extension-element-prefixes="xs ae search"
-                exclude-result-prefixes="xs ae search"
+                extension-element-prefixes="xs fn ae search"
+                exclude-result-prefixes="xs fn ae search"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -30,6 +31,8 @@
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
     <xsl:param name="queryid"/>
+    <xsl:param name="accession"/>
+    <xsl:param name="userid"/>
 
     <xsl:param name="host"/>
     <xsl:param name="context-path"/>
@@ -42,7 +45,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="if ($accession) then search:queryIndex('experiments', fn:concat('accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $accession] else search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <experiments version="1.2" revision="100915"

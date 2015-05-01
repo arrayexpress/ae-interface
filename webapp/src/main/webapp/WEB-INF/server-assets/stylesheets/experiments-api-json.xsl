@@ -17,10 +17,11 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
                 xmlns:json="http://json.org/"
-                extension-element-prefixes="search json"
-                exclude-result-prefixes="search json"
+                extension-element-prefixes="fn search json"
+                exclude-result-prefixes="fn search json"
                 version="2.0">
 
     <xsl:import href="xml-to-json.xsl"/>
@@ -34,6 +35,8 @@
 
     <xsl:param name="limit"/>
     <xsl:param name="queryid"/>
+    <xsl:param name="accession"/>
+    <xsl:param name="userid"/>
 
     <xsl:output method="text" indent="no" encoding="UTF-8"/>
     
@@ -41,7 +44,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
+        <xsl:variable name="vFilteredExperiments" select="if ($accession) then search:queryIndex('experiments', fn:concat('accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $accession] else search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <xsl:variable name="vOutput">
