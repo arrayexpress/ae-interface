@@ -102,73 +102,74 @@ public class QueryServlet extends AuthAwareApplicationServlet
             response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
         }
 
-        // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
-        // because it disallows sending errors like 404 and alike
-        if (null != request.getParameter("flusheaders")) {
-            response.flushBuffer();
-        }
+        String stylesheetName = ("-".equals(index) ? "" : index + "-")
+                + stylesheet + "-" + outputType + ".xsl";
 
-        // Output goes to the response PrintWriter.
-        try (PrintWriter out = response.getWriter()) {
-            String stylesheetName = ("-".equals(index) ? "" : index + "-")
-                    + stylesheet + "-" + outputType + ".xsl";
+        HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
 
-            HttpServletRequestParameterMap params = new HttpServletRequestParameterMap(request);
+        // to make sure nobody sneaks in the other value w/o proper authentication
+        params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
+        params.put("username", authUserName);
 
-            // to make sure nobody sneaks in the other value w/o proper authentication
-            params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
-            params.put("username", authUserName);
+        // migration rudiment - show only "visible" i.e. overlapping experiments from AE2
+        params.put("visible", "true");
 
-            // migration rudiment - show only "visible" i.e. overlapping experiments from AE2
-            params.put("visible", "true");
+        try {
+            SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
+            SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
+            NodeInfo source = saxonEngine.getAppDocument().getRootNode();
+            if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
+                source = saxonEngine.getRegisteredDocument(index + ".xml");
+                Integer queryId = search.getController().addQuery(index, params);
+                params.put("queryid", String.valueOf(queryId));
 
-            try {
-                SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
-                SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
-                NodeInfo source = saxonEngine.getAppDocument().getRootNode();
-                if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
-                    source = saxonEngine.getRegisteredDocument(index + ".xml");
-                    Integer queryId = search.getController().addQuery(index, params);
-                    params.put("queryid", String.valueOf(queryId));
+                /***
+                 this thing is simply to test facets
 
-                    /***
-                     this thing is simply to test facets
-
-                    List<String> facetTerms = search.getController().getFacetTerms("experiments", "organism", 1);
-                    for (String term : facetTerms) {
-                        logger.info("Facet term [{}]", term);
-                    }
-                    List<FacetResult> facetResults = search.getController().queryFacets(queryId, 10);
-                    for (FacetResult facet : facetResults) {
-                        logger.info("Facet [{}], child count [{}]", facet.dim, facet.childCount);
-                        for (LabelAndValue lv : facet.labelValues) {
-                            logger.info(" - [{}] ({})", lv.label, lv.value.intValue());
-                        }
-                    }
-                    **/
+                List<String> facetTerms = search.getController().getFacetTerms("experiments", "organism", 1);
+                for (String term : facetTerms) {
+                    logger.info("Facet term [{}]", term);
                 }
+                List<FacetResult> facetResults = search.getController().queryFacets(queryId, 10);
+                for (FacetResult facet : facetResults) {
+                    logger.info("Facet [{}], child count [{}]", facet.dim, facet.childCount);
+                    for (LabelAndValue lv : facet.labelValues) {
+                        logger.info(" - [{}] ({})", lv.label, lv.value.intValue());
+                    }
+                }
+                **/
+            }
+
+            // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
+            // because it disallows sending errors like 404 and alike
+            if (null != request.getParameter("flusheaders")) {
+                response.flushBuffer();
+            }
+
+            // Output goes to the response PrintWriter.
+            try (PrintWriter out = response.getWriter()) {
 
                 if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
                     throw new Exception("Transformation returned an error");
                 }
-            } catch (ParseException x) {
-                logger.error("Caught lucene parse exception:", x);
-                response.sendError(
-                        HttpServletResponse.SC_BAD_REQUEST
-                        , params.getString("keywords"));
-            } catch (SaxonException x) {
-                if (x.getCause() instanceof HTTPStatusException) {
-                    HTTPStatusException xx = (HTTPStatusException)x.getCause();
-                    logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
-                    if ( null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500 ) {
-                        response.sendError(xx.getStatusCode());
-                    } else {
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    }
+            }
+        } catch (ParseException x) {
+            logger.error("Caught lucene parse exception:", x);
+            response.sendError(
+                    HttpServletResponse.SC_BAD_REQUEST
+                    , params.getString("keywords"));
+        } catch (SaxonException x) {
+            if (x.getCause() instanceof HTTPStatusException) {
+                HTTPStatusException xx = (HTTPStatusException)x.getCause();
+                logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
+                if ( null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500 ) {
+                    response.sendError(xx.getStatusCode());
+                } else {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }
             }
-
         } catch (Exception x) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(x);
         }
     }
