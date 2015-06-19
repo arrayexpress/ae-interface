@@ -114,10 +114,11 @@ public class QueryServlet extends AuthAwareApplicationServlet
         // migration rudiment - show only "visible" i.e. overlapping experiments from AE2
         params.put("visible", "true");
 
+        SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
+        NodeInfo source = saxonEngine.getAppDocument().getRootNode();
+
         try {
             SearchEngine search = ((SearchEngine) getComponent("SearchEngine"));
-            SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
-            NodeInfo source = saxonEngine.getAppDocument().getRootNode();
             if (search.getController().hasIndexDefined(index)) { // only do query if index id is defined
                 source = saxonEngine.getRegisteredDocument(index + ".xml");
                 Integer queryId = search.getController().addQuery(index, params);
@@ -126,50 +127,51 @@ public class QueryServlet extends AuthAwareApplicationServlet
                 /***
                  this thing is simply to test facets
 
-                List<String> facetTerms = search.getController().getFacetTerms("experiments", "organism", 1);
-                for (String term : facetTerms) {
-                    logger.info("Facet term [{}]", term);
-                }
-                List<FacetResult> facetResults = search.getController().queryFacets(queryId, 10);
-                for (FacetResult facet : facetResults) {
-                    logger.info("Facet [{}], child count [{}]", facet.dim, facet.childCount);
-                    for (LabelAndValue lv : facet.labelValues) {
-                        logger.info(" - [{}] ({})", lv.label, lv.value.intValue());
-                    }
-                }
-                **/
-            }
-
-            // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
-            // because it disallows sending errors like 404 and alike
-            if (null != request.getParameter("flusheaders")) {
-                response.flushBuffer();
-            }
-
-            // Output goes to the response PrintWriter.
-            try (PrintWriter out = response.getWriter()) {
-
-                if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
-                    throw new Exception("Transformation returned an error");
-                }
+                 List<String> facetTerms = search.getController().getFacetTerms("experiments", "organism", 1);
+                 for (String term : facetTerms) {
+                 logger.info("Facet term [{}]", term);
+                 }
+                 List<FacetResult> facetResults = search.getController().queryFacets(queryId, 10);
+                 for (FacetResult facet : facetResults) {
+                 logger.info("Facet [{}], child count [{}]", facet.dim, facet.childCount);
+                 for (LabelAndValue lv : facet.labelValues) {
+                 logger.info(" - [{}] ({})", lv.label, lv.value.intValue());
+                 }
+                 }
+                 **/
             }
         } catch (ParseException x) {
             logger.error("Caught lucene parse exception:", x);
             response.sendError(
                     HttpServletResponse.SC_BAD_REQUEST
                     , params.getString("keywords"));
-        } catch (SaxonException x) {
-            if (x.getCause() instanceof HTTPStatusException) {
-                HTTPStatusException xx = (HTTPStatusException)x.getCause();
-                logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
-                if ( null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500 ) {
-                    response.sendError(xx.getStatusCode());
-                } else {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
+        // because it disallows sending errors like 404 and alike
+        if (null != request.getParameter("flusheaders")) {
+            response.flushBuffer();
+        }
+        try {
+            // Output goes to the response PrintWriter.
+            try (PrintWriter out = response.getWriter()) {
+                try {
+                    if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
+                        throw new Exception("Transformation returned an error");
+                    }
+                } catch (SaxonException x) {
+                    if (x.getCause() instanceof HTTPStatusException) {
+                        HTTPStatusException xx = (HTTPStatusException) x.getCause();
+                        logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
+                        if (null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500) {
+                            response.sendError(xx.getStatusCode());
+                        } else {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
                 }
             }
         } catch (Exception x) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(x);
         }
     }
