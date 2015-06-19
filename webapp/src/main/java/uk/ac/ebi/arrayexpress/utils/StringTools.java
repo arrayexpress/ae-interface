@@ -269,7 +269,7 @@ public class StringTools
         }
     }
 
-    public static String replaceIllegalHTMLCharacters( String in )
+    public static String replaceIllegalHTMLCharacters( String in, boolean shouldEscape )
     {
         if (null == in)
             return null;
@@ -280,7 +280,7 @@ public class StringTools
         for (int i = 0; i < in.length(); i++) {
             decoded = transcodeUnsafeHTMLChar(in.charAt(i));
             if (null != decoded) {
-                out.append(decoded >= 0x80 ? escapeChar(decoded) : decoded);
+                out.append(decoded >= 0x80 && shouldEscape ? escapeChar(decoded) : decoded);
             }
         }
         return out.toString();

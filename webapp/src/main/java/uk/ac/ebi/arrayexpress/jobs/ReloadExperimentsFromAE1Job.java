@@ -259,6 +259,7 @@ public class ReloadExperimentsFromAE1Job extends ApplicationJob implements JobLi
                                         experimentsXml
                                 ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
                         )
+                        , true
                 );
             }
         }

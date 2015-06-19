@@ -44,7 +44,7 @@ public class StringToolsTest
             experimentsXmlText = experimentsXmlText.replaceAll("&amp;#(\\d+);", "&#$1;");
             experimentsXmlText = StringTools.unescapeXMLDecimalEntities(experimentsXmlText);
             experimentsXmlText = StringTools.detectDecodeUTF8Sequences(experimentsXmlText);
-            experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText);
+            experimentsXmlText = StringTools.replaceIllegalHTMLCharacters(experimentsXmlText, true);
     }
 
     @Test

@@ -111,6 +111,7 @@ public class ArrayXmlDatabaseRetriever extends SqlStatementExecutor
                                 arrayDesignXml.toString()
                         ).replaceAll("&amp;#(\\d+);", "&#$1;")      // transform &amp;#dddd; -> &#dddd;
                 )
+                , true
         );
     }
 
