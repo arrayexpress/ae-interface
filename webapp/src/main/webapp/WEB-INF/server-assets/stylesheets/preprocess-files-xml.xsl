@@ -119,7 +119,7 @@
                         <xsl:text>r-object</xsl:text>
                     </xsl:when>
                     <xsl:when test="fn:matches($vPath, '[.]bam([.][^.]+)?$')">
-                        <xsl:text>bam</xsl:text>
+                        <xsl:text>processed</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:text/>
