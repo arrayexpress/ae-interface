@@ -476,21 +476,21 @@
                                             <xsl:when test="fn:contains(fn:lower-case($vColInfo/@name), 'file')">
                                                 <xsl:variable name="vAvailArchives" select="$vData[@extension = 'zip']/@name"/>
                                                 <xsl:variable name="vAvailFiles" select="$vData/@name"/>
-                                                <xsl:variable name="vArchiveName" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
+                                                <xsl:variable name="vFtpName" select="fn:replace($vCol/following-sibling::*[1]/text(), '^.+/([^/]+)$', '$1')"/>
 
                                                 <xsl:choose>
-                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:matches($vArchiveName, '.+[.]zip$') and fn:index-of($vAvailArchives, $vArchiveName)">
-                                                        <a href="{$context-path}/files/{$vAccession}/{$vArchiveName}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:matches($vFtpName, '.+[.]zip$') and fn:index-of($vAvailArchives, $vFtpName)">
+                                                        <a href="{$context-path}/files/{$vAccession}/{$vFtpName}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
                                                     </xsl:when>
-                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:index-of($vAvailFiles, $vColText)">
-                                                        <a href="{$context-path}/files/{$vAccession}/{fn:encode-for-uri($vColText)}" title="Click to download {$vColText}">
+                                                    <xsl:when test="ae:isStringNotEmpty($vColText) and fn:index-of($vAvailFiles, $vFtpName)">
+                                                        <a href="{$context-path}/files/{$vAccession}/{fn:encode-for-uri($vFtpName)}" title="Click to download {$vFtpName}">
                                                             <span class="icon icon-functional" data-icon="="/>
                                                         </a>
-                                                        <xsl:if test="fn:ends-with($vColText, '.bam')">
+                                                        <xsl:if test="fn:ends-with($vFtpName, '.bam')">
                                                             <xsl:call-template name="ensembl-link">
-                                                                <xsl:with-param name="pBAMFile" select="$vColText"/>
+                                                                <xsl:with-param name="pBAMFile" select="$vFtpName"/>
                                                             </xsl:call-template>
                                                         </xsl:if>
                                                     </xsl:when>
