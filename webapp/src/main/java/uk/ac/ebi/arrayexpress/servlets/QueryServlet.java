@@ -140,39 +140,40 @@ public class QueryServlet extends AuthAwareApplicationServlet
                  }
                  **/
             }
+
+            // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
+            // because it disallows sending errors like 404 and alike
+            if (null != request.getParameter("flusheaders")) {
+                response.flushBuffer();
+            }
+            try {
+                // Output goes to the response PrintWriter.
+                try (PrintWriter out = response.getWriter()) {
+                    try {
+                        if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
+                            throw new Exception("Transformation returned an error");
+                        }
+                    } catch (SaxonException x) {
+                        if (x.getCause() instanceof HTTPStatusException) {
+                            HTTPStatusException xx = (HTTPStatusException) x.getCause();
+                            logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
+                            if (null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500) {
+                                response.sendError(xx.getStatusCode());
+                            } else {
+                                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception x) {
+                throw new RuntimeException(x);
+            }
+
         } catch (ParseException x) {
             logger.error("Caught lucene parse exception:", x);
             response.sendError(
                     HttpServletResponse.SC_BAD_REQUEST
                     , params.getString("keywords"));
-        }
-
-        // flushing buffer to output headers; should only be used for looooong operations to mitigate proxy timeouts
-        // because it disallows sending errors like 404 and alike
-        if (null != request.getParameter("flusheaders")) {
-            response.flushBuffer();
-        }
-        try {
-            // Output goes to the response PrintWriter.
-            try (PrintWriter out = response.getWriter()) {
-                try {
-                    if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
-                        throw new Exception("Transformation returned an error");
-                    }
-                } catch (SaxonException x) {
-                    if (x.getCause() instanceof HTTPStatusException) {
-                        HTTPStatusException xx = (HTTPStatusException) x.getCause();
-                        logger.warn("ae:httpStatus({}) called from the transformation", xx.getStatusCode());
-                        if (null != xx.getStatusCode() && xx.getStatusCode() > 200 && xx.getStatusCode() < 500) {
-                            response.sendError(xx.getStatusCode());
-                        } else {
-                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        }
-                    }
-                }
-            }
-        } catch (Exception x) {
-            throw new RuntimeException(x);
         }
     }
 }
