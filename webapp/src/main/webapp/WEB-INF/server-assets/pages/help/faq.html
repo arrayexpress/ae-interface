@@ -6,16 +6,8 @@
 <div id="content" role="main" class="grid_24 clearfix">
 <section id="ae-help" class="grid_18 alpha">
 <h2>Frequently Asked Questions (FAQ)</h2>
-<p>If you cannot find the answer to your question in this FAQ or other <a href="index.html">ArrayExpress help pages</a> then please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>.</p>
+<p>Please contact us using the "Feedback" button at the top of this page if you cannot find the answer to your question.</p>
 
-<p>The FAQ is divided into two sections:</p>
-<ol>
-    <li><a href="#use_ae_faq">Using ArrayExpress</a></li>
-    <li><a href="#submit_faq_general">Submitting data to ArrayExpress</a></li>
-</ol>
-<p><strong>Please note that from July 2014, the MIAMExpress tool is no longer maintained for experiment or array design submissions. MAGE-TAB tool was retired on 1 September 2014.  For experiment submissions, please use the <a href="submissions_overview.html">Annotare webform tool</a> instead.  For array design submissions, please follow the <a href='/fgpt/magetab/help/adf_quick_start.html'>instructions here</a>.</strong></p>
-
-<p>&nbsp;</p>
 <a id="use_ae_faq"></a>
 <h3>1. Using ArrayExpress</h3>
 <h5>Searching and understanding data</h5>
@@ -108,17 +100,12 @@
 
 <ul>
     <li><a id="explain_magetab"></a><strong>How do I link sample and data file information in the downloadable files?</strong><br>
-        All the downloadable files relating to an experiment are in MAGE-TAB
-        format. Top level information about an experiment (title, authors,
-        protocols etc) is in a file called the IDF (Investigation Definition
-        Format). Sample, extract and hybridization information is in a file
-        called the SDRF (Sample and Data Relationship Format) which also links
-        to the protocol information in the IDF. The SDRF lists which data files
-        are associated with each hybridization or sequencing assay. For more information on
-        the MAGE-TAB format, please visit the <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/introduction-mage-tab-format">MAGE-TAB
-            help page</a>. The IDF and SDRF components are described in
-        greater detail on <a href="/training/online/course/arrayexpress-submitting-data-using-mage-tab/creating-mage-tab-document">this
-            help page</a>.</li>
+        <p>Top level information about an experiment (title, authors,
+        protocols etc) is in a tab-delimited text file called the IDF (Investigation Definition
+        Format). Sample, extract and assay and data file information is in a file
+        called the SDRF (Sample and Data Relationship Format), also in tab-delimited text format, and it links
+        to the protocol information in the IDF. Tab-delimited text files can be easily <a href="http://office.microsoft.com/en-gb/excel-help/import-or-export-text-txt-or-csv-files-HP010342598.aspx">opened in Microsoft Excel</a> as nicely-formatted spreadsheets.</p>
+        More information on IDF/SDRF can be found on <a href="http://www.ebi.ac.uk/fgpt/magetab/help/creating_an_idf.html">IDF help page</a> and <a href="http://www.ebi.ac.uk/fgpt/magetab/help/creating_a_sdrf.html">SDRF help page</a>.</li>
 </ul>
 
 <ul>
@@ -164,7 +151,7 @@
     <li><a id="lost_login_details"></a><strong>I've
         lost my ArrayExpress website login details. What do I do?</strong><br>
         If you are viewing a curated experiment which you submitted to ArrayExpress, use the
-        <a href="/arrayexpress/help/how_to_search.html#Login">forgotten password reminder form</a> in the login box.
+        <a href="how_to_search_private_data.html#LostPrivateDataLogin">forgotten password reminder form</a> in the login box.
         If you are not the data submitter (e.g. a reviewer), then please contact the the submitter.
         We can only give ArrayExpress login details to the owners of the data directly.</li>
 </ul>
@@ -258,7 +245,7 @@
         <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?</strong>
         <br>When submitting via <a href="/fg/annotare/login">Annotare</a>,
         after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
-        you can proceed to submit and will receive an automatic confirmation email containing the accession number usually within 24 hours. Sometimes we receive a high volume of submissions, which can cause delay in generating accession numbers, so please bear with us. The accession number will NOT change throughout data curation and processing, so you can quote it in your manuscript.<br><br>
+        you can proceed to submit and will receive an automatic confirmation email containing the accession number usually within 24 hours. Sometimes we receive a high volume of submissions, which can cause delay accessioning, so please bear with us. The accession number will NOT change throughout data curation and processing, so you can quote it in your manuscript.<br><br>
         If you still haven't received an accession number 5 working days post submission, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> citing your experiment's title, and we will investigate.
         </li>
 </ul>
@@ -301,11 +288,11 @@
         curated and then loaded into ArrayExpress. If you are using an
         ArrayExpress login which you have just received, it might not be
         working yet because ArrayExpress is updated only once a day at about
-        06:00 GMT. Try again after this time.
+        6am UK time. Try again after this time.
         <br><br>
         <p>If you've forgotten or lost
         your access account details, you can retrieve it using the 
-        <a href="how_to_search.html#Login">forgotten password tool</a>. If it still does not work, contact
+        <a href="how_to_search_private_data.html#LostPrivateDataLogin">forgotten password tool</a>. If it still does not work, contact
         us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         and tell us what login details you are trying to use / which page you
         tried those details on.</p></li>
@@ -388,7 +375,7 @@
         No. MAGE-ML files are no longer supported and accepted by ArrayExpress from 2011.  Only MAGE-TAB files are supported. (You can download a PDF version of the latest 
         <a href="https://annotare.googlecode.com/files/MAGE-TABv1.1_2011_07_28.pdf">MAGE-TAB 1.1 specification</a> here. The file is 57Mb in size.)
         Please submit your experiment data using our webform-baed <a href="/fg/annotare/login">Annotare</a> tool, described on this <a href="submissions_overview.html">submissions overview page</a>.<br><br>
-        Alternatively, a MAGE-TAB spreadsheet upload-and-validate functionality will be available from Annotare by the end of 2014. If you would like to update your pipeline to generate MAGE-TAB files, please write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
+        Alternatively, a MAGE-TAB spreadsheet upload-and-validate functionality will be available from Annotare by the end of 2015. If you would like to update your pipeline to generate MAGE-TAB files, please write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
     </li>
 </ul>
 
@@ -399,9 +386,8 @@
     <li><strong><a id="hit_submit_too_soon"></a>I hit "Submit" at the end of my submission but I haven't actually finished editing.
         I logged in to the submission tool but can't edit my experiment anymore. Help!</strong><br>
         Email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> as soon as possible and ask us to 
-        "reopen" the submission and "assign" it back to you. (Once submitted, your submission
-        may already be worked on by a curator and is considered "closed", so as to avoid confusing,
-        concurrent editing of the same submission by you and the curator.) Remember to include your username 
+        "reopen" the submission and "assign" it back to you, so you can edit it again.  (Submitted data sets are "read-only" 
+        to the submitter to avoid confusing, concurrent editing of the same submission by submitter and curator.) Remember to include your username 
         and the experiment/array design title in your email so we can quickly find your submission. 
         </li>
 </ul>
@@ -434,21 +420,20 @@
     <ul id="secondary-nav">
         <li><a href="index.html">Help home</a></li>
         <li><a href="quick_start.html">Quick Start guide</a></li>
-        <li><a href="how_to_search.html">How to search</a></li>
-        <li><a href="programmatic_access.html">Other ways to get data</a>
+        <li><a href="how_to_search.html">How to search</a>
             <ul>
-                <li><a href="programmatic_access.html">Programmatic access</a></li>
-				<li><a href="FTP_archives.html">FTP archives</a></li>
-				<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+                <li><a href="how_to_search_adf.html">Array design search</a></li>
+                <li><a href="how_to_search_private_data.html">Search for private data</a></li>
             </ul>
-        </li>
+        </li>    
         <li><a href="submissions_overview.html">How to submit</a>
             <ul>
                 <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
-                <li><a href="third_party_tools.html">Third-party tools</a></li>
+                <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
+                <li><a href="ftp_upload.html">FTP upload instructions</a></li>
+                <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
             </ul>
         </li>
-        <li class="active"><a href="FAQ.html">FAQ</a></li>
         <li><a href="data_availability.html">Learn more about our data</a>
             <ul>
                 <li><a href="data_availability.html">Data access policy</a></li>
@@ -456,6 +441,14 @@
                 <li><a href="GEO_data.html">GEO data</a></li>
             </ul>
         </li>
+        <li><a href="programmatic_access.html">Other ways to get data</a>
+            <ul>
+                <li><a href="programmatic_access.html">Programmatic access</a></li>
+				<li><a href="FTP_archives.html">FTP archives</a></li>
+				<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+            </ul>
+        </li>
+        <li class="active"><a href="FAQ.html">FAQ</a></li>
         <li><a href="contact_us.html">Contact us</a></li>
     </ul>
 </aside>

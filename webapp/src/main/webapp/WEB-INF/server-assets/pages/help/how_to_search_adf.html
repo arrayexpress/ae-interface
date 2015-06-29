@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head><title>ADF Submissions Overview &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<body class="level2">
+    <div id="content" role="main" class="grid_24 clearfix">
+        <section id="ae-help" class="grid_18 alpha">
+
+
+            <h2>Search for array designs</h2>
+            <p>Array designs, also known as platform designs, can be searched on the <a href="/arrayexpress/arrays/browse.html">Arrays page</a>.  <p>Toggle the check box "ArrayExpress data only" to search for array designs submitted directly to ArrayExpress, or those imported from <a href="http://www.ncbi.nlm.nih.gov/geo/browse/?view=platforms">NCBI Gene Expression Omnibus</a> (see the <a href="GEO_data.html">GEO data help page</a> for more details on the import process).</p>
+            <p> You can search by the array design's accession, species, name/description and the submitter's contact details:</p>
+
+            <ul>
+                <li><strong>ArrayExpress accession</strong>: It has a format of A-xxxx-n, where xxxx represents a four letter code and n is a number e.g. <code>A-MEXP-1234</code>, <code>A-AFFY-44</code>.
+                <p>&nbsp;</p>
+                <p><img src="adf_acc_search_example.png" alt="adf_acc_search_example" style='border:2px solid #385930'></p>                
+                </li>
+                <li><strong>Organism</strong>: The name of the organism for which the microarray probes were designed. You can use either common name or Latin name. E.g. <code>Homo sapiens</code>, <code>Saccharomyces cerevisiae</code>, <code>dog</code> because <a href="how_to_search.html/#EFO_expansion">search term expansion by Experimental Factor Ontology</a> will match common names automatically with Latin names as synonyms (highlighted green in search results).
+                <p>&nbsp;</p>
+                <p><img src="adf_organism_search_example.png" alt="adf_organism_search_example"  style='border:2px solid #385930'></p>
+                </li>
+                <li><strong>Array name and description</strong>: You can search for terms in the array's name (title) and description, e.g. the array's manufacturer, name of the lab which printed the microarray, catalogue number, Design ID/Grid name (for Agilent arrays), the purpose of the array (e.g. <code>CGH</code>, <code>expression</code>). Exact and synonym matches to search terms will be highlighted yellow and green respectively:
+                <p>&nbsp;</p>
+                <p><img src="adf_name_search_example.png" alt="adf_name_search_example"  style='border:2px solid #385930'></p>
+
+                <p>If you are not sure about the terms to use, you can do "wild card" search, i.e. expand the search space by including asterisks (*). In the following example, both <code>CGH</code> and <code>aCGH</code> (in A-MEXP-1849) are matched because of <code>*CGH</code>:</p>
+                <p><img src="adf_name_search_wildcard_example.png" alt="adf_name_search_wildcard_example"  style='border:2px solid #385930'></p>
+
+                <p>Here is another example of searching with asterisks. Both <code>Human HT-12</code> and <code>HumanHT-12</code> are matched:</p>
+                <p><img src="adf_name_search_wildcard_2_example.png" alt="adf_name_search_wildcard_2_example"  style='border:2px solid #385930'></p>
+                </li>
+                <li><strong>Array submitter's name</strong>: The name or email address of the person who submitted the array design to ArrayExpress.
+                <p>&nbsp;</p>
+                <p><img src="adf_submitter_search_example.png" alt="adf_submitter_search_example"  style='border:2px solid #385930'></p>
+                </li>
+            </ul>
+
+
+            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+
+
+
+        </section>
+        <aside class="grid_6 omega">
+            <h2>Help</h2>
+    <ul id="secondary-nav">
+        <li><a href="index.html">Help home</a></li>
+        <li><a href="quick_start.html">Quick Start guide</a></li>
+        <li><a href="how_to_search.html">How to search</a>
+            <ul>
+                <li class="active"><a href="how_to_search_adf.html">Array design search</a></li>
+                <li><a href="how_to_search_private_data.html">Search for private data</a></li>
+            </ul>
+        </li>
+        <li><a href="submissions_overview.html">How to submit</a>
+            <ul>
+                <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
+                <li><a href="ftp_upload.html">FTP upload instructions</a></li>
+                <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
+            </ul>
+        </li>
+        <li><a href="data_availability.html">Learn more about our data</a>
+            <ul>
+                <li><a href="data_availability.html">Data access policy</a></li>
+                <li><a href="accession_codes.html">Accession codes</a></li>
+                <li><a href="GEO_data.html">GEO data</a></li>
+            </ul>
+        </li>
+        <li><a href="programmatic_access.html">Other ways to get data</a>
+            <ul>
+                <li><a href="programmatic_access.html">Programmatic access</a></li>
+				<li><a href="FTP_archives.html">FTP archives</a></li>
+				<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+            </ul>
+        </li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="contact_us.html">Contact us</a></li>
+    </ul>
+        </aside>
+    </div>
+</body>
+</html>

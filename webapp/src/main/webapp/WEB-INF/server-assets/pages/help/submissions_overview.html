@@ -8,37 +8,32 @@
             
             <div class="grid_24">
                 <div class="calloutbox" style="padding: 20px;  position: relative; background-color: rgb(238, 249, 243);">
-                    <h3 class="icon icon-functional" data-icon="_"><a href="/fg/annotare/login">Annotare webform tool</a></h3>
+                    <h3 class="icon icon-functional" data-icon="_"><a href="/fgpt/annotare_help">Annotare webform tool</a></h3>
                     <br>
                     <ul>
-                        <li><strong>FOR ALL NEW SUBMISSIONS.</strong> If for some reasons you cannot use Annotare, please contact us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> and we will advise further</li>
-                        <li><a href="/fgpt/annotare_help"><strong>Getting started with Annotare</strong></a></li>
-                        <li>All sequencing and microarray experiments, up to 1000 assays, with no complex design (e.g. one microarray
-                            design used, no sample pooling)</li>
+                        <li><strong>FOR ALL NON-PIPELINE SUBMISSIONS OF MICROARRAY OR SEQUENCING EXPERIMENTS.</strong> Pipeline submitters: please contact us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> and we will advise further</li>
+                        <li>Supports up to 1000 assays, with no complex design (e.g. one microarray design used, no sample pooling)</li>
                         <li>Fill in a series of webforms (auto-saved), featuring auto fill-down and copy/paste functions</li>
-                        <li>Upload data files directly within the tool or via FTP</li>                    
+                        <li>Upload data files directly within the tool or via <a href="ftp_upload.html">FTP</a></li>                    
                         <li>Automatic validation prior to submission to speed up downstream processing and loading into ArrayExpress (<a href="/fgpt/annotare_help/validate_exp.html">common validation errors and fixes</a>)</li>   
                     </ul>
                 </div>
             </div>
             
-            <p>&nbsp;</p>
-            <p><strong>MAGE-TAB submission tool was retired on 1 September 2014</strong>: Please start your new submission with Annotare. For pipeline submitters, an IDF/SDRF upload-and-validate functionality will be available from Annotare soon.  Please contact us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> for more details. <a href="/fgpt/magetab/help/">MAGE-TAB help</a> is here if you still need it.</p>
-            <p>&nbsp;</p>
-                        
-            <h3>Details about experiment and array design submissions</h3>
+            <p>&nbsp;</p>                       
             <p>
-                <a href="#WhatIsASub">1. Experiment submissions</a><br>
-                <a href="#CommonQuestions">2. Common questions</a><br>
-                <a href="#ADFSub">3. Array Design submissions</a><br>
-                <a href="#UpdateCompletedSub">4. Update/modify an experiment or array design which has been loaded into ArrayExpress</a><br>
+                <a href="#WhatData">1. What data sets do we accept?</a><br>
+                <a href="#WhatIsASub">2. Major components of an experiment submission</a><br>
             </p>
-            
-            <h3><a id="WhatIsASub"></a>1. Experiment submissions</h3>
-            <p>ArrayExpress accepts all functional genomics data, including microarray-based and <a href="UHTS_submissions.html">sequencing</a> data. Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href='http://www.mged.org/Workgroups/MIAME/miame_2.0.html'>MIAME</a>) guidelines, while sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href='http://www.mged.org/minseqe/'>MINSEQE</a>).</p>
+
+            <h3><a id="WhatData"></a>What data sets do we accept?</h3>
+            <p>ArrayExpress accepts all functional genomics data, e.g. expression profiling, genotyping, chromatin immunoprecipitation, copy-number variation, from microarray and sequencing technologies.</p>
+            <p>Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href='http://www.mged.org/Workgroups/MIAME/miame_2.0.html'>MIAME</a>) guidelines, while sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href='http://www.mged.org/minseqe/'>MINSEQE</a>).</p>
             <p><span style="color:red">Please try and get your submission in the best possible shape to avoid <a href='#UpdateCompletedSub'>retrospective fixes post-curation</a>, because such fixes could be tedious and lengthy (especially for <a href='UHTS_submissions.html#HTSDataReleasePolicy'>sequencing experiments</a>).</span></p>
-            <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>. Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted to the <a href="/ega/">European Genome-phenome Archive (EGA)</a> (<a href="uhts_submissions.html#HumanIdentifiableData">more details here</a>).</p>             
-            <p>Following the MIAME/MINSEQE guidelines, we ask experiment submitters to provide:</p>
+            <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>. Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted to the <a href="/ega/">European Genome-phenome Archive (EGA)</a> (<a href="uhts_submissions.html#HumanIdentifiableData">more details here</a>).</p>  
+            
+            <h3><a id="WhatIsASub"></a>Major components of an experiment submission?</h3>            
+            <p>Following the MIAME/MINSEQE guidelines, we ask submitters to provide:</p>
             <div class="grid_1 alpha">
                 <p>&nbsp;</p>
             </div>
@@ -46,90 +41,55 @@
             <div  class="grid_23 omega">
                 <p><strong>Meta-data</strong>: E.g. Background biology of your experiment, aim of the experiment, biological materials/samples used and their characteristics, wet-lab and dry-lab procedures (protocols).</p>
                 <p><strong>Raw data files</strong>: These are unprocessed data files obtained from the microarray scanner (e.g. Affymetrix CEL files, Agilent feature extraction files) or from the sequencing machine (e.g. fastq files).</p>
-                <p><i>Microarray experiment submitters</i>: Please make sure the format of your raw data files matches one of the <a href="/fgpt/annotare_help/data_format.html#raw">accepted formats</a>.  For Illumina BeadChip microarray experiments, please see this <a href="faq.html#illumina">Illumina BeadChip submission FAQ page</a>.</p>
-                <p><i>Sequencing experiment submitters</i>: Please make sure your raw sequence read files are formatted and prepared according to <a href="/ena/about/read-file-formats">specifications by the European Nucleotide Archive (ENA)</a> and you've gathered all required information describing your samples/libraries/data files. The raw sequence read files must be sent to ArrayExpress via <a href="ftp_upload.html">FTP</a>. See this <a href = "UHTS_submissions.html">specific help page on sequencing submissions</a> for more information.</p>
+                <ul>
+                <li><i>Microarray experiment</i>: Make sure the format of your raw data files matches one of the <a href="/fgpt/annotare_help/data_format.html#raw">accepted formats</a>.</li>
+                <li><i>Sequencing experiment</i>: Make sure your raw sequence read files are prepared according to <a href="/ena/about/read-file-formats">specifications by the European Nucleotide Archive (ENA)</a> and send them to ArrayExpress by <a href="ftp_upload.html">FTP</a>. You'll also need to gather details about your samples/libraries/data files. For more details, see this <a href = "UHTS_submissions.html">specific help page on sequencing submissions</a>.</li>
+                </ul>
                 <p><strong>Processed data files</strong>: These are data files generated from the raw data files, often involving e.g. normalisation or background-subtraction. In sequencing experiments, the processing can also involve alignment of sequencing reads to a reference genome, calculation of RPKM/FPKM values, etc.</p>
-                <p><i>Microarray experiment submitters</i>: Please prepare files as in this <a href="/fgpt/annotare_help/data_format.html#normalized">per-hybridisation normalised file example</a> or the <a href="/fgpt/annotare_help/data_format.html#data_matrix">data matrix format</a>. We do not enforce strict formatting requirements for processed data files, but you're encouraged to use the recommended formats.  Please also make sure you have provided a detailed normalisation/data transformation protocol in your meta-data, as that will allow your files to be interpreted properly.</p>
-                <p><i>Sequencing experiment submitters</i>: We do not enforce strict formatting requirements on processed files, except for bam (alignment) files, which should follow <a href="/ena/about/read-file-formats#bam_format">bam file specification from the European Nucleotide Archive</a>. The alignments should also be generated against a reference genome which has been deposited in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>). See this <a href = "UHTS_submissions.html#HowToSubmit">sequencing submissions help page</a> for more details.</p>
+                <ul>
+                <li><i>Microarray experiment</i>: Send us processed data in tab-delimited text (*.txt) files as in this <a href="/fgpt/annotare_help/data_format.html#normalized">per-hybridisation normalised file example</a>, a relaxed matrix format, or the <a href="/fgpt/annotare_help/data_format.html#data_matrix">strict MAGE-TAB data matrix format</a>.</li>
+                <li><i>Sequencing experiment submitters</i>: We do not enforce strict formatting requirements on processed files, except for bam (alignment) files. See <a href="UHTS_submissions.html#BamSpec">bam file specification</a> for more details.</li>
+                </ul>
             </div>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            
-            <h3><a id="CommonQuestions"></a>2. Common questions</h3>
-            <ul>
-                <li><strong>General submission questions</strong>: <a href="faq.html#submit_faq_general">Submission FAQ</a></li>
-                <li>How to <strong>use Annotare</strong> for submission: <a href="/fgpt/annotare_help/">Annotare help</a></li>
-                <li>How to <strong>upload data files via FTP</strong> for submission: <a href="ftp_upload.html">FTP upload instructions</a></li>                
-                <li>Getting ArrayExpress <strong>accession number</strong> for your experiment: <a href="faq.html#need_acc_num_urgent">Accession number</a></li>
-                <li>How to <strong>change release dates</strong> for your unpublished data: <a href="data_availability.html#changes">Release date changes</a></li>
-            </ul>
-            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-
-
-            <h3><a id="ADFSub"></a>3. Array design submissions</h3>
-
-            <h4>What is an array design?</h4>
-
-            <p>For each microarray experiment submission, the submission tool will ask you for the array design (i.e. microarray chip/platform) used for each hybridisation. Many of these designs, especially commercially available ones, are already accessioned in ArrayExpress as array design format (ADF) files (one ADF for one microarray chip). The ADF file is a tabulated (spreadsheet-like) tab-delimited text file with a meta-data header followed by a multi-column table of probe information (here is <a href="/fgpt/magetab/help/creating_an_adf.html#WhatIsADF">an example</a>).</p>
-
-            <h4>Do I need to submit an array design for my experiment?</h4>
-            <p>If your ADF is already accessioned in ArrayExpress, you do <em>not</em> need to submit any ADF to us. All you need to do is to specify the ADF by accession when asked by Annotare submission tool <a href="/fgpt/annotare_help/create_exp.html">"What array did you use?"</a>, or insert the ADF's accession number in the <code>Array Design REF</code> column of your spreadsheet (if using MAGE-TAB submission tool).</p>
-            <p> To find out whether your array design is already in ArrayExpress and get its accession, search by keywords (e.g. manufacturer name, species name) on the <a href="/arrayexpress/arrays/browse.html?directsub=on">ArrayExpress array design search page</a>. If the search does not return any results, <a href="/arrayexpress/arrays/browse.html">broaden your search here</a> to include array designs we imported from <a href="http://www.ncbi.nlm.nih.gov/geo">NCBI Gene Expression Omnibus (GEO)</a> (accession numbers prefixed by "A-GEOD"). As a rule of thumb, a GEO platform accession can be converted to the ArrayExpress equivalent by replacing "GPL" with "A-GEOD", e.g. "GPL1234" will be "A-GEOD-1234". See this <a href="how_to_search.html#SearchADF">ADF search help page</a> for further details.</p>
-
-            <h4>How do I submit commercially available array designs?</h4>
-            <p>If you use a commercially available microarray which is not accessioned in ArrayExpress, please do the following:</p>
-            <ol>
-            <li>Download this <a href="/fgpt/magetab/help/commercial_array_header_template.xls">meta-data header template file</a>;</li>
-            <li>Fill in the template with as much background information about the array design as possible (here is a <a href="/fgpt/magetab/help/creating_an_adf.html#ADFHeader">guide</a>), especially the mandatory fields. Save it as a tab-delimited text (*.txt) file when done;</li>
-            <li>Send us the filled template (*.txt file) and any annotation/support files for the array design (e.g. NimbleGen NDF file, GAL file for spotted arrays) <a href="ftp_upload.html">by FTP</a> because the support files contain information about the probes;</li>
-            <li>Write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>, mentioning the files which have been uploaded.</li>
-            </ol>            
-            <p>An ArrayExpress curator will create the full ADF on your behalf by combining the meta-data header and some information converted from the annotation/support files. As the format of annotation files differ quite a lot from one manufacturer to another, please note that creation of ADFs often requires manual processing by the curator and can take up to five working days.</p>
-
-            <h4>How do I submit custom array designs?</h4>
-            <p>If you have a custom microarray which is not accessioned in ArrayExpress at all and is not commercially available, please download an array design format (ADF) template, fill it in, and submit it following <a href="/fgpt/magetab/help/adf_quick_start.html">these ADF submission guidelines</a>. Find more information in this <a href="/fgpt/magetab/help/creating_an_adf.html">step by step guide</a> on how to fill in the template.</p>
-
-            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            
-            <h3><a id="UpdateCompletedSub"></a>4. Update/modify an experiment or array design which has been loaded into ArrayExpress</h3>
-            
-            <p>Once we have finished curating and processing your submission, we will load the experiment or array design into ArrayExpress database. Occassionally, the loaded record needs to be modified or updated, perhaps because a submission error needs to be fixed, or you need to add/remove samples or files in response to comments from peer reviewers of your pre-published paper.</p>
-            <p>To make any changes to an experiment or array design which has been loaded into ArrayExpress database, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the accession number and describe what corrections are needed.  A curator will unload your data from the database, and may be able to do minor corrections such as fixing a few typing errors, before re-loading the corrected version back into the database. Data sets which undergo major changes, such as addition/removal of samples/assays/data files for an experiment, would most likely require re-curation before they are fit for loading into ArrayExpress again, and hence could take a considerable amount of time to complete.</p>
-            <p><strong>Special rules apply to sequencing experiments</strong>, because the storage of meta-data and raw data files is split between ArrayExpress and <a href="/ena">ENA</a> respectively.  Please refer to our <a href="UHTS_submissions.html#HTSDataReleasePolicy">guide to updating a sequencing experiment</a> for further details.</p>
-            
-            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>            
-            
+            <p>&nbsp;</p>                   
         </section>
         <aside class="grid_6 omega">
             <h3>Help</h3>
-            <ul id="secondary-nav">
-                <li><a href="index.html">Help home</a></li>
-                <li><a href="quick_start.html">Quick Start guide</a></li>
-                <li><a href="how_to_search.html">How to search</a></li>
-                <li><a href="programmatic_access.html">Other ways to get data</a>
-                    <ul>
-                        <li><a href="programmatic_access.html">Programmatic access</a></li>
-						<li><a href="FTP_archives.html">FTP archives</a></li>
-						<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="submissions_overview.html">How to submit</a>
-                    <ul>
-                        <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
-                        <li><a href="third_party_tools.html">Third-party tools</a></li>
-                    </ul>
-                </li>
-                <li><a href="FAQ.html">FAQ</a></li>
-                <li><a href="data_availability.html">Learn more about our data</a>
-                    <ul>
-                        <li><a href="data_availability.html">Data access policy</a></li>
-                        <li><a href="accession_codes.html">Accession codes</a></li>
-                        <li><a href="GEO_data.html">GEO data</a></li>
-                    </ul>
-                </li>
-                <li><a href="contact_us.html">Contact us</a></li>
+    <ul id="secondary-nav">
+        <li><a href="index.html">Help home</a></li>
+        <li><a href="quick_start.html">Quick Start guide</a></li>
+        <li><a href="how_to_search.html">How to search</a>
+            <ul>
+                <li><a href="how_to_search_adf.html">Array design search</a></li>
+                <li><a href="how_to_search_private_data.html">Search for private data</a></li>
             </ul>
+        </li>    
+        <li class="active"><a href="submissions_overview.html">How to submit</a>
+            <ul>
+                <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
+                <li><a href="ftp_upload.html">FTP upload instructions</a></li>
+                <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
+            </ul>
+        </li>
+        <li><a href="data_availability.html">Learn more about our data</a>
+            <ul>
+                <li><a href="data_availability.html">Data access policy</a></li>
+                <li><a href="accession_codes.html">Accession codes</a></li>
+                <li><a href="GEO_data.html">GEO data</a></li>
+            </ul>
+        </li>
+        <li><a href="programmatic_access.html">Other ways to get data</a>
+            <ul>
+                <li><a href="programmatic_access.html">Programmatic access</a></li>
+				<li><a href="FTP_archives.html">FTP archives</a></li>
+				<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+            </ul>
+        </li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="contact_us.html">Contact us</a></li>
+    </ul>
         </aside>
     </div>
 </body>

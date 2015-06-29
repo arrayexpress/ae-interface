@@ -14,14 +14,21 @@
 		<ol>
 		<li><strong>File preparation:</strong> Please check our guidelines on submitting files for a <a href='/fgpt/annotare_help/data_format.html'>microarray experiment</a>, <a href='UHTS_submissions.html#HowToSubmit'>sequencing experiment</a> or <a href='/fgpt/magetab/help/adf_quick_start.html'>array design</a>. E.g. microarray data files should not be compressed, but fastq files from sequencing experiments must be individually compressed by gzip or bzip2 (as a requirement from the Sequence Read Archive).</li>
 		<li><strong>Data privacy:</strong> All ArrayExpress submitters use the same account to upload files (see below). As most of the files are un-/pre-published, we make all uploaded files "private", which means you will not be able to see any files or directories already on the FTP site, including those that you uploaded or created.</li>
-        <li><strong>No whitespaces or special characters in file names</strong>Make sure the file names are constructed only from alphanumerals [A-Z,a-z,0-9], underscores [_] and dots [.], with no whitespaces, brackets, other punctuations or symbols.</li>
+        <li><strong>No whitespaces or special characters in file names:</strong> Make sure the file names are constructed only from alphanumerals [A-Z,a-z,0-9], underscores [_] and dots [.], with no whitespaces, brackets, other punctuations or symbols.</li>
 		<li><strong>Unique/specific file names:</strong> Make sure your file names are unique/specific so you will not be overwriting other submitters' files (or risk your own files being overwritten likewise). E.g. <code>"Bloggs_lab_Mar2014_sample1.fq.gz"</code> is a better choice of file name than simply <code>"sample1.fq.gz"</code>.</li>
 		<li><strong>Finish your experiment submission (if applicable):</strong> Data files uploaded to ArrayExpress by FTP are only part of an experiment submission. The submission is only complete when experimental <em>meta-data</em> (e.g. sample information and protocols) are also submitted to ArrayExpress using <a href="/fg/annotare/login">Annotare</a>. See <a href="submissions_overview.html">submissions help page</a> for further details.</li>
 		<li><strong>Email us (for non-Annotare submitters):</strong> When the transfer is complete, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the names of files transferred and a short note on what the files are for.</li>
 		</ol>
           
         <p>&nbsp;</p>  
-        <h3>Transferring files with Windows Explorer (drag and drop)</h3>
+        
+        <p>
+                <a href="#WindowsFTP">1. Instruction for Windows Explorer users</a><br>
+                <a href="#TerminalFTP">2. Instruction for terminal/command prompt users</a><br>
+        </p>
+        
+        <p>&nbsp;</p> 
+        <h3><a id="WindowsFTP"></a>1. Transferring files with Windows Explorer (drag and drop)</h3>
         
         <p>Make sure you've opened a Windows Explorer window and <em>not</em> an internet browser window as the latter is not designed for FTP file uploads. You can open an Explorer window by going to <code>Start</code>, followed by <code>Computer</code> or <code>My Computer</code> (if using Windows XP). If you need further help, here is a <a href="http://www.wikihow.com/Open-Windows-Explorer">short tutorial with screenshots</a>.</p>
         <p>In the Windows Explorer window, enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in the address bar. This URL already contains the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
@@ -34,7 +41,7 @@
         <p>Note: you will not be able to see any files or directories on the FTP site, including the files that you have uploaded. This is because we don't allow submitters to see each others' data files.</p>
         
         <p>&nbsp;</p>
-        <h3>Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
+        <h3><a id="TerminalFTP"></a>2. Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
         
         <p> Connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code>. The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.  Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory.</p>
         <p>To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
@@ -45,33 +52,40 @@
 
     <aside class="grid_6 omega">
         <h3>Help</h3>
-        <ul id="secondary-nav">
-            <li><a href="index.html">Help home</a></li>
-            <li><a href="quick_start.html">Quick Start guide</a></li>
-            <li><a href="how_to_search.html">How to search</a></li>
-            <li><a href="programmatic_access.html">Other ways to get data</a>
-                <ul>
-                    <li><a href="programmatic_access.html">Programmatic access</a></li>
-					<li><a href="FTP_archives.html">FTP archives</a></li>
-					<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
-                </ul>
-            </li>
-            <li><a href="submissions_overview.html">How to submit</a>
-                <ul>
-                    <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
-                    <li><a href="third_party_tools.html">Third-party tools</a></li>
-                </ul>
-            </li>
-            <li><a href="FAQ.html">FAQ</a></li>
-            <li><a href="data_availability.html">Learn more about our data</a>
-                <ul>
-                    <li><a href="data_availability.html">Data access policy</a></li>
-                    <li><a href="accession_codes.html">Accession codes</a></li>
-                    <li><a href="GEO_data.html">GEO data</a></li>
-                </ul>
-            </li>
-            <li><a href="contact_us.html">Contact us</a></li>
-        </ul>
+    <ul id="secondary-nav">
+        <li><a href="index.html">Help home</a></li>
+        <li><a href="quick_start.html">Quick Start guide</a></li>
+        <li><a href="how_to_search.html">How to search</a>
+            <ul>
+                <li><a href="how_to_search_adf.html">Array design search</a></li>
+                <li><a href="how_to_search_private_data.html">Search for private data</a></li>
+            </ul>
+        </li>    
+        <li><a href="submissions_overview.html">How to submit</a>
+            <ul>
+                <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
+                <li class="active"><a href="ftp_upload.html">FTP upload instructions</a></li>
+                <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
+            </ul>
+        </li>
+        <li><a href="data_availability.html">Learn more about our data</a>
+            <ul>
+                <li><a href="data_availability.html">Data access policy</a></li>
+                <li><a href="accession_codes.html">Accession codes</a></li>
+                <li><a href="GEO_data.html">GEO data</a></li>
+            </ul>
+        </li>
+        <li><a href="programmatic_access.html">Other ways to get data</a>
+            <ul>
+                <li><a href="programmatic_access.html">Programmatic access</a></li>
+				<li><a href="FTP_archives.html">FTP archives</a></li>
+				<li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+            </ul>
+        </li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="contact_us.html">Contact us</a></li>
+    </ul>
     </aside>
 </div>
 </body>
