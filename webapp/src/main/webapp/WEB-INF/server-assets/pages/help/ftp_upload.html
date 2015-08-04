@@ -5,11 +5,11 @@
 <div id="content" role="main" class="grid_24 clearfix">
     <section id="ae-help" class="grid_18 alpha">
 
-	
+
 		<h2>Send data files to ArrayExpress by FTP</h2>
-	   
+
 		<p>ArrayExpress provides a FTP repository for submitters to upload a large volume of data files associated with their experiment submissions. FTP upload is also useful if you would like to send files to us prior to a submission (e.g. for us to check if they are in a suitable format).</p>
-		
+
 		<p><strong>Before you start transferring files, please note the following points:</strong></p>
 		<ol>
 		<li><strong>File preparation:</strong> Please check our guidelines on submitting files for a <a href='/fgpt/annotare_help/data_format.html'>microarray experiment</a>, <a href='UHTS_submissions.html#HowToSubmit'>sequencing experiment</a> or <a href='/fgpt/magetab/help/adf_quick_start.html'>array design</a>. E.g. microarray data files should not be compressed, but fastq files from sequencing experiments must be individually compressed by gzip or bzip2 (as a requirement from the Sequence Read Archive).</li>
@@ -19,33 +19,42 @@
 		<li><strong>Finish your experiment submission (if applicable):</strong> Data files uploaded to ArrayExpress by FTP are only part of an experiment submission. The submission is only complete when experimental <em>meta-data</em> (e.g. sample information and protocols) are also submitted to ArrayExpress using <a href="/fg/annotare/login">Annotare</a>. See <a href="submissions_overview.html">submissions help page</a> for further details.</li>
 		<li><strong>Email us (for non-Annotare submitters):</strong> When the transfer is complete, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the names of files transferred and a short note on what the files are for.</li>
 		</ol>
-          
-        <p>&nbsp;</p>  
-        
+
+        <p>&nbsp;</p>
+
         <p>
                 <a href="#WindowsFTP">1. Instruction for Windows Explorer users</a><br>
                 <a href="#TerminalFTP">2. Instruction for terminal/command prompt users</a><br>
         </p>
-        
-        <p>&nbsp;</p> 
+
+        <p>&nbsp;</p>
         <h3><a id="WindowsFTP"></a>1. Transferring files with Windows Explorer (drag and drop)</h3>
-        
-        <p>Make sure you've opened a Windows Explorer window and <em>not</em> an internet browser window as the latter is not designed for FTP file uploads. You can open an Explorer window by going to <code>Start</code>, followed by <code>Computer</code> or <code>My Computer</code> (if using Windows XP). If you need further help, here is a <a href="http://www.wikihow.com/Open-Windows-Explorer">short tutorial with screenshots</a>.</p>
+
+        <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
+
+        <p>Open a Windows Explorer window (and <em>not</em> an internet browser window as the latter is not designed for FTP file upload). If you need help how to open an Explorer window, here are instructions for <a href="http://www.wikihow.com/Open-Windows-Explorer">Windows XP/Vista/7</a>, <a href="http://www.7tutorials.com/7-ways-open-file-explorer-windows-81">Windows 8</a> and <a href="http://www.7tutorials.com/9-ways-open-file-explorer-windows-10">Windows 10</a>.</p>
+
         <p>In the Windows Explorer window, enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in the address bar. This URL already contains the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
 
         <p>If there are no error messages from Windows, that means connection is successful. (Unfortunately, Windows does not provide notification confirming successful connection to an FTP server.)  When connected, you will see an almost "blank" Windows Explorer window which is similar to this:</p>
-        
+
         <p><img src="ftp_upload_windows_explorer_FTP.PNG" alt="Windows Explorer FTP login image" style='border:2px solid #385930; width: 75%; height: 75%'></p>
 
-        <p>You can start dragging files from your computer's file system and dropping them onto the logged-on Windows Explorer window.</p> 
+        <p>You can start dragging files from your computer's file system and dropping them onto the logged-on Windows Explorer window.</p>
         <p>Note: you will not be able to see any files or directories on the FTP site, including the files that you have uploaded. This is because we don't allow submitters to see each others' data files.</p>
-        
+
         <p>&nbsp;</p>
         <h3><a id="TerminalFTP"></a>2. Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
-        
-        <p> Connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code>. The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.  Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory.</p>
+
+        <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
+
+        <p>Connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code>. The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.  Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory.</p>
+
         <p>To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
+
         <p>Note: you will not be able to list the files in the directory or download files from the FTP site to your directory. This is because we don't allow submitters to see each others' data files.</p>
+
+        <p>If you are using Mac, the file transfer may fail due to incompatible FTP settings of the standard FTP client on Mac (which is embedded in Finder). In this case you should be able to upload your files using an alternative FTP client, e.g. <a href="https://cyberduck.io/">CyberDuck</a>.</p>
 
 	</section>
 
@@ -60,7 +69,7 @@
                 <li><a href="how_to_search_adf.html">Array design search</a></li>
                 <li><a href="how_to_search_private_data.html">Search for private data</a></li>
             </ul>
-        </li>    
+        </li>
         <li><a href="submissions_overview.html">How to submit</a>
             <ul>
                 <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
