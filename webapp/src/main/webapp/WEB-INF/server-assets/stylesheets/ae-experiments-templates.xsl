@@ -574,7 +574,7 @@
 
     <xsl:template name="exp-status-section">
         <xsl:param name="pIsGoogleBot" as="xs:boolean"/>
-        <xsl:param name="pIsPrivate" as="xs:boolean"/>
+        <xsl:param name="pShowChangeReleaseDate" as="xs:boolean"/>
 
         <xsl:variable name="vDates" select="submissiondate | lastupdatedate | releasedate"/>
         <xsl:variable name="vAccession" select="accession"/>
@@ -622,7 +622,7 @@
                                     </xsl:choose>
                                     <xsl:text> </xsl:text>
                                     <xsl:value-of select="ae:formatDate(text())"/>
-                                    <xsl:if test="(fn:name() = 'releasedate') and $pIsPrivate"> (<a href="/fg/acext?acc={$vAccession}">change release date</a>&#160;<span class="new">new!</span>)</xsl:if>
+                                    <xsl:if test="(fn:name() = 'releasedate') and $pShowChangeReleaseDate"> (<a href="/fg/acext?acc={$vAccession}">change release date</a>&#160;<span class="new">new!</span>)</xsl:if>
                                 </xsl:for-each>
                             </div>
                         </td>

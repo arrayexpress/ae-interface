@@ -33,8 +33,8 @@
     <xsl:param name="full"/>
 
     <!-- TODO: fix grouping when we're ready -->
-    <xsl:variable name="vGrouping" as="xs:boolean" select="false()"/>
-    <xsl:variable name="vFull" as="xs:boolean" select="not(not($full))"/>
+    <xsl:variable name="vGrouping" as="xs:boolean" select="fn:false()"/>
+    <xsl:variable name="vFull" as="xs:boolean" select="fn:not(fn:not($full) or $vIsAnonymousReview)"/>
 
     <xsl:param name="s_page"/>
     <xsl:param name="s_pagesize"/>
@@ -54,6 +54,8 @@
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
     <xsl:variable name="vSampleFiles" select="$vData[@kind = 'sdrf' and @extension = 'txt']"/>
     <xsl:variable name="vMetaData" select="search:queryIndex('experiments', fn:concat('accession:', $vAccession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $vAccession]" />
+
+    <xsl:variable name="vIsAnonymousReview" select="fn:not($vMetaData/user/@id = '1') and ($isreviewer = 'true') and $vMetaData/source/@anonymousreview"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
@@ -246,7 +248,11 @@
                         <td class="bottom_filler"/>
                     </tr>
                     <tr>
-                        <td colspan="3" class="col_footer"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a></td>
+                        <td colspan="3" class="col_footer">
+                            <xsl:if test="fn:not($vIsAnonymousReview)">
+                                <a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a>
+                            </xsl:if>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -326,7 +332,7 @@
         <xsl:param name="pTableInfo"/>
 
         <thead>
-            <xsl:if test="not($vFull)">
+            <xsl:if test="fn:not($vFull)">
                 <tr>
                     <xsl:for-each select="$pTableInfo/header/col">
                         <xsl:variable name="vColInfo" select="."/>
@@ -338,7 +344,7 @@
                         <xsl:variable name="vNextColType" select="$vNextCols[1]/@type"/>
                         <xsl:variable name="vNextGroupCol" select="$vNextCols[@type != $vColType][1]"/>
                         <xsl:variable name="vNextGroupColPos" select="if ($vNextGroupCol) then count($vNextGroupCol/preceding-sibling::*) + 1 else (count($pTableInfo/header/col) + 1)"/>
-                        <xsl:if test="not($vPrevColType = $vColType)">
+                        <xsl:if test="fn:not($vPrevColType = $vColType)">
                             <th>
                                 <xsl:attribute name="class">
                                     <xsl:text>even</xsl:text>
@@ -441,7 +447,7 @@
                         <xsl:variable name="vNextGroupRow" select="$vNextRows[col[$vColPos]/text() != $vColText][1]"/>
                         <xsl:variable name="vNextGroupRowPos" select="if ($vNextGroupRow) then count($vNextGroupRow/preceding-sibling::*) + 1 else ($pTableInfo/header/@data-rows + 1)"/>
 
-                        <xsl:if test="not($vPrevColText = $vColText) or not($vGrouping)">
+                        <xsl:if test="fn:not($vPrevColText = $vColText) or fn:not($vGrouping)">
                             <td>
                                 <xsl:attribute name="class">
                                     <xsl:choose>
