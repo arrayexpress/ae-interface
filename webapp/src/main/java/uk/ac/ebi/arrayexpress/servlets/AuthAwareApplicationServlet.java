@@ -142,4 +142,8 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
            throw new AuthApplicationServletException(x);
         }
     }
+
+    protected boolean isReviewerByName( String userName ) {
+        return ((Users) getComponent("Users")).isReviewerByName(userName);
+    }
 }

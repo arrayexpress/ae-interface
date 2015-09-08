@@ -40,13 +40,14 @@
                         <xsl:for-each select="current-group()">
                             <xsl:variable name="vHasData" select="rawdatafiles/@available = 'true' or processeddatafiles/@available = 'true' or fn:exists(seqdatauri)"/>
                             <xsl:variable name="vVisible" select="source/@id = 'ae2' and $vHasData"/>
+                            <xsl:variable name="vAnonymousReview" select="fn:exists(anonymousreview)"/>
 
                             <experiment>
                                 <xsl:copy-of select="*[name() != 'source']|@*"/>
                                 <xsl:for-each select="species">
                                     <organism><xsl:value-of select="."/></organism>
                                 </xsl:for-each>
-                                <source id="{source/@id}" migrated="{$vMigrated}" visible="{$vVisible}"/>
+                                <source id="{source/@id}" migrated="{$vMigrated}" visible="{$vVisible}" anonymousreview="{$vAnonymousReview}"/>
                             </experiment>
                         </xsl:for-each>
 

@@ -205,6 +205,11 @@ public class Users extends ApplicationComponent implements XMLDocumentSource
         }
     }
 
+    public boolean isReviewerByName( String name )
+    {
+        return null != name && name.matches("Reviewer_E-\\w{4}-\\d+");
+    }
+
     public List<String> getUserIDs( String name ) throws IOException
     {
         name = StringEscapeUtils.escapeXml(name);

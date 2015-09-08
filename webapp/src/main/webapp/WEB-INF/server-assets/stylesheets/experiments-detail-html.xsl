@@ -112,7 +112,7 @@
     <xsl:template match="experiment">
         <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
-
+        <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and $isreviewer and source/@anonymousreview"/>
         <div id="ae-detail">
             <table cellpadding="0" cellspacing="0" border="0">
                 <xsl:call-template name="exp-status-section">
@@ -149,13 +149,15 @@
                     <xsl:with-param name="pQueryId" select="$queryid"/>
                 </xsl:call-template>
 
-                <xsl:call-template name="exp-contact-section">
-                    <xsl:with-param name="pQueryId" select="$queryid"/>
-                </xsl:call-template>
+                <xsl:if test="fn:not($vIsAnonymousReview)">
+                    <xsl:call-template name="exp-contact-section">
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
+                    </xsl:call-template>
 
-                <xsl:call-template name="exp-citation-section">
-                    <xsl:with-param name="pQueryId" select="$queryid"/>
-                </xsl:call-template>
+                    <xsl:call-template name="exp-citation-section">
+                        <xsl:with-param name="pQueryId" select="$queryid"/>
+                    </xsl:call-template>
+                </xsl:if>
 
                 <xsl:call-template name="exp-minseqe-section"/>
 
@@ -174,6 +176,7 @@
                 <xsl:call-template name="exp-files-section">
                     <xsl:with-param name="pBasePath" select="$context-path"/>
                     <xsl:with-param name="pFiles" select="$vFiles"/>
+                    <xsl:with-param name="pHideMageTabForReviewer" select="$vIsAnonymousReview"/>
                 </xsl:call-template>
 
                 <xsl:call-template name="exp-links-section">

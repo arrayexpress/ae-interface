@@ -110,6 +110,7 @@ public class QueryServlet extends AuthAwareApplicationServlet
         // to make sure nobody sneaks in the other value w/o proper authentication
         params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
         params.put("username", authUserName);
+        params.put("isreviewer", String.valueOf(isReviewerByName(authUserName)));
 
         // migration rudiment - show only "visible" i.e. overlapping experiments from AE2
         params.put("visible", "true");

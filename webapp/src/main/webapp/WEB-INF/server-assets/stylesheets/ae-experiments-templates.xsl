@@ -501,6 +501,7 @@
     <xsl:template name="exp-files-section">
         <xsl:param name="pBasePath"/>
         <xsl:param name="pFiles"/>
+        <xsl:param name="pHideMageTabForReviewer"/>
 
         <xsl:if test="fn:exists($pFiles/file)">
             <tr>
@@ -510,10 +511,12 @@
                         <div>
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
-                                    <xsl:call-template name="exp-magetab-files">
-                                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                                        <xsl:with-param name="pFiles" select="$pFiles"/>
-                                    </xsl:call-template>
+                                    <xsl:if test="fn:not($pHideMageTabForReviewer)">
+                                        <xsl:call-template name="exp-magetab-files">
+                                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                                            <xsl:with-param name="pFiles" select="$pFiles"/>
+                                        </xsl:call-template>
+                                    </xsl:if>
                                     <xsl:call-template name="exp-data-files">
                                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
                                         <xsl:with-param name="pFiles" select="$pFiles"/>

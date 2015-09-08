@@ -31,6 +31,7 @@
     <xsl:param name="query-string"/>
     <xsl:param name="userid"/>
     <xsl:param name="username"/>
+    <xsl:param name="isreviewer"/>
 
     <xsl:output omit-xml-declaration="yes" method="html" indent="no" encoding="UTF-8"/>
 
