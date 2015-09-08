@@ -112,7 +112,7 @@
     <xsl:template match="experiment">
         <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vQueryString" select="if ($query-string) then fn:concat('?', $query-string) else ''"/>
-        <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and $isreviewer and source/@anonymousreview"/>
+        <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and ($isreviewer = 'true') and source/@anonymousreview"/>
         <div id="ae-detail">
             <table cellpadding="0" cellspacing="0" border="0">
                 <xsl:call-template name="exp-status-section">
