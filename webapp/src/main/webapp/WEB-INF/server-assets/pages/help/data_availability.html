@@ -7,6 +7,7 @@
         <h2>Data access policy</h2>
         <ol>
             <li><a href="#general">General information</a></li>
+            <li><a href="#double-blind">Submitter anonymity</a></li>
             <li><a href="#release">Release policy</a></li>
             <li><a href="#changes">Release date changes</a></li>
             <li><a href="#removal">Removal of data from the public domain</a></li>
@@ -24,7 +25,11 @@
         <p>For sensitive data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences), ArrayExpress 'private' data sets and submitter/reviewer login accounts cannot provide the high level of data encryption and access control required. In such cases, there should be a <a href="/ega/submission/FAQ#DAC">data access committee</a> overlooking data privacy issues, and the data should be submitted to the <a href="/ega/">European Genome-phenome Archive</a> (EGA).</p>
         <p>Human-identifiable data can still be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>.</p>
         <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-        <a id="release"><h3>2. Release policy</h3></a>
+        <a id="double-blind"><h3>2. Submitter anonymity</h3></a>
+        <p>To reduce potential bias during peer review, some journals now offer manuscript depositers the option of "double-blind" peer review, where a depositer remains anonymous to the reviewer.  ArrayExpress supports "double-blind" peer review of private data sets by redacting certain meta-data fields which would inevitably reveal the submitter's identity, e.g. <code>Contacts</code> (name and email address), <code>Citation</code> (contains preliminary publication title and author list). The redaction is an optional feature at submitter's request, and only applies when a reviewer is accessing the ArrayExpress experiment of interest (detected by the reviewer's login name), so the ArrayExpress submitter (using his/her dedicated login) will continue to see the full meta-data record.  Anonymity can also be lifted at submitter's request, e.g. when the manuscript is submitted to a journal which does not support "double-blind" peer review. Finally, submitter anonymity will be lifted completely once the experiment goes public.</p>
+        <p>If you are the submitter of a previously non-anonymised private data set in ArrayExpress and would like to switch on anomymity, please write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>.</p>
+        <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+        <a id="release"><h3>3. Release policy</h3></a>
         <p>Experiments are made public when</p>
         <ul>
             <li>the specified release date is reached</li>
@@ -50,7 +55,7 @@
             There are more information on this <a href="ftp_archives.html">ArrayExpress FTP downloads</a> help page.</p>
         <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
-        <a id="changes"><h3>3. Release date changes</h3></a>
+        <a id="changes"><h3>4. Release date changes</h3></a>
         <p>Reminders about experiment and array design release dates are sent to submitters 7, 30 and 60 days before the current release date.</p>
         <p><strong>Microarray experiment submitters:</strong> Release date can be changed using this <a href="https://www.ebi.ac.uk/fg/acext/">
             access control tool</a>. Simply login with the data access account details which we emailed you when curation was completed,
@@ -59,7 +64,7 @@
        
         <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
-        <a id ="removal"><h3>4. Removal of data from the public domain</h3></a>
+        <a id ="removal"><h3>5. Removal of data from the public domain</h3></a>
         <p>Data may be be made private again in ArrayExpress (removing both web interface and FTP access) in the
             following circumstances</p>
         <ul>
@@ -91,7 +96,7 @@
             ArrayExpress, but transferred to the European Nucleotide Archive (ENA) is
             subject to their <a href="/ena/about/data_availability_policy">data release policies</a>. In general, ENA does not turn a public experiment private again unless there is an exceptional reason. Please also refer to our <a href='uhts_submission.html#HTSDataReleasePolicy'>policy on updating/cancelling a sequencing experiment</a> for more details.</p>
         <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-        <a id="user_accounts"><h3>5. ArrayExpress data access accounts</h3></a>
+        <a id="user_accounts"><h3>6. ArrayExpress data access accounts</h3></a>
         <p>Submitters are sent details about their own access accounts and
             those for journal reviewers after a pre-published experiment or array design is
             loaded into the ArrayExpress database. Submitters
