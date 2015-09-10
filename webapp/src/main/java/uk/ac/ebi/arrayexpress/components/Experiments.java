@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.components;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.BooleanValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.app.Application;
@@ -48,7 +49,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
     public final static String MAP_EXPERIMENTS_DOWNLOADS = "experiments-downloads";
     public final static String MAP_EXPERIMENTS_COMPLETE_DOWNLOADS = "experiments-complete-downloads";
     public final static String MAP_EXPERIMENTS_IN_ATLAS = "experiments-in-atlas";
-    //public final static String MAP_VISIBLE_EXPERIMENTS = "visible-experiments";
+    public final static String MAP_ANONYMOUS_REVIEW_EXPERIMENTS = "anonymous_review";
     public final static String MAP_EXPERIMENTS_FOR_PROTOCOL = "experiments-for-protocol";
     public final static String MAP_EXPERIMENTS_FOR_ARRAY = "experiments-for-array";
     public final static String MAP_EXPERIMENTS_FOR_USER = "experiments-for-user";
@@ -179,7 +180,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_VIEWS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_DOWNLOADS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_COMPLETE_DOWNLOADS));
-        //maps.registerMap(new MapEngine.SimpleValueMap(MAP_VISIBLE_EXPERIMENTS));
+        maps.registerMap(new MapEngine.SimpleValueMap(MAP_ANONYMOUS_REVIEW_EXPERIMENTS));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_PROTOCOL));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_ARRAY));
         maps.registerMap(new MapEngine.SimpleValueMap(MAP_EXPERIMENTS_FOR_USER));
@@ -272,7 +273,7 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
     {
         this.logger.debug("Updating maps for experiments");
 
-        //maps.clearMap(MAP_VISIBLE_EXPERIMENTS);
+        maps.clearMap(MAP_ANONYMOUS_REVIEW_EXPERIMENTS);
         maps.clearMap(MAP_EXPERIMENTS_FOR_PROTOCOL);
         maps.clearMap(MAP_EXPERIMENTS_FOR_ARRAY);
         users.clearUserMap(INDEX_ID);
@@ -291,7 +292,8 @@ public class Experiments extends ApplicationComponent implements XMLDocumentSour
                     NodeInfo exp = (NodeInfo)node;
 
                     String accession = saxon.evaluateXPathSingleAsString(exp, "accession");
-                    //maps.setMappedValue(MAP_VISIBLE_EXPERIMENTS, accession, exp);
+                    Item isAnonymousReviewRequested = saxon.evaluateXPathSingle(exp, "not(user/@id = '1') and source/@anonymousreview = 'true'");
+                    maps.setMappedValue(MAP_ANONYMOUS_REVIEW_EXPERIMENTS, accession, ((BooleanValue)isAnonymousReviewRequested).effectiveBooleanValue());
                     List<Item> userIds = saxon.evaluateXPath(exp, "user/@id");
                     if (null != userIds && userIds.size() > 0) {
                         Set<String> usersForExperiment = new HashSet<>(userIds.size());

@@ -17,18 +17,17 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
-import de.schlichtherle.util.zip.ZipEntry;
-import de.schlichtherle.util.zip.ZipFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.Users;
 import uk.ac.ebi.arrayexpress.utils.RegexHelper;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.io.ArchivedDownloadFile;
+import uk.ac.ebi.arrayexpress.utils.io.IDownloadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
 import java.util.List;
 
 public class ArchivedFileDownloadServlet extends BaseDownloadServlet
@@ -37,90 +36,7 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected final class ArchivedDownloadFile implements IDownloadFile
-    {
-        private final File file;
-        private final String entryName;
-        private final ZipFile zipFile;
-        private final ZipEntry zipEntry;
-
-        public ArchivedDownloadFile( File archiveFile, String entryName ) throws IOException
-        {
-            if ( null == archiveFile || null == entryName ) {
-                throw new IllegalArgumentException("Arguments cannot be null");
-            }
-            this.file = archiveFile;
-            this.entryName = entryName;
-            this.zipFile = new ZipFile(archiveFile);
-            this.zipEntry = this.zipFile.getEntry(this.entryName);
-        }
-
-        private File getFile()
-        {
-            return this.file;
-        }
-        
-        private String getEntryName()
-        {
-            return this.entryName;
-        }
-
-        private ZipEntry getZipEntry()
-        {
-            return this.zipEntry;
-        }
-
-        public String getName()
-        {
-            return getEntryName();
-        }
-
-        public String getPath()
-        {
-            return getFile().getName() + File.separator + getEntryName();
-        }
-
-        public long getLength()
-        {
-            return (null != getZipEntry() ? getZipEntry().getSize() : 0L);
-        }
-
-        public long getLastModified()
-        {
-            return (null != getZipEntry() ? getZipEntry().getTime() : 0L);
-        }
-
-        public boolean canDownload()
-        {
-            return null != getZipEntry();
-        }
-
-        public boolean isRandomAccessSupported()
-        {
-            return false;
-        }
-
-        public RandomAccessFile getRandomAccessFile() throws IOException
-        {
-            throw new IllegalArgumentException("Method not supported");
-        }
-
-        public InputStream getInputStream() throws IOException
-        {
-            if (null == getZipEntry())
-                throw new FileNotFoundException("Archived file not found");
-            return this.zipFile.getInputStream(getZipEntry());
-        }
-
-        public void close() throws IOException
-        {
-            if (null != this.zipFile) {
-                zipFile.close();
-            }
-        }
-    }
-
-    protected IDownloadFile getDownloadFileFromRequest( HttpServletRequest request, HttpServletResponse response, List<String> userIDs )
+    protected IDownloadFile getDownloadFileFromRequest( HttpServletRequest request, HttpServletResponse response, String authUserName )
             throws DownloadServletException
     {
         RegexHelper PARSE_ARGUMENTS_REGEX = new RegexHelper("/([^/]+)/([^/]+)/([^/]+)$", "i");
@@ -170,13 +86,14 @@ public class ArchivedFileDownloadServlet extends BaseDownloadServlet
                                     + "] were not determined");
                 }
 
-                if (!(null != userIDs && (0 == userIDs.size() || users.isAccessible(accession, userIDs)))) {
+                List<String> userIDs = getUserIds(authUserName);
+                if (null == userIDs || (0 != userIDs.size() && !users.isAccessible(accession, userIDs))) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     throw new DownloadServletException(
                             "Data from ["
                                     + accession
-                                    + "] is not accessible for the user with id(s) ["
-                                    + StringTools.arrayToString(userIDs.toArray(new String[userIDs.size()]), ", ")
+                                    + "] is not accessible for the user ["
+                                    + authUserName
                                     + "]"
                     );
                 }

@@ -20,6 +20,7 @@ package uk.ac.ebi.arrayexpress.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.io.IDownloadFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -58,24 +59,6 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         }
     }
 
-    protected interface IDownloadFile
-    {
-        public String getName();
-        public String getPath();
-
-        public long getLength();
-        public long getLastModified();
-
-        public boolean canDownload();
-
-        public boolean isRandomAccessSupported();
-        public RandomAccessFile getRandomAccessFile() throws IOException;
-
-        public InputStream getInputStream() throws IOException;
-
-        public void close() throws IOException;
-    }
-
     @Override
     protected boolean canAcceptRequest( HttpServletRequest request, RequestType requestType )
     {
@@ -94,7 +77,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         IDownloadFile downloadFile = null;
         try {
-            downloadFile = getDownloadFileFromRequest(request, response, getUserIds(authUserName));
+            downloadFile = getDownloadFileFromRequest(request, response, authUserName);
             if (null != downloadFile) {
                 verifyFile(downloadFile, response);
 
@@ -123,7 +106,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     protected abstract IDownloadFile getDownloadFileFromRequest(
             HttpServletRequest request
             , HttpServletResponse response
-            , List<String> authUserIDs
+            , String authUserName
     ) throws DownloadServletException;
 
     private void verifyFile( IDownloadFile file, HttpServletResponse response )

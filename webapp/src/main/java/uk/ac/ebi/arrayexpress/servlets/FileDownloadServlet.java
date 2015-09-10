@@ -19,13 +19,16 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Files;
+import uk.ac.ebi.arrayexpress.components.MapEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
-import uk.ac.ebi.arrayexpress.utils.StringTools;
+import uk.ac.ebi.arrayexpress.utils.io.IDownloadFile;
+import uk.ac.ebi.arrayexpress.utils.io.RegularDownloadFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
 import java.util.List;
 
 public class FileDownloadServlet extends BaseDownloadServlet
@@ -34,72 +37,10 @@ public class FileDownloadServlet extends BaseDownloadServlet
 
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected final class RegularDownloadFile implements IDownloadFile
-    {
-        private final File file;
-        
-        public RegularDownloadFile( File file )
-        {
-            if (null == file) {
-                throw new IllegalArgumentException("File cannot be null");
-            }
-            this.file = file;
-        }
-
-        private File getFile()
-        {
-            return this.file;
-        }
-        
-        public String getName()
-        {
-            return getFile().getName();
-        }
-        
-        public String getPath()
-        {
-            return getFile().getPath();
-        }
-
-        public long getLength()
-        {
-            return getFile().length();
-        }
-        
-        public long getLastModified()
-        {
-            return getFile().lastModified();
-        }
-
-        public boolean canDownload()
-        {
-            return getFile().exists() && getFile().isFile() && getFile().canRead();
-        }
-
-        public boolean isRandomAccessSupported()
-        {
-            return true;
-        }
-        
-        public RandomAccessFile getRandomAccessFile() throws IOException
-        {
-            return new RandomAccessFile(getFile(), "r");
-        }
-
-        public InputStream getInputStream() throws IOException
-        {
-            return new FileInputStream(getFile());
-        }
-
-        public void close() throws IOException
-        {
-        }
-    }
-
     protected IDownloadFile getDownloadFileFromRequest(
             HttpServletRequest request
             , HttpServletResponse response
-            , List<String> userIDs
+            , String authUserName
     ) throws DownloadServletException
     {
         String accession = "";
@@ -122,6 +63,7 @@ public class FileDownloadServlet extends BaseDownloadServlet
                 }
             }
             logger.info("Requested download of [" + name + "], kind [" + kind + "], accession [" + accession + "]");
+            MapEngine maps = (MapEngine) getComponent("MapEngine");
             Files files = (Files) getComponent("Files");
             Users users = (Users) getComponent("Users");
 
@@ -150,19 +92,33 @@ public class FileDownloadServlet extends BaseDownloadServlet
                                     + "] were not determined");
                 }
 
-                if (null != userIDs && 0 != userIDs.size() && !users.isAccessible(accession, userIDs)) {
+                List<String> userIDs = getUserIds(authUserName);
+                if (null == userIDs || (0 != userIDs.size() && !users.isAccessible(accession, userIDs))) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     throw new DownloadServletException(
                             "Data from ["
                                     + accession
-                                    + "] is not accessible for the user with id(s) ["
-                                    + StringTools.arrayToString(userIDs.toArray(new String[userIDs.size()]), ", ")
+                                    + "] is not accessible for the user ["
+                                    + authUserName
                                     + "]"
                     );
                 }
 
                 logger.debug("Will be serving file [{}]", location);
-                file = new RegularDownloadFile(new File(files.getRootFolder(), location));
+
+                if (users.isReviewerByName(authUserName) && (Boolean)maps.getMappedValue(Experiments.MAP_ANONYMOUS_REVIEW_EXPERIMENTS, accession)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    throw new DownloadServletException(
+                            "Data from ["
+                                    + accession
+                                    + "] is not accessible for the reviewer ["
+                                    + authUserName
+                                    + "] to protect identity of the submitter"
+                    );
+                    //file = new FilteredMageTabDownloadFile(new File(files.getRootFolder(), location));
+                } else {
+                    file = new RegularDownloadFile(new File(files.getRootFolder(), location));
+                }
             }
         } catch (DownloadServletException x) {
             throw x;
