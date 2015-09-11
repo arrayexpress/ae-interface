@@ -80,7 +80,7 @@
                     <xsl:value-of select="$vAccession"/>
                 </a>
                 <xsl:text> > Samples and Data</xsl:text>
-                <xsl:if test="not($vFull)">
+                <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
                     <sup><a href="{$context-path}/experiments/{$vAccession}/samples/?full=true" title="Some columns were omitted; please click here to get a full view of samples and data">*</a></sup>
                 </xsl:if>
             </xsl:with-param>
