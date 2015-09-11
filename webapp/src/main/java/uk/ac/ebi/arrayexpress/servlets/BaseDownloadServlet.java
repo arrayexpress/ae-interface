@@ -176,10 +176,10 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
         // Determine content disposition. If content type is supported by the browser or an image
         // then it is set to inline, else attachment which will pop up a 'save as' dialogue.
-        //String accept = request.getHeader("Accept");
-        //boolean inline = !contentType.contains("octet stream") && (accept != null && accepts(accept, contentType));
-        //String disposition = (inline ||contentType.startsWith("image")) ? "inline" : "attachment";
-        String disposition = "attachment";
+        String accept = request.getHeader("Accept");
+        boolean inline = !contentType.contains("octet stream") && (accept != null && accepts(accept, contentType));
+        String disposition = (inline || contentType.startsWith("image")) ? "inline" : "attachment";
+        //String disposition = "attachment";
 
         // Initialize response.
         response.reset();
@@ -340,7 +340,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         // Determine content disposition. If content type is supported by the browser or an image
         // then it is set to inline, else attachment which will pop up a 'save as' dialogue.
         String accept = request.getHeader("Accept");
-        boolean inline = (accept != null && accepts(accept, contentType));
+        boolean inline = !contentType.contains("octet stream") && (accept != null && accepts(accept, contentType));
         String disposition = (inline || contentType.startsWith("image")) ? "inline" : "attachment";
 
         // Initialize response.
