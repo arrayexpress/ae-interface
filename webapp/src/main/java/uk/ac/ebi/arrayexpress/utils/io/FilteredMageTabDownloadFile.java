@@ -17,6 +17,8 @@ package uk.ac.ebi.arrayexpress.utils.io;
  *
  */
 
+import uk.ac.ebi.arrayexpress.utils.StringTools;
+
 import java.io.*;
 
 public class FilteredMageTabDownloadFile implements IDownloadFile
@@ -25,7 +27,6 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
     private final boolean isMageTabFile;
 
     private final static String IDF_FILE_NAME_PATTERN = "^.+[.]idf[.]txt$";
-    private final static String IDF_FILTER_PATTERN = "^(person.+|pubmedid|publication.+)$";
     private final static String SDRF_FILE_NAME_PATTERN = "^.+[.]sdrf[.]txt$";
     private final static String SDRF_FILTER_PATTERN = "^(performer|provider)$";
 
@@ -96,10 +97,15 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
     {
     }
 
+    private static final char DEFAULT_COL_DELIMITER = 0x9;
+    private static final char DEFAULT_COL_QUOTE_CHAR = '"';
+    private static final String DEFAILT_CHARSET = "UTF-8";
 
     static class IdfFilter
     {
         private final File file;
+
+        private final static String IDF_FILTER_PATTERN = "^(person.+|pubmedid|publication.+|comment\\[AEAnonymousReview\\])$";
 
         public IdfFilter( File file )
         {
@@ -108,7 +114,79 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
         public InputStream getFilteredStream() throws IOException
         {
-            return new FileInputStream(file);
+            StringBuilder sb = new StringBuilder();
+
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), DEFAILT_CHARSET))) {
+                for(String line; (line = br.readLine()) != null; ) {
+                    String header = processHeader(line.replaceFirst("^([^\t]*).*$", "$1"));
+                    if (!header.matches(IDF_FILTER_PATTERN)) {
+                        sb.append(line).append(StringTools.EOL);
+                    }
+                }
+            }
+
+            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
+        }
+
+        public static String processHeader(String header) {
+            if (header == null) {
+                return "";
+            }
+            else {
+                String main = "";
+                String type = "";
+                String subtype = "";
+
+                // reduce header to only text, excluding types and subtype
+                main = header;
+
+                // remove subtype first
+                if (header.contains("(")) {
+                    // the main part is everything up to ( - there shouldn't be cases of this?
+                    main = header.substring(0, header.indexOf('('));
+                    // the qualifier is everything after (
+                    subtype = "(" + extractSubtype(header) + ")";
+                }
+                // remove type second
+                if (header.contains("[")) {
+                    // the main part is everything up to [
+                    main = header.substring(0, header.indexOf('['));
+                    // the qualifier is everything after [
+                    type = "[" + extractType(header) + "]";
+                }
+
+                StringBuilder processed = new StringBuilder();
+
+                for (int i = 0; i < main.length(); i++) {
+                    char c = main.charAt(i);
+                    switch (c) {
+                        case ' ':
+                        case '\t':
+                            continue;
+                        default:
+                            processed.append(Character.toLowerCase(c));
+                    }
+                }
+
+                // add any [] (type) or () (subtype) qualifiers
+                processed.append(type).append(subtype);
+
+                return processed.toString();
+            }
+        }
+
+        public static String extractType(String header) {
+            return header.contains("[") ? header.substring(header.indexOf("[") + 1, header.lastIndexOf("]")) : "";
+        }
+
+        public static String extractSubtype(String header) {
+            // remove typing first
+            String untypedHeader = (header.contains("[")
+                    ? header.replace(header.substring(header.indexOf("[") + 1, header.lastIndexOf("]")), "")
+                    : header);
+            // now check untypedHeader for parentheses
+            return untypedHeader.contains("(") ?
+                    untypedHeader.substring(untypedHeader.indexOf("(") + 1, untypedHeader.lastIndexOf(")")) : "";
         }
     }
 
