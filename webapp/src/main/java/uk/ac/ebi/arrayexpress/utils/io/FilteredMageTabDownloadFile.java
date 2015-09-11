@@ -22,6 +22,7 @@ import java.io.*;
 public class FilteredMageTabDownloadFile implements IDownloadFile
 {
     private final File file;
+    private final boolean isMageTabFile;
 
     private final static String IDF_FILE_NAME_PATTERN = "^.+[.]idf[.]txt$";
     private final static String IDF_FILTER_PATTERN = "^(person.+|pubmedid|publication.+)$";
@@ -34,6 +35,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
             throw new IllegalArgumentException("File cannot be null");
         }
         this.file = file;
+        this.isMageTabFile = getName().matches(IDF_FILE_NAME_PATTERN) || getName().matches(SDRF_FILE_NAME_PATTERN);
     }
 
     private File getFile()
@@ -68,12 +70,16 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
     public boolean isRandomAccessSupported()
     {
-        return false;
+        return !isMageTabFile;
     }
 
     public RandomAccessFile getRandomAccessFile() throws IOException
     {
-        throw new IllegalArgumentException("Method not supported");
+        if (isRandomAccessSupported()) {
+            return new RandomAccessFile(getFile(), "r");
+        } else {
+            throw new IllegalStateException("Unable to provide direct access to MAGE-TAB file [" + getName() + "]");
+        }
     }
 
     public InputStream getInputStream() throws IOException

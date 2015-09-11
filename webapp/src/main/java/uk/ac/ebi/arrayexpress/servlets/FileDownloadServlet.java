@@ -23,6 +23,7 @@ import uk.ac.ebi.arrayexpress.components.Experiments;
 import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.components.MapEngine;
 import uk.ac.ebi.arrayexpress.components.Users;
+import uk.ac.ebi.arrayexpress.utils.io.FilteredMageTabDownloadFile;
 import uk.ac.ebi.arrayexpress.utils.io.IDownloadFile;
 import uk.ac.ebi.arrayexpress.utils.io.RegularDownloadFile;
 
@@ -107,15 +108,7 @@ public class FileDownloadServlet extends BaseDownloadServlet
                 logger.debug("Will be serving file [{}]", location);
 
                 if (users.isReviewerByName(authUserName) && (Boolean)maps.getMappedValue(Experiments.MAP_ANONYMOUS_REVIEW_EXPERIMENTS, accession)) {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                    throw new DownloadServletException(
-                            "Data from ["
-                                    + accession
-                                    + "] is not accessible for the reviewer ["
-                                    + authUserName
-                                    + "] to protect identity of the submitter"
-                    );
-                    //file = new FilteredMageTabDownloadFile(new File(files.getRootFolder(), location));
+                    file = new FilteredMageTabDownloadFile(new File(files.getRootFolder(), location));
                 } else {
                     file = new RegularDownloadFile(new File(files.getRootFolder(), location));
                 }
