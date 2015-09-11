@@ -17,9 +17,13 @@ package uk.ac.ebi.arrayexpress.utils.io;
  *
  */
 
+import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FilteredMageTabDownloadFile implements IDownloadFile
 {
@@ -28,7 +32,6 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
     private final static String IDF_FILE_NAME_PATTERN = "^.+[.]idf[.]txt$";
     private final static String SDRF_FILE_NAME_PATTERN = "^.+[.]sdrf[.]txt$";
-    private final static String SDRF_FILTER_PATTERN = "^(performer|provider)$";
 
     public FilteredMageTabDownloadFile( File file )
     {
@@ -101,33 +104,8 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
     private static final char DEFAULT_COL_QUOTE_CHAR = '"';
     private static final String DEFAILT_CHARSET = "UTF-8";
 
-    static class IdfFilter
+    static abstract class MageTabFilter
     {
-        private final File file;
-
-        private final static String IDF_FILTER_PATTERN = "^(person.+|pubmedid|publication.+|comment\\[AEAnonymousReview\\])$";
-
-        public IdfFilter( File file )
-        {
-            this.file = file;
-        }
-
-        public InputStream getFilteredStream() throws IOException
-        {
-            StringBuilder sb = new StringBuilder();
-
-            try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), DEFAILT_CHARSET))) {
-                for(String line; (line = br.readLine()) != null; ) {
-                    String header = processHeader(line.replaceFirst("^([^\t]*).*$", "$1"));
-                    if (!header.matches(IDF_FILTER_PATTERN)) {
-                        sb.append(line).append(StringTools.EOL);
-                    }
-                }
-            }
-
-            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
-        }
-
         public static String processHeader(String header) {
             if (header == null) {
                 return "";
@@ -190,9 +168,39 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
         }
     }
 
-    static class SdrfFilter
+    static class IdfFilter extends MageTabFilter
     {
         private final File file;
+
+        private final static String IDF_FILTER_PATTERN = "^(person.+|pubmedid|publication.+|comment\\[AEAnonymousReview\\])$";
+
+        public IdfFilter( File file )
+        {
+            this.file = file;
+        }
+
+        public InputStream getFilteredStream() throws IOException
+        {
+            StringBuilder sb = new StringBuilder();
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), DEFAILT_CHARSET))) {
+                for(String line; (line = br.readLine()) != null; ) {
+                    String header = processHeader(line.replaceFirst("^([^\t]*).*$", "$1"));
+                    if (!header.matches(IDF_FILTER_PATTERN)) {
+                        sb.append(line).append(StringTools.EOL);
+                    }
+                }
+            }
+
+            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
+        }
+    }
+
+    static class SdrfFilter extends MageTabFilter
+    {
+        private final File file;
+
+        private final static String SDRF_FILTER_PATTERN = "^(performer|provider)$";
 
         public SdrfFilter( File file )
         {
@@ -201,7 +209,46 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
         public InputStream getFilteredStream() throws IOException
         {
-            return new FileInputStream(file);
+            StringBuilder sb = new StringBuilder();
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), DEFAILT_CHARSET))) {
+                CSVReader ff = new CSVReader(br, DEFAULT_COL_DELIMITER, DEFAULT_COL_QUOTE_CHAR);
+                List<String[]> table = ff.readAll();
+                if (null != table && table.size() > 0) {
+                    Set<Integer> columnsToOmit = new HashSet<>();
+                    String[] headers = table.get(0);
+                    for (int col = 0; null != headers && col < headers.length; col++) {
+                        String header = processHeader(headers[col]);
+                        if (header.matches(SDRF_FILTER_PATTERN)) {
+                            columnsToOmit.add(col);
+                        } else if (col > 0 && columnsToOmit.contains(col - 1) && header.startsWith("comment[")) {
+                            columnsToOmit.add(col);
+                        }
+                    }
+                    outputLine(sb, headers, columnsToOmit);
+                    for (int line = 1; line < table.size(); line++) {
+                        outputLine(sb, table.get(line), columnsToOmit);
+                    }
+                }
+            }
+            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
+        }
+
+        private void outputLine(StringBuilder sb, String[] line, Set<Integer> columnsToOmit) {
+            boolean shouldAddDelimiter = false;
+
+            for (int col = 0; null != line && col < line.length; col++) {
+                if (!columnsToOmit.contains(col)) {
+                    if (shouldAddDelimiter) {
+                        sb.append(DEFAULT_COL_DELIMITER);
+                    }
+                    sb.append(line[col]);
+                    shouldAddDelimiter = true;
+                }
+            }
+            if (null != line) {
+                sb.append(StringTools.EOL);
+            }
         }
     }
 
