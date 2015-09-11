@@ -28,18 +28,24 @@ import java.util.Set;
 public class FilteredMageTabDownloadFile implements IDownloadFile
 {
     private final File file;
-    private final boolean isMageTabFile;
+    private final byte[] filteredFile;
 
     private final static String IDF_FILE_NAME_PATTERN = "^.+[.]idf[.]txt$";
     private final static String SDRF_FILE_NAME_PATTERN = "^.+[.]sdrf[.]txt$";
 
-    public FilteredMageTabDownloadFile( File file )
+    public FilteredMageTabDownloadFile( File file ) throws IOException
     {
         if (null == file) {
             throw new IllegalArgumentException("File cannot be null");
         }
         this.file = file;
-        this.isMageTabFile = getName().matches(IDF_FILE_NAME_PATTERN) || getName().matches(SDRF_FILE_NAME_PATTERN);
+        if (getName().matches(IDF_FILE_NAME_PATTERN)) {
+            filteredFile = new IdfFilter(file).getFilteredFile();
+        } else if (getName().matches(SDRF_FILE_NAME_PATTERN)) {
+            filteredFile = new SdrfFilter(file).getFilteredFile();
+        } else {
+            filteredFile = null;
+        }
     }
 
     private File getFile()
@@ -59,7 +65,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
     public long getLength()
     {
-        return getFile().length();
+        return null != filteredFile ? filteredFile.length : getFile().length();
     }
 
     public long getLastModified()
@@ -74,7 +80,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
     public boolean isRandomAccessSupported()
     {
-        return !isMageTabFile;
+        return null == filteredFile;
     }
 
     public RandomAccessFile getRandomAccessFile() throws IOException
@@ -88,10 +94,8 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
 
     public InputStream getInputStream() throws IOException
     {
-        if (getName().matches(IDF_FILE_NAME_PATTERN)) {
-            return new IdfFilter(getFile()).getFilteredStream();
-        } else if (getName().matches(SDRF_FILE_NAME_PATTERN)) {
-            return new SdrfFilter(getFile()).getFilteredStream();
+        if (null != filteredFile) {
+            return new ByteArrayInputStream(filteredFile);
         }
         return new FileInputStream(getFile());
     }
@@ -179,7 +183,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
             this.file = file;
         }
 
-        public InputStream getFilteredStream() throws IOException
+        public byte[] getFilteredFile() throws IOException
         {
             StringBuilder sb = new StringBuilder();
 
@@ -192,7 +196,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
                 }
             }
 
-            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
+            return sb.toString().getBytes(DEFAILT_CHARSET);
         }
     }
 
@@ -207,7 +211,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
             this.file = file;
         }
 
-        public InputStream getFilteredStream() throws IOException
+        public byte[] getFilteredFile() throws IOException
         {
             StringBuilder sb = new StringBuilder();
 
@@ -231,7 +235,7 @@ public class FilteredMageTabDownloadFile implements IDownloadFile
                     }
                 }
             }
-            return new ByteArrayInputStream(sb.toString().getBytes(DEFAILT_CHARSET));
+            return sb.toString().getBytes(DEFAILT_CHARSET);
         }
 
         private void outputLine(StringBuilder sb, String[] line, Set<Integer> columnsToOmit) {
