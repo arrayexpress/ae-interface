@@ -176,7 +176,6 @@
                 <xsl:call-template name="exp-files-section">
                     <xsl:with-param name="pBasePath" select="$context-path"/>
                     <xsl:with-param name="pFiles" select="$vFiles"/>
-                    <xsl:with-param name="pHideMageTabForReviewer" select="$vIsAnonymousReview"/>
                 </xsl:call-template>
 
                 <xsl:call-template name="exp-links-section">

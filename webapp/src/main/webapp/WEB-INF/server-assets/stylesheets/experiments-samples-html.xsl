@@ -249,9 +249,7 @@
                     </tr>
                     <tr>
                         <td colspan="3" class="col_footer">
-                            <xsl:if test="fn:not($vIsAnonymousReview)">
-                                <a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a>
-                            </xsl:if>
+                            <a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a>
                         </td>
                     </tr>
                 </tbody>
