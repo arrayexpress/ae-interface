@@ -17,10 +17,11 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
                 xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-                extension-element-prefixes="xs ae search"
-                exclude-result-prefixes="xs ae search"
+                extension-element-prefixes="xs fn ae search"
+                exclude-result-prefixes="xs fn ae search"
                 version="2.0">
 
     <xsl:param name="sortby"/>
@@ -30,6 +31,9 @@
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
     <xsl:param name="queryid"/>
+    <xsl:param name="accession"/>
+    <xsl:param name="userid"/>
+    <xsl:param name="isreviewer"/>
 
     <xsl:param name="host"/>
     <xsl:param name="context-path"/>
@@ -43,7 +47,7 @@
 
     <xsl:template match="/experiments">
 
-        <xsl:variable name="vFilteredExperiments" select="//experiment[accession = 'E-MEXP-31']"/> <!-- search:queryIndex($queryid)"/> -->
+        <xsl:variable name="vFilteredExperiments" select="if ($accession) then search:queryIndex('experiments', fn:concat('accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $accession] else search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
         <experiments version="3.0" revision="140109"
@@ -61,6 +65,7 @@
     </xsl:template>
 
     <xsl:template match="experiment">
+        <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and ($isreviewer = 'true') and source/@anonymousreview"/>
         <experiment>
             <xsl:apply-templates select="id" mode="copy"/>
             <xsl:apply-templates select="accession" mode="copy"/>
@@ -71,8 +76,10 @@
             <xsl:apply-templates select="experimenttype" mode="copy"/>
             <xsl:apply-templates select="experimentdesign" mode="copy"/>
             <xsl:apply-templates select="description" mode="copy"/>
-            <xsl:apply-templates select="provider" mode="copy"/>
-            <xsl:apply-templates select="bibliography" mode="copy"/>
+            <xsl:if test="fn:not($vIsAnonymousReview)">
+                <xsl:apply-templates select="provider" mode="copy"/>
+                <xsl:apply-templates select="bibliography" mode="copy"/>
+            </xsl:if>
             <xsl:apply-templates select="sampleattribute" mode="copy"/>
             <xsl:apply-templates select="experimentalfactor" mode="copy"/>
             <xsl:apply-templates select="arraydesign" mode="copy"/>

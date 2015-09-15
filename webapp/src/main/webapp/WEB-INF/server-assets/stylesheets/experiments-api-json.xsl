@@ -37,6 +37,7 @@
     <xsl:param name="queryid"/>
     <xsl:param name="accession"/>
     <xsl:param name="userid"/>
+    <xsl:param name="isreviewer"/>
 
     <xsl:output method="text" indent="no" encoding="UTF-8"/>
     
@@ -71,8 +72,9 @@
         <xsl:param name="pFrom"/>
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
+            <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and ($isreviewer = 'true') and source/@anonymousreview"/>
             <experiment>
-                <xsl:copy-of select="*[not(name() = 'user' or name() = 'source')]"/>
+                <xsl:copy-of select="*[fn:not(fn:name() = 'user' or fn:name() = 'source') or ($vIsAnonymousReview and (fn:name() = 'provider' or fn:name() = 'bibliography'))]"/>
             </experiment>
         </xsl:if>
     </xsl:template>
