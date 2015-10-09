@@ -38,7 +38,7 @@
     <xsl:template name="root">
         <xsl:param name="pJson" as="xs:boolean"/>
 
-        <experiment api-version="3.0" api-revision="150305">
+        <experiment api-version="3.0" api-revision="091005">
             <accession><xsl:value-of select="$vAccession"/></accession>
             <xsl:for-each select="$vSampleFiles">
                 <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, '- -header=1')/table"/>

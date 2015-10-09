@@ -26,7 +26,7 @@
 
     <xsl:param name="sortby"/>
     <xsl:param name="sortorder"/>
-    
+
     <xsl:variable name="vSortBy" select="if ($sortby) then $sortby else 'releasedate'"/>
     <xsl:variable name="vSortOrder" select="if ($sortorder) then $sortorder else 'descending'"/>
 
@@ -41,15 +41,16 @@
     <xsl:variable name="vBaseUrl"><xsl:value-of select="$host"/><xsl:value-of select="$context-path"/></xsl:variable>
 
     <xsl:output omit-xml-declaration="no" method="xml" indent="no" encoding="UTF-8"/>
-    
+    <xsl:strip-space elements="*"/>
+
     <xsl:include href="ae-sort-experiments.xsl"/>
 
-    <xsl:template match="/experiments">
+    <xsl:template name="root">
 
         <xsl:variable name="vFilteredExperiments" select="if ($accession) then search:queryIndex('experiments', fn:concat('accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $accession] else search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
-        <experiments version="1.2" revision="100915"
+        <experiments api-version="3.0" api-revision="091015" version="3.0" revision="091015"
                      total="{$vTotal}"
                      total-samples="{sum($vFilteredExperiments/samples) cast as xs:integer}"
                      total-assays="{sum($vFilteredExperiments/assays) cast as xs:integer}">
@@ -66,45 +67,37 @@
     <xsl:template match="experiment">
         <xsl:variable name="vIsAnonymousReview" select="fn:not(user/@id = '1') and ($isreviewer = 'true') and source/@anonymousreview"/>
         <experiment>
-            <xsl:copy-of select="*[fn:not(fn:name() = 'user' or fn:name() = 'source' or ($vIsAnonymousReview and (fn:name() = 'provider' or fn:name() = 'bibliography')))]"/>
-            <files>
-                <xsl:comment>
-This section is deprecated and unsupported.
-Please use webservice located at:
-    <xsl:value-of select="$vBaseUrl"/>/xml/files
-to obtain detailed information on files available for the experiment.
-For more information, please go to:
-    http://www.ebi.ac.uk/arrayexpress/help/programmatic_access.html
-                </xsl:comment>
-                <xsl:variable name="vAccession" select="accession"/>
-                <xsl:variable name="vExpFolder" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
-                <xsl:if test="$vExpFolder/file[@kind = 'raw']">
-                    <raw name="{$vExpFolder/file[@kind = 'raw']/@name}"
-                         count="{rawdatafiles/@available}"
-                         celcount="{sum(bioassaydatagroup[isderived = '0'][contains(dataformat, 'CEL')]/bioassays)}"/>
-                </xsl:if>
-                <xsl:if test="$vExpFolder/file[@kind = 'processed']">
-                    <fgem name="{$vExpFolder/file[@kind = 'processed']/@name}"
-                          available="{processeddatafiles/@available}"/>
-                </xsl:if>
-                <xsl:if test="$vExpFolder/file[@kind = 'idf' and @extension = 'txt']">
-                    <idf name="{$vExpFolder/file[@kind = 'idf' and @extension = 'txt']/@name}"/>
-                </xsl:if>
-                <xsl:if test="$vExpFolder/file[@kind = 'sdrf' and @extension = 'txt']">
-                    <sdrf name="{$vExpFolder/file[@kind = 'sdrf' and @extension = 'txt']/@name}"/>
-                </xsl:if>
-                <xsl:if test="$vExpFolder/file[@kind = 'biosamples']">
-                    <biosamples>
-                        <xsl:if test="$vExpFolder/file[@kind = 'biosamples' and @extension = 'png']">
-                            <png name="{$vExpFolder/file[@kind = 'biosamples' and @extension = 'png']/@name}"/>
-                        </xsl:if>
-                        <xsl:if test="$vExpFolder/file[@kind = 'biosamples' and @extension = 'svg']">
-                            <svg name="{$vExpFolder/file[@kind = 'biosamples' and @extension = 'svg']/@name}"/>
-                        </xsl:if>
-                    </biosamples>
-                </xsl:if>
-            </files>
+            <xsl:apply-templates select="id" mode="copy"/>
+            <xsl:apply-templates select="accession" mode="copy"/>
+            <xsl:apply-templates select="secondaryaccession" mode="copy"/>
+            <xsl:apply-templates select="name" mode="copy"/>
+            <xsl:apply-templates select="releasedate | lastupdatedate | submissiondate" mode="copy"/>
+            <xsl:apply-templates select="organism" mode="copy"/>
+            <xsl:apply-templates select="experimenttype" mode="copy"/>
+            <xsl:apply-templates select="experimentdesign" mode="copy"/>
+            <xsl:apply-templates select="description" mode="copy"/>
+            <xsl:if test="fn:not($vIsAnonymousReview)">
+                <xsl:apply-templates select="provider" mode="copy"/>
+                <xsl:apply-templates select="bibliography" mode="copy"/>
+            </xsl:if>
+            <xsl:apply-templates select="sampleattribute" mode="copy"/>
+            <xsl:apply-templates select="experimentalfactor" mode="copy"/>
+            <xsl:apply-templates select="arraydesign" mode="copy"/>
+            <xsl:apply-templates select="protocol" mode="copy"/>
+            <xsl:apply-templates select="bioassaydatagroup" mode="copy"/>
         </experiment>
+    </xsl:template>
+
+    <xsl:template match="source | user" mode="copy"/>
+
+    <xsl:template match="sampleattribute" mode="copy">
+        <samplecharacteristic>
+            <xsl:apply-templates select="node()" mode="copy"/>
+        </samplecharacteristic>
+    </xsl:template>
+
+    <xsl:template match="*" mode="copy">
+        <xsl:copy-of select="."/>
     </xsl:template>
 
 </xsl:stylesheet>
