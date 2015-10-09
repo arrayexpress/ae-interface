@@ -75,7 +75,20 @@
             <xsl:when test="$vName = 'sourcename'">
                 <source>
                     <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
                 </source>
+            </xsl:when>
+            <xsl:when test="$vName = 'extractname'">
+                <extract>
+                    <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
+                </extract>
             </xsl:when>
             <xsl:when test="$vName = 'labeledextractname'">
                 <labeled-extract>
@@ -88,11 +101,19 @@
                             </label>
                         </xsl:if>
                     </xsl:for-each>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
                 </labeled-extract>
             </xsl:when>
             <xsl:when test="$vName = 'assayname' or $vName = 'hybridizationname'">
                 <assay>
                     <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
                 </assay>
             </xsl:when>
             <xsl:when test="fn:starts-with($vName, 'characteristics')">
@@ -129,9 +150,36 @@
                     <xsl:if test="fn:matches(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'comment\[(Derived |)ArrayExpress FTP file\]')">
                         <url><xsl:value-of select="fn:concat(fn:replace($pCell/following-sibling::col[1],'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/\w{4}/',$vFileUrl), '/', $pCell)"/></url>
                     </xsl:if>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
                 </file>
             </xsl:when>
             <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="comment-element">
+        <xsl:param name="pHeader"/>
+        <xsl:param name="pCell"/>
+        <xsl:variable name="vName" select="ae:normaliseHeader($pHeader[1])"/>
+        <xsl:choose>
+            <xsl:when test="fn:starts-with($vName, 'comment')">
+                <comment>
+                    <name><xsl:value-of select="fn:replace($pHeader[1], '.+\[(.+)\].*', '$1')"/></name>
+                    <value><xsl:value-of select="$pCell[1]"/></value>
+                </comment>
+            </xsl:when>
+            <xsl:when test="ae:isNode($vName)"/>
+            <xsl:otherwise>
+                <xsl:if test="$pHeader/following-sibling::col">
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -142,5 +190,11 @@
                           select="fn:lower-case(fn:replace(fn:replace($pHeader, '^(.+)\[.+\].*', '$1'), '\s+', ''))"/>
             <xsl:value-of select="if (fn:matches($pHeader,'\[.+\]')) then fn:concat($vName, fn:replace($pHeader, '.+(\[.+\]).*', '$1')) else $vName"/>
         </xsl:if>
+    </xsl:function>
+
+    <xsl:function name="ae:isNode">
+        <xsl:param name="pName"/>
+        <xsl:value-of
+                select="fn:matches($pName, '^(sourcename|samplename|extractname|labeledextractname|assayname|scanname|normalizationname|(derived|)arraydata(matrix|)file|imagefile|protocolref)')"/>
     </xsl:function>
 </xsl:stylesheet>
