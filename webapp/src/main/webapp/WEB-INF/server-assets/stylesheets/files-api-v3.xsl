@@ -48,7 +48,7 @@
         <xsl:variable name="vTotal" select="count($vFilteredFiles)"/>
 
         <files api-version="3" api-revision="091015" version="1.0" revision="091015"
-                   total-protocols="{$vTotal}">
+                   total-files="{$vTotal}">
             <xsl:call-template name="ae-sort-files">
                 <xsl:with-param name="pFiles" select="$vFilteredFiles"/>
                 <xsl:with-param name="pFrom"/>
@@ -61,13 +61,21 @@
 
     <xsl:template match="file">
         <file>
-            <xsl:apply-templates select="*" mode="copy"/>
+            <xsl:apply-templates select="@*" mode="copy"/>
         </file>
     </xsl:template>
 
-    <xsl:template match="source | user" mode="copy"/>
+    <xsl:template match="@access | @owner | @group | @hidden" mode="copy"/>
 
-    <xsl:template match="*" mode="copy">
-        <xsl:copy-of select="."/>
+    <xsl:template match="@location" mode="copy">
+        <xsl:element name="url">
+            <xsl:value-of select="$vBaseUrl"/>/files/<xsl:value-of select="../../@accession"/>/<xsl:value-of select="../@name"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="@*" mode="copy">
+        <xsl:element name="{fn:lower-case(fn:name())}">
+            <xsl:value-of select="." />
+        </xsl:element>
     </xsl:template>
 </xsl:stylesheet>
