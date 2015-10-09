@@ -535,9 +535,19 @@
         <to type="forward" last="true">/servlets/query/experiments/api-v3/xml</to>
     </rule>
     <rule>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/files$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
+    </rule>
+    <rule>
         <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/samples$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/samples-api-v3/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/protocols$</from>
+        <set type="parameter" name="experiment">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/experiments/(.*)$</from>
@@ -546,17 +556,31 @@
     </rule>
     <rule>
         <from>^/xml/v3/files$</from>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/files/([E]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/files/(.*)$</from>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v3/protocols$</from>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v3/protocols/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
+    </rule>
+    <rule>
+        <from>^/xml/v3/protocols/(.*)$</from>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
 
     <!-- rest api v2 support -->
@@ -564,53 +588,58 @@
         <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
         <from>^/xml/v2/experiments$</from>
         <set type="parameter" name="accession">%1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments$</from>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/experiments/(.*)$</from>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files$</from>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/([E]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/v2/files/(.*)$</from>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
 
-    <!-- rest api in json -->
+    <!-- rest api in json v3 -->
     <rule>
         <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
-        <from>^/json/v2/experiments$</from>
+        <from>^/json/v3/experiments$</from>
         <set type="parameter" name="accession">%1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v3/json</to>
     </rule>
     <rule>
-        <from>^/json/v2/experiments$</from>
+        <from>^/json/v3/experiments$</from>
         <set type="parameter" name="flusheaders">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v3/json</to>
     </rule>
     <rule>
-        <from>^/json/v2/experiments/([E]-\w{4}-\d+)/?$</from>
+        <from>^/json/v3/experiments/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/experiments/([E]-\w{4}-\d+)/files</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/files/api-v3/json</to>
     </rule>
     <rule>
         <from>^/json/v3/experiments/([E]-\w{4}-\d+)/samples$</from>
@@ -618,60 +647,120 @@
         <to type="forward" last="true">/servlets/query/experiments/samples-api-v3/json</to>
     </rule>
     <rule>
+        <from>^/json/v3/experiments/([E]-\w{4}-\d+)/protocols$</from>
+        <set type="parameter" name="experiment">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/experiments/(.*)$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/files$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward" last="true">/servlets/query/files/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/files/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/files/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/files/(.*)$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward" last="true">/servlets/query/files/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/protocols$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/protocols/([E]-\w{4}-\d+)$</from>
+        <set type="parameter" name="experiment">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v3/protocols/(.*)$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <set type="parameter" name="keywords">$1</set>
+        <to type="forward" last="true">/servlets/query/protocols/api-v3/json</to>
+    </rule>
+    <!-- rest api in json v2 -->
+    <rule>
+        <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
+        <from>^/json/v2/experiments$</from>
+        <set type="parameter" name="accession">%1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/experiments$</from>
+        <set type="parameter" name="flusheaders">1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/json</to>
+    </rule>
+    <rule>
+        <from>^/json/v2/experiments/([E]-\w{4}-\d+)/?$</from>
+        <set type="parameter" name="accession">$1</set>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/json</to>
+    </rule>
+    <rule>
         <from>^/json/v2/experiments/(.*)$</from>
         <set type="parameter" name="flusheaders">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files$</from>
         <set type="parameter" name="flusheaders">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files/([E]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
     </rule>
     <rule>
         <from>^/json/v2/files/(.*)$</from>
         <set type="parameter" name="flusheaders">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
     </rule>
 
     <!-- rest api legacy support -->
     <rule>
         <from>^/xml/experiments$</from>
         <set type="parameter" name="queryversion">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/([E]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/experiments/(.*)$</from>
         <set type="parameter" name="queryversion">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/api/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/files$</from>
         <set type="parameter" name="queryversion">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/([AE]-\w{4}-\d+)$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
     <rule>
         <from>^/xml/files/(.*)$</from>
         <set type="parameter" name="queryversion">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
     </rule>
 
     <!-- search results export in tab format -->

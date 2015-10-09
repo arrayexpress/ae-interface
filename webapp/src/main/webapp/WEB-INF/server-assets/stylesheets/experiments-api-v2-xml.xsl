@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,20 @@
  *
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions"
-    xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
-    xmlns:search="http://www.ebi.ac.uk/arrayexpress/XSLT/SearchExtension"
-    extension-element-prefixes="ae search"
-    exclude-result-prefixes="xs fn ae search"
-    version="2.0">
-    
-    <xsl:import href="experiments-samples-api-v3.xsl"/>
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                extension-element-prefixes="fn"
+                exclude-result-prefixes="xs fn"
+                version="2.0">
+
+    <xsl:import href="experiments-api-v2.xsl"/>
 
     <xsl:output method="xml" omit-xml-declaration="no" indent="no" encoding="UTF-8"/>
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
         <xsl:call-template name="root">
-            <xsl:with-param name="pJson" select="false()"/>
+            <xsl:with-param name="pJson" select="fn:false()"/>
         </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>

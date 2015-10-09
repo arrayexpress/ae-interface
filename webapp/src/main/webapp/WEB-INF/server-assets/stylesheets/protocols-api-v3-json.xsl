@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:json="http://json.org/"
                 extension-element-prefixes="fn json"
-                exclude-result-prefixes="fn json"
+                exclude-result-prefixes="xs fn json"
                 version="2.0">
 
-    <xsl:import href="experiments-samples-api-v3-xml.xsl"/>
+    <xsl:import href="protocols-api-v3.xsl"/>
     <xsl:import href="xml-to-json.xsl"/>
     <xsl:param name="skip-root" as="xs:boolean" select="fn:true()"/>
 

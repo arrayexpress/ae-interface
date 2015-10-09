@@ -46,11 +46,12 @@
     <xsl:include href="ae-sort-experiments.xsl"/>
 
     <xsl:template name="root">
+        <xsl:param name="pJson" as="xs:boolean"/>
 
         <xsl:variable name="vFilteredExperiments" select="if ($accession) then search:queryIndex('experiments', fn:concat('accession:', $accession, if ($userid) then fn:concat(' userid:(', $userid, ')') else ''))[accession = $accession] else search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" as="xs:integer" select="count($vFilteredExperiments)"/>
 
-        <experiments api-version="3.0" api-revision="091015" version="3.0" revision="091015"
+        <experiments api-version="3" api-revision="091015" version="3.0" revision="091015"
                      total="{$vTotal}"
                      total-samples="{sum($vFilteredExperiments/samples) cast as xs:integer}"
                      total-assays="{sum($vFilteredExperiments/assays) cast as xs:integer}">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
                 exclude-result-prefixes="fn json"
                 version="2.0">
 
-    <xsl:import href="experiments-samples-api-v3-xml.xsl"/>
+    <xsl:import href="experiments-files-api-v2.xsl"/>
     <xsl:import href="xml-to-json.xsl"/>
     <xsl:param name="skip-root" as="xs:boolean" select="fn:true()"/>
 
@@ -38,4 +38,5 @@
         </xsl:variable>
         <xsl:value-of select="json:generate($vXml)"/>
     </xsl:template>
+
 </xsl:stylesheet>

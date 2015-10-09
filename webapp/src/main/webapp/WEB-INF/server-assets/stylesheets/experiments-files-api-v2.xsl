@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * Copyright 2009-2014 European Molecular Biology Laboratory
+ * Copyright 2009-2015 European Molecular Biology Laboratory
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,12 +41,13 @@
 
     <xsl:include href="ae-sort-experiments.xsl"/>
 
-    <xsl:template match="/experiments">
+    <xsl:template name="root">
+        <xsl:param name="pJson" as="xs:boolean"/>
 
         <xsl:variable name="vFilteredExperiments" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="fn:count($vFilteredExperiments)"/>
 
-        <files version="1.2" revision="130311"
+        <files api-version="2" api-revision="091015" version="1.2" revision="130311"
                      total-experiments="{$vTotal}">
             <xsl:call-template name="ae-sort-experiments">
                 <xsl:with-param name="pExperiments" select="$vFilteredExperiments"/>
