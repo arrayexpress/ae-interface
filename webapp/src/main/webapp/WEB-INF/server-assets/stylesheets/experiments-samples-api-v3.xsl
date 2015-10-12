@@ -170,6 +170,10 @@
                     <name><xsl:value-of select="fn:replace($pHeader[1], '.+\[(.+)\].*', '$1')"/></name>
                     <value><xsl:value-of select="$pCell[1]"/></value>
                 </comment>
+                <xsl:call-template name="comment-element">
+                    <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                    <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="ae:isNode($vName)"/>
             <xsl:otherwise>
