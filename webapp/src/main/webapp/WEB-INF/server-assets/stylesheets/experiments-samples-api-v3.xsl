@@ -116,6 +116,15 @@
                     </xsl:call-template>
                 </assay>
             </xsl:when>
+            <xsl:when test="$vName = 'scanname'">
+                <scan>
+                    <name><xsl:value-of select="$pCell"/></name>
+                    <xsl:call-template name="comment-element">
+                        <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
+                        <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
+                    </xsl:call-template>
+                </scan>
+            </xsl:when>
             <xsl:when test="fn:starts-with($vName, 'characteristics')">
                 <characteristic>
                     <xsl:if test="$pJson">
