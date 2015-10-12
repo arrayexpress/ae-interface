@@ -175,7 +175,7 @@
                     <xsl:with-param name="pCell" select="$pCell/following-sibling::col"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="ae:isNode($vName)"/>
+            <xsl:when test="fn:true() = ae:isNode($vName)"/>
             <xsl:otherwise>
                 <xsl:if test="$pHeader/following-sibling::col">
                     <xsl:call-template name="comment-element">
