@@ -98,8 +98,19 @@
             <xsl:if test="$vJson">
                 <xsl:attribute name="json:force-array" namespace="http://json.org/" select="fn:true()"/>
             </xsl:if>
-            <xsl:apply-templates select="node()" mode="copy"/>
+            <xsl:apply-templates select="category" mode="copy"/>
+            <xsl:apply-templates select="value" mode="copy-as-array"/>
         </samplecharacteristic>
+    </xsl:template>
+
+    <xsl:template match="experimentalfactor" mode="copy-as-array">
+        <experimentalvariable>
+            <xsl:if test="$vJson">
+                <xsl:attribute name="json:force-array" namespace="http://json.org/" select="fn:true()"/>
+            </xsl:if>
+            <xsl:apply-templates select="name" mode="copy"/>
+            <xsl:apply-templates select="value" mode="copy-as-array"/>
+        </experimentalvariable>
     </xsl:template>
 
     <xsl:template match="description" mode="copy-as-array">
