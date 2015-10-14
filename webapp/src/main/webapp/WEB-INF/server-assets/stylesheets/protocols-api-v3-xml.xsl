@@ -27,9 +27,9 @@
     <xsl:output method="xml" omit-xml-declaration="no" indent="no" encoding="UTF-8"/>
     <xsl:strip-space elements="*"/>
 
+    <xsl:variable name="vJson" select="fn:false()" as="xs:boolean"/>
+
     <xsl:template match="/">
-        <xsl:call-template name="root">
-            <xsl:with-param name="pJson" select="fn:false()"/>
-        </xsl:call-template>
+        <xsl:call-template name="root"/>
     </xsl:template>
 </xsl:stylesheet>

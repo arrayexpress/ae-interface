@@ -42,9 +42,7 @@
     <xsl:include href="ae-sort-files.xsl"/>
 
     <xsl:template name="root">
-        <xsl:param name="pJson" as="xs:boolean"/>
-
-        <xsl:variable name="vFilteredFiles" select="search:queryIndex($queryid)"/>
+       <xsl:variable name="vFilteredFiles" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredFiles)"/>
 
         <files api-version="3" api-revision="091015" version="1.0" revision="091015"
@@ -61,6 +59,9 @@
 
     <xsl:template match="file">
         <file>
+            <xsl:if test="$vJson">
+                <xsl:attribute name="json:force-array" namespace="http://json.org/" select="fn:true()"/>
+            </xsl:if>
             <xsl:apply-templates select="@*" mode="copy"/>
         </file>
     </xsl:template>

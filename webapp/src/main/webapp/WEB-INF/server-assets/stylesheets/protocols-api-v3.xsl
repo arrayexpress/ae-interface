@@ -42,7 +42,6 @@
     <xsl:include href="ae-sort-protocols.xsl"/>
 
     <xsl:template name="root">
-        <xsl:param name="pJson" as="xs:boolean"/>
 
         <xsl:variable name="vFilteredProtocols" select="search:queryIndex($queryid)"/>
         <xsl:variable name="vTotal" select="count($vFilteredProtocols)"/>
@@ -61,6 +60,9 @@
 
     <xsl:template match="protocol">
         <protocol>
+            <xsl:if test="$vJson">
+                <xsl:attribute name="json:force-array" namespace="http://json.org/" select="fn:true()"/>
+            </xsl:if>
             <xsl:apply-templates select="*" mode="copy"/>
         </protocol>
     </xsl:template>

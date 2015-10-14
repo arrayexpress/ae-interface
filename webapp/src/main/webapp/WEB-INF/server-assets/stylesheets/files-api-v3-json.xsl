@@ -30,11 +30,11 @@
     <xsl:output method="text" omit-xml-declaration="no" indent="no" encoding="UTF-8"/>
     <xsl:strip-space elements="*"/>
 
+    <xsl:variable name="vJson" select="fn:true()" as="xs:boolean"/>
+
     <xsl:template match="/">
         <xsl:variable name="vXml">
-            <xsl:call-template name="root">
-                <xsl:with-param name="pJson" select="fn:true()"/>
-            </xsl:call-template>
+            <xsl:call-template name="root"/>
         </xsl:variable>
         <xsl:value-of select="json:generate($vXml)"/>
     </xsl:template>
