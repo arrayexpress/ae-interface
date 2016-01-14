@@ -63,7 +63,7 @@
                         </xsl:variable>
                         <xsl:for-each select="$vSampleXml/node()">
                             <xsl:sort select="fn:name()"/>
-                            <xsl:copy-of select="*"/>
+                            <xsl:copy-of select="."/>
                         </xsl:for-each>
                     </sample>
                 </xsl:for-each>
