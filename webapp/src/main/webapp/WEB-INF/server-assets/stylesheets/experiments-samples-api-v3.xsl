@@ -50,14 +50,20 @@
                         <xsl:if test="$pJson">
                             <xsl:attribute name="json:force-array" namespace="http://json.org/" select="$pJson"/>
                         </xsl:if>
-                        <xsl:for-each select="$vHeader/col">
-                            <xsl:variable name="vPos" select="fn:position()"/>
-                            <xsl:call-template name="sample-element">
-                                <xsl:with-param name="pPos" select="$vPos"/>
-                                <xsl:with-param name="pHeader" select="."/>
-                                <xsl:with-param name="pCell" select="$vRow/col[$vPos]"/>
-                                <xsl:with-param name="pJson" select="$pJson"/>
-                            </xsl:call-template>
+                        <xsl:variable name="vSampleXml">
+                            <xsl:for-each select="$vHeader/col">
+                                <xsl:variable name="vPos" select="fn:position()"/>
+                                <xsl:call-template name="sample-element">
+                                    <xsl:with-param name="pPos" select="$vPos"/>
+                                    <xsl:with-param name="pHeader" select="."/>
+                                    <xsl:with-param name="pCell" select="$vRow/col[$vPos]"/>
+                                    <xsl:with-param name="pJson" select="$pJson"/>
+                                </xsl:call-template>
+                            </xsl:for-each>
+                        </xsl:variable>
+                        <xsl:for-each select="$vSampleXml/node()">
+                            <xsl:sort select="fn:name()"/>
+                            <xsl:copy-of select="*"/>
                         </xsl:for-each>
                     </sample>
                 </xsl:for-each>

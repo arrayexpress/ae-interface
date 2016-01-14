@@ -513,72 +513,72 @@
 
     <!-- rss feeds support, current scheme -->
     <rule>
-        <from>^/rss/v2/experiments$</from>
+        <from>^/rss/v2/experiments/?$</from>
         <to type="forward" last="true">/servlets/query/experiments/rss/xml</to>
     </rule>
 
     <!-- rss feeds support, old scheme -->
     <rule>
-        <from>^/rss/experiments$</from>
+        <from>^/rss/experiments/?$</from>
         <set type="parameter" name="queryversion">1</set>
         <to type="forward" last="true">/servlets/query/experiments/rss/xml</to>
     </rule>
 
     <!-- rest api v3 support -->
     <rule>
-        <from>^/xml/v3/experiments$</from>
+        <from>^/xml/v3/experiments/?$</from>
         <to type="forward" last="true">/servlets/query/experiments/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)$</from>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/files$</from>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/files/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/samples$</from>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/samples/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/samples-api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/protocols$</from>
+        <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/protocols/?$</from>
         <set type="parameter" name="experiment">$1</set>
         <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/experiments/(.*)$</from>
+        <from>^/xml/v3/experiments/(.+)$</from>
         <set type="parameter" name="keywords">$1</set>
         <to type="forward" last="true">/servlets/query/experiments/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/files$</from>
+        <from>^/xml/v3/files/?$</from>
         <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/files/([E]-\w{4}-\d+)$</from>
+        <from>^/xml/v3/files/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/files/(.*)$</from>
+        <from>^/xml/v3/files/(.+)$</from>
         <set type="parameter" name="keywords">$1</set>
         <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/protocols$</from>
+        <from>^/xml/v3/protocols/?$</from>
         <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/protocols/([E]-\w{4}-\d+)$</from>
+        <from>^/xml/v3/protocols/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
         <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
     <rule>
-        <from>^/xml/v3/protocols/(.*)$</from>
+        <from>^/xml/v3/protocols/(.+)$</from>
         <set type="parameter" name="keywords">$1</set>
         <to type="forward" last="true">/servlets/query/protocols/api-v3/xml</to>
     </rule>
