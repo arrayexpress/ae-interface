@@ -253,7 +253,7 @@
                                 <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                             </xsl:call-template>
                             <tr>
-                                <td colspan="4" class="col_footer">&#160;</td>
+                                <td colspan="{if ($vUnrestrictedAccess) then '5' else '4'}" class="col_footer">&#160;</td>
                             </tr>
                         </tbody>
                     </table>
@@ -309,7 +309,15 @@
                 <xsl:if test="$vUnrestrictedAccess">
                     <td class="col_experiments">
                         <div>
-                            <xsl:value-of select="fn:count(ae:getMappedValue('experiments-for-array', accession))"/>
+                            <xsl:variable name="vNumExperiments" select="fn:count(fn:distinct-values(ae:getMappedValue('experiments-for-array', accession)))"/>
+                            <xsl:choose>
+                                <xsl:when test="$vNumExperiments > 0">
+                                    <a href="{$context-path}/experiments/browse.html?array={accession}">
+                                        <xsl:value-of select="$vNumExperiments"/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise>-</xsl:otherwise>
+                            </xsl:choose>
                         </div>
                     </td>
                 </xsl:if>
@@ -349,6 +357,12 @@
 
         <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vExpsWithArray" select="search:queryIndex('experiments', concat('visible:true array:', $vAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
+
+        <xsl:for-each select="ae:getMappedValue('experiments-for-array', $vAccession)">
+            <xsl:if test="current() != $vExpsWithArray/experiment/accession">
+                <xsl:message select="fn:concat('accession: ', current())"/>
+            </xsl:if>
+        </xsl:for-each>
 
         <h4>
             <xsl:if test="not($pArray/user/@id = '1')">
