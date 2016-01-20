@@ -45,6 +45,7 @@
     <xsl:variable name="vExperiment" select="if ($ref) then $vRef else fn:upper-case($experiment)"/>
     <xsl:variable name="vReference" select="if ($vExperimentMode) then $vExperiment else if (fn:not($vBrowseMode)) then $vAccession else ''"/>
     <xsl:variable name="vQueryString" as="xs:string" select="if ($vExperimentMode) then fn:concat('?ref=', $vReference) else (if ($query-string) then fn:concat('?', $query-string) else '')"/>
+    <xsl:variable name="vUnrestrictedAccess" select="fn:not($userid)"/>
 
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-experiments-templates.xsl"/>
@@ -68,7 +69,7 @@
                 </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pExtraCSS">
-                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-arrays-browse-1.0.130313.css" type="text/css"/>
+                <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-arrays-browse-1.0.160120.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
@@ -102,7 +103,7 @@
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
-                <script src="{$context-path}/assets/scripts/jquery.ae-arrays-browse-1.0.0.js" type="text/javascript"/>
+                <script src="{$context-path}/assets/scripts/jquery.ae-arrays-browse-1.0.160120.js" type="text/javascript"/>
             </xsl:with-param>
             <xsl:with-param name="pExtraBodyClasses"/>
         </xsl:call-template>
@@ -182,6 +183,9 @@
                         <col class="col_accession"/>
                         <col class="col_name"/>
                         <col class="col_organism"/>
+                        <xsl:if test="$vUnrestrictedAccess">
+                            <col class="col_experiments"/>
+                        </xsl:if>
                         <col class="col_files"/>
                         <thead>
                             <tr>
@@ -216,6 +220,16 @@
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                     </xsl:call-template>
                                 </th>
+                                <xsl:if test="$vUnrestrictedAccess">
+                                    <th class="col_experiments sortable">
+                                        <xsl:text>Experiments</xsl:text>
+                                        <xsl:call-template name="add-table-sort">
+                                            <xsl:with-param name="pKind" select="'experiments'"/>
+                                            <xsl:with-param name="pSortBy" select="$vSortBy"/>
+                                            <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
+                                        </xsl:call-template>
+                                    </th>
+                                </xsl:if>
                                 <th class="col_files">
                                     <xsl:text>Files</xsl:text>
                                 </th>
@@ -226,6 +240,9 @@
                         <col class="col_accession"/>
                         <col class="col_name"/>
                         <col class="col_organism"/>
+                        <xsl:if test="$vUnrestrictedAccess">
+                            <col class="col_experiments"/>
+                        </xsl:if>
                         <col class="col_files"/>
                         <tbody>
                             <xsl:call-template name="ae-sort-arrays">
@@ -289,6 +306,13 @@
                         </xsl:call-template>
                     </div>
                 </td>
+                <xsl:if test="$vUnrestrictedAccess">
+                    <td class="col_experiments">
+                        <div>
+                            <xsl:value-of select="fn:count(ae:getMappedValue('experiments-for-array', accession))"/>
+                        </div>
+                    </td>
+                </xsl:if>
                 <td class="col_files">
                     <div>
                         <xsl:choose>

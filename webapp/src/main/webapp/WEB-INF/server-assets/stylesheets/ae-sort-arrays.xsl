@@ -16,6 +16,10 @@
  *
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                xmlns:ae="http://www.ebi.ac.uk/arrayexpress/XSLT/Extension"
+                extension-element-prefixes="fn ae"
+                exclude-result-prefixes="fn ae"
                 version="2.0">
 
     <xsl:template name="ae-sort-arrays">
@@ -35,7 +39,7 @@
             <xsl:when test="$pSortBy='accession'">
                 <xsl:apply-templates select="$pArrays">
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
-                    <!-- sort by experiment 4-letter code -->
+                    <!-- sort by pipeline 4-letter code -->
                     <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
                     <!-- sort by number -->
                     <xsl:with-param name="pFrom" select="$pFrom"/>
@@ -47,7 +51,7 @@
                     <xsl:sort select="lower-case(name)" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
-                    <!-- sort by experiment 4-letter code -->
+                    <!-- sort by pipeline 4-letter code -->
                     <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
                     <!-- sort by number -->
 
@@ -67,7 +71,7 @@
                               data-type="number"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
-                    <!-- sort by experiment 4-letter code -->
+                    <!-- sort by pipeline 4-letter code -->
                     <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
                     <!-- sort by number -->
 
@@ -82,7 +86,20 @@
                     <xsl:sort select="organism[3]" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
-                    <!-- sort by experiment 4-letter code -->
+                    <!-- sort by pipeline 4-letter code -->
+                    <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
+                    <!-- sort by number -->
+
+                    <xsl:with-param name="pFrom" select="$pFrom"/>
+                    <xsl:with-param name="pTo" select="$pTo"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:when test="$pSortBy='experiments'">
+                <xsl:apply-templates select="$pArrays">
+                    <xsl:sort select="fn:count(ae:getMappedValue('experiments-for-array', accession))" order="{$pSortOrder}"/>
+                    <!-- then sort by accession -->
+                    <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
+                    <!-- sort by pipeline 4-letter code -->
                     <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
                     <!-- sort by number -->
 
@@ -95,7 +112,7 @@
                     <xsl:sort select="*[name()=$pSortBy][1]" order="{$pSortOrder}"/>
                     <!-- then sort by accession -->
                     <xsl:sort select="substring(accession, 3, 4)" order="{$pSortOrder}"/>
-                    <!-- sort by experiment 4-letter code -->
+                    <!-- sort by pipeline 4-letter code -->
                     <xsl:sort select="substring(accession, 8)" order="{$pSortOrder}" data-type="number"/>
                     <!-- sort by number -->
 

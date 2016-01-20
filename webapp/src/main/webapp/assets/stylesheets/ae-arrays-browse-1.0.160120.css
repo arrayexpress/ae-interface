@@ -29,6 +29,11 @@
     text-align: left;
 }
 
+#ae-browse .col_experiments {
+    width: 100px;
+    text-align: center;
+}
+
 #ae-browse .col_files {
     width: 70px;
     text-align: center;

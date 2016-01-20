@@ -25,7 +25,7 @@
             , fields:
                 { accession: { title: "accession", sort : "ascending" }
                 , name: { title: "name", sort: "ascending" }
-                , assays: { title: "number of assays", sort: "descending" }
+                , experiments: { title: "number of experiments", sort: "descending" }
                 , organism: { title: "organism", sort: "ascending" }
             }
         });
