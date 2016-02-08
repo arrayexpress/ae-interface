@@ -2,15 +2,6 @@
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>${project.name} v${project.version}.r${buildNumber}</display-name>
-    <servlet>
-        <description>ArrayExpress HTTP Proxy Servlet</description>
-        <servlet-name>HttpProxyServlet</servlet-name>
-        <servlet-class>uk.ac.ebi.arrayexpress.servlets.HttpProxyServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HttpProxyServlet</servlet-name>
-        <url-pattern>/servlets/proxy/*</url-pattern>
-    </servlet-mapping>
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>

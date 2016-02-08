@@ -780,16 +780,6 @@
         <to type="forward" last="true">/servlets/query/experiments/ebeye/xml</to>
     </rule>
 
-    <!-- proxy calls to json efo api for nils -->
-    <rule>
-        <from>^/json/v2/efotree$</from>
-        <to type="forward" last="true">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efotree</to>
-    </rule>
-    <rule>
-        <from>^/json/v2/efodict$</from>
-        <to type="forward" last="true">/servlets/proxy/http://orange.ebi.ac.uk:8180/microarray-as/ae/json/v2/efodict</to>
-    </rule>
-
     <!-- helpers -->
     <rule>
         <from>^/species-list[.]html</from>
