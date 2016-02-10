@@ -36,7 +36,7 @@
     <li><a href="#standard_url">Is there a standard URL format for linking to an experiment in ArrayExpress?</a></li>
     <li><a href="#api">Do you have any application programming interfaces (APIs) for accessing ArrayExpress?</a></li>
 </ul>
-
+<p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 <h5>Other general questions</h5>
 <ul>
     <li><a href="#cite">How do I cite ArrayExpress in my publication?</a></li>
@@ -74,7 +74,7 @@
 <ul>
     <li><a href="#affy">Which files do I need to submit for an Affymetrix experiment?</a></li>
     <li><a href="#illumina">What files do I need to submit for an Illumina experiment?</a></li>
-    <li><a href="#hts">How do I submit a high throughput sequencing (HTS) experiment?</a></li>
+    <li><a href="#hts">How do I submit a high throughput sequencing (HTS) or next-generation sequencing (NGS) experiment?</a></li>
     <li><a href="#large_files">I have very large data files, do I need to upload them through the web interface?</a></li>
     <li><a href="#mageml">I have MAGE-ML files generated from in-house pipelines. Does ArrayExpress still accept them?</a></li>
 </ul>
@@ -91,7 +91,7 @@
 <h5>Searching and understanding data</h5>
 <ul>
     <li><a id="search_help"></a><strong>How do I search the ArrayExpress database?</strong><br>
-        For simple keyword searches and browsing, please visit the <a href="/training/online/course/arrayexpress-exploring-functional-genomics-data-ar/how-search-archive">search help page</a>. For more complex search queries, e.g. "Find me all the microarray experiments on Agilent chip X studying diabetes in mouse", please refer to the <a href="how_to_search.html#AdvancedSearchExperiment">advanced search help</a>.</li>
+        For simple keyword searches and browsing, please visit the <a href="http://www.ebi.ac.uk/arrayexpress/help/how_to_search.html">search help page</a>. For more complex search queries, e.g. "Find all the microarray experiments on Agilent chip X studying diabetes in mouse", you will need to use some sophisticated search filters to limit the search space of some terms, e.g. ask the search engine to find studies where “diabetes” is the subject of investigation, and not merely mentioned in background information of a study. Please refer to the <a href="how_to_search.html#AdvancedSearchExperiment">advanced search help</a> for more details.</li>
 </ul>
 
 <ul>
@@ -110,8 +110,7 @@
 </ul>
 
 <ul>
-    <li><a id="expt_already_published"></a><strong>I read a
-        paper that referred to data in ArrayExpress but when I searched for the data I got no hits. Why?</strong><br>
+    <li><a id="expt_already_published"></a><strong>I read a paper that referred to data in ArrayExpress but when I searched for the data I got no     hits. Why?</strong><br>
         It could be that the submitter of the data has not yet told us that the experiment should be made public. If you come across this problem
         please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> - tell us which paper you found the reference in and the ArrayExpress accession number quoted if any. We will make this data publicly available.</li>
 </ul>
@@ -122,9 +121,9 @@
         as "E-MTAB", "E-GEOD", etc. What do the prefixes mean?<br>
     </strong>The prefixes indicate the source and/or submission route from which the data came from. The common ones are:
         <ul>
-            <li>MEXP = data submitted via the <a href="/miamexpress/login.html">MIAMExpress</a> submission route </li>
+            <li>MEXP = data submitted via the MIAMExpress submission route (discontinued since July 2014)</li>
             <li>TABM = data submitted via the Tab2MAGE submission route (discontinued since January 2012)</li>
-            <li>MTAB = data submitted via the <a href="/cgi-bin/microarray/magetab.cgi">MAGE-TAB</a> submission route</li>
+            <li>MTAB = data submitted via the MAGE-TAB (discontinued since September 2014) or <a href="/fg/annotare/login">Annotare</a> submission route</li>
             <li>GEOD = data imported from <a href="http://www.ncbi.nlm.nih.gov/geo/">NCBI Gene Expression Omnibus</a></li>
         </ul>
         See the <a href="accession_codes.html">accession codes</a> help page for more information.</li>
@@ -133,8 +132,7 @@
 
 <h5>Data access policy - permissions and restrictions</h5>
 <ul>
-    <li><a id="data_restrictions"></a><strong>Are
-        there any restrictions on the use of microarray data obtained through
+    <li><a id="data_restrictions"></a><strong>Are there any restrictions on the use of microarray data obtained through
         ArrayExpress?</strong><br>
         No restrictions, all public data from ArrayExpress can be used by
         anyone and our services are completely free of charge.</li>
@@ -153,7 +151,7 @@
         lost my ArrayExpress website login details. What do I do?</strong><br>
         If you are viewing a curated experiment which you submitted to ArrayExpress, use the
         <a href="how_to_search_private_data.html#LostPrivateDataLogin">forgotten password reminder form</a> in the login box.
-        If you are not the data submitter (e.g. a reviewer), then please contact the the submitter.
+        If you are not the data submitter (e.g. a reviewer), then please contact the submitter.
         We can only give ArrayExpress login details to the owners of the data directly.</li>
 </ul>
 
@@ -191,6 +189,7 @@
         ArrayExpress?</strong><br>
         Yes, we have REST-style and WebService APIs for accessing ArrayExpress. Details can be found here: <a href="programmatic_access.html">Programmatic access</a>.</li>
 </ul>
+<p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
 <h5>Other general questions</h5>
 <ul>
@@ -210,8 +209,9 @@
         <p>You should include your experiment accession number and the URL to
         ArrayExpress home page, <a href="/arrayexpress/">www.ebi.ac.uk/arrayexpress</a>.
         e.g. "Microarray data are available in the ArrayExpress database (<a href="/arrayexpress/">www.ebi.ac.uk/arrayexpress</a>)
-        under accession number E-MTAB-12345." You can also include a direct link to your experiment or array design. For example, the link would be 
-        <code>http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-1234</code> for experiment "E-MTAB-1234", or 
+        under accession number E-MTAB-xxxx." You can also include a direct link to your experiment or array design.
+        For example, the link would be
+        <code>http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-1234</code> for experiment "E-MTAB-1234", or
         <code>http://www.ebi.ac.uk/arrayexpress/arrays/A-MTAB-567</code> for array design "A-MTAB-567".</p>
         <p>If you wish to include a citation
         for ArrayExpress then the following publication should be used: Kolesnikov N. et al. 2015 ArrayExpress update - simplifying data submissions. Nucleic
@@ -222,32 +222,30 @@
     <li><a id="update_frequency"></a><strong>How often is ArrayExpress updated?</strong><br>
         The <a href="/arrayexpress/">public
             web interface</a> and the <a href="ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/">FTP site</a>
-        for ArrayExpress are updated daily at about 06:00 UK time.</li>
+        for ArrayExpress are updated daily at about 06am UK time.</li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
 
     <!--START OF GENERAL SUBMISSION FAQ ANSWERS-->
 <p>&nbsp;</p>
-<h3>2. Submitting data to ArrayExpress (general)</h3>
+<h3>2. Submitting data to ArrayExpress</h3>
 <h5>Accession numbers</h5>
 <ul>
     <li>
         <a id="need_acc_num_urgent"></a><strong>I urgently need an accession number to include in my publication - how can I get one?</strong><br>
-        Firstly, start your submission if you have not already done so! ArrayExpress does not provide accession numbers in advance of
+        Firstly, start your <a href="http://www.ebi.ac.uk/arrayexpress/submit/overview.html">submission</a> if you have not already done so! ArrayExpress does not provide accession numbers in advance of
         submission of data. This is in line with the <a href="http://www.ncbi.nlm.nih.gov/geo/info/faq.html#Whenaccessions">NCBI
         Gene Expression Omnibus (GEO)'s policy</a> of provision of accession numbers after deposition. If you have completed the
-        submission and are waiting for a response you can email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
-        to let us know how urgently the accession number is required. To help us find your submission tell us your username, the title of the
-        experiment or array. We will reply to your email as quickly as possible but please note that we often have several submissions requiring urgent
-        attention. </li>
+        submission in Annotare, you should receive an automated email with the accession number usually within 15 minutes. For other submissions you can email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
+        to let us know how urgently the accession number is required. We will reply to your email as quickly as possible but please note that we often have several submissions requiring urgent attention.</li>
 </ul>
 <ul>
     <li>
-        <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?</strong>
-        <br>When submitting via <a href="/fg/annotare/login">Annotare</a>,
-        after you've filled in the webforms with experimental information and uploaded data files, all information will go through a mandatory validation step. If there are no errors,
-        you can proceed to submit and will receive an automatic confirmation email containing the accession number usually within 24 hours. Sometimes we receive a high volume of submissions, which can cause delay accessioning, so please bear with us. The accession number will NOT change throughout data curation and processing, so you can quote it in your manuscript.<br><br>
-        If you still haven't received an accession number 5 working days post submission, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> citing your experiment's title, and we will investigate.
+        <a id="how_long_to_get_acc"></a><strong>How long will it take to get an accession number?</strong><br>
+        Using the <a href="/fg/annotare/login">Annotare submission tool</a>, the majority of users submit within 3 hours, from creating a new submission account to submitting the experiment. This does not imply strictly 3 hours of hands-on time because information entered in Annotare is saved automatically, and a submitter is free to logout and login again at any time.
+        Annotare features a built-in validation tool to ensure all essential information is included in your submission so we can assign an accession number to your data set quickly upon submission, usually within 15 minutes.
+        Sometimes we receive a high volume of submissions, which can cause a delay in accessioning for up to 24 hours. The accession number will NOT change throughout data curation and processing, so you can quote it in your manuscript.<br><br>
+        If you still haven't received an accession number withing 24 hours post submission, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> citing your experiment's title, and we will investigate.
         </li>
 </ul>
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
@@ -260,19 +258,19 @@
         Yes, all submitted information will be kept private
         until the release date that you set at the time of submission, or until
         a publication is released that contains the ArrayExpress accession
-        number relating to your data. You can also change the release date to suit the 
-        peer review progress of your paper.  Please see our <a href="data_availability.html#changes">data availability</a>
+        number relating to your data. You can also change the release date to suit the
+        peer review progress of your paper. Please see our <a href="data_availability.html#changes">data availability</a>
         page for more information.</li>
 </ul>
 <ul>
     <li><a id="journal_private_access"></a>
-        <strong>The journal I am submitting to have requested private access to my data - how do I get
+        <strong>The journal I am submitting to has requested private access to my data - how do I get
             an ArrayExpress login for them?</strong><br>
-        Firstly, start your ArrayExpress submission if you have not already
+        Firstly, start your <a href="http://www.ebi.ac.uk/arrayexpress/submit/overview.html">ArrayExpress submission</a> if you have not already
         done so! You will be sent login details for viewing your private experimental data
         on the <a href="/arrayexpress">ArrayExpress website</a>
         <em>only when curation is finished and when your data is loaded into the ArrayExpress database</em>. If you are really pushed
-        for time, reply to the email thread sent to you by the ArrayExpress
+        for time, reply to the email sent to you by Annotare or the ArrayExpress
         curator in charge of your submission, or email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         to let us know about your situation. We will try our best to fast-track
         your submission.</li>
@@ -295,13 +293,13 @@
         These "submitter" accounts can only be used for
         submitting data, not viewing it in ArrayExpress. We will provide you
         with an ArrayExpress data access login account after your submission has been
-        curated and then loaded into ArrayExpress. If you are using an
+        curated and loaded into ArrayExpress. If you are using an
         ArrayExpress login which you have just received, it might not be
         working yet because ArrayExpress is updated only once a day at about
         6am UK time. Try again after this time.
         <br><br>
         <p>If you've forgotten or lost
-        your access account details, you can retrieve it using the 
+        your access account details, you can retrieve it using the
         <a href="how_to_search_private_data.html#LostPrivateDataLogin">forgotten password tool</a>. If it still does not work, contact
         us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
         and tell us what login details you are trying to use / which page you
@@ -322,14 +320,14 @@
 <ul>
     <li><a id="make_public"></a>
         <strong>My paper is about to be published - how do I make the data public?</strong><br>
-        For microarray data, you can <a href="data_availability.html#changes">change the release date</a> using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>. Simply login with the data access account details which we emailed you when curation was completed, double-click at the private experiment that you would like release date changed, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s). Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. Your experiment will appear on the ArrayExpress website at about 06:00 UK time the following day, following an overnight website update.<br><br>
+        For microarray data, you can <a href="data_availability.html#changes">change the release date</a> using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>. Simply login with the data access account details which we emailed you when curation was completed, double-click at the private experiment that you would like release date changed, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s). Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. Your experiment will appear on the ArrayExpress website at about 06am UK time the following day, after an overnight website update.<br><br>
         For sequencing data, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the experiment accession number and tell us when it should be made public.  We will change release date for you in both ArrayExpress and ENA (where the raw data files are stored) to make sure the records are in sync.<br><br>
 </ul>
 
 <ul>
     <li><a id="add_publication"></a>
         <strong>My paper has been published - how do I add the citation details to my experiment?</strong><br>
-        You can add, remove or edit citation details for your experiment (microarray or sequencing alike) using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>.  Simply login with the data access account details which we emailed you when curation was completed, double-click at the experiment that you would like associate the publication with, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s).<br><br> Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. The changes you make will appear on the ArrayExpress website at about 06:00 UK time the following day, following an overnight website update.<br>
+        You can add, remove or edit citation details for your experiment (microarray or sequencing alike) using this <a href="https://www.ebi.ac.uk/fg/acext/">self-service tool</a>.  Simply login with the data access account details which we emailed you when curation was completed, double-click at the experiment that you would like associate the publication with, and follow on-screen instructions. You would normally have used these account details to log in to the ArrayExpress website and view your private experiment(s).<br><br> Don't worry if you have forgotten the username and/or password, you can <a href="how_to_search.html#Login">retrieve login details</a> using your submitter's email address and the experiment accession number. The changes you make will appear on the ArrayExpress website at about 06am UK time the following day, after an overnight website update.<br>
     </li>
 </ul>
 
@@ -342,11 +340,11 @@
     <li><a id="affy"></a>
         <strong>Which files do I need to submit for an Affymetrix
             experiment?</strong><br>
-        For a <a href="http://www.mged.org/Workgroups/MIAME/miame_2.0.html">MIAME
+        For a <a href="http://fged.org/projects/miame/">MIAME
             compliant</a> submission we need Affymetrix .CEL files as raw
         data and some form of processed, probe set level data. The processed
         data is preferably a matrix file generated by software such as as <a href="http://biostatistics.oxfordjournals.org/content/4/2/249.full.pdf">robust
-            multi-array average (RMA)</a> or <a href="http://biosun1.harvard.edu/complab/dchip/">dChip</a>.
+            multi-array average (RMA)</a>.
         A matrix file has a rather strict format, with the Affyemtrix probesets in the rows and processed
         intensity values per hybridisation in the columns <a href="/fgpt/annotare_help/data_format.html#data_matrix">
             (data matrix example)</a>.</li>
@@ -354,39 +352,38 @@
 <ul>
     <li><a id="illumina"></a>
         <strong>What files do I need to submit for an Illumina experiment?</strong><br>
-        Illumina raw data files are usually either in plain text or binary format.  Plain text files are generated by the <a href="http://www.illumina.com/software/genomestudio_software.ilmn">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software, using the <a href="http://www.illumina.com/software/illumina_connect.ilmn#gene_expression_plug_ins">ArrayExpress Data Submission Report Plug-in</a>), whereas the binary "IDAT" files (stands for "intensity data file") are generated by R/BioConductor packages such as <a href="http://www.bioconductor.org/packages/release/bioc/html/illuminaio.html">illuminaio</a>). IDAT files is the preferred format, as it is a binary format created by the scanner, containing all information required to analyse the data.  In contrast, plain-text files can be missing information such as which are the control probes; this is sometimes provided in a separate file, but not always, and heterogeneity in raw data file formats makes systematic analysis of data difficult.  Another disadvantage of plain-text files is that they are susceptible to human-introduced errors, as it is easy for someone to open the file in a text editor or spreadsheet program and accidentally change its content.
+        Illumina raw data files are usually either in plain text or binary format.  Plain text files are generated by the <a href="http://www.illumina.com/techniques/microarrays/array-data-analysis-experimental-design/genomestudio.html">Illumina GenomeStudio software </a>(previously known as the "BeadStudio" software, using the <a href="http://support.illumina.com/content/dam/illumina-support/documents/myillumina/6978f434-ba69-4af6-9572-2578e7193938/arrayexpress_data_subm_report_plug-in_v2.0.0.pdf">ArrayExpress Data Submission Report Plug-in</a>). The binary "IDAT" files (stands for "intensity data file") are generated by the scanner and can be parsed using  R/BioConductor packages such as <a href="http://www.bioconductor.org/packages/release/bioc/html/illuminaio.html">illuminaio</a>). IDAT is the preferred file format, as it is a binary format, containing all information required to analyse the data. In contrast, plain-text files can be missing information such as which are the control probes; this is sometimes provided in a separate file, but not always, and heterogeneity in raw data file formats makes systematic analysis of data difficult.  Another disadvantage of plain-text files is that they are susceptible to human-introduced errors, as it is easy for someone to open the file in a text editor or spreadsheet program and accidentally change its content.
         </li>
 </ul>
 <ul>
-    <li><strong><a id="hts"></a>How do I submit a high throughput sequencing (HTS) experiment?</strong><br>
+    <li><strong><a id="hts"></a>How do I submit a high throughput sequencing (HTS) or next-generation sequencing (NGS) experiment?</strong><br>
         You will need to provide as much information as possible about the experiment's purpose, starting materials (samples),
         sequencing libraries, wet- and dry-lab protocols used, raw sequence data files for each sequencing
-        assay, and optionally processed data files, e.g. BAM alignment files, RPFM/FPKM values for each gene/transcript. The <a href="/fg/annotare/login">Annotare</a> 
+        assay, and optionally processed data files, e.g. BAM alignment files, RPFM/FPKM values for each gene/transcript. The <a href="/fg/annotare/login">Annotare</a>
          submission tool will guide you step-by-step in the process.<br><br>
-        After you've submitted via Annotare, an ArrayExpress curator will check the meta-data and data files you provided. If 
-        everything is fine, ArrayExpress will act as a data broker and transfer the raw read files to the <a href="/ena">European Nucleotide Archive (ENA)</a>
-        on your behalf, so you do not need to send the read files directly to the ENA.
+        After you've submitted via Annotare, an ArrayExpress curator will check the meta-data and data files you provided. If
+        everything is fine, ArrayExpress will act as a data broker and transfer the raw read files to the Sequence Read Archive (SRA) at the <a href="/ena">European Nucleotide Archive (ENA)</a>
+        on your behalf, so you do not need to send the read files directly to the ENA. or any SRA partners. (The SRA is a collaboration between NCBI in the United States, EBI in the United Kingdom and DDBJ in Japan. The three partners exchange data daily.)
         <br><br>
         Raw data files must be in a format <a href="/ena/about/read-file-formats">accepted by the Sequence Read Archive (SRA)</a> at the ENA,
-        otherwise we will not be able to process your submission.  We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing submissions help page</a> as it explains the requirements in a lot more detail. </li>
+        otherwise we will not be able to process your submission. We strongly recommend that you check out our <a href="UHTS_submissions.html">sequencing submissions help page</a> as it explains the requirements in a lot more detail. </li>
 </ul>
 
 <ul>
     <li><strong><a id="large_files"></a>I have very large data files, do I need to upload them through the web interface?</strong><br>
-        Large (over 10Mb) data files can be sent to us via <a href="ftp_upload.html"> FTP</a> instead of uploaded through the <a href="/fg/annotare/login">Annotare webform</a> tool (more information on this <a href="/fgpt/annotare_help/describe_files.html">help page</a>).
+        Large (over 10Mb) data files can be sent to us via <a href="ftp_upload.html"> FTP</a> instead of uploaded through the <a href="/fg/annotare/login">Annotare webform</a> tool (more information on <a href="http://www.ebi.ac.uk/fgpt/annotare_help/file_upload.html#ftp">linking files on the FTP server to your Annotare submission</a>).
     </li>
 </ul>
 
 
 <ul>
-    <li><strong><a id="mageml"></a>I
-        have MAGE-ML files generated from in-house pipelines. Does ArrayExpress
+    <li><strong><a id="mageml"></a>I have MAGE-ML/MAGE-TAB files generated from in-house pipelines. Does ArrayExpress
         still accept them?</strong><br>
-        No. MAGE-ML files are no longer supported and accepted by ArrayExpress from 2011.  Only MAGE-TAB files are supported. (You can download a PDF version of the latest 
-        <a href="https://annotare.googlecode.com/files/MAGE-TABv1.1_2011_07_28.pdf">MAGE-TAB 1.1 specification</a> here. The file is 57Mb in size.)
-        Please submit your experiment data using our webform-baed <a href="/fg/annotare/login">Annotare</a> tool, described on this <a href="submissions_overview.html">submissions overview page</a>.<br><br>
-        Alternatively, a MAGE-TAB spreadsheet upload-and-validate functionality will be available from Annotare by the end of 2015. If you would like to update your pipeline to generate MAGE-TAB files, please write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
-    </li>
+        MAGE-ML files are no longer supported or accepted by ArrayExpress since 2011. Only MAGE-TAB files are supported. To submit metadata, please use the webform-based tool <a href="/fg/annotare/login">Annotare</a>, which will generate MAGE-TAB files for you, so you don’t have to worry about learning the file format. All you need to do is to fill in a series of webforms and upload data files within the tool. (If you’re interested, here is the PDF version of the latest
+        <a href="https://annotare.googlecode.com/files/MAGE-TABv1.1_2011_07_28.pdf">MAGE-TAB 1.1 specification</a> for download. The file is 57Mb in size.)
+        <br><br>
+        In exceptional cases, we accept the submission of correctly formatted MAGE-TAB spreadsheets uploaded via FTP. If you would like to update your pipeline to generate MAGE-TAB files, please write to us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> and we will try our best to offer assistance.
+      </li>
 </ul>
 
 <p style="text-align: right;"><a href="#top" class="linktotop">Top</a>
@@ -395,19 +392,17 @@
 <ul>
     <li><strong><a id="hit_submit_too_soon"></a>I hit "Submit" at the end of my submission but I haven't actually finished editing.
         I logged in to the submission tool but can't edit my experiment anymore. Help!</strong><br>
-        Email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> as soon as possible and ask us to 
-        "reopen" the submission and "assign" it back to you, so you can edit it again.  (Submitted data sets are "read-only" 
-        to the submitter to avoid confusing, concurrent editing of the same submission by submitter and curator.) Remember to include your username 
-        and the experiment/array design title in your email so we can quickly find your submission. 
+        Email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> as soon as possible and ask us to
+        "reopen" the submission and "assign" it back to you, so you can edit it again.  (Submitted data sets are "read-only"
+        to the submitter to avoid confusing, concurrent editing of the same submission by submitter and curator.) Remember to include your username
+        and the experiment/array design title in your email so we can quickly find your submission.
         </li>
 </ul>
 <ul>
-    <li><a id="data_already_in_AE_DB"></a><strong>My
-        data has been loaded into ArrayExpress but I need to change/correct something - how do I do
+    <li><a id="data_already_in_AE_DB"></a><strong>My data has been loaded into ArrayExpress but I need to change/correct something - how do I do
         this?</strong><br>
-        Email us at
-        <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the accession number and describe what corrections you would like
-        to make. Please see this help page on <a href="submissions_overview.html#UpdateCompletedSub">updating experiments/array designs</a> for further details.
+        Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the accession number and describe what corrections you would like
+        to make. Please see this help page on <a href="http://www.ebi.ac.uk/arrayexpress/help/modify_data_loaded_in_AE.html">updating experiments/array designs</a> for further details.
         </li>
 </ul>
 <ul>
@@ -435,7 +430,7 @@
                 <li><a href="how_to_search_adf.html">Array design search</a></li>
                 <li><a href="how_to_search_private_data.html">Search for private data</a></li>
             </ul>
-        </li>    
+        </li>
         <li><a href="submissions_overview.html">How to submit</a>
             <ul>
                 <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
