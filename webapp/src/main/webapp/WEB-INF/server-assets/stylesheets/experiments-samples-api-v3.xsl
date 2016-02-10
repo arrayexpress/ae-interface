@@ -163,7 +163,7 @@
                     <type><xsl:value-of select="fn:normalize-space(fn:replace($vName,'^(derived|)array(data)(matrix|)file$', '$1 $2 $3'))"/></type>
                     <name><xsl:value-of select="$pCell"/></name>
                     <xsl:if test="fn:matches(ae:normaliseHeader($pHeader/following-sibling::col[1]), 'comment\[(Derived |)ArrayExpress FTP file\]')">
-                        <url><xsl:value-of select="fn:concat(fn:replace($pCell/following-sibling::col[1],'ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/\w{4}/',$vFileUrl), '/', $pCell)"/></url>
+                        <url><xsl:value-of select="fn:concat(fn:replace($pCell/following-sibling::col[1],'ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/\w{4}/',$vFileUrl), '/', $pCell)"/></url>
                     </xsl:if>
                     <xsl:call-template name="comment-element">
                         <xsl:with-param name="pHeader" select="$pHeader/following-sibling::col"/>
