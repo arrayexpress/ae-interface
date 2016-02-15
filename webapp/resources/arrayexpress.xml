@@ -189,8 +189,8 @@
                 <field name="protocol" title="by Protocol" type="string" path="protocol/id | protocol/accession" analyze="true" store="false" escape="false" expand="false"/>
                 <field name="exptype" title="by Experiment Type" type="string" path="experimenttype" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="expdesign" title="by Experiment Design" type="string" path="experimentdesign" analyze="true" store="false" escape="false" expand="true"/>
-                <field name="ef" title="by Experimental Factor" type="string" path="experimentalfactor/name" analyze="true" store="false" escape="false" expand="true"/>
-                <field name="efv" title="by Experimental Factor Value" type="string" path="experimentalfactor/value" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="ev" title="by Experimental Variable" type="string" path="experimentalfactor/name" analyze="true" store="false" escape="false" expand="true"/>
+                <field name="evv" title="by Experimental Variable Value" type="string" path="experimentalfactor/value" analyze="true" store="false" escape="false" expand="true"/>
                 <field name="sa" title="by Sample Attribute Value" type="string" path="sampleattribute/value" analyze="true" store="false" escape="true" expand="true"/>
                 <field name="pmid" title="by PubMed ID" type="string" path="bibliography/accession" analyze="false" store="false" escape="false" expand="false"/>
                 <field name="userid" type="string" path="user/@id" analyze="false" store="false" escape="false" expand="false"/>

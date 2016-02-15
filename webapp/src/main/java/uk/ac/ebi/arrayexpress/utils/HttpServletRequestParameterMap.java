@@ -34,6 +34,8 @@ public class HttpServletRequestParameterMap extends HashMap<String,String[]>
         Map<String, String> result = new HashMap<>();
         result.put("query", "keywords");
         result.put("species", "organism");
+        result.put("ef", "ev");
+        result.put("efv", "evv");
         return Collections.unmodifiableMap(result);
     }
 
