@@ -23,8 +23,23 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class EnhancedQueryParser extends QueryParser {
-    private IndexEnvironment env;
+
+    private final static Map<String, String> FIELD_ALIASES_MAP = createAliasesMap();
+
+    private static Map<String, String> createAliasesMap() {
+        Map<String, String> result = new HashMap<>();
+        result.put("species", "organism");
+        result.put("ef", "ev");
+        result.put("efv", "evv");
+        return Collections.unmodifiableMap(result);
+    }
+
+    private final IndexEnvironment env;
 
     public EnhancedQueryParser(IndexEnvironment env, String f, Analyzer a) {
         super(f, a);
@@ -61,10 +76,16 @@ public class EnhancedQueryParser extends QueryParser {
     }
 
     protected Query getFieldQuery(String field, String queryText, int slop) throws ParseException {
+        if (FIELD_ALIASES_MAP.containsKey(field)) {
+            field = FIELD_ALIASES_MAP.get(field);
+        }
         return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText, slop), field, queryText);
     }
 
     protected Query getFieldQuery(String field, String queryText, boolean quoted) throws ParseException {
+        if (FIELD_ALIASES_MAP.containsKey(field)) {
+            field = FIELD_ALIASES_MAP.get(field);
+        }
         return rewriteNumericBooleanFieldQuery(super.getFieldQuery(field, queryText, quoted), field, queryText);
     }
 
