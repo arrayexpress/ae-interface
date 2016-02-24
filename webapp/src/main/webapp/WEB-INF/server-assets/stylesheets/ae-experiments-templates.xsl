@@ -688,6 +688,16 @@
                             </xsl:call-template>
                         </a>
                     </xsl:when>
+                    <xsl:when test="fn:matches(., '^MTBLS\d+$')">
+                        <a href="http://www.ebi.ac.uk/metabolights/{.}">
+                            <xsl:text>GEO - </xsl:text>
+                            <xsl:call-template name="highlight">
+                                <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                <xsl:with-param name="pText" select="."/>
+                                <xsl:with-param name="pFieldName" select="'accession'"/>
+                            </xsl:call-template>
+                        </a>
+                    </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
