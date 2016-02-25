@@ -690,7 +690,7 @@
                     </xsl:when>
                     <xsl:when test="fn:matches(., '^MTBLS\d+$')">
                         <a href="http://www.ebi.ac.uk/metabolights/{.}">
-                            <xsl:text>GEO - </xsl:text>
+                            <xsl:text>MetaboLights - </xsl:text>
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                 <xsl:with-param name="pText" select="."/>
