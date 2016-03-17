@@ -5,80 +5,72 @@
     <div id="content" role="main" class="grid_24 clearfix">
         <section class="grid_18 alpha">
             <h2>Sequencing Submissions</h2>
-            <p>
-                <a href="#DataTypes">1. Types of data that can be submitted</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#HumanIdentifiableData"> Potentially identifiable human data</a><br>
-                <a href="#HowToSubmit">2. What data files to submit, and how</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#meta_data">Meta-data</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#raw_data_files">Raw data files</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#MD5">MD5 checksum of raw files</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#sending_raw_files">Sending raw files</a><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#processed_data">Processed data files</a><br>
-                <a href="#BamSpec">3. BAM file requirements</a><br>
-                <a href="#HTSDataReleasePolicy"> 4. Modifying/cancelling a sequencing experiment in ArrayExpress and ENA</a><br>
-
-            </p>
+            <ol>
+                <li><a href="#DataTypes">Types of data that can be submitted</a>
+                  <ul>
+                    <li><a href="#HumanIdentifiableData">Potentially identifiable human data</a></li>
+                  </ul>
+                </li>
+                <li><a href="#HowToSubmit">What data files to submit, and how</a>
+                  <ul>
+                    <li><a href="#meta_data">Meta-data</a></li>
+                    <li><a href="#raw_data_files">Raw data file requirements</a></li>
+                    <li><a href="#processed_data">Processed data files</a></li>
+                    <li><a href="#sending_raw_files">File upload</a></li>
+                  </ul>
+                </li>
+            </ol>
             <br>
+
             <h3><a id="DataTypes"></a>1. Types of data that can be submitted</h3>
             <p>ArrayExpress accepts submissions of functional genomics data generated using high throughput sequencing (HTS) assays like RNA-seq and ChIP-seq, mostly from <strong>non-human and human non-identifiable</strong> samples, with the following exceptions:</p>
-            
             <ol>
             <li>Metagenomic/metatranscriptomic data: please submit to the <a href="/metagenomics/submission">EBI Metagenomics service</a> for optimised organisation of your meta-data (e.g. sample annotation).</li>
-            <li>De novo assembly of transcriptome: the raw RNA-seq reads should be submitted to ArrayExpress still. Once we have finished processing your raw reads, submit the assembled transcriptome file (often in fasta format) directly to the <a href="/embl/genomes/submission/app/login/login.jsf">European Nucleotide Archive</a>.</li>
+            <li>De novo assembly of transcriptome: the raw RNA-seq reads should be submitted to ArrayExpress. Once we have finished processing your raw reads, submit the assembled transcriptome file (often in fasta format) directly to the <a href="/embl/genomes/submission/app/login/login.jsf">European Nucleotide Archive</a>.</li>
             </ol>
-            
-            <p>If you're submitting potentially identifiable human data, please <a href="#HumanIdentifiableData">see below</a>.</p>
-            
-            <p>To submit to ArrayExpress, all you need to do is send us meta-data for your experiment (e.g. experiment description, samples and their attributes, all protocols used) and the raw data files; see the <a href="#HowToSubmit">submission guide below</a>.  Submissions without raw data files will not be accepted unless in exceptional circumstances .</p>
-            <p>The meta-data about your experiment will be stored at ArrayExpress, and the raw data files (e.g. fastq files) are eventually stored at the <a href="/ena/about/sra_submissions">Sequence Read Archive</a> (SRA) of the <a href="/ena/">European Nucleotide Archive</a> (ENA). ArrayExpress will transfer the raw data files to the ENA for you so you <i>do not</i> need to submit those files separately to the ENA. You can also send us processed data (i.e. processed from the raw reads, e.g. BAM alignment files, differential expression data, expression values linked to genome coordinates, etc).  Depending on the file format, it will either be stored at ArrayExpress or the ENA.  <span style="color:red">Given the split of meta-data and data files between ArrayExpress and ENA, once your submission is fully processed, it is a lengthy process to modify/update it. Some changes (e.g. cancelling an ENA record which has been released to the public) will not be possible.  Please take a look at our <a href="#HTSDataReleasePolicy">sequencing experiment update/cancellation policy</a> before proceeding.</span></p>
+            <p>If you have potentially identifiable human data, please <a href="#HumanIdentifiableData">see below</a>.</p>
+
+            <p>To submit to ArrayExpress, all you need to do is send us meta-data for your experiment (e.g. experiment description, samples and their attributes, all protocols used) and the raw data files; see the <a href="#HowToSubmit">submission guide below</a>. Submissions without raw data files will not be accepted unless there are exceptional circumstances.</p>
+            <p>The meta-data about your experiment will be stored at ArrayExpress, and the raw data files (e.g. fastq files) are stored at the <a href="/ena/about/sra_submissions">Sequence Read Archive</a> (SRA) of the <a href="/ena/">European Nucleotide Archive</a> (ENA). ArrayExpress will transfer the raw data files to the ENA for you so you <i>do not</i> need to submit those files separately to the ENA. You can also send us processed data (i.e. processed from the raw reads, e.g. BAM alignment files, differential expression data, expression values linked to genome coordinates, etc).  Depending on the file format, it will either be stored at ArrayExpress or the ENA.  <span style="color:red">Given the split of meta-data and data files between ArrayExpress and ENA, once your submission is fully processed, it is a lengthy process to modify/update it. Some changes (e.g. cancelling an ENA record which has been released to the public) will not be possible.  Please take a look at our <a href="modify_data_loaded_in_AE.html">sequencing experiment update/cancellation policy</a> before proceeding.</span></p>
+
             <h4><a id="HumanIdentifiableData"></a>Potentially identifiable human data</h4>
-            <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>.</p>
-            <p>Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted directly to the <a href="/ega/">European Genome-phenome Archive (EGA)</a>, not ArrayExpress. Cases are possible where identifiable data (e.g. raw sequences) are submitted to the EGA, while the related processed data (e.g. RPKM values) are submitted to ArrayExpress, but <em>it is up to the submitter to ensure that such a submission copies to the respective ethics requirements.</em>  To submit processed data to ArrayExpress, please begin by emailing us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the EGA study accession number. We will import non-human-identifiable meta-data from EGA in a spreadsheet (which the submitter will have the chance to review), and then match the meta-data with processed data.</p>
-            <p>The following diagram summarises the typical data flow:.</p>
+            <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if consent for public release of the data hs been given. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>.</p>
+            <p>Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted directly to the <a href="/ega/">European Genome-phenome Archive (EGA)</a>, not ArrayExpress. Cases are possible where identifiable data (e.g. raw sequences) are submitted to the EGA, while the related processed data (e.g. RPKM values) are submitted to ArrayExpress, but <em>it is up to the submitter to ensure that such a submission complies with the respective ethics requirements.</em>  To submit processed data to ArrayExpress, please begin by emailing us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the EGA study accession number. We will import non-human-identifiable meta-data from EGA in a spreadsheet (which the submitter will have the chance to review), and then match the meta-data with processed data.</p>
+            <p>The following diagram summarises the typical data flow:</p>
             <p><img src="UHTS_HighThroughputSequencingSubmissionDiagram.jpg" alt="Diagram of data submission routes" height="328" width="542"></p>
             <p>Diagram of the submission of different sequencing data types to ArrayExpress or the European Genome-phenome archive.</p>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <p>&nbsp;</p>
 
-            <h3><a id="HowToSubmit"></a>2. What data files to submit, and how</h3>
-            <p><a id="meta_data"></a><strong>Experiment meta-data</strong>: It should be submitted via the <a href="/fg/annotare/login">Annotare webform submission tool</a> (further described on this <a href="submissions_overview.html">submissions overview page</a>).</p>
+            <h3 id="HowToSubmit">2. What data files to submit, and how</h3>
+            <p>To start a submission to go the <a href="/fg/annotare/login">Annotare webform submission tool</a> and start a submission.</p>
 
-            <p><a id="raw_data_files"></a><strong>Raw data files</strong>: Please provide unprocessed files as raw data files. After demultiplexing and trimming of adapter sequences do not remove entire sequence reads or trim by quality score. Prepare your files according to <a href='/ena/about/read-file-formats'>ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
-            <p>For fastq files, each file must be individually compressed by gzip or bzip2. Do not bundle multiple fastq files into one archive. For paired-end experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <code>_1.fq.gz</code> and <code>_2.fq.gz</code>. Examples of naming styles supported by the ENA:            </p>
+            <h4 id="meta_data">Experiment meta-data</h4>
+            <p>Apart from the <a href="submissions_overview.html">experiment description and sample annotation</a>, sequencing experiments require further details describing the sequencing    library (as they are needed for ENA submission). Please see <a href="www.ebi.ac.uk/fgpt/annotare_help/seq_lib_spec.html">this guide</a> for more information about the library specifications.</p>
+
+            <h4 id="raw_data_files">Raw data file requirements</h4>
+            <p>Please provide individual <strong>unprocessed</strong> raw data files for each sample. After demultiplexing and trimming of adapter sequences do <i>not</i> remove entire sequence reads or trim by quality score. Prepare your files according to <a href='/ena/about/read-file-formats'>ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
+            <p>For <strong>FASTQ</strong> files, each file must be individually compressed by gzip or bzip2. Do not bundle multiple fastq files into one archive. For paired-end experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <code>_1.fq.gz</code> and <code>_2.fq.gz</code>. Examples of naming styles supported by the ENA:            </p>
             <ul>
-            <li>sampleA_1.fq.gz / sampleA_2.fq.gz</li>
-            <li>sampleA_F.fq.gz / sampleA_R.fq.gz</li>
+              <li>sampleA<strong>_1</strong>.fq.gz / sampleA<strong>_2</strong>.fq.gz</li>
+              <li>sampleA<strong>_F</strong>.fq.gz / sampleA<strong>_R</strong>.fq.gz</li>
             </ul>
-
-            <p>If you are submitting BAM files as raw data files, please read this important documentation on <a href="#BamSpec">BAM file specification</a>.</p>
-
-            <p><a id="MD5"></a><strong>MD5 checksum of raw files</strong>: As sequence files tend to be very large, we implement a file integrity validation step before sending them to the ENA on your behalf. For each raw file, please calculate its MD5 checksum. The checksum is hexadecimal and expressed as a long string of letters and numbers, which looks something like this: <code>eef75461035fb66d9173799d4e26ea97</code>. MD5 checksums are like the files' digital "fingerprints" and it is very unlikely that two non-identical files would generate the same "fingerprint", thus allowing us to verify that each file has not been corrupted during FTP transfer. Remember to calculate the checksum from the actual compressed file (e.g. fastq.gz or fastq.bz2) that is sent to us, not from the uncompressed fastq file or a re-compressed version created at a later time.</p>
-
-            <p>How to calculate MD5 checksums: <a href="http://www.winmd5.com/">Windows user example</a>, <a href="http://www.resourcesforlife.com/docs/item1428">Mac user example</a>, <a href="http://heatware.net/linux-unix/how-to-create-md5-checksums-and-validate-a-file-in-linux/">Linux user example</a>.</p>
-
-            <p><a id="sending_raw_files"></a><strong>Sending raw files:</strong> You must send the raw files to ArrayExpress by FTP (see <a href="ftp_upload.html">FTP transfer instructions</a>). Please transfer the compressed files one by one (and not bundling multiple fastq.gz files in one tar.gz archive) to avoid time-out issues and to allow us to process your files promptly.  For <a href="/fg/annotare/login">Annotare</a> to associate the transferred files with your experiment submission, please go to the <code>Samples and Data</code> --> <code>Upload and assign data files</code> section in Annotare, click <code>FTP Upload...</code>, and follow on-screen instructions to fill in file names and their corresponding MD5 checksums.  Annotare will then verify the presence of the files on our FTP site and the MD5 checksums.  If verification passes, you will be able to assign data files to each of your samples.</p>
-
-            <p><a id="processed_data"></a><strong>Processed data files</strong>: If they are in spreadsheets, e.g. a table of FPKM values for genes with genes in rows and samples in columns, please save them in tab-delimited text (*.txt) format (not Excel). We also accept bam alignment files. There is no need to compress or zip up the processed files one by one or as a bundle. Upload them <a href="ftp_upload.html">by FTP</a> and assign to your samples in the same way as you would for <a href="#sending_raw_files">raw files</a>.</p>
-
-            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
-            <p>&nbsp;</p>
-            <h3><a id="BamSpec"></a>3. BAM data file requirements</h3>
-            <p>If you're submitting raw data files in BAM format, please make sure they satisfy <a href="/ena/about/read-file-formats#bam_format">ENA  specifications</a> as well as the following conditions:</p>
+            <p>If you're submitting raw data files in <strong>BAM</strong> format, please make sure they satisfy <a href="/ena/about/read-file-formats#bam_format">ENA  specifications</a> as well as the following conditions:</p>
             <ol><li>Each file contains all reads from the sequencing machine, regardless of whether the reads mapped to the reference genome. The reason for this is that we would expect the BAM file to be used to regenerate <i>all</i> the sequencing reads.</li>
             <li>The phred quality score for each base should be included in the file.</li>
             <li>If you have data from paired-end sequencing libraries, for each sequencing run, include data for both mate reads in one single bam file.</li></ol>
+            <p>If your BAM files contain only mapped reads, then please either create "full" (unfiltered) BAM files, or send us the original read files (e.g. fastq.gz files) as raw data files (again, check <a href='/ena/about/read-file-formats'>ENA specifications</a>). BAM files containing only mapped reads can be included in your submission as processed files, as long as they satisfy ENA's specification and that the reference genome used for alignment has been accessioned in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>).</p>
 
-            <p>If your BAM files contain only mapped reads, then please either create "full" (unfiltered) BAM files, or send us the original read files (e.g. fastq.gz files) as raw data files (again, check <a href='/ena/about/read-file-formats'>ENA specifications</a>).</p>
-            <p>BAM files containing only mapped reads can be included in your submission as processed files, as long as they satisfy ENA's specification and that the reference genome used for alignment has been accessioned in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>).</p>
-            <p>&nbsp;</p>
-            <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+            <h4 id="processed_data">Processed data files</h4>
+            <p>If your processed data are in spreadsheets, e.g. a table of FPKM values for genes with genes in rows and samples in columns, please save them in tab-delimited text (*.txt) format (not Excel). We also accept BAM alignment files. There is no need to compress or zip up the processed files one by one or as a bundle. Upload them in Annotare and assign to your samples in the same way as you would for <a href="#sending_raw_files">raw files</a> (see below).</p>
 
-            <h3><a id="HTSDataReleasePolicy"></a>4. Modifying/cancelling a sequencing experiment in ArrayExpress and ENA</h3>
-            <p>Release date changes are possible as long as the experiment remains private.  Citation/publication update is possible at any time. Modification/addition of metadata and/or data files for a private experiment is possible, but often lengthy and tedious. It is therefore important that you get the submission right before you submit.</p>
+            <h4 id="sending_raw_files">File upload</h4>
+            <p style="color:red">UPDATE (17th March 2016):<br>New direct upload feature in Annotare and new FTP path</p>
+            <p>You can upload raw and processed sequencing files <strong>directly in Annotare</strong>. Use "drag-and-drop" to place files in the upload frame or click <code>"Upload files..."</code> to select the files to be transferred. </p>
+            <p>If you prefer, you may still use the FTP upload function, but note that the private <strong>FTP directory is unique for each submission</strong>. Before starting to transfer files, go to the <code>"Samples and Data"</code> > <code>"Upload and assign data files"</code> section in Annotare and click <code>"FTP Upload..."</code>. The dialogue will show you the ftp directory for your submission (e.g. <code>ftp-private.ebi.ac.uk/ibtd1rmo-20r7k3g747sup/</code>). Then copy the data files to this directory following the <a href="ftp_upload.html">FTP transfer instructions</a>. Please transfer the compressed files one by one (and not bundling multiple fastq.gz files in one tar.gz archive) to avoid time-out issues and to allow us to process your files promptly.
 
-            <p><strong>Private experiments</strong>: If your experiment is still private and an update is required, please email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> quoting the experiment accesssion and explaining what changes are needed.  We will advise the next step accordingly. Depending on your needs, we may append the ENA records with your new data (e.g. addition/removal of samples, sequencing libraries and associated data files), or, in more complicated cases, we may cancel the previously brokered record at ENA and broker your experiment as a brand new submission to ENA (which will generate a new ENA Study accession). In either case, we will keep the same ArrayExpress accession for your data set, and we'll make sure the ArrayExpress record link to the correct ENA submission.  Please allow up to 15 working days for the update.</p>
-            <p><strong>Public experiments</strong>: It is ENA's policy not to make a public experiment private again or cancel it unless there is an exceptional reason. (See <a href="https://www.ebi.ac.uk/ena/about/data_availability_policy">ENA's Data availability policy</a> for further information.)  Modifying the meta-data and/or data files of a public experiment is very tedious, because they would have been mirrored among other <a href='http://www.insdc.org/'>INSDC</a> partners already (namely, <a href='http://www.ncbi.nlm.nih.gov/genbank'>GenBank</a> and <a href='www.ddbj.nig.ac.jp/'>DDBJ</a>). Please <a href="mailto:datasubs@ebi.ac.uk">contact ENA directly</a> to sort out the existing record at ENA which contains deprecated/incorrect information. If you would like to keep the ArrayExpress and ENA synchronised, please also inform us of any changes which have been agreed and actioned by the ENA, so we can advise further on how to update the ArrayExpress record.</p>
-            <p>&nbsp;</p>
+            To associate the transferred files with your experiment submission and ensure the file integrity, and follow the on-screen instructions of the dialogue and fill in file names and their corresponding <a href="https://en.wikipedia.org/wiki/MD5">MD5 checksums</a> (remember to use the checksum of the actual compressed file that is sent to us). Annotare will then verify the presence of the files on our FTP site and the MD5 checksums. If verification passes, you will be able to assign data files to each of your samples. Here are some examples how to caclulate MD5 checksums: <a href="http://www.winmd5.com/">Windows user example</a>, <a href="http://www.resourcesforlife.com/docs/item1428">Mac user example</a>, <a href="http://heatware.net/linux-unix/how-to-create-md5-checksums-and-validate-a-file-in-linux/">Linux user example</a>.</p>
+
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
 
         </section>
