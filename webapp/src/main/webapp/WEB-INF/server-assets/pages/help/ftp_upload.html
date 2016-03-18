@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head><title>Send data files to ArrayExpress via FTP &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
 <body class="level2">
-<div id="content" role="main" class="grid_24 clearfix">
+  <div id="content" role="main" class="grid_24 clearfix">
     <section id="ae-help" class="grid_18 alpha">
 
 
@@ -12,50 +12,48 @@
 
 		<p><strong>Before you start transferring files, please note the following points:</strong></p>
 		<ol>
-		<li><strong>File preparation:</strong> Please check our guidelines on submitting files for a <a href='/fgpt/annotare_help/accepted_raw_ma_file_formats.html'>microarray experiment</a>, <a href='UHTS_submissions.html#HowToSubmit'>sequencing experiment</a> or <a href='/fgpt/magetab/help/adf_quick_start.html'>array design</a>. E.g. microarray data files should not be compressed, but fastq files from sequencing experiments must be individually compressed by gzip or bzip2 (as a requirement from the Sequence Read Archive).</li>
-		<li><strong>Data privacy:</strong> All ArrayExpress submitters use the same account to upload files (see below). As most of the files are un-/pre-published, we make all uploaded files "private", which means you will not be able to see any files or directories already on the FTP site, including those that you uploaded or created.  The FTP server is a temporary storage space, where we will keep your files for two months, counting from the date of file upload, after which we will delete them without warning. This is to comply with the <a href="http://www.ebi.ac.uk/ena/submit/read-submission#fair_use_policy">fair usage policy</a> of the disc space which we share with the European Nucleotide Archive.</li>
-        <li><strong>No whitespaces or special characters in file names:</strong> Make sure the file names are constructed only from alphanumerals [A-Z,a-z,0-9], underscores [_] and dots [.], with no whitespaces, brackets, other punctuations or symbols.</li>
-		<li><strong>Unique/specific file names:</strong> Make sure your file names are unique/specific so you will not be overwriting other submitters' files (or risk your own files being overwritten likewise). E.g. <code>"Bloggs_lab_Mar2014_sample1.fq.gz"</code> is a better choice of file name than simply <code>"sample1.fq.gz"</code>.</li>
-		<li><strong>Finish your experiment submission (if applicable):</strong> Data files uploaded to ArrayExpress by FTP are only part of an experiment submission. The submission is only complete when experimental <em>meta-data</em> (e.g. sample information and protocols) are also submitted to ArrayExpress using <a href="/fg/annotare/login">Annotare</a>. See <a href="submissions_overview.html">submissions help page</a> for further details.</li>
-		<li><strong>Email us (for non-Annotare submitters):</strong> When the transfer is complete, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the names of files transferred and a short note on what the files are for.</li>
-		</ol>
+  		<li><strong>File preparation:</strong> Please check our guidelines on submitting files for a <a href='/fgpt/annotare_help/accepted_raw_ma_file_formats.html'>microarray experiment</a>, <a href='UHTS_submissions.html#HowToSubmit'>sequencing experiment</a> or <a href='/fgpt/magetab/help/adf_quick_start.html'>array design</a>. E.g. microarray data files should not be compressed, but fastq files from sequencing experiments must be individually compressed by gzip or bzip2 (as a requirement from the Sequence Read Archive).</li>
+  		<li><strong>Data privacy:</strong> All ArrayExpress submitters use the same account to upload files (see below). As most of the files are un-/pre-published, we make all uploaded files "private", which means you will not be able to see any files or directories already on the FTP site, including those that you uploaded or created. You will only be able to see your files if you are uploading to your  personal Annotare submission directory. The FTP server is a temporary storage space, where we will keep your files for two months, counting from the date of file upload, after which we will delete them without warning. This is to comply with the <a href="http://www.ebi.ac.uk/ena/submit/read-submission#fair_use_policy">fair usage policy</a> of the disc space which we share with the European Nucleotide Archive.</li>
+      <li><strong>No whitespaces or special characters in file names:</strong> Make sure the file names are constructed only from alphanumerals [A-Z,a-z,0-9], underscores [_] and dots [.], with no whitespaces, brackets, other punctuations or symbols.</li>
+  		<li><strong>Unique/specific file names:</strong> Make sure your file names are unique/specific so you will not be overwriting other submitters' files (or risk your own files being overwritten likewise). E.g. <code>"Bloggs_lab_Mar2014_sample1.fq.gz"</code> is a better choice of file name than simply <code>"sample1.fq.gz"</code>.</li>
+  		<li><strong>Finish your experiment submission (if applicable):</strong> Data files uploaded to ArrayExpress by FTP are only part of an experiment submission. The submission is only complete when experimental <em>meta-data</em> (e.g. sample information and protocols) are also submitted to ArrayExpress using <a href="/fg/annotare/login">Annotare</a>. See <a href="submissions_overview.html">submissions help page</a> for further details.</li>
+  		<li><strong>Email us (for non-Annotare submitters):</strong> When the transfer is complete, please email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the names of files transferred and a short note on what the files are for.</li>
+  	</ol>
 
-        <p>&nbsp;</p>
+    <br>
 
-        <p>
-                <a href="#WindowsFTP">1. Instruction for Windows Explorer users</a><br>
-                <a href="#TerminalFTP">2. Instruction for terminal/command prompt users</a><br>
-        </p>
+    <p>
+      <a href="#WindowsFTP">1. Instruction for Windows Explorer users</a><br>
+      <a href="#TerminalFTP">2. Instruction for terminal/command prompt users</a><br>
+    </p>
 
-        <p>&nbsp;</p>
-        <h3><a id="WindowsFTP"></a>1. Transferring files with Windows Explorer (drag and drop)</h3>
+    <br>
+    <h3 id="WindowsFTP">1. Transferring files with Windows Explorer (drag and drop)</h3>
 
-        <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
+    <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
 
-        <p>Open a Windows Explorer window (and <em>not</em> an internet browser window as the latter is not designed for FTP file upload). If you need help how to open an Explorer window, here are instructions for <a href="http://www.wikihow.com/Open-Windows-Explorer">Windows XP/Vista/7</a>, <a href="http://www.7tutorials.com/7-ways-open-file-explorer-windows-81">Windows 8</a> and <a href="http://www.7tutorials.com/9-ways-open-file-explorer-windows-10">Windows 10</a>.</p>
+    <p>Open a Windows Explorer window (and <em>not</em> an internet browser window as the latter is not designed for FTP file upload). If you need help how to open an Explorer window, here are instructions for <a href="http://www.wikihow.com/Open-Windows-Explorer">Windows XP/Vista/7</a>, <a href="http://www.7tutorials.com/7-ways-open-file-explorer-windows-81">Windows 8</a> and <a href="http://www.7tutorials.com/9-ways-open-file-explorer-windows-10">Windows 10</a>.</p>
 
-        <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have get the FTP address from your Annotare <code>"Upload and assign data files" > "FTP upload..."</code> window. This FTP address should contain the path to your personalised directory. Please manually copy this FTP path from the Annotare dialogue into the Windows Explorer address bar. For all other submissions (e.g. array design), enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in Windows Explorer address bar. The URLs already contain the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
-        <p>If there are no error messages from Windows, that means connection is successful. (Unfortunately, Windows does not provide notification confirming successful connection to an FTP server.)  When connected, you will see an almost "blank" Windows Explorer window which is similar to this:</p>
+    <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have get the FTP address from your Annotare <code>"Upload and assign data files" > "FTP upload..."</code> window. This FTP address  contains the path to your personal subdirectory. Please manually copy this FTP path from the Annotare dialogue using right-click "Copy link" and paste it into the Windows Explorer address bar. It should look similar to this: <code>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/ibtd1rmo-20r7k3g747sup/</code>. For all other submissions (e.g. array design), enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in Windows Explorer address bar. The URLs already contain the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
+    <p>If there are no error messages from Windows, that means connection is successful. (Unfortunately, Windows does not provide notification confirming successful connection to an FTP server.)  When connected, you will see an almost "blank" Windows Explorer window which is similar to this:</p>
 
-        <p><img src="ftp_upload_windows_explorer_FTP.PNG" alt="Windows Explorer FTP login image" style='border:2px solid #385930; width: 75%; height: 75%'></p>
+    <p><img src="ftp_upload_windows_explorer_FTP.PNG" alt="Windows Explorer FTP login image" style='border:2px solid #385930; width: 75%; height: 75%'></p>
 
-        <p>You can start dragging files from your computer's file system and dropping them onto the logged-on Windows Explorer window.</p>
-        <p>Note: you will not be able to see any files or directories on the general FTP site, including the files that you have uploaded. This is because we don't allow submitters to see each others' data files.</p>
+    <p>You can start dragging files from your computer's file system and dropping them onto the logged-on Windows Explorer window.</p>
+    <p>Note: You will not be able to see any files or directories on the general FTP site, including the files that you have uploaded (it will only work within your personal Annotare submission directory). This is because we don't allow submitters to see each others' data files.</p>
 
-        <p>&nbsp;</p>
-        <h3><a id="TerminalFTP"></a>2. Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
+    <br>
+    <h3 id="TerminalFTP">2. Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
 
-        <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
+    <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
 
-        <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have copy the FTP address from your Annotare <code>"Upload and assign data files" > "FTP upload..."</code> window. This FTP address should contain the path to your personalised directory. Open a Terminal window and type <code><strong>ftp</strong></code> then paste the FTP path from the Annotare dialogue into the command line and press "enter".</p>
-        <p>For all other submissions (e.g. array design), connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code></p>
-        <p>The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.  Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory.</p>
+    <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have copy the FTP address from your Annotare <code>"Upload and assign data files"</code> > <code>"FTP upload..."</code> window. This FTP address contains the path to your personal subdirectory. Copy the full path using right-click "Copy link". Open a Terminal window and change to the directory containing the data files. Type <code><strong>ftp</strong></code> and add the FTP address by pasting the path from the Annotare dialogue into the command line. It should look similar to this: <code>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/ibtd1rmo-20r7k3g747sup/</code>.</p>
+    <p>For all other submissions (e.g. array design), connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code> The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.
+    <p>Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory. To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
 
-        <p>To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
+    <p>Note: You will not be able to list the files in the directory if you are using the general FTP site (it will only work within your personal Annotare submission directory). This is because we don't allow submitters to see each others' data files.</p>
 
-        <p>Note: you will not be able to list the files in the directory or download files from the general FTP site to your directory. This is because we don't allow submitters to see each others' data files.</p>
-
-        <p>If you are using Mac, the file transfer may fail due to incompatible FTP settings of the standard FTP client on Mac (which is embedded in Finder). In this case you should be able to upload your files using an alternative FTP client, e.g. <a href="https://cyberduck.io/">CyberDuck</a>. If you have CyberDuck installed, you will be able to transfer files for your Annotare submission by clicking on the link with the ftp address in Annotare.</p>
+    <p>If you are using Mac, the file transfer may fail due to incompatible FTP settings of the standard FTP client on Mac (which is embedded in Finder). In this case you should be able to upload your files using an alternative FTP client, e.g. <a href="https://cyberduck.io/">CyberDuck</a>. If you have CyberDuck installed, you will be able to transfer files for your Annotare submission by clicking on the link with the FTP address in Annotare.</p>
 
 	</section>
 
@@ -97,6 +95,6 @@
         <li><a href="contact_us.html">Contact us</a></li>
     </ul>
     </aside>
-</div>
+  </div>
 </body>
 </html>
