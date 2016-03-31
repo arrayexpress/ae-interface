@@ -44,8 +44,11 @@
             if (undefined != val) {
                 if (!val.match(/^http:\/\//)) {
 
+                    // fix links to files
+                    val = val.replace(/^([^\/]+[.][A-GI-Za-gi-z][A-Za-z]+$)/, "../../../assets/misc/$1");
+
                     // fix relative links
-                    val = val.replace(/^([^\/#])/, "preview.html?page=help/$1");
+                    val = val.replace(/^([^\/]+[.]html)/, "preview.html?page=help/$1");
 
                     // fix internal project links
                     val = val.replace(/^\/arrayexpress\//, "preview.html?page=");
