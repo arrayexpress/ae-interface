@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head><title>Creating a SDRF &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<body class="level2">
+<div id="content" role="main" class="grid_24 clearfix">
+    <section id="ae-help" class="grid_18 alpha">
+        <h2>Creating a SDRF</h2>
+        <p>The SDRF (Sample and Data Relationship Format) describes the
+            sample characteristics and the relationship between samples, arrays,
+            data files etc. The information in the SDRF is organised so that it
+            follows the natural flow of a functional genomics experiment. It begins
+            with describing your samples and finishes with the names of the data
+            files generated from the analysis of the experiment results. For
+            single-channel microarray data one row in the SDRF is equal to one
+            hybridization. For two-channel microarray data one row is equal to one
+            channel. For sequencing submissions you generally create one row per raw
+            file.</p>
+
+        <br>
+        <img class="reduce" src="sdrf_layout.png" alt="SDRF" />
+        <br>
+        <br>
+
+        <p>An experiment can be described in terms of a graph, in which the
+            graph nodes correspond to materials or data files, and the graph edges
+            (or arcs) correspond to treatments. Each block in the diagram above
+            would be represented as a node in such a graph, with the treatments
+            (protocols) acting as edges. Each node block starts with a "Name" or
+            "File" column (e.g. "Source Name","Extract Name", "Array Data File")
+            identifying the type of node, followed by a set of attribute columns
+            (e.g. Characteristics [organism]). Each block is separated from its
+            predecessor by <a href="#protocol_section">Protocol REF</a> graph edge
+            columns containing references to the "Protocol Name" values defined in
+            the IDF. A further set of columns is used to specify the values for the
+            variables ("experimental factors") within the experiment. These <a
+                    href="#factorvalue_section">Factor Value[]</a> columns reference the
+            experimental factor names defined in the <a href="creating_an_idf.html"
+            target="_blank">IDF</a>, and should be placed at the end of the SDRF.
+            The contents of these columns will usually duplicate those in a material
+            <a href="#characteristics">Characteristics</a> column or a protocol <a
+                    href="#parameter_value">Parameter Value</a> column.</p>
+        <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+
+        <h3>Example SDRF sections</h3>
+
+        <h4><a id="protocol_section">Protocols</a></h4>
+
+        <p>In most cases, each treatment within an experiment will be
+            represented simply by a <a href="#protocol_ref">Protocol REF</a> column
+            containing references to the <a href="creating_an_idf.html#protoname">Protocol
+                Names</a> defined in the IDF. If multiple protocols need to be chained
+            together this can be achieved using multiple "Protocol REF" columns.</p>
+
+        <p>Additionally, any <a href="creating_an_idf.html#protoparam">Protocol
+            Parameters</a> associated with the protocol (as defined in the IDF) should
+            have their values listed after the Protocol REF column. For example,
+            with this in your IDF:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="creating_an_idf.html#protoname">Protocol Name</a></td>
+                <td>My Ext. Protocol</td>
+                <td>My Labeling Protocol</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#prototype">Protocol Type</a></td>
+                <td>nucleic acid extraction protocol</td>
+                <td>labelling protocol</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#protoparam">Protocol
+                    Parameters</a></td>
+                <td>amplification;RNA quality</td>
+                <td>amount of RNA used</td>
+            </tr>
+        </table>
+
+        <p>The SDRF describing the use of these protocols might look as
+            follows:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#parameter_value" class="plain">Parameter Value
+                    [RNA quality]</a></td>
+                <td><a href="#parameter_value" class="plain">Parameter Value
+                    [amplification]</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#parameter_value" class="plain">Parameter Value
+                    [amount of RNA used]</a></td>
+                <td><a href="#unit" class="plain">Unit [mass unit]</a></td>
+            </tr>
+            <tr>
+                <td>My Ext. Protocol</td>
+                <td>RIN 8</td>
+                <td>RNA polymerase</td>
+                <td>My Labeling Protocol</td>
+                <td>10</td>
+                <td>microgram</td>
+            </tr>
+        </table>
+
+        <p>Other columns which may be used to annotate these Protocol REF
+            columns are: <a href="#performer">Performer</a>, <a href="#date">Date</a>,
+            and <a href="#comment">Comment</a>.</p>
+
+
+        <h4><a id="source_section">Sources</a></h4>
+        <p>Sources are the starting material for the experiment. The section
+            starts with a <a href="#source_name">Source Name column</a>, which will
+            typically be followed by several <a href="#characteristics">Characteristics</a>
+            columns and a <a href="#material_type">Material Type</a> column:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#source_name" class="plain">Source Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [organism]</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [organism part]</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [disease]</a></td>
+            </tr>
+            <tr>
+                <td>Tumor 1</td>
+                <td>organism part</td>
+                <td>Homo sapiens</td>
+                <td>mammary gland</td>
+                <td>invasive ductal carcinoma</td>
+            </tr>
+        </table>
+
+        <p>Additional columns which may be used to annotate Sources are: <a
+                href="#provider">Provider</a>, <a href="#description">Description</a>,
+            and <a href="#comment">Comment</a>.</p>
+
+        <h4><a id="sample_section">Samples</a></h4>
+        <p>Samples represent steps in the chain of treatments applied to the
+            original Source. MAGE-TAB allows you to create as many Sample steps as
+            necessary:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#source_name" class="plain">Source Name</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#sample_name" class="plain">Sample Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#sample_name" class="plain">Sample Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [organism part]</a></td>
+            </tr>
+            <tr>
+                <td>Young Rat 99</td>
+                <td>My growth protocol</td>
+                <td>Adult Rat 99</td>
+                <td>whole organism</td>
+                <td>My dissect protocol</td>
+                <td>Adult Rat Liver 99</td>
+                <td>organism part</td>
+                <td>liver</td>
+            </tr>
+        </table>
+
+
+
+        <p>For ArrayExpress submissions, typically no Sample steps are
+            needed. Columns which may be used to annotate Samples are: <a
+                    href="#characteristics">Characteristics[]</a>, <a href="#material_type">Material
+                Type</a>, <a href="#description">Description</a>, and <a href="#comment">Comment</a>.</p>
+
+        <h4><a id="extract_section">Extracts</a></h4>
+        <p>Extracts refer to the extracted nucleic acid used in the
+            experiment. Again, as many Extract steps may be used as are necessary.
+            For example, if you need to represent separate nucleic acid extraction
+            and chromatin immunoprecipitation steps in your SDRF, you could use two
+            Extract steps. In most cases, however, a single Extract Name column
+            would suffice:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#sample_name" class="plain">Sample Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#extract_name" class="plain">Extract Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+            </tr>
+            <tr>
+                <td>Rat Liver 99</td>
+                <td>organism part</td>
+                <td>My Ext. Protocol</td>
+                <td>Liver RNA 99</td>
+                <td>total RNA</td>
+            </tr>
+        </table>
+
+        <p>Columns which may be used to annotate Extracts are: <a
+                href="#characteristics">Characteristics[]</a>, <a href="#material_type">Material
+            Type</a>, <a href="#description">Description</a>, and <a href="#comment">Comment</a>.</p>
+
+
+        <h4><a id="labeledextract_section">Labeled Extracts</a></h4>
+        <p>The Labeled Extracts in an experiment are those materials which
+            have been conjugated to a label of some kind, prior to hybridization on
+            an array. Typically there is only one labeled extract step. For
+            submission to ArrayExpress, a <a href="#label">Label</a> column must be
+            included with the <a href="#labeled_extract_name">Labeled Extract
+                Name</a> column to indicate which label (and therefore scanner channel)
+            corresponds to which sample:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#extract_name" class="plain">Extract Name</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#labeled_extract_name" class="plain">Labeled
+                    Extract Name</a></td>
+                <td><a href="#label" class="plain">Label</a></td>
+                <td><a href="#material_type" class="plain">Material Type</a></td>
+            </tr>
+            <tr>
+                <td>Liver RNA 99</td>
+                <td>total RNA</td>
+                <td>My labeling protocol</td>
+                <td>Liver LE 99 Cy3</td>
+                <td>Cy3</td>
+                <td>synthetic_DNA</td>
+            </tr>
+            <tr>
+                <td>Kidney RNA 34</td>
+                <td>total RNA</td>
+                <td>My labeling protocol</td>
+                <td>Kidney LE 34 Cy5</td>
+                <td>Cy5</td>
+                <td>synthetic_DNA</td>
+            </tr>
+        </table>
+
+        <p>Note that it it wise to also include the label in the labeled
+            extract Name itself, so that unique objects are correctly created for
+            each labeled extract. Columns which may be used to annotate Labeled
+            Extracts are: <a href="#characteristics">Characteristics[]</a>, <a
+                    href="#material_type">Material Type</a>, <a href="#description">Description</a>,
+            and <a href="#comment">Comment</a>.</p>
+
+        <h4><a id="assay_section">Assays</a></h4>
+        <p>The hybridization of labeled extract to an array or the
+            sequencing of a library is a key step in the SDRF, since it connects the
+            "materials" section of the SDRF to the "data" section. For an array
+            submission to ArrayExpress, an <a href="#array_design_ref">Array
+                Design&nbsp;REF</a> column must be included with the <a href="#assay_name">Assay
+                Name</a> column, indicating which array design was used</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#labeled_extract_name" class="plain">Labeled
+                    Extract Name</a></td>
+                <td><a href="#label" class="plain">Label</a></td>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#technology_type" class="plain">Technology Type</a></td>
+                <td><a href="#array_design_ref" class="plain">Array Design
+                    REF</a></td>
+            </tr>
+            <tr>
+                <td>Liver LE 1</td>
+                <td>Cy3</td>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-MEXP-88</td>
+            </tr>
+            <tr>
+                <td>Kidney LE 1</td>
+                <td>Cy5</td>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-MEXP-88</td>
+            </tr>
+        </table>
+
+        <p>It is also possible to use <a href="#comment">Comment</a> columns
+            to annotate both "Assay Name" and "Array Design REF" columns. Note that
+            the values in Assay Name columns may be used in <a
+            href="data_format.html#data_matrix">Data&nbsp;Matrix</a> files to link
+            columns of data to individual assays.</p>
+
+        <h4><a id="scan_section">Scans</a></h4>
+        <p>If desired, the act of scanning the hybridized array may be
+            represented as a distinct node in the experimental graph, and encoded in
+            the SDRF using <a href="#scan_name">Scan Name</a> columns. These columns
+            are optional, but can be useful in cases where e.g. multiple scans have
+            been made of a single hybridized array, but where the data files do not
+            explicitly reflect this:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#technology_type" class="plain">Technology Type</a></td>
+                <td><a href="#array_design_ref" class="plain">Array Design
+                    REF</a></td>
+                <td><a href="#scan_name" class="plain">Scan Name</a></td>
+                <td><a href="#array_data_file" class="plain">Array Data File</a></td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-MEXP-88</td>
+                <td>LK1 First Scan</td>
+                <td>Data1.txt</td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-MEXP-88</td>
+                <td>LK1 Second Scan</td>
+                <td>Data1.txt</td>
+            </tr>
+        </table>
+
+        <p>Again, <a href="#comment">Comment</a> columns may be used to
+            further annotate Scan&nbsp;Name columns, where appropriate. Note that
+            the values in Scan&nbsp;Name columns may be used in <a
+                    href="data_format.html#data_matrix">Data&nbsp;Matrix</a> files to link
+            columns of data to individual scanning events.</p>
+
+        <h4><a id="arraydatafile_section">Raw Data Files</a></h4>
+        <p>The raw data files generated by an investigation should be listed
+            in an <a href="#array_data_file">Array&nbsp;Data&nbsp;File</a> column
+            following the <a href="#assay_name">Assay&nbsp;Name</a> and (optional) <a
+                    href="#scan_name">Scan&nbsp;Name</a> columns:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#technology_type" class="plain">Technology Type</a></td>
+                <td><a href="#array_design_ref" class="plain">Array Design
+                    REF</a></td>
+                <td><a href="#array_data_file" class="plain">Array Data File</a></td>
+                <td><a href="#comment" class="plain">Comment [EXP]</a></td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-AFFY-33</td>
+                <td>Data1.CEL</td>
+                <td>Data1.EXP</td>
+            </tr>
+        </table>
+
+        <p><a href="#comment">Comment</a> columns can be used to add
+            information relating to the raw files. For example, if you are coding an
+            Affymetrix-based experiment and you wish to include the EXP files in
+            your submission, you should list them in a "Comment[EXP]" column
+            following the "Array Data File" column, as shown above.</p>
+
+        <h4><a id="normalization_section">Normalizations</a></h4>
+        <p>Similarly to the use of <a href="#scan_name">Scan Name</a>
+            columns <a href="#scan_section">above</a>, it is possible to represent
+            the act of normalizing your data independently from the listing of data
+            files themselves. This is done using the optional <a
+                    href="#normalization_name">Normalization&nbsp;Name</a> column:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#technology_type" class="plain">Technology Type</a></td>
+                <td><a href="#array_design_ref" class="plain">Array Design
+                    REF</a></td>
+                <td><a href="#array_data_file" class="plain">Array Data File</a></td>
+                <td><a href="#normalization_name" class="plain">Normalization
+                    Name</a></td>
+                <td><a href="#derived_array_data_file" class="plain">Derived
+                    Array Data File</a></td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-AFFY-33</td>
+                <td>Data1.CEL</td>
+                <td>Norm 1</td>
+                <td>Data1.CHP</td>
+            </tr>
+        </table>
+
+        <p>Again, <a href="#comment">Comment</a> columns may be used to
+            further annotate "Normalization&nbsp;Name" columns, where appropriate.
+            Note that the values in "Normalization&nbsp;Name" columns may be used in
+            <a href="data_format.html#data_matrix">Data&nbsp;Matrix</a> files to
+            link columns of data to individual normalization events.</p>
+
+        <h4><a id="derivedarraydatafile_section">Processed Data Files</a></h4>
+        <p>The processed data files which have been derived from the raw
+            data should be listed in a <a href="#derived_array_data_file">Derived&nbsp;Array&nbsp;Data&nbsp;File</a>
+            column. <em>Note</em> that this generally only applies to processed data
+            arranged into one file per assay (or scan, or normalization). If your
+            files contain processed data columns for more than one assay, you should
+            reformat these into the <a href="data_format.html#data_matrix">MAGE-TAB
+            Data Matrix format</a> and include them instead in a <a
+            href="#derived_array_data_matrix_file">Derived&nbsp;Array&nbsp;Data&nbsp;Matrix&nbsp;File</a>
+            column. Multiple steps of normalization can be captured:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#technology_type" class="plain">Technology Type</a></td>
+                <td><a href="#array_design_ref" class="plain">Array Design
+                    REF</a></td>
+                <td><a href="#array_data_file" class="plain">Array Data File</a></td>
+                <td><a href="#normalization_name" class="plain">Normalization
+                    Name</a></td>
+                <td><a href="#derived_array_data_file" class="plain">Derived
+                    Array Data File</a></td>
+                <td><a href="#normalization_name" class="plain">Normalization
+                    Name</a></td>
+                <td><a href="#derived_array_data_matrix_file" class="plain">Derived
+                    Array Data Matrix File</a></td>
+                <td><a href="#comment" class="plain">Comment [CDF]</a></td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 1</td>
+                <td>array assay</td>
+                <td>A-AFFY-33</td>
+                <td>Data1.CEL</td>
+                <td>MAS5 Norm 1</td>
+                <td>Data1.CHP</td>
+                <td>RMA Norm</td>
+                <td>RMANormData.txt</td>
+                <td>HG-U133A.cdf</td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 2</td>
+                <td>array assay</td>
+                <td>A-AFFY-33</td>
+                <td>Data2.CEL</td>
+                <td>MAS5 Norm 2</td>
+                <td>Data2.CHP</td>
+                <td>RMA Norm</td>
+                <td>RMANormData.txt</td>
+                <td>HG-U133A.cdf</td>
+            </tr>
+            <tr>
+                <td>Liver vs. Kidney 3</td>
+                <td>array assay</td>
+                <td>A-AFFY-33</td>
+                <td>Data3.CEL</td>
+                <td>MAS5 Norm 3</td>
+                <td>Data3.CHP</td>
+                <td>RMA Norm</td>
+                <td>RMANormData.txt</td>
+                <td>HG-U133A.cdf</td>
+            </tr>
+        </table>
+
+        <p>In the above example, the columns from the "RMANormData.txt" data
+            matrix file could be linked to either the assay names or the previous
+            set of normalization names, allowing for flexible representation of the
+            flow of data through the process. See the <a
+                    href="data_format.html#data_matrix">Data Matrix notes</a> for details
+            of how these links are encoded in the data matrix file header.</p>
+
+        <p><a href="#comment">Comment</a> columns may be used to add
+            information relating to processed data files. For example, when coding
+            an Affymetrix-based experiment with a Data Matrix file, as in the
+            example above, a Comment[CDF] column should be used to indicate which
+            Affymetrix library ("CDF") file applies to these data.</p>
+
+        <h4><a id="factorvalue_section">Factor Values</a></h4>
+        <p>The factor values for an experiment are the values of the
+            variables under investigation. For example, an experiment studying the
+            effect of different compounds on a cell culture would have "compound" as
+            an experimental variable. These variables are listed in the IDF as
+            "Experimental Factor Names" with associated Types:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="creating_an_idf.html#factorname" class="plain">Experimental
+                    Factor Name</a></td>
+                <td>cell line</td>
+                <td>compound</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#factortype" class="plain">Experimental
+                    Factor Type</a></td>
+                <td>cell line</td>
+                <td>compound</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#protoname" class="plain">Protocol
+                    Name</a></td>
+                <td>Treatment protocol</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#protoparam" class="plain">Protocol
+                    Parameters</a></td>
+                <td>compound</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+
+        <p>Given the above definitions in the accompanying IDF, the SDRF
+            file can then reference these factors when we come to list the factor
+            values:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#source_name" class="plain">Source Name</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [cell line]</a></td>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#parameter_value" class="plain">Parameter Value
+                    [compound]</a></td>
+                <td><a href="#assay_name" class="plain">Assay Name</a></td>
+                <td><a href="#factor_value" class="plain">Factor Value [cell
+                    line]</a></td>
+                <td><a href="#factor_value" class="plain">Factor Value
+                    [compound]</a></td>
+            </tr>
+            <tr>
+                <td>Line 1</td>
+                <td>Jurkat</td>
+                <td>All Treatments</td>
+                <td>imatinib</td>
+                <td>Jurkat vs imatinib</td>
+                <td>Jurkat</td>
+                <td>imatinib</td>
+            </tr>
+            <tr>
+                <td>Line 1</td>
+                <td>Jurkat</td>
+                <td>All Treatments</td>
+                <td>lapatinib</td>
+                <td>Jurkat vs lapatinib</td>
+                <td>Jurkat</td>
+                <td>lapatinib</td>
+            </tr>
+            <tr>
+                <td>Line 2</td>
+                <td>RKO</td>
+                <td>All Treatments</td>
+                <td>imatinib</td>
+                <td>RKO vs imatinib</td>
+                <td>RKO</td>
+                <td>imatinib</td>
+            </tr>
+            <tr>
+                <td>Line 2</td>
+                <td>RKO</td>
+                <td>All Treatments</td>
+                <td>lapatinib</td>
+                <td>RKO vs lapatinib</td>
+                <td>RKO</td>
+                <td>lapatinib</td>
+            </tr>
+        </table>
+
+        <p>Note that there is inevitably duplication between factor values
+            and values entered elsewhere in the SDRF. It is particularly common to
+            have the "Factor Value" column duplicate either a <a
+                    href="#characteristics">Characteristics[]</a> column or a <a
+                    href="#parameter_value">Parameter&nbsp;Value[]</a> column.</p>
+
+        <p>Factor Value columns may be placed anywhere after the assay
+            section of the SDRF, although this is most easily achieved by adding
+            them at the end (i.e., the far right) of the SDRF.</p>
+        <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+
+        <h3>All valid SDRF column headings</h3>
+        <h4><a id="source_name">Source Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This column
+            contains user-defined names for the <a href="#source_section">Source</a>
+            materials. The following columns can be used to annotate "Source Name"
+            columns:</p>
+        <ul>
+            <li><a href="#characteristics">Characteristics[]</a></li>
+            <li><a href="#provider">Provider</a></li>
+            <li><a href="#material_type">Material Type</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+
+
+        <h4><a id="sample_name">Sample Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This column
+            contains user-defined names for each <a href="#sample_section">Sample</a>
+            material. The following columns can be used to annotate "Sample Name"
+            columns:</p>
+
+        <ul>
+            <li><a href="#characteristics">Characteristics[]</a></li>
+            <li><a href="#material_type">Material Type</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="extract_name">Extract Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This column
+            contains user-defined names for each <a href="#extract_section">Extract</a>
+            material. The following columns can be used to annotate "Extract Name"
+            columns:</p>
+
+        <ul>
+            <li><a href="#characteristics">Characteristics[]</a></li>
+            <li><a href="#material_type">Material Type</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="labeled_extract_name">Labeled Extract Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This column
+            contains user-defined names for each <a href="#labeledextract_section">Labeled
+                Extract</a> material. The following columns can be used to annotate "Labeled
+            Extract" Name columns:</p>
+
+        <ul>
+            <li><a href="#label">Label</a> (required for array submissions)</li>
+            <li><a href="#characteristics">Characteristics[]</a></li>
+            <li><a href="#material_type">Material Type</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="assay_name">Assay Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This column
+            contains user-defined names for each <a href="#assay_section">Assay</a>.
+            The following columns can be used to annotate "Assay Name" columns:</p>
+
+        <ul>
+            <li><a href="#array_design_ref">Array Design REF</a> (required for
+                array submissions)</li>
+            <li><a href="#technology_type">Technology Type</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <p>Note that as of MAGE-TAB version 1.1, all "Assay Name" columns
+            must be followed by a "Technology Type" column.</p>
+
+        <h4><a id="scan_name">Scan Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This optional
+            column contains user-defined names for each <a href="#scan_section">Scan</a>
+            event. The following columns can be used to annotate "Scan Name"
+            columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="normalization_name">Normalization Name</a></h4>
+        <p>Used as an identifier within the MAGE-TAB document. This optional
+            column contains user-defined names for each <a
+                    href="#normalization_section">Normalization</a> event. The following
+            columns can be used to annotate "Normalization Name" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="array_data_file">Array Data File</a></h4>
+        <p>This column contains a list of <a href="#arraydatafile_section">raw
+            data files</a>, one for each row of the SDRF file, linking these data files
+            to their respective assays. The following columns can be used to
+            annotate "Array Data File" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="derived_array_data_file">Derived Array Data File</a></h4>
+        <p>This column contains a list of <a
+                href="#derivedarraydatafile_section">processed data files</a>, one for
+            each row of the SDRF file, linking these data files to their respective
+            assays. The following columns can be used to annotate "Derived Array
+            Data File" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="array_data_matrix_file">Array Data Matrix File</a></h4>
+        <p>This column contains a list of raw data matrix files, where data
+            from multiple assays is stored in a single file, and the data mapped to
+            each assay via the <a href="data_format.html#data_matrix">Data
+                Matrix</a> format itself. The following columns can be used to annotate
+            "Array Data Matrix File" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="derived_array_data_matrix_file">Derived Array Data
+            Matrix File</a></h4>
+        <p>This column contains a list of processed data matrix files, where
+            data from multiple assays is stored in a single file, and the data
+            mapped to each assay (or scan, or normalization) via the <a
+                    href="data_format.html#data_matrix">Data Matrix</a> format itself. The
+            following columns can be used to annotate "Derived Array Data Matrix
+            File" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="image_file">Image File</a></h4>
+        <p>This optional column contains a list of image files, one for each
+            row of the SDRF file, linking these image files to their respective
+            assay. Note that ArrayExpress does not store image data due to size
+            constraints on the database. If desired, you may use this column to
+            include links to image files stored on your local webserver. The
+            following columns can be used to annotate "Image File" columns:</p>
+
+        <ul>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <h4><a id="array_design_ref">Array Design REF</a></h4>
+        <p>This column contains references to the array design used for each
+            assay. For ArrayExpress submissions this should be an ArrayExpress
+            accession number, e.g. "A-AFFY-33". Help on searching for an array
+            design accession can be found <a href="how_to_search_adf.html">here</a>.
+            The following columns can be used to annotate "Array Design REF" columns:</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <p>The Term Source REF column here can be used to point to the
+            source of the array design referenced; however for ArrayExpress
+            submissions this should always be ArrayExpress itself, and so this
+            column is in effect ignored.</p>
+
+        <h4><a id="protocol_ref">Protocol REF</a></h4>
+        <p>This column contains references to <a
+                href="creating_an_idf.html#protoname">Protocol Names</a> defined in the
+            IDF, or accession numbers of protocols already deposited with
+            ArrayExpress. The following columns can be used to annotate "Protocol
+            REF" columns:</p>
+
+        <ul>
+            <li><a href="#parameter_value">Parameter Value[]</a></li>
+            <li><a href="#performer">Performer</a></li>
+            <li><a href="#date">Date</a></li>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <p>The "Term Source REF" column here can be used to point to the
+            source of the protocol referenced. For ArrayExpress submissions this
+            should always be ArrayExpress itself, and a suitable ArrayExpress Term
+            Source should be defined in the IDF.</p>
+
+        <h4><a id="characteristics">Characteristics[&lt;category
+            term&gt;]</a></h4>
+        <p>Controlled vocabulary term or measurement. Used as an attribute
+            column following <a href="#source_name">Source Name</a>, <a
+                    href="#sample_name">Sample Name</a>, <a href="#extract_name">Extract
+                Name</a>, or <a href="#labeled_extract_name">Labeled Extract Name</a>. This
+            column contains terms describing each material according to the
+            characteristics category indicated in the column header. For example, a
+            column headed "Characteristics[organism part]" would contain individual
+            organism part terms, for example "ear". These terms may be user-defined
+            (the default), from an external ontology source (indicated using a Term
+            Source REF column), or a measurement (indicated using a Unit[] column).</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+            <li><a href="#unit">Unit[]</a></li>
+        </ul>
+
+        <h4><a id="provider">Provider</a></h4>
+        <p>Used as an attribute column following <a href="#source_name">Source
+            Name</a>. A free-text string identifying the organization or person from
+            which the Source was obtained.</p>
+
+        <h4><a id="material_type">Material Type</a></h4>
+        <p>Controlled vocabulary term. Used as an attribute column following
+            <a href="#source_name">Source Name</a>, <a href="#sample_name">Sample
+                Name</a>, <a href="#extract_name">Extract Name</a>, or <a
+                    href="#labeled_extract_name">Labeled Extract Name</a>. This column
+            contains terms describing the type of each material, for examples: whole
+            organism, organism part, cell, total RNA. The following columns can be
+            used to annotate Material Type columns:</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+        </ul>
+
+        <p>The Term Source REF column in this case would point to the
+            ontology <a href="creating_an_idf.html#termsourcename">(defined in
+                the IDF)</a> from which the Material Type terms are taken.</p>
+
+        <h4><a id="label">Label</a></h4>
+        <p>Controlled vocabulary term. Used as an attribute column following
+            <a href="#labeled_extract_name">Labeled Extract Name</a>. The label
+            compound which is conjugated to an Extract to create the Labeled
+            Extract. Examples: Cy3, Cy5, biotin, alexa_546. The following columns
+            can be used to annotate Label columns:</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+        </ul>
+
+        <p>The Term Source REF column in this case would point to the
+            ontology <a href="creating_an_idf.html#termsourcename">(defined in
+                the IDF)</a> from which the Label terms are taken.</p>
+
+        <h4><a id="technology_type">Technology Type</a></h4>
+        <p>Controlled vocabulary term. Used as an attribute column following
+            <a href="#assay_name">Assay Name</a>. This column contains terms
+            describing the type of each assay for example <a
+                    href="/efo/EFO_0002696" target="_blank">array
+                assay</a> or <a href="/efo/EFO_0003740" target="_blank">sequencing
+                assay</a> . The following columns can be used to annotate Technology Type
+            columns:</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+        </ul>
+
+        <p>The Term Source REF column in this case would point to the
+            ontology <a href="creating_an_idf.html#termsourcename">(defined in
+                the IDF)</a>from which the Technology Type terms are taken.</p>
+
+        <h4><a id="factor_value">Factor Value[&lt;experiment factor
+            name&gt;]</a></h4>
+        <p>Controlled vocabulary term or measurement. This column contains
+            terms describing the experimental factor values (i.e., variables) for
+            each row of the SDRF. The Experimental Factor Name to which it pertains
+            (from the accompanying IDF) should be indicated in the column heading.
+            For example, if you have this in your IDF:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="creating_an_idf.html#factorname">Experimental
+                    Factor Name</a></td>
+                <td>organism part</td>
+            </tr>
+            <tr>
+                <td><a href="creating_an_idf.html#factortype" class="plain">Experimental
+                    Factor Type</a></td>
+                <td>organism part</td>
+            </tr>
+        </table>
+
+        <p>You could then use this factor in your SDRF (assuming you had
+            also defined the "EFO" term source in your <a
+                    href="creating_an_idf.html#termsourcename">IDF</a>):</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#factor_value" class="plain">Factor
+                    Value[organism part]</a></td>
+                <td><a href="#term_source_ref" class="plain">Term Source REF</a></td>
+            </tr>
+            <tr>
+                <td>gall bladder</td>
+                <td>EFO</td>
+            </tr>
+            <tr>
+                <td>kidney</td>
+                <td>EFO</td>
+            </tr>
+            <tr>
+                <td>liver</td>
+                <td>EFO</td>
+            </tr>
+            <tr>
+                <td>intestine</td>
+                <td>EFO</td>
+            </tr>
+            <tr>
+                <td>pancreas</td>
+                <td>EFO</td>
+            </tr>
+        </table>
+
+        <p>The terms in the column may be user-defined (the default), from
+            an external ontology source (indicated using a Term Source REF column),
+            or a measurement (indicated using a Unit[] column).</p>
+
+        <p>In the example above, the column terms would be treated as
+            describing organism parts. For more precise control over the treatment
+            of these terms, the optional form "Factor Value [] ()" is available,
+            e.g. "Factor Value [growthconditionEF] (Nutrients)".</p>
+
+        <h4><a id="performer">Performer</a></h4>
+        <p>Used as an attribute column following <a href="#protocol_ref">Protocol
+            REF</a>. The name of the researcher or centre where the protocol was carried
+            out.</p>
+
+        <h4><a id="date">Date</a></h4>
+        <p>Used as an attribute column following <a href="#protocol_ref">Protocol
+            REF</a>. The date (and time, where available) upon which the protocol was
+            performed, in the following format: YYYY-MM-DD.</p>
+
+        <h4><a id="parameter_value">Parameter Value[&lt;protocol
+            parameter&gt;]</a></h4>
+        <p>Used as an attribute column following <a href="#protocol_ref">Protocol
+            REF</a> columns. This column contains values for the protocol parameters
+            referenced in the column header. The following columns can be used to
+            annotate Parameter Value[] columns:</p>
+
+        <ul>
+            <li><a href="#unit">Unit[]</a></li>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+            <li><a href="#comment">Comment[]</a></li>
+        </ul>
+
+        <p>For example, if a Protocol Name "Array Hybridization" is defined
+            in the accompanying IDF, with Protocol Parameters "hyb temp;hyb volume",
+            the following would be valid:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#protocol_ref" class="plain">Protocol REF</a></td>
+                <td><a href="#parameter_value" class="plain">Parameter&nbsp;Value
+                    [hyb&nbsp;temp]</a></td>
+                <td><a href="#unit" class="plain">Unit[temperature unit]</a></td>
+                <td><a href="#paramater_value" class="plain">Parameter&nbsp;Value
+                    [hyb&nbsp;volume]</a></td>
+                <td><a href="#unit" class="plain">Unit[volume unit]</a></td>
+            </tr>
+            <tr>
+                <td>Array Hybridization</td>
+                <td>55</td>
+                <td>degree celsius</td>
+                <td>100</td>
+                <td>microliter</td>
+            </tr>
+        </table>
+        <br>
+
+        <h4><a id="unit">Unit[&lt;unit category&gt;]</a></h4>
+        <p>Controlled vocabulary term. Used as an attribute column following
+            <a href="#characteristics">Characteristics[]</a>, <a
+                    href="#factor_value">Factor Value[]</a> or <a href="#parameter_value">Parameter
+                Value[]</a>. This column contains terms describing the unit(s) to be applied
+            to the values in the preceding column. The type of unit is included in
+            the column heading, e.g. "Unit[volume unit]". These unit types should
+            correspond to <a href="http://purl.obolibrary.org/obo/UO_0000000"
+                             target="_blank">Unit</a> subclasses from <a
+                    href="/efo/" target="_blank">EFO</a>. The following
+            columns can be used to annotate Unit[] columns:</p>
+
+        <ul>
+            <li><a href="#term_source_ref">Term Source REF</a></li>
+        </ul>
+
+        <p>The Term Source REF column in this case would point to the
+            ontology <a href="creating_an_idf.html#termsourcename">(defined in
+                the IDF)</a> from which the Unit terms are taken.</p>
+
+        <h4><a id="description">Description</a></h4>
+        <p>Used as an attribute column following <a href="#source_name">Source
+            Name</a>, <a href="#sample_name">Sample Name</a>, <a href="#extract_name">Extract
+            Name</a>, or <a href="#labeled_extract_name">Labeled Extract Name</a>. A
+            free-text description to be attached to the corresponding material. To
+            be used sparingly, if at all - most annotations should be provided using
+            controlled vocabulary terms, using <a href="#characteristics">Characteristics[]</a>
+            columns.</p>
+
+        <h4><a id="term_source_ref">Term Source REF</a></h4>
+        <p>Used as an attribute column following any controlled vocabulary
+            column (e.g., <a href="#characteristics">Characteristics[]</a>), or
+            column allowing reference of external entities (e.g., <a
+                    href="#protocol_ref">Protocol REF</a>). This column contains references
+            to ontology or database Term Sources defined in the IDF, and from which
+            the values in the previous column were taken. The following columns can
+            be used to annotate Term Source REF columns:</p>
+
+        <ul>
+            <li><a href="#term_accession_number">Term Accession Number</a></li>
+        </ul>
+
+        <h4><a id="term_accession_number">Term Accession Number</a></h4>
+        <p>Used as an attribute column following <a href="#term_source_ref">Term
+            Source REF</a> columns. This column contains the accession numbers from the
+            term source used to identify the ontology or database terms in question.
+            For example:</p>
+
+        <table class="example">
+            <tr>
+                <td><a href="#source_name" class="plain">Source Name</a></td>
+                <td><a href="#characteristics" class="plain">Characteristics
+                    [disease]</a></td>
+                <td><a href="#term_source_ref" class="plain">Term Source REF</a></td>
+                <td><a href="#term_accession_number" class="plain">Term
+                    Accession Number</a></td>
+            </tr>
+            <tr>
+                <td>Sample 1</td>
+                <td>acute lymphoblastic leukemia</td>
+                <td>EFO</td>
+                <td>EFO_0000220</td>
+            </tr>
+        </table>
+
+        <p>(This example relies on the <a href="/efo/">EFO</a>
+            Term Source having been pre-defined in the <a
+                    href="creating_an_idf.html#termsourcename">IDF</a> accompanying the
+            SDRF.)</p>
+
+        <h4><a id="comment">Comment[&lt;comment name&gt;]</a></h4>
+        <p>This column can be used to annotate the main graph node and edge
+            columns listed above. It is included as an extensibility mechanism, and
+            should not generally be used to encode meaningful biological annotation.
+            The column heading should contain a name for the type of values included
+            in the column.</p>
+        <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
+    </section>
+    <aside class="grid_6 omega">
+        <h3>Help</h3>
+        <ul id="secondary-nav">
+            <li><a href="index.html">Help home</a></li>
+            <li><a href="quick_start.html">Quick Start guide</a></li>
+            <li><a href="how_to_search.html">How to search</a>
+                <ul>
+                    <li><a href="how_to_search_adf.html">Array design search</a></li>
+                    <li><a href="how_to_search_private_data.html">Search for private data</a></li>
+                </ul>
+            </li>
+            <li class="active"><a href="submissions_overview.html">How to submit</a>
+                <ul>
+                    <li><a href="magetab_spec.html">MAGE-TAB format</a>
+                        <ul>
+                            <li><a href="creating_an_idf.html">Creating an IDF</a></li>
+                            <li class="active"><a href="creating_a_sdrf.html">Creating a SDRF</a></li>
+                            <li><a href="data_format.html">Data formats</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                    <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
+                    <li><a href="ftp_upload.html">FTP upload instructions</a></li>
+                    <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
+                </ul>
+            </li>
+            <li><a href="data_availability.html">Learn more about our data</a>
+                <ul>
+                    <li><a href="data_availability.html">Data access policy</a></li>
+                    <li><a href="accession_codes.html">Accession codes</a></li>
+                    <li><a href="GEO_data.html">GEO data</a></li>
+                </ul>
+            </li>
+            <li><a href="programmatic_access.html">Other ways to get data</a>
+                <ul>
+                    <li><a href="programmatic_access.html">Programmatic access</a></li>
+                    <li><a href="FTP_archives.html">FTP archives</a></li>
+                    <li><a href="expressionset_objects.html">ExpressionSet R objects</a></li>
+                </ul>
+            </li>
+            <li><a href="FAQ.html">FAQ</a></li>
+            <li><a href="contact_us.html">Contact us</a></li>
+        </ul>
+    </aside>
+</div>
+</body>
+</html>
