@@ -62,7 +62,7 @@
             <xsl:when test="fn:local-name() = 'src' and fn:local-name(parent::node()) = 'img'">
                 <xsl:attribute name="src" select="fn:concat($context-path, '/assets/images/', $vSubFolder, .)"/>
             </xsl:when>
-            <xsl:when test="fn:local-name() = 'href' and fn:local-name(parent::node()) = 'a' and fn:matches(., '^[^/.]+[.](?!html)$')">
+            <xsl:when test="fn:local-name() = 'href' and fn:local-name(parent::node()) = 'a' and fn:matches(., '^[^/.]+[.]([^h]|h[^t]|ht[^m])[A-Za-z]*$')">
                 <xsl:attribute name="href" select="fn:concat($context-path, '/assets/misc/', .)"/>
             </xsl:when>
             <xsl:otherwise>
