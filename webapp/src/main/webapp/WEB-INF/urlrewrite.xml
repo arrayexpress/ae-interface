@@ -921,6 +921,11 @@
         <from>^/genes/any/(.*)$</from>
         <to type="permanent-redirect" last="true">${interface.application.link.atlas.base.url}query?geneQuery=$1</to>
     </rule>
+
+    <rule>
+        <from>^/Submissions/.*$</from>
+        <to type="permanent-redirect" last="true">%{context-path}/help/submissions_overview.html</to>
+    </rule>
     <!-- test page -->
     <rule>
         <from>^/test[.]html?$</from>
