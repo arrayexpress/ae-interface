@@ -83,13 +83,18 @@ public abstract class AuthAwareApplicationServlet extends ApplicationServlet
             }
             String token = cookies.getCookieValue(AE_LOGIN_TOKEN_COOKIE);
             String userAgent = request.getHeader("User-Agent");
+            if (null == userAgent || userAgent.trim().isEmpty()) {
+                userAgent = "unknown";
+            }
+            String userIp = request.getHeader("X-Cluster-Client-Ip");
+            if (null == userIp || userIp.trim().isEmpty()) {
+                userIp = request.getRemoteAddr();
+            }
             Users users = (Users) getComponent("Users");
             return users.verifyLogin(
                     userName
                     , token
-                    , request.getRemoteAddr().concat(
-                        userAgent != null ? userAgent : "unknown"
-                    )
+                    , userIp + userAgent
             );
         } catch (Exception x) {
             throw new AuthApplicationServletException(x);
