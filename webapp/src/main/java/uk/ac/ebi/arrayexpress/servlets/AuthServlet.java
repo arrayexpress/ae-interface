@@ -68,7 +68,13 @@ public class AuthServlet extends ApplicationServlet
         String email = request.getParameter("e");
         String accession = request.getParameter("a");
         String userAgent = request.getHeader("User-Agent");
-
+        if (null == userAgent || userAgent.trim().isEmpty()) {
+            userAgent = "unknown";
+        }
+        String userIp = request.getHeader("X-Cluster-Client-Ip");
+        if (null == userIp || userIp.trim().isEmpty()) {
+            userIp = request.getRemoteAddr();
+        }
         Users users = ((Users) getComponent("Users"));
         String token = "";
         boolean isLoginSuccessful = false;
@@ -81,7 +87,7 @@ public class AuthServlet extends ApplicationServlet
             token = users.hashLogin(
                     username
                     , password
-                    , request.getRemoteAddr().concat(null != userAgent ? userAgent : "unknown")
+                    , userIp + userAgent
             );
 
             // 31,557,600 is a standard year in seconds
