@@ -798,6 +798,10 @@
         <to type="forward" last="true">/servlets/lookup/exptech</to>
     </rule>
     <rule>
+        <from>^/exptypes[.]txt</from>
+        <to type="forward" last="true">/servlets/lookup/exptypes</to>
+    </rule>
+    <rule>
         <from>^/keywords[.]txt</from>
         <to type="forward" last="true">/servlets/lookup/keywords</to>
     </rule>

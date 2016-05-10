@@ -89,6 +89,8 @@ public class LookupServlet extends ApplicationServlet
                 out.print(ontologies.getAssayByMoleculeOptions());
             } else if ("exptech".equals(type) && null != ontologies) {
                 out.print(ontologies.getAssayByInstrumentOptions());
+            } else if ("exptypes".equals(type) && null != ontologies) {
+                out.print(ontologies.getExperimentTypes());
             } else if ("keywords".equals(type) && null != autocompletion) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
                 out.print(autocompletion.getKeywords(query, field, limit));

@@ -146,6 +146,31 @@ public class Ontologies extends ApplicationComponent
         return this.assayByInstrument.getHtml();
     }
 
+    public String getExperimentTypes() {
+        EFONode arrayAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0002696");
+        EFONode seqAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0003740");
+        Set<EFONode> arrayTypes = null != arrayAssay ? arrayAssay.getChildren() : new HashSet<EFONode>();
+        Set<EFONode> seqTypes = null != seqAssay ? seqAssay.getChildren() : new HashSet<EFONode>();
+
+        Set<EFONode> allTypes = new HashSet<>(arrayTypes);
+        allTypes.addAll(seqTypes);
+
+        StringBuffer sb = new StringBuffer();
+        for (EFONode node : allTypes) {
+            String term = node.getTerm();
+            if (null != term) {
+                sb.append(term.trim().toLowerCase())
+                        .append(',')
+                        .append(arrayTypes.contains(node))
+                        .append(',')
+                        .append(seqTypes.contains(node))
+                        .append('\n');
+            }
+        }
+        return sb.toString();
+    }
+
+
     public EFOExpansionLookupIndex getExpansionLookupIndex()
     {
         return this.lookupIndex;
