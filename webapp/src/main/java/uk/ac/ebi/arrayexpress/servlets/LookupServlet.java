@@ -71,7 +71,7 @@ public class LookupServlet extends ApplicationServlet
             response.setContentType("text/plain; charset=UTF-8");
         }
         // Output goes to the response PrintWriter.
-        try (PrintWriter out = response.getWriter()) {
+        try {
             Experiments experiments = (Experiments)getComponent("Experiments");
             Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
             Ontologies ontologies = (Ontologies)getComponent("Ontologies");
@@ -96,12 +96,16 @@ public class LookupServlet extends ApplicationServlet
             } else {
                 logger.error("Action [{}] is not supported", type);
             }
+
             // Disable cache no matter what (or we're fucked on IE side)
             response.addHeader("Pragma", "no-cache");
             response.addHeader("Cache-Control", "no-cache");
             response.addHeader("Cache-Control", "must-revalidate");
             response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
-            out.print(output);
+
+            try (PrintWriter out = response.getWriter()) {
+                out.print(output);
+            }
         } catch (Exception x) {
             throw new RuntimeException(x);
         }
