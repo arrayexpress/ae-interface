@@ -70,37 +70,38 @@ public class LookupServlet extends ApplicationServlet
         } else {
             response.setContentType("text/plain; charset=UTF-8");
         }
-        // Disable cache no matter what (or we're fucked on IE side)
-        response.addHeader("Pragma", "no-cache");
-        response.addHeader("Cache-Control", "no-cache");
-        response.addHeader("Cache-Control", "must-revalidate");
-        response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
-
         // Output goes to the response PrintWriter.
         try (PrintWriter out = response.getWriter()) {
             Experiments experiments = (Experiments)getComponent("Experiments");
             Autocompletion autocompletion = (Autocompletion)getComponent("Autocompletion");
             Ontologies ontologies = (Ontologies)getComponent("Ontologies");
+            String output = "";
             if ("arrays".equals(type) && null != experiments) {
-                out.print(experiments.getArrays());
+                output = experiments.getArrays();
             } else if ("species".equals(type) && null != experiments) {
-                out.print(experiments.getSpecies());
+                output = experiments.getSpecies();
             } else if ("expdesign".equals(type) && null != ontologies) {
-                out.print(ontologies.getAssayByMoleculeOptions());
+                output = ontologies.getAssayByMoleculeOptions();
             } else if ("exptech".equals(type) && null != ontologies) {
-                out.print(ontologies.getAssayByInstrumentOptions());
+                output = ontologies.getAssayByInstrumentOptions();
             } else if ("exptypes".equals(type) && null != ontologies) {
-                out.print(ontologies.getExperimentTypes());
+                output = ontologies.getExperimentTypes();
             } else if ("keywords".equals(type) && null != autocompletion) {
                 String field = (null != request.getParameter("field") ? request.getParameter("field") : "");
-                out.print(autocompletion.getKeywords(query, field, limit));
+                output = autocompletion.getKeywords(query, field, limit);
             } else if ("efowords".equals(type) && null != autocompletion) {
-                out.print(autocompletion.getEfoWords(query, limit));
+                output = autocompletion.getEfoWords(query, limit);
             } else if ("efotree".equals(type) && null != autocompletion) {
-                out.print(autocompletion.getEfoChildren(efoId));
+                output = autocompletion.getEfoChildren(efoId);
             } else {
                 logger.error("Action [{}] is not supported", type);
             }
+            // Disable cache no matter what (or we're fucked on IE side)
+            response.addHeader("Pragma", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+            response.addHeader("Cache-Control", "must-revalidate");
+            response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
+            out.print(output);
         } catch (Exception x) {
             throw new RuntimeException(x);
         }

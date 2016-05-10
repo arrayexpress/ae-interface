@@ -146,11 +146,22 @@ public class Ontologies extends ApplicationComponent
         return this.assayByInstrument.getHtml();
     }
 
+    private Set<EFONode> getDescendents(EFONode node) {
+        Set<EFONode> set = new HashSet<>();
+        if (null != node) {
+            for (EFONode child : node.getChildren()) {
+                set.add(child);
+                set.addAll(getDescendents(child));
+            }
+        }
+        return set;
+    }
+
     public String getExperimentTypes() {
         EFONode arrayAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0002696");
         EFONode seqAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0003740");
-        Set<EFONode> arrayTypes = null != arrayAssay ? arrayAssay.getChildren() : new HashSet<EFONode>();
-        Set<EFONode> seqTypes = null != seqAssay ? seqAssay.getChildren() : new HashSet<EFONode>();
+        Set<EFONode> arrayTypes = getDescendents(arrayAssay);
+        Set<EFONode> seqTypes = getDescendents(seqAssay);
 
         Set<EFONode> allTypes = new HashSet<>(arrayTypes);
         allTypes.addAll(seqTypes);
