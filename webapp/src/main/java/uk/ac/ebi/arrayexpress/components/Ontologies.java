@@ -171,9 +171,9 @@ public class Ontologies extends ApplicationComponent
             String term = node.getTerm();
             if (null != term) {
                 sb.append(term.trim().toLowerCase())
-                        .append(',')
+                        .append('\t')
                         .append(arrayTypes.contains(node))
-                        .append(',')
+                        .append('\t')
                         .append(seqTypes.contains(node))
                         .append('\n');
             }
