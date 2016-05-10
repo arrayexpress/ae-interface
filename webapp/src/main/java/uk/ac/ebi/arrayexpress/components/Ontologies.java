@@ -34,10 +34,7 @@ import uk.ac.ebi.arrayexpress.utils.search.EFOQueryExpander;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -146,37 +143,30 @@ public class Ontologies extends ApplicationComponent
         return this.assayByInstrument.getHtml();
     }
 
-    private Set<EFONode> getDescendents(EFONode node) {
-        Set<EFONode> set = new HashSet<>();
-        if (null != node) {
-            for (EFONode child : node.getChildren()) {
-                set.add(child);
-                set.addAll(getDescendents(child));
-            }
-        }
-        return set;
-    }
+    public String getExperimentTypes()
+    {
+        Set<String> arrayTypes = getEfo().getTerms(
+                "http://www.ebi.ac.uk/efo/EFO_0002696",
+                IEFO.INCLUDE_CHILD_TERMS + IEFO.INCLUDE_CHILD_ALT_TERMS
+        );
 
-    public String getExperimentTypes() {
-        EFONode arrayAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0002696");
-        EFONode seqAssay = getEfo().getMap().get("http://www.ebi.ac.uk/efo/EFO_0003740");
-        Set<EFONode> arrayTypes = getDescendents(arrayAssay);
-        Set<EFONode> seqTypes = getDescendents(seqAssay);
+        Set<String> seqTypes = getEfo().getTerms(
+                "http://www.ebi.ac.uk/efo/EFO_0003740",
+                IEFO.INCLUDE_CHILD_TERMS + IEFO.INCLUDE_CHILD_ALT_TERMS
+        );
 
-        Set<EFONode> allTypes = new HashSet<>(arrayTypes);
+        Set<String> allTypes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        allTypes.addAll(arrayTypes);
         allTypes.addAll(seqTypes);
 
         StringBuffer sb = new StringBuffer();
-        for (EFONode node : allTypes) {
-            String term = node.getTerm();
-            if (null != term) {
-                sb.append(term.trim().toLowerCase())
-                        .append('\t')
-                        .append(arrayTypes.contains(node))
-                        .append('\t')
-                        .append(seqTypes.contains(node))
-                        .append('\n');
-            }
+        for (String type : allTypes) {
+            sb.append(type.trim().toLowerCase())
+                    .append('\t')
+                    .append(arrayTypes.contains(type))
+                    .append('\t')
+                    .append(seqTypes.contains(type))
+                    .append('\n');
         }
         return sb.toString();
     }
