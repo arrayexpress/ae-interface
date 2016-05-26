@@ -16,9 +16,9 @@
     <url>http://www.ebi.ac.uk/arrayexpress</url>
 
     <scm>
-        <connection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</connection>
-        <developerConnection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</developerConnection>
-        <url>svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/webapp</url>
+        <url>https://github.com/arrayexpress/ae-interface</url>
+        <connection>scm:git:git://github.com/arrayexpress/ae-interface.git</connection>
+        <developerConnection>scm:git:git@github.com:arrayexpress/ae-interface.git</developerConnection>
     </scm>
 
     <!-- default values for repository related properties -->
@@ -317,6 +317,7 @@
                 <configuration>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
+                    <shortRevisionLength>10</shortRevisionLength>
                 </configuration>
             </plugin>
         </plugins>

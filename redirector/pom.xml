@@ -15,11 +15,11 @@
     </parent>
     <url>http://www.ebi.ac.uk/microarray-as/ae</url>
 
-    <scm>
+    <!--scm>
         <connection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/redirector</connection>
         <developerConnection>scm:svn:svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/redirector</developerConnection>
         <url>svn://bar.ebi.ac.uk/trunk/arrayexpress-interface/redirector</url>
-    </scm>    
+    </scm-->
     <!-- default values for repository related properties -->
     <properties>
         <redirector.application.log.default.priority>INFO</redirector.application.log.default.priority>
@@ -118,7 +118,7 @@
                     </webResources>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <executions>
@@ -133,7 +133,7 @@
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
                 </configuration>
-            </plugin>
+            </plugin-->
         </plugins>
     </build>
 
