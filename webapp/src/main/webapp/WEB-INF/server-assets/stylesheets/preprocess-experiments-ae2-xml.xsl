@@ -192,6 +192,21 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template match="relatedexperiment" mode="copy">
+        <xsl:choose>
+            <xsl:when test="fn:string-length(.) = 0"/>
+            <xsl:when test="fn:contains(., ';G')">
+                <xsl:variable name="vValues" select="fn:tokenize(., '\s*;\s*')"/>
+                <xsl:for-each select="$vValues">
+                    <xsl:element name="relatedexperiment">
+                        <xsl:value-of select="."/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template match="experimentdesign" mode="copy">
         <xsl:variable name="vValue" select="fn:replace(fn:replace(., '_design', ''), '_', ' ')"/>
         <xsl:if test="not(fn:index-of((../experimenttype), $vValue))">

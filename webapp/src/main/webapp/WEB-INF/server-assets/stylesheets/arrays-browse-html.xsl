@@ -357,7 +357,6 @@
 
         <xsl:variable name="vFiles" select="ae:getMappedValue('ftp-folder', $vAccession)"/>
         <xsl:variable name="vExpsWithArray" select="search:queryIndex('experiments', concat('visible:true array:', $vAccession, if ($userid) then concat(' userid:(', $userid, ')') else ''))"/>
-
         <xsl:for-each select="ae:getMappedValue('experiments-for-array', $vAccession)">
             <xsl:if test="current() != $vExpsWithArray/experiment/accession">
                 <xsl:message select="fn:concat('accession: ', current())"/>
@@ -426,6 +425,12 @@
                                 </xsl:when>
                                 <xsl:otherwise/>
                             </xsl:choose>
+                            <xsl:if test="fn:matches($pArray/secondaryaccession, '^(GSE|GDS|GPL)\d+$')">
+                                <br/>
+                                <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={$pArray/secondaryaccession}">
+                                    <xsl:text>GEO - </xsl:text><xsl:value-of select="$pArray/secondaryaccession"/>
+                                </a>
+                            </xsl:if>
                         </xsl:with-param>
                     </xsl:call-template>
                     <xsl:if test="fn:count($vFiles/file) > 0">

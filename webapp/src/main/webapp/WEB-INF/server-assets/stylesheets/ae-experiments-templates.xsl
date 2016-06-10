@@ -556,8 +556,8 @@
                         <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
                     </div>
                 </xsl:if>
-                <xsl:if test="secondaryaccession">
-                    <xsl:call-template name="exp-secondaryaccession">
+                <xsl:if test="secondaryaccession|relatedexperiment">
+                    <xsl:call-template name="exp-secondaryaccession-or-relatedexperiment">
                         <xsl:with-param name="pQueryId" select="$pQueryId"/>
                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
                     </xsl:call-template>
@@ -629,12 +629,12 @@
         </xsl:if>
     </xsl:template>
  
-    <xsl:template name="exp-secondaryaccession">
+    <xsl:template name="exp-secondaryaccession-or-relatedexperiment">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
 
         <div>
-            <xsl:for-each select="secondaryaccession">
+            <xsl:for-each select="secondaryaccession|relatedexperiment">
                 <xsl:choose>
                     <xsl:when test="fn:string-length(.) = 0"/>
                     <xsl:when test="fn:matches(., '^(GSE|GDS)\d+$')">
@@ -710,7 +710,8 @@
             </xsl:for-each>
         </div>
     </xsl:template>
-    
+
+
     <xsl:template name="exp-provider">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pContacts"/>
