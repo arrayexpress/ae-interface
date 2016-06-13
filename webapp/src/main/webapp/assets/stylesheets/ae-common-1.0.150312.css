@@ -962,7 +962,12 @@ p.center {
 }
 
 #ae-detail td i {
-    padding: 0 3px
+    padding: 0 3px;
+    font-style: oblique;
+}
+
+#ae-detail td b {
+    font-weight: bold;
 }
 
 #ae-detail a img {
