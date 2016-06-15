@@ -425,11 +425,27 @@
                                 </xsl:when>
                                 <xsl:otherwise/>
                             </xsl:choose>
-                            <xsl:if test="fn:matches($pArray/secondaryaccession, '^(GSE|GDS|GPL)\d+$')">
-                                <br/>
-                                <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={$pArray/secondaryaccession}">
-                                    <xsl:text>GEO - </xsl:text><xsl:value-of select="$pArray/secondaryaccession"/>
-                                </a>
+                            <xsl:if test="fn:count($pArray/secondaryaccession)>0">
+                                <div>
+                                    <xsl:for-each select="$pArray/secondaryaccession">
+                                        <xsl:if test="fn:matches(., '^(GSE|GDS|GPL)\d+$')">
+                                            <a href="http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc={.}">
+                                                <xsl:text>GEO - </xsl:text><xsl:value-of select="."/>
+                                            </a>
+                                        </xsl:if>
+                                        <xsl:if test="fn:matches(., '^E-.*\d+$')">
+                                            <a href="{$context-path}/experiments/{.}">
+                                                <xsl:value-of select="."/>
+                                            </a>
+                                        </xsl:if>
+                                        <xsl:if test="fn:matches(., '^A-.*\d+$')">
+                                            <a href="{$context-path}/arrays/{.}">
+                                                <xsl:value-of select="."/>
+                                            </a>
+                                        </xsl:if>
+                                        <xsl:if test="fn:position() != fn:last()"><xsl:text>, </xsl:text></xsl:if>
+                                    </xsl:for-each>
+                                </div>
                             </xsl:if>
                         </xsl:with-param>
                     </xsl:call-template>
