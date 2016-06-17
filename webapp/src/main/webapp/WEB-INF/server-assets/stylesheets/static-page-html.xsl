@@ -40,8 +40,8 @@
                     <xsl:with-param name="pExtraSearchFields"/>
                     <xsl:with-param name="pTitleTrail" select="fn:substring-before($vContent//html:title, '&lt; ArrayExpress')"/>
                     <xsl:with-param name="pBreadcrumbTrail"/>
-                    <xsl:with-param name="pExtraCSS"/>
-                    <xsl:with-param name="pExtraJS"/>
+                    <xsl:with-param name="pExtraCSS" select="$vContent//html:link"/>
+                    <xsl:with-param name="pExtraJS" select="$vContent//html:script" />
                     <xsl:with-param name="pExtraBodyClasses"/>
                 </xsl:call-template>
             </xsl:when>
@@ -59,7 +59,10 @@
     <!-- attributes, commments, processing instructions, text: copy as is -->
     <xsl:template match="@*|processing-instruction()|text()" mode="html">
         <xsl:choose>
-            <xsl:when test="fn:local-name() = 'src' and fn:local-name(parent::node()) = 'img'">
+            <xsl:when test="fn:local-name() = 'href' and fn:local-name(parent::node()) = 'link'">
+                <xsl:attribute name="href" select="fn:concat($context-path, '/assets/stylesheets/', $vSubFolder, .)"/>
+            </xsl:when>
+            <xsl:when test="fn:local-name() = 'src' and fn:local-name(parent::node()) = 'img' and not(fn:starts-with(.,'http'))">
                 <xsl:attribute name="src" select="fn:concat($context-path, '/assets/images/', $vSubFolder, .)"/>
             </xsl:when>
             <xsl:when test="fn:local-name() = 'href' and fn:local-name(parent::node()) = 'a' and fn:matches(., '^[^/.]+[.]([^h]|h[^t]|ht[^m])[A-Za-z]*$')">
