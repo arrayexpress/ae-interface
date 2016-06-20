@@ -1,0 +1,46 @@
+
+
+.ae-help_mainboxleft {
+  float: left;
+  max-width: 900px;
+  background-color: #F2F2F2;
+  margin-top: 18px;
+  padding: 8px;
+}
+
+.ae-help_mainboxleft-hide {
+  display: none;
+  float: left;
+  max-width: 900px;
+  background-color: #F2F2F2;
+  margin-top: 18px;
+  padding: 8px;
+}
+
+.ae-help_linkbox {
+  border: 2px solid rgb(229, 229, 229);
+  margin-top: 18px;
+}
+
+.ae-help_checklist {
+  list-style: url("../../images/help/check.png");
+}
+
+.ae-help_optionbox {
+  float: left;
+  margin-right: 15px;
+}
+
+div.ae-help_optionbox a {
+  display: block;
+  height: 42px;
+  width: 200px;
+  padding-top: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  font-family: 'HelveticaNeueLT Pro','Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size:  16px;
+  text-align: center;
+  border-bottom-style: none;
+}
