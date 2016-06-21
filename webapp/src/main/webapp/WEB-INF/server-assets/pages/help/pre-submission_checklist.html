@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head><title>Pre-submission checklist &lt; ArrayExpress &lt; EMBL-EBI</title>
-  <link rel="stylesheet" type="text/css" href="../../../../assets/stylesheets/help/ae-help-submit-1.0.160617.css">
+  <link rel="stylesheet" type="text/css" href="../assets/stylesheets/help/ae-help-submit-1.0.160617.css" />
   <script type="text/javascript">
     function HideContent(d) {
     document.getElementById(d).style.display = "none";
@@ -23,7 +23,7 @@
 
           <h2>Pre-submission checklist</h2>
           <br>
-          <p>There are a few types of submissions that need special instructions. Please check this list to see if this applies to your experiment before you start the submission in Annotare.</p>
+          <p>There are a few types of submissions that need special instructions. Please check this list to see if it applies to your experiment before you start the submission in Annotare.</p>
 
           <ul>
             <li><a href="javascript:ReverseDisplay('twocol')">Two-colour microarray experiment</a></li>
@@ -35,7 +35,7 @@
 
           <p>If none of this applies to your submission, you can
             <a href="/fg/annotare/">start your submission (Annotare)</a>.</p>
-          <p><a href="submissions_overview.html">Back</a> to submissions overview</p>
+          <p><a href="submissions_overview.html">Back</a> to Submissions Overview</p>
 
         </div>
 
@@ -54,8 +54,8 @@
             <h3>Single-cell sequencing experiment</h3>
 
             <p>Fill in the normal Annotare form for sequencing experiments. Please also include information about <strong>spike-in RNAs</strong> and upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a <i>fasta</i> file with the nucleotide sequences. Here is an example: <a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip">E-MTAB-3624.additional.1.zip</a><br>
-            You should include a sample attribute "<strong>single cell id</strong>" to uniquely name your individual cells and use it as the experimental variable.
-            If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as "<strong>single cell well quality</strong>". The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
+            You should include a sample attribute "<strong>single cell ID</strong>" to uniquely name your individual cells and use it as the experimental variable.
+            If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as "<strong>single cell well information</strong>". The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
             <ul>
               <li>"debris" (intracellular matrix, proteins)</li>
               <li>"multiple cells"</li>
@@ -71,7 +71,7 @@
           <div class="ae-help_mainboxleft-hide" id="moresamp">
             <h3>More than 1000 samples</h3>
 
-            <p>Currently Annotare does not handle more than 1000 samples per submission and these submissions need a little workaround. Please provide as much information as possible in the Annotare, including the protocols and experiment description. You don't need to create 1000 samples, maybe just a 10-20, with sample attributes. Upload the files using the drag and drop feature. If you prefer, you may upload the files via the ftp server.  We will then export the submission and send you the samples and data relationship format (SDRF) spreadsheet for you to fill in the rest of the sample information.</p>
+            <p>Currently Annotare does not handle more than 1000 samples per submission and such submissions need some workaround. Please provide as much information as possible in the Annotare form, including the protocols and experiment description. You don't need to create 1000 samples, maybe just 10-20, with sample attributes. Upload the files using the drag and drop feature. If you prefer, you may upload the files via the ftp server.  We will then export the submission and send you the samples and data relationship format (SDRF) spreadsheet for you to fill in the rest of the sample information.</p>
             <a href="javascript:HideContent('moresamp')" class="hide_button">Hide</a>
           </div>
         </div>
