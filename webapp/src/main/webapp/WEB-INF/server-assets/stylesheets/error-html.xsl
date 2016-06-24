@@ -72,6 +72,14 @@
                         <xsl:with-param name="pMessage">The resource located at <span class="alert"><xsl:value-of select="$error-request-uri"/></span> may have been removed, had its name changed, or has restricted access. If you have been granted access, please <a href="#" class="login">log in</a> to proceed.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
+                <xsl:when test="$error-code = '429'">
+                    <xsl:call-template name="block-warning">
+                        <xsl:with-param name="pTitle">Server busy</xsl:with-param>
+                        <xsl:with-param name="pMessage">All our servers are busy at the moment. Please try again after a
+                            few minutes or use the link below to download the file via FTP.<br/>
+                        <p class="center"><a href="{$error-request-uri}"><xsl:value-of select="$error-request-uri"/></a></p></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">Something has gone wrong with ArrayExpress</xsl:with-param>

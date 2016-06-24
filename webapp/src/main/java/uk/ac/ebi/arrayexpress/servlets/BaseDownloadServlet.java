@@ -17,8 +17,10 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.arrayexpress.components.Files;
 import uk.ac.ebi.arrayexpress.utils.StringTools;
 import uk.ac.ebi.arrayexpress.utils.io.IDownloadFile;
 
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 {
@@ -43,6 +46,11 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
     // multipart boundary constant
     private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
+
+    // restrictions for parallel downloads
+    private static AtomicInteger downloadsInProgress = new AtomicInteger(0);
+    private static final int MAX_PARALLEL_DOWNLOADS = 50;
+
 
     protected final static class DownloadServletException extends Exception
     {
@@ -78,6 +86,13 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         IDownloadFile downloadFile = null;
         try {
             downloadFile = getDownloadFileFromRequest(request, response, authUserName);
+            if (downloadsInProgress.get()>=MAX_PARALLEL_DOWNLOADS) {
+                forwardToErrorPage(request, response, downloadFile);
+                return;
+            }
+
+            downloadsInProgress.incrementAndGet();
+
             if (null != downloadFile) {
                 verifyFile(downloadFile, response);
 
@@ -101,8 +116,22 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
             if (null != downloadFile) {
                 downloadFile.close();
             }
+            downloadsInProgress.decrementAndGet();
         }
     }
+
+    private void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response, IDownloadFile downloadFile) throws ServletException, IOException {
+        String ftpURL = StringUtils.replace(
+                            StringUtils.replace(downloadFile.getPath(), File.separator, "/"),
+                                ((Files) getComponent("Files")).getRootFolder(),
+                                "ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data");
+        request.setAttribute("javax.servlet.error.status_code",429);
+        request.setAttribute("javax.servlet.error.message","server busy error");
+        request.setAttribute("javax.servlet.error.request_uri",ftpURL);
+        request.getRequestDispatcher("/servlets/error/html")
+                .forward(request, response);
+    }
+
     protected abstract IDownloadFile getDownloadFileFromRequest(
             HttpServletRequest request
             , HttpServletResponse response
