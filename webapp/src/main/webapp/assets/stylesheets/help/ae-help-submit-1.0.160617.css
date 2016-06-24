@@ -29,14 +29,14 @@
 .ae-help_optionbox {
   float: left;
   margin-right: 15px;
+  margin-top: 15px;
 }
 
 div.ae-help_optionbox a {
   display: block;
-  height: 42px;
+  height: 44px;
   width: 200px;
-  padding-top: 22px;
-  font-weight: bold;
+  padding-top: 20px;
   text-decoration: none;
   color: white;
   font-family: 'HelveticaNeueLT Pro','Helvetica Neue', Helvetica, Arial, sans-serif;
