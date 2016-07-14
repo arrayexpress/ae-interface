@@ -163,9 +163,10 @@
         </xsl:variable>
         <xsl:variable name="vAdjustedColType" select="fn:lower-case(fn:replace($vColType, '\s+', ''))"/>
         <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, $vAdjustedColType)"/>
-        <xsl:variable name="vColClass" select="if ($vAdjustedColType = 'characteristics') then 'sa' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'ef' else '')"/>
+        <xsl:variable name="vColClass" select="if ($vAdjustedColType = 'characteristics') then 'sa' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'evv' else '')"/>
+        <xsl:variable name="vField" select="if ($vAdjustedColType = 'characteristics') then 'sac' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'ev' else '')"/>
 
-        <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}"/>
+        <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}" field="{$vField}"/>
     </xsl:template>
 
     <xsl:template match="table">
@@ -189,7 +190,7 @@
                     <xsl:variable name="vIsUnit" as="xs:boolean" select="fn:not($vFull) and @type = 'unit'"/>
 
                     <xsl:if test="fn:not($vIsUnit)">
-                        <col pos="{@pos}" type="{@type}" name="{@name}" group="{@group}" class="{@class}">
+                        <col pos="{@pos}" type="{@type}" name="{@name}" group="{@group}" class="{@class}" field="{@field}">
                             <xsl:if test="$vHasUnit">
                                 <xsl:attribute name="unit" select="following-sibling::*[1]/@pos"/>
                             </xsl:if>
@@ -402,11 +403,11 @@
                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'derived array data matrix file'">Processed Matrix</xsl:when>
                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data file'">Raw</xsl:when>
                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'array data matrix file'">Raw Matrix</xsl:when>
-                            <xsl:when test="$vColInfo/@class != ''">
+                            <xsl:when test="$vColInfo/@field != ''">
                                 <xsl:call-template name="highlight">
                                     <xsl:with-param name="pQueryId" select="$queryid"/>
                                     <xsl:with-param name="pText" select="$vColInfo/@name"/>
-                                    <xsl:with-param name="pFieldName" select="$vColInfo/@class"/>
+                                    <xsl:with-param name="pFieldName" select="$vColInfo/@field"/>
                                 </xsl:call-template>
                             </xsl:when>
                             <xsl:otherwise>
