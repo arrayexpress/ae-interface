@@ -42,7 +42,7 @@
             <p>&nbsp;</p>
 
             <h4><a id="simple_filter">1.3 Filtering results</a></h4>
-            <p><img src="ae_help_filtering_choices.png" alt="Filtering options image"  style='border:2px solid #385930'></p>
+            <p><img src="ae_help_filter_box.png" alt="Filtering options image"  style='border:2px solid #385930'></p>
             <p>Experiments can be filtered using the drop down menus at the top of the results table. They can be filtered by: </p>
             <ul>
                 <li><strong>organism</strong></li>
@@ -131,14 +131,14 @@
             <td>array:A-AFFY-33</td>
         </tr>
         <tr>
-            <td><strong>ef</strong></td>
-            <td>Experimental factor, the name of the main variable under study in an experiment. E.g. if the factor is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have. Has <a href="#EFO_expansion">EFO expansion</a>.</td>
-            <td>ef:genotype</td>
+            <td><strong>ev (or ef)</strong></td>
+            <td>Experimental variable (or factor), the name of the main variable under study in an experiment. E.g. if the variable is "sex" in a human study, the researchers would be comparing between male and female samples, and "sex" is not merely an attribute the samples happen to have. Has <a href="#EFO_expansion">EFO expansion</a>.</td>
+            <td>ev:genotype</td>
         </tr>
         <tr>
-            <td><strong>efv</strong></td>
-            <td>The value of an experimental factor. E.g. The values for "genotype" factor can be "wild type", "p53-/-". Has <a href="#EFO_expansion">EFO expansion</a>.</td>
-            <td>efv:"wild type"</td>
+            <td><strong>evv (or efv)</strong></td>
+            <td>The value of an experimental variable (or factor). E.g. The values for "genotype" factor can be "wild type", "p53-/-". Has <a href="#EFO_expansion">EFO expansion</a>.</td>
+            <td>evv:"wild type"</td>
         </tr>
         <tr>
             <td><strong>expdesign</strong></td>
@@ -164,6 +164,11 @@
             <td><strong>sa</strong></td>
             <td>Sample attribute values. Has <a href="#EFO_expansion">EFO expansion</a>.</td>
             <td>sa:fibroblast</td>
+        </tr>
+        <tr>
+            <td><strong>sac</strong></td>
+            <td>Sample attribute category. Find experiments that have a specific sample attribute defined, e.g. "age", "strain". Has <a href="#EFO_expansion">EFO expansion</a>.</td>
+            <td>sac:age</td>
         </tr>
         <tr>
             <td><strong>organism</strong></td>
