@@ -356,7 +356,7 @@
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="."/>
-                                            <xsl:with-param name="pFieldName" select="'ef'"/>
+                                            <xsl:with-param name="pFieldName" select="'ev'"/>
                                         </xsl:call-template>
                                     </match>
                                 </xsl:for-each>
@@ -365,16 +365,25 @@
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="."/>
-                                            <xsl:with-param name="pFieldName" select="'efv'"/>
+                                            <xsl:with-param name="pFieldName" select="'evv'"/>
                                         </xsl:call-template>
                                     </match>
                                 </xsl:for-each>
-                                <xsl:for-each select="sampleattribute/category | sampleattribute/value">
+                                <xsl:for-each select="sampleattribute/value">
                                     <match text="{fn:lower-case(.)}">
                                         <xsl:call-template name="highlight">
                                             <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                             <xsl:with-param name="pText" select="."/>
                                             <xsl:with-param name="pFieldName" select="'sa'"/>
+                                        </xsl:call-template>
+                                    </match>
+                                </xsl:for-each>
+                                <xsl:for-each select="sampleattribute/category">
+                                    <match text="{fn:lower-case(.)}">
+                                        <xsl:call-template name="highlight">
+                                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                                            <xsl:with-param name="pText" select="."/>
+                                            <xsl:with-param name="pFieldName" select="'sac'"/>
                                         </xsl:call-template>
                                     </match>
                                 </xsl:for-each>
