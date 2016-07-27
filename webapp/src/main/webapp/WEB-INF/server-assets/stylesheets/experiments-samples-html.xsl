@@ -362,7 +362,7 @@
                                     <xsl:when test="$vColClass = 'sa'">
                                         <xsl:text>Sample Attributes</xsl:text>
                                     </xsl:when>
-                                    <xsl:when test="$vColClass = 'ef'">
+                                    <xsl:when test="$vColClass = 'ev' or $vColClass = 'evv'">
                                         <xsl:text>Variables</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="$vColInfo/@type = 'links'">
