@@ -18,18 +18,25 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                extension-element-prefixes=""
-                exclude-result-prefixes="xs fn"
+                xmlns:json="http://json.org/"
+                extension-element-prefixes="fn json"
+                exclude-result-prefixes="fn json"
                 version="2.0">
 
-    <xsl:import href="files-api-v3.xsl"/>
+    <xsl:import href="experiments-files-api-v3.xsl"/>
+    <xsl:import href="xml-to-json.xsl"/>
+    <xsl:param name="skip-root" as="xs:boolean" select="fn:true()"/>
 
-    <xsl:output method="xml" omit-xml-declaration="no" indent="no" encoding="UTF-8"/>
+    <xsl:output method="text" omit-xml-declaration="no" indent="no" encoding="UTF-8"/>
     <xsl:strip-space elements="*"/>
 
-    <xsl:variable name="vJson" select="fn:false()" as="xs:boolean"/>
-
     <xsl:template match="/">
-        <xsl:call-template name="root"/>
+        <xsl:variable name="vXml">
+            <xsl:call-template name="root">
+                <xsl:with-param name="pJson" select="fn:true()"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:value-of select="json:generate($vXml)"/>
     </xsl:template>
+
 </xsl:stylesheet>

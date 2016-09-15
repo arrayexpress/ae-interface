@@ -556,17 +556,17 @@
     </rule>
     <rule>
         <from>^/xml/v3/files/?$</from>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/files/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/files/(.+)$</from>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/protocols/?$</from>
@@ -639,7 +639,7 @@
     <rule>
         <from>^/json/v3/experiments/([E]-\w{4}-\d+)/files/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/files/api-v3/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/json</to>
     </rule>
     <rule>
         <from>^/json/v3/experiments/([E]-\w{4}-\d+)/samples/?$</from>
@@ -660,18 +660,18 @@
     <rule>
         <from>^/json/v3/files/?$</from>
         <set type="parameter" name="flusheaders">1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/json</to>
     </rule>
     <rule>
         <from>^/json/v3/files/([E]-\w{4}-\d+)/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/json</to>
     </rule>
     <rule>
         <from>^/json/v3/files/(.+)$</from>
         <set type="parameter" name="flusheaders">1</set>
         <set type="parameter" name="keywords">$1</set>
-        <to type="forward" last="true">/servlets/query/experiments/files-api-v2/json</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/json</to>
     </rule>
     <rule>
         <from>^/json/v3/protocols/?$</from>
