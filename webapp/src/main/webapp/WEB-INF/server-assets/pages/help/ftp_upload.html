@@ -47,9 +47,15 @@
 
     <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
 
-    <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have copy the FTP address from your Annotare <code>"Upload and assign data files"</code> > <code>"FTP upload..."</code> window. This FTP address contains the path to your personal subdirectory. Copy the full path using right-click "Copy link". Open a Terminal window and change to the directory containing the data files. Type <code><strong>ftp</strong></code> and add the FTP address by pasting the path from the Annotare dialogue into the command line. It should look similar to this: <code>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/ibtd1rmo-20r7k3g747sup/</code>.</p>
-    <p>For all other submissions (e.g. array design), connect to the FTP server using the command <code><strong>ftp ftp-private.ebi.ac.uk</strong></code> The username is <code><strong>aexpress</strong></code> and password is <code><strong>aexpress1</strong></code>.
-    <p>Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the default FTP directory. To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
+    <p>1. Open a Terminal window and change to the directory containing the data files.<br>
+    2. Type: <code><strong>ftp ftp-private.ebi.ac.uk</strong></code> to connect to the FTP server.<br>
+    3. Enter username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>.<br>
+    4. (<em>Annotare submissions only</em>) Change into the submission's subdirectory. You will find the path in Annotare under "Upload and assign data files" by clicking on "FTP upload...". It should look similar to this: <code>ibtd1rmo-20r7k3g747sup</code>.<br>
+    In the terminal window type <code><strong>cd</strong></code> followed by the path name.<br>
+    5. Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the FTP directory.<br>
+    To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
+
+    <p><img src="ftp_upload_instructions_terminal.png" alt="Terminal session for FTP upload"></p>
 
     <p>Note: You will not be able to list the files in the directory if you are using the general FTP site (it will only work within your personal Annotare submission directory). This is because we don't allow submitters to see each others' data files.</p>
 
