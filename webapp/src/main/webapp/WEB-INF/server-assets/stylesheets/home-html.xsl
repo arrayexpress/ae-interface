@@ -92,6 +92,7 @@
         </section>
         <section class="grid_8">
             <h3 class="icon icon-functional" data-icon="t">Tools and Access</h3>
+            <p><a href="/fg/annotare/">Annotare</a>: web-based submission tool for ArrayExpress.</p>
             <p><a href="http://www.bioconductor.org/packages/release/bioc/html/ArrayExpress.html">ArrayExpress Bioconductor package</a>: an R package to access ArrayExpress and build data structures.</p>
             <p><a href="{$context-path}/help/programmatic_access.html">Programmatic access</a>: query and download data using web services or JSON.</p>
             <p><a href="ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/">FTP access</a>: data can be downloaded directly from our FTP site.</p>
