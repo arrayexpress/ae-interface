@@ -39,7 +39,7 @@
 
                         <xsl:for-each select="current-group()">
                             <xsl:variable name="vHasData" select="rawdatafiles/@available = 'true' or processeddatafiles/@available = 'true' or fn:exists(seqdatauri)"/>
-                            <xsl:variable name="vVisible" select="source/@id = 'ae2' and $vHasData"/>
+                            <xsl:variable name="vVisible" select="source/@id = 'ae2' "/>
                             <xsl:variable name="vAnonymousReview" select="fn:exists(anonymousreview)"/>
 
                             <experiment>

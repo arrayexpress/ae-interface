@@ -71,7 +71,7 @@
                 <xsl:attribute name="loadedinatlas">true</xsl:attribute>
             </xsl:if>
 
-            <source id="ae1"/>
+            <source id="ae1" visible="true"/>
             <xsl:copy-of select="user"/>
 
             <releasedate>
