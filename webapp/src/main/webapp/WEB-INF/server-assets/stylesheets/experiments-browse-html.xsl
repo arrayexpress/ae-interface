@@ -498,7 +498,7 @@
                     <div>
                         <xsl:choose>
                             <xsl:when test="@loadedinatlas">
-                                <a href="${interface.application.link.atlas.exp_query.url}{accession}">
+                                <a href="${interface.application.link.atlas.exp_query.url}{accession}" title="Link to Atlas">
                                     <span class="icon icon-generic" data-icon="L"/>
                                 </a>
                             </xsl:when>
@@ -521,12 +521,12 @@
         <xsl:variable name="vFiles" select="$pFiles/file[@kind = $pKind]"/>
         <xsl:choose>
             <xsl:when test="fn:count($vFiles) > 1">
-                <a href="{$context-path}/experiments/{$pAccession}/files/{$pKind}/">
+                <a href="{$context-path}/experiments/{$pAccession}/files/{$pKind}/" title="Link to file download page">
                     <span class="icon icon-generic" data-icon="L"/>
                 </a>
             </xsl:when>
             <xsl:when test="fn:count($vFiles) = 1">
-                <a href="{$context-path}/files/{$pAccession}/{$vFiles[1]/@name}">
+                <a href="{$context-path}/files/{$pAccession}/{$vFiles[1]/@name}" title="Direct download">
                     <span class="icon icon-functional" data-icon="="/>
                 </a>
             </xsl:when>
@@ -544,11 +544,11 @@
                         <xsl:choose>
                             <xsl:when test="fn:count(fn:current-group()) = 1
                                             and fn:matches(fn:current-group()[1], '/[DES]RR\d+$')">
-                                <a href="{fn:current-group()[1]}" title="Click to go to ENA run"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
+                                <a href="{fn:current-group()[1]}" title="Go to European Nucleotide Archive run"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:for-each select="$pEnaAccession">
-                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Click to go to ENA study"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
+                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Go to European Nucleotide Archive to download all raw files for this experiment"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
                                     <xsl:if test="fn:position() != fn:last()">
                                         <xsl:text>, </xsl:text>
                                     </xsl:if>
@@ -560,7 +560,7 @@
                         <xsl:for-each select="fn:current-group()">
                             <xsl:choose>
                                 <xsl:when test="fn:contains(., '/ega/')">
-                                    <a href="{.}" title="Click to go to EGA study"><img src="{$context-path}/assets/images/ega-icon-16.png" width="16" height="16" alt="EGA"/></a>
+                                    <a href="{.}" title="Go to European Genome-phenome Archive study"><img src="{$context-path}/assets/images/ega-icon-16.png" width="16" height="16" alt="EGA"/></a>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <a href="{.}">
