@@ -191,6 +191,10 @@
     background-color: #FDF0DB
 }
 
+#ae-results .ae_samples_table th.assay {
+    background-color: #ffe7c3;
+}
+
 #ae-results .ae_samples_table .right {
     text-align: right !important
 }

@@ -47,8 +47,9 @@
     <xsl:variable name="vPage" select="if ($s_page and $s_page castable as xs:integer) then $s_page cast as xs:integer else 1" as="xs:integer"/>
     <xsl:variable name="vPageSize" select="if ($s_pagesize and $s_pagesize castable as xs:integer) then $s_pagesize cast as xs:integer else 25"  as="xs:integer"/>
 
-    <xsl:variable name="vPermittedColType" select="('sourcename','sample_description','sample_source_name','characteristics','factorvalue','unit','links')"/>
+    <xsl:variable name="vPermittedColType" select="('sourcename','sample_description','sample_source_name','characteristics','factorvalue','unit','assay','links')"/>
     <xsl:variable name="vLinksColName" select="('arraydatafile','derivedarraydatafile','arraydatamatrixfile','derivedarraydatamatrixfile','ena_run','fastq_uri')"/>
+    <xsl:variable name="vAssayColName" select="('assayname','hybridizationname','label','labeledextractname')"/>
 
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
@@ -80,9 +81,6 @@
                     <xsl:value-of select="$vAccession"/>
                 </a>
                 <xsl:text> > Samples and Data</xsl:text>
-                <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
-                    <sup><a href="{$context-path}/experiments/{$vAccession}/samples/?full=true" title="Some columns were omitted; please click here to get a full view of samples and data">*</a></sup>
-                </xsl:if>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
@@ -108,6 +106,18 @@
                         </h4>
                         <div id="ae-results">
                             <xsl:for-each select="$vSampleFiles">
+
+                                <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
+                                    <p id="ae-infotext">You're seeing a summary of the sample-data table.
+                                        <a  title="Some columns were omitted; please click here to get a full view of samples and data"
+                                            href="{$context-path}/experiments/{$vAccession}/samples/?full=true"
+                                            class="icon icon-functional" data-icon="4">Display
+                                        </a> or
+                                        <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download
+                                        </a>
+                                        the full table.</p>
+                                </xsl:if>
+
                                 <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=', $vPage, ';--pagesize=', $vPageSize, ';--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
                                 <xsl:choose>
                                     <xsl:when test="fn:not(fn:exists($vTable))">
@@ -150,6 +160,9 @@
                 <xsl:when test="fn:exists(fn:index-of($vLinksColName, fn:lower-case(fn:replace($vColName, '\s+', ''))))">
                     <xsl:text>Links</xsl:text>
                 </xsl:when>
+                <xsl:when test="fn:exists(fn:index-of($vAssayColName, fn:lower-case(fn:replace($vColName, '\s+', ''))))">
+                    <xsl:text>Assay</xsl:text>
+                </xsl:when>
                 <xsl:when test="$vIsColComplex and $vIsColComment">
                     <xsl:value-of select="$vColName"/>
                 </xsl:when>
@@ -163,10 +176,26 @@
         </xsl:variable>
         <xsl:variable name="vAdjustedColType" select="fn:lower-case(fn:replace($vColType, '\s+', ''))"/>
         <xsl:variable name="vColPosition" select="if ($vFull) then $pPos else fn:index-of($vPermittedColType, $vAdjustedColType)"/>
-        <xsl:variable name="vColClass" select="if ($vAdjustedColType = 'characteristics') then 'sa' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'evv' else '')"/>
-        <xsl:variable name="vField" select="if ($vAdjustedColType = 'characteristics') then 'sac' else (if (fn:matches($vAdjustedColType, 'factorvalue')) then 'ev' else '')"/>
-
-        <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}" field="{$vField}"/>
+        <xsl:variable name="vColClass">
+            <xsl:choose>
+                <xsl:when test="$vAdjustedColType = 'characteristics'">sa</xsl:when>
+                <xsl:when test="fn:matches($vAdjustedColType, 'factorvalue')">evv</xsl:when>
+                <xsl:when test="fn:contains('assayname hybridizationname label labeledextractname',fn:lower-case(fn:replace($vColName, '\s+', '')))">
+                    <xsl:value-of select="'assay'"/>
+                </xsl:when>
+                <xsl:otherwise></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="vField">
+            <xsl:choose>
+                <xsl:when test="$vAdjustedColType = 'characteristics'">sa</xsl:when>
+                <xsl:when test="fn:matches($vAdjustedColType, 'factorvalue')">ev</xsl:when>
+                <xsl:otherwise></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:if test="not( ($vColName='Label' or $vColName='Labeled Extract Name') and count(fn:distinct-values(../../row/col[$pPos])) = 1)">
+            <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}" field="{$vField}"/>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="table">
@@ -198,16 +227,14 @@
                     </xsl:if>
                 </xsl:for-each>
             </xsl:variable>
-
             <header data-rows="{@rows}">
-                <xsl:for-each select="$vUnitFixedHeaderInfo/col[@group != '']">
+                <xsl:for-each select="$vUnitFixedHeaderInfo/col[@group!='']">
                     <xsl:sort select="@group" order="ascending" data-type="number"/>
                     <xsl:sort select="@pos" order="ascending" data-type="number"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </header>
         </xsl:variable>
-
         <div class="ae_samples_table_border">
             <table class="ae_samples_table" border="0" cellpadding="0" cellspacing="0" style="visibility:hidden">
                 <col class="col_left_fixed" style=""/>
@@ -247,11 +274,6 @@
                     <tr>
                         <td class="bottom_filler"/>
                         <td class="bottom_filler"/>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="col_footer">
-                            <a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Download Samples and Data table in Tab-delimited format</a>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -315,7 +337,6 @@
                 <xsl:copy-of select="$pTableInfo/header/col[@type='links']"/>
             </header>
         </xsl:variable>
-
         <table class="links_table" border="0" cellpadding="0" cellspacing="0">
             <xsl:call-template name="out-header">
                 <xsl:with-param name="pTableInfo" select="$vTableChunkInfo"/>
@@ -329,7 +350,6 @@
 
     <xsl:template name="out-header">
         <xsl:param name="pTableInfo"/>
-
         <thead>
             <xsl:if test="fn:not($vFull)">
                 <tr>
@@ -355,6 +375,9 @@
                                         <xsl:value-of select="$vColClass"/>
                                     </xsl:if>
                                 </xsl:attribute>
+                                <xsl:attribute name="foo" select="$vNextGroupColPos"/>
+                                <xsl:attribute name="bar" select="$vColPos"/>
+                                <xsl:attribute name="t" select="$vColType"/>
                                 <xsl:if test="($vColType = $vNextColType)">
                                     <xsl:attribute name="colspan" select="$vNextGroupColPos - $vColPos"/>
                                 </xsl:if>
@@ -364,6 +387,9 @@
                                     </xsl:when>
                                     <xsl:when test="$vColClass = 'ev' or $vColClass = 'evv'">
                                         <xsl:text>Variables</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="$vColClass = 'assay'">
+                                        <xsl:text>Assay</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="$vColInfo/@type = 'links'">
                                         <xsl:text>Links to Data</xsl:text>
