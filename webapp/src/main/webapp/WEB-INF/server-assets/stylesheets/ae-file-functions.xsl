@@ -44,7 +44,9 @@
             <xsl:when test="$pKind != ''">
                 <xsl:value-of select="fn:concat(fn:upper-case(fn:substring($pKind, 1, 1)), fn:substring($pKind, 2))"/>
             </xsl:when>
-            <xsl:otherwise/>
+            <xsl:otherwise>
+                <xsl:text>Additional data</xsl:text>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
 
