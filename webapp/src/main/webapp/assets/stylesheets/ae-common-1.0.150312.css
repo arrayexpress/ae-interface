@@ -335,12 +335,19 @@ div#local-masthead ul li a:active {
 , #ae-feedback > h3 a {
     float: right;
     font-size: 87%;
-    border-bottom-style: none
+    border-bottom-style: none;
 }
 
-#ae-login .icon-functional:hover:before
-, #ae-feedback .icon-functional:hover:before {
+#ae-login .icon-functional:hover:before {
     color: #444
+}
+
+#ae-feedback .icon-functional:before {
+    color: #5E8CC0;
+}
+
+#ae-feedback .icon-functional:hover:before {
+    color: #1E4B7D;
 }
 
 #ae-login .icon-functional:before

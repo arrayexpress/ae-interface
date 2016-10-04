@@ -132,6 +132,7 @@
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
             hideForgotPanel();
+            $('#ae-feedback-close').click();
             $window.show();
         }
 

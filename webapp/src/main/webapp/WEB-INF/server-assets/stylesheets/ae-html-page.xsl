@@ -254,7 +254,7 @@
                                         </xsl:choose>
                                     </a>
                                 </li>
-                                <li class="functional"><a href="#" class="icon icon-static feedback" data-icon="\">Feedback</a></li>
+                                <li class="functional"><a href="#" class="icon icon-static feedback" data-icon="\">Contact Us</a></li>
                                 <!--
                                 <li class="functional"><a href="#" class="icon icon-functional" data-icon="r">Share</a></li>
                                 -->
