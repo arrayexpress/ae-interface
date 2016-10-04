@@ -135,6 +135,8 @@
 
         $table.aeSampleTableSorter();
         $table.aeSampleTableScrollShadow();
+        var sortby = $.query.get("s_sortby") || "col_1";
+        $('div.attr_table_scroll').scrollLeft($('th.'+sortby).position().left-10)
     });
 
 })(window.jQuery);
