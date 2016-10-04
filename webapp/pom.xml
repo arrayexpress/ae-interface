@@ -31,7 +31,7 @@
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
         <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
-        <interface.application.pref.reports.hidden-recipients>kolais&#64;ebi.ac.uk</interface.application.pref.reports.hidden-recipients>
+        <interface.application.pref.reports.hidden-recipients>awais&#64;ebi.ac.uk</interface.application.pref.reports.hidden-recipients>
         <interface.application.pref.feedback.recipients>arrayexpress&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
         <interface.application.pref.remind.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
 
@@ -60,9 +60,9 @@
         <profile>
             <id>debug</id>
             <properties>
-                <interface.application.pref.reports.recipients>kolais&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
-                <interface.application.pref.feedback.recipients>kolais&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
-                <interface.application.pref.remind.recipients>kolais&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
+                <interface.application.pref.reports.recipients>awais&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
+                <interface.application.pref.feedback.recipients>awais&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
+                <interface.application.pref.remind.recipients>awais&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
                 <interface.application.log.default.priority>ALL</interface.application.log.default.priority>
             </properties>
         </profile>

@@ -49,7 +49,7 @@
 
     <xsl:variable name="vPermittedColType" select="('sourcename','sample_description','sample_source_name','characteristics','factorvalue','unit','assay','links')"/>
     <xsl:variable name="vLinksColName" select="('arraydatafile','derivedarraydatafile','arraydatamatrixfile','derivedarraydatamatrixfile','ena_run','fastq_uri')"/>
-    <xsl:variable name="vAssayColName" select="('assayname','hybridizationname','label','labeledextractname')"/>
+    <xsl:variable name="vAssayColName" select="('assayname','hybridizationname','label')"/>
 
     <xsl:variable name="vAccession" select="fn:upper-case($accession)"/>
     <xsl:variable name="vData" select="search:queryIndex('files', fn:concat('accession:', $vAccession))"/>
@@ -117,6 +117,16 @@
                                         </a>
                                         the full table.</p>
                                 </xsl:if>
+                                <xsl:if test="$vFull">
+                                    <p id="ae-infotext">You're seeing the full sample-data table.
+                                        <a  title="Please click here to get a summary view of samples and data"
+                                            href="{$context-path}/experiments/{$vAccession}/samples/"
+                                            class="icon icon-functional" data-icon="4">Display summary
+                                        </a> or
+                                        <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download
+                                        </a>
+                                        the table.</p>
+                                </xsl:if>
 
                                 <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=', $vPage, ';--pagesize=', $vPageSize, ';--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
                                 <xsl:choose>
@@ -180,7 +190,7 @@
             <xsl:choose>
                 <xsl:when test="$vAdjustedColType = 'characteristics'">sa</xsl:when>
                 <xsl:when test="fn:matches($vAdjustedColType, 'factorvalue')">evv</xsl:when>
-                <xsl:when test="fn:contains('assayname hybridizationname label labeledextractname',fn:lower-case(fn:replace($vColName, '\s+', '')))">
+                <xsl:when test="fn:contains('assayname hybridizationname label',fn:lower-case(fn:replace($vColName, '\s+', '')))">
                     <xsl:value-of select="'assay'"/>
                 </xsl:when>
                 <xsl:otherwise></xsl:otherwise>
@@ -193,7 +203,7 @@
                 <xsl:otherwise></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:if test="not( ($vColName='Label' or $vColName='Labeled Extract Name') and count(fn:distinct-values(../../row/col[$pPos])) = 1)">
+        <xsl:if test="not( $vColName='Label' and count(fn:distinct-values(../../row/col[$pPos])) = 1)">
             <col pos="{$pPos}" type="{$vAdjustedColType}" name="{$vColName}" group="{$vColPosition}" class="{$vColClass}" field="{$vField}"/>
         </xsl:if>
     </xsl:template>
