@@ -953,7 +953,7 @@
         <xsl:param name="pBasePath"/>
         
         <xsl:variable name="vAccession" select="accession" as="xs:string"/>
-        <xsl:variable name="vFiles" select="$pFiles/file[(@kind = 'raw' or @kind = 'processed' or @kind='') and @hidden != 'true']"/>
+        <xsl:variable name="vFiles" select="$pFiles/file[(@kind = 'raw' or @kind = 'processed' or (@kind='' and contains(@name,'.additional.'))) and @hidden != 'true']"/>
         <xsl:if test="$vFiles">
             <xsl:for-each-group select="$vFiles" group-by="@kind">
                 <xsl:sort select="@kind" order="descending"/>
