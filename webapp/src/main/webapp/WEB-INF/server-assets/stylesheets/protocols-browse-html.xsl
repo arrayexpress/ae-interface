@@ -49,7 +49,7 @@
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
-            <xsl:with-param name="pIsSearchVisible" select="fn:not($vBrowseMode)"/>
+            <xsl:with-param name="pIsSearchVisible" select="true()"/>
             <xsl:with-param name="pSearchInputValue"/>
             <xsl:with-param name="pExtraSearchFields"/>
             <xsl:with-param name="pTitleTrail">
