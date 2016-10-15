@@ -166,7 +166,6 @@
         function hideForgotPanel() {
 
             $forgot_form.hide();
-            $forgot_form.find("input").first().val("");
             $login_form.show();
         }
 
@@ -252,7 +251,7 @@
 
             $submit.removeAttr("disabled");
             $window.show();
-            $message.val("").focus();
+            $message.focus();
         }
 
         function doCloseWindow() {
