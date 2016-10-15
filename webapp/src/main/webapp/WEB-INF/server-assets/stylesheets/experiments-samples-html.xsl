@@ -61,6 +61,8 @@
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
 
+    <xsl:variable name="back-link" select="if ($query-string) then concat('?',fn:replace($query-string,'&amp;full=true','')) else ''"/>
+
     <xsl:template match="/">
         <xsl:call-template name="ae-page">
             <xsl:with-param name="pIsSearchVisible" select="fn:true()"/>
@@ -75,9 +77,9 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130704.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/browse.html">Browse</a>
+                <a href="{$context-path}/browse.html{$back-link}">Browse</a>
                 <xsl:text> > </xsl:text>
-                <a href="{$context-path}/experiments/{$vAccession}/">
+                <a href="{$context-path}/experiments/{$vAccession}/{$back-link}">
                     <xsl:value-of select="$vAccession"/>
                 </a>
                 <xsl:text> > Samples and Data</xsl:text>
@@ -110,7 +112,7 @@
                                 <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
                                     <p id="ae-infotext">You're seeing a summary of the sample-data table.
                                         <a  title="Some columns were omitted; please click here to get a full view of samples and data"
-                                            href="{$context-path}/experiments/{$vAccession}/samples/?full=true"
+                                            href="{$context-path}/experiments/{$vAccession}/samples/{if ($back-link) then concat($back-link,'&amp;') else '?'}full=true"
                                             class="icon icon-functional" data-icon="4">Display
                                         </a> or
                                         <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download
@@ -120,7 +122,7 @@
                                 <xsl:if test="$vFull">
                                     <p id="ae-infotext">You're seeing the full sample-data table.
                                         <a  title="Please click here to get a summary view of samples and data"
-                                            href="{$context-path}/experiments/{$vAccession}/samples/"
+                                            href="{$context-path}/experiments/{$vAccession}/samples/{$back-link}"
                                             class="icon icon-functional" data-icon="4">Display summary
                                         </a> or
                                         <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download

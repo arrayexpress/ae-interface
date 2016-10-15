@@ -36,6 +36,7 @@
     <xsl:param name="id"/>
     <xsl:param name="experiment"/>
     <xsl:param name="ref"/>
+    <xsl:param name="qs"/>
 
     <xsl:variable name="vBrowseMode" select="not($id)"/>
     <xsl:variable name="vRef" select="fn:upper-case($ref)"/>
@@ -70,16 +71,16 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/browse.html">Browse</a>
+                        <a href="{$context-path}/browse.html{$qs}">Browse</a>
                         <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vExperiment}/">
+                        <a href="{$context-path}/experiments/{$vExperiment}/{$qs}">
                             <xsl:value-of select="$vExperiment"/>
                         </a>
                         <xsl:text> > </xsl:text>
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Protocols</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/experiments/{$vExperiment}/protocols/">Protocols</a>
+                                <a href="{$context-path}/experiments/{$vExperiment}/protocols/?{$query-string}">Protocols</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="fn:upper-case($id)"/>
                             </xsl:otherwise>
@@ -89,7 +90,7 @@
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Protocols</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/protocols/browse.html">Protocols</a>
+                                <a href="{$context-path}/protocols/browse.html?{$query-string}">Protocols</a>
                                 <xsl:text> > </xsl:text>
                                 <xsl:value-of select="upper-case($id)"/>
                             </xsl:otherwise>
@@ -317,16 +318,16 @@
                 </td>
             </tr>
             <xsl:if test="$vExperimentMode">
-            <tr>
-                <td class="col_detail" colspan="3">
-                    <xsl:for-each select="text">
-                        <xsl:apply-templates select="." mode="highlight">
-                            <xsl:with-param name="pQueryId" select="$queryid"/>
-                            <xsl:with-param name="pFieldName"/>
-                        </xsl:apply-templates>
-                    </xsl:for-each>
-                </td>
-            </tr>
+                <tr>
+                    <td class="col_detail" colspan="3">
+                        <xsl:for-each select="text">
+                            <xsl:apply-templates select="." mode="highlight">
+                                <xsl:with-param name="pQueryId" select="$queryid"/>
+                                <xsl:with-param name="pFieldName"/>
+                            </xsl:apply-templates>
+                        </xsl:for-each>
+                    </td>
+                </tr>
             </xsl:if>
         </xsl:if>
     </xsl:template>
@@ -379,18 +380,18 @@
                         <xsl:with-param name="pContent">
                             <xsl:choose>
                                 <xsl:when test="count($vExpsWithProtocol) > 10">
-                                   <a href="{$context-path}/experiments/browse.html?protocol={$pProtocol/id}">All <xsl:value-of select="count($vExpsWithProtocol)"/> experiments using protocol <xsl:value-of select="$pProtocol/accession"/></a>
+                                    <a href="{$context-path}/experiments/browse.html?protocol={$pProtocol/id}">All <xsl:value-of select="count($vExpsWithProtocol)"/> experiments using protocol <xsl:value-of select="$pProtocol/accession"/></a>
                                 </xsl:when>
                                 <xsl:when test="count($vExpsWithProtocol) > 1">
                                     <a href="{$context-path}/experiments/browse.html?protocol={$pProtocol/id}">All experiments using protocol <xsl:value-of select="$pProtocol/accession"/></a>
                                     <xsl:text>: (</xsl:text>
-                                        <xsl:for-each select="$vExpsWithProtocol">
-                                            <xsl:sort select="accession"/>
-                                            <a href="{$context-path}/experiments/{accession}/">
-                                                <xsl:value-of select="accession"/>
-                                            </a>
-                                            <xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
-                                        </xsl:for-each>
+                                    <xsl:for-each select="$vExpsWithProtocol">
+                                        <xsl:sort select="accession"/>
+                                        <a href="{$context-path}/experiments/{accession}/">
+                                            <xsl:value-of select="accession"/>
+                                        </a>
+                                        <xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
+                                    </xsl:for-each>
                                     <xsl:text>)</xsl:text>
                                 </xsl:when>
                                 <xsl:when test="count($vExpsWithProtocol) = 1">

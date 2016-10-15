@@ -497,8 +497,13 @@
             <tr>
                 <td class="name"><div>Protocols (<xsl:value-of select="count(protocol)"/>)</div></td>
                 <td class="value">
+                    <xsl:variable name="back-query">
+                        <xsl:if test="$query-string">
+                            <xsl:value-of select="concat('?qs=',encode-for-uri(concat('?',$query-string)))"></xsl:value-of>
+                        </xsl:if>
+                    </xsl:variable>
                     <div>
-                        <a href="{$pBasePath}/experiments/{accession}/protocols/">
+                        <a href="{concat($pBasePath,'/experiments/',accession,'/protocols/',$back-query)}">
                             <xsl:text>Click for detailed protocol information</xsl:text>
                         </a>
                     </div>
