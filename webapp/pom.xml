@@ -161,7 +161,7 @@
             <id>preproduction</id>
             <properties>
                 <interface.application.webxml.security.transport.guarantee>CONFIDENTIAL</interface.application.webxml.security.transport.guarantee>
-
+                <interface.application.log.appender.ref>ROLLINGFILE-LONDON</interface.application.log.appender.ref>
                 <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
