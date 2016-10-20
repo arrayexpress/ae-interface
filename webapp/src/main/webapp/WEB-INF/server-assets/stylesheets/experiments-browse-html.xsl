@@ -119,7 +119,7 @@
 
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
-                <section class="grid_6 alpha shortcuts expander" id="search-filters">
+                <section class="columns medium-3 shortcuts expander" id="search-filters">
                     <div id="ae-filters">
                         <h3 class="slideToggle icon icon-functional" data-icon="f">Filter search results<i class="fa fa-spinner fa-pulse"/></h3>
                         <form id="ae-filters-expanded" method="get" style="display:none">
@@ -158,12 +158,12 @@
                                 <label for="ae-directsub" title="By default all data from GEO and ArrayExpress are queried. Select the 'ArrayExpress data only' check box to query data submitted directly to ArrayExpress. If you want to query GEO data only include AND E-GEOD* in your query. E.g. cancer AND E-GEOD* will retrieve all GEO experiments with cancer annotations.">ArrayExpress data only</label>
                             </div>
                             <a href="#" class="reset">Reset filters</a>
-                            <input id="ae-filters-submit" class="submit" type="submit" value="Filter"/>
+                            <input id="ae-filters-submit" class="submit button" type="submit" value="Filter"/>
                         </form>
                     </div>
                     <xsl:text>&#160;</xsl:text>
                 </section>
-                <section class="grid_12 search-title">
+                <section class="columns medium-6 search-title">
                     <xsl:if test="$vSearchMode">
                         <h3>
                             <xsl:text>Search results for </xsl:text>
@@ -182,13 +182,13 @@
                     <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
                 </section>
                 <xsl:if test="$vSearchMode">
-                    <aside class="grid_6 omega shortcuts expander" id="search-extras">
+                    <aside class="columns medium-3 last shortcuts expander" id="search-extras">
                         <div id="ebi_search_results">
                             <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI<i class="fa fa-spinner fa-pulse"/></h3>
                         </div>
                     </aside>
                 </xsl:if>
-                <section class="grid_24 alpha omega">
+                <section class="columns medium-12 last">
                     <div id="ae-content">
                         <div id="ae-browse">
                             <div class="persist-area">
@@ -581,7 +581,7 @@
 
     <xsl:template name="browse-no-results">
 
-        <section class="grid_18 alpha">
+        <section class="columns medium-9">
             <h2 class="alert">We’re sorry that we couldn’t find any matching experiments</h2>
             <p>Your search for <span class="alert"><xsl:value-of select="$keywords"/></span> returned no results.</p>
             <h3>Can’t find what you’re looking for?</h3>
@@ -595,7 +595,7 @@
             </ul>
             -->
         </section>
-        <aside class="grid_6 omega shortcuts" id="search-extras">
+        <aside class="columns medium-3 last shortcuts" id="search-extras">
             <div id="ebi_search_results">
                 <h3>More data from EMBL-EBI</h3>
             </div>

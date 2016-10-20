@@ -80,7 +80,7 @@ $.Autocompleter = function(input, options) {
 	var blockSubmit;
 
 	// prevent form submit in opera when selecting with return key
-	$.browser.opera && $(input.form).bind("submit.autocomplete", function() {
+	window.opera && window.opera.buildNumber && $(input.form).bind("submit.autocomplete", function() {
 		if (blockSubmit) {
 			blockSubmit = false;
 			return false;
@@ -88,7 +88,7 @@ $.Autocompleter = function(input, options) {
 	});
 
 	// only opera doesn't trigger keydown multiple times while pressed, others don't work with keypress at all
-	$input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function(event) {
+	$input.bind(((window.opera && window.opera.buildNumber) ? "keypress" : "keydown") + ".autocomplete", function(event) {
 		// a keypress means the input has focus
 		// avoids issue where input had focus before the autocomplete was applied
 		hasFocus = 1;
@@ -181,7 +181,7 @@ $.Autocompleter = function(input, options) {
 		if ( hasFocus++ > 1 && !select.visible() ) {
 			onChange(0, true);
 		}
-	}).bind("search", function() {
+	}).on("search", function() {
 		// TODO why not just specifying both arguments?
 		var fn = (arguments.length > 1) ? arguments[1] : null;
 		function findValueCallback(q, data) {
@@ -950,7 +950,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 	}
 
     function onWinResize() {
-        var adjust = $.browser.mozilla ? 2 : 4;
+        var adjust = (navigator.userAgent.indexOf("Firefox") > 0) ? 2 : 4;
         element.width($(input).width() + adjust);
     }
 
@@ -1014,8 +1014,9 @@ $.Autocompleter.Select = function (options, input, select, config) {
 					maxHeight: options.scrollHeight,
 					overflow: 'auto'
 				});
+				isIE = /*@cc_on!@*/false || !!document.documentMode;
 
-                if ($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+                if (isIE && typeof document.body.style.maxHeight === "undefined") {
                     var listHeight = 0;
                     listItems.each(function() {
                         listHeight += this.offsetHeight;

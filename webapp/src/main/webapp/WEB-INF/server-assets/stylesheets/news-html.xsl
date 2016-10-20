@@ -42,7 +42,7 @@
     </xsl:template>
 
     <xsl:template name="ae-content-section">
-        <section class="grid_24">
+        <section class="columns medium-12">
             <h2>ArrayExpress News</h2>
             <xsl:for-each select="doc('news.xml')/news/item">
                 <h3><a id="{fn:position()}"><xsl:value-of select="title"/></a></h3>

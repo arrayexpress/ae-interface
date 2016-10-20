@@ -67,7 +67,7 @@ ul#secondary-nav li.active > a {
     left: 9px;
 }
 
-#search-extras.omega {
+#search-extras.last {
     right: 9px;
 }
 
@@ -180,15 +180,6 @@ ul#secondary-nav li.active > a {
     your custom colour palette in a consistent manner */
 
 /* Links */
-a:link,
-a:visited { border-bottom-color: #5E8CC0; }
-
-a:hover,
-a:focus,
-a:active {
-    color: #5E8CC0;
-    border-bottom: 1px solid #5E8CC0;
-}
 
 a.special:hover,
 a.special:focus,
@@ -198,11 +189,11 @@ a.special:active {
 }
 
 
-a:link { color: #2A2282; }
+a:link { color: #5E8CC0; }
 
 a:hover,
 a:focus,
-a:active { color: #1C7E60; }
+a:active { color: #1E4B7D; }
 
 a.special { background-color: #9CE0CB; }
 
@@ -254,32 +245,21 @@ form input.submit {
 }
 
 /* Define the basic colour your local masthead */
-div#local-masthead { background-color: ${interface.application.css.local-masthead-color}; }
+div#local-masthead { background-color: #A1BEDF; }
+/*div#local-masthead { background-color: ${interface.application.css.local-masthead-color}; }*/
 
-/* Colour the faux-underline for local menu items */
-div#local-masthead ul li a:hover,
-div#local-masthead ul li a:focus,
-div#local-masthead ul li a:active {
-    border-bottom: 3px solid #5E8CC0;
+header .masthead {
+    padding-top: 1em;
 }
 
-/* --------------------------------- */
+#example a,
+#example a:link,
+#example a:visited {
+    border-bottom-color: #fff;
+}
 
-::-webkit-input-placeholder {
-    font-style: italic;
-    color: #999
-}
-:-moz-placeholder {
-    font-style: italic;
-    color: #999
-}
-::-moz-placeholder {
-    font-style: italic;
-    color: #999
-}
-:-ms-input-placeholder {
-    font-style: italic;
-    color: #999
+#example a:hover {
+    border-bottom-style: solid;
 }
 
 /* --------------------------------- */
@@ -517,8 +497,8 @@ div#local-masthead ul li a:active {
 /* home page stuff */
 
 #ae-news {
-    background-image: url(../images/bg-news.gif);
-    padding: 10px 0;
+    background-color: #f5f9fe;
+    padding: 10px;
     margin: 10px 0
 }
 
@@ -527,10 +507,16 @@ div#local-masthead ul li a:active {
     text-align: center;
 }
 
-p.browse-link {
-    font-size:123.1%;
-    margin-top: -20px;
+div.browse-link {
+    font-size:150%;
     padding: 5px;
+}
+div.browse-link a , div.browse-link a:visited {
+    color: #5E8CC0;
+    border-bottom:0px;
+}
+div.browse-link a:hover {
+    color: #597390;
 }
 
 p.justify, td.justify {
@@ -1096,4 +1082,23 @@ p.center {
 
 .ac_efo {
     font-weight: bold;
+}
+.icon.spaced {
+    padding-right:5px;
+}
+.margin-top-extra-large {
+   margin-top:1.5em;
+}
+.button {
+    background-color: #A1BEDF;
+}
+.button:hover {
+    background-color: #A1BEDF;
+}
+.icon.rounded {
+    background-color: #8AB2DF;
+    border-radius: 50%;
+    display:inline-flex;
+    color:#fff;
+    margin-right:5px;
 }

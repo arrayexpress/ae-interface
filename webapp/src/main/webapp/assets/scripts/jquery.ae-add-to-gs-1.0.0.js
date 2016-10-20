@@ -30,8 +30,8 @@
         $("#gs_auth_username").html(gsUserName);
         $("#gs_login_section").hide();
         $("#gs_upload_section").show();
-
-        if ($.browser.msie) {
+        isIE = /*@cc_on!@*/false || !!document.documentMode;
+        if (isIE) {
             $.gsToken = gsToken;
             checkGSTargetDirectory();
         } else {
@@ -55,7 +55,8 @@
     function
     checkIfLoggedToGS( onLoggedInFunc, onLoggedOutFunc )
     {
-        if ($.browser.msie) {
+        isIE = /*@cc_on!@*/false || !!document.documentMode;
+        if (isIE) {
             var userName = $.cookie("gs-username");
             var token = $.cookie("gs-token");
             if (null != userName && null != token) {

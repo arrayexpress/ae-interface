@@ -185,7 +185,7 @@
                 <fieldset>
                     <label for="ae-query-keywords">Search files by experiment/array accessions, kinds, names, or extensions</label>
                     <input id="ae-query-keywords" type="text" name="keywords" value="{$keywords}" maxlength="255"/>
-                    <div><input class="submit" type="submit" value="Search"/></div>
+                    <div><input class="submit button" type="submit" value="Search"/></div>
                 </fieldset>
             </form>
         </div>

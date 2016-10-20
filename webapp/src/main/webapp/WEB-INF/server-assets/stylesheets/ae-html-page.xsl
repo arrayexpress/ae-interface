@@ -94,7 +94,11 @@
 
             <!-- CSS: implied media=all -->
             <!-- CSS concatenated and minified via ant build script-->
-            <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/>
+            <!--link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css"/-->
+            <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" />
+            <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" />
+            <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" />
+            <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-ebi-services-about.css" type="text/css" />
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/font-awesome.css" type="text/css"/>
             <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-common-1.0.150312.css" type="text/css"/>
             <xsl:copy-of select="$pExtraCode"/>
@@ -133,138 +137,163 @@
                     <li><a href="#content" title="">Skip to main content</a></li>
                     <li><a href="#local-nav" title="">Skip to local navigation</a></li>
                     <li><a href="#global-nav" title="">Skip to EBI global navigation menu</a></li>
-                    <li><a href="#global-nav-expanded" title="">Skip to expanded EBI global navigation menu (includes all sub-sections)</a></li>
+                    <li><a href="#global-nav-expanded" title="" class="row"></a></li>
                 </ul>
             </div>
 
-            <div id="wrapper" class="container_24">
+            <div id="wrapper">
                 <header>
-                    <div id="global-masthead" class="masthead grid_24">
-                        <!--This has to be one line and no newline characters-->
-                        <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"/></a>
-
-                        <nav>
-                            <ul id="global-nav">
-                                <!-- set active class as appropriate -->
-                                <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
-                                <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
-                                <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
-                                <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
-                                <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
-                            </ul>
-                        </nav>
-
-                    </div>
-                    <div id="local-masthead" class="masthead grid_24 nomenu">
-                        <!-- local-title -->
-                        <div id="local-title">
-                            <xsl:attribute name="class">logo-title<xsl:if test="$pIsSearchVisible"> grid_12 alpha</xsl:if></xsl:attribute>
-                            <img class="svg" src="{$context-path}/assets/images/ae-logo-64.svg" width="64" height="64" alt="AE"/>
-                            <span>
-                                <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
-                            </span>
-                        </div>
-                        <!-- /local-title -->
-                        <!-- local-search -->
-                        <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-                        <xsl:if test="$pIsSearchVisible">
-                            <div class="grid_12 omega">
-                                <form id="local-search" name="local-search" action="{$context-path}/search" method="get">
-                                    <fieldset>
-                                        <div class="left">
-                                            <label>
-                                                <input type="text" name="query" id="local-searchbox">
-                                                    <xsl:if test="$pSearchInputValue != ''">
-                                                        <xsl:attribute name="value" select="$pSearchInputValue"/>
-                                                    </xsl:if>
-                                                </input>
-                                            </label>
-                                            <!-- Include some example searchterms - keep them short and few! -->
-                                            <span class="examples">Examples: <a href="{$context-path}/search?query=E-MEXP-31">E-MEXP-31</a>, <a href="{$context-path}/search?query=cancer">cancer</a>, <a href="{$context-path}/search?query=p53">p53</a>, <a href="{$context-path}/search?query=Geuvadis">Geuvadis</a></span>
-                                        </div>
-                                        <div class="right">
-                                            <input type="submit" value="Search" class="submit"/>
-                                            <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
-                                           with whatever features you want available -->
-                                            <span class="adv"><a href="{$context-path}/help/how_to_search.html#AdvancedSearchExperiment" id="adv-search" title="Advanced">Advanced</a></span>
-                                        </div>
-                                    </fieldset>
-                                    <xsl:copy-of select="$pExtraSearchFields"/>
-                                </form>
+                    <div>
+                        <div id="local-masthead" class="meta-background-image" data-sticky="true" data-sticky-on="large" data-top-anchor="180" data-btm-anchor="300000">
+                            <div id="global-masthead" class="clearfix">
+                                <!--This has to be one line and no newline characters-->
+                                <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><span class="ebi-logo"></span></a>
+                                <nav>
+                                    <div class="row">
+                                        <ul id="global-nav" class="menu">
+                                            <!-- set active class as appropriate -->
+                                            <li id="home-mobile" class=""><a href="//www.ebi.ac.uk"></a></li>
+                                            <li id="home"><a href="//www.ebi.ac.uk"><i class="icon icon-generic" data-icon="H"></i> EMBL-EBI</a></li>
+                                            <li id="services" class="active"><a href="//www.ebi.ac.uk/services"><i class="icon icon-generic" data-icon="("></i> Services</a></li>
+                                            <li id="research"><a href="//www.ebi.ac.uk/research"><i class="icon icon-generic" data-icon=")"></i> Research</a></li>
+                                            <li id="training"><a href="//www.ebi.ac.uk/training"><i class="icon icon-generic" data-icon="t"></i> Training</a></li>
+                                            <li id="about"><a href="//www.ebi.ac.uk/about"><i class="icon icon-generic" data-icon="i"></i> About us</a></li>
+                                            <li id="search">
+                                                <a href="#" data-toggle="search-global-dropdown"><i class="icon icon-functional" data-icon="1"></i> <span class="show-for-small-only">Search</span></a>
+                                                <div id="search-global-dropdown" class="dropdown-pane" data-dropdown="" data-options="closeOnClick:true;">
+                                                    <form id="global-search" name="global-search" action="/ebisearch/search.ebi" method="GET">
+                                                        <fieldset>
+                                                            <div class="input-group">
+                                                                <input type="text" name="query" id="global-searchbox" class="input-group-field" placeholder="Search all of EMBL-EBI"/>
+                                                                <div class="input-group-button">
+                                                                    <input type="submit" name="submit" value="Search" class="button"/>
+                                                                    <input type="hidden" name="db" value="allebi" checked="checked"/>
+                                                                    <input type="hidden" name="requestFrom" value="global-masthead" checked="checked"/>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                            <li class="float-right show-for-medium embl-selector">
+                                                <button class="button" type="button" data-toggle="embl-dropdown">Hinxton</button>
+                                                <div id="embl-dropdown" class="dropdown-pane" data-dropdown="" data-options="closeOnClick:true;">
+                                                    to come.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
                             </div>
-                        </xsl:if>
-                        <!-- /local-search -->
-                        <!-- local-nav -->
-                        <nav>
-                            <ul class="grid_24" id="local-nav">
-                                <li>
-                                    <xsl:attribute name="class">first<xsl:if test="$relative-uri = '/'"> active</xsl:if></xsl:attribute>
-                                    <a href="{$context-path}/" title="ArrayExpress ${project.version}.r${buildNumber}">Home</a>
-                                </li>
-                                <li>
-                                    <xsl:choose>
-                                        <xsl:when test="not($userid)">
-                                            <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                            <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:if test="fn:starts-with($relative-uri, '/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                            <a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse</a>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </li>
-                                <xsl:if test="not($userid)">
-                                    <li>
-                                        <xsl:if test="fn:starts-with($relative-uri, '/arrays/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/arrays/browse.html?directsub=on" title="Arrays">Arrays</a>
-                                    </li>
-                                    <li>
-                                        <xsl:if test="fn:starts-with($relative-uri, '/protocols/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/protocols/browse.html" title="Protocols">Protocols</a>
-                                    </li>
-                                    <li>
-                                        <xsl:if test="fn:starts-with($relative-uri, '/files/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/files/browse.html" title="Files">Files</a>
-                                    </li>
-                                    <li>
-                                        <xsl:if test="fn:starts-with($relative-uri, '/users/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                        <a href="{$context-path}/users/browse.html" title="Users">Users</a>
-                                    </li>
+                            <div class="masthead row">
+                                <!-- local-title -->
+                                <div class="columns medium-12" id="local-title">
+                                    <xsl:attribute name="class">logo-title<xsl:if test="$pIsSearchVisible"> columns medium-7</xsl:if></xsl:attribute>
+                                    <img class="svg" src="{$context-path}/assets/images/ae-logo-64.svg" width="64" height="64" alt="AE"/>
+                                    <span>
+                                        <h1><a href="{$context-path}/" title="Back to ArrayExpress homepage">ArrayExpress</a></h1>
+                                    </span>
+                                </div>
+                                <!-- local-search -->
+                                <xsl:if test="$pIsSearchVisible">
+                                    <div class="columns medium-5">
+                                        <form id="local-search" name="local-search" action="{$context-path}/search" method="get">
+                                            <fieldset>
+                                                <div class="input-group margin-bottom-none margin-top-extra-large">
+                                                    <input id="local-searchbox" class="input-group-field" title="ArrayExpress Search"
+                                                           tabindex="1" type="text" name="query" value="" size="35" maxlength="2048" placeholder="Search">
+                                                            <xsl:if test="$pSearchInputValue != ''">
+                                                                <xsl:attribute name="value" select="$pSearchInputValue"/>
+                                                            </xsl:if>
+                                                        </input>
+                                                    <div class="input-group-button">
+                                                        <input id="search_submit" class="button icon icon-functional" data-icon="s" tabindex="2" type="submit" name="submit1" value="1"/>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <p id="example" class="small">
+                                                Examples: <a href="{$context-path}/search?query=E-MEXP-31">E-MEXP-31</a>, <a href="{$context-path}/search?query=cancer">cancer</a>, <a href="{$context-path}/search?query=p53">p53</a>, <a href="{$context-path}/search?query=Geuvadis">Geuvadis</a>
+                                                <a class="float-right" href="{$context-path}/help/how_to_search.html#AdvancedSearchExperiment"><span class="icon icon-generic" data-icon="("></span> advanced search</a>
+                                            </p>
+                                            <xsl:copy-of select="$pExtraSearchFields"/>
+                                        </form>
+                                    </div>
                                 </xsl:if>
-                                <li>
-                                    <xsl:if test="fn:starts-with($relative-uri, '/submit/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/submit/overview.html" title="Submit to ArrayExpress">Submit</a></li>
-                                <li>
-                                    <xsl:if test="fn:starts-with($relative-uri, '/help/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/help/index.html" title="ArrayExpress Help">Help</a>
-                                </li>
-                                <li class="last">
-                                    <xsl:if test="$relative-uri = '/about.html'"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
-                                    <a href="{$context-path}/about.html" title="About ArrayExpress">About ArrayExpress</a></li>
-                                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-                                 add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-                                 whichever one will show up last...
-                                 For example: -->
-                                <li class="functional last">
-                                    <a href="#" class="icon icon-functional login" data-icon="l">
-                                        <xsl:choose>
-                                            <xsl:when test="$userid = '1'">Login</xsl:when>
-                                            <xsl:when test="fn:exists($username)">Logout [<xsl:value-of select="$username"/>]</xsl:when>
-                                            <xsl:otherwise>Logout</xsl:otherwise>
-                                        </xsl:choose>
-                                    </a>
-                                </li>
-                                <li class="functional"><a href="#" class="icon icon-static feedback" data-icon="\">Contact Us</a></li>
-                                <!--
-                                <li class="functional"><a href="#" class="icon icon-functional" data-icon="r">Share</a></li>
-                                -->
-                            </ul>
-                        </nav>
-                        <!-- /local-nav -->
+                                <!-- /local-search -->
+                                <!-- local-nav -->
+                                <nav>
+                                    <ul class="menu float-left" data-dropdown-menu="true" id="local-nav">
+                                        <li>
+                                            <xsl:attribute name="class">first<xsl:if test="$relative-uri = '/'"> active</xsl:if></xsl:attribute>
+                                            <a href="{$context-path}/" title="ArrayExpress ${project.version}.r${buildNumber}">Home</a>
+                                        </li>
+                                        <li>
+                                            <xsl:choose>
+                                                <xsl:when test="not($userid)">
+                                                    <xsl:if test="fn:starts-with($relative-uri, '/experiments/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                    <a href="{$context-path}/experiments/browse.html" title="Experiments">Experiments</a>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:if test="fn:starts-with($relative-uri, '/browse.html')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                    <a href="{$context-path}/browse.html" title="Browse ArrayExpress">Browse</a>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </li>
+                                        <xsl:if test="not($userid)">
+                                            <li>
+                                                <xsl:if test="fn:starts-with($relative-uri, '/arrays/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                <a href="{$context-path}/arrays/browse.html?directsub=on" title="Arrays">Arrays</a>
+                                            </li>
+                                            <li>
+                                                <xsl:if test="fn:starts-with($relative-uri, '/protocols/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                <a href="{$context-path}/protocols/browse.html" title="Protocols">Protocols</a>
+                                            </li>
+                                            <li>
+                                                <xsl:if test="fn:starts-with($relative-uri, '/files/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                <a href="{$context-path}/files/browse.html" title="Files">Files</a>
+                                            </li>
+                                            <li>
+                                                <xsl:if test="fn:starts-with($relative-uri, '/users/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                                <a href="{$context-path}/users/browse.html" title="Users">Users</a>
+                                            </li>
+                                        </xsl:if>
+                                        <li>
+                                            <xsl:if test="fn:starts-with($relative-uri, '/submit/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                            <a href="{$context-path}/submit/overview.html" title="Submit to ArrayExpress">Submit</a></li>
+                                        <li>
+                                            <xsl:if test="fn:starts-with($relative-uri, '/help/')"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                            <a href="{$context-path}/help/index.html" title="ArrayExpress Help">Help</a>
+                                        </li>
+                                        <li class="last">
+                                            <xsl:if test="$relative-uri = '/about.html'"><xsl:attribute name="class">active</xsl:attribute></xsl:if>
+                                            <a href="{$context-path}/about.html" title="About ArrayExpress">About ArrayExpress</a></li>
+                                        </ul>
+                                        <ul class="menu float-right">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="icon icon-static feedback" data-icon="\"/>Contact Us
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="login">
+                                                    <i class="icon icon-functional login spaced" data-icon="l"/>
+                                                    <xsl:choose>
+                                                        <xsl:when test="$userid = '1'">Login</xsl:when>
+                                                        <xsl:when test="fn:exists($username)">Logout [<xsl:value-of select="$username"/>]</xsl:when>
+                                                        <xsl:otherwise>Logout</xsl:otherwise>
+                                                    </xsl:choose>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                </nav>
+                                <!-- /local-nav -->
+                            </div>
+                        <!-- /local-title -->
+                        </div>
                     </div>
                 </header>
 
-                <div id="content" role="main" class="grid_24 clearfix">
+                <div id="content" role="main" class="columns medium-12 clearfix row">
                     <!-- If you require a breadcrumb trail, its root should be your service.
      	                 You don't need a breadcrumb trail on the homepage of your service... -->
                     <xsl:if test="$pBreadcrumbTrail != ''">
@@ -278,11 +307,11 @@
                     <section id="ae-login" style="display:none">
                         <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-user-field">User name</label>
                                 <input id="ae-user-field" name="u" maxlength="50"/>
                             </fieldset>
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-pass-field">Password</label>
                                 <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
                             </fieldset>
@@ -290,90 +319,75 @@
                                 <input id="ae-login-remember" name="r" type="checkbox"/>
                                 <label for="ae-login-remember">Remember me</label>
                             </span>
-                            <input class="submit" type="submit" value="Login"/>
+                            <input class="submit button" type="submit" value="Login"/>
                             <div class="ae-login-status" style="display:none"/>
                             <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
                         </form>
                         <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-name-email-field">User name or email address</label>
                                 <input id="ae-name-email-field" name="e" maxlength="50"/>
                             </fieldset>
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-accession-field">Experiment accession associated with the account</label>
                                 <input id="ae-accession-field" name="a" maxlength="14"/>
                             </fieldset>
                             <div>We will send you a reminder with your account information</div>
                             <div class="ae-login-status" style="display:none"/>
-                            <input class="submit" type="submit" value="Send"/>
+                            <input class="submit button" type="submit" value="Send"/>
                         </form>
                     </section>
                     <section id="ae-feedback" style="display:none">
                         <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                         <form method="post" action="#" onsubmit="return false">
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-feedback-message">We value your feedback. Please leave your comment below.</label>
                                 <textarea id="ae-feedback-message" name="m"/>
                             </fieldset>
-                            <fieldset>
+                            <fieldset class="callout">
                                 <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
                                 <input id="ae-email-field" name="e" maxlength="50"/>
                             </fieldset>
                             <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
                             <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
-                            <input class="submit" type="submit" value="Send"/>
+                            <input class="submit button" type="submit" value="Send"/>
                         </form>
                     </section>
                 </div>
-                <footer>
-                    <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
-                    <!--
-                    <div id="local-footer" class="grid_24 clearfix">
-                            <p>How to reference this page: ...</p>
-                        </div>
-                    -->
-                    <!-- End optional local footer -->
-                    <div id="global-footer" class="grid_24">
-                        <nav id="global-nav-expanded">
-                            <div class="grid_4 alpha">
-                                <h3 class="embl-ebi"><a href="//www.ebi.ac.uk/" title="EMBL-EBI">EMBL-EBI</a></h3>
-                            </div>
-                            <div class="grid_4">
-                                <h3 class="services"><a href="//www.ebi.ac.uk/services">Services</a></h3>
-                            </div>
-                            <div class="grid_4">
-                                <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>
-                            </div>
-                            <div class="grid_4">
-                                <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>
-                            </div>
-                            <div class="grid_4">
-                                <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>
-                            </div>
-                            <div class="grid_4 omega">
-                                <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>
-                            </div>
-                        </nav>
-                        <section id="ebi-footer-meta">
-                            <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &#160; &#160; +44 (0)1223 49 44 44</p>
-                            <p class="legal">Copyright &#169; EMBL-EBI 2016 | EBI is an Outstation of the <a href="http://www.embl.org">European Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a> | <a href="/about/terms-of-use">Terms of use</a></p>
-                        </section>
-                    </div>
-                </footer>
             </div>  <!--! end of #wrapper -->
 
-            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"/>
-            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"/>
+            <footer>
+                <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
+                <!--
+                      <div id="local-footer">
+                        <div class="row">
+                          <span class="reference">How to reference this page: ...</span>
+                        </div>
+                      </div>
+                 -->
+                <!-- End optional local footer -->
+                <div id="global-footer">
+                    <nav id="global-nav-expanded" class="row"><div class="columns small-6 medium-2 ">  <a href="//www.ebi.ac.uk" title="EMBL-EBI"><span class="ebi-logo"></span></a>  <ul>  </ul>  </div>   <div class="columns small-6 medium-2 ">  <h5 class="services"><a class="services-color" href="//www.ebi.ac.uk/services">Services</a></h5>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/services">By topic</a></li>  <li><a href="//www.ebi.ac.uk/services/all">By name (A-Z)</a></li>  <li class="last"><a href="//www.ebi.ac.uk/support">Help &amp; Support</a></li>  </ul>  </div>   <div class="columns small-6 medium-2 ">  <h5 class="research"><a class="research-color" href="//www.ebi.ac.uk/research">Research</a></h5>  <ul>  <li><a href="//www.ebi.ac.uk/research/publications">Publications</a></li>  <li><a href="//www.ebi.ac.uk/research/groups">Research groups</a></li>  <li class="last"><a href="//www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; <a href="//www.ebi.ac.uk/research/eipp">PhDs</a></li>  </ul>  </div>   <div class="columns small-6 medium-2 ">  <h5 class="training"><a class="training-color" href="//www.ebi.ac.uk/training">Training</a></h5>  <ul>  <li><a href="//www.ebi.ac.uk/training/handson">Train at EBI</a></li>  <li><a href="//www.ebi.ac.uk/training/roadshow">Train outside EBI</a></li>  <li><a href="//www.ebi.ac.uk/training/online">Train online</a></li>  <li class="last"><a href="//www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>  </ul>  </div>   <div class="columns small-6 medium-2 ">  <h5 class="industry"><a class="industry-color" href="//www.ebi.ac.uk/industry">Industry</a></h5>  <ul>  <li><a href="//www.ebi.ac.uk/industry/private">Members Area</a></li>  <li><a href="//www.ebi.ac.uk/industry/workshops">Workshops</a></li>  <li><a href="//www.ebi.ac.uk/industry/sme-forum"><abbr title="Small Medium Enterprise">SME</abbr> Forum</a></li>  <li class="last"><a href="//www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>  </ul>  </div>   <div class="columns small-6 medium-2 ">  <h5 class="about"><a class="ebi-color" href="//www.ebi.ac.uk/about">About EMBL-EBI</a></h5>  <ul>  <li><a href="//www.ebi.ac.uk/about/contact">Contact us</a>  </li><li><a href="//www.ebi.ac.uk/about/events">Events</a></li>  <li><a href="//www.ebi.ac.uk/about/jobs" title="Jobs, postdocs, PhDs...">Jobs</a></li>  <li class="first"><a href="//www.ebi.ac.uk/about/news">News</a></li>  <li><a href="//www.ebi.ac.uk/about/people">People &amp; groups</a></li>  </ul>  </div></nav>
+                    <section id="ebi-footer-meta" class="row"><div class="columns"><p class="address">EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK. +44 (0)1223 49 44 44</p> <p class="legal">Copyright © EMBL-EBI 2016 | EMBL-EBI is <a href="http://www.embl.org/">part of the European Molecular Biology Laboratory</a> | <a href="//www.ebi.ac.uk/about/terms-of-use">Terms of use</a><a class="readmore float-right" href="http://intranet.ebi.ac.uk">Intranet</a></p></div></section>
+                </div>
+            </footer>
+
+            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/fontpresentation.js"></script>
+            <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+
             <script type="text/javascript">
                 <xsl:text>var contextPath = "</xsl:text>
                 <xsl:value-of select="$context-path"/>
                 <xsl:text>";</xsl:text>
             </script>
-            <script src="{$context-path}/assets/scripts/jquery-1.8.2.min.js"/>
+            <script src="{$context-path}/assets/scripts/jquery-1.10.2.min.js"/>
             <script src="{$context-path}/assets/scripts/jquery.cookie-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.caret-range-1.0.js"/>
             <script src="{$context-path}/assets/scripts/jquery.autocomplete-1.1.0.150319.js"/>
             <script src="{$context-path}/assets/scripts/jquery.ae-common-1.0.150304.js"/>
+
             <xsl:copy-of select="$pExtraCode"/>
             ${interface.application.google.analytics}
         </body>

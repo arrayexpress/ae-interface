@@ -24,7 +24,7 @@
     function
     addHtmlToSelect( selectElt, html )
     {
-        if ( $.browser.opera ) {
+        if ( window.opera && window.opera.buildNumber ) {
             var htmlParsed = $.clean( new Array(html) );
             var select = $( selectElt ).empty();
             for ( var i = 0; i < htmlParsed.length; i++ ) {
