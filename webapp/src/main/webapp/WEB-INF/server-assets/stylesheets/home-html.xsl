@@ -64,7 +64,7 @@
 
         <xsl:if test="$vTotal > 0">
             <aside class="columns medium-4 last">
-                <h3><i class="icon icon-generic spaced" data-icon="g"/>Data Content</h3>
+                <h3><i class="icon icon-generic" data-icon="g"/>Data Content</h3>
                 <xsl:if test="fn:string-length($vRetrieved) > 1">
                     <h5>Updated <xsl:value-of select="ae:formatDateTime2($vRetrieved)"/></h5>
                 </xsl:if>
@@ -78,7 +78,7 @@
         </xsl:if>
         <xsl:if test="fn:count($vNews/news/item) > 0">
             <section class="columns medium-12 last" id="ae-news">
-                <h3><i class="icon icon-generic spaced" data-icon="N"/>Latest News</h3>
+                <h3><i class="icon icon-generic" data-icon="N"/>Latest News</h3>
                 <xsl:for-each select="$vNews/news/item">
                     <xsl:if test="fn:position() &lt; 3">
                         <p class="news"><xsl:value-of select="ae:formatDateGoogle(date)"/> - <strong><xsl:value-of select="title"/></strong><br/>
@@ -94,19 +94,19 @@
         </xsl:if>
 
         <section class="columns medium-4">
-            <h3><i class="icon icon-generic spaced" data-icon="L"/>Links</h3>
+            <h3><i class="icon icon-generic" data-icon="L"/>Links</h3>
             <p>Information about how to search ArrayExpress, understand search results, how to submit data and FAQ can be found in our <a href="{$context-path}/help/index.html">Help section</a>.</p>
             <p>Find out more about the <a href="/about/people/alvis-brazma">Functional Genomics group</a>.</p>
         </section>
         <section class="columns medium-4">
-            <h3><i class="icon icon-functional spaced" data-icon="t"/>Tools and Access</h3>
+            <h3><i class="icon icon-functional" data-icon="t"/>Tools and Access</h3>
             <p><a href="/fg/annotare/">Annotare</a>: web-based submission tool for ArrayExpress.</p>
             <p><a href="http://www.bioconductor.org/packages/release/bioc/html/ArrayExpress.html">ArrayExpress Bioconductor package</a>: an R package to access ArrayExpress and build data structures.</p>
             <p><a href="{$context-path}/help/programmatic_access.html">Programmatic access</a>: query and download data using web services or JSON.</p>
             <p><a href="ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/">FTP access</a>: data can be downloaded directly from our FTP site.</p>
         </section>
         <section class="columns medium-4 last">
-            <h3><i class="icon icon-generic spaced" data-icon="L"/>Related Projects</h3>
+            <h3><i class="icon icon-generic" data-icon="L"/>Related Projects</h3>
             <p>Discover up and down regulated genes in numerous experimental conditions in the <a href="${interface.application.link.atlas.base.url}">Expression Atlas</a>.</p>
             <p>Explore the <a href="/efo">Experimental Factor Ontology</a> used to support queries and annotation of ArrayExpress data.</p>
         </section>

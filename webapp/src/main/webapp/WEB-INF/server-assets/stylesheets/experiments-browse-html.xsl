@@ -119,9 +119,17 @@
 
         <xsl:choose>
             <xsl:when test="$vTotal&gt;0">
-                <section class="columns medium-3 shortcuts expander" id="search-filters">
+                <xsl:if test="$vSearchMode">
+                    <section class="shortcuts expander" id="search-extras">
+                        <div id="ebi_search_results">
+                            <h3 class="slideToggle"><span class="icon icon-functional spaced" data-icon="u"/>Show more data from EMBL-EBI<i class="fa fa-spinner fa-pulse"/></h3>
+                        </div>
+                    </section>
+                </xsl:if>
+
+                <section class="shortcuts expander" id="search-filters">
                     <div id="ae-filters">
-                        <h3 class="slideToggle icon icon-functional" data-icon="f">Filter search results<i class="fa fa-spinner fa-pulse"/></h3>
+                        <h3 class="slideToggle"><span class="icon icon-functional spaced" data-icon="f"/>Filter search results<i class="fa fa-spinner fa-pulse"/></h3>
                         <form id="ae-filters-expanded" method="get" style="display:none">
                             <input id="ae-keywords" type="hidden" name="keywords" value="{$keywords}" maxlength="255"/>
                             <label for="ae-organism">By organism:</label>
@@ -163,7 +171,7 @@
                     </div>
                     <xsl:text>&#160;</xsl:text>
                 </section>
-                <section class="columns medium-6 search-title">
+                <section class="columns medium-12 search-title">
                     <xsl:if test="$vSearchMode">
                         <h3>
                             <xsl:text>Search results for </xsl:text>
@@ -181,13 +189,6 @@
                     </xsl:if>
                     <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
                 </section>
-                <xsl:if test="$vSearchMode">
-                    <aside class="columns medium-3 last shortcuts expander" id="search-extras">
-                        <div id="ebi_search_results">
-                            <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI<i class="fa fa-spinner fa-pulse"/></h3>
-                        </div>
-                    </aside>
-                </xsl:if>
                 <section class="columns medium-12 last">
                     <div id="ae-content">
                         <div id="ae-browse">

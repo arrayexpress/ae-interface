@@ -52,7 +52,7 @@
 }
 
 #ae-browse .col_assays {
-    width: 70px;
+    width: 80px;
     text-align: left;
 }
 
@@ -62,12 +62,12 @@
 }
 
 #ae-browse .col_releasedate {
-    width: 90px;
+    width: 95px;
     text-align: left;
 }
 
 #ae-browse .col_processed {
-    width: 90px;
+    width: 100px;
     text-align: center;
 }
 

@@ -71,6 +71,13 @@ ul#secondary-nav li.active > a {
     right: 9px;
 }
 
+
+#search-extras.expander {
+    height:4em;
+    float: right;
+    position: relative;
+}
+
 #search-filters.expander,
 #search-extras.expander {
     height: 4em;
@@ -87,7 +94,6 @@ ul#secondary-nav li.active > a {
 }
 
 #search-filters.expander #ae-filters {
-    left: 0;
     background: #ffe0b1
 }
 
@@ -96,9 +102,15 @@ ul#secondary-nav li.active > a {
     background: #eee
 }
 
+
+#search-extras {
+    float: right;
+    position: relative;
+}
+
 #search-filters #ae-filters,
 #search-extras #ebi_search_results {
-    width: 100%;
+    width: 350px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -106,8 +118,12 @@ ul#secondary-nav li.active > a {
 
 #search-filters #ae-filters h3,
 #search-extras #ebi_search_results h3 {
+    border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius: 5px 5px 0px 0px;
     font-size:123.1%;
-    cursor: pointer
+    cursor: pointer;
+    padding:2px 5px;
 }
 
 #search-filters #ae-filters h3.slideToggle:hover,
@@ -609,7 +625,6 @@ p.center {
 }
 
 #ae-filters-expanded label {
-    width: 100%;
     font: 108% 'HelveticaNeueLT Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
     margin-bottom: 10px;
 }
@@ -622,7 +637,7 @@ p.center {
 }
 
 #ae-filters-expanded input[type='checkbox'] {
-    margin: 0.25em 0.4em 0 5px;
+    margin: 4px 0 0 0;
     vertical-align: top;
 }
 
@@ -862,11 +877,6 @@ p.center {
 }
 
 /* detailed entity */
-
-#ae-detail {
-    margin: 0 9px;
-}
-
 #ae-detail * {
     font-style: inherit;
 }
@@ -887,6 +897,11 @@ p.center {
 #ae-detail tr table
 , #ae-detail tr tr:nth-child(n) {
     background-color: transparent
+}
+
+
+table thead {
+    border: 0;
 }
 
 #ae-detail th
@@ -1083,11 +1098,9 @@ p.center {
 .ac_efo {
     font-weight: bold;
 }
-.icon.spaced {
-    padding-right:5px;
-}
+
 .margin-top-extra-large {
-   margin-top:1.5em;
+   margin-top:2em;
 }
 .button {
     background-color: #A1BEDF;
@@ -1101,4 +1114,7 @@ p.center {
     display:inline-flex;
     color:#fff;
     margin-right:5px;
+}
+.icon:before {
+    padding:0px 5px;
 }

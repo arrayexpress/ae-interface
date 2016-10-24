@@ -173,11 +173,10 @@
                         <col class="col_id"/>
                         -->
                         <col class="col_accession"/>
-                        <col class="col_name"/>
                         <col class="col_type"/>
                         <thead>
                             <xsl:call-template name="table-pager">
-                                <xsl:with-param name="pColumnsToSpan" select="3"/>
+                                <xsl:with-param name="pColumnsToSpan" select="2"/>
                                 <xsl:with-param name="pName" select="'protocol'"/>
                                 <xsl:with-param name="pTotal" select="$vTotal"/>
                                 <xsl:with-param name="pPage" select="$vPage"/>
@@ -202,14 +201,14 @@
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                     </xsl:call-template>
                                 </th>
-                                <th class="col_name sortable">
+                                <!--th class="col_name sortable">
                                     <xsl:text>Name</xsl:text>
                                     <xsl:call-template name="add-table-sort">
                                         <xsl:with-param name="pKind" select="'name'"/>
                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
                                         <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                                     </xsl:call-template>
-                                </th>
+                                </th-->
                                 <th class="col_type sortable">
                                     <xsl:text>Type</xsl:text>
                                     <xsl:call-template name="add-table-sort">
@@ -233,7 +232,6 @@
                         <col class="col_id"/>
                         -->
                         <col class="col_accession"/>
-                        <col class="col_name"/>
                         <col class="col_type"/>
                         <tbody>
                             <xsl:call-template name="ae-sort-protocols">
@@ -244,7 +242,7 @@
                                 <xsl:with-param name="pSortOrder" select="$vSortOrder"/>
                             </xsl:call-template>
                             <tr>
-                                <td colspan="3" class="col_footer">&#160;</td>
+                                <td colspan="2" class="col_footer">&#160;</td>
                             </tr>
                         </tbody>
                     </table>
@@ -298,7 +296,7 @@
                         </a>
                     </div>
                 </td>
-                <td class="col_name">
+                <!--td class="col_name">
                     <div>
                         <xsl:call-template name="highlight">
                             <xsl:with-param name="pQueryId" select="$queryid"/>
@@ -306,7 +304,7 @@
                             <xsl:with-param name="pFieldName"/>
                         </xsl:call-template>
                     </div>
-                </td>
+                </td -->
                 <td class="col_type">
                     <div>
                         <xsl:call-template name="highlight">
@@ -319,7 +317,7 @@
             </tr>
             <xsl:if test="$vExperimentMode">
                 <tr>
-                    <td class="col_detail" colspan="3">
+                    <td class="col_detail" colspan="2">
                         <xsl:for-each select="text">
                             <xsl:apply-templates select="." mode="highlight">
                                 <xsl:with-param name="pQueryId" select="$queryid"/>

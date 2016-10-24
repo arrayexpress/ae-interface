@@ -207,7 +207,7 @@
                                                             </xsl:if>
                                                         </input>
                                                     <div class="input-group-button">
-                                                        <input id="search_submit" class="button icon icon-functional" data-icon="s" tabindex="2" type="submit" name="submit1" value="1"/>
+                                                        <input id="search_submit" class="button icon icon-functional" data-icon="s" tabindex="2" type="submit" value="1"/>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -276,7 +276,7 @@
                                             </li>
                                             <li>
                                                 <a href="#" class="login">
-                                                    <i class="icon icon-functional login spaced" data-icon="l"/>
+                                                    <i class="icon icon-functional login" data-icon="l"/>
                                                     <xsl:choose>
                                                         <xsl:when test="$userid = '1'">Login</xsl:when>
                                                         <xsl:when test="fn:exists($username)">Logout [<xsl:value-of select="$username"/>]</xsl:when>

@@ -53,3 +53,7 @@
 #ae-detail u {
     display: none;
 }
+
+#ae-detail table.min-score-tbl tbody {
+    background-color: transparent;
+}
