@@ -103,6 +103,10 @@ ul#secondary-nav li.active > a {
     background: #eee
 }
 
+#ebi_search_results p, #ebi_search_results ul {
+    padding-left: 10px;
+    list-style-type: none;
+}
 
 #search-extras {
     float: right;
