@@ -60,13 +60,16 @@
         <a id="HeaderFieldList"><h4>A glossary of the ADF header fields (* denotes <em>mandatory</em> fields):</h4>
 
         </a><table class="example">
-        <tbody><tr>
+        <thead>
+          <tr>
             <th></th>
             <th>ADF header field</th>
             <th>What is it?</th>
             <th>Allowed values</th>
             <th>Example</th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
             <td>1</td>
             <td><strong>* Array Design Name</strong></td>
@@ -235,11 +238,12 @@
         <p>For each control reporter, describe what type of control it is in the <strong><code>Control Type</code></strong> column.  <em>(Do not fill in this column for any experimental reporters.)</em> The allowed control type values taken from <a href="http://www.ebi.ac.uk/efo">Experimental Factor Ontology (EFO)</a>. Here is a glossary:</p>
 
         <a id="ControlTypesList"></a><table class="example">
-        <tbody><tr>
+        <thead><tr>
             <th>Allowed terms</th>
             <th>Meaning</th>
         </tr>
-
+        </thead>
+        <tbody>
         <tr>
             <td><a href="http://www.ebi.ac.uk/efo/EFO_0005433">array control biosequence</a></td>
             <td>E.g. a spiked sequence from E. coli for a human microarray. <a href="#ReporterAnnotation">Reporter Sequence</a> must be provided.</td>
@@ -272,7 +276,7 @@
             <td><a href="http://www.ebi.ac.uk/efo/EFO_0005440">array control design</a></td>
             <td>(when none of the above applies, i.e. a control was used, but no further details available)</td>
         </tr>
-
+      </tbody>
     </table>
         <p>&nbsp;</p>
         <p>Here is an example of reporter roles in the ADF table:</p>
@@ -317,7 +321,7 @@
             </li>
             <li><a href="submissions_overview.html">How to submit</a>
                 <ul>
-                    <li><a href="pre-submission_checklist">Pre-submission checklist</a></li>
+                    <li><a href="pre-submission_checklist.html">Pre-submission checklist</a></li>
                     <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
                     <li><a href="adf_submissions_overview.html">Array design submissions</a>
                         <ul>
