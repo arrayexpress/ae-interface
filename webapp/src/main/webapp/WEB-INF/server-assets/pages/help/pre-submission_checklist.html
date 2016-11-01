@@ -39,17 +39,17 @@
 
         </div>
 
-        <div class="columns medium-9">
+        <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="twocol">
             <h3>Two-colour microarray experiment (including Illumina methylation arrays)</h3>
 
             <p>At the moment Annotare only supports one type of two-colour workflow (see graphic <a href="/fg/annotare/help/two_color_ma.html">here</a>), where two samples are connected with one common raw data file, which includes both channels. If you select two-colour for your Annotare submission, it will expect that you provide one file for the two samples that were hybridised together. Some recent two-colour microarray technologies generate two separate raw data files (usually one for each channel), which will cause Annotare validation to fail (if you connect a single file per sample.)<br>
-            If you have <strong>separate files for each channel</strong>, please complete the Annotare form, and connect the files and samples as it makes sense for your experiment. When you only see the error message <i>"An assay must be connected to a number of distinctly labeled extracts that equals a number of channels (dyes used)"</i> after validation, contact a curator, by emailing to <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (tell us your Annotare user email and the title of the experiment). We will then be able to submit the experiment for you, overriding the validation error.</p>
+            If you have <strong>separate files for each channel</strong>, please complete the Annotare form, and connect the files and samples as it makes sense for your experiment. When you only see the error message <i>"[Assign Files] The assignment between files and samples contains errors."</i> after validation, contact a curator, by emailing to <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> (tell us your Annotare user email and the title of the experiment). We will then be able to submit the experiment for you, overriding the validation error.</p>
             <a href="javascript:HideContent('twocol')" class="hide_button">Hide</a>
           </div>
         </div>
 
-        <div class="columns medium-9">
+        <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="single">
             <h3>Single-cell sequencing experiment</h3>
 
@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <div class="columns medium-9">
+        <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="moresamp">
             <h3>More than 1000 samples</h3>
 
@@ -76,14 +76,16 @@
           </div>
         </div>
 
-        <div class="columns medium-9">
+        <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="moretech">
             <h3>More than one technology per experiment (e.g. different arrays or microarray plus sequencing)</h3>
 
             <p>Annotare will ask you for the technology and name of the array, and applies it to the whole submission. If you have more than one array or used different types of technologies for the same set of samples, we ask you to <strong>create separate submissions</strong> in Annotare. Please make sure that the submissions have <strong>distinct titles</strong> (even though they may belong to the same study), in order to avoid mistakes.</p>
             <a href="javascript:HideContent('moretech')" class="hide_button">Hide</a>
           </div>
+        </div>
 
+        <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="humid">
             <h3>Sequencing of potentially identifiable human material</h3>
 
@@ -108,9 +110,9 @@
                         <li><a href="how_to_search_private_data.html">Search for private data</a></li>
                     </ul>
                 </li>
-                <li class="active"><a href="submissions_overview.html">How to submit</a>
+                <li><a href="submissions_overview.html">How to submit</a>
                     <ul>
-                        <li><a href="magetab_spec.html">MAGE-TAB format</a></li>
+                        <li class="active"><a href="pre-submission_checklist">Pre-submission checklist</a></li>
                         <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
                         <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
                         <li><a href="ftp_upload.html">FTP upload instructions</a></li>
@@ -122,6 +124,7 @@
                         <li><a href="data_availability.html">Data access policy</a></li>
                         <li><a href="accession_codes.html">Accession codes</a></li>
                         <li><a href="GEO_data.html">GEO data</a></li>
+                        <li><a href="magetab_spec.html">MAGE-TAB format</a></li>
                     </ul>
                 </li>
                 <li><a href="programmatic_access.html">Other ways to get data</a>

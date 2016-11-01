@@ -11,157 +11,178 @@
 
             <h2>Submissions overview</h2>
             <br>
-            <h3>I would like to submit...</h3>
+            <h4>I would like to submit...</h4>
 
-            <div class="columns medium-11">
-
-               <div class="ae-help_optionbox"><a id="array-select" style="background-color: green" href="#">Microarray experiment</a></div>
-               <div class="ae-help_optionbox"><a id="seq-select" style="background-color: orange" href="#">Sequencing experiment</a></div>
-               <div class="ae-help_optionbox"><a id="adf-select" style="background-color: darkblue" target="_blank" href="adf_submissions_overview.html">Array design</a></div>
-
+            <div class="row">
+                <div class="columns medium-12 margin-bottom-large">
+                        <div class="button-grid">
+                          <a class="button columns medium-4" id="array-select" style="background-color: green" href="#"> Microarray experiment</a>
+                          <a class="button columns medium-4" id="seq-select" style="background-color: orange" href="#">Sequencing experiment</a>
+                          <a class="button columns medium-4" id="adf-select" style="background-color: darkblue" target="_blank" href="adf_submissions_overview.html">Array desgin</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="columns medium-9">
-              <div class="ae-help_mainboxleft">
+            <div class="row">
+              <div class="columns medium-12">
+                <div class="callout">
                 <h3 id="what_data">1. What data sets can be submitted?</h3>
                 <p>ArrayExpress accepts all <strong>functional genomics data</strong> generated from <strong>microarray</strong> or <strong>next-generation sequencing (NGS)</strong> platforms. Popular experiment types are transcription profiling (mRNA and miRNA), SNP genotyping, chromatin immunoprecipitation (ChIP) and comparative genomic hybridisation. Here is the <a href="experiment_types.html">full list of experiment types in ArrayExpress</a>.</p>
                 <p class="ngs">We currently <strong>don't accept</strong> metagenomics/metatranscriptomics data (please submit to the <a href="/metagenomics/submission">EBI Metagenomics service</a>) or de novo transcriptome assembly data (the raw RNA-seq reads should be submitted to ArrayExpress, but the assembled transcriptome file directly to the <a href="/ena/submit">European Nucleotide Archive</a>).</p>
               </div>
             </div>
+          </div>
 
-            <div class="columns medium-3">
-              <div class="ae-help_linkbox">
+          <div class="row">
+            <div class="columns medium-12 margin-bottom-large">
+              <div style="border:1px solid rgb(230,230,230); padding:1rem">
                 <h5>Links</h5>
                 <ul>
                   <li><a href="experiment_types.html">Experiment types in ArrayExpress</a></li>
                 </ul>
               </div>
             </div>
+          </div>
 
-            <div class="columns medium-9">
-              <div class="ae-help_mainboxleft">
-                <h3 id="what_to_prepare">2. What do I need to prepare?</h3>
-                <br>
-                <h4>Breadth of the data and metadata</h4>
-                <p>The aim is that an ArrayExpress user should have everything they need for the data set to make sense and be reproducible without referring to an associated paper.</p>
-                <p>Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href="http://fged.org/projects/miame/" target="_blank">MIAME</a>) guidelines. Sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href="http://fged.org/projects/minseqe/" target="_blank">MINSEQE</a>).</p>
-                <br>
-                <div>
-                  <img style="display:block; margin-right:auto; margin-left:auto" src="what-to-submit.jpg" alt="What to submit" />
+            <div class="row">
+              <div class="columns medium-12">
+                <div class="callout">
+                  <h3 id="what_to_prepare">2. What do I need to prepare?</h3>
+                  <br>
+                  <h4>Breadth of the data and metadata</h4>
+                  <p>The aim is that an ArrayExpress user should have everything they need for the data set to make sense and be reproducible without referring to an associated paper.</p>
+                  <p>Microarray submissions follow the "Minimum Information About a Microarray Experiment" (<a href="http://fged.org/projects/miame/" target="_blank">MIAME</a>) guidelines. Sequencing submissions follow a similar set of guidelines, "Minimum Information About a Sequencing Experiment" (<a href="http://fged.org/projects/minseqe/" target="_blank">MINSEQE</a>).</p>
+                  <br>
+                  <div>
+                    <img style="display:block; margin-right:auto; margin-left:auto" src="what-to-submit.jpg" alt="What to submit" />
+                  </div>
+                  <br>
+                  <h4>Metadata</h4>
+                  <ul class="ae-help_checklist">
+                    <li>Experiment description (not publication abstract)</li>
+                    <li>Protocols of all experimental and data analysis procedures</li>
+                    <li>Sample annotation (as much details as possible)</li>
+                    <li>Author information</li>
+                    <li class="ngs"><a href="/fg/annotare/help/seq_lib_spec.html">Sequencing library specification</a> (NGS experiments only)</li>
+                  </ul>
+
+                  <h4>Raw data</h4>
+                  <ul class="ae-help_checklist">
+                    <li>Unprocessed data files
+                    <p class="array"><strong>Microarray</strong>: files obtained from the microarray scanner (e.g. Affymetrix <em>CEL</em> files, Agilent feature extraction <em>txt</em> files, Illumina <em>idat</em> files)<br>
+                       See the <a href="/fg/annotare/help/accepted_raw_ma_file_formats.html">full list of accepted microarray raw data files</a>.</p>
+                    <p class="ngs"><strong>Sequencing</strong>: compressed raw sequence read files (e.g. <em>fastq.gz</em> files)<br>
+                      See <a href="UHTS_submissions.html#HowToSubmit">accepted sequencing raw data files</a>.</p>
+                    </li>
+                  </ul>
+
+                  <h4>Processed data</h4>
+                  <ul class="ae-help_checklist">
+                    <li>Processed data matrix in tab-delimited <em>txt</em> format</li>
+                    <li class="ngs">Other processed data formats, e.g. <em>bam</em> alignment files (optional)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="columns medium-12 margin-bottom-large">
+                <div style="border:1px solid rgb(230,230,230); padding:1rem">
+                  <h5>Links</h5>
+                  <ul>
+                    <li class="array"><a href="/fg/annotare/help/accepted_raw_ma_file_formats.html">Accepted microarray raw data files</a></li>
+                    <li class="array"><a href="/fg/annotare/help/accepted_processed_ma_file_formats.html">Accepted microarray processed data files</a></li>
+                  </ul>
+                  <ul>
+                    <li class="ngs"><a href="UHTS_submissions.html#HowToSubmit">Accepted sequencing data files</a></li>
+                    <li class="ngs"><a href="/fg/annotare/help/seq_lib_spec.html">Guide to sequencing library specification</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="columns medium-12">
+                <div class="callout">
+                  <h3 id="submission_process">3. The submission process</h3>
+                  <p>Experiment submissions are handled via the online tool <strong>Annotare</strong>, which involves filling in a series of web-forms and direct upload of files.</p>
+                  <p>Before starting, have a look at the <a href="pre-submission_checklist.html">pre-submission checklist</a> (because there are a few exceptional cases that need further instructions).</p>
+                  <p>Note that once you have pressed "Submit", you <strong>cannot make any further changes</strong>. Updating an experiment that is already curated and loaded into ArrayExpress can be tedious and lengthy (especially for sequencing experiments), so please get your submission in the best possible shape before you submit.</p>
+                  <div>
+                    <img style="display:block; margin-right:auto; margin-left:auto" src="annotare_screenshot.png" alt="Annotare screenshot" />
+                    <!--
+                    <a href="https://www.ebi.ac.uk/fg/annotare/" style="display:inline-block; width:150px; background-color:teal; color:white; font-size:16px; font-weight:bold; margin:auto 40px; padding:50px 25px">Annotare Login</a>
+                    -->
                 </div>
                 <br>
-                <h4>Metadata</h4>
-                <ul class="ae-help_checklist">
-                  <li>Experiment description (not publication abstract)</li>
-                  <li>Protocols of all experimental and data analysis procedures</li>
-                  <li>Sample annotation (as much details as possible)</li>
-                  <li>Author information</li>
-                  <li class="ngs"><a href="/fg/annotare/help/seq_lib_spec.html">Sequencing library specification</a> (NGS experiments only)</li>
-                </ul>
-
-                <h4>Raw data</h4>
-                <ul class="ae-help_checklist">
-                  <li>Unprocessed data files
-                  <p class="array"><strong>Microarray</strong>: files obtained from the microarray scanner (e.g. Affymetrix <em>CEL</em> files, Agilent feature extraction <em>txt</em> files, Illumina <em>idat</em> files)<br>
-                     See the <a href="/fg/annotare/help/accepted_raw_ma_file_formats.html">full list of accepted microarray raw data files</a>.</p>
-                  <p class="ngs"><strong>Sequencing</strong>: compressed raw sequence read files (e.g. <em>fastq.gz</em> files)<br>
-                    See <a href="UHTS_submissions.html#HowToSubmit">accepted sequencing raw data files</a>.</p>
-                  </li>
-                </ul>
-
-                <h4>Processed data</h4>
-                <ul class="ae-help_checklist">
-                  <li>Processed data matrix in tab-delimited <em>txt</em> format</li>
-                  <li class="ngs">Other processed data formats, e.g. <em>bam</em> alignment files (optional)</li>
-                </ul>
-
               </div>
             </div>
+          </div>
 
-            <div class="columns medium-3">
-              <div class="ae-help_linkbox">
-                <h5>Links</h5>
-                <ul>
-                  <li class="array"><a href="/fg/annotare/help/accepted_raw_ma_file_formats.html">Accepted microarray raw data files</a></li>
-                  <li class="array"><a href="/fg/annotare/help/accepted_processed_ma_file_formats.html">Accepted microarray processed data files</a></li>
-                </ul>
-                <ul>
-                  <li class="ngs"><a href="UHTS_submissions.html#HowToSubmit">Accepted sequencing data files</a></li>
-                  <li class="ngs"><a href="/fg/annotare/help/seq_lib_spec.html">Guide to sequencing library specification</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="columns medium-9">
-              <div class="ae-help_mainboxleft">
-                <h3 id="submission_process">3. The submission process</h3>
-                <p>Experiment submissions are handled via the online tool <strong>Annotare</strong>, which involves filling in a series of web-forms and direct upload of files.</p>
-                <p>Before starting, have a look at the <a href="pre-submission_checklist.html">pre-submission checklist</a> (because there are a few exceptional cases that need further instructions).</p>
-                <p>Note that once you have pressed "Submit", you <strong>cannot make any further changes</strong>. Updating an experiment that is already curated and loaded into ArrayExpress can be tedious and lengthy (especially for sequencing experiments), so please get your submission in the best possible shape before you submit.</p>
-                <div>
-                  <img style="display:block; margin-right:auto; margin-left:auto" src="annotare_screenshot.png" alt="Annotare screenshot" />
-                  <!--
-                  <a href="https://www.ebi.ac.uk/fg/annotare/" style="display:inline-block; width:150px; background-color:teal; color:white; font-size:16px; font-weight:bold; margin:auto 40px; padding:50px 25px">Annotare Login</a>
-                  -->
-                </div>
-                <br>
-              </div>
-            </div>
-
-            <div class="columns medium-3">
-              <div class="ae-help_linkbox">
+          <div class="row">
+            <div class="columns medium-12 margin-bottom-large">
+              <div style="border:1px solid rgb(230,230,230); padding:1rem">
                 <h5>Links</h5>
                 <ul>
                   <li><a href="pre-submission_checklist.html">Pre-submission checklist</a></li>
-                  <li><a href="/fg/annotare/help/index.html">Creating a submission in Annotare (step-by-step guide)</a></li>
+                  <li><a href="/fg/annotare/help/index.html">Annotare Help (submission step-by-step guide)</a></li>
                   <li><a href="/fg/annotare/">Annotare</a></li>
                 </ul>
               </div>
             </div>
+          </div>
 
-            <div class="columns medium-9">
-              <div class="ae-help_mainboxleft">
-                <h3 id="after_submission">4. The curation process</h3>
-                <div class="image_container">
-                  <img style="display:block; margin-right:auto; margin-left:auto" src="submission-process.jpg" alt="The submission process" />
+            <div class="row">
+              <div class="columns medium-12">
+                <div class="callout">
+                  <h3 id="after_submission">4. The curation process</h3>
+                  <div class="image_container">
+                    <img style="display:block; margin-right:auto; margin-left:auto" src="submission-process.jpg" alt="The submission process" />
+                  </div>
+                  <br>
+                  <p>When validation in Annotare was successful you are <strong>automatically sent an accession number</strong>. The experiment is then   <strong>curated</strong> which may involve further inquiry by email. You may cite this accession number in your publication but be aware that it is your responsibility to ensure that the submission process is completed before the manuscript is published.</p>
                 </div>
-                <br>
-                <p>When validation in Annotare was successful you are <strong>automatically sent an accession number</strong>. The experiment is then   <strong>curated</strong> which may involve further inquiry by email. You may cite this accession number in your publication but be aware that it is your responsibility to ensure that the submission process is completed before the manuscript is published.</p>
               </div>
             </div>
 
-            <div class="columns medium-9">
-              <div class="ae-help_mainboxleft">
-                <h3>5. Success / After the submission</h3>
-                <p>When curation is completed the experiment is loaded into ArrayExpress, which is confirmed by an email from one of our curators. The experiment may stay <strong>private</strong> with <a href="data_availability.html">restricted access</a> (e.g. the submitter or journal editors/reviewers can view the data) until the associated research article is published.</p>
-                <p>The last step will be to release the experiment and add the publication details to your submission. This can be done using the <a href="/fg/acext/">Access Control tool</a>. Login details will have been sent to you by email. </p>
-                <p>If you must update other content of your completed submission, read the instructions <a href="modify_data_loaded_in_AE.html">here</a> and <a href="mailto:arrayexpress@ebi.ac.uk">contact us</a> with your request.</p>
-              </div>
-            </div>
-
-            <div class="columns medium-3">
-              <div class="ae-help_linkbox">
-                <h5>Links</h5>
-                <ul>
-                  <li><a href="data_availability.html">Data access policy</a></li>
-                  <li><a href="modify_data_loaded_in_AE.html">Modify experiments in ArrayExpress</a></li>
-                  <li><a href="/fg/acext/">Access Control Tool:<br>Change release date/Add publication details</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="columns medium-9" style="margin-top:18px">
-                <a href="/fg/annotare/" style="text-decoration:none">
-                <div style="background-color:#6C8CD5; padding-top: 20px; padding-bottom: 1px">
-                    <p style="color:white; font-size:24px; font-family:'HelveticaNeueLT Pro','Helvetica Neue', Helvetica, sans-serif">
-                    <img style="background-color:#6C8CD5; margin-left:30%; margin-right:3%; vertical-align:middle" src="https://www.ebi.ac.uk/fg/annotare/assets/images/annotare-logo-64.svg" alt="Annotare_logo" />
-                    Annotare Login
-                    </p>
+            <div class="row">
+              <div class="columns medium-12">
+                <div class="callout">
+                  <h3>5. Success / After the submission</h3>
+                  <p>When curation is completed the experiment is loaded into ArrayExpress, which is confirmed by an email from one of our curators. The experiment may stay <strong>private</strong> with <a href="data_availability.html">restricted access</a> (e.g. the submitter or journal editors/reviewers can view the data) until the associated research article is published.</p>
+                  <p>The last step will be to release the experiment and add the publication details to your submission. This can be done using the <a href="/fg/acext/">Access Control tool</a>. Login details will have been sent to you by email. </p>
+                  <p>If you must update other content of your completed submission, read the instructions <a href="modify_data_loaded_in_AE.html">here</a> and <a href="mailto:arrayexpress@ebi.ac.uk">contact us</a> with your request.</p>
                 </div>
-              </a>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="columns medium-12 margin-bottom-large">
+                <div style="border:1px solid rgb(230,230,230); padding:1rem">
+                  <h5>Links</h5>
+                  <ul>
+                    <li><a href="data_availability.html">Data access policy</a></li>
+                    <li><a href="modify_data_loaded_in_AE.html">Modify experiments in ArrayExpress</a></li>
+                    <li><a href="/fg/acext/">Access Control Tool:<br>Change release date/Add publication details</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="columns medium-12">
+                  <a href="/fg/annotare/" style="text-decoration:none">
+                  <div style="background-color:#6C8CD5; padding-top: 20px; padding-bottom: 1px">
+                      <p style="color:white; font-size:24px; font-family:'HelveticaNeueLT Pro','Helvetica Neue', Helvetica, sans-serif">
+                      <img style="background-color:#6C8CD5; margin-left:30%; margin-right:3%; vertical-align:middle" src="https://www.ebi.ac.uk/fg/annotare/assets/images/annotare-logo-64.svg" alt="Annotare_logo" />
+                      Annotare Login</p>
+                  </div>
+                </a>
+              </div>
             </div>
 
           </div>
+          <p>&nbsp;</p>
           <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
           <p>&nbsp;</p>
         </section>
@@ -179,7 +200,7 @@
                 </li>
                 <li class="active"><a href="submissions_overview.html">How to submit</a>
                     <ul>
-                        <li><a href="magetab_spec.html">MAGE-TAB format</a></li>
+                        <li><a href="pre-submission_checklist">Pre-submission checklist</a></li>
                         <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
                         <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
                         <li><a href="ftp_upload.html">FTP upload instructions</a></li>
@@ -191,6 +212,7 @@
                         <li><a href="data_availability.html">Data access policy</a></li>
                         <li><a href="accession_codes.html">Accession codes</a></li>
                         <li><a href="GEO_data.html">GEO data</a></li>
+                        <li><a href="magetab_spec.html">MAGE-TAB format</a></li>
                     </ul>
                 </li>
                 <li><a href="programmatic_access.html">Other ways to get data</a>
