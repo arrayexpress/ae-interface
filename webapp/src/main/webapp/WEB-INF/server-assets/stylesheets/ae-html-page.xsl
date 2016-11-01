@@ -270,7 +270,7 @@
                                         </ul>
                                         <ul class="menu float-right">
                                             <li>
-                                                <a href="#">
+                                                <a href="#" id="feedback-link">
                                                     <i class="icon icon-static feedback" data-icon="\"/>Contact Us
                                                 </a>
                                             </li>
@@ -293,6 +293,55 @@
                     </div>
                 </header>
 
+                <section id="ae-login" style="display:none">
+                    <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
+                    <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
+                        <fieldset class="callout">
+                            <label for="ae-user-field">User name</label>
+                            <input id="ae-user-field" name="u" maxlength="50"/>
+                        </fieldset>
+                        <fieldset class="callout">
+                            <label for="ae-pass-field">Password</label>
+                            <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
+                        </fieldset>
+                        <span id="ae-login-remember-option">
+                            <input id="ae-login-remember" name="r" type="checkbox"/>
+                            <label for="ae-login-remember">Remember me</label>
+                        </span>
+                        <input class="submit button" type="submit" value="Login"/>
+                        <div class="ae-login-status" style="display:none"/>
+                        <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
+                    </form>
+                    <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
+                        <fieldset class="callout">
+                            <label for="ae-name-email-field">User name or email address</label>
+                            <input id="ae-name-email-field" name="e" maxlength="50"/>
+                        </fieldset>
+                        <fieldset class="callout">
+                            <label for="ae-accession-field">Experiment accession associated with the account</label>
+                            <input id="ae-accession-field" name="a" maxlength="14"/>
+                        </fieldset>
+                        <div>We will send you a reminder with your account information</div>
+                        <div class="ae-login-status" style="display:none"/>
+                        <input class="submit button" type="submit" value="Send"/>
+                    </form>
+                </section>
+                <section id="ae-feedback" style="display:none">
+                    <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
+                    <form method="post" action="#" onsubmit="return false">
+                        <fieldset class="callout">
+                            <label for="ae-feedback-message">We value your feedback. Please leave your comment below.</label>
+                            <textarea id="ae-feedback-message" name="m"/>
+                        </fieldset>
+                        <fieldset class="callout">
+                            <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
+                            <input id="ae-email-field" name="e" maxlength="50"/>
+                        </fieldset>
+                        <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
+                        <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
+                        <input class="submit button" type="submit" value="Send"/>
+                    </form>
+                </section>
                 <div id="content" role="main" class="columns medium-12 clearfix row">
                     <!-- If you require a breadcrumb trail, its root should be your service.
      	                 You don't need a breadcrumb trail on the homepage of your service... -->
@@ -303,56 +352,7 @@
                     </xsl:if>
 
                     <xsl:call-template name="ae-content-section"/>
-                    
-                    <section id="ae-login" style="display:none">
-                        <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
-                        <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset class="callout">
-                                <label for="ae-user-field">User name</label>
-                                <input id="ae-user-field" name="u" maxlength="50"/>
-                            </fieldset>
-                            <fieldset class="callout">
-                                <label for="ae-pass-field">Password</label>
-                                <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
-                            </fieldset>
-                            <span id="ae-login-remember-option">
-                                <input id="ae-login-remember" name="r" type="checkbox"/>
-                                <label for="ae-login-remember">Remember me</label>
-                            </span>
-                            <input class="submit button" type="submit" value="Login"/>
-                            <div class="ae-login-status" style="display:none"/>
-                            <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
-                        </form>
-                        <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
-                            <fieldset class="callout">
-                                <label for="ae-name-email-field">User name or email address</label>
-                                <input id="ae-name-email-field" name="e" maxlength="50"/>
-                            </fieldset>
-                            <fieldset class="callout">
-                                <label for="ae-accession-field">Experiment accession associated with the account</label>
-                                <input id="ae-accession-field" name="a" maxlength="14"/>
-                            </fieldset>
-                            <div>We will send you a reminder with your account information</div>
-                            <div class="ae-login-status" style="display:none"/>
-                            <input class="submit button" type="submit" value="Send"/>
-                        </form>
-                    </section>
-                    <section id="ae-feedback" style="display:none">
-                        <h3>Have your say<a id="ae-feedback-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
-                        <form method="post" action="#" onsubmit="return false">
-                            <fieldset class="callout">
-                                <label for="ae-feedback-message">We value your feedback. Please leave your comment below.</label>
-                                <textarea id="ae-feedback-message" name="m"/>
-                            </fieldset>
-                            <fieldset class="callout">
-                                <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
-                                <input id="ae-email-field" name="e" maxlength="50"/>
-                            </fieldset>
-                            <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
-                            <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
-                            <input class="submit button" type="submit" value="Send"/>
-                        </form>
-                    </section>
+
                 </div>
             </div>  <!--! end of #wrapper -->
 

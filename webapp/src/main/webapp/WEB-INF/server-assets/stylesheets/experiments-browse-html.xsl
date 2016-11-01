@@ -122,7 +122,7 @@
                 <xsl:if test="$vSearchMode">
                     <section class="shortcuts expander" id="search-extras">
                         <div id="ebi_search_results">
-                            <h3 class="slideToggle"><span class="icon icon-functional spaced" data-icon="u"/>Show more data from EMBL-EBI<i class="fa fa-spinner fa-pulse"/></h3>
+                            <h3 class="slideToggle icon icon-functional" data-icon="u">Show more data from EMBL-EBI<i class="fa fa-spinner fa-pulse"/></h3>
                         </div>
                     </section>
                 </xsl:if>
@@ -171,24 +171,26 @@
                     </div>
                     <xsl:text>&#160;</xsl:text>
                 </section>
-                <section class="columns medium-12 search-title">
-                    <xsl:if test="$vSearchMode">
-                        <h3>
-                            <xsl:text>Search results for </xsl:text>
-                            <span class="ae_keywords"><xsl:value-of select="$keywords"/></span>
-                        </h3>
-                    </xsl:if>
-                    <xsl:if test="$vFilterMode">
-                        <h5>
-                            <xsl:text>Filtered by </xsl:text>
-                            <xsl:call-template name="ae-filter-desc">
-                                <xsl:with-param name="pFields" select="('organism', 'experiment type', 'experiment type', 'array', 'AE only', 'private')"/>
-                                <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub), fn:string($private))"/>
-                            </xsl:call-template>
-                        </h5>
-                    </xsl:if>
-                    <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
-                </section>
+                <xsl:if test="$vSearchMode or $vFilterMode">
+                    <section class="columns medium-12 search-title">
+                        <xsl:if test="$vSearchMode">
+                            <h3>
+                                <xsl:text>Search results for </xsl:text>
+                                <span class="ae_keywords"><xsl:value-of select="$keywords"/></span>
+                            </h3>
+                        </xsl:if>
+                        <xsl:if test="$vFilterMode">
+                            <h5>
+                                <xsl:text>Filtered by </xsl:text>
+                                <xsl:call-template name="ae-filter-desc">
+                                    <xsl:with-param name="pFields" select="('organism', 'experiment type', 'experiment type', 'array', 'AE only', 'private')"/>
+                                    <xsl:with-param name="pValues" select="(fn:string($organism), fn:string($exptype[1]), fn:string($exptype[2]), fn:string($array), fn:string($directsub), fn:string($private))"/>
+                                </xsl:call-template>
+                            </h5>
+                        </xsl:if>
+                        <xsl:if test="fn:not($vSearchMode) and fn:not($vFilterMode)"><xsl:text>&#160;</xsl:text></xsl:if>
+                    </section>
+                </xsl:if>
                 <section class="columns medium-12 last">
                     <div id="ae-content">
                         <div id="ae-browse">
@@ -291,7 +293,7 @@
                                             </th>
                                             <xsl:if test="$vUnrestrictedAccess">
                                                 <th class="col_downloads sortable">
-                                                    <xsl:text>DL Attempts</xsl:text>
+                                                    DL<br/>Attempts
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
@@ -299,7 +301,7 @@
                                                     </xsl:call-template>
                                                 </th>
                                                 <th class="col_complete_downloads sortable">
-                                                    <xsl:text>Complete DLs</xsl:text>
+                                                    Complete<br/>DLs
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'complete_downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>

@@ -61,7 +61,7 @@
     <xsl:include href="ae-html-page.xsl"/>
     <xsl:include href="ae-highlight.xsl"/>
 
-    <xsl:variable name="back-link" select="if ($query-string) then concat('?',fn:replace($query-string,'&amp;full=true','')) else ''"/>
+    <xsl:variable name="back-link" select="if ($query-string and not($query-string='full=true')) then concat('?',fn:replace($query-string,'&amp;full=true','')) else ''"/>
 
     <xsl:template match="/">
         <xsl:call-template name="ae-page">

@@ -88,6 +88,7 @@ ul#secondary-nav li.active > a {
     position: absolute;
     z-index: 500;
     min-width: 275px;
+    padding-bottom: 7px;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -288,9 +289,8 @@ header .masthead {
 
 #ae-login
 , #ae-feedback {
+    font-size: 80%;
     position: absolute;
-    top: 2px;
-    right: 5px;
     background: #eee;
     color: #000;
     border-radius: 5px;
@@ -434,7 +434,8 @@ header .masthead {
     width: 100%;
     margin: 0 0 5px 0;
     padding: 0;
-    font-size: 100%
+    font-size: 110%;
+    height: 1.5em;
 }
 
 #ae-feedback fieldset textarea {
@@ -724,7 +725,6 @@ p.center {
 }
 
 #ae-browse th {
-    font-size: 108%;
     font-weight: normal;
     vertical-align: bottom;
     white-space: nowrap;
@@ -794,7 +794,7 @@ p.center {
 
 #ae-browse .col_pager {
     font-size: 100%;
-    padding: 5px 5px 3px 5px;
+    padding: 5px 5px 15px 5px;
     border-bottom: 0 none;
 }
 
@@ -886,6 +886,11 @@ p.center {
     table-layout: fixed;
 }
 
+table thead, table tbody, table tfoot {
+    border: 0px;
+    background-color: transparent;
+}
+
 #ae-detail tr:nth-child(odd) {
     background-color: #e8f1fc
 }
@@ -915,7 +920,6 @@ table thead {
 
 #ae-detail td.name {
     white-space: nowrap;
-    font-size: 108%;
     color: #666;
     background-image: url(../images/bg-ltgray.gif);
     text-align: right;
@@ -1117,4 +1121,8 @@ table thead {
 }
 .icon:before {
     padding:0px 5px;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: transparent;
 }

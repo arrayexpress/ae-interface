@@ -131,7 +131,8 @@
         function doOpenWindow() {
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
-            hideForgotPanel();
+            $forgot_form.hide();
+            $login_form.show();
             $('#ae-feedback-close').click();
             $window.show();
         }
@@ -161,12 +162,6 @@
             $login_form.hide();
             $forgot_form.show();
             $forgot_form.find("input").first().focus();
-        }
-
-        function hideForgotPanel() {
-
-            $forgot_form.hide();
-            $login_form.show();
         }
 
         $login_form.submit(function() {
@@ -248,7 +243,7 @@
         function doOpenWindow() {
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
-
+            $('#ae-login-close').click();
             $submit.removeAttr("disabled");
             $window.show();
             $message.focus();
@@ -400,7 +395,7 @@
             forgot: "#ae-login-forgot"
         });
         $("#ae-feedback").aeFeedbackForm({
-            open: "a.feedback",
+            open: "#feedback-link",
             close: "#ae-feedback-close"
         });
 

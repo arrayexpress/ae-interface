@@ -33,16 +33,17 @@
 }
 
 #ae-browse .col_accession {
-    width: 120px;
+    width: 124px;
     text-align: left;
 }
 
 #ae-browse .col_name {
     text-align: left;
+    min-width: 200px;
 }
 
 #ae-browse .col_type {
-    width: 140px;
+    width: 100px;
     text-align: left;
 }
 
