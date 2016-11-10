@@ -57,7 +57,7 @@
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
-                    <xsl:when test="$vBrowseMode">Users</xsl:when>
+                    <xsl:when test="$vBrowseMode"><li>Users</li></xsl:when>
                     <xsl:otherwise>
                         <!--
                         <a href="{$context-path}/users">Users</a>

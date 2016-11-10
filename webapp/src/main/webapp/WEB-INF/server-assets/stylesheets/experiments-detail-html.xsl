@@ -59,14 +59,23 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$keywords != ''">
-                        <a href="{$context-path}/search.html?{$query-string}">Search results for "<xsl:value-of select="$keywords"/>"</a>
+                        <li>
+                            <a href="{$context-path}/search.html?{$query-string}">Search results for "<xsl:value-of
+                                    select="$keywords"/>"
+                            </a>
+                        </li>
+
                     </xsl:when>
                     <xsl:otherwise>
-                        <a href="{$context-path}/browse.html?{$query-string}">Browse</a>
+                        <li>
+                            <a href="{$context-path}/browse.html?{$query-string}">Browse</a>
+                        </li>
+
                     </xsl:otherwise>
                 </xsl:choose>
-                >
-                <xsl:value-of select="$vAccession"/>
+                <li>
+                    <xsl:value-of select="$vAccession"/>
+                </li>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS"/>
             <xsl:with-param name="pExtraBodyClasses"/>

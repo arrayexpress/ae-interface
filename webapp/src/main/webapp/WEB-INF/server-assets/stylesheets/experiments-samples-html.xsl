@@ -77,12 +77,15 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-experiment-samples-1.0.130704.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/browse.html{$back-link}">Browse</a>
-                <xsl:text> > </xsl:text>
-                <a href="{$context-path}/experiments/{$vAccession}/{$back-link}">
-                    <xsl:value-of select="$vAccession"/>
-                </a>
-                <xsl:text> > Samples and Data</xsl:text>
+                <li>
+                    <a href="{$context-path}/browse.html{$back-link}">Browse</a>
+                </li>
+                <li>
+                    <a href="{$context-path}/experiments/{$vAccession}/{$back-link}">
+                        <xsl:value-of select="$vAccession"/>
+                    </a>
+                </li>
+                <li>Samples and Data</li>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.query-2.1.7m-ebi.js" type="text/javascript"/>
@@ -108,28 +111,6 @@
                         </h4>
                         <div id="ae-results">
                             <xsl:for-each select="$vSampleFiles">
-
-                                <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
-                                    <p id="ae-infotext">You're seeing a summary of the sample-data table.
-                                        <a  title="Some columns were omitted; please click here to get a full view of samples and data"
-                                            href="{$context-path}/experiments/{$vAccession}/samples/{if ($back-link) then concat($back-link,'&amp;') else '?'}full=true"
-                                            class="icon icon-functional" data-icon="4">Display
-                                        </a> or
-                                        <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download
-                                        </a>
-                                        the full table.</p>
-                                </xsl:if>
-                                <xsl:if test="$vFull">
-                                    <p id="ae-infotext">You're seeing the full sample-data table.
-                                        <a  title="Please click here to get a summary view of samples and data"
-                                            href="{$context-path}/experiments/{$vAccession}/samples/{$back-link}"
-                                            class="icon icon-functional" data-icon="4">Display summary
-                                        </a> or
-                                        <a href="{$context-path}/files/{$vAccession}/{.}" class="icon icon-functional" data-icon="=">Download
-                                        </a>
-                                        the table.</p>
-                                </xsl:if>
-
                                 <xsl:variable name="vTable" select="ae:tabularDocument($vAccession, @name, fn:concat('--header=1;--page=', $vPage, ';--pagesize=', $vPageSize, ';--sortby=', $vSortBy, ';--sortorder=', $vSortOrder))/table"/>
                                 <xsl:choose>
                                     <xsl:when test="fn:not(fn:exists($vTable))">
@@ -212,6 +193,25 @@
 
     <xsl:template match="table">
         <xsl:param name="pFileName"/>
+
+        <div>
+            <xsl:if test="fn:not($vFull) and fn:not($vIsAnonymousReview)">
+                <a  title="Some columns were omitted; please click here to get a full view of samples and data"
+                    href="{$context-path}/experiments/{$vAccession}/samples/{if ($back-link) then concat($back-link,'&amp;') else '?'}full=true"
+                    class="icon icon-functional" data-icon="4">Display full sample-data table
+                </a>
+                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimeted format
+                </a></span>
+            </xsl:if>
+            <xsl:if test="$vFull">
+                <a  title="Please click here to get a summary view of samples and data"
+                    href="{$context-path}/experiments/{$vAccession}/samples/{$back-link}"
+                    class="icon icon-functional" data-icon="4">Display summary
+                </a>
+                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimeted format
+                </a></span>
+            </xsl:if>
+        </div>
 
         <xsl:variable name="vTableInfo">
             <xsl:variable name="vHeaderRow" select="header"/>

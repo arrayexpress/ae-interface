@@ -296,11 +296,11 @@
                 <section id="ae-login" style="display:none">
                     <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                     <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
-                        <fieldset class="callout">
+                        <fieldset class="callout" id="ae-user-fieldset">
                             <label for="ae-user-field">User name</label>
-                            <input id="ae-user-field" name="u" maxlength="50"/>
+                            <input id="ae-user-field" type="text" name="u" maxlength="50"/>
                         </fieldset>
-                        <fieldset class="callout">
+                        <fieldset class="callout" id="ae-password-fieldset">
                             <label for="ae-pass-field">Password</label>
                             <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
                         </fieldset>
@@ -346,9 +346,10 @@
                     <!-- If you require a breadcrumb trail, its root should be your service.
      	                 You don't need a breadcrumb trail on the homepage of your service... -->
                     <xsl:if test="$pBreadcrumbTrail != ''">
-                        <nav id="breadcrumb">
-                            <p><a href="{$context-path}/">ArrayExpress</a> &gt; <xsl:copy-of select="$pBreadcrumbTrail"/></p>
-                        </nav>
+                        <ul id="breadcrumb" class="breadcrumbs">
+                            <li><a href="{$context-path}/">ArrayExpress</a></li>
+                            <xsl:copy-of select="$pBreadcrumbTrail"/>
+                        </ul>
                     </xsl:if>
 
                     <xsl:call-template name="ae-content-section"/>

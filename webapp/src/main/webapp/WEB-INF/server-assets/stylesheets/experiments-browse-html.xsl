@@ -293,7 +293,7 @@
                                             </th>
                                             <xsl:if test="$vUnrestrictedAccess">
                                                 <th class="col_downloads sortable">
-                                                    DL<br/>Attempts
+                                                    <i class="fa fa-download" aria-hidden="true"></i>
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>
@@ -301,7 +301,7 @@
                                                     </xsl:call-template>
                                                 </th>
                                                 <th class="col_complete_downloads sortable">
-                                                    Complete<br/>DLs
+                                                    <i class="icon icon-functional" data-icon="="/>
                                                     <xsl:call-template name="add-table-sort">
                                                         <xsl:with-param name="pKind" select="'complete_downloads'"/>
                                                         <xsl:with-param name="pSortBy" select="$vSortBy"/>

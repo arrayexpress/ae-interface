@@ -80,40 +80,31 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/browse.html">Browse</a>
-                        <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a>
-                        <xsl:text> > </xsl:text>
+                        <li><a href="{$context-path}/browse.html">Browse</a></li>
+                        <li><a href="{$context-path}/experiments/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a></li>
                         <xsl:if test="$vExperimentArrayMode or $vKindMode">
-                            <a href="{$context-path}/experiments/{$vRefAccession}/files/">Files</a>
-                            <xsl:text> > </xsl:text>
+                            <li><a href="{$context-path}/experiments/{$vRefAccession}/files/">Files</a></li>
                             <xsl:if test="$vExperimentArrayMode and $vKindMode">
-                                <a href="{$context-path}/files/{$vAccession}/?ref={$vRefAccession}">
+                                <li><a href="{$context-path}/files/{$vAccession}/?ref={$vRefAccession}">
                                     <xsl:value-of select="$vAccession"/>
-                                </a>
-                                <xsl:text> > </xsl:text>
+                                </a></li>
                             </xsl:if>
                         </xsl:if>
                     </xsl:when>
                     <xsl:when test="$vArrayMode">
-                        <a href="{$context-path}/arrays/browse.html">Arrays</a>
-                        <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/arrays/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a>
-                        <xsl:text> > </xsl:text>
+                        <li><a href="{$context-path}/arrays/browse.html">Arrays</a></li>
+                        <li><a href="{$context-path}/arrays/{$vRefAccession}/"><xsl:value-of select="$vRefAccession"/></a></li>
                         <xsl:if test="$vKindMode">
-                            <a href="{$context-path}/arrays/{$vRefAccession}/files/">Files</a>
-                            <xsl:text> > </xsl:text>
+                            <li><a href="{$context-path}/arrays/{$vRefAccession}/files/">Files</a></li>
                         </xsl:if>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:if test="fn:not($vBrowseMode)">
-                            <a href="{$context-path}/files/browse.html">Files</a>
-                            <xsl:text> > </xsl:text>
+                            <li><a href="{$context-path}/files/browse.html">Files</a></li>
                             <xsl:if test="$vKindMode">
-                                <a href="{$context-path}/files/{$vAccession}/">
+                                <li><a href="{$context-path}/files/{$vAccession}/">
                                     <xsl:value-of select="$vAccession"/>
-                                </a>
-                                <xsl:text> > </xsl:text>
+                                </a></li>
                             </xsl:if>
 
                         </xsl:if>
@@ -121,13 +112,13 @@
                 </xsl:choose>
                 <xsl:choose>
                     <xsl:when test="$vKindMode">
-                        <xsl:value-of select="ae:getKindTitle($kind)"/>
+                        <li><xsl:value-of select="ae:getKindTitle($kind)"/></li>
                     </xsl:when>
                     <xsl:when test="$vBrowseMode or ($vExperimentMode and fn:not($vExperimentArrayMode)) or $vArrayMode">
-                        <xsl:text>Files</xsl:text>
+                        <li><xsl:text>Files</xsl:text></li>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$vAccession"/>
+                        <li><xsl:value-of select="$vAccession"/></li>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>

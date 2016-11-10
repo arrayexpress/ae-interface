@@ -74,18 +74,19 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/browse.html">Browse</a>
-                        <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vExperiment}/">
-                            <xsl:value-of select="$vExperiment"/>
-                        </a>
-                        <xsl:text> > </xsl:text>
+                        <li><a href="{$context-path}/browse.html">Browse</a></li>
+                        <li>
+                            <a href="{$context-path}/experiments/{$vExperiment}/">
+                                <xsl:value-of select="$vExperiment"/>
+                            </a>
+                        </li>
                         <xsl:choose>
                             <xsl:when test="$vBrowseMode">Arrays</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/experiments/{$vExperiment}/arrays/">Arrays</a>
-                                <xsl:text> > </xsl:text>
-                                <xsl:value-of select="fn:upper-case($accession)"/>
+                                <li>
+                                    <a href="{$context-path}/experiments/{$vExperiment}/arrays/">Arrays</a>
+                                </li>
+                                <li><xsl:value-of select="fn:upper-case($accession)"/></li>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
@@ -93,9 +94,13 @@
                         <xsl:choose>
                            <xsl:when test="$vBrowseMode">Arrays</xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/arrays/browse.html?directsub=on">Arrays</a>
-                                <xsl:text> > </xsl:text>
-                                <xsl:value-of select="upper-case($accession)"/>
+                                <li>
+                                    <a href="{$context-path}/arrays/browse.html?directsub=on">Arrays</a>
+                                </li>
+                                <li>
+                                    <xsl:value-of select="upper-case($accession)"/>
+                                </li>
+
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:otherwise>

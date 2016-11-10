@@ -71,28 +71,24 @@
             <xsl:with-param name="pBreadcrumbTrail">
                 <xsl:choose>
                     <xsl:when test="$vExperimentMode">
-                        <a href="{$context-path}/browse.html{$qs}">Browse</a>
-                        <xsl:text> > </xsl:text>
-                        <a href="{$context-path}/experiments/{$vExperiment}/{$qs}">
+                        <li><a href="{$context-path}/browse.html{$qs}">Browse</a></li>
+                        <li><a href="{$context-path}/experiments/{$vExperiment}/{$qs}">
                             <xsl:value-of select="$vExperiment"/>
-                        </a>
-                        <xsl:text> > </xsl:text>
+                        </a></li>
                         <xsl:choose>
-                            <xsl:when test="$vBrowseMode">Protocols</xsl:when>
+                            <xsl:when test="$vBrowseMode"><li>Protocols</li></xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/experiments/{$vExperiment}/protocols/?{$query-string}">Protocols</a>
-                                <xsl:text> > </xsl:text>
-                                <xsl:value-of select="fn:upper-case($id)"/>
+                                <li><a href="{$context-path}/experiments/{$vExperiment}/protocols/?{$query-string}">Protocols</a></li>
+                                <li><xsl:value-of select="fn:upper-case($id)"/></li>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:choose>
-                            <xsl:when test="$vBrowseMode">Protocols</xsl:when>
+                            <xsl:when test="$vBrowseMode"><li>Protocols</li></xsl:when>
                             <xsl:otherwise>
-                                <a href="{$context-path}/protocols/browse.html?{$query-string}">Protocols</a>
-                                <xsl:text> > </xsl:text>
-                                <xsl:value-of select="upper-case($id)"/>
+                                <li><a href="{$context-path}/protocols/browse.html?{$query-string}">Protocols</a></li>
+                                <li><xsl:value-of select="upper-case($id)"/></li>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:otherwise>

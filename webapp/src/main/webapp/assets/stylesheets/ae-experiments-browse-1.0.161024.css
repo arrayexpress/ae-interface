@@ -33,7 +33,7 @@
 }
 
 #ae-browse .col_accession {
-    width: 124px;
+    width: 130px;
     text-align: left;
 }
 
@@ -89,7 +89,7 @@
 
 #ae-browse .col_downloads,
 #ae-browse .col_complete_downloads {
-    width: 120px;
+    width: 40px;
     text-align: center;
 }
 

@@ -95,7 +95,7 @@ ul#secondary-nav li.active > a {
 }
 
 #search-filters.expander #ae-filters {
-    background: #ffe0b1
+    background: #ffeba4;
 }
 
 #search-extras.expander #ebi_search_results {
@@ -226,7 +226,7 @@ h1 { color: #5E8CC0; }
 
 h2 { color: #1E4B7D; }
 
-h3 { color: #BFA070; }
+h3 { color: #a67325; }
 
 h1 a:link,
 h2 a:link,
@@ -248,25 +248,8 @@ h6 a:visited {
 th { background-color: #EEEEEE; }
 
 
-/* Form submission button */
-form input.submit {
-    /* colours */
-    color: #fff;
-    text-shadow: #1E4B7D 1px 1px;
-    border-top: 1px solid #A1BEDF;
-    border-left: 1px solid #A1BEDF;
-    border-right: 1px solid #1E4B7D;
-    border-bottom: 1px solid #1E4B7D;
-
-    background-image: -moz-linear-gradient(top, #5E8CC0, #597390);
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #597390));
-    background-image: -webkit-linear-gradient(#5E8CC0, #597390);
-    background-image: linear-gradient(top, #5E8CC0, #597390);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5E8CC0', EndColorStr='#597390');
-}
-
 /* Define the basic colour your local masthead */
-div#local-masthead { background-color: #A1BEDF; }
+div#local-masthead { background-color: #5E8CC0; }
 /*div#local-masthead { background-color: ${interface.application.css.local-masthead-color}; }*/
 
 header .masthead {
@@ -331,6 +314,12 @@ header .masthead {
     -moz-border-radius-topright: 5px
 }
 
+
+#ae-user-fieldset, #ae-password-fieldset {
+    float: left;
+    width: 50%
+}
+
 #ae-login > h3 a
 , #ae-feedback > h3 a {
     float: right;
@@ -381,22 +370,16 @@ header .masthead {
     padding: 0;
     margin: 0;
     border: 0 none;
-    width: 100%
-}
-
-#ae-login-form fieldset {
-    float: left;
-    width: 50%
 }
 
 #ae-login input[type = 'checkbox'] {
-    vertical-align: baseline;
+    vertical-align: middle;
     margin: 0 3px
 }
 
 #ae-login input[type = 'checkbox'] + label {
     font-size: 93%;
-    vertical-align: middle
+    margin: 0px;
 }
 
 #ae-login fieldset
@@ -406,8 +389,8 @@ header .masthead {
     color: inherit
 }
 
-#ae-login-form fieldset:first-child {
-    padding: 0 10px 0 0
+#ae-login-form fieldset:nth-child(2) {
+    padding-left: 10px;
 }
 
 #ae-feedback fieldset:first-child
@@ -457,13 +440,11 @@ header .masthead {
 
 #ae-login input[type='submit']:last-child {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     right: 20px
 }
 
 #ae-login-remember-option {
-    float: left;
-    margin: 8px 0 0
 }
 
 #ae-login-forgot {
@@ -479,6 +460,11 @@ header .masthead {
 
 #ae-accession-field {
     width: 150px !important
+}
+
+.alert {
+    background-color: #FFB3CA;
+    padding: 0.1em 0.2em;
 }
 
 /* --------------------------------- */
@@ -1111,10 +1097,10 @@ table thead {
    margin-top:2em;
 }
 .button {
-    background-color: #A1BEDF;
+    background-color: #5e8cc0;
 }
 .button:hover {
-    background-color: #A1BEDF;
+    background-color: #245a95;
 }
 .icon.rounded {
     background-color: #8AB2DF;
@@ -1124,9 +1110,13 @@ table thead {
     margin-right:5px;
 }
 .icon:before {
-    padding:0px 5px;
+    padding-right:5px;
 }
 
 table tbody tr:nth-child(even) {
+    background-color: transparent;
+}
+
+#local-search [type="submit"]:hover {
     background-color: transparent;
 }

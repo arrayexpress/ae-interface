@@ -207,8 +207,8 @@
             if (undefined != username) {
                 $user.val(username);
             }
-            showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1"));
             doOpenWindow();
+            showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1"));
             if (undefined != username) {
                 $pass.focus();
             } else {
