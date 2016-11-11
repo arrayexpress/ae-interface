@@ -209,15 +209,16 @@ a.special:active {
     border-bottom: 3px double #5E8CC0;
 }
 
-
-a:link { color: #5E8CC0; }
+a:link { color: #1E4B7D; }
 
 a:hover,
 a:focus,
-a:active { color: #1E4B7D; }
+a:active { color: #111; }
 
 a.special { background-color: #9CE0CB; }
 
+
+a:visited { color:#5E8CC0; }
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 { color: #222222; }
@@ -739,7 +740,7 @@ p.center {
 }
 
 #ae-browse tbody tr:nth-child(odd) {
-    background: #e8f1fc
+    background: #f9fbff;
 }
 
 #ae-browse tbody tr:nth-child(even) {
@@ -882,7 +883,7 @@ table thead, table tbody, table tfoot {
 }
 
 #ae-detail tr:nth-child(odd) {
-    background-color: #e8f1fc
+    background-color: #f9fbff;
 }
 
 #ae-detail tr:nth-child(even) {
