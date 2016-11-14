@@ -95,7 +95,7 @@
         <xsl:param name="pTitle"/>
         <xsl:param name="pMessage"/>
         <section>
-            <h2 class="alert"><xsl:copy-of select="$pTitle"/></h2>
+            <h3 class="alert"><xsl:copy-of select="$pTitle"/></h3>
             <p><xsl:copy-of select="$pMessage"/></p>
             <h3>Still confused?</h3>
             <p>If you require further assistance locating missing page or file, please <a href="#" class="feedback">contact us</a> and we will look into it for you.</p>

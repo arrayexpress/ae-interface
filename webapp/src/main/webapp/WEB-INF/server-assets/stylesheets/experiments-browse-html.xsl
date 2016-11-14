@@ -585,7 +585,7 @@
     <xsl:template name="browse-no-results">
 
         <section class="columns medium-9">
-            <h2 class="alert">We’re sorry that we couldn’t find any matching experiments</h2>
+            <h3 class="alert">We’re sorry that we couldn’t find any matching experiments</h3>
             <p>Your search for <span class="alert"><xsl:value-of select="$keywords"/></span> returned no results.</p>
             <h3>Can’t find what you’re looking for?</h3>
             <p>Please <a href="#" class="feedback">contact us</a> for help if you get no or unexpected results.</p>
