@@ -175,7 +175,7 @@
 }
 
 #ae-results .ae_samples_table td.odd {
-    background-color: #E8F1FC
+    background-color: #F7FaFF;
 }
 
 #ae-results .ae_samples_table th {
@@ -183,7 +183,7 @@
 }
 
 #ae-results .ae_samples_table th.sa {
-    background-color: #E2ECF8
+    background-color: #F7FaFF
 }
 
 #ae-results .ae_samples_table th.ev, #ae-results .ae_samples_table th.evv {
