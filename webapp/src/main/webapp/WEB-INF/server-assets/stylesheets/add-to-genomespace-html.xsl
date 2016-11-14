@@ -45,10 +45,9 @@
                 <link rel="stylesheet" href="{$context-path}/assets/stylesheets/ae-add-to-gs-1.0.0.css" type="text/css"/>
             </xsl:with-param>
             <xsl:with-param name="pBreadcrumbTrail">
-                <a href="{$context-path}/browse.html">Browse</a>
-                <xsl:text> > </xsl:text>
-                <a href="{$context-path}/experiments/{$vAccession}/"><xsl:value-of select="$vAccession"/></a>
-                <xsl:text> > Send to GenomeSpace</xsl:text>
+                <li><a href="{$context-path}/browse.html">Browse</a></li>
+                <li><a href="{$context-path}/experiments/{$vAccession}/"><xsl:value-of select="$vAccession"/></a></li>
+                <li><xsl:text>Send to GenomeSpace</xsl:text></li>
             </xsl:with-param>
             <xsl:with-param name="pExtraJS">
                 <script src="{$context-path}/assets/scripts/jquery.ae-add-to-gs-1.0.0.js" type="text/javascript"/>
