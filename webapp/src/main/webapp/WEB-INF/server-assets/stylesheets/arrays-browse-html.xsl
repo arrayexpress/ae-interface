@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         <xsl:choose>
-                            <xsl:when test="$vBrowseMode">Arrays</xsl:when>
+                            <xsl:when test="$vBrowseMode"><li>Arrays</li></xsl:when>
                             <xsl:otherwise>
                                 <li>
                                     <a href="{$context-path}/experiments/{$vExperiment}/arrays/">Arrays</a>
