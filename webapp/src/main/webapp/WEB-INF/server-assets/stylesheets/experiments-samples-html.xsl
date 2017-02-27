@@ -200,7 +200,7 @@
                     href="{$context-path}/experiments/{$vAccession}/samples/{if ($back-link) then concat($back-link,'&amp;') else '?'}full=true"
                     class="icon icon-functional" data-icon="4">Display full sample-data table
                 </a>
-                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimeted format
+                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format
                 </a></span>
             </xsl:if>
             <xsl:if test="$vFull">
@@ -208,7 +208,7 @@
                     href="{$context-path}/experiments/{$vAccession}/samples/{$back-link}"
                     class="icon icon-functional" data-icon="4">Display summary
                 </a>
-                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimeted format
+                <span style="float:right"><a href="{$context-path}/files/{$vAccession}/{$pFileName}" class="icon icon-functional" data-icon="S">Export table in Tab-delimited format
                 </a></span>
             </xsl:if>
         </div>
