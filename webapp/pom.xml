@@ -160,9 +160,9 @@
         <profile>
             <id>preproduction</id>
             <properties>
-                <interface.application.pref.reports.recipients>arrayexpress-testdesk&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
+                <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
                 <interface.application.pref.feedback.recipients>arrayexpress-testdesk&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
-                <interface.application.pref.remind.recipients>arrayexpress-testdesk&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
+                <interface.application.pref.remind.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
 
                 <interface.application.webxml.security.transport.guarantee>CONFIDENTIAL</interface.application.webxml.security.transport.guarantee>
                 <interface.application.log.appender.ref>ROLLINGFILE-LONDON</interface.application.log.appender.ref>
