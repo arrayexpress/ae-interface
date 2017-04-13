@@ -54,8 +54,8 @@
             <h3>Single-cell sequencing experiment</h3>
 
             <p>Fill in the normal Annotare form for sequencing experiments. Please also include information about <strong>spike-in RNAs</strong> and upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a <i>fasta</i> file with the nucleotide sequences. Here is an example: <a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip">E-MTAB-3624.additional.1.zip</a><br>
-            You should include a sample attribute "<strong>single cell ID</strong>" to uniquely name your individual cells and use it as the experimental variable.
-            If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as "<strong>single cell well information</strong>". The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
+            You should include a sample attribute "<strong>single cell identifier</strong>" to uniquely name your individual cells and use it as the experimental variable (if there are no other experimental conditions).
+            If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as "<strong>single cell well quality</strong>". The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
             <ul>
               <li>"debris" (intracellular matrix, proteins)</li>
               <li>"multiple cells"</li>
@@ -71,7 +71,7 @@
           <div class="ae-help_mainboxleft-hide" id="moresamp">
             <h3>More than 1000 samples</h3>
 
-            <p>Currently Annotare does not handle more than 1000 samples per submission and such submissions need some workaround. Please provide as much information as possible in the Annotare form, including the protocols and experiment description. You don't need to create 1000 samples, maybe just 10-20, with sample attributes. Upload the files using the drag and drop feature. If you prefer, you may upload the files via the ftp server.  We will then export the submission and send you the samples and data relationship format (SDRF) spreadsheet for you to fill in the rest of the sample information.</p>
+            <p>Currently Annotare does not handle more than 1000 samples per submission and such submissions need a workaround. Please provide as much information as possible in the Annotare form, including the protocols and experiment description. You don't need to create 1000 samples, just 4-10, with sample attributes. Upload all data files <a href="ftp_upload.html">via the FTP server</a> and <a href="/fg/annotare/help/file_upload.html#ftp">connect the uploaded files</a> to the first few samples that you've created. This should let you pass validation and submit normally. Let us know in the feedback box that you have more samples to add to this submission. We will then send you the samples and data relationship format (SDRF) spreadsheet for you to fill in the rest of the sample information.</p>
             <a href="javascript:HideContent('moresamp')" class="hide_button">Hide</a>
           </div>
         </div>
@@ -91,7 +91,7 @@
 
             <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if the data has been consented for public release. Such approvals typically would be given by the relevant ethics committees and ensuring this is the responsibility of the submitters.</p>
             <p>Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted directly to the <a href="/ega/">European Genome-phenome Archive (EGA)</a>, not ArrayExpress. It is possible to submit identifiable data (e.g. raw sequences) to the EGA, while the related processed data (e.g. RPKM values) are submitted to ArrayExpress. It is the submitter's responsibility to ensure that such a submission complies with the respective ethics requirements. </p>
-            <p>Processed data files can be submitted to ArrayExpress via Annotare. Please create a new submission and include the sample annotation and processed data files. Make sure to add the EGA study accession and if available EGA sample, experiment and run accessions (as sample attributes). We can then add a link to the corresponding EGA study page. Email us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> if you have questions about this type of submission.</p>
+            <p>Processed data files can be submitted to ArrayExpress via Annotare. Please create a new submission and include the sample annotation and processed data files. Make sure to add the EGA study accession and if available EGA sample, experiment and run accessions (as sample attributes). We can then add a link to the corresponding EGA study page. Email us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> if you have questions about this type of submission.</p>
 
             <a href="javascript:HideContent('humid')" class="hide_button">Hide</a>
           </div>
