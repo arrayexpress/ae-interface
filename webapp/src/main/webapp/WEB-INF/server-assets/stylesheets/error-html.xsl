@@ -83,8 +83,9 @@
                 <xsl:otherwise>
                     <xsl:call-template name="block-warning">
                         <xsl:with-param name="pTitle">Something has gone wrong with ArrayExpress</xsl:with-param>
-                        <xsl:with-param name="pMessage">Our web server says this as a <span class="alert"><xsl:value-of select="$error-message"/></span>.
-                            This problem means that the service you are trying to access is currently unavailable. We’re very sorry.</xsl:with-param>
+                        <xsl:with-param name="pMessage">
+                            <xsl:if test="$error-message">Our web server says this as a <span class="alert"><xsl:value-of select="$error-message"/></span>.</xsl:if>
+                            This means that the service you are trying to access is currently unavailable. We’re very sorry.</xsl:with-param>
                     </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>

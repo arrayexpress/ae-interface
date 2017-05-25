@@ -152,7 +152,7 @@ public class QueryServlet extends AuthAwareApplicationServlet
                 try (PrintWriter out = response.getWriter()) {
                     try {
                         if (!saxonEngine.transform(source, stylesheetName, params, new StreamResult(out))) {
-                            throw new Exception("Transformation returned an error");
+                            throw new SaxonException( new Exception("Transformation returned an error"));
                         }
                     } catch (SaxonException x) {
                         if (x.getCause() instanceof HTTPStatusException) {
@@ -163,6 +163,8 @@ public class QueryServlet extends AuthAwareApplicationServlet
                             } else {
                                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             }
+                        } else {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         }
                     }
                 }
