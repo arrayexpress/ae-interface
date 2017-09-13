@@ -102,7 +102,7 @@ public class LookupServlet extends ApplicationServlet
             response.addHeader("Cache-Control", "no-cache");
             response.addHeader("Cache-Control", "must-revalidate");
             response.addHeader("Expires", "Fri, 16 May 2008 10:00:00 GMT"); // some date in the past
-
+            response.addHeader("Access-Control-Allow-Origin:", "*");
             try (PrintWriter out = response.getWriter()) {
                 out.print(output);
             }
