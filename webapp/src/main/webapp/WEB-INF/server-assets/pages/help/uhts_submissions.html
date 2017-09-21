@@ -36,10 +36,10 @@
 
             <h4><a id="HumanIdentifiableData"></a>Potentially identifiable human data</h4>
             <p>Data from human samples and individuals that can potentially lead to the identification of the donors (e.g. genomic DNA sequences) can be submitted to ArrayExpress if consent for public release of the data hs been given. Such approvals typically would be given by the relevant ethics committees and <em>ensuring this is the responsibility of the submitters</em>.</p>
-            <p>Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted directly to the <a href="/ega/">European Genome-phenome Archive (EGA)</a>, not ArrayExpress. Cases are possible where identifiable data (e.g. raw sequences) are submitted to the EGA, while the related processed data (e.g. RPKM values) are submitted to ArrayExpress, but <em>it is up to the submitter to ensure that such a submission complies with the respective ethics requirements.</em>  To submit processed data to ArrayExpress, please begin by emailing us at <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a> with the EGA study accession number. We will import non-human-identifiable meta-data from EGA in a spreadsheet (which the submitter will have the chance to review), and then match the meta-data with processed data.</p>
+            <p>Identifiable data approved for <a href="/ega/submission/FAQ#DAC">controlled access</a> should be submitted directly to the <a href="/ega/">European Genome-phenome Archive (EGA)</a>, not ArrayExpress. Cases are possible where identifiable data (e.g. raw sequences) are submitted to the EGA, while the related processed data (e.g. RPKM values) are submitted to ArrayExpress, but <em>it is up to the submitter to ensure that such a submission complies with the respective ethics requirements.</em>  To submit processed data to ArrayExpress, please begin by emailing us at <a href="mailto:annotare@ebi.ac.uk">annotare@ebi.ac.uk</a> with the EGA study accession number. We will import non-human-identifiable meta-data from EGA in a spreadsheet (which the submitter will have the chance to review), and then match the meta-data with processed data.</p>
             <p>The following diagram summarises the typical data flow:</p>
             <p><img src="UHTS_HighThroughputSequencingSubmissionDiagram.jpg" alt="Diagram of data submission routes" height="328" width="542"></p>
-            <p>Diagram of the submission of different sequencing data types to ArrayExpress or the European Genome-phenome archive.</p>
+            <p>Diagram of the submission of different sequencing data types to ArrayExpress or the European Genome-Phenome Archive.</p>
             <p style="text-align: right;"><a href="#top" class="linktotop">Top</a></p>
             <p>&nbsp;</p>
 
@@ -52,17 +52,39 @@
             <p>Apart from the <a href="submissions_overview.html">experiment description and sample annotation</a>, sequencing experiments require further details describing the sequencing    library (as they are needed for ENA submission). Please see <a href="/fg/annotare/help/seq_lib_spec.html">this guide</a> for more information about the library specifications.</p>
 
             <h4 id="raw_data_files">Raw data file requirements</h4>
-            <p>Please provide individual <strong>unprocessed</strong> raw data files for each sample. After demultiplexing and trimming of adapter sequences do <i>not</i> remove entire sequence reads or trim by quality score. Prepare your files according to <a href='/ena/about/read-file-formats'>ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
-            <p>For <strong>FASTQ</strong> files, each file must be individually compressed by gzip or bzip2. Do not bundle multiple fastq files into one archive. For paired-end experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <code>_1.fq.gz</code> and <code>_2.fq.gz</code>. Examples of naming styles supported by the ENA:</p>
+            <p>Please provide individual <strong>unprocessed</strong> raw data files for each sample, in <a href="#FastqSpec">FASTQ</a> or <a href="#BamSpec">BAM</a> format, and prepare your files according to <a href="/ena/about/read-file-formats">ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
+            <p id="FastqSpec"><strong>FASTQ specifications</strong></p>
             <ul>
-              <li>sampleA<strong>_1</strong>.fq.gz / sampleA<strong>_2</strong>.fq.gz</li>
-              <li>sampleA<strong>_F</strong>.fq.gz / sampleA<strong>_R</strong>.fq.gz</li>
+              <li>Each file must be <strong>compressed</strong> by gzip or bzip2.</li>
+              <li>Submit <strong>individual files</strong>. Do not bundle multiple FASTQ files into one archive.</li>
+              <li>Multiplexed libraries should be <strong>demultiplexed</strong> into separate files.</li>
+              <li><strong>No technical adapter sequences</strong> are allowed. But do <i>not</i> remove entire sequence reads or trim by quality score.</li>
+              <li>For <strong>paired-end</strong> experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <strong>_1.fq.gz</strong> and <strong>_2.fq.gz</strong>. Examples of naming styles supported by the ENA:
+                      <ul style="list-style-type:none">
+                        <li>sampleA<strong>_1</strong>.fq.gz / sampleA<strong>_2</strong>.fq.gz</li>
+                        <li>sampleA<strong>_F</strong>.fq.gz / sampleA<strong>_R</strong>.fq.gz</li>
+                      </ul>
+                    </li>
+              <li>Check <a href="/ena/about/read-file-formats#fastq_format">ENA specifications</a> for additional information about the accepted FASTQ format.</li>
             </ul>
-            <p id="BamSpec">If you're submitting raw data files in <strong>BAM</strong> format, please make sure they satisfy <a href="/ena/about/read-file-formats#bam_format">ENA  specifications</a> as well as the following conditions:</p>
-            <ol><li>Each file contains all reads from the sequencing machine, regardless of whether the reads mapped to the reference genome. The reason for this is that we would expect the BAM file to be used to regenerate <i>all</i> the sequencing reads.</li>
-            <li>The phred quality score for each base should be included in the file.</li>
-            <li>If you have data from paired-end sequencing libraries, for each sequencing run, include data for both mate reads in one single BAM file.</li></ol>
-            <p>If your BAM files contain only mapped reads, then please either create "full" (unfiltered) BAM files, or send us the original read files (e.g. fastq.gz files) as raw data files (again, check <a href='/ena/about/read-file-formats'>ENA specifications</a>). BAM files containing only mapped reads can be included in your submission as processed files, as long as they satisfy ENA's specification and that the reference genome used for alignment has been accessioned in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="http://www.ddbj.nig.ac.jp">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>).</p>
+
+            <p id="BamSpec"><strong>BAM specifications</strong></p>
+
+            <ul>
+              <li>Each file must contain <strong>all reads</strong> from the sequencing machine and all reads must be <strong>unaligned</strong>. The reason for this is that we expect the BAM file to be used to regenerate <i>all</i> the sequencing reads.</li>
+              <li>The phred quality score for each base should be included in the file.</li>
+              <li>If you have data from paired-end sequencing libraries, for each sequencing run, include data for both mate reads in one single BAM file.</li>
+              <li>Check <a href="/ena/about/read-file-formats#bam_format">ENA specifications</a> for additional information about the accepted BAM format.</li>
+            </ul>
+
+            <p>To ensure your BAM files contain unaligned reads, you can run the following commands:</p>
+              <ul style="list-style-type:none">
+                <li><code>samtools view -c -F 4 bam_file</code> (counts how many reads are aligned and should return 0)</li>
+                <li><code>samtools view -c -f 4 bam_file</code> (counts how many reads are unaligned and should return at least 1)</li>
+              </ul>
+            <p>If your BAM files contain mapped reads, then please either create unmapped BAM files, or send us the original read files (e.g. fastq.gz files) as raw data files (again, check <a href="/ena/about/read-file-formats">ENA specifications</a>).
+              BAM files containing mapped reads can be included in your submission as processed files, as long as they satisfy ENA's specification and that the reference genome used for alignment has been accessioned in the International Nucleotide Sequence Database Collaboration (INSDC, involving <a href="https://www.ddbj.nig.ac.jp/">DDBJ</a>, <a href="/ena">ENA</a>, and <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>).</p>
+
 
             <h4 id="processed_data">Processed data files</h4>
             <p>If your processed data are in spreadsheets, e.g. a table of FPKM values for genes with genes in rows and samples in columns, please save them in tab-delimited text (*.txt) format (not Excel). We also accept BAM alignment files. There is no need to compress or zip up the processed files one by one or as a bundle. Upload them in Annotare and assign to your samples in the same way as you would for <a href="#sending_raw_files">raw files</a> (see below).</p>
