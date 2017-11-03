@@ -537,7 +537,7 @@
     <rule>
         <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/files/?$</from>
         <set type="parameter" name="accession">$1</set>
-        <to type="forward" last="true">/servlets/query/files/api-v3/xml</to>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/xml</to>
     </rule>
     <rule>
         <from>^/xml/v3/experiments/([E]-\w{4}-\d+)/samples/?$</from>
