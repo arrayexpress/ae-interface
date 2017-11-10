@@ -1132,3 +1132,7 @@ table tbody tr:nth-child(even) {
 #local-search [type="submit"]:hover {
     background-color: transparent;
 }
+
+div#elixir-banner-info {
+    color: white;
+}
