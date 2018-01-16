@@ -56,7 +56,7 @@
             <p id="FastqSpec"><strong>FASTQ specifications</strong></p>
             <ul>
               <li>Each file must be <strong>compressed</strong> by gzip or bzip2.</li>
-              <li>Submit <strong>individual files</strong>. Do not bundle multiple FASTQ files into one archive.</li>
+              <li>Submit <strong>individual files</strong> per sample and lane (if applicable). Do not bundle multiple FASTQ files into one archive, or split a file into smaller sized chunks.</li>
               <li>Multiplexed libraries should be <strong>demultiplexed</strong> into separate files.</li>
               <li><strong>No technical adapter sequences</strong> are allowed. But do <i>not</i> remove entire sequence reads or trim by quality score.</li>
               <li>For <strong>paired-end</strong> experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <strong>_1.fq.gz</strong> and <strong>_2.fq.gz</strong>. Examples of naming styles supported by the ENA:
