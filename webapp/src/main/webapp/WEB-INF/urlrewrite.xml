@@ -555,6 +555,10 @@
         <to type="forward" last="true">/servlets/query/experiments/api-v3/xml</to>
     </rule>
     <rule>
+        <from>^/xml/v3/files/stats$</from>
+        <to type="forward" last="true">/servlets/query/experiments/files-api-v3/size</to>
+    </rule>
+    <rule>
         <from>^/xml/v3/files/?$</from>
         <to type="forward" last="true">/servlets/query/experiments/files-api-v3/xml</to>
     </rule>
