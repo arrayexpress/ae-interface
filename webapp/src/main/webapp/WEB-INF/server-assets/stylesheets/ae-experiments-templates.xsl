@@ -865,7 +865,7 @@
                             <xsl:text>, </xsl:text>
                         </xsl:if>
                         <a href="http://europepmc.org/abstract/MED/{accession}">
-                            <xsl:text>Europe PMC </xsl:text>
+                            <xsl:text>PMID:</xsl:text>
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$pQueryId"/>
                                 <xsl:with-param name="pText" select="accession"/>
