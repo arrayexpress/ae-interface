@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-
+<head><title>Single-cell submission guide &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
 
 <body class="level2">
     <div id="content" role="main" class="columns medium-12 clearfix">
         <section id="ae-help" class="columns medium-12">
 
           <h2>Single-cell submission guide</h2>
+          <br>
+          <ol>
+            <li><a href="#SampleInfo">Sample information</a>
+
+            </li>
+            <li><a href="#LibraryInfo">Library and sequencing information</a></li>
+            <li><a href="#FileFormats">File formats</a></li>
+            <li><a href="#Droplet">Droplet-based technologies</a></li>
+              <li><a href="#Tips">A few more tips</a></li>
+          </ol>
           <br>
 
           <p>Start your single cell submission using the sequencing template in <a href="/fg/annotare/">Annotare</a>. Follow the guides below for information what metadata and data format to include. Larger experiments (with more than 1000 raw data files in one experiment) will be started in Annotare and completed manually via the spreadsheets created by Annotare.</p>
@@ -15,16 +25,16 @@
 
           <h4>Required sample attributes</h4>
           <div class="row">
-            <div class="columns medium-12">
+            <div class="columns medium-11 medium-push-1">
             <p>Minimum sample attributes for primary cells from different species and cell lines</p>
             <table>
               <thead>
                 <tr>
-                  <th>Human <i class="icon icon-species" data-icon="H"></th>
-                  <th>Vertebrates <i class="icon icon-species" data-icon="M"> <i class="icon icon-species" data-icon="E"></th>
-                  <th >Plants <i class="icon icon-species" data-icon="P"></th>
-                  <th >Cell lines <i class="icon icon-species" data-icon="Y"></th>
-                  <th width=150 >Comment</th>
+                  <th>Human <i class="icon icon-species" data-icon="H"></i></th>
+                  <th>Vertebrates <i class="icon icon-species" data-icon="M"></i></th>
+                  <th >Plants <i class="icon icon-species" data-icon="P"></i></th>
+                  <th >Cell lines <i class="icon icon-species" data-icon="Y"></i></th>
+                  <th >Comment</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +85,7 @@
                   <td>genotype</td>
                   <td>genotype</td>
                   <td>genotype</td>
-                  <td>genetic modification</td>
+                  <td><em>genetic modification</em></td>
                 </tr>
                 <tr>
                   <td>organism part</td>
@@ -89,21 +99,21 @@
                   <td>cell type*</td>
                   <td></td>
                   <td>cell type</td>
-                  <td>* if known, see comment below</td>
+                  <td><em>* if known, see comment below</em></td>
                 </tr>
                 <tr>
                   <td>individual</td>
                   <td>individual</td>
                   <td></td>
                   <td></td>
-                  <td>donor or animal ID</td>
+                  <td><em>donor or animal ID</em></td>
                 </tr>
                 <tr>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td>cell line</td>
-                  <td>name of commercial cell line</td>
+                  <td><em>name of commercial cell line</em></td>
                 </tr>
               </tbody>
             </table>
@@ -130,7 +140,7 @@
 
               <li>
                 <h5>Quality control pre-analysis</h5>
-                <p> If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as <strong>"single cell well quality"</strong>. The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:<br>
+                <p> If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as <strong>"single cell well quality"</strong>. The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
                   <ul>
                     <li>"debris"</li>
                     <li>"multiple cells" or number of cells if known</li>
@@ -138,7 +148,7 @@
                     <li>"no cell"</li>
                   </ul>
                 <a href="/arrayexpress/experiments/E-MTAB-5522/samples/" class="readmore" target="_blank">Example: E-MTAB-5522</a>
-                </p>
+
                 <hr />
               </li>
 
@@ -153,7 +163,7 @@
           </div>
 
           <div class="row">
-            <div class="columns medium-12">
+            <div class="columns medium-11 medium-push-1">
               <p>Examples of additional single cell sample attributes</p>
               <table>
                 <thead>
@@ -225,7 +235,7 @@
           </div>
           </div>
 
-          <h3>Library and sequencing information</h3>
+          <h3 id="LibraryInfo">2. Library and sequencing information</h3>
 
           <h4>Library construction protocol</h4>
           <div class="row">
@@ -268,7 +278,7 @@
               <hr />
               <li>
                 <h5>Custom spike-ins</h5>
-                <p>If you have used a non-commercial spike-in set, describe this in the library construction protocol. Additionally, upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a fasta file containing the nucleotide sequences.<a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip" class="readmore" target="_blank">Example: Example: E-MTAB-3624.additional.1.zip</a>
+                <p>If you have used a non-commercial spike-in set, describe this in the library construction protocol. Additionally, upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a fasta file containing the nucleotide sequences.<a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip" class="readmore" target="_blank">Example: E-MTAB-3624.additional.1.zip</a>
                 </p>
               </li>
               <hr />
@@ -331,7 +341,7 @@
             <ul class="no-bullet">
               <li>
                 <h5>Raw data</h5>
-                <p>Raw read data should be submitted in fastq.gz format. Prepare one file per cell (or 2 if you have used paired-end sequencing), following the <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html">general recommendations from the European Nucleotide Archive (ENA)</a>. An exception are droplet-based technologies like Drop-seq and 10x; for those protocols please follow the <a href="#Droplet">guide below</a>.</p>
+                <p>Raw read data should be submitted in <em>fastq.gz</em> format. Prepare one file per cell (or 2 if you have used paired-end sequencing), following the <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html">general recommendations from the European Nucleotide Archive (ENA)</a>. An exception are droplet-based technologies like Drop-seq and 10x; for those protocols please follow the <a href="#Droplet">guide below</a>.</p>
               <hr />
               </li>
               <li>
@@ -447,13 +457,22 @@
           <div class="row">
           <div class="columns medium-11 medium-push-1">
             <ul class="no-bullet">
-              <li><p>For <strong>10x technology</strong>, please provide fastq.gz files as generated by CellRanger software from bcl files (https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq). These are usually 3-4 fastq files per library containing the cDNA read and several barcode reads in known positions.</p>
-                <p>We can currently validate files that follow the 10x file naming conventions.<br>
-                  <strong>10x version 1</strong><br>
-                  "R1", "R2", "R3", "I1" or<br>
-                          "RA", "I1", "I2"<br>
-                  <strong>10x version 2</strong><br>
-                   "R1", "R2", "I1"</p>
+              <li><p>For <strong>10x technology</strong>, please provide <em>fastq.gz</em> files as generated by CellRanger software from bcl files (https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq). These are usually 3-4 <em>fastq.gz</em> files per library containing the cDNA read and several barcode reads in known positions.</p>
+                <p>We can currently validate files that follow the 10x file naming conventions:</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>10x version 1</th>
+                      <th>10x version 2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>R1 + R2 + R3 + I1 or RA + I1 + I2</td>
+                      <td>R1 + R2 + I1</td>
+                    </tr>
+                  </tbody>
+                </table>
                    <hr />
               </li>
               <li><p><strong>Processed data</strong>: Since there is no information about the individual cells at the sample annotation or file level, it makes sense to include processed data, e.g. a read count matrix, to describe the analysis results like the "inferred cell types" (see <a href="#SampleInfo">above</a>).
