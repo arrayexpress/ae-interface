@@ -19,10 +19,9 @@
           </ol>
           <br>
 
-          <p>Start your single cell submission using the sequencing template in <a href="/fg/annotare/">Annotare</a>. Follow the guides below for information what metadata and data format to include. Larger experiments (with more than 1000 raw data files in one experiment) will be started in Annotare and completed manually via the spreadsheets created by Annotare.</p>
-
-          <h3 id="SampleInfo">Sample information</h3>
+          <p>Start your single-cell submission using the sequencing template in <a href="/fg/annotare/">Annotare</a>. Follow the guides below for information about data formats and what metadata to include. Note that larger experiments with more than 1000 raw data files in one experiment are started in Annotare but will be completed manually with the help of a curator.</p>
           <br>
+          <h3 id="SampleInfo">Sample information</h3>
           <h4>Required sample attributes</h4>
           <div class="row">
             <div class="columns medium-11 medium-push-1">
@@ -32,17 +31,17 @@
                 <tr>
                   <th>Human <i class="icon icon-species" data-icon="H"></i></th>
                   <th>Vertebrates <i class="icon icon-species" data-icon="M"></i></th>
-                  <th >Plants <i class="icon icon-species" data-icon="P"></i></th>
-                  <th >Cell lines <i class="icon icon-species" data-icon="Y"></i></th>
-                  <th >Comment</th>
+                  <th>Plants <i class="icon icon-species" data-icon="P"></i></th>
+                  <th>Cell lines <i class="icon icon-species" data-icon="Y"></i></th>
+                  <th>Comment</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Organism</td>
-                  <td>Organism</td>
-                  <td>Organism</td>
-                  <td>Organism</td>
+                  <td>organism</td>
+                  <td>organism</td>
+                  <td>organism</td>
+                  <td>organism</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -133,7 +132,7 @@
 
               <li>
                 <h5>Experimental variable</h5>
-                <p> If the purpose of your experiment is comparing the heterogeneity within one cell population, you might not have any other experimental variables. In this case, you can use the term <strong>"single cell identifier"</strong> as experimental variable and enter the cell IDs as values. <a href="/arrayexpress/experiments/E-MTAB-6142/" class="readmore" target="_blank">Example: E-MTAB-6142</a>
+                <p> If the purpose of your experiment is comparing the heterogeneity within one cell population, you might not have any other experimental variables. In this case, you can use the term <strong>"single cell identifier"</strong> as experimental variable and enter the cell IDs as values. <a href="/arrayexpress/experiments/E-MTAB-6142/samples/" class="readmore" target="_blank">Example: E-MTAB-6142</a>
                 </p>
                 <hr />
               </li>
@@ -164,15 +163,15 @@
 
           <div class="row">
             <div class="columns medium-11 medium-push-1">
-              <p>Examples of additional single cell sample attributes</p>
+              <p>Examples of additional single-cell sample attributes</p>
               <table>
                 <thead>
                   <tr>
-                    <th width="150">Example</th>
-                    <th width="200">single cell identifier (experimental variable)</th>
-                    <th width="150">inferred cell type</th>
-                    <th width="150">single cell well quality</th>
-                    <th width="150">post-analysis single cell quality</th>
+                    <th>Example</th>
+                    <th>single cell identifier (experimental variable)</th>
+                    <th>inferred cell type</th>
+                    <th>single cell well quality</th>
+                    <th>post-analysis single cell quality</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -229,7 +228,7 @@
             <ul class="no-bullet">
               <li>
                 <h5>Method of cell singularisation</h5>
-                <p> Please include a description of how the cells were treated and separated into single cells, e.g. FACS or microfluidics (Fluidigm)</p><hr />
+                <p> Please include a description of how the cells were treated and separated into single-cells, e.g. FACS or microfluidics (Fluidigm).</p><hr />
               </li>
             </ul>
           </div>
@@ -241,8 +240,8 @@
           <div class="columns medium-11 medium-push-1">
             <ul class="no-bullet">
               <li>
-                <h5>Single cell library construction</h5>
-                <p>Please mention the type of single cell library method that was used (e.g. Smart-seq2, Drop-seq) and give any relevant literature references.</p><hr />
+                <h5>Single-cell library construction</h5>
+                <p>Please mention the type of single-cell library method that was used (e.g. Smart-seq2, 10x, Drop-seq) and give any relevant literature references.</p><hr />
               </li>
 
               <li>
@@ -260,7 +259,7 @@
             <ul class="no-bullet">
               <li>
                 <h5>Technical replicates</h5>
-                <p>Please include details about technical replicates, e.g. if the same libraries were sequenced twice. </p><hr />
+                <p>Please include details about technical replicates, e.g. if the same libraries were sequenced multiple times or across several lanes. </p><hr />
               </li>
             </ul>
           </div>
@@ -277,7 +276,7 @@
               <hr />
               <li>
                 <h5>Custom spike-ins</h5>
-                <p>If you have used a non-commercial spike-in set, describe this in the library construction protocol. Additionally, upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a fasta file containing the nucleotide sequences.<a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip" class="readmore" target="_blank">Example: E-MTAB-3624.additional.1.zip</a>
+                <p>If you have used a non-commercial spike-in set, describe this in the library construction protocol. Additionally, upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a <em>fasta</em> file containing the nucleotide sequences. <a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip" class="readmore">Example: E-MTAB-3624.additional.1.zip</a>
                 </p>
               </li>
               <hr />
@@ -322,11 +321,11 @@
           <div class="columns medium-11 medium-push-1">
             <ul class="no-bullet">
               <li>
-                <p>If your single cell protocol uses unique molecular identifiers (UMIs), all relevant information about the UMI barcodes should be included to enable re-analysis of the data. We suggest to include the following:</p>
+                <p>If your single-cell protocol uses unique molecular identifiers (UMIs), all relevant information about the UMI barcodes should be included to enable re-analysis of the data. We suggest to include the following:</p>
                 <ul>
                   <li><strong>UMI barcode read</strong> (the file that contains the UMI). Values: read1/read2/index1/index2</li>
-                  <li><strong>UMI barcode offset</strong> (start position of UMI barcode in the sequence). Values: number (0 for start of read)</li>
-                  <li><strong>UMI barcode size</strong> (length of UMI barcode in bp). Values: number</li>
+                  <li><strong>UMI barcode offset</strong> (start position of UMI barcode in the sequence). Values: (number, 0 for start of read)</li>
+                  <li><strong>UMI barcode size</strong> (length of UMI barcode in bp). Values: (number)</li>
                 </ul>
                 <hr />
               </li>
@@ -340,7 +339,7 @@
             <ul class="no-bullet">
               <li>
                 <h5>Raw data</h5>
-                <p>Raw read data should be submitted in <em>fastq.gz</em> format. Prepare one file per cell (or 2 if you have used paired-end sequencing), following the <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html">general recommendations from the European Nucleotide Archive (ENA)</a>. An exception are droplet-based technologies like Drop-seq and 10x; for those protocols please follow the <a href="#Droplet">guide below</a>.</p>
+                <p>Raw read data should be submitted in <em>fastq.gz</em> format. Prepare one file per cell (or 2 if you have used paired-end sequencing), following the <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html">general recommendations from the European Nucleotide Archive (ENA)</a>. An exception are droplet-based technologies like 10x and Drop-seq; for those protocols please follow the <a href="#Droplet">guide below</a>.</p>
               <hr />
               </li>
               <li>
@@ -456,7 +455,7 @@
           <div class="row">
           <div class="columns medium-11 medium-push-1">
             <ul class="no-bullet">
-              <li><p>For <strong>10x technology</strong>, please provide <em>fastq.gz</em> files as generated by CellRanger software from bcl files (https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq). These are usually 3-4 <em>fastq.gz</em> files per library containing the cDNA read and several barcode reads in known positions.</p>
+              <li><p>For <strong>10x technology</strong>, please provide <em>fastq.gz</em> files as <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq">generated by CellRanger software from bcl files</a>. These are usually 3-4 <em>fastq.gz</em> files per library containing the cDNA read and several barcode reads in known positions.</p>
                 <p>We can currently validate files that follow the 10x file naming conventions:</p>
                 <table>
                   <thead>
@@ -477,7 +476,7 @@
               <li><p><strong>Processed data</strong>: Since there is no information about the individual cells at the sample annotation or file level, it makes sense to include processed data, e.g. a read count matrix, to describe the analysis results like the "inferred cell types" (see <a href="#SampleInfo">above</a>).
                 </p> <hr />
               </li>
-              <li><p><strong>Additional files</strong>: It is encouraged to upload any additional files that facilitate data analysis, e.g. text files containing lists of known barcodes in the library. These files will be linked to the experiment and don't need to be associated with any specific sample in the submission. Please leave a description of such files in an appropriate protocol, e.g. the normalisation data transformation protocol.
+              <li><p><strong>Additional files</strong>: It is encouraged to upload any additional files that facilitate data analysis, e.g. text files containing lists of known barcodes in the library. These files will be linked to the experiment and don't need to be associated with any specific sample in the submission. Please leave a description of such files in an appropriate protocol, e.g. the normalisation data transformation protocol. <a href="https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-6153/E-MTAB-6153.additional.1.zip/E-MTAB-6153_sample_barcodes.txt" class="readmore" target="_blank">Example: E-MTAB-6153_sample_barcodes.txt</a>
                 </p><hr />
               </li>
             </ul>
@@ -490,7 +489,7 @@
             <ul class="no-bullet">
               <li><p>Use experiment type "RNA-seq of coding RNA from single cells" for single-cell RNA-sequencing experiments.</p><hr /></li>
               <li><p>Make sure to check the library strand information of your library protocol or kit and enter the relevant strand (see <a href="/fg/annotare/help/seq_lib_spec.html">guide to sequencing library information</a>).</p><hr /></li>
-              <li><p>If an attribute or parameter in a protocol is different for different files, please include this information at the level of sample annotation. Alternatively, create multiple protocols of the same type and assign them to individual samples (e.g. if you have included files from different sequencer models).</p><hr /></li>
+              <li><p>If an attribute or parameter in a protocol is different for different files, please include this information at the level of sample annotation. Alternatively, create multiple protocols of the same type and assign them to individual samples (e.g. if you have included files from different sequencer models, create two sequencing protocols).</p><hr /></li>
             </ul>
           </div>
           </div>
