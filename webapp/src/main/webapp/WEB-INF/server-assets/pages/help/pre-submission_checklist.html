@@ -27,7 +27,7 @@
 
           <ul>
             <li><a href="javascript:ReverseDisplay('twocol')">Two-colour microarray experiment</a></li>
-            <li><a href="javascript:ReverseDisplay('single')">Single-cell sequencing experiment</a></li>
+            <li><a href="single-cell_submission_guide.html">Single-cell sequencing experiment</a></li>
             <li><a href="javascript:ReverseDisplay('moresamp')">More than 1000 samples</a></li>
             <li><a href="javascript:ReverseDisplay('moretech')">More than one technology per experiment</a></li>
             <li><a href="javascript:ReverseDisplay('humid')">Sequencing of potentially identifiable human material</a></li>
@@ -43,29 +43,12 @@
           <div class="ae-help_mainboxleft-hide" id="twocol">
             <h3>Two-colour microarray experiment (including Illumina methylation arrays)</h3>
 
-            <p>At the moment Annotare only supports one type of two-colour workflow (see graphic <a href="/fg/annotare/help/two_color_ma.html">here</a>), where two samples are connected with one common raw data file, which includes both channels. If you select two-colour for your Annotare submission, it will expect that you provide one file for the two samples that were hybridised together. Some recent two-colour microarray technologies generate two separate raw data files (usually one for each channel), which will cause Annotare validation to fail (if you connect a single file per sample.)<br>
+            <p>At the moment Annotare only supports one type of two-colour workflow (see graphic <a href="/fg/annotare/help/two_color_ma.html">here</a>), where two samples are connected with one common raw data file, which includes both channels. If you select two-colour for your Annotare submission, it will expect that you provide one file for the two samples that were hybridised together. Some recent two-colour microarray technologies generate two separate raw data files (usually one for each channel), which will cause Annotare validation to fail (if you connect a single file per sample).<br>
             If you have <strong>separate files for each channel</strong>, please complete the Annotare form, and connect the files and samples as it makes sense for your experiment. When you only see the error message <i>"[Assign Files] The assignment between files and samples contains errors."</i> after validation, contact a curator, by clicking on <code>Contact Us</code> from within your submission. We will then be able to submit the experiment for you, overriding the validation error.</p>
             <a href="javascript:HideContent('twocol')" class="hide_button">Hide</a>
           </div>
         </div>
 
-        <div class="columns medium-12">
-          <div class="ae-help_mainboxleft-hide" id="single">
-            <h3>Single-cell sequencing experiment</h3>
-
-            <p>Fill in the normal Annotare form for sequencing experiments. Please also include information about <strong>spike-in RNAs</strong> and upload a table (tab-delimited text) with the names and concentrations of the spike-ins, and a <i>fasta</i> file with the nucleotide sequences. Here is an example: <a href="/arrayexpress/files/E-MTAB-3624/E-MTAB-3624.additional.1.zip">E-MTAB-3624.additional.1.zip</a><br>
-            You should include a sample attribute "<strong>single cell identifier</strong>" to uniquely name your individual cells and use it as the experimental variable (if there are no other experimental conditions).
-            If your single-cell experiment included visual inspection of the cells before lysis, you can include this information in the sample attributes as "<strong>single cell well quality</strong>". The values for this attribute should be "OK" or "not OK" (i.e. the well should be discarded from data analysis). If you have more detailed information about the "bad" wells, the following terms should be used:</p>
-            <ul>
-              <li>"debris" (intracellular matrix, proteins)</li>
-              <li>"multiple cells"</li>
-              <li>"dead cell"</li>
-              <li>"no cell"</li>
-            </ul>
-            <p>If you have more than 1000 cells please also see the point below.</p>
-            <a href="javascript:HideContent('single')" class="hide_button">Hide</a>
-          </div>
-        </div>
 
         <div class="columns medium-12">
           <div class="ae-help_mainboxleft-hide" id="moresamp">
@@ -80,7 +63,8 @@
           <div class="ae-help_mainboxleft-hide" id="moretech">
             <h3>More than one technology per experiment (e.g. different arrays or microarray plus sequencing)</h3>
 
-            <p>Annotare will ask you for the technology and name of the array, and applies it to the whole submission. If you have more than one array or used different types of technologies for the same set of samples, we ask you to <strong>create separate submissions</strong> in Annotare. Please make sure that the submissions have <strong>distinct titles</strong> (even though they may belong to the same study), in order to avoid mistakes.</p>
+            <p>Annotare will ask you for the technology and name of the array, and applies it to the whole submission. If you have used different types of technologies for the same set of samples, we ask you to <strong>create separate submissions</strong> in Annotare. Please make sure that the submissions have <strong>distinct titles</strong> (even though they may belong to the same study), in order to avoid mistakes.<br>
+            If you have samples from more than one array design in your experiment, it is possible to submit only one experiment. If you wish to to this, please indicate the array type in the sample annotation by creating a custom attribute called "array design" and fill in the array design reference (e.g. A-AFFY-44) for each sample individually.</p>
             <a href="javascript:HideContent('moretech')" class="hide_button">Hide</a>
           </div>
         </div>
@@ -114,6 +98,7 @@
                     <ul>
                         <li class="active"><a href="pre-submission_checklist.html">Pre-submission checklist</a></li>
                         <li><a href="UHTS_submissions.html">Sequencing submissions</a></li>
+                        <li><a href="single-cell_submission_guide.html">Single-cell submissions</a></li>
                         <li><a href="adf_submissions_overview.html">Array design submissions</a></li>
                         <li><a href="ftp_upload.html">FTP upload instructions</a></li>
                         <li><a href="modify_data_loaded_in_AE.html">Modify data in ArrayExpress</a></li>
