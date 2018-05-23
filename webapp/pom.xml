@@ -13,7 +13,7 @@
         <version>2.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <url>http://www.ebi.ac.uk/arrayexpress</url>
+    <url>https://www.ebi.ac.uk/arrayexpress</url>
 
     <scm>
         <url>https://github.com/arrayexpress/ae-interface</url>
@@ -31,7 +31,6 @@
         <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
         <interface.application.pref.reports.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.reports.recipients>
-        <interface.application.pref.reports.hidden-recipients>awais&#64;ebi.ac.uk</interface.application.pref.reports.hidden-recipients>
         <interface.application.pref.feedback.recipients>arrayexpress&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
         <interface.application.pref.remind.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
 
@@ -69,7 +68,7 @@
         <profile>
             <id>export.aepub1</id>
             <properties>
-                <interface.application.link.atlas.base.url>http://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.base.url>https://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.pref.experiments.ae1.source.location/>
@@ -87,7 +86,7 @@
         <profile>
             <id>export.aepub2_aepub3</id>
             <properties>
-                <interface.application.link.atlas.base.url>http://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.base.url>https://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.pref.experiments.ae1.source.location/>
@@ -105,7 +104,7 @@
         <profile>
             <id>test.ae2_perftest</id>
             <properties>
-                <interface.application.link.atlas.base.url>http://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.base.url>https://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.pref.experiments.ae1.source.location/>
@@ -125,7 +124,7 @@
         <profile>
             <id>test.ae2_curator</id>
             <properties>
-                <interface.application.link.atlas.base.url>http://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.base.url>https://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.pref.experiments.ae1.source.location/>
@@ -145,7 +144,7 @@
         <profile>
             <id>test.ae2_production</id>
             <properties>
-                <interface.application.link.atlas.base.url>http://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
+                <interface.application.link.atlas.base.url>https://www.ebi.ac.uk/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
 
                 <interface.application.pref.experiments.ae1.connections/>

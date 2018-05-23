@@ -245,7 +245,7 @@
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
             $('#ae-login-close').click();
-            $submit.attr("disabled", "true");
+            $submit.attr("disabled", !$consent.is(':checked'));
             $window.show();
             $message.focus();
         }
@@ -262,6 +262,7 @@
 
         $form.submit(function() {
             $submit.attr("disabled", "true");
+            $consent.attr("disabled", "true");
             $.post( contextPath + "/feedback"
                 , {m : $message.val(), e : $email.val(), p : $page.val(), r : $ref.val()}
             ).always(function() {
