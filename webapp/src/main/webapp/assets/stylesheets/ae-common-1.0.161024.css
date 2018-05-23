@@ -426,6 +426,12 @@ header .masthead {
     height: 1.5em;
 }
 
+#ae-agreement {
+    float: right;
+    display: inline-block;
+    margin-top: 4pt;
+}
+
 #ae-feedback fieldset textarea {
     width: 100%;
     margin: 0 0 5px 0;

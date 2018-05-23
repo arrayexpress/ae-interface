@@ -334,12 +334,19 @@
                             <textarea id="ae-feedback-message" name="m"/>
                         </fieldset>
                         <fieldset class="callout">
-                            <label for="ae-email-field">Optionally please enter your email address if you wish to get a response.<br/>We will never share this address with anyone else.</label>
+                            <label for="ae-email-field">Optionally please enter your email address if you wish to get a
+                                response. </label>
                             <input id="ae-email-field" name="e" maxlength="50"/>
                         </fieldset>
+                            By sending us this feedback, you are agreeing to limited processing of your personal
+                            data <br/> as outlined in our
+                            <a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/arrayexpress-support">
+                                Privacy Notice</a> and
+                            <a target="_blank" href="https://www.ebi.ac.uk/about/terms-of-use">Terms of Use</a>.<br/>
+                        <input class="submit button" style="float:right" type="submit" disabled="true" value="Send"/>
+                        <span id="ae-agreement"><input id="ae-email-consent" name="c" type="checkbox"/><label for="ae-email-consent">I agree</label></span>
                         <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
                         <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
-                        <input class="submit button" type="submit" value="Send"/>
                     </form>
                 </section>
                 <div id="content" role="main" class="columns medium-12 clearfix row">

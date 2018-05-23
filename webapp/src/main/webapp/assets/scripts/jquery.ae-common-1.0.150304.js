@@ -235,6 +235,7 @@
         var $email = $form.find("input[name='e']").first();
         var $page = $form.find("input[name='p']").first();
         var $ref = $form.find("input[name='r']").first();
+        var $consent = $form.find("input[name='c']").first();
         var $submit = $form.find("input[type='submit']").first();
         var $open = $(options.open);
         var $close = $(options.close);
@@ -244,7 +245,7 @@
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
             $('#ae-login-close').click();
-            $submit.removeAttr("disabled");
+            $submit.attr("disabled", "true");
             $window.show();
             $message.focus();
         }
@@ -277,6 +278,10 @@
         $close.click(function (e) {
             e.preventDefault();
             doCloseWindow();
+        });
+
+        $consent.change(function (e) {
+            $submit.attr("disabled", !$consent.is(':checked'));
         });
 
         $form.find("input,textarea").keydown(function (e) {
