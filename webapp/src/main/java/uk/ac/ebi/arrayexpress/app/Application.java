@@ -160,7 +160,7 @@ public abstract class Application
             StrSubstitutor sub = new StrSubstitutor(params);
 
             emailer.send(recipients
-                    , getPreferences().getStringArray("app.reports.hidden-recipients")
+                    , null
                     , subject
                     , sub.replace(message)
                     , originator
