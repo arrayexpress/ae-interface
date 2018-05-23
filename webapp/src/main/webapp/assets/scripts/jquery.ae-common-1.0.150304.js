@@ -246,6 +246,7 @@
             $window.bind("click", onWindowClick);
             $('#ae-login-close').click();
             $submit.attr("disabled", !$consent.is(':checked'));
+            $consent.removeAttr("disabled");
             $window.show();
             $message.focus();
         }
