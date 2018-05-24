@@ -83,7 +83,7 @@
             }
 
             if ($.cookie(privacyCookie)!='true' && !$consent.is(':checked')) {
-                showStatus("You haven't agreed with the privacy policy");
+                showStatus("Please agree to the our new privacy notice");
                 $consent.focus();
                 return false;
             }
