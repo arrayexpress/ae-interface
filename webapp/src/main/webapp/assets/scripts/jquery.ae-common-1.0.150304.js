@@ -82,7 +82,7 @@
                 return false;
             }
 
-            if (!$consent.is(':checked')) {
+            if ($.cookie(privacyCookie)!='true' && !$consent.is(':checked')) {
                 showStatus("You haven't agreed with the privacy policy");
                 $consent.focus();
                 return false;
