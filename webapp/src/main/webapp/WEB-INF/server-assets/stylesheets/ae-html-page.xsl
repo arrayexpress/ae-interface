@@ -297,18 +297,29 @@
                     <h3>ArrayExpress submitter/reviewer login<a id="ae-login-close" href="#" class="icon icon-functional" data-icon="x"/></h3>
                     <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
                         <fieldset class="callout" id="ae-user-fieldset">
-                            <label for="ae-user-field">User name</label>
-                            <input id="ae-user-field" type="text" name="u" maxlength="50"/>
+                            <label for="ae-user-field">User name <span style="color:#aaa;">(case-sensitive)</span></label>
+                            <input id="ae-user-field" type="text" name="u" maxlength="50" />
                         </fieldset>
                         <fieldset class="callout" id="ae-password-fieldset">
                             <label for="ae-pass-field">Password</label>
                             <input id="ae-pass-field" type="password" name="p" maxlength="50"/>
                         </fieldset>
-                        <span id="ae-login-remember-option">
+                        <div id="ae-login-remember-option"  style="float:right;padding-bottom: 10pt;">
                             <input id="ae-login-remember" name="r" type="checkbox"/>
                             <label for="ae-login-remember">Remember me</label>
-                        </span>
-                        <input class="submit button" type="submit" value="Login"/>
+                        </div>
+                        <div id="ae-privacy-notice" class="clearboth">
+                            <p>This service requires limited processing of your personal data.
+                                By using the service you <br/> are agreeing to this as
+                                outlined in our
+                                <a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/arrayexpress-support">
+                                    Privacy Notice</a> and
+                                    <a target="_blank" href="https://www.ebi.ac.uk/about/terms-of-use">Terms of Use</a>.
+                                <span id="ae-agreement"><input id="ae-email-consent" name="c" type="checkbox"/>
+                                    <label for="ae-email-consent">I agree</label></span>
+                            </p>
+                        </div>
+                        <input class="submit button clearboth" type="submit" value="Login" />
                         <div class="ae-login-status" style="display:none"/>
                         <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
                     </form>
@@ -338,13 +349,7 @@
                                 response. </label>
                             <input id="ae-email-field" name="e" maxlength="50"/>
                         </fieldset>
-                            By sending us this feedback, you are agreeing to limited processing of your personal
-                            data <br/> as outlined in our
-                            <a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/arrayexpress-support">
-                                Privacy Notice</a> and
-                            <a target="_blank" href="https://www.ebi.ac.uk/about/terms-of-use">Terms of Use</a>.<br/>
-                        <input class="submit button" style="float:right" type="submit" disabled="true" value="Send"/>
-                        <span id="ae-agreement"><input id="ae-email-consent" name="c" type="checkbox"/><label for="ae-email-consent">I agree</label></span>
+                        <input class="submit button" style="float:right" type="submit" value="Send"/>
                         <input type="hidden" name="p" value="{$host}{$context-path}{$relative-uri}{if ($query-string) then fn:concat('?', $query-string) else ''}"/>
                         <input type="hidden" name="r" value="{$host}{$context-path}{$relative-referer}"/>
                     </form>

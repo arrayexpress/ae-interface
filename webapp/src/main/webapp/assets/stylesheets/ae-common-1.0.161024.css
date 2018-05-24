@@ -429,7 +429,9 @@ header .masthead {
 #ae-agreement {
     float: right;
     display: inline-block;
-    margin-top: 4pt;
+}
+.clearboth {
+    clear: both;
 }
 
 #ae-feedback fieldset textarea {

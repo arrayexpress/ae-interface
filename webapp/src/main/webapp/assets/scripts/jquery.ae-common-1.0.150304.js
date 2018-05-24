@@ -66,6 +66,8 @@
         var $forgot_form = $window.find("form").last();
         var $email = $forgot_form.find("input[name='e']").first();
         var $accession = $forgot_form.find("input[name='a']").first();
+        var $consent = $login_form.find("input[name='c']").first();
+        var privacyCookie = 'ArrayExpress-v1-data-protection-accepted';
 
         function verifyLoginValues() {
             if ("" == $user.val()) {
@@ -80,10 +82,17 @@
                 return false;
             }
 
+            if (!$consent.is(':checked')) {
+                showStatus("You haven't agreed with the privacy policy");
+                $consent.focus();
+                return false;
+            }
+
+
             hideStatus();
+            $.cookie(privacyCookie,true, {expires:90});
             return true;
         }
-
         function verifyForgotValues() {
 
             if ("" == $email.val()) {
@@ -149,7 +158,7 @@
         }
 
         function showStatus(text) {
-            $status_text.text(text);
+            $status_text.html(text);
             $status.show();
         }
 
@@ -208,12 +217,15 @@
                 $user.val(username);
             }
             doOpenWindow();
-            showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1"));
+            showStatus(message.replace(/^"?(.+[^"])"?$/g, "$1")+'. For ongoing submissions, please use <a href="https://www.ebi.ac.uk/fg/annotare/">Annotare</a>');
             if (undefined != username) {
                 $pass.focus();
             } else {
                 $user.focus();
             }
+        }
+        if ($.cookie(privacyCookie)=='true') {
+            $('#ae-privacy-notice').hide();
         }
     };
 
@@ -235,7 +247,6 @@
         var $email = $form.find("input[name='e']").first();
         var $page = $form.find("input[name='p']").first();
         var $ref = $form.find("input[name='r']").first();
-        var $consent = $form.find("input[name='c']").first();
         var $submit = $form.find("input[type='submit']").first();
         var $open = $(options.open);
         var $close = $(options.close);
@@ -245,8 +256,7 @@
             $body.bind("click", doCloseWindow);
             $window.bind("click", onWindowClick);
             $('#ae-login-close').click();
-            $submit.attr("disabled", !$consent.is(':checked'));
-            $consent.removeAttr("disabled");
+            $submit.removeAttr("disabled");
             $window.show();
             $message.focus();
         }
@@ -263,7 +273,6 @@
 
         $form.submit(function() {
             $submit.attr("disabled", "true");
-            $consent.attr("disabled", "true");
             $.post( contextPath + "/feedback"
                 , {m : $message.val(), e : $email.val(), p : $page.val(), r : $ref.val()}
             ).always(function() {
@@ -280,10 +289,6 @@
         $close.click(function (e) {
             e.preventDefault();
             doCloseWindow();
-        });
-
-        $consent.change(function (e) {
-            $submit.attr("disabled", !$consent.is(':checked'));
         });
 
         $form.find("input,textarea").keydown(function (e) {
