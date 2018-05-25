@@ -163,7 +163,7 @@
                 <interface.application.pref.feedback.recipients>arrayexpress-testdesk&#64;ebi.ac.uk</interface.application.pref.feedback.recipients>
                 <interface.application.pref.remind.recipients>ae-mgmt&#64;ebi.ac.uk</interface.application.pref.remind.recipients>
 
-                <interface.application.webxml.security.transport.guarantee>CONFIDENTIAL</interface.application.webxml.security.transport.guarantee>
+                <interface.application.webxml.security.transport.guarantee>NONE</interface.application.webxml.security.transport.guarantee>
                 <interface.application.log.appender.ref>ROLLINGFILE-LONDON</interface.application.log.appender.ref>
                 <interface.application.link.atlas.base.url>/gxa/</interface.application.link.atlas.base.url>
                 <interface.application.link.atlas.exp_query.url>${interface.application.link.atlas.base.url}experiments/</interface.application.link.atlas.exp_query.url>
