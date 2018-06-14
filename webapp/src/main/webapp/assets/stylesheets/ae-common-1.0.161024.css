@@ -458,7 +458,7 @@ header .masthead {
 
 #ae-login-forgot {
     clear: both;
-    text-align: center
+    float:right;
 }
 
 #ae-login .ae-login-status {
@@ -1143,4 +1143,8 @@ table tbody tr:nth-child(even) {
 
 div#elixir-banner-info {
     color: white;
+}
+
+#ae-privacy-notice {
+    float:left;
 }

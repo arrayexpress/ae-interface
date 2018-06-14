@@ -66,8 +66,6 @@
         var $forgot_form = $window.find("form").last();
         var $email = $forgot_form.find("input[name='e']").first();
         var $accession = $forgot_form.find("input[name='a']").first();
-        var $consent = $login_form.find("input[name='c']").first();
-        var privacyCookie = 'ArrayExpress-v1-data-protection-accepted';
 
         function verifyLoginValues() {
             if ("" == $user.val()) {
@@ -82,15 +80,7 @@
                 return false;
             }
 
-            if ($.cookie(privacyCookie)!='true' && !$consent.is(':checked')) {
-                showStatus("Please agree to the our new privacy notice");
-                $consent.focus();
-                return false;
-            }
-
-
             hideStatus();
-            $.cookie(privacyCookie,true, {expires:90});
             return true;
         }
         function verifyForgotValues() {
@@ -223,9 +213,6 @@
             } else {
                 $user.focus();
             }
-        }
-        if ($.cookie(privacyCookie)=='true') {
-            $('#ae-privacy-notice').hide();
         }
     };
 

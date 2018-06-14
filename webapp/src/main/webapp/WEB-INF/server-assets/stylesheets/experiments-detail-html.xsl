@@ -102,6 +102,12 @@
 
     <xsl:template name="block-experiment">
         <xsl:param name="pExperiment"/>
+        <xsl:if test="fn:starts-with($pExperiment/accession,'E-GEOD-')">
+            <p class="callout warning">This may not be the latest version of this experiment. We have stopped the
+                regular imports of Gene Expression Omnibus (GEO) data into ArrayExpress. We will keep using data
+                from GEO to build our added value database Expression Atlas, and the reprocessed and additionally
+                annotated data for selected datasets will be available from there.</p>
+        </xsl:if>
         <h4>
             <xsl:if test="not($pExperiment/user/@id = '1')">
                 <xsl:attribute name="class" select="'icon icon-functional'"/>

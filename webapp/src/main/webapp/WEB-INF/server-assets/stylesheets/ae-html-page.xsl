@@ -308,20 +308,11 @@
                             <input id="ae-login-remember" name="r" type="checkbox"/>
                             <label for="ae-login-remember">Remember me</label>
                         </div>
-                        <div id="ae-privacy-notice" class="clearboth">
-                            <p>This service requires limited processing of your personal data.
-                                By using the service you <br/> are agreeing to this as
-                                outlined in our
-                                <a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/arrayexpress-support">
-                                    Privacy Notice</a> and
-                                    <a target="_blank" href="https://www.ebi.ac.uk/about/terms-of-use">Terms of Use</a>.
-                                <span id="ae-agreement"><input id="ae-email-consent" name="c" type="checkbox"/>
-                                    <label for="ae-email-consent">I agree</label></span>
-                            </p>
-                        </div>
                         <input class="submit button clearboth" type="submit" value="Login" />
                         <div class="ae-login-status" style="display:none"/>
                         <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
+                        <div id="ae-privacy-notice"><a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/annotare">
+                            Privacy Notice</a></div>
                     </form>
                     <form id="ae-forgot-form" method="post" action="{$secure-host}{$context-path}/auth">
                         <fieldset class="callout">
