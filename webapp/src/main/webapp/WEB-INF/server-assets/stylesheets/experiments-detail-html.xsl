@@ -103,7 +103,7 @@
     <xsl:template name="block-experiment">
         <xsl:param name="pExperiment"/>
         <xsl:if test="fn:starts-with($pExperiment/accession,'E-GEOD-')">
-            <p class="callout warning">Please note we have stopped the regular imports of Gene Expression Omnibus (GEO)
+            <p class="callout warning">Please note that we have stopped the regular imports of Gene Expression Omnibus (GEO)
                 data into ArrayExpress. This may not be the latest version of this experiment.</p>
         </xsl:if>
         <h4>
