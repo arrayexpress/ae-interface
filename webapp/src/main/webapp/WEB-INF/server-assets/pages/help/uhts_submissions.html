@@ -52,20 +52,22 @@
             <p>Apart from the <a href="submissions_overview.html">experiment description and sample annotation</a>, sequencing experiments require further details describing the sequencing    library (as they are needed for ENA submission). Please see <a href="/fg/annotare/help/seq_lib_spec.html">this guide</a> for more information about the library specifications.</p>
 
             <h4 id="raw_data_files">Raw data file requirements</h4>
-            <p>Please provide individual <strong>unprocessed</strong> raw data files for each sample, in <a href="#FastqSpec">FASTQ</a> or <a href="#BamSpec">BAM</a> format, and prepare your files according to <a href="/ena/about/read-file-formats">ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
+            <p>Please provide individual <strong>unprocessed</strong> raw data files for each sample, in <a href="#FastqSpec">FASTQ</a> or <a href="#BamSpec">BAM</a> format, and prepare your files according to <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html">ENA specifications</a>. This is a developing field so please do check the specifications every time you submit a new experiment. Data files which do not satisfy ENA's requirements will not be accepted.</p>
+
             <p id="FastqSpec"><strong>FASTQ specifications</strong></p>
             <ul>
               <li>Each file must be <strong>compressed</strong> by gzip or bzip2.</li>
               <li>Submit <strong>individual files</strong> per sample and lane (if applicable). Do not bundle multiple FASTQ files into one archive, or split a file into smaller sized chunks.</li>
               <li>Multiplexed libraries should be <strong>demultiplexed</strong> into separate files.</li>
               <li><strong>No technical adapter sequences</strong> are allowed. But do <i>not</i> remove entire sequence reads or trim by quality score.</li>
-              <li>For <strong>paired-end</strong> experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files must be named with the same root and end with extensions such as <strong>_1.fq.gz</strong> and <strong>_2.fq.gz</strong>. Examples of naming styles supported by the ENA:
+              <li>For <strong>paired-end</strong> experiments, if the mate pairs are in two separate files (one file for the forward strand, one for the reverse strand), the two files <i>must</i> be named with the same root and end with extensions such as <strong>_1.fq.gz</strong> and <strong>_2.fq.gz</strong>. Examples of naming styles supported by the ENA:
                       <ul style="list-style-type:none">
+                        <li>sampleA<strong>_R1</strong>.fq.gz / sampleA<strong>_R2</strong>.fq.gz</li>
                         <li>sampleA<strong>_1</strong>.fq.gz / sampleA<strong>_2</strong>.fq.gz</li>
                         <li>sampleA<strong>_F</strong>.fq.gz / sampleA<strong>_R</strong>.fq.gz</li>
                       </ul>
                     </li>
-              <li>Check <a href="/ena/about/read-file-formats#fastq_format">ENA specifications</a> for additional information about the accepted FASTQ format.</li>
+              <li>Check <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html#fastq-format">ENA specifications</a> for additional information about the accepted FASTQ format.</li>
             </ul>
 
             <p id="BamSpec"><strong>BAM specifications</strong></p>
@@ -74,7 +76,7 @@
               <li>Each file must contain <strong>all reads</strong> from the sequencing machine and all reads must be <strong>unaligned</strong>. The reason for this is that we expect the BAM file to be used to regenerate <i>all</i> the sequencing reads.</li>
               <li>The phred quality score for each base should be included in the file.</li>
               <li>If you have data from paired-end sequencing libraries, for each sequencing run, include data for both mate reads in one single BAM file.</li>
-              <li>Check <a href="/ena/about/read-file-formats#bam_format">ENA specifications</a> for additional information about the accepted BAM format.</li>
+              <li>Check <a href="http://ena-docs.readthedocs.io/en/latest/format_01.html#bam-format">ENA specifications</a> for additional information about the accepted BAM format.</li>
             </ul>
 
             <p>To ensure your BAM files contain unaligned reads, you can run the following commands:</p>
