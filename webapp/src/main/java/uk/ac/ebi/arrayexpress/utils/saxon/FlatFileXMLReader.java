@@ -285,10 +285,13 @@ public class FlatFileXMLReader extends AbstractCustomXMLReader
             int result;
             switch (sortColDataType) {
                 case INTEGER:
-                    long int1 = Long.valueOf(o1[sortBy]);
-                    long int2 = Long.valueOf(o2[sortBy]);
-
-                    result = Long.compare(int1, int2);
+                    try {
+                        long int1 = Long.valueOf(o1[sortBy]);
+                        long int2 = Long.valueOf(o2[sortBy]);
+                        result = Long.compare(int1, int2);
+                    } catch (NumberFormatException e) {
+                        result = o1[sortBy].compareToIgnoreCase(o2[sortBy]);
+                    }
                     break;
                 case DECIMAL:
                     double dec1 = Double.valueOf(o1[sortBy]);
