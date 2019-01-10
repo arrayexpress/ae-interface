@@ -161,7 +161,7 @@
             <location>${sys:java.io.tmpdir}/efo.owl</location>
             <source>/WEB-INF/classes/efo.owl</source>
             <update>
-                <source>https://www.ebi.ac.uk/efo/efo.owl</source>
+                <source>https://github.com/EBISPOT/efo/releases/download/v3.2.0/efo.owl</source>
                 <schedule>${interface.application.pref.efo.update.schedule}</schedule>
             </update>
             <ignoreList>/WEB-INF/classes/efo-ignore.txt</ignoreList>

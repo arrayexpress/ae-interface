@@ -77,7 +77,7 @@ public class EFOClassAnnotationVisitor implements IClassAnnotationVisitor<EFONod
             this.term = annotation.getAnnotationValue().getLiteral();
         } else if (annotation.getAnnotationURI().toString().contains("EFO_URI")) {
             this.efoUri = annotation.getAnnotationValue().getLiteral();
-        } else if (annotation.getAnnotationURI().toString().contains("alternative_term")) {
+        } else if (annotation.getAnnotationURI().toString().contains("hasExactSynonym")) {
             String alternativeTerm = annotation.getAnnotationValue().getLiteral();
             this.alternatives.add(Utils.preprocessAlternativeTermString(alternativeTerm));
         }
