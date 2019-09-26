@@ -576,9 +576,6 @@
                         <xsl:with-param name="pBasePath" select="$pBasePath"/>
                     </xsl:call-template>
                 </xsl:if>
-                <div>
-                    <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to <u>GenomeSpace</u></span><img src="{$pBasePath}/assets/images/gs-logo-title-16.gif" width="120" height="16" title="GenomeSpace" alt="GenomeSpace"/></a>
-                </div>
             </td>
         </tr>
     </xsl:template>
