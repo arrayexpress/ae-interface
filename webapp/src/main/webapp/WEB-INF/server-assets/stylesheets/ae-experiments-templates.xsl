@@ -561,23 +561,24 @@
     <xsl:template name="exp-links-section">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
-
-        <tr>
-            <td class="name"><div>Links</div></td>
-            <td class="value">
-                <xsl:if test="@loadedinatlas">
-                    <div>
-                        <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
-                    </div>
-                </xsl:if>
-                <xsl:if test="secondaryaccession|relatedexperiment">
-                    <xsl:call-template name="exp-secondaryaccession-or-relatedexperiment">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                    </xsl:call-template>
-                </xsl:if>
-            </td>
-        </tr>
+        <xsl:if test="@loadedinatlas|secondaryaccession|relatedexperiment">
+            <tr>
+                <td class="name"><div>Links</div></td>
+                <td class="value">
+                    <xsl:if test="@loadedinatlas">
+                        <div>
+                            <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
+                        </div>
+                    </xsl:if>
+                    <xsl:if test="secondaryaccession|relatedexperiment">
+                        <xsl:call-template name="exp-secondaryaccession-or-relatedexperiment">
+                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                        </xsl:call-template>
+                    </xsl:if>
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="exp-status-section">
