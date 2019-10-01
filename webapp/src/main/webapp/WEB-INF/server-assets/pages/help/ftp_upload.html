@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-<head><title>Send data files to ArrayExpress via FTP &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
+<head><title>Send data files to ArrayExpress via FTP/Aspera &lt; Help &lt; ArrayExpress &lt; EMBL-EBI</title></head>
 <body class="level2">
   <div id="content" role="main" class="columns medium-12 clearfix">
     <section id="ae-help" class="columns medium-9">
 
 
-		<h2>Send data files to ArrayExpress by FTP</h2>
+		<h2>Send data files to ArrayExpress by FTP/Aspera</h2>
 
 		<p>ArrayExpress provides a FTP repository for submitters to upload a large volume of data files associated with their experiment submissions. FTP upload is also useful if you would like to send files to us prior to a submission (e.g. for us to check if they are in a suitable format).</p>
 
@@ -23,16 +23,17 @@
     <br>
 
     <p>
-      <a href="#WindowsFTP">1. Instruction for Windows Explorer users</a><br>
-      <a href="#TerminalFTP">2. Instruction for terminal/command prompt users</a><br>
+      <a href="#WindowsFTP">1. FTP upload instruction for Windows Explorer users</a><br>
+      <a href="#TerminalFTP">2. FTP upload instruction for terminal/command prompt users</a><br>
+      <a href="#Aspera">3. Aspera upload instruction</a><br>
     </p>
 
     <br>
-    <h3 id="WindowsFTP">1. Transferring files with Windows Explorer (drag and drop)</h3>
+    <h3 id="WindowsFTP">1. Transferring files via FTP using Windows Explorer (drag and drop)</h3>
 
     <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
 
-    <p>Open a Windows Explorer window (and <em>not</em> an internet browser window as the latter is not designed for FTP file upload). If you need help how to open an Explorer window, here are instructions for <a href="http://www.wikihow.com/Open-Windows-Explorer">Windows XP/Vista/7</a>, <a href="http://www.7tutorials.com/7-ways-open-file-explorer-windows-81">Windows 8</a> and <a href="http://www.7tutorials.com/9-ways-open-file-explorer-windows-10">Windows 10</a>.</p>
+    <p>Open a Windows Explorer window (and <em>not</em> an internet browser window as the latter is not designed for FTP file upload). If you need help how to open an Explorer window, here are instructions for <a href="https://www.wikihow.com/Open-Windows-Explorer#Windows_7_and_Vista_sub">Windows XP/Vista/7</a>, <a href="http://www.7tutorials.com/7-ways-open-file-explorer-windows-81">Windows 8</a> and <a href="http://www.7tutorials.com/9-ways-open-file-explorer-windows-10">Windows 10</a>.</p>
 
     <p>If you are uploading files for an <strong>Annotare submission</strong>, you will have get the FTP address from your Annotare <code>"Upload and assign data files" > "FTP upload..."</code> window. This FTP address  contains the path to your personal subdirectory. Please manually copy this FTP path from the Annotare dialogue using right-click "Copy link" and paste it into the Windows Explorer address bar. It should look similar to this: <code>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/ibtd1rmo-20r7k3g747sup/</code>. For all other submissions (e.g. array design), enter <code><strong>ftp://aexpress:aexpress1@ftp-private.ebi.ac.uk/</strong></code> in Windows Explorer address bar. The URLs already contain the username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>, so you're logged in automatically after being connected to the FTP server.</p>
     <p>If there are no error messages from Windows, that means connection is successful. (Unfortunately, Windows does not provide notification confirming successful connection to an FTP server.)  When connected, you will see an almost "blank" Windows Explorer window which is similar to this:</p>
@@ -43,7 +44,7 @@
     <p>Note: You will not be able to see any files or directories on the general FTP site, including the files that you have uploaded (it will only work within your personal Annotare submission directory). This is because we don't allow submitters to see each others' data files.</p>
 
     <br>
-    <h3 id="TerminalFTP">2. Transferring files with Mac/Unix/Windows terminal (command prompt)</h3>
+    <h3 id="TerminalFTP">2. Transferring files via FTP using Mac/Unix/Windows terminal (command prompt)</h3>
 
     <p>Make sure you are connected to the internet via a physical connection and <em>not</em> on a wireless connection.</p>
 
@@ -60,6 +61,21 @@
     <p>Note: You will not be able to list the files in the directory if you are using the general FTP site (it will only work within your personal Annotare submission directory). This is because we don't allow submitters to see each others' data files.</p>
 
     <p>If you are using Mac, the file transfer may fail due to incompatible FTP settings of the standard FTP client on Mac (which is embedded in Finder). In this case you should be able to upload your files using an alternative FTP client, e.g. <a href="https://cyberduck.io/">CyberDuck</a>. If you have CyberDuck installed, you will be able to transfer files for your Annotare submission by clicking on the link with the FTP address in Annotare.</p>
+
+    <br>
+    <h3 id="Aspera">3. Transferring files using Aspera command line client</h3>
+
+    <p>Aspera is a commercial file transfer protocol that provides better transfer speeds than FTP over long distances.</p>
+    <ol>
+        <li>Download the Aspera Command Line Client <a href="http://downloads.asperasoft.com/en/downloads/62" target="_blank">here</a> (choose the required platform) and run the instal process.</li>
+        <li>Once the tool has been setup enter the following command to transfer a file:<br>
+            <code><strong>ascp -P 33001 &lt;yourfile.txt&gt; aexpress@fasp.ebi.ac.uk:&lt;your upload directory&gt;&#47;</strong></code></li>
+        <li>When prompted for a password enter <code><strong>aexpress1</strong></code>.</li>
+        <li>(<em>Annotare submissions only</em>) You can find your upload directory from Annotare under <code>"Assign data files"</code> by clicking on <code>"FTP/Aspera upload..."</code>. It should look similar to this:
+            <code>abcd1efg-hijk2lmno3pqr</code>.<br>
+            Proceed to import the uploaded files to your submission, as described <a href="/fg/annotare/help/file_upload.html#ftp">here</a>.</li>
+    </ol>
+
 
 	</section>
 
