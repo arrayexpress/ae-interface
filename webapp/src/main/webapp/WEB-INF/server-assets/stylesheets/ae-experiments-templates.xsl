@@ -561,26 +561,24 @@
     <xsl:template name="exp-links-section">
         <xsl:param name="pQueryId"/>
         <xsl:param name="pBasePath"/>
-
-        <tr>
-            <td class="name"><div>Links</div></td>
-            <td class="value">
-                <xsl:if test="@loadedinatlas">
-                    <div>
-                        <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
-                    </div>
-                </xsl:if>
-                <xsl:if test="secondaryaccession|relatedexperiment">
-                    <xsl:call-template name="exp-secondaryaccession-or-relatedexperiment">
-                        <xsl:with-param name="pQueryId" select="$pQueryId"/>
-                        <xsl:with-param name="pBasePath" select="$pBasePath"/>
-                    </xsl:call-template>
-                </xsl:if>
-                <div>
-                    <a href="{$pBasePath}/experiments/{accession}/genomespace.html"><span>Send <xsl:value-of select="accession"/> data to <u>GenomeSpace</u></span><img src="{$pBasePath}/assets/images/gs-logo-title-16.gif" width="120" height="16" title="GenomeSpace" alt="GenomeSpace"/></a>
-                </div>
-            </td>
-        </tr>
+        <xsl:if test="@loadedinatlas|secondaryaccession|relatedexperiment">
+            <tr>
+                <td class="name"><div>Links</div></td>
+                <td class="value">
+                    <xsl:if test="@loadedinatlas">
+                        <div>
+                            <a href="${interface.application.link.atlas.exp_query.url}{accession}?ref=aebrowse">Expression Atlas - <xsl:value-of select="accession"/></a>
+                        </div>
+                    </xsl:if>
+                    <xsl:if test="secondaryaccession|relatedexperiment">
+                        <xsl:call-template name="exp-secondaryaccession-or-relatedexperiment">
+                            <xsl:with-param name="pQueryId" select="$pQueryId"/>
+                            <xsl:with-param name="pBasePath" select="$pBasePath"/>
+                        </xsl:call-template>
+                    </xsl:if>
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="exp-status-section">
