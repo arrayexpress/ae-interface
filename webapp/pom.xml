@@ -49,7 +49,7 @@
         <interface.application.pref.files.list-all.command>find ${interface.application.pref.files.root.location}/ -regextype posix-egrep -mindepth 3 -maxdepth 5 -not -iname ".*" -and -iregex ".+/(array|experiment)/[a-z]{4}/[ae]-[a-z]{4}-[0-9]+($|/.+$)" -print0 | xargs -0 ls -L -dl -Q --time-style=long-iso</interface.application.pref.files.list-all.command>
 
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
-        <interface.application.pref.files.rescan.interval>60</interface.application.pref.files.rescan.interval>
+        <interface.application.pref.files.rescan.interval>1060</interface.application.pref.files.rescan.interval>
 
         <interface.application.css.local-masthead-color>#A1BEDF</interface.application.css.local-masthead-color>
         <interface.application.pref.files.check.schedule/>
