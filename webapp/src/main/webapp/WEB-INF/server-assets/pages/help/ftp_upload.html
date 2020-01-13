@@ -51,7 +51,7 @@
     <p>1. Open a Terminal window and change to the directory containing the data files.<br>
     2. Type: <code><strong>ftp ftp-private.ebi.ac.uk</strong></code> to connect to the FTP server.<br>
     3. Enter username <code><strong>aexpress</strong></code> and password <code><strong>aexpress1</strong></code>.<br>
-    4. (<em>Annotare submissions only</em>) Change into the submission's subdirectory. You will find the path in Annotare under "Upload and assign data files" by clicking on "FTP upload...". It should look similar to this: <code>ibtd1rmo-20r7k3g747sup</code>.<br>
+    4. (<em>Annotare submissions only</em>) Change into the submission's subdirectory. You will find the path in Annotare by clicking on "FTP upload...". It should look similar to this: <code>ibtd1rmo-20r7k3g747sup</code>.<br>
     In the terminal window type <code><strong>cd</strong></code> followed by the path name.<br>
     5. Use the <code><strong>put</strong></code> command to place one file (or <code><strong>mput</strong></code> for multiple files) into the FTP directory.<br>
     To exit FTP, type <code><strong>quit</strong></code>. On exiting you will get a message printed to screen to tell you whether your transfer was successful.</p>
@@ -67,8 +67,8 @@
 
     <p>Aspera is a commercial file transfer protocol that provides better transfer speeds than FTP over long distances.</p>
     <ol>
-        <li>Download the Aspera Command Line Client <a href="http://downloads.asperasoft.com/en/downloads/62" target="_blank">here</a> (choose the required platform) and run the instal process.</li>
-        <li>Once the tool has been setup enter the following command to transfer a file:<br>
+        <li>Download the Aspera Command Line Client <a href="http://downloads.asperasoft.com/en/downloads/62" target="_blank">here</a> (choose the required platform) and run the installation process.</li>
+        <li>Once the tool has been set up enter the following command to transfer a file:<br>
             <code><strong>ascp -P 33001 &lt;yourfile.txt&gt; aexpress@fasp.ebi.ac.uk:&lt;your upload directory&gt;&#47;</strong></code></li>
         <li>When prompted for a password enter <code><strong>aexpress1</strong></code>.</li>
         <li>(<em>Annotare submissions only</em>) You can find your upload directory from Annotare under <code>"Assign data files"</code> by clicking on <code>"FTP/Aspera upload..."</code>. It should look similar to this:
