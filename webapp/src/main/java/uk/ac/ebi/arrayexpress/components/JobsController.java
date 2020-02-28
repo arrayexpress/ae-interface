@@ -141,7 +141,7 @@ public class JobsController extends ApplicationComponent implements IJobsControl
                                 .withIntervalInMinutes(interval)
                                 .repeatForever()
                 )
-                .startNow()
+                .startAt(futureDate(interval, DateBuilder.IntervalUnit.MINUTE))
                 .build();
 
         getScheduler().scheduleJob(intervalTrigger);
