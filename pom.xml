@@ -17,6 +17,14 @@
     -->
     <developers>
         <developer>
+            <id>awais</id>
+            <name>Awais Athar</name>
+            <email>awais@ebi.ac.uk</email>
+            <roles>
+                <role>Software Development Project Leader</role>
+            </roles>
+        </developer>
+        <developer>
             <id>kolais</id>
             <name>Nikolay Kolesnikov</name>
             <email>kolais@ebi.ac.uk</email>
@@ -41,6 +49,10 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
 
@@ -206,6 +218,11 @@
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>2.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.4</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.lucene</groupId>

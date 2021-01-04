@@ -17,6 +17,7 @@ package uk.ac.ebi.arrayexpress.servlets;
  *
  */
 
+import org.apache.commons.collections4.map.PassiveExpiringMap;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
@@ -50,6 +48,8 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     // restrictions for parallel downloads
     private static AtomicInteger downloadsInProgress = new AtomicInteger(0);
     private static final int MAX_PARALLEL_DOWNLOADS = 50;
+    private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 5000; // in milliseconds
+    private static Map ipMap = Collections.synchronizedMap( new PassiveExpiringMap(DOWNLOAD_CACHE_EXPIRY_TIME));
 
 
     protected final static class DownloadServletException extends Exception
@@ -86,10 +86,16 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         IDownloadFile downloadFile = null;
         try {
             downloadFile = getDownloadFileFromRequest(request, response, authUserName);
-            if (downloadsInProgress.get()>=MAX_PARALLEL_DOWNLOADS) {
-                forwardToErrorPage(request, response, downloadFile);
-                return;
+            String ip = getIPAddress(request);
+            synchronized (ipMap) {
+                Set set = ipMap.keySet();
+                if ( set.size()>=MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
+                    forwardToErrorPage(request, response, downloadFile);
+                    return;
+                }
+                ipMap.put(ip, new Date().getTime());
             }
+            logger.debug("Added {} to the cache map at {}", ip, ipMap.get(ip));
 
             downloadsInProgress.incrementAndGet();
 
@@ -118,6 +124,17 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
             }
             downloadsInProgress.decrementAndGet();
         }
+    }
+
+    private String getIPAddress(HttpServletRequest request) {
+        String ip = null;
+        try {
+            String fwdHeaders = request.getHeader("X-Forwarded-For");
+            ip = (fwdHeaders != null) ? StringUtils.split(fwdHeaders, ',')[0] : request.getRemoteAddr();
+        } catch (Exception ex) {
+            logger.warn("Could not get ip");
+        }
+        return ip;
     }
 
     private void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response, IDownloadFile downloadFile) throws ServletException, IOException {
