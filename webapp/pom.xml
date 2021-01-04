@@ -36,11 +36,11 @@
 
         <interface.application.pref.experiments.ae1.source.location>/ebi/microarray/home/arrayexpress/ae1_aepub2_aepub3/</interface.application.pref.experiments.ae1.source.location>
         <interface.application.pref.experiments.ae1.connections/>
-        <interface.application.pref.experiments.ae1.reload.schedule>0 30 6 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
+        <interface.application.pref.experiments.ae1.reload.schedule>0 10 3 * * ?</interface.application.pref.experiments.ae1.reload.schedule>
         <interface.application.pref.experiments.ae1.export.location/>
 
         <interface.application.pref.experiments.ae2.source.location>/ebi/microarray/home/arrayexpress/ae2_production/software/browse/</interface.application.pref.experiments.ae2.source.location>
-        <interface.application.pref.experiments.ae2.reload.schedule>0 50 0-7 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
+        <interface.application.pref.experiments.ae2.reload.schedule>0 15 3 * * ?</interface.application.pref.experiments.ae2.reload.schedule>
         <interface.application.pref.experiments.ae2.export.location/>
 
         <interface.application.pref.efo.update.schedule>0 0 1 ? * SUN</interface.application.pref.efo.update.schedule>
@@ -49,7 +49,7 @@
         <interface.application.pref.files.list-all.command>find ${interface.application.pref.files.root.location}/ -regextype posix-egrep -mindepth 3 -maxdepth 5 -not -iname ".*" -and -iregex ".+/(array|experiment)/[a-z]{4}/[ae]-[a-z]{4}-[0-9]+($|/.+$)" -print0 | xargs -0 ls -L -dl -Q --time-style=long-iso</interface.application.pref.files.list-all.command>
 
         <interface.application.pref.files.prefix>ae</interface.application.pref.files.prefix>
-        <interface.application.pref.files.rescan.interval>1060</interface.application.pref.files.rescan.interval>
+        <interface.application.pref.files.rescan.schedule>0 0 4 * * ?</interface.application.pref.files.rescan.schedule>
 
         <interface.application.css.local-masthead-color>#A1BEDF</interface.application.css.local-masthead-color>
         <interface.application.pref.files.check.schedule/>
@@ -172,7 +172,7 @@
                 <interface.application.link.links_xml.url>ae-links.xml</interface.application.link.links_xml.url>
 
                 <interface.application.pref.experiments.ae2.reload.schedule>0 50 * * * ?</interface.application.pref.experiments.ae2.reload.schedule>
-                <interface.application.pref.files.rescan.interval>15</interface.application.pref.files.rescan.interval>
+                <interface.application.pref.files.rescan.interval>120</interface.application.pref.files.rescan.interval>
 
                 <interface.application.pref.restart.command>/net/isilonP/public/rw/webadmin/tomcat/bases/fg/tc-fg-arrayexpress_test/restart-nowait</interface.application.pref.restart.command>
             </properties>
@@ -222,6 +222,15 @@
                 <interface.application.pref.experiments.ae2.export.location/>
 
                 <interface.application.pref.files.root.location>/nfs/public/ro/fg/arrayexpress/ftp</interface.application.pref.files.root.location>
+            </properties>
+        </profile>
+        <profile>
+            <id>annualindexing</id>
+            <properties>
+                <interface.application.pref.experiments.ae1.reload.schedule>0 0 1 1 * ?</interface.application.pref.experiments.ae1.reload.schedule>
+                <interface.application.pref.experiments.ae2.reload.schedule>0 0 1 1 * ?</interface.application.pref.experiments.ae2.reload.schedule>
+                <interface.application.pref.efo.update.schedule>0 0 1 1 * ?</interface.application.pref.efo.update.schedule>
+                <interface.application.pref.files.rescan.schedule>0 0 1 1 * ?</interface.application.pref.files.rescan.schedule>
             </properties>
         </profile>
         <profile>
