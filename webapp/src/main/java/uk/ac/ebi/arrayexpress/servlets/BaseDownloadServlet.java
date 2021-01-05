@@ -19,6 +19,7 @@ package uk.ac.ebi.arrayexpress.servlets;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.arrayexpress.components.Files;
@@ -88,13 +89,12 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
             downloadFile = getDownloadFileFromRequest(request, response, authUserName);
             String ip = getIPAddress(request);
             synchronized (ipMap) {
-                Set set = ipMap.keySet();
-                if ( set.size()>=MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
+                if ( downloadsInProgress.get() >= MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
                     logger.warn ("Found {} in cache map at {}", ip, ipMap.get(ip));
                     forwardToErrorPage(request, response, downloadFile);
                     return;
                 }
-                ipMap.put(ip, new Date().getTime());
+                ipMap.put(ip, System.currentTimeMillis());
             }
             logger.warn ("Added {} to the cache map at {}", ip, ipMap.get(ip));
 
@@ -129,6 +129,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
 
     private String getIPAddress(HttpServletRequest request) {
         String ip = null;
+
         try {
             String fwdHeaders = request.getHeader("X-Forwarded-For");
             ip = (fwdHeaders != null) ? StringUtils.split(fwdHeaders, ',')[0] : request.getRemoteAddr();
