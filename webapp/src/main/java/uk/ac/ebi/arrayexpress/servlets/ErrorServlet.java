@@ -62,6 +62,9 @@ public class ErrorServlet extends AuthAwareApplicationServlet {
             params.put("original-request-uri", (String)request.getAttribute("javax.servlet.error.request_uri"));
             params.put("userid", StringTools.listToString(getUserIds(authUserName), " OR "));
             params.put("username", authUserName);
+            if (request.getAttribute("javax.servlet.error.status_code")!=null) {
+                response.sendError((Integer) request.getAttribute("javax.servlet.error.status_code"));
+            }
 
             SaxonEngine saxonEngine = (SaxonEngine) getComponent("SaxonEngine");
             NodeInfo source = saxonEngine.getAppDocument().getRootNode();

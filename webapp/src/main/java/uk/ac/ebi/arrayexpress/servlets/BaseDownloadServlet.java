@@ -46,10 +46,10 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
 
     // restrictions for parallel downloads
-    private static AtomicInteger downloadsInProgress = new AtomicInteger(0);
+    private static final AtomicInteger downloadsInProgress = new AtomicInteger(0);
     private static final int MAX_PARALLEL_DOWNLOADS = 50;
     private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 5000; // in milliseconds
-    private static Map ipMap = Collections.synchronizedMap( new PassiveExpiringMap(DOWNLOAD_CACHE_EXPIRY_TIME));
+    private static final Map<String, Long> ipMap = Collections.synchronizedMap( new PassiveExpiringMap<String, Long>(DOWNLOAD_CACHE_EXPIRY_TIME));
 
 
     protected final static class DownloadServletException extends Exception
@@ -90,12 +90,13 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
             synchronized (ipMap) {
                 Set set = ipMap.keySet();
                 if ( set.size()>=MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
+                    logger.warn ("Found {} in cache map at {}", ip, ipMap.get(ip));
                     forwardToErrorPage(request, response, downloadFile);
                     return;
                 }
                 ipMap.put(ip, new Date().getTime());
             }
-            logger.debug("Added {} to the cache map at {}", ip, ipMap.get(ip));
+            logger.warn ("Added {} to the cache map at {}", ip, ipMap.get(ip));
 
             downloadsInProgress.incrementAndGet();
 
