@@ -88,15 +88,17 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         try {
             downloadFile = getDownloadFileFromRequest(request, response, authUserName);
             String ip = getIPAddress(request);
-            synchronized (ipMap) {
-                if ( downloadsInProgress.get() >= MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
-                    logger.warn ("Found {} in cache map at {}", ip, ipMap.get(ip));
-                    forwardToErrorPage(request, response, downloadFile);
-                    return;
+            if (!ip.startsWith("10.")) {
+                synchronized (ipMap) {
+                    if (downloadsInProgress.get() >= MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
+                        logger.warn("Found {} in cache map at {}", ip, ipMap.get(ip));
+                        forwardToErrorPage(request, response, downloadFile);
+                        return;
+                    }
+                    ipMap.put(ip, System.currentTimeMillis());
                 }
-                ipMap.put(ip, System.currentTimeMillis());
+                logger.warn("Added {} to the cache map at {}", ip, ipMap.get(ip));
             }
-            logger.warn ("Added {} to the cache map at {}", ip, ipMap.get(ip));
 
             downloadsInProgress.incrementAndGet();
 
@@ -144,7 +146,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
                             StringUtils.replace(downloadFile.getPath(), File.separator, "/"),
                                 ((Files) getComponent("Files")).getRootFolder(),
                                 "ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data");
-        request.setAttribute("javax.servlet.error.status_code",429);
+        request.setAttribute("javax.servlet.error.status_code",404);
         request.setAttribute("javax.servlet.error.message","server busy error");
         request.setAttribute("javax.servlet.error.request_uri",ftpURL);
         request.getRequestDispatcher("/servlets/error/html")
