@@ -49,7 +49,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     // restrictions for parallel downloads
     private static final AtomicInteger downloadsInProgress = new AtomicInteger(0);
     private static final int MAX_PARALLEL_DOWNLOADS = 50;
-    private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 5000; // in milliseconds
+    private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 3000; // in milliseconds
     private static final Map<String, Long> ipMap = Collections.synchronizedMap( new PassiveExpiringMap<String, Long>(DOWNLOAD_CACHE_EXPIRY_TIME));
 
 
@@ -83,6 +83,11 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     ) throws ServletException, IOException
     {
         logRequest(logger, request, requestType);
+        String range = request.getHeader("Range");
+        if (range != null) {
+            response.sendError(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+            return;
+        }
 
         IDownloadFile downloadFile = null;
         try {
