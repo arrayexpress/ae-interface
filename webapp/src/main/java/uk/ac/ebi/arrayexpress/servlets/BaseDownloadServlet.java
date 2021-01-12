@@ -49,8 +49,8 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
     // restrictions for parallel downloads
     private static final AtomicInteger downloadsInProgress = new AtomicInteger(0);
     private static final int MAX_PARALLEL_DOWNLOADS = 50;
-    private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 3000; // in milliseconds
-    private static final Map<String, Long> ipMap = Collections.synchronizedMap( new PassiveExpiringMap<String, Long>(DOWNLOAD_CACHE_EXPIRY_TIME));
+    //private static final int DOWNLOAD_CACHE_EXPIRY_TIME = 3000; // in milliseconds
+    //private static final Map<String, Long> ipMap = Collections.synchronizedMap( new PassiveExpiringMap<String, Long>(DOWNLOAD_CACHE_EXPIRY_TIME));
 
 
     protected final static class DownloadServletException extends Exception
@@ -92,7 +92,7 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
         IDownloadFile downloadFile = null;
         try {
             downloadFile = getDownloadFileFromRequest(request, response, authUserName);
-            String ip = getIPAddress(request);
+            /*String ip = getIPAddress(request);
             if (!ip.startsWith("10.")) {
                 synchronized (ipMap) {
                     if (downloadsInProgress.get() >= MAX_PARALLEL_DOWNLOADS || ipMap.containsKey(ip)) {
@@ -103,6 +103,10 @@ public abstract class BaseDownloadServlet extends AuthAwareApplicationServlet
                     ipMap.put(ip, System.currentTimeMillis());
                 }
                 logger.warn("Added {} to the cache map at {}", ip, ipMap.get(ip));
+            }*/
+            if (downloadsInProgress.get() >= MAX_PARALLEL_DOWNLOADS) {
+                forwardToErrorPage(request, response, downloadFile);
+                return;
             }
 
             downloadsInProgress.incrementAndGet();
