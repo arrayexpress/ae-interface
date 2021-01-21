@@ -585,7 +585,7 @@
         <xsl:param name="pIsGoogleBot" as="xs:boolean"/>
         <xsl:param name="pShowChangeReleaseDate" as="xs:boolean"/>
 
-        <xsl:variable name="vDates" select="submissiondate | lastupdatedate | releasedate"/>
+        <xsl:variable name="vDates" select="lastupdatedate | releasedate"/>
         <xsl:variable name="vAccession" select="accession"/>
         <xsl:if test="$vDates">
             <tr>
@@ -611,7 +611,7 @@
                                     <xsl:variable name="vLabel">
                                         <xsl:if test="ae:isFutureDate(text())">will be </xsl:if>
                                         <xsl:choose>
-                                            <!--xsl:when test="fn:name() = 'submissiondate'">submitted</xsl:when-->
+                                            <xsl:when test="fn:name() = 'submissiondate'">submitted</xsl:when>
                                             <xsl:when test="fn:name() = 'lastupdatedate'">
                                                 <xsl:if test="not(ae:isFutureDate(text()))">last </xsl:if>
                                                 <xsl:text>updated</xsl:text>
