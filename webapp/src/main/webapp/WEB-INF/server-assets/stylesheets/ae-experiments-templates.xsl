@@ -670,7 +670,7 @@
                         </a>
                     </xsl:when>
                     <xsl:when test="fn:matches(., '^(DRP|ERP|SRP|PRJ\w{2})\d+$')">
-                        <a href="http://www.ebi.ac.uk/ena/data/view/{.}">
+                        <a href="https://www.ebi.ac.uk/ena/browser/view/{.}">
                             <xsl:text>ENA - </xsl:text>
                             <xsl:call-template name="highlight">
                                 <xsl:with-param name="pQueryId" select="$pQueryId"/>

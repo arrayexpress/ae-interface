@@ -545,7 +545,7 @@
                                             <xsl:when test="fn:lower-case($vColInfo/@name) = 'ena_run' and ae:isStringNotEmpty($vColText)">
                                                 <xsl:variable name="vBAMFile" select="fn:concat($vAccession, '.BAM.', $vColText, '.bam')"/>
 
-                                                <a href="http://www.ebi.ac.uk/ena/data/view/{$vColText}" title="Click to go to ENA run summary">
+                                                <a href="https://www.ebi.ac.uk/ena/browser/view/{$vColText}" title="Click to go to ENA run summary">
                                                     <span class="icon icon-generic" data-icon="L"/>
                                                     <!-- <img src="{$context-path}/assets/images/data_link_ena.gif" width="23" height="16"/> -->
                                                 </a>

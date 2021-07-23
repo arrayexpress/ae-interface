@@ -551,7 +551,7 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:for-each select="$pEnaAccession">
-                                    <a href="http://www.ebi.ac.uk/ena/data/view/{.}" title="Go to European Nucleotide Archive to download all raw files for this experiment"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
+                                    <a href="https://www.ebi.ac.uk/ena/browser/view/{.}" title="Go to European Nucleotide Archive to download all raw files for this experiment"><img src="{$context-path}/assets/images/ena-icon-16.svg" width="22" height="16" alt="ENA"/></a>
                                     <xsl:if test="fn:position() != fn:last()">
                                         <xsl:text>, </xsl:text>
                                     </xsl:if>
