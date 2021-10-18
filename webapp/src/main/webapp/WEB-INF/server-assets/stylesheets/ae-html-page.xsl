@@ -298,7 +298,7 @@
                     <form id="ae-login-form" method="post" action="{$secure-host}{$context-path}/auth">
                         <fieldset class="callout" id="ae-user-fieldset">
                             <label for="ae-user-field">User name <span style="color:#aaa;">(case-sensitive)</span></label>
-                            <input id="ae-user-field" type="text" name="u" maxlength="50" />
+                            <input id="ae-user-field" type="text" name="u" maxlength="150" />
                         </fieldset>
                         <fieldset class="callout" id="ae-password-fieldset">
                             <label for="ae-pass-field">Password</label>
