@@ -276,7 +276,7 @@
         <xsl:param name="pTo"/>
         <xsl:if test="position() >= $pFrom and not(position() > $pTo)">
             <xsl:variable name="vUserInfo" select="ae:getMappedValue('users-for-accession', ../@accession)"/>
-            <xsl:variable name="vFilePath" select="fn:concat($context-path, '/files/', ../@accession, '/', @name)"/>
+            <xsl:variable name="vFilePath" select="fn:concat($context-path, '/files/', ../@accession, '/', encode-for-uri(@name))"/>
             <tr>
                 <td class="col_accession">
                     <div>
@@ -462,7 +462,7 @@
             <xsl:sort select="fn:replace(@name, '^.+[.](\d+)[.].+$', '$1')" data-type="number" order="ascending"/>
             <xsl:sort select="fn:lower-case(@name)" order="ascending"/>
             <tr>
-                <td class="col_name"><div><a href="{$context-path}/files/{../@accession}/{@name}" title="Click to download {@name}" class="icon icon-functional" data-icon="="><xsl:value-of select="@name"/></a></div></td>
+                <td class="col_name"><div><a href="{$context-path}/files/{../@accession}/{encode-for-uri(@name)}" title="Click to download {@name}" class="icon icon-functional" data-icon="="><xsl:value-of select="@name"/></a></div></td>
                 <td class="col_size"><div><xsl:value-of select="ae:formatFileSize(@size)"/></div></td>
                 <td class="col_lastmodified"><div><xsl:value-of select="ae:formatDateTime(@lastmodified)"/></div></td>
             </tr>
