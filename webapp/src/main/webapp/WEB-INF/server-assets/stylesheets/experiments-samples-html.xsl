@@ -100,6 +100,13 @@
             <div id="ae-content">
                 <xsl:choose>
                     <xsl:when test="fn:exists($vSampleFiles) and fn:exists($vMetaData)">
+                        <p class="callout warning center">
+                            ArrayExpress is moving to BioStudies. This view of ArrayExpress will be deprecated soon. <br/>
+                            Please visit the new experiment page at
+                            <a><xsl:attribute name="href" select="fn:concat('https://www.ebi.ac.uk/biostudies/arrayexpress/studies/',
+             $vMetaData/accession)"/>https://www.ebi.ac.uk/biostudies/arrayexpress/studies/<xsl:value-of select="$vMetaData/accession"/>
+                            </a>.
+                        </p>
                         <h4>
                             <xsl:if test="not($vMetaData/user/@id = '1')">
                                 <xsl:attribute name="class" select="'icon icon-functional'"/>

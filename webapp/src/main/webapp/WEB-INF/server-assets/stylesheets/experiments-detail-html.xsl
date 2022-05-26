@@ -102,10 +102,17 @@
 
     <xsl:template name="block-experiment">
         <xsl:param name="pExperiment"/>
+        <p class="callout warning center">
+            ArrayExpress is moving to BioStudies. This view of ArrayExpress will be deprecated soon. <br/>
+            Please visit the new experiment page at
+            <a><xsl:attribute name="href" select="fn:concat('https://www.ebi.ac.uk/biostudies/arrayexpress/studies/',
+             $pExperiment/accession)"/>https://www.ebi.ac.uk/biostudies/arrayexpress/studies/<xsl:value-of select="$pExperiment/accession"/>
+            </a>.
         <xsl:if test="fn:starts-with($pExperiment/accession,'E-GEOD-')">
-            <p class="callout warning">Please note that we have stopped the regular imports of Gene Expression Omnibus (GEO)
-                data into ArrayExpress. This may not be the latest version of this experiment.</p>
+            Please also note that we have stopped the regular imports of Gene Expression Omnibus (GEO)
+                data into ArrayExpress. This may not be the latest version of this experiment.
         </xsl:if>
+        </p>
         <h4>
             <xsl:if test="not($pExperiment/user/@id = '1')">
                 <xsl:attribute name="class" select="'icon icon-functional'"/>
