@@ -168,6 +168,8 @@ public class Ontologies extends ApplicationComponent
                     .append(seqTypes.contains(type))
                     .append('\n');
         }
+        sb.append("RNA-seq of coding RNA\tfalse\ttrue\n".toLowerCase() +
+                "RNA-seq of non coding RNA\tfalse\ttrue".toLowerCase());
         return sb.toString();
     }
 
