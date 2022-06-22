@@ -73,6 +73,7 @@ public class UpdateOntologyJob extends ApplicationJob
 
     private boolean isVersionNewer( String version, String baseVersion )
     {
+        if (true) return false; // never refresh!
         return null != version
                 && null != baseVersion
                 && Float.parseFloat("0." + version.replace(".", "")) > Float.parseFloat("0." + baseVersion.replace(".", ""));
