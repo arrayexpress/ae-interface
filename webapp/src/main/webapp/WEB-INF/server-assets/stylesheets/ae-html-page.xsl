@@ -310,6 +310,10 @@
                         </div>
                         <input class="submit button clearboth" type="submit" value="Login" />
                         <div class="ae-login-status" style="display:none"/>
+                        <div style="background-color: #f5f9fe;float: left;margin: 0 0 1em 0;padding: 1em;border-radius: 5%;">
+                            ArrayExpress is moving to BioStudies.<br/>
+                            <a href="/biostudies/arrayexpress/help#activate">Activate your new BioStudies account.</a>
+                        </div>
                         <div id="ae-login-forgot"><a href="#">Forgot user name or password?</a></div>
                         <div id="ae-privacy-notice"><a target="_blank" href="https://www.ebi.ac.uk/data-protection/privacy-notice/annotare">
                             Privacy Notice</a></div>
