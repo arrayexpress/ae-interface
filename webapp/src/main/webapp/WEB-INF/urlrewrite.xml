@@ -94,7 +94,7 @@
     <!-- browse page -->
     <rule>
         <from>^(|/experiments)/browse[.]html?$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
 
     <!-- search page -->
@@ -109,7 +109,7 @@
     </rule>
     <rule>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
 
     <!-- experiments section -->
@@ -144,7 +144,7 @@
     <!-- experiment arrays -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays$</from>
@@ -162,7 +162,7 @@
     <!-- experiment protocols -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols$</from>
@@ -180,7 +180,7 @@
     <!-- experiment files -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files$</from>
@@ -196,7 +196,7 @@
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)$</from>
@@ -214,16 +214,17 @@
     </rule>
 
     <!-- experiment samples -->
+
+    <rule>
+        <from>^/experiments/(E-\w{4}-\d+)/samples$</from>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+    </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/(.+)$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
-    </rule>
-    <rule>
-        <from>^/experiments/(E-\w{4}-\d+)/samples$</from>
         <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
@@ -240,7 +241,7 @@
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples.xml$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
 
     <!-- arrays -->
@@ -259,11 +260,11 @@
     </rule>
     <rule>
         <from>^/arrays/browse[.]html$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies?type:array</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)$</from>
@@ -290,15 +291,15 @@
     </rule>
     <rule>
         <from>^/protocols/browse[.]html$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/protocols/(\d+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <from>^/protocols/([^/]+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <from>^/protocols/([^/]+)$</from>
@@ -325,11 +326,11 @@
     </rule>
     <rule>
         <from>^/files/browse[.]html$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)$</from>
@@ -341,7 +342,7 @@
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/$</from>
-        <to type="forward" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)$</from>
@@ -354,19 +355,19 @@
     <rule>
         <condition name="user-agent">.*(Googlebot|Java).*</condition>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <to type="forward" last="true">/servlets/xxx</to>
+        <to type="permanent-redirect" last="true">/servlets/xxx</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <to type="forward" last="true">/biostudies/files/$1/$2</to>
+        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+)$</from>
-        <to type="forward" last="true">/biostudies/files/$1/$2</to>
+        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+)/([^/]+)$</from>
-        <to type="forward" last="true">/biostudies/files/$1/$2</to>
+        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
 
 
@@ -387,7 +388,7 @@
     <!-- news page -->
     <rule>
         <from>^/news[.]html?$</from>
-            <to type="forward" last="true">/biostudies/arrayexpress</to>
+            <to type="permanent-redirect" last="true">/biostudies/arrayexpress</to>
     </rule>
 
     <!-- about arrayexpress page -->
