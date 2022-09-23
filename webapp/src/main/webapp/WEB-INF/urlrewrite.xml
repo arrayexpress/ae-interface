@@ -466,7 +466,7 @@
     </rule>
     <rule>
         <from>^/help/(.+)[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/help/$1</to>
+        <to type="permanent-redirect" last="true">/fg/annotare/help/$1.html</to>
     </rule>
 
     <rule>
