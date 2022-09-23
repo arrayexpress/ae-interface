@@ -13,470 +13,482 @@
     <!-- skip all requests for assets -->
     <rule>
         <from>^(/assets/.*)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/$1</to>
+        <to type="redirect" last="true">/biostudies/$1</to>
     </rule>
 
     <!-- home page -->
     <rule>
         <from>^/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress</to>
     </rule>
 
     <rule>
         <from>^/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress</to>
     </rule>
     <rule>
         <from>^$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress</to>
     </rule>
 
     <!-- experiment accession shortcuts -->
     <rule>
         <from>^/(E-\w{4}-\d+)/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/studies/$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="keywords">^\s*(E-\w{4}-\d+)\s*$</condition>
         <from>^(|/experiments)/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="accession">^\s*(E-\w{4}-\d+)\s*$</condition>
         <from>^(|/experiments)/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="query">^\s*(E-\w{4}-\d+)\s*$</condition>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
 
     <!-- array accession shortcuts -->
     <rule>
         <from>^/(A-\w{4}-\d+)/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="keywords">^\s*(A-\w{4}-\d+)\s*$</condition>
         <from>^(|/arrays|/experiments)/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="query">^\s*(A-\w{4}-\d+)\s*$</condition>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
 
     <!-- protocol accession shortcuts -->
     <rule>
         <from>^/(P-\w{4}-\d+)/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <condition type="parameter" name="keywords">^\s*(P-\w{4}-\d+)\s*$</condition>
         <from>^(|/protocols|/experiments)/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1/</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1/</to>
     </rule>
     <rule>
         <condition type="parameter" name="query">^\s*(P-\w{4}-\d+)\s*$</condition>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
 
     <!-- empty search shortcut -->
     <rule>
         <condition type="parameter" name="query">^\s*$</condition>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
     </rule>
 
     <!-- browse page -->
     <rule>
         <from>^(|/experiments)/browse[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
 
     <!-- search page -->
     <rule>
         <condition type="query-string" operator="greater"/>
         <from>^/search/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
     </rule>
     <rule>
         <from>^/search/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^(|/experiments)/search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
 
     <!-- experiments section -->
     <rule>
         <condition type="query-string" operator="greater"/>
         <from>^/experiments/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=%{query-string}</to>
     </rule>
     <rule>
         <from>^/experiments/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/experiments/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
 
     <!-- experiment detail -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
 
     <!-- experiment arrays -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/arrays/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1</to>
     </rule>
 
     <!-- experiment protocols -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/protocols/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1#Protocols</to>
     </rule>
 
     <!-- experiment files -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/.]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
 
     <!-- this hack is to fix incorrect path for direct file access -->
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/files/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
 
     <!-- experiment samples -->
 
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/(.+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/sdrf[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
     <rule>
         <from>^/experiments/(E-\w{4}-\d+)/samples.xml$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/sdrf</to>
     </rule>
 
     <!-- arrays -->
     <rule>
         <condition type="query-string" operator="greater"/>
         <from>^/arrays/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?%{query-string}&amp;type:array</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?%{query-string}&amp;type:array</to>
     </rule>
     <rule>
         <from>^/arrays/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
     </rule>
     <rule>
         <from>^/arrays/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
     </rule>
     <rule>
         <from>^/arrays/browse[.]html$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?type:array</to>
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
     <rule>
         <from>^/arrays/(A-\w{4}-\d+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/arrays/$1</to>
     </rule>
 
     <!-- protocols -->
     <rule>
         <condition type="query-string" operator="greater"/>
         <from>^/protocols/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/search?query=%{query-string}</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/search?query=%{query-string}</to>
     </rule>
     <rule>
         <from>^/protocols/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/protocols/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/protocols/browse[.]html$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/protocols/(\d+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <from>^/protocols/([^/]+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <from>^/protocols/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
     <rule>
         <from>^/protocols/([^/]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies?query=$1</to>
     </rule>
 
     <!-- files -->
     <rule>
         <condition type="query-string" operator="greater"/>
         <from>^/files/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/files/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/files/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/files/browse[.]html$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/.]+)/index[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/studies/$1/files?fs=$2</to>
     </rule>
     <rule>
         <condition name="user-agent">.*(Googlebot|Java).*</condition>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/servlets/xxx</to>
+        <to type="redirect" last="true">/servlets/xxx</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+[.]zip)/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
+        <to type="redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
+        <to type="redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
     <rule>
         <from>^/files/([AE]-\w{4}-\d+)/([^/]+)/([^/]+)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/files/$1/$2</to>
+        <to type="redirect" last="true">/biostudies/files/$1/$2</to>
     </rule>
 
 
     <!-- submit section -->
     <rule>
         <from>^/submit/?$</from>
-        <to type="permanent-redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
+        <to type="redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
     </rule>
     <rule>
         <from>^/submit/overview.html?$</from>
-        <to type="permanent-redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
+        <to type="redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
     </rule>
     <rule>
         <from>^/submit/(.+)[.]html?$</from>
-        <to type="permanent-redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
+        <to type="redirect" last="true">https://www.ebi.ac.uk/fg/annotare/</to>
     </rule>
 
     <!-- news page -->
     <rule>
         <from>^/news[.]html?$</from>
-            <to type="permanent-redirect" last="true">/biostudies/arrayexpress</to>
+            <to type="redirect" last="true">/biostudies/arrayexpress</to>
     </rule>
 
     <!-- about arrayexpress page -->
     <rule>
         <from>^/about[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/about</to>
+        <to type="redirect" last="true">/biostudies/about</to>
     </rule>
     <rule>
         <from>^/acknowledgements[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/about</to>
+        <to type="redirect" last="true">/biostudies/about</to>
     </rule>
 
 
     <!-- help pages -->
     <rule>
         <from>^/help/?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
     <rule>
         <from>^/help/how_to_search[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/help#advancedsearch</to>
+        <to type="redirect" last="true">/biostudies/help#advancedsearch</to>
+    </rule>
+    <rule>
+        <from>^/help/submissions_overview[.]html?$</from>
+        <to type="redirect" last="true">/fg/annotare/</to>
     </rule>
     <rule>
         <from>^/help/how_to_search_adf[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
+        <to type="redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
     </rule>
     <rule>
         <from>^/help/how_to_search_private_data[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#ae-access</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#ae-access</to>
     </rule>
     <rule>
         <from>^/help/accession_codes[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
     </rule>
     <rule>
         <from>^/help/GEO_data[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
     </rule>
     <rule>
         <from>^/help/magetab_spec[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#ae-data</to>
     </rule>
     <rule>
         <from>^/help/FTP_archives[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/help#download</to>
+        <to type="redirect" last="true">/biostudies/help#download</to>
     </rule>
     <rule>
         <from>^/help/FAQ[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
     <rule>
         <from>^/help/contact_us[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/about#contact</to>
+        <to type="redirect" last="true">/fg/annotare/about#contact</to>
     </rule>
     <rule>
         <from>^/help/programmatic_access[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
     </rule>
 
     <rule>
         <from>^/help/browse_results[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
+        <to type="redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
     </rule>
     <rule>
         <from>^/help/adf_quick_start[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
+        <to type="redirect" last="true">/fg/annotare/help/adf_submissions_overview.html</to>
+    </rule>
+    <rule>
+        <from>^/help/data_availability[.]html?$</from>
+        <to type="redirect" last="true">/fg/annotare/help/after_sub_modify_data.html</to>
+    </rule>
+    <rule>
+        <from>^/help/modify_data_loaded_in_AE[.]html?$</from>
+        <to type="redirect" last="true">/fg/annotare/help/after_sub_data_availability.html</to>
     </rule>
     <rule>
         <from>^/help/ae_help[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
     <rule>
         <from>^/help/spreadsheet_submissions[.]html?$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
     <rule>
         <from>^/help/(.+)[.]html?$</from>
-        <to type="permanent-redirect" last="true">/fg/annotare/help/$1.html</to>
+        <to type="redirect" last="true">/fg/annotare/help/$1.html</to>
     </rule>
 
     <rule>
         <from>^/json/(.*)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
     </rule>
 
     <rule>
         <from>^/xml/(.*)$</from>
-        <to type="permanent-redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#programmatic</to>
     </rule>
 
 
