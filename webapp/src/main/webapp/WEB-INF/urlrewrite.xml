@@ -12,7 +12,7 @@
 
     <!-- skip all requests for assets -->
     <rule>
-        <from>^(/assets/.*)$</from>
+        <from>^/assets/(.*)$</from>
         <to type="redirect" last="true">/biostudies/$1</to>
     </rule>
 
@@ -440,6 +440,10 @@
         <to type="redirect" last="true">/biostudies/help#download</to>
     </rule>
     <rule>
+        <from>^/help/expressionset_objects[.]html?$</from>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help#esets</to>
+    </rule>
+    <rule>
         <from>^/help/FAQ[.]html?$</from>
         <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
@@ -474,6 +478,10 @@
     </rule>
     <rule>
         <from>^/help/spreadsheet_submissions[.]html?$</from>
+        <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
+    </rule>
+    <rule>
+        <from>^/help/index[.]html?$</from>
         <to type="redirect" last="true">/biostudies/arrayexpress/help</to>
     </rule>
     <rule>
